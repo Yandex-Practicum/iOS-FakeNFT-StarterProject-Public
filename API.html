@@ -702,6 +702,7 @@
     },
     "images" : {
       "type" : "array",
+      "example" : [ "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png", "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/2.png", "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/3.png" ],
       "items" : {
         "type" : "string",
         "example" : "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png"
@@ -743,9 +744,9 @@
     },
     "nfts" : {
       "type" : "array",
+      "example" : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
       "items" : {
-        "type" : "integer",
-        "example" : 16
+        "type" : "integer"
       }
     },
     "description" : {
@@ -761,72 +762,42 @@
             defs["inline_response_200_2"] = {
   "type" : "object",
   "properties" : {
-    "createdAt" : {
-      "type" : "string",
-      "example" : "2023-04-20T02:22:27Z"
-    },
     "name" : {
-      "type" : "string",
-      "example" : "Beige"
-    },
-    "cover" : {
-      "type" : "string",
-      "example" : "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png"
-    },
-    "nfts" : {
-      "type" : "array",
-      "items" : {
-        "type" : "integer",
-        "example" : 21
-      }
-    },
-    "description" : {
-      "type" : "string",
-      "example" : "A series of one-of-a-kind NFTs featuring historic moments in sports history."
-    },
-    "id" : {
-      "type" : "string",
-      "example" : "1"
-    }
-  }
-};
-            defs["inline_response_200_3"] = {
-  "type" : "object",
-  "properties" : {
-    "name" : {
-      "type" : "string",
-      "example" : "Lucille Heaney"
+      "type" : "string"
     },
     "avatar" : {
-      "type" : "string",
-      "example" : "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/753.jpg"
+      "type" : "string"
     },
     "description" : {
-      "type" : "string",
-      "example" : "Supporting artists through NFTs is my passion ❤"
+      "type" : "string"
     },
     "website" : {
-      "type" : "string",
-      "example" : "https://practicum.yandex.ru/promo/courses/email-marketing"
+      "type" : "string"
     },
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer",
-        "example" : 72
+        "type" : "integer"
       }
     },
     "rating" : {
-      "type" : "string",
-      "example" : "10"
+      "type" : "string"
     },
     "id" : {
-      "type" : "string",
-      "example" : "3"
+      "type" : "string"
     }
+  },
+  "example" : {
+    "name" : "Lucille Heaney",
+    "avatar" : "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/753.jpg",
+    "description" : "Supporting artists through NFTs is my passion ❤",
+    "website" : "https://practicum.yandex.ru/promo/courses/email-marketing",
+    "nfts" : [ 1, 4, 5 ],
+    "rating" : 10,
+    "id" : "3"
   }
 };
-            defs["inline_response_200_4"] = {
+            defs["inline_response_200_3"] = {
   "type" : "object",
   "properties" : {
     "name" : {
@@ -848,15 +819,28 @@
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer",
-        "example" : 68
+        "type" : "integer"
       }
     },
     "likes" : {
       "type" : "array",
       "items" : {
-        "type" : "integer",
-        "example" : 5
+        "type" : "integer"
+      }
+    },
+    "id" : {
+      "type" : "string",
+      "example" : "1"
+    }
+  }
+};
+            defs["inline_response_200_4"] = {
+  "type" : "object",
+  "properties" : {
+    "nfts" : {
+      "type" : "array",
+      "items" : {
+        "type" : "integer"
       }
     },
     "id" : {
@@ -868,39 +852,48 @@
             defs["inline_response_200_5"] = {
   "type" : "object",
   "properties" : {
-    "nfts" : {
-      "type" : "array",
-      "items" : {
-        "type" : "integer",
-        "example" : 93
-      }
+    "title" : {
+      "type" : "string"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "image" : {
+      "type" : "string"
     },
     "id" : {
-      "type" : "string",
-      "example" : "1"
+      "type" : "string"
     }
+  },
+  "example" : {
+    "title" : "Bitcoin,",
+    "name" : "BTC,",
+    "image" : "https://code.s3.yandex.net/Mobile/iOS/Currencies/Bitcoin_(BTC).png,",
+    "id" : "1"
   }
 };
             defs["inline_response_200_6"] = {
   "type" : "object",
   "properties" : {
     "title" : {
-      "type" : "string",
-      "example" : "Bitcoin"
+      "type" : "string"
     },
     "name" : {
-      "type" : "string",
-      "example" : "BTC"
+      "type" : "string"
     },
     "image" : {
-      "type" : "string",
-      "example" : "https://code.s3.yandex.net/Mobile/iOS/Currencies/Bitcoin_(BTC).png"
+      "type" : "string"
     },
     "id" : {
-      "type" : "string",
-      "example" : "1"
+      "type" : "string"
     }
-  }
+  },
+  "example" : [ {
+    "title" : "Bitcoina",
+    "name" : "BTC",
+    "image" : "https://code.s3.yandex.net/Mobile/iOS/Currencies/Bitcoin_(BTC).png",
+    "id" : "1"
+  } ]
 };
             defs["inline_response_200_7"] = {
   "type" : "object",
@@ -916,6 +909,38 @@
     "id" : {
       "type" : "string",
       "example" : "3"
+    }
+  }
+};
+            defs["orders_1_body"] = {
+  "type" : "object",
+  "properties" : {
+    "nfts" : {
+      "type" : "array",
+      "items" : {
+        "type" : "integer"
+      }
+    }
+  }
+};
+            defs["profile_1_body"] = {
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string"
+    },
+    "description" : {
+      "type" : "string"
+    },
+    "website" : {
+      "type" : "string",
+      "example" : "https://practicum.yandex.ru/ios-developer"
+    },
+    "likes" : {
+      "type" : "array",
+      "items" : {
+        "type" : "integer"
+      }
     }
   }
 };
@@ -935,19 +960,6 @@
             -->
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
-                  <li class="nav-header" data-group="Cart"><a href="#api-Cart">API Methods - Cart</a></li>
-                    <li data-group="Cart" data-name="apiV1CurrenciesCurrencyIdGet" class="">
-                      <a href="#api-Cart-apiV1CurrenciesCurrencyIdGet">apiV1CurrenciesCurrencyIdGet</a>
-                    </li>
-                    <li data-group="Cart" data-name="apiV1CurrenciesGet" class="">
-                      <a href="#api-Cart-apiV1CurrenciesGet">apiV1CurrenciesGet</a>
-                    </li>
-                    <li data-group="Cart" data-name="apiV1Orders1Get" class="">
-                      <a href="#api-Cart-apiV1Orders1Get">apiV1Orders1Get</a>
-                    </li>
-                    <li data-group="Cart" data-name="apiV1Orders1PaymentCurrencyIdGet" class="">
-                      <a href="#api-Cart-apiV1Orders1PaymentCurrencyIdGet">apiV1Orders1PaymentCurrencyIdGet</a>
-                    </li>
                   <li class="nav-header" data-group="Collections"><a href="#api-Collections">API Methods - Collections</a></li>
                     <li data-group="Collections" data-name="apiV1CollectionsCollectionIdGet" class="">
                       <a href="#api-Collections-apiV1CollectionsCollectionIdGet">apiV1CollectionsCollectionIdGet</a>
@@ -962,9 +974,28 @@
                     <li data-group="NFT" data-name="apiV1NftNftIdGet" class="">
                       <a href="#api-NFT-apiV1NftNftIdGet">apiV1NftNftIdGet</a>
                     </li>
+                  <li class="nav-header" data-group="OrderAndPayment"><a href="#api-OrderAndPayment">API Methods - OrderAndPayment</a></li>
+                    <li data-group="OrderAndPayment" data-name="apiV1CurrenciesCurrencyIdGet" class="">
+                      <a href="#api-OrderAndPayment-apiV1CurrenciesCurrencyIdGet">apiV1CurrenciesCurrencyIdGet</a>
+                    </li>
+                    <li data-group="OrderAndPayment" data-name="apiV1CurrenciesGet" class="">
+                      <a href="#api-OrderAndPayment-apiV1CurrenciesGet">apiV1CurrenciesGet</a>
+                    </li>
+                    <li data-group="OrderAndPayment" data-name="apiV1Orders1Get" class="">
+                      <a href="#api-OrderAndPayment-apiV1Orders1Get">apiV1Orders1Get</a>
+                    </li>
+                    <li data-group="OrderAndPayment" data-name="apiV1Orders1PaymentCurrencyIdGet" class="">
+                      <a href="#api-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet">apiV1Orders1PaymentCurrencyIdGet</a>
+                    </li>
+                    <li data-group="OrderAndPayment" data-name="apiV1Orders1Put" class="">
+                      <a href="#api-OrderAndPayment-apiV1Orders1Put">apiV1Orders1Put</a>
+                    </li>
                   <li class="nav-header" data-group="Profile"><a href="#api-Profile">API Methods - Profile</a></li>
                     <li data-group="Profile" data-name="apiV1Profile1Get" class="">
                       <a href="#api-Profile-apiV1Profile1Get">apiV1Profile1Get</a>
+                    </li>
+                    <li data-group="Profile" data-name="apiV1Profile1Put" class="">
+                      <a href="#api-Profile-apiV1Profile1Put">apiV1Profile1Put</a>
                     </li>
                   <li class="nav-header" data-group="Users"><a href="#api-Users">API Methods - Users</a></li>
                     <li data-group="Users" data-name="apiV1UsersGet" class="">
@@ -988,1125 +1019,10 @@
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
-            <div>Моковое API для дипломного проекта курса iOS-разработчик</div>
+            <div>API for retrieving cryptocurrency information</div>
           </div>
         </div>
         <div id="sections">
-                <section id="api-Cart">
-                  <h1>Cart</h1>
-                    <div id="api-Cart-apiV1CurrenciesCurrencyIdGet">
-                      <article id="api-Cart-apiV1CurrenciesCurrencyIdGet-0" data-group="User" data-name="apiV1CurrenciesCurrencyIdGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>apiV1CurrenciesCurrencyIdGet</h1>
-                          <p>Получение валюты с заданным id</p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/currencies/{currency_id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesCurrencyIdGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies/{currency_id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CartApi;
-
-import java.io.File;
-import java.util.*;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        
-        CartApi apiInstance = new CartApi();
-        Integer currencyId = 56; // Integer | Id of currency to get
-        try {
-            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1CurrenciesCurrencyIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CartApi;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        CartApi apiInstance = new CartApi();
-        Integer currencyId = 56; // Integer | Id of currency to get
-        try {
-            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1CurrenciesCurrencyIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *currencyId = 56; // Id of currency to get
-
-CartApi *apiInstance = [[CartApi alloc] init];
-
-// Получение валюты с заданным id
-[apiInstance apiV1CurrenciesCurrencyIdGetWith:currencyId
-              completionHandler: ^(inline_response_200_6 output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
-
-var api = new CurrenciesApi.CartApi()
-var currencyId = 56; // {{Integer}} Id of currency to get
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.apiV1CurrenciesCurrencyIdGet(currencyId, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class apiV1CurrenciesCurrencyIdGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new CartApi();
-            var currencyId = 56;  // Integer | Id of currency to get
-
-            try
-            {
-                // Получение валюты с заданным id
-                inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling CartApi.apiV1CurrenciesCurrencyIdGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiCartApi();
-$currencyId = 56; // Integer | Id of currency to get
-
-try {
-    $result = $api_instance->apiV1CurrenciesCurrencyIdGet($currencyId);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling CartApi->apiV1CurrenciesCurrencyIdGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::CartApi;
-
-my $api_instance = WWW::SwaggerClient::CartApi->new();
-my $currencyId = 56; # Integer | Id of currency to get
-
-eval { 
-    my $result = $api_instance->apiV1CurrenciesCurrencyIdGet(currencyId => $currencyId);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling CartApi->apiV1CurrenciesCurrencyIdGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesCurrencyIdGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.CartApi()
-currencyId = 56 # Integer | Id of currency to get
-
-try: 
-    # Получение валюты с заданным id
-    api_response = api_instance.api_v1_currencies_currency_id_get(currencyId)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling CartApi->apiV1CurrenciesCurrencyIdGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">currency_id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_apiV1CurrenciesCurrencyIdGet_currencyId">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                  
-                                                      <div class="inner description">
-                                                          Id of currency to get
-                                                      </div>
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiV1CurrenciesCurrencyIdGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiV1CurrenciesCurrencyIdGet-200-schema">
-                                  <div id='responses-apiV1CurrenciesCurrencyIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_6"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiV1CurrenciesCurrencyIdGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiV1CurrenciesCurrencyIdGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiV1CurrenciesCurrencyIdGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Cart-apiV1CurrenciesGet">
-                      <article id="api-Cart-apiV1CurrenciesGet-0" data-group="User" data-name="apiV1CurrenciesGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>apiV1CurrenciesGet</h1>
-                          <p>Получение списка валют</p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/currencies</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Cart-apiV1CurrenciesGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1CurrenciesGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Cart-apiV1CurrenciesGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CartApi;
-
-import java.io.File;
-import java.util.*;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        
-        CartApi apiInstance = new CartApi();
-        try {
-            array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1CurrenciesGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CartApi;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        CartApi apiInstance = new CartApi();
-        try {
-            array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1CurrenciesGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-CartApi *apiInstance = [[CartApi alloc] init];
-
-// Получение списка валют
-[apiInstance apiV1CurrenciesGetWithCompletionHandler: 
-              ^(array[inline_response_200_6] output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
-
-var api = new CurrenciesApi.CartApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.apiV1CurrenciesGet(callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class apiV1CurrenciesGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new CartApi();
-
-            try
-            {
-                // Получение списка валют
-                array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling CartApi.apiV1CurrenciesGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiCartApi();
-
-try {
-    $result = $api_instance->apiV1CurrenciesGet();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling CartApi->apiV1CurrenciesGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::CartApi;
-
-my $api_instance = WWW::SwaggerClient::CartApi->new();
-
-eval { 
-    my $result = $api_instance->apiV1CurrenciesGet();
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling CartApi->apiV1CurrenciesGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1CurrenciesGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.CartApi()
-
-try: 
-    # Получение списка валют
-    api_response = api_instance.api_v1_currencies_get()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling CartApi->apiV1CurrenciesGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiV1CurrenciesGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiV1CurrenciesGet-200-schema">
-                                  <div id='responses-apiV1CurrenciesGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "type" : "array",
-        "items" : {
-          "$ref" : "#/components/schemas/inline_response_200_6"
-        },
-        "x-content-type" : "application/json"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiV1CurrenciesGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiV1CurrenciesGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiV1CurrenciesGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Cart-apiV1Orders1Get">
-                      <article id="api-Cart-apiV1Orders1Get-0" data-group="User" data-name="apiV1Orders1Get" data-version="0">
-                        <div class="pull-left">
-                          <h1>apiV1Orders1Get</h1>
-                          <p>Получение заказа</p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/orders/1</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Cart-apiV1Orders1Get-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1Orders1Get-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1Orders1Get-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1Get-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Cart-apiV1Orders1Get-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CartApi;
-
-import java.io.File;
-import java.util.*;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        
-        CartApi apiInstance = new CartApi();
-        try {
-            inline_response_200_5 result = apiInstance.apiV1Orders1Get();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1Orders1Get");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CartApi;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        CartApi apiInstance = new CartApi();
-        try {
-            inline_response_200_5 result = apiInstance.apiV1Orders1Get();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1Orders1Get");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-CartApi *apiInstance = [[CartApi alloc] init];
-
-// Получение заказа
-[apiInstance apiV1Orders1GetWithCompletionHandler: 
-              ^(inline_response_200_5 output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
-
-var api = new CurrenciesApi.CartApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.apiV1Orders1Get(callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class apiV1Orders1GetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new CartApi();
-
-            try
-            {
-                // Получение заказа
-                inline_response_200_5 result = apiInstance.apiV1Orders1Get();
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling CartApi.apiV1Orders1Get: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiCartApi();
-
-try {
-    $result = $api_instance->apiV1Orders1Get();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling CartApi->apiV1Orders1Get: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::CartApi;
-
-my $api_instance = WWW::SwaggerClient::CartApi->new();
-
-eval { 
-    my $result = $api_instance->apiV1Orders1Get();
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling CartApi->apiV1Orders1Get: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1Get-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.CartApi()
-
-try: 
-    # Получение заказа
-    api_response = api_instance.api_v1_orders1_get()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling CartApi->apiV1Orders1Get: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiV1Orders1Get-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiV1Orders1Get-200-schema">
-                                  <div id='responses-apiV1Orders1Get-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_5"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiV1Orders1Get-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiV1Orders1Get-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiV1Orders1Get-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Cart-apiV1Orders1PaymentCurrencyIdGet">
-                      <article id="api-Cart-apiV1Orders1PaymentCurrencyIdGet-0" data-group="User" data-name="apiV1Orders1PaymentCurrencyIdGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>apiV1Orders1PaymentCurrencyIdGet</h1>
-                          <p>Оплата заказа валютой с заданным id</p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/orders/1/payment/{currency_id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1/payment/{currency_id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CartApi;
-
-import java.io.File;
-import java.util.*;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        
-        CartApi apiInstance = new CartApi();
-        Integer currencyId = 56; // Integer | Id валюты для оплаты
-        try {
-            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1Orders1PaymentCurrencyIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CartApi;
-
-public class CartApiExample {
-
-    public static void main(String[] args) {
-        CartApi apiInstance = new CartApi();
-        Integer currencyId = 56; // Integer | Id валюты для оплаты
-        try {
-            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling CartApi#apiV1Orders1PaymentCurrencyIdGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *currencyId = 56; // Id валюты для оплаты
-
-CartApi *apiInstance = [[CartApi alloc] init];
-
-// Оплата заказа валютой с заданным id
-[apiInstance apiV1Orders1PaymentCurrencyIdGetWith:currencyId
-              completionHandler: ^(inline_response_200_7 output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
-
-var api = new CurrenciesApi.CartApi()
-var currencyId = 56; // {{Integer}} Id валюты для оплаты
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.apiV1Orders1PaymentCurrencyIdGet(currencyId, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class apiV1Orders1PaymentCurrencyIdGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new CartApi();
-            var currencyId = 56;  // Integer | Id валюты для оплаты
-
-            try
-            {
-                // Оплата заказа валютой с заданным id
-                inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling CartApi.apiV1Orders1PaymentCurrencyIdGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiCartApi();
-$currencyId = 56; // Integer | Id валюты для оплаты
-
-try {
-    $result = $api_instance->apiV1Orders1PaymentCurrencyIdGet($currencyId);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling CartApi->apiV1Orders1PaymentCurrencyIdGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::CartApi;
-
-my $api_instance = WWW::SwaggerClient::CartApi->new();
-my $currencyId = 56; # Integer | Id валюты для оплаты
-
-eval { 
-    my $result = $api_instance->apiV1Orders1PaymentCurrencyIdGet(currencyId => $currencyId);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling CartApi->apiV1Orders1PaymentCurrencyIdGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Cart-apiV1Orders1PaymentCurrencyIdGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.CartApi()
-currencyId = 56 # Integer | Id валюты для оплаты
-
-try: 
-    # Оплата заказа валютой с заданным id
-    api_response = api_instance.api_v1_orders1_payment_currency_id_get(currencyId)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling CartApi->apiV1Orders1PaymentCurrencyIdGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">currency_id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_apiV1Orders1PaymentCurrencyIdGet_currencyId">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      Integer
-                                                  </span>
-                                  
-                                                      <div class="inner description">
-                                                          Id валюты для оплаты
-                                                      </div>
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiV1Orders1PaymentCurrencyIdGet-200-schema">
-                                  <div id='responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_7"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                  </section>
                 <section id="api-Collections">
                   <h1>Collections</h1>
                     <div id="api-Collections-apiV1CollectionsCollectionIdGet">
@@ -2161,7 +1077,7 @@ public class CollectionsApiExample {
         CollectionsApi apiInstance = new CollectionsApi();
         Integer collectionId = 56; // Integer | Id of collection to get
         try {
-            inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+            inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CollectionsApi#apiV1CollectionsCollectionIdGet");
@@ -2180,7 +1096,7 @@ public class CollectionsApiExample {
         CollectionsApi apiInstance = new CollectionsApi();
         Integer collectionId = 56; // Integer | Id of collection to get
         try {
-            inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+            inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CollectionsApi#apiV1CollectionsCollectionIdGet");
@@ -2200,7 +1116,7 @@ CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
 
 // Получение коллекции с заданным id
 [apiInstance apiV1CollectionsCollectionIdGetWith:collectionId
-              completionHandler: ^(inline_response_200_2 output, NSError* error) {
+              completionHandler: ^(inline_response_200_1 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2251,7 +1167,7 @@ namespace Example
             try
             {
                 // Получение коллекции с заданным id
-                inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+                inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2373,7 +1289,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_2"
+        "$ref" : "#/components/schemas/inline_response_200_1"
       }
     }
   }
@@ -3229,6 +2145,1413 @@ except ApiException as e:
                       </div>
                       <hr>
                   </section>
+                <section id="api-OrderAndPayment">
+                  <h1>OrderAndPayment</h1>
+                    <div id="api-OrderAndPayment-apiV1CurrenciesCurrencyIdGet">
+                      <article id="api-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0" data-group="User" data-name="apiV1CurrenciesCurrencyIdGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1CurrenciesCurrencyIdGet</h1>
+                          <p>Получение валюты с заданным id</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/currencies/{currency_id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies/{currency_id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OrderAndPaymentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        Integer currencyId = 56; // Integer | Id of currency to get
+        try {
+            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesCurrencyIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OrderAndPaymentApi;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        Integer currencyId = 56; // Integer | Id of currency to get
+        try {
+            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesCurrencyIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Integer *currencyId = 56; // Id of currency to get
+
+OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
+
+// Получение валюты с заданным id
+[apiInstance apiV1CurrenciesCurrencyIdGetWith:currencyId
+              completionHandler: ^(inline_response_200_6 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.OrderAndPaymentApi()
+var currencyId = 56; // {{Integer}} Id of currency to get
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1CurrenciesCurrencyIdGet(currencyId, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1CurrenciesCurrencyIdGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OrderAndPaymentApi();
+            var currencyId = 56;  // Integer | Id of currency to get
+
+            try
+            {
+                // Получение валюты с заданным id
+                inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OrderAndPaymentApi.apiV1CurrenciesCurrencyIdGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
+$currencyId = 56; // Integer | Id of currency to get
+
+try {
+    $result = $api_instance->apiV1CurrenciesCurrencyIdGet($currencyId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrderAndPaymentApi->apiV1CurrenciesCurrencyIdGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OrderAndPaymentApi;
+
+my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
+my $currencyId = 56; # Integer | Id of currency to get
+
+eval { 
+    my $result = $api_instance->apiV1CurrenciesCurrencyIdGet(currencyId => $currencyId);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrderAndPaymentApi->apiV1CurrenciesCurrencyIdGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OrderAndPaymentApi()
+currencyId = 56 # Integer | Id of currency to get
+
+try: 
+    # Получение валюты с заданным id
+    api_response = api_instance.api_v1_currencies_currency_id_get(currencyId)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrderAndPaymentApi->apiV1CurrenciesCurrencyIdGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">currency_id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1CurrenciesCurrencyIdGet_currencyId">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      Integer
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Id of currency to get
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1CurrenciesCurrencyIdGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1CurrenciesCurrencyIdGet-200-schema">
+                                  <div id='responses-apiV1CurrenciesCurrencyIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_6"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1CurrenciesCurrencyIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1CurrenciesCurrencyIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1CurrenciesCurrencyIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-OrderAndPayment-apiV1CurrenciesGet">
+                      <article id="api-OrderAndPayment-apiV1CurrenciesGet-0" data-group="User" data-name="apiV1CurrenciesGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1CurrenciesGet</h1>
+                          <p>Получение списка валют</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/currencies</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1CurrenciesGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OrderAndPaymentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        try {
+            array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OrderAndPaymentApi;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        try {
+            array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
+
+// Получение списка валют
+[apiInstance apiV1CurrenciesGetWithCompletionHandler: 
+              ^(array[inline_response_200_5] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.OrderAndPaymentApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1CurrenciesGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1CurrenciesGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OrderAndPaymentApi();
+
+            try
+            {
+                // Получение списка валют
+                array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OrderAndPaymentApi.apiV1CurrenciesGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
+
+try {
+    $result = $api_instance->apiV1CurrenciesGet();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrderAndPaymentApi->apiV1CurrenciesGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OrderAndPaymentApi;
+
+my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
+
+eval { 
+    my $result = $api_instance->apiV1CurrenciesGet();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrderAndPaymentApi->apiV1CurrenciesGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OrderAndPaymentApi()
+
+try: 
+    # Получение списка валют
+    api_response = api_instance.api_v1_currencies_get()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrderAndPaymentApi->apiV1CurrenciesGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1CurrenciesGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1CurrenciesGet-200-schema">
+                                  <div id='responses-apiV1CurrenciesGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/inline_response_200_5"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1CurrenciesGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1CurrenciesGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1CurrenciesGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-OrderAndPayment-apiV1Orders1Get">
+                      <article id="api-OrderAndPayment-apiV1Orders1Get-0" data-group="User" data-name="apiV1Orders1Get" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1Orders1Get</h1>
+                          <p>Получение заказа</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/orders/1</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-java">Java</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Get-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-OrderAndPayment-apiV1Orders1Get-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OrderAndPaymentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        try {
+            inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Get");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OrderAndPaymentApi;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        try {
+            inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Get");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
+
+// Получение заказа
+[apiInstance apiV1Orders1GetWithCompletionHandler: 
+              ^(inline_response_200_4 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.OrderAndPaymentApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1Orders1Get(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1Orders1GetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OrderAndPaymentApi();
+
+            try
+            {
+                // Получение заказа
+                inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OrderAndPaymentApi.apiV1Orders1Get: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
+
+try {
+    $result = $api_instance->apiV1Orders1Get();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrderAndPaymentApi->apiV1Orders1Get: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OrderAndPaymentApi;
+
+my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
+
+eval { 
+    my $result = $api_instance->apiV1Orders1Get();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrderAndPaymentApi->apiV1Orders1Get: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OrderAndPaymentApi()
+
+try: 
+    # Получение заказа
+    api_response = api_instance.api_v1_orders1_get()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrderAndPaymentApi->apiV1Orders1Get: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1Orders1Get-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1Orders1Get-200-schema">
+                                  <div id='responses-apiV1Orders1Get-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_4"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1Orders1Get-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1Orders1Get-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1Orders1Get-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet">
+                      <article id="api-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0" data-group="User" data-name="apiV1Orders1PaymentCurrencyIdGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1Orders1PaymentCurrencyIdGet</h1>
+                          <p>Оплата заказа валютой с заданным id</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/orders/1/payment/{currency_id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1/payment/{currency_id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OrderAndPaymentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        Integer currencyId = 56; // Integer | Id валюты для оплаты
+        try {
+            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1PaymentCurrencyIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OrderAndPaymentApi;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        Integer currencyId = 56; // Integer | Id валюты для оплаты
+        try {
+            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1PaymentCurrencyIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Integer *currencyId = 56; // Id валюты для оплаты
+
+OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
+
+// Оплата заказа валютой с заданным id
+[apiInstance apiV1Orders1PaymentCurrencyIdGetWith:currencyId
+              completionHandler: ^(inline_response_200_7 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.OrderAndPaymentApi()
+var currencyId = 56; // {{Integer}} Id валюты для оплаты
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1Orders1PaymentCurrencyIdGet(currencyId, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1Orders1PaymentCurrencyIdGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OrderAndPaymentApi();
+            var currencyId = 56;  // Integer | Id валюты для оплаты
+
+            try
+            {
+                // Оплата заказа валютой с заданным id
+                inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OrderAndPaymentApi.apiV1Orders1PaymentCurrencyIdGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
+$currencyId = 56; // Integer | Id валюты для оплаты
+
+try {
+    $result = $api_instance->apiV1Orders1PaymentCurrencyIdGet($currencyId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrderAndPaymentApi->apiV1Orders1PaymentCurrencyIdGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OrderAndPaymentApi;
+
+my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
+my $currencyId = 56; # Integer | Id валюты для оплаты
+
+eval { 
+    my $result = $api_instance->apiV1Orders1PaymentCurrencyIdGet(currencyId => $currencyId);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrderAndPaymentApi->apiV1Orders1PaymentCurrencyIdGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OrderAndPaymentApi()
+currencyId = 56 # Integer | Id валюты для оплаты
+
+try: 
+    # Оплата заказа валютой с заданным id
+    api_response = api_instance.api_v1_orders1_payment_currency_id_get(currencyId)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrderAndPaymentApi->apiV1Orders1PaymentCurrencyIdGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">currency_id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Orders1PaymentCurrencyIdGet_currencyId">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      Integer
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Id валюты для оплаты
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1Orders1PaymentCurrencyIdGet-200-schema">
+                                  <div id='responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_7"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1Orders1PaymentCurrencyIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-OrderAndPayment-apiV1Orders1Put">
+                      <article id="api-OrderAndPayment-apiV1Orders1Put-0" data-group="User" data-name="apiV1Orders1Put" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1Orders1Put</h1>
+                          <p>Изменение заказа</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/orders/1</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-java">Java</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-OrderAndPayment-apiV1Orders1Put-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-OrderAndPayment-apiV1Orders1Put-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/x-www-form-urlencoded"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.OrderAndPaymentApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        array[Integer] nfts = ; // array[Integer] | 
+        try {
+            inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Put");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.OrderAndPaymentApi;
+
+public class OrderAndPaymentApiExample {
+
+    public static void main(String[] args) {
+        OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
+        array[Integer] nfts = ; // array[Integer] | 
+        try {
+            inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Put");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">array[Integer] *nfts = ; //  (optional)
+
+OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
+
+// Изменение заказа
+[apiInstance apiV1Orders1PutWith:nfts
+              completionHandler: ^(inline_response_200_4 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.OrderAndPaymentApi()
+var opts = { 
+  'nfts':  // {{array[Integer]}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1Orders1Put(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1Orders1PutExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new OrderAndPaymentApi();
+            var nfts = new array[Integer](); // array[Integer] |  (optional) 
+
+            try
+            {
+                // Изменение заказа
+                inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling OrderAndPaymentApi.apiV1Orders1Put: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
+$nfts = ; // array[Integer] | 
+
+try {
+    $result = $api_instance->apiV1Orders1Put($nfts);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrderAndPaymentApi->apiV1Orders1Put: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::OrderAndPaymentApi;
+
+my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
+my $nfts = []; # array[Integer] | 
+
+eval { 
+    my $result = $api_instance->apiV1Orders1Put(nfts => $nfts);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrderAndPaymentApi->apiV1Orders1Put: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.OrderAndPaymentApi()
+nfts =  # array[Integer] |  (optional)
+
+try: 
+    # Изменение заказа
+    api_response = api_instance.api_v1_orders1_put(nfts=nfts)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrderAndPaymentApi->apiV1Orders1Put: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+                            <div class="methodsubtabletitle">Form parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">nfts</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Orders1Put_nfts">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      array[Integer]
+                                                  </span>
+                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1Orders1Put-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1Orders1Put-200-schema">
+                                  <div id='responses-apiV1Orders1Put-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_4"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1Orders1Put-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1Orders1Put-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1Orders1Put-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-Profile">
                   <h1>Profile</h1>
                     <div id="api-Profile-apiV1Profile1Get">
@@ -3282,7 +3605,7 @@ public class ProfileApiExample {
         
         ProfileApi apiInstance = new ProfileApi();
         try {
-            inline_response_200_4 result = apiInstance.apiV1Profile1Get();
+            inline_response_200_3 result = apiInstance.apiV1Profile1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Get");
@@ -3300,7 +3623,7 @@ public class ProfileApiExample {
     public static void main(String[] args) {
         ProfileApi apiInstance = new ProfileApi();
         try {
-            inline_response_200_4 result = apiInstance.apiV1Profile1Get();
+            inline_response_200_3 result = apiInstance.apiV1Profile1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Get");
@@ -3319,7 +3642,7 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
 
 // Получение профиля
 [apiInstance apiV1Profile1GetWithCompletionHandler: 
-              ^(inline_response_200_4 output, NSError* error) {
+              ^(inline_response_200_3 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3367,7 +3690,7 @@ namespace Example
             try
             {
                 // Получение профиля
-                inline_response_200_4 result = apiInstance.apiV1Profile1Get();
+                inline_response_200_3 result = apiInstance.apiV1Profile1Get();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3457,7 +3780,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_4"
+        "$ref" : "#/components/schemas/inline_response_200_3"
       }
     }
   }
@@ -3483,6 +3806,373 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-apiV1Profile1Get-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Profile-apiV1Profile1Put">
+                      <article id="api-Profile-apiV1Profile1Put-0" data-group="User" data-name="apiV1Profile1Put" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiV1Profile1Put</h1>
+                          <p>Обновление профиля</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/profile/1</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Profile-apiV1Profile1Put-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Profile-apiV1Profile1Put-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Profile-apiV1Profile1Put-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Profile-apiV1Profile1Put-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Profile-apiV1Profile1Put-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/x-www-form-urlencoded"\
+"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/profile/1"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.ProfileApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ProfileApiExample {
+
+    public static void main(String[] args) {
+        
+        ProfileApi apiInstance = new ProfileApi();
+        String name = name_example; // String | 
+        String description = description_example; // String | 
+        String website = website_example; // String | 
+        array[Integer] likes = ; // array[Integer] | 
+        try {
+            inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ProfileApi#apiV1Profile1Put");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileApi;
+
+public class ProfileApiExample {
+
+    public static void main(String[] args) {
+        ProfileApi apiInstance = new ProfileApi();
+        String name = name_example; // String | 
+        String description = description_example; // String | 
+        String website = website_example; // String | 
+        array[Integer] likes = ; // array[Integer] | 
+        try {
+            inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ProfileApi#apiV1Profile1Put");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *name = name_example; //  (optional)
+String *description = description_example; //  (optional)
+String *website = website_example; //  (optional)
+array[Integer] *likes = ; //  (optional)
+
+ProfileApi *apiInstance = [[ProfileApi alloc] init];
+
+// Обновление профиля
+[apiInstance apiV1Profile1PutWith:name
+    description:description
+    website:website
+    likes:likes
+              completionHandler: ^(inline_response_200_3 output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+
+var api = new CurrenciesApi.ProfileApi()
+var opts = { 
+  'name': name_example // {{String}} 
+  'description': description_example // {{String}} 
+  'website': website_example // {{String}} 
+  'likes':  // {{array[Integer]}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiV1Profile1Put(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiV1Profile1PutExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new ProfileApi();
+            var name = name_example;  // String |  (optional) 
+            var description = description_example;  // String |  (optional) 
+            var website = website_example;  // String |  (optional) 
+            var likes = new array[Integer](); // array[Integer] |  (optional) 
+
+            try
+            {
+                // Обновление профиля
+                inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ProfileApi.apiV1Profile1Put: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiProfileApi();
+$name = name_example; // String | 
+$description = description_example; // String | 
+$website = website_example; // String | 
+$likes = ; // array[Integer] | 
+
+try {
+    $result = $api_instance->apiV1Profile1Put($name, $description, $website, $likes);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProfileApi->apiV1Profile1Put: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::ProfileApi;
+
+my $api_instance = WWW::SwaggerClient::ProfileApi->new();
+my $name = name_example; # String | 
+my $description = description_example; # String | 
+my $website = website_example; # String | 
+my $likes = []; # array[Integer] | 
+
+eval { 
+    my $result = $api_instance->apiV1Profile1Put(name => $name, description => $description, website => $website, likes => $likes);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ProfileApi->apiV1Profile1Put: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.ProfileApi()
+name = name_example # String |  (optional)
+description = description_example # String |  (optional)
+website = website_example # String |  (optional)
+likes =  # array[Integer] |  (optional)
+
+try: 
+    # Обновление профиля
+    api_response = api_instance.api_v1_profile1_put(name=name, description=description, website=website, likes=likes)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProfileApi->apiV1Profile1Put: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+                            <div class="methodsubtabletitle">Form parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">name</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Profile1Put_name">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                                  <tr><td style="width:150px;">description</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Profile1Put_description">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                                  <tr><td style="width:150px;">website</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Profile1Put_website">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                                  <tr><td style="width:150px;">likes</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiV1Profile1Put_likes">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      array[Integer]
+                                                  </span>
+                                  
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiV1Profile1Put-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiV1Profile1Put-200-schema">
+                                  <div id='responses-apiV1Profile1Put-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/inline_response_200_3"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiV1Profile1Put-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiV1Profile1Put-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiV1Profile1Put-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -3543,7 +4233,7 @@ public class UsersApiExample {
         
         UsersApi apiInstance = new UsersApi();
         try {
-            array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
+            array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersGet");
@@ -3561,7 +4251,7 @@ public class UsersApiExample {
     public static void main(String[] args) {
         UsersApi apiInstance = new UsersApi();
         try {
-            array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
+            array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersGet");
@@ -3580,7 +4270,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Получение списка пользователей
 [apiInstance apiV1UsersGetWithCompletionHandler: 
-              ^(array[inline_response_200_3] output, NSError* error) {
+              ^(array[inline_response_200_2] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3628,7 +4318,7 @@ namespace Example
             try
             {
                 // Получение списка пользователей
-                array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
+                array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3720,7 +4410,7 @@ except ApiException as e:
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/inline_response_200_3"
+          "$ref" : "#/components/schemas/inline_response_200_2"
         },
         "x-content-type" : "application/json"
       }
@@ -3806,7 +4496,7 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         Integer userId = 56; // Integer | Id пользователя
         try {
-            inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
+            inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersUserIdGet");
@@ -3825,7 +4515,7 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         Integer userId = 56; // Integer | Id пользователя
         try {
-            inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
+            inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersUserIdGet");
@@ -3845,7 +4535,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Получение пользователя с заданным id
 [apiInstance apiV1UsersUserIdGetWith:userId
-              completionHandler: ^(inline_response_200_3 output, NSError* error) {
+              completionHandler: ^(inline_response_200_2 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3896,7 +4586,7 @@ namespace Example
             try
             {
                 // Получение пользователя с заданным id
-                inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
+                inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4018,7 +4708,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_3"
+        "$ref" : "#/components/schemas/inline_response_200_2"
       }
     }
   }
