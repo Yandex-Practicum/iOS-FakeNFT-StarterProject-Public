@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Currencies API</title>
+  <title>FakeNFT API</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -753,6 +753,10 @@
       "type" : "string",
       "example" : "A series of one-of-a-kind NFTs featuring historic moments in sports history."
     },
+    "author" : {
+      "type" : "integer",
+      "example" : 49
+    },
     "id" : {
       "type" : "string",
       "example" : "1"
@@ -760,6 +764,38 @@
   }
 };
             defs["inline_response_200_2"] = {
+  "type" : "object",
+  "properties" : {
+    "createdAt" : {
+      "type" : "string",
+      "example" : "2023-04-20T02:22:27Z"
+    },
+    "name" : {
+      "type" : "string",
+      "example" : "Beige"
+    },
+    "cover" : {
+      "type" : "string",
+      "example" : "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png"
+    },
+    "nfts" : {
+      "type" : "array",
+      "example" : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
+      "items" : {
+        "type" : "integer"
+      }
+    },
+    "description" : {
+      "type" : "string",
+      "example" : "A series of one-of-a-kind NFTs featuring historic moments in sports history."
+    },
+    "id" : {
+      "type" : "string",
+      "example" : "1"
+    }
+  }
+};
+            defs["inline_response_200_3"] = {
   "type" : "object",
   "properties" : {
     "name" : {
@@ -797,7 +833,7 @@
     "id" : "3"
   }
 };
-            defs["inline_response_200_3"] = {
+            defs["inline_response_200_4"] = {
   "type" : "object",
   "properties" : {
     "name" : {
@@ -834,7 +870,7 @@
     }
   }
 };
-            defs["inline_response_200_4"] = {
+            defs["inline_response_200_5"] = {
   "type" : "object",
   "properties" : {
     "nfts" : {
@@ -849,7 +885,7 @@
     }
   }
 };
-            defs["inline_response_200_5"] = {
+            defs["inline_response_200_6"] = {
   "type" : "object",
   "properties" : {
     "title" : {
@@ -872,7 +908,7 @@
     "id" : "1"
   }
 };
-            defs["inline_response_200_6"] = {
+            defs["inline_response_200_7"] = {
   "type" : "object",
   "properties" : {
     "title" : {
@@ -895,7 +931,7 @@
     "id" : "1"
   } ]
 };
-            defs["inline_response_200_7"] = {
+            defs["inline_response_200_8"] = {
   "type" : "object",
   "properties" : {
     "success" : {
@@ -1010,7 +1046,7 @@
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>Currencies API</h1>
+            <h1>FakeNFT API</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -1019,7 +1055,7 @@
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
-            <div>API for retrieving cryptocurrency information</div>
+            <div>API for retrieving NFT information</div>
           </div>
         </div>
         <div id="sections">
@@ -1077,7 +1113,7 @@ public class CollectionsApiExample {
         CollectionsApi apiInstance = new CollectionsApi();
         Integer collectionId = 56; // Integer | Id of collection to get
         try {
-            inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+            inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CollectionsApi#apiV1CollectionsCollectionIdGet");
@@ -1096,7 +1132,7 @@ public class CollectionsApiExample {
         CollectionsApi apiInstance = new CollectionsApi();
         Integer collectionId = 56; // Integer | Id of collection to get
         try {
-            inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+            inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CollectionsApi#apiV1CollectionsCollectionIdGet");
@@ -1116,7 +1152,7 @@ CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
 
 // Получение коллекции с заданным id
 [apiInstance apiV1CollectionsCollectionIdGetWith:collectionId
-              completionHandler: ^(inline_response_200_1 output, NSError* error) {
+              completionHandler: ^(inline_response_200_2 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1128,9 +1164,9 @@ CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Collections-apiV1CollectionsCollectionIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.CollectionsApi()
+var api = new FakeNftApi.CollectionsApi()
 var collectionId = 56; // {{Integer}} Id of collection to get
 
 var callback = function(error, data, response) {
@@ -1167,7 +1203,7 @@ namespace Example
             try
             {
                 // Получение коллекции с заданным id
-                inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
+                inline_response_200_2 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1289,7 +1325,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_1"
+        "$ref" : "#/components/schemas/inline_response_200_2"
       }
     }
   }
@@ -1421,9 +1457,9 @@ CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Collections-apiV1CollectionsGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.CollectionsApi()
+var api = new FakeNftApi.CollectionsApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1686,9 +1722,9 @@ NFTApi *apiInstance = [[NFTApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-NFT-apiV1NftGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.NFTApi()
+var api = new FakeNftApi.NFTApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1951,9 +1987,9 @@ NFTApi *apiInstance = [[NFTApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-NFT-apiV1NftNftIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.NFTApi()
+var api = new FakeNftApi.NFTApi()
 var nftId = 56; // {{Integer}} Id of NFT to get
 
 var callback = function(error, data, response) {
@@ -2199,7 +2235,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         Integer currencyId = 56; // Integer | Id of currency to get
         try {
-            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+            inline_response_200_7 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesCurrencyIdGet");
@@ -2218,7 +2254,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         Integer currencyId = 56; // Integer | Id of currency to get
         try {
-            inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+            inline_response_200_7 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesCurrencyIdGet");
@@ -2238,7 +2274,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 // Получение валюты с заданным id
 [apiInstance apiV1CurrenciesCurrencyIdGetWith:currencyId
-              completionHandler: ^(inline_response_200_6 output, NSError* error) {
+              completionHandler: ^(inline_response_200_7 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2250,9 +2286,9 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.OrderAndPaymentApi()
+var api = new FakeNftApi.OrderAndPaymentApi()
 var currencyId = 56; // {{Integer}} Id of currency to get
 
 var callback = function(error, data, response) {
@@ -2289,7 +2325,7 @@ namespace Example
             try
             {
                 // Получение валюты с заданным id
-                inline_response_200_6 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
+                inline_response_200_7 result = apiInstance.apiV1CurrenciesCurrencyIdGet(currencyId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2411,7 +2447,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_6"
+        "$ref" : "#/components/schemas/inline_response_200_7"
       }
     }
   }
@@ -2494,7 +2530,7 @@ public class OrderAndPaymentApiExample {
         
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         try {
-            array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+            array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesGet");
@@ -2512,7 +2548,7 @@ public class OrderAndPaymentApiExample {
     public static void main(String[] args) {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         try {
-            array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+            array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1CurrenciesGet");
@@ -2531,7 +2567,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 // Получение списка валют
 [apiInstance apiV1CurrenciesGetWithCompletionHandler: 
-              ^(array[inline_response_200_5] output, NSError* error) {
+              ^(array[inline_response_200_6] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2543,9 +2579,9 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.OrderAndPaymentApi()
+var api = new FakeNftApi.OrderAndPaymentApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2579,7 +2615,7 @@ namespace Example
             try
             {
                 // Получение списка валют
-                array[inline_response_200_5] result = apiInstance.apiV1CurrenciesGet();
+                array[inline_response_200_6] result = apiInstance.apiV1CurrenciesGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2671,7 +2707,7 @@ except ApiException as e:
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/inline_response_200_5"
+          "$ref" : "#/components/schemas/inline_response_200_6"
         },
         "x-content-type" : "application/json"
       }
@@ -2756,7 +2792,7 @@ public class OrderAndPaymentApiExample {
         
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         try {
-            inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+            inline_response_200_5 result = apiInstance.apiV1Orders1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Get");
@@ -2774,7 +2810,7 @@ public class OrderAndPaymentApiExample {
     public static void main(String[] args) {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         try {
-            inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+            inline_response_200_5 result = apiInstance.apiV1Orders1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Get");
@@ -2793,7 +2829,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 // Получение заказа
 [apiInstance apiV1Orders1GetWithCompletionHandler: 
-              ^(inline_response_200_4 output, NSError* error) {
+              ^(inline_response_200_5 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2805,9 +2841,9 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.OrderAndPaymentApi()
+var api = new FakeNftApi.OrderAndPaymentApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2841,7 +2877,7 @@ namespace Example
             try
             {
                 // Получение заказа
-                inline_response_200_4 result = apiInstance.apiV1Orders1Get();
+                inline_response_200_5 result = apiInstance.apiV1Orders1Get();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2931,7 +2967,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_4"
+        "$ref" : "#/components/schemas/inline_response_200_5"
       }
     }
   }
@@ -3015,7 +3051,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         Integer currencyId = 56; // Integer | Id валюты для оплаты
         try {
-            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+            inline_response_200_8 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1PaymentCurrencyIdGet");
@@ -3034,7 +3070,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         Integer currencyId = 56; // Integer | Id валюты для оплаты
         try {
-            inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+            inline_response_200_8 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1PaymentCurrencyIdGet");
@@ -3054,7 +3090,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 // Оплата заказа валютой с заданным id
 [apiInstance apiV1Orders1PaymentCurrencyIdGetWith:currencyId
-              completionHandler: ^(inline_response_200_7 output, NSError* error) {
+              completionHandler: ^(inline_response_200_8 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3066,9 +3102,9 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.OrderAndPaymentApi()
+var api = new FakeNftApi.OrderAndPaymentApi()
 var currencyId = 56; // {{Integer}} Id валюты для оплаты
 
 var callback = function(error, data, response) {
@@ -3105,7 +3141,7 @@ namespace Example
             try
             {
                 // Оплата заказа валютой с заданным id
-                inline_response_200_7 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
+                inline_response_200_8 result = apiInstance.apiV1Orders1PaymentCurrencyIdGet(currencyId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3227,7 +3263,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_7"
+        "$ref" : "#/components/schemas/inline_response_200_8"
       }
     }
   }
@@ -3312,7 +3348,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         array[Integer] nfts = ; // array[Integer] | 
         try {
-            inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+            inline_response_200_5 result = apiInstance.apiV1Orders1Put(nfts);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Put");
@@ -3331,7 +3367,7 @@ public class OrderAndPaymentApiExample {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
         array[Integer] nfts = ; // array[Integer] | 
         try {
-            inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+            inline_response_200_5 result = apiInstance.apiV1Orders1Put(nfts);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrderAndPaymentApi#apiV1Orders1Put");
@@ -3351,7 +3387,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 // Изменение заказа
 [apiInstance apiV1Orders1PutWith:nfts
-              completionHandler: ^(inline_response_200_4 output, NSError* error) {
+              completionHandler: ^(inline_response_200_5 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3363,9 +3399,9 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.OrderAndPaymentApi()
+var api = new FakeNftApi.OrderAndPaymentApi()
 var opts = { 
   'nfts':  // {{array[Integer]}} 
 };
@@ -3403,7 +3439,7 @@ namespace Example
             try
             {
                 // Изменение заказа
-                inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
+                inline_response_200_5 result = apiInstance.apiV1Orders1Put(nfts);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3519,7 +3555,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_4"
+        "$ref" : "#/components/schemas/inline_response_200_5"
       }
     }
   }
@@ -3605,7 +3641,7 @@ public class ProfileApiExample {
         
         ProfileApi apiInstance = new ProfileApi();
         try {
-            inline_response_200_3 result = apiInstance.apiV1Profile1Get();
+            inline_response_200_4 result = apiInstance.apiV1Profile1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Get");
@@ -3623,7 +3659,7 @@ public class ProfileApiExample {
     public static void main(String[] args) {
         ProfileApi apiInstance = new ProfileApi();
         try {
-            inline_response_200_3 result = apiInstance.apiV1Profile1Get();
+            inline_response_200_4 result = apiInstance.apiV1Profile1Get();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Get");
@@ -3642,7 +3678,7 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
 
 // Получение профиля
 [apiInstance apiV1Profile1GetWithCompletionHandler: 
-              ^(inline_response_200_3 output, NSError* error) {
+              ^(inline_response_200_4 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3654,9 +3690,9 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Profile-apiV1Profile1Get-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.ProfileApi()
+var api = new FakeNftApi.ProfileApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3690,7 +3726,7 @@ namespace Example
             try
             {
                 // Получение профиля
-                inline_response_200_3 result = apiInstance.apiV1Profile1Get();
+                inline_response_200_4 result = apiInstance.apiV1Profile1Get();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3780,7 +3816,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_3"
+        "$ref" : "#/components/schemas/inline_response_200_4"
       }
     }
   }
@@ -3868,7 +3904,7 @@ public class ProfileApiExample {
         String website = website_example; // String | 
         array[Integer] likes = ; // array[Integer] | 
         try {
-            inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+            inline_response_200_4 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Put");
@@ -3890,7 +3926,7 @@ public class ProfileApiExample {
         String website = website_example; // String | 
         array[Integer] likes = ; // array[Integer] | 
         try {
-            inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+            inline_response_200_4 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ProfileApi#apiV1Profile1Put");
@@ -3916,7 +3952,7 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
     description:description
     website:website
     likes:likes
-              completionHandler: ^(inline_response_200_3 output, NSError* error) {
+              completionHandler: ^(inline_response_200_4 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3928,9 +3964,9 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.ProfileApi()
+var api = new FakeNftApi.ProfileApi()
 var opts = { 
   'name': name_example // {{String}} 
   'description': description_example // {{String}} 
@@ -3974,7 +4010,7 @@ namespace Example
             try
             {
                 // Обновление профиля
-                inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
+                inline_response_200_4 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4147,7 +4183,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_3"
+        "$ref" : "#/components/schemas/inline_response_200_4"
       }
     }
   }
@@ -4233,7 +4269,7 @@ public class UsersApiExample {
         
         UsersApi apiInstance = new UsersApi();
         try {
-            array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
+            array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersGet");
@@ -4251,7 +4287,7 @@ public class UsersApiExample {
     public static void main(String[] args) {
         UsersApi apiInstance = new UsersApi();
         try {
-            array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
+            array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersGet");
@@ -4270,7 +4306,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Получение списка пользователей
 [apiInstance apiV1UsersGetWithCompletionHandler: 
-              ^(array[inline_response_200_2] output, NSError* error) {
+              ^(array[inline_response_200_3] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4282,9 +4318,9 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Users-apiV1UsersGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.UsersApi()
+var api = new FakeNftApi.UsersApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4318,7 +4354,7 @@ namespace Example
             try
             {
                 // Получение списка пользователей
-                array[inline_response_200_2] result = apiInstance.apiV1UsersGet();
+                array[inline_response_200_3] result = apiInstance.apiV1UsersGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4410,7 +4446,7 @@ except ApiException as e:
       "schema" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/inline_response_200_2"
+          "$ref" : "#/components/schemas/inline_response_200_3"
         },
         "x-content-type" : "application/json"
       }
@@ -4496,7 +4532,7 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         Integer userId = 56; // Integer | Id пользователя
         try {
-            inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
+            inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersUserIdGet");
@@ -4515,7 +4551,7 @@ public class UsersApiExample {
         UsersApi apiInstance = new UsersApi();
         Integer userId = 56; // Integer | Id пользователя
         try {
-            inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
+            inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UsersApi#apiV1UsersUserIdGet");
@@ -4535,7 +4571,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
 
 // Получение пользователя с заданным id
 [apiInstance apiV1UsersUserIdGetWith:userId
-              completionHandler: ^(inline_response_200_2 output, NSError* error) {
+              completionHandler: ^(inline_response_200_3 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4547,9 +4583,9 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
                             </div>
 
                             <div class="tab-pane" id="examples-Users-apiV1UsersUserIdGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CurrenciesApi = require('currencies_api');
+                              <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
-var api = new CurrenciesApi.UsersApi()
+var api = new FakeNftApi.UsersApi()
 var userId = 56; // {{Integer}} Id пользователя
 
 var callback = function(error, data, response) {
@@ -4586,7 +4622,7 @@ namespace Example
             try
             {
                 // Получение пользователя с заданным id
-                inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
+                inline_response_200_3 result = apiInstance.apiV1UsersUserIdGet(userId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4708,7 +4744,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/inline_response_200_2"
+        "$ref" : "#/components/schemas/inline_response_200_3"
       }
     }
   }
