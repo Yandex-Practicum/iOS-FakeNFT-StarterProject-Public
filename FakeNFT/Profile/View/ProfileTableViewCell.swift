@@ -2,8 +2,6 @@
 //  ProfileTableViewCell.swift
 //  FakeNFT
 //
-//  Created by Юрий Демиденко on 25.05.2023.
-//
 
 import UIKit
 

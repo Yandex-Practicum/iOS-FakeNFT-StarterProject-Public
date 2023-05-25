@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Юрий Демиденко on 25.05.2023.
+  
+*/
+
+myNFTs = "My NFT (%d)";
+favoritesNFTs = "Favorites NFT (%d)";
+aboutDeveloper = "About developer";

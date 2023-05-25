@@ -5,6 +5,7 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -13,9 +14,9 @@ final class ProfileViewController: UIViewController {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.kf.indicatorType = .activity
-        imageView.image = UIImage(named: "AvatarPlaceholder")
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 35
+        imageView.layer.masksToBounds = true
         return imageView
     }()
 
@@ -24,7 +25,6 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .textColorBlack
-        label.text = "Joaquin Phoenix"
         return label
     }()
 
@@ -34,7 +34,6 @@ final class ProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .textColorBlack
         label.numberOfLines = 0
-        label.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
         return label
     }()
 
@@ -43,7 +42,6 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .textColorBlue
-        label.text = "Joaquin Phoenix.com"
         return label
     }()
 
@@ -64,6 +62,7 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .viewBackgroundColor
         setupNavigationController()
         setupConstraints()
+        UIBlockingProgressHUD.show()
         bind()
     }
 
@@ -71,8 +70,28 @@ final class ProfileViewController: UIViewController {
 
     private func bind() {
         guard let viewModel = viewModel else { return }
-
-        //imageView.kf.setImage(with: viewModel?.avatarURL, placeholder: UIImage(named: "AvatarPlaceholder"))
+        viewModel.nameObservable.bind { [weak self] name in
+            self?.nameLabel.text = name
+        }
+        viewModel.avatarURLObservable.bind { [weak self] url in
+            self?.avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "AvatarPlaceholder")) { _ in
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+        viewModel.descriptionObservable.bind { [weak self] description in
+            self?.descriptionLabel.text = description
+        }
+        viewModel.websiteObservable.bind { [weak self] website in
+            self?.websiteLabel.text = website
+        }
+        viewModel.nftsObservable.bind { [weak self] nfts in
+            let cell = self?.profileTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileTableViewCell
+            cell?.setLabel(text: Constants.localizedStringFor(tableViewCell: 0, myNFT: nfts.count))
+        }
+        viewModel.likesObservable.bind { [weak self] likes in
+            let cell = self?.profileTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileTableViewCell
+            cell?.setLabel(text: Constants.localizedStringFor(tableViewCell: 1, favoritesNFT: likes.count))
+        }
     }
 
     private func setupNavigationController() {
@@ -95,6 +114,8 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
             avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
 
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
@@ -133,7 +154,7 @@ extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileTableViewCell = tableView.dequeueReusableCell()
-        cell.setLabel(text: "Hello, world!")
+        cell.setLabel(text: Constants.localizedStringFor(tableViewCell: indexPath.row))
         return cell
     }
 }

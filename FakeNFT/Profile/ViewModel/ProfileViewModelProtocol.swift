@@ -12,7 +12,7 @@ protocol ProfileViewModelProtocol {
     var descriptionObservable: Observable<String> { get }
     var websiteObservable: Observable<String> { get }
     var nftsObservable: Observable<[Int]> { get }
-    var likesObservable: Observable<String> { get }
+    var likesObservable: Observable<[Int]> { get }
 
-    func getProfile()
+    func fetchProfile()
 }

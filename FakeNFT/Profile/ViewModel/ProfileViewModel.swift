@@ -25,12 +25,12 @@ final class ProfileViewModel {
     private(set) var nfts: [Int] = []
 
     @Observable
-    private(set) var likes: String = ""
+    private(set) var likes: [Int] = []
 
     init(profileStore: ProfileStoreProtocol = ProfileStore()) {
         self.profileStore = profileStore
         self.profileStore?.delegate = self
-        getProfile()
+        fetchProfile()
     }
 }
 
@@ -43,9 +43,9 @@ extension ProfileViewModel: ProfileViewModelProtocol {
     var descriptionObservable: Observable<String> { $description }
     var websiteObservable: Observable<String> { $website }
     var nftsObservable: Observable<[Int]> { $nfts }
-    var likesObservable: Observable<String> { $likes }
+    var likesObservable: Observable<[Int]> { $likes }
 
-    func getProfile() {
+    func fetchProfile() {
         profileStore?.fetchProfile()
     }
 }
@@ -60,6 +60,6 @@ extension ProfileViewModel: ProfileStoreDelegate {
         description = profile.description
         website = profile.website
         nfts = profile.nfts
-        likes = profile.likes
+        likes = profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }
     }
 }
