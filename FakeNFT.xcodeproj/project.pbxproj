@@ -40,6 +40,9 @@
 		92DB4DC12A1F72BA00312BC1 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DB4DC02A1F72BA00312BC1 /* ProfileTableViewCell.swift */; };
 		92DB4DC42A1F896900312BC1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92DB4DC62A1F896900312BC1 /* Localizable.strings */; };
 		92DB4DC92A1FB63000312BC1 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DB4DC82A1FB63000312BC1 /* UIBlockingProgressHUD.swift */; };
+		92DB4DCB2A1FD59900312BC1 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DB4DCA2A1FD59900312BC1 /* EditProfileViewController.swift */; };
+		92DB4DD12A20B13700312BC1 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DB4DD02A20B13700312BC1 /* UIViewController+Extensions.swift */; };
+		92DB4DD32A20E2CA00312BC1 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DB4DD22A20E2CA00312BC1 /* UITextField+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +99,9 @@
 		92DB4DC52A1F896900312BC1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		92DB4DC72A1F899500312BC1 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		92DB4DC82A1FB63000312BC1 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		92DB4DCA2A1FD59900312BC1 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		92DB4DD02A20B13700312BC1 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		92DB4DD22A20E2CA00312BC1 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +271,7 @@
 				92DB4DAF2A1CFCEA00312BC1 /* Model */,
 				92DB4DA42A1B7BA500312BC1 /* View */,
 				92DB4DA72A1B890C00312BC1 /* ViewModel */,
+				92DB4DCF2A20B11D00312BC1 /* Helpers */,
 				92DB4DAC2A1B95D000312BC1 /* Resources */,
 			);
 			path = Profile;
@@ -275,6 +282,7 @@
 			children = (
 				92DB4DA12A1B6E6200312BC1 /* ProfileViewController.swift */,
 				92DB4DC02A1F72BA00312BC1 /* ProfileTableViewCell.swift */,
+				92DB4DCA2A1FD59900312BC1 /* EditProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -308,6 +316,15 @@
 				92DB4DBA2A1F480E00312BC1 /* ProfileRequest.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		92DB4DCF2A20B11D00312BC1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				92DB4DD02A20B13700312BC1 /* UIViewController+Extensions.swift */,
+				92DB4DD22A20E2CA00312BC1 /* UITextField+Extensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -474,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92DB4DCB2A1FD59900312BC1 /* EditProfileViewController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				92DB4DAB2A1B895500312BC1 /* ProfileViewModelProtocol.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
@@ -494,7 +512,9 @@
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				92DB4DD32A20E2CA00312BC1 /* UITextField+Extensions.swift in Sources */,
 				92DB4DA92A1B892800312BC1 /* ProfileViewModel.swift in Sources */,
+				92DB4DD12A20B13700312BC1 /* UIViewController+Extensions.swift in Sources */,
 				92DB4DB92A1F45CD00312BC1 /* ProfileModel.swift in Sources */,
 				92DB4DB32A1CFD9F00312BC1 /* ProfileStoreProtocol.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,

@@ -37,8 +37,9 @@ extension UIColor {
     static let textOnPrimary = UIColor.white
     static let textOnSecondary = UIColor.black
 
-    // Background color
+    // Background colors
     static let viewBackgroundColor = UIColor.systemBackground
+    static var lightGreyBackground: UIColor { UIColor(named: "LightGreyBackground") ?? .systemGray5 }
 
     // Font colors
     static var textColorBlack: UIColor { UIColor(named: "TextColorBlack") ?? .black }

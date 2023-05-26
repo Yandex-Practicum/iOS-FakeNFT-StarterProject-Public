@@ -60,6 +60,6 @@ extension ProfileViewModel: ProfileStoreDelegate {
         description = profile.description
         website = profile.website
         nfts = profile.nfts
-        likes = profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }
+        likes = Array(profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }.drop { $0 == 0 })
     }
 }

@@ -74,8 +74,15 @@ final class ProfileViewController: UIViewController {
             self?.nameLabel.text = name
         }
         viewModel.avatarURLObservable.bind { [weak self] url in
-            self?.avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "AvatarPlaceholder")) { _ in
+            self?.avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "AvatarPlaceholder")) { result in
                 UIBlockingProgressHUD.dismiss()
+                switch result {
+                case .success(let value):
+                    ImageCache.default.store(value.image, forKey: "avatar")
+                case .failure(let error):
+                    print("Error \(error): unable to load avatar image, will use placeholder image")
+                    self?.avatarImageView.image = UIImage(named: "AvatarPlaceholder")
+                }
             }
         }
         viewModel.descriptionObservable.bind { [weak self] description in
@@ -106,7 +113,9 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editProfileButtonAction() {
-
+        let editProfileViewController = EditProfileViewController()
+        editProfileViewController.viewModel = viewModel
+        present(editProfileViewController, animated: true)
     }
 
     private func setupConstraints() {

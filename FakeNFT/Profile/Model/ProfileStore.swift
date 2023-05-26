@@ -25,7 +25,8 @@ extension ProfileStore: ProfileStoreProtocol {
                 case .success(let profile):
                     self?.delegate?.didReceive(profile)
                 case .failure(let error):
-                    preconditionFailure("Error: \(error)")
+                    print("Error \(error): unable to get user profile, will use default profile")
+                    self?.delegate?.didReceive(ProfileModel.defaultProfile)
                 }
             }
         }
