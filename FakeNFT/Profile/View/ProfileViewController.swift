@@ -17,6 +17,7 @@ final class ProfileViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 35
         imageView.layer.masksToBounds = true
+        imageView.kf.indicatorType = .activity
         return imageView
     }()
 
@@ -62,8 +63,8 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .viewBackgroundColor
         setupNavigationController()
         setupConstraints()
-        UIBlockingProgressHUD.show()
         bind()
+        viewModel?.fetchProfile()
     }
 
     // MARK: - Private Funcs
@@ -75,7 +76,6 @@ final class ProfileViewController: UIViewController {
         }
         viewModel.avatarURLObservable.bind { [weak self] url in
             self?.avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "AvatarPlaceholder")) { result in
-                UIBlockingProgressHUD.dismiss()
                 switch result {
                 case .success(let value):
                     ImageCache.default.store(value.image, forKey: "avatar")
@@ -99,6 +99,9 @@ final class ProfileViewController: UIViewController {
             let cell = self?.profileTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileTableViewCell
             cell?.setLabel(text: Constants.localizedStringFor(tableViewCell: 1, favoritesNFT: likes.count))
         }
+        viewModel.isProfileUpdatingNowObservable.bind { isProfileUpdatingNow in
+            isProfileUpdatingNow ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
+        }
     }
 
     private func setupNavigationController() {
@@ -108,8 +111,9 @@ final class ProfileViewController: UIViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(editProfileButtonAction))
-        rightButton.tintColor = .black
         navigationItem.rightBarButtonItem = rightButton
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .textColorBlack
     }
 
     @objc private func editProfileButtonAction() {
@@ -142,6 +146,20 @@ final class ProfileViewController: UIViewController {
             profileTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+
+    private func pushMyNFTViewController() {
+        let myNFTViewController = MyNFTViewController()
+        myNFTViewController.viewModel = NFTsViewModel()
+        myNFTViewController.myNFTs = viewModel?.nftsObservable.wrappedValue ?? []
+        navigationController?.pushViewController(myNFTViewController, animated: true)
+    }
+
+    private func pushFavoritesNFTViewController() {
+        let favoritesNFTViewController = FavoritesNFTViewController()
+        favoritesNFTViewController.viewModel = NFTsViewModel()
+        favoritesNFTViewController.favoritesNFTs = viewModel?.likesObservable.wrappedValue ?? []
+        navigationController?.pushViewController(favoritesNFTViewController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -150,6 +168,11 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.row {
+        case 0: pushMyNFTViewController()
+        case 1: pushFavoritesNFTViewController()
+        default: print("2")
+        }
     }
 }
 

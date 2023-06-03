@@ -13,6 +13,8 @@ protocol ProfileViewModelProtocol {
     var websiteObservable: Observable<String> { get }
     var nftsObservable: Observable<[Int]> { get }
     var likesObservable: Observable<[Int]> { get }
+    var isProfileUpdatingNowObservable: Observable<Bool> { get }
 
     func fetchProfile()
+    func didChangeProfile(_ changeParameters: [String: String])
 }

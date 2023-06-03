@@ -27,10 +27,12 @@ final class ProfileViewModel {
     @Observable
     private(set) var likes: [Int] = []
 
+    @Observable
+    private var isProfileUpdatingNow: Bool = false
+
     init(profileStore: ProfileStoreProtocol = ProfileStore()) {
         self.profileStore = profileStore
         self.profileStore?.delegate = self
-        fetchProfile()
     }
 }
 
@@ -44,9 +46,16 @@ extension ProfileViewModel: ProfileViewModelProtocol {
     var websiteObservable: Observable<String> { $website }
     var nftsObservable: Observable<[Int]> { $nfts }
     var likesObservable: Observable<[Int]> { $likes }
+    var isProfileUpdatingNowObservable: Observable<Bool> { $isProfileUpdatingNow }
 
     func fetchProfile() {
+        isProfileUpdatingNow = true
         profileStore?.fetchProfile()
+    }
+
+    func didChangeProfile(_ changedParameters: [String : String]) {
+        isProfileUpdatingNow = true
+        profileStore?.updateProfile(changedParameters)
     }
 }
 
@@ -55,11 +64,12 @@ extension ProfileViewModel: ProfileViewModelProtocol {
 extension ProfileViewModel: ProfileStoreDelegate {
 
     func didReceive(_ profile: ProfileModel) {
+        isProfileUpdatingNow = false
         name = profile.name
         avatarURL = URL(string: profile.avatar)
         description = profile.description
         website = profile.website
         nfts = profile.nfts
-        likes = Array(profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }.drop { $0 == 0 })
+        likes = profile.likes.isEmpty ? [] : profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }
     }
 }

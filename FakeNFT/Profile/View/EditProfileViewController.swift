@@ -5,11 +5,13 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class EditProfileViewController: UIViewController {
 
     var viewModel: ProfileViewModelProtocol?
     private let notificationCenter = NotificationCenter.default
+    private var profileUpdateParameters = [String: String]()
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -44,11 +46,26 @@ final class EditProfileViewController: UIViewController {
                            options: [.processor(processor)])
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFill
+        button.imageView?.contentMode = .scaleAspectFill
         button.setTitle(NSLocalizedString("changePhoto", comment: "Change avatar button label text"), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        button.titleLabel?.textColor = .white
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.textAlignment = .center
+        button.addTarget(self, action: #selector(changeAvatarAction), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var loadNewAvatarButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(NSLocalizedString("uploadImage", comment: "Upload new avatar label"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.setTitleColor(.textColorBlack, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.isUserInteractionEnabled = false
+        button.alpha = 0.0
+        button.addTarget(self, action: #selector(uploadAvatarAction), for: .touchUpInside)
         return button
     }()
 
@@ -64,8 +81,7 @@ final class EditProfileViewController: UIViewController {
     private lazy var websiteTextVField = makeTextField(text: viewModel?.websiteObservable.wrappedValue ?? "")
     private lazy var websiteStackView = makeStackView(with: [websiteLabel, websiteTextVField])
 
-    private lazy var mainStackView = makeStackView(with: [nameStackView, descriptionStackView, websiteStackView],
-                                                   spacing: 24)
+    private lazy var mainStackView = makeStackView(with: [nameStackView, descriptionStackView, websiteStackView], spacing: 24)
 
     // MARK: - LifeCycle
 
@@ -90,6 +106,21 @@ final class EditProfileViewController: UIViewController {
 
     // MARK: - Pivate Funcs
 
+    @objc private func changeAvatarAction() {
+        loadNewAvatarButton.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 1) { self.loadNewAvatarButton.alpha = 1.0 }
+    }
+
+    @objc private func uploadAvatarAction() {
+        // Так как моковый api не поддерживает загрузку изображений, то здесь я передаю константный URL на заранее подготовленную картинку
+        UIBlockingProgressHUD.show()
+        changeAvatarButton.kf.setImage(with: URL(string: Constants.avatarImageURLString), for: .normal,
+                                       completionHandler:  { _ in UIBlockingProgressHUD.dismiss() })
+        profileUpdateParameters["avatar"] = Constants.avatarImageURLString
+        loadNewAvatarButton.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 1) { self.loadNewAvatarButton.alpha = 0.0 }
+    }
+
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
@@ -103,6 +134,16 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonAction() {
+        if nameTextField.text != viewModel?.nameObservable.wrappedValue {
+            profileUpdateParameters["name"] = nameTextField.text
+        }
+        if descriptionTextView.text != viewModel?.descriptionObservable.wrappedValue {
+            profileUpdateParameters["description"] = descriptionTextView.text
+        }
+        if websiteTextVField.text != viewModel?.websiteObservable.wrappedValue {
+            profileUpdateParameters["website"] = websiteTextVField.text
+        }
+        if !profileUpdateParameters.isEmpty { viewModel?.didChangeProfile(profileUpdateParameters) }
         dismiss(animated: true)
     }
 
@@ -158,7 +199,7 @@ final class EditProfileViewController: UIViewController {
     private func setupConstraints() {
         [scrollView, closeButton].forEach { view.addSubview($0) }
         scrollView.addSubview(contentView)
-        [changeAvatarButton, mainStackView].forEach { contentView.addSubview($0) }
+        [changeAvatarButton, loadNewAvatarButton, mainStackView].forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -179,7 +220,10 @@ final class EditProfileViewController: UIViewController {
             changeAvatarButton.widthAnchor.constraint(equalToConstant: 70),
             changeAvatarButton.heightAnchor.constraint(equalToConstant: 70),
 
-            mainStackView.topAnchor.constraint(equalTo: changeAvatarButton.bottomAnchor, constant: 24),
+            loadNewAvatarButton.topAnchor.constraint(equalTo: changeAvatarButton.bottomAnchor, constant: 12),
+            loadNewAvatarButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+
+            mainStackView.topAnchor.constraint(equalTo: loadNewAvatarButton.bottomAnchor, constant: -6),
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),

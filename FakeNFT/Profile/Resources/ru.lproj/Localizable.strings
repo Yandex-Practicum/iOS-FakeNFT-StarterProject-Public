@@ -9,7 +9,11 @@
 myNFTs = "Мои NFT (%d)";
 favoritesNFTs = "Избранные NFT (%d)";
 aboutDeveloper = "О разработчике";
-changePhoto = "Сменить фото";
+changePhoto = "Сменить\nфото";
 name = "Имя";
 description = "Описание";
 website = "Сайт";
+uploadImage = "Загрузить изображение";
+fromAuthor = "от ";
+priceTitle = "Цена";
+favoritesNFT = "Избранные NFT";
