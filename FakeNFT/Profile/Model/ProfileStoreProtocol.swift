@@ -6,7 +6,8 @@
 import Foundation
 
 protocol ProfileStoreProtocol {
-    var delegate: ProfileStoreDelegate? { get set }
-    func fetchProfile()
-    func updateProfile(_ updatedParameters: [String: String])
+    func fetchProfile(callback: @escaping ((Result<ProfileModel, Error>) -> Void))
+    func updateProfile(_ profileModel: ProfileModel,
+                       _ viewModelCallback: @escaping (Result<ProfileModel, Error>) -> Void,
+                       _ viewCallback: (() -> Void)?)
 }

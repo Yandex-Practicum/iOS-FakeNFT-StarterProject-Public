@@ -9,7 +9,7 @@ import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
-    var viewModel: ProfileViewModelProtocol? = ProfileViewModel()
+    private let profileViewModel: ProfileViewModelProtocol
 
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,49 +58,59 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - LifeCycle
 
+    required init?(coder: NSCoder) {
+        self.profileViewModel = ProfileViewModel()
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .viewBackgroundColor
         setupNavigationController()
         setupConstraints()
         bind()
-        viewModel?.fetchProfile()
+        profileViewModel.profileViewDidLoad()
     }
 
     // MARK: - Private Funcs
 
     private func bind() {
-        guard let viewModel = viewModel else { return }
-        viewModel.nameObservable.bind { [weak self] name in
+        profileViewModel.nameObservable.bind { [weak self] name in
             self?.nameLabel.text = name
         }
-        viewModel.avatarURLObservable.bind { [weak self] url in
-            self?.avatarImageView.kf.setImage(with: url, placeholder: UIImage(named: "AvatarPlaceholder")) { result in
+        profileViewModel.avatarURLObservable.bind { [weak self] url in
+            self?.avatarImageView.kf.setImage(with: url,
+                                              placeholder: UIImage(named: Constants.avatarPlaceholder)) { result in
                 switch result {
                 case .success(let value):
                     ImageCache.default.store(value.image, forKey: "avatar")
                 case .failure(let error):
                     print("Error \(error): unable to load avatar image, will use placeholder image")
-                    self?.avatarImageView.image = UIImage(named: "AvatarPlaceholder")
+                    self?.avatarImageView.image = UIImage(named: Constants.avatarPlaceholder)
                 }
             }
         }
-        viewModel.descriptionObservable.bind { [weak self] description in
+        profileViewModel.descriptionObservable.bind { [weak self] description in
             self?.descriptionLabel.text = description
         }
-        viewModel.websiteObservable.bind { [weak self] website in
+        profileViewModel.websiteObservable.bind { [weak self] website in
             self?.websiteLabel.text = website
         }
-        viewModel.nftsObservable.bind { [weak self] nfts in
-            let cell = self?.profileTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileTableViewCell
-            cell?.setLabel(text: Constants.localizedStringFor(tableViewCell: 0, myNFT: nfts.count))
+        profileViewModel.nftsObservable.bind { [weak self] _ in
+            self?.profileTableView.performBatchUpdates {
+                self?.profileTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
         }
-        viewModel.likesObservable.bind { [weak self] likes in
-            let cell = self?.profileTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileTableViewCell
-            cell?.setLabel(text: Constants.localizedStringFor(tableViewCell: 1, favoritesNFT: likes.count))
+        profileViewModel.likesObservable.bind { [weak self] _ in
+            self?.profileTableView.performBatchUpdates {
+                self?.profileTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+            }
         }
-        viewModel.isProfileUpdatingNowObservable.bind { isProfileUpdatingNow in
+        profileViewModel.isProfileUpdatingNowObservable.bind { isProfileUpdatingNow in
             isProfileUpdatingNow ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
+        }
+        profileViewModel.profileReceivingErrorObservable.bind { [weak self] error in
+            self?.showAlertMessage(with: error) { self?.profileViewModel.profileViewDidLoad() }
         }
     }
 
@@ -117,8 +127,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editProfileButtonAction() {
-        let editProfileViewController = EditProfileViewController()
-        editProfileViewController.viewModel = viewModel
+        let editProfileViewController = EditProfileViewController(profileViewModel: profileViewModel)
         present(editProfileViewController, animated: true)
     }
 
@@ -147,18 +156,21 @@ final class ProfileViewController: UIViewController {
         ])
     }
 
-    private func pushMyNFTViewController() {
-        let myNFTViewController = MyNFTViewController()
-        myNFTViewController.viewModel = NFTsViewModel()
-        myNFTViewController.myNFTs = viewModel?.nftsObservable.wrappedValue ?? []
-        navigationController?.pushViewController(myNFTViewController, animated: true)
-    }
-
-    private func pushFavoritesNFTViewController() {
-        let favoritesNFTViewController = FavoritesNFTViewController()
-        favoritesNFTViewController.viewModel = NFTsViewModel()
-        favoritesNFTViewController.favoritesNFTs = viewModel?.likesObservable.wrappedValue ?? []
-        navigationController?.pushViewController(favoritesNFTViewController, animated: true)
+    private func show(_ profileOption: ProfileOption) {
+        let viewModel = profileViewModel.didSelect(profileOption)
+        var viewController: UIViewController
+        switch profileOption {
+        case .myNFT:
+            guard let nftsViewModel = viewModel as? NFTsViewModelProtocol else { return }
+            viewController = MyNFTViewController(nftsViewModel: nftsViewModel)
+        case .favoritesNFT:
+            guard let nftsViewModel = viewModel as? NFTsViewModelProtocol else { return }
+            viewController = FavoritesNFTViewController(nftsViewModel: nftsViewModel)
+        case .website:
+            guard let websiteViewModel = viewModel as? WebsiteViewModelProtocol else { return }
+            viewController = WebsiteViewController(websiteViewModel: websiteViewModel)
+        }
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -168,11 +180,8 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath.row {
-        case 0: pushMyNFTViewController()
-        case 1: pushFavoritesNFTViewController()
-        default: print("2")
-        }
+        guard let profileOption = ProfileOption(rawValue: indexPath.row) else { return }
+        show(profileOption)
     }
 }
 
@@ -185,8 +194,9 @@ extension ProfileViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let profileOption = ProfileOption(rawValue: indexPath.row) else { return UITableViewCell() }
         let cell: ProfileTableViewCell = tableView.dequeueReusableCell()
-        cell.setLabel(text: Constants.localizedStringFor(tableViewCell: indexPath.row))
+        cell.setLabel(text: profileViewModel.labelTextFor(profileOption))
         return cell
     }
 }

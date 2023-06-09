@@ -5,9 +5,13 @@
 
 import Foundation
 
+enum ProfileOption: Int {
+    case myNFT, favoritesNFT, website
+}
+
 final class ProfileViewModel {
 
-    private var profileStore: ProfileStoreProtocol?
+    private let profileStore: ProfileStoreProtocol
 
     @Observable
     private(set) var name: String = ""
@@ -30,9 +34,46 @@ final class ProfileViewModel {
     @Observable
     private var isProfileUpdatingNow: Bool = false
 
+    @Observable
+    private var profileReceivingError: String = ""
+
+    private var avatarURLString: String {
+        avatarURL?.absoluteString ?? ""
+    }
+
+    private lazy var viewModelCallback: ((Result<ProfileModel, Error>) -> Void) = { [weak self] result in
+        self?.isProfileUpdatingNow = false
+        switch result {
+        case .success(let profile): self?.setProfileViewModel(from: profile)
+        case .failure(let error): self?.handle(error)
+        }
+    }
+
     init(profileStore: ProfileStoreProtocol = ProfileStore()) {
         self.profileStore = profileStore
-        self.profileStore?.delegate = self
+    }
+
+    private func setProfileViewModel(from profileModel: ProfileModel) {
+        name = profileModel.name
+        avatarURL = URL(string: profileModel.avatar)
+        description = profileModel.description
+        website = profileModel.website
+        nfts = profileModel.nfts
+        likes = profileModel.likes
+    }
+
+    private func handle(_ error: Error) {
+        resetProfileViewModel()
+        profileReceivingError = String(format: NSLocalizedString("profileReceivingError", comment: "Message when receiving error while profile data downloading"), error as CVarArg)
+    }
+
+    private func resetProfileViewModel() {
+        name = ""
+        description = ""
+        website = ""
+        avatarURL = nil
+        nfts = []
+        likes = []
     }
 }
 
@@ -47,29 +88,47 @@ extension ProfileViewModel: ProfileViewModelProtocol {
     var nftsObservable: Observable<[Int]> { $nfts }
     var likesObservable: Observable<[Int]> { $likes }
     var isProfileUpdatingNowObservable: Observable<Bool> { $isProfileUpdatingNow }
+    var profileReceivingErrorObservable: Observable<String> { $profileReceivingError }
 
-    func fetchProfile() {
+    func profileViewDidLoad() {
         isProfileUpdatingNow = true
-        profileStore?.fetchProfile()
+        profileStore.fetchProfile(callback: viewModelCallback)
     }
 
-    func didChangeProfile(_ changedParameters: [String : String]) {
+    func didChangeProfile(name: String?,
+                          description: String?,
+                          website: String?,
+                          avatar: String?,
+                          likes: [Int]?,
+                          viewCallback: @escaping () -> Void) {
         isProfileUpdatingNow = true
-        profileStore?.updateProfile(changedParameters)
+        let profileModel = ProfileModel(name: name ?? self.name,
+                                        avatar: avatar ?? self.avatarURLString,
+                                        description: description ?? self.description,
+                                        website: website ?? self.website,
+                                        nfts: self.nfts,
+                                        likes: likes ?? self.likes)
+        profileStore.updateProfile(profileModel, viewModelCallback, viewCallback)
     }
-}
 
-// MARK: - ProfileStoreDelegate
+    func labelTextFor(_ profileOption: ProfileOption) -> String {
+        switch profileOption {
+        case .myNFT:
+            let localizedFormatString = NSLocalizedString("myNFTsWithCount", comment: "")
+            return String(format: localizedFormatString, nfts.count)
+        case .favoritesNFT:
+            let localizedFormatString = NSLocalizedString("favoritesNFTsWithCount", comment: "")
+            return String(format: localizedFormatString, likes.count)
+        case .website:
+            return NSLocalizedString("aboutDeveloper", comment: "Label text for the third table row")
+        }
+    }
 
-extension ProfileViewModel: ProfileStoreDelegate {
-
-    func didReceive(_ profile: ProfileModel) {
-        isProfileUpdatingNow = false
-        name = profile.name
-        avatarURL = URL(string: profile.avatar)
-        description = profile.description
-        website = profile.website
-        nfts = profile.nfts
-        likes = profile.likes.isEmpty ? [] : profile.likes.components(separatedBy: ",").map { Int($0) ?? 0 }
+    func didSelect(_ profileOption: ProfileOption) -> ViewModelProtocol {
+        switch profileOption {
+        case .myNFT: return NFTsViewModel(for: nfts)
+        case .favoritesNFT: return NFTsViewModel(for: likes, profileViewModel: self)
+        case .website: return WebsiteViewModel(websiteURLString: website)
+        }
     }
 }

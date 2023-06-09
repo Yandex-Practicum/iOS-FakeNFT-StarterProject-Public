@@ -8,7 +8,7 @@ import Foundation
 final class ProfileStore {
 
     var networkClient: NetworkClient?
-    weak var delegate: ProfileStoreDelegate?
+    private var networkTask: NetworkTask?
 
     init(networkClient: NetworkClient = ProfileNetworkClient()) {
         self.networkClient = networkClient
@@ -17,32 +17,23 @@ final class ProfileStore {
 
 extension ProfileStore: ProfileStoreProtocol {
 
-    func fetchProfile() {
-        let profileRequest = ProfileRequest(httpMethod: .get)
-        networkClient?.send(request: profileRequest, type: ProfileModel.self) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let profile):
-                    self?.delegate?.didReceive(profile)
-                case .failure(let error):
-                    print("Error \(error): unable to get user profile, will use default profile")
-                    self?.delegate?.didReceive(ProfileModel.defaultProfile)
-                }
-            }
+    func fetchProfile(callback: @escaping ((Result<ProfileModel, Error>) -> Void)) {
+        networkTask?.cancel()
+        let profileRequest = ProfileRequest()
+        networkTask = networkClient?.send(request: profileRequest, type: ProfileModel.self) { result in
+            DispatchQueue.main.async { callback(result) }
         }
     }
 
-    func updateProfile(_ updatedParameters: [String : String]) {
-        let updateProfileRequest = ProfileRequest(queryParameters: updatedParameters, httpMethod: .put)
-        networkClient?.send(request: updateProfileRequest, type: ProfileModel.self) { [weak self] result in
+    func updateProfile(_ profileModel: ProfileModel,
+                       _ viewModelCallback: @escaping (Result<ProfileModel, Error>) -> Void,
+                       _ viewCallback: (() -> Void)?) {
+        networkTask?.cancel()
+        let updateProfileRequest = UpdateProfileRequest(profile: profileModel)
+        networkTask = networkClient?.send(request: updateProfileRequest, type: ProfileModel.self) { result in
             DispatchQueue.main.async {
-                switch result {
-                case .success(let profile):
-                    self?.delegate?.didReceive(profile)
-                case .failure(let error):
-                    print("Error \(error): unable to get user profile, will use default profile")
-                    self?.delegate?.didReceive(ProfileModel.defaultProfile)
-                }
+                viewCallback?()
+                viewModelCallback(result)
             }
         }
     }

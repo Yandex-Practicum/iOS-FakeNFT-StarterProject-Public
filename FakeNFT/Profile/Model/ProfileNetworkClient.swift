@@ -62,18 +62,25 @@ struct ProfileNetworkClient: NetworkClient {
 
     private func create(request: NetworkRequest) -> URLRequest? {
         guard let endpoint = request.endpoint else { return nil }
-        guard var components = URLComponents(url: endpoint, resolvingAgainstBaseURL: true) else { return nil }
+//        guard var components = URLComponents(url: endpoint, resolvingAgainstBaseURL: true) else { return nil }
 
-        components.queryItems = request.queryParameters?.map { key, value in
-            URLQueryItem(name: key, value: value)
-        }
+//        components.queryItems = request.queryParameters?.map { key, value in
+//            URLQueryItem(name: key, value: value)
+//        }
 
-        guard let url = components.url else { return nil }
+//        guard let url = components.url else { return nil }
 
-        var urlRequest = URLRequest(url: url)
+//        var urlRequest = URLRequest(url: url)
+        var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
-        urlRequest.httpBody = components.query?.data(using: .utf8)
-        urlRequest.allHTTPHeaderFields = ["Content-Type": "application/x-www-form-urlencoded"]
+        urlRequest.httpBody = request.httpBody
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+
+//        if request.httpMethod == .put {
+//            urlRequest.httpBody = try? JSONEncoder().encode(request.queryParameters)
+//            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        }
 
         return urlRequest
     }

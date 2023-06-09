@@ -7,7 +7,7 @@ import UIKit
 
 final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
 
-    private lazy var label: UILabel = {
+    private lazy var profileOptionlabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -29,15 +29,15 @@ final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     private func setupConstraints() {
-        contentView.addSubview(label)
+        contentView.addSubview(profileOptionlabel)
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            profileOptionlabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            profileOptionlabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            profileOptionlabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 
     func setLabel(text: String) {
-        label.text = text
+        profileOptionlabel.text = text
     }
 }

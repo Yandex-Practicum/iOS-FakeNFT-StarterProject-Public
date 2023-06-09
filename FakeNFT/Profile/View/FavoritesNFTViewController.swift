@@ -9,8 +9,17 @@ import ProgressHUD
 
 final class FavoritesNFTViewController: UIViewController {
 
-    var viewModel: NFTsViewModelProtocol?
-    var favoritesNFTs: [Int] = []
+    private let nftsViewModel: NFTsViewModelProtocol
+
+    private lazy var stubLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = Constants.favoritesNFTStubLabelText
+        label.font = UIFont.systemFont(ofSize: 17, weight:  .bold)
+        label.textColor = .textColorBlack
+        label.isHidden = nftsViewModel.stubLabelIsHidden
+        return label
+    }()
 
     private lazy var favoritesNFTCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -21,12 +30,21 @@ final class FavoritesNFTViewController: UIViewController {
         return collectionView
     }()
 
+    init(nftsViewModel: NFTsViewModelProtocol) {
+        self.nftsViewModel = nftsViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupController()
         setupConstraints()
         bind()
-        viewModel?.get(favoritesNFTs)
+        nftsViewModel.nftViewDidLoad()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -35,29 +53,40 @@ final class FavoritesNFTViewController: UIViewController {
     }
 
     private func bind() {
-        guard let viewModel = viewModel else { return }
-        viewModel.nftViewModelsObservable.bind { [weak self] _ in
-            self?.favoritesNFTCollectionView.performBatchUpdates({
-                self?.favoritesNFTCollectionView.reloadData()
+        nftsViewModel.nftViewModelsObservable.bind { [weak self] _ in
+            guard let self = self else { return }
+            self.favoritesNFTCollectionView.performBatchUpdates({
+                self.favoritesNFTCollectionView.reloadSections(IndexSet(integer: 0))
+                self.stubLabel.isHidden = self.nftsViewModel.stubLabelIsHidden
             })
         }
-        viewModel.isNFTsDownloadingNowObservable.bind { isNFTsDownloadingNow in
+        nftsViewModel.isNFTsDownloadingNowObservable.bind { isNFTsDownloadingNow in
             isNFTsDownloadingNow ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
+        }
+        nftsViewModel.nftsReceivingErrorObservable.bind { [weak self] error in
+            self?.showAlertMessage(with: error, tryAgainAction: {
+                self?.nftsViewModel.nftViewDidLoad()
+            }, cancelAction: {
+                self?.navigationController?.popViewController(animated: true)
+            })
         }
     }
 
     private func setupController() {
-        title = NSLocalizedString("favoritesNFT", comment: "Favorites NFT screen title")
         view.backgroundColor = .white
+        title = nftsViewModel.favoritesNFTsTitle
     }
 
     private func setupConstraints() {
-        view.addSubview(favoritesNFTCollectionView)
+        [favoritesNFTCollectionView, stubLabel].forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             favoritesNFTCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             favoritesNFTCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             favoritesNFTCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            favoritesNFTCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            favoritesNFTCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
 }
@@ -84,13 +113,27 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
 extension FavoritesNFTViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.nftViewModels.count ?? 0
+        nftsViewModel.nftViewModels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let viewModel = viewModel else { return  UICollectionViewCell() }
         let cell: FavoritesNFTCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.configCell(from: viewModel.nftViewModels[indexPath.row])
+        cell.delegate = self
+        cell.configCell(from: nftsViewModel.nftViewModels[indexPath.row])
         return cell
+    }
+}
+
+// MARK: - FavoritesNFTCellDelegate
+
+extension FavoritesNFTViewController: FavoritesNFTCellDelegate {
+
+    func didTapLike(_ cell: FavoritesNFTCollectionViewCell) {
+        guard let indexPath = favoritesNFTCollectionView.indexPath(for: cell) else { return }
+        UIBlockingProgressHUD.show()
+        nftsViewModel.didTapLike(nft: indexPath.item) {
+            cell.changeLikeButtonImage()
+            UIBlockingProgressHUD.dismiss()
+        }
     }
 }

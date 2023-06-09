@@ -6,8 +6,10 @@
   
 */
 
-myNFTs = "Мои NFT (%d)";
-favoritesNFTs = "Избранные NFT (%d)";
+myNFTsWithCount = "Мои NFT (%d)";
+myNFTs = "Мои NFT";
+favoritesNFTsWithCount = "Избранные NFT (%d)";
+favoritesNFTs = "Избранные NFT";
 aboutDeveloper = "О разработчике";
 changePhoto = "Сменить\nфото";
 name = "Имя";
@@ -17,3 +19,16 @@ uploadImage = "Загрузить изображение";
 fromAuthor = "от ";
 priceTitle = "Цена";
 favoritesNFT = "Избранные NFT";
+errorTitle = "Ошибка";
+errorMessage = "Во время загрузки данных из сети что-то пошло не так:\n%@";
+profileReceivingError = "Данные профиля не загружены. Ошибка: %@";
+alertActionTitle = "Попробовать ещё раз";
+nftsReceivingError = "Данные NFT не загружены. Ошибка: %@";
+cancelTitle = "Отмена";
+sorting = "Сортировка";
+sortByPrice = "По цене";
+sortByRating = "По рейтингу";
+sortByName = "По названию";
+closeTitle = "Закрыть";
+myNFTStub = "У Вас ещё нет NFT";
+favoritesNFTStub = "У Вас ещё нет избранных NFT";

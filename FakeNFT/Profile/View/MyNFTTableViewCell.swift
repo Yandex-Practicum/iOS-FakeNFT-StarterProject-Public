@@ -8,8 +8,6 @@ import Kingfisher
 
 final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
 
-    var id: String = ""
-
     private lazy var cellStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [nftImageView, nftDataStackView, nftPriceStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +52,6 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         let button = UIButton(frame: CGRect(x: 79, y: 12, width: 18, height: 16))
         button.setImage(UIImage(systemName: "heart.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
         button.contentMode = .center
-        button.addTarget(self, action: #selector(likeButtonAction), for: .touchUpInside)
         return button
     }()
 
@@ -112,10 +109,6 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         nftImageView.kf.cancelDownloadTask()
     }
 
-    @objc private func likeButtonAction() {
-
-    }
-
     private func setupConstraints() {
         contentView.addSubview(cellStackView)
         NSLayoutConstraint.activate([
@@ -127,18 +120,36 @@ final class MyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         ])
     }
 
+    private func makeRatingString(from rating: Int) -> NSAttributedString {
+        let fullString = NSMutableAttributedString(string: "")
+        for count in 1...5 {
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.bounds = CGRect(origin: .zero, size: CGSize(width: 14, height: 13))
+            if count <= rating && rating != 0 {
+                imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingStarYellow)
+                fullString.append(NSAttributedString(attachment: imageAttachment))
+            } else {
+                imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingStarLightGray)
+                fullString.append(NSAttributedString(attachment: imageAttachment))
+            }
+        }
+        return fullString
+    }
+
+    func makeAttributedAuthorString(from authorString: String) -> NSAttributedString {
+        let attributedAuthorString = NSMutableAttributedString()
+        attributedAuthorString.append(NSAttributedString(string: NSLocalizedString("fromAuthor", comment: ""),
+                                                         attributes: [.font: UIFont.systemFont(ofSize: 15)]))
+        attributedAuthorString.append(NSAttributedString(string: NSLocalizedString(authorString, comment: ""),
+                                                         attributes: [.font: UIFont.systemFont(ofSize: 13)]))
+        return attributedAuthorString
+    }
+
     func configCell(from nftViewModel: NFTViewModel) {
         nftImageView.kf.setImage(with: nftViewModel.image)
         nftNameLabel.text = nftViewModel.name
-        nftRatingLabel.attributedText = nftViewModel.rating
+        nftRatingLabel.attributedText = makeRatingString(from: nftViewModel.rating)
+        nftAuthorLabel.attributedText = makeAttributedAuthorString(from: nftViewModel.author)
         nftPriceValueLabel.text = nftViewModel.price
-        id = nftViewModel.id
-    }
-
-    func set(author: String) {
-        let mutableAttributedString = NSMutableAttributedString()
-        mutableAttributedString.append(NSAttributedString(string: NSLocalizedString("fromAuthor", comment: ""), attributes: [.font: UIFont.systemFont(ofSize: 15)]))
-        mutableAttributedString.append(NSAttributedString(string: NSLocalizedString(author, comment: ""), attributes: [.font: UIFont.systemFont(ofSize: 13)]))
-        nftAuthorLabel.attributedText = mutableAttributedString
     }
 }

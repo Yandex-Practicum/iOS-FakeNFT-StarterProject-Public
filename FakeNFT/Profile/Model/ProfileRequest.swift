@@ -6,13 +6,11 @@
 import Foundation
 
 struct ProfileRequest: NetworkRequest {
-    let endpoint: URL? = URL(string: Constants.endpointURLString + Constants.profilePathComponentString)
-    let queryParameters: [String: String]?
+    let endpoint: URL?
     let httpMethod: HttpMethod
 
-    init(queryParameters: [String: String]? = nil,
-         httpMethod: HttpMethod) {
-        self.queryParameters = queryParameters
-        self.httpMethod = httpMethod
+    init() {
+        self.endpoint = URL(string: Constants.endpointURLString + Constants.profilePathComponentString)
+        self.httpMethod = .get
     }
 }

@@ -6,8 +6,5 @@
 import Foundation
 
 protocol NFTStoreProtocol {
-    var delegate: NFTStoreDelegate? { get set }
-    func get(_ nfts: [Int])
-    func getСollections()
-    func getNames(for authorIDs: [AuthorViewModel])
+    func getNFTs(using nftIDs: [Int], callback: @escaping ((Result<NFTModel, Error>) -> Void))
 }

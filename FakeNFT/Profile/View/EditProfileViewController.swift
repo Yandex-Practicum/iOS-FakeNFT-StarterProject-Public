@@ -9,9 +9,8 @@ import ProgressHUD
 
 final class EditProfileViewController: UIViewController {
 
-    var viewModel: ProfileViewModelProtocol?
+    private let profileViewModel: ProfileViewModelProtocol
     private let notificationCenter = NotificationCenter.default
-    private var profileUpdateParameters = [String: String]()
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -41,13 +40,14 @@ final class EditProfileViewController: UIViewController {
         button.layer.cornerRadius = 35
         button.layer.masksToBounds = true
         let processor = OverlayImageProcessor(overlay: .textColorBlack, fraction: 0.6)
-        button.kf.setBackgroundImage(with: viewModel?.avatarURLObservable.wrappedValue,
-                           for: .normal, placeholder: UIImage(named: "AvatarPlaceholder"),
-                           options: [.processor(processor)])
+        button.kf.setBackgroundImage(with: profileViewModel.avatarURLObservable.wrappedValue,
+                                     for: .normal,
+                                     placeholder: UIImage(named: Constants.avatarPlaceholder),
+                                     options: [.processor(processor)])
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFill
         button.imageView?.contentMode = .scaleAspectFill
-        button.setTitle(NSLocalizedString("changePhoto", comment: "Change avatar button label text"), for: .normal)
+        button.setTitle(Constants.changeAvatarButtonTitle, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.numberOfLines = 2
@@ -59,31 +59,40 @@ final class EditProfileViewController: UIViewController {
     private lazy var loadNewAvatarButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("uploadImage", comment: "Upload new avatar label"), for: .normal)
+        button.setTitle(Constants.loadNewAvatarButtonTitle, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.setTitleColor(.textColorBlack, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.isUserInteractionEnabled = false
         button.alpha = 0.0
-        button.addTarget(self, action: #selector(uploadAvatarAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(fakeUploadAvatarAction), for: .touchUpInside)
         return button
     }()
 
-    private lazy var nameLabel = makeLabel(text: NSLocalizedString("name", comment: "User name label"))
-    private lazy var nameTextField = makeTextField(text: viewModel?.nameObservable.wrappedValue ?? "")
+    private lazy var nameLabel = makeLabel(text: Constants.nameLabelText)
+    private lazy var nameTextField = makeTextField(text: profileViewModel.nameObservable.wrappedValue)
     private lazy var nameStackView = makeStackView(with: [nameLabel, nameTextField])
 
-    private lazy var descriptionLabel = makeLabel(text: NSLocalizedString("description", comment: "User description label"))
-    private lazy var descriptionTextView = makeTextView(text: viewModel?.descriptionObservable.wrappedValue ?? "")
+    private lazy var descriptionLabel = makeLabel(text: Constants.descriptionLabelText)
+    private lazy var descriptionTextView = makeTextView(text: profileViewModel.descriptionObservable.wrappedValue)
     private lazy var descriptionStackView = makeStackView(with: [descriptionLabel, descriptionTextView])
 
-    private lazy var websiteLabel = makeLabel(text: NSLocalizedString("website", comment: "User website label"))
-    private lazy var websiteTextVField = makeTextField(text: viewModel?.websiteObservable.wrappedValue ?? "")
+    private lazy var websiteLabel = makeLabel(text: Constants.websiteLabelText)
+    private lazy var websiteTextVField = makeTextField(text: profileViewModel.websiteObservable.wrappedValue)
     private lazy var websiteStackView = makeStackView(with: [websiteLabel, websiteTextVField])
 
     private lazy var mainStackView = makeStackView(with: [nameStackView, descriptionStackView, websiteStackView], spacing: 24)
 
     // MARK: - LifeCycle
+
+    init(profileViewModel: ProfileViewModelProtocol) {
+        self.profileViewModel = profileViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,12 +120,10 @@ final class EditProfileViewController: UIViewController {
         UIView.animate(withDuration: 1) { self.loadNewAvatarButton.alpha = 1.0 }
     }
 
-    @objc private func uploadAvatarAction() {
-        // Так как моковый api не поддерживает загрузку изображений, то здесь я передаю константный URL на заранее подготовленную картинку
+    @objc private func fakeUploadAvatarAction() {
         UIBlockingProgressHUD.show()
-        changeAvatarButton.kf.setImage(with: URL(string: Constants.avatarImageURLString), for: .normal,
+        changeAvatarButton.kf.setImage(with: URL(string: Constants.mockAvatarImageURLString), for: .normal,
                                        completionHandler:  { _ in UIBlockingProgressHUD.dismiss() })
-        profileUpdateParameters["avatar"] = Constants.avatarImageURLString
         loadNewAvatarButton.isUserInteractionEnabled = false
         UIView.animate(withDuration: 1) { self.loadNewAvatarButton.alpha = 0.0 }
     }
@@ -134,17 +141,15 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonAction() {
-        if nameTextField.text != viewModel?.nameObservable.wrappedValue {
-            profileUpdateParameters["name"] = nameTextField.text
+        UIBlockingProgressHUD.show()
+        profileViewModel.didChangeProfile(name: nameTextField.text,
+                                          description: descriptionTextView.text,
+                                          website: websiteTextVField.text,
+                                          avatar: Constants.mockAvatarImageURLString,
+                                          likes: nil) { [weak self] in
+            self?.dismiss(animated: true)
+            UIBlockingProgressHUD.dismiss()
         }
-        if descriptionTextView.text != viewModel?.descriptionObservable.wrappedValue {
-            profileUpdateParameters["description"] = descriptionTextView.text
-        }
-        if websiteTextVField.text != viewModel?.websiteObservable.wrappedValue {
-            profileUpdateParameters["website"] = websiteTextVField.text
-        }
-        if !profileUpdateParameters.isEmpty { viewModel?.didChangeProfile(profileUpdateParameters) }
-        dismiss(animated: true)
     }
 
     private func makeLabel(text: String) -> UILabel {

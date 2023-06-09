@@ -3,96 +3,107 @@
 //  FakeNFT
 //
 
-// КОММЕНТАРИЙ ДЛЯ РЕВЬЮЕРА
-// Что НЕ сделано:
-// 1. На экране Мои NFT не отображается автор NFT. Пока что не могу по-нормальному это реализовать. API изначально отдаёт NFT без автора. Чтобы добыть автора надо: взять все коллекции NFT, по ID NFT найти там ID автора, потом по ID автора получить имя автора. Учитывая, что ответы на все эти запросы приходят асинхронно, я пока что не смог осилить эту задачу. Но продолжаю попытки)
-// 2. Не реализована сортировка Моих NFT. Проблем нет, сделаю, нехватка времени.
-// 3. Не реализованы заглушеи на случай отсутствия Моих или Избранных NFT. Проблем нет, сделаю, нехватка времени.
-// 4. Не реализован WebView О разработчике. Проблем нет, сделаю, нехватка времени.
-
 import Foundation
 
-final class NFTsViewModel {
+enum SortingMethod {
+    case price, rating, name
+}
 
-    private var nftStore: NFTStoreProtocol?
-    private var nfts: [Int] = []
+final class NFTsViewModel: ViewModelProtocol {
+
+    weak var profileViewModel: ProfileViewModelProtocol?
+
+    private let nftIDs: [Int]
+    private let nftStore: NFTStoreProtocol
     private var receivedNFTModels: [NFTModel] = []
-    private var receivedAuthorModels: [AuthorModel] = []
-    private var authorsCount = 0
-    private var temporaryAuthorViewModels: [AuthorViewModel] = []
 
     @Observable
     private(set) var nftViewModels: [NFTViewModel] = []
+
     @Observable
     private var isNFTsDownloadingNow: Bool = false
+
     @Observable
-    private var authorViewModels: [AuthorViewModel] = []
+    private var nftsReceivingError: String = ""
 
-    init(nftStore: NFTStoreProtocol = NFTStore()) {
+    init(for nftsIDs: [Int], nftStore: NFTStoreProtocol = NFTStore()) {
+        self.nftIDs = nftsIDs
         self.nftStore = nftStore
-        self.nftStore?.delegate = self
-    }
-}
-
-extension NFTsViewModel: NFTsViewModelProtocol {
-
-    var nftViewModelsObservable: Observable<[NFTViewModel]> { $nftViewModels }
-    var isNFTsDownloadingNowObservable: Observable<Bool> { $isNFTsDownloadingNow }
-    var authorsObservable: Observable<[AuthorViewModel]> { $authorViewModels }
-
-    func get(_ nfts: [Int]) {
-        nftStore?.get(nfts)
-        self.nfts = nfts
-        isNFTsDownloadingNow = true
     }
 
-    func getAuthors() {
-        nftStore?.getСollections()
+    convenience init(for nftsIDs: [Int], profileViewModel: ProfileViewModelProtocol) {
+        self.init(for: nftsIDs, nftStore: NFTStore())
+        self.profileViewModel = profileViewModel
+
     }
-}
 
-// MARK: - NFTStoreDelegate
-
-extension NFTsViewModel: NFTStoreDelegate {
-
-    func didReceive(_ nftModel: NFTModel) {
+    private func setNFTsViewModel(from nftModel: NFTModel) {
         receivedNFTModels.append(nftModel)
-        if receivedNFTModels.count == nfts.count {
+        if receivedNFTModels.count == nftIDs.count {
             isNFTsDownloadingNow = false
             nftViewModels = receivedNFTModels.map {
                 NFTViewModel(name: $0.name,
                              image: URL(string: $0.images.first ?? ""),
-                             rating: $0.rating.ratingString,
-                             price: String($0.price).replacingOccurrences(of: ".", with: ",") + Constants.ethCurrency,
+                             rating: $0.rating,
+                             author: Constants.mockAuthorString,
+                             price: String($0.price).replacingOccurrences(of: ".", with: ",") + Constants.mockCurrencyString,
                              id: $0.id)
-            }.sorted { Int($0.id) ?? 0 < Int($1.id) ?? 0 }
+            }
         }
     }
 
-    func didReceive(_ nftCollections: [CollectionModel]) {
-        for nft in nfts {
-            let collection = nftCollections.first { $0.nfts.contains(nft) }
-            temporaryAuthorViewModels.append(AuthorViewModel(id: String(collection?.author ?? 0),
-                                                             name: "",
-                                                             nftID: String(nft)))
+    private func handle(_ error: Error) {
+        isNFTsDownloadingNow = false
+        nftsReceivingError = String(format: NSLocalizedString("nftsReceivingError", comment: "Message when receiving error while NFTs data downloading"), error as CVarArg)
+    }
+}
+
+// MARK: - NFTsViewModelProtocol
+
+extension NFTsViewModel: NFTsViewModelProtocol {
+
+    var myNFTsTitle: String { String(NSLocalizedString("myNFTs", comment: "My NFT screen title")) }
+
+    var favoritesNFTsTitle: String { NSLocalizedString("favoritesNFT", comment: "Favorites NFT screen title") }
+
+    var nftViewModelsObservable: Observable<[NFTViewModel]> { $nftViewModels }
+
+    var isNFTsDownloadingNowObservable: Observable<Bool> { $isNFTsDownloadingNow }
+
+    var nftsReceivingErrorObservable: Observable<String> { $nftsReceivingError }
+
+    var stubLabelIsHidden: Bool { !nftIDs.isEmpty }
+
+    func nftViewDidLoad() {
+        if nftIDs.isEmpty { return }
+        isNFTsDownloadingNow = true
+        receivedNFTModels = []
+        nftStore.getNFTs(using: nftIDs) { [weak self] result in
+            switch result {
+            case .success(let nftModel): self?.setNFTsViewModel(from: nftModel)
+            case .failure(let error): self?.handle(error)
+            }
         }
-        nftStore?.getNames(for: temporaryAuthorViewModels)
-        authorsCount = temporaryAuthorViewModels.count
     }
 
-    func didReceive(_ userModel: AuthorModel) {
-//        receivedAuthorModels.append(userModel)
-//        if receivedAuthorModels.count == authorsCount {
-//            temporaryAuthorViewModels.map { viewModel in
-//                viewModel.name = receivedAuthorModels.first { $0.id == viewModel.id }?.name
-//            }
-//
-//
-//            authorViewModels = receivedAuthorModels.map {
-//                AuthorViewModel(
-//                    name: $0.name,
-//                    nftID: String(authorIDs[Int($0.id) ?? 0] ?? 0))
-//            }
-//        }
+    func myNFTSorted(by sortingMethod: SortingMethod) {
+        switch sortingMethod {
+        case .price: nftViewModels.sort { Float($0.price.dropLast(4).replacingOccurrences(of: ",", with: ".")) ?? 0
+            < Float($1.price.dropLast(4).replacingOccurrences(of: ",", with: ".")) ?? 0 }
+        case .rating: nftViewModels.sort { $0.rating > $1.rating }
+        case .name: nftViewModels.sort { $0.name < $1.name }
+        }
+    }
+
+    func didTapLike(nft: Int, callback: @escaping () -> Void) {
+        nftViewModels.remove(at: nft)
+        var updatedLikes: [Int] = []
+        nftViewModels.forEach { updatedLikes.append(Int($0.id) ?? 0) }
+        profileViewModel?.didChangeProfile(name: nil,
+                                           description: nil,
+                                           website: nil,
+                                           avatar: nil,
+                                           likes: updatedLikes,
+                                           viewCallback: callback)
     }
 }
