@@ -22,8 +22,9 @@ final class MainTabBarController: UITabBarController {
 private extension MainTabBarController {
     func setTabBarAppearance() {
         let tabBarAppearance = UITabBarAppearance()
-        setTabBarItemColors(tabBarAppearance.stackedLayoutAppearance)
-        setTabBarItemColors(tabBarAppearance.inlineLayoutAppearance)
+        setTabBarItemColors(tabBarAppearance.stackedLayoutAppearance) // для портретной ориентации
+        setTabBarItemColors(tabBarAppearance.inlineLayoutAppearance) // для ландшафтной ориентации на отдельных моделях
+        setTabBarItemColors(tabBarAppearance.compactInlineLayoutAppearance) // для ландшафтной ориентации
         
         tabBarAppearance.backgroundColor = .ypWhite
         tabBar.standardAppearance = tabBarAppearance
