@@ -30,6 +30,7 @@
 		61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F02A3EE9450082B4D2 /* Constants.swift */; };
 		61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */; };
 		61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */; };
+		61D7BED82A3F4FCF0059CE5A /* Ilya Valito Workflow.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BED72A3F4FCF0059CE5A /* Ilya Valito Workflow.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		61D4B0F02A3EE9450082B4D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		61D7BED72A3F4FCF0059CE5A /* Ilya Valito Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Ilya Valito Workflow.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				61D7BED62A3F4FCF0059CE5A /* Docs */,
 				3FC8C39629D24D9D0081F015 /* .swiftlint.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
@@ -263,6 +266,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		61D7BED62A3F4FCF0059CE5A /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BED72A3F4FCF0059CE5A /* Ilya Valito Workflow.md */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -379,6 +390,7 @@
 				3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */,
 				61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				61D7BED82A3F4FCF0059CE5A /* Ilya Valito Workflow.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
