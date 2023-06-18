@@ -44,7 +44,7 @@ extension NavigationController {
             .font: UIFont.appFont(.bold, withSize: 17),
             .foregroundColor: UIColor.appBlack
         ]
-        
+
         // configure a navigation controller for a currently selected TabBar tab (your epic's main VC)
         if viewController is UIViewController {
             navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
