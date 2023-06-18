@@ -1,33 +1,33 @@
 FakeNFT Yandex Project Workflow
 
-"Configure a project for using a SwiftLint" (Estimated time: 15, Time spent: 5 min)
-"Prepare the project for using a code-writed UI" (Estimated time: 5, Time spent: 5 min)
-"Create a project's main TabBarController" (Estimated time: 30, Time spent: 30 min)
-"Create a .md file with a project Workflow" (Estimated time: 15, Time spent: 25 min)
-"Create a project's main NavigationController" (Estimated time: 15, Time spent: 10 min)
-"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent:)
-"Create a ProfileScreen UI" (Estimated time: 25, Time spent:)
-"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent:)
-"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)
-"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent:)
-"Implement the ProfileScreen logic" (Estimated time: 45, Time spent:)
-"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent:)
-"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent:)
-"Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:)
-"Change the logic of the default NavigationController when a ProfileNFTScreen is visible" (Estimated time: 10, Time spent:)
-"Implement the ProfileNFTScreen sorting button logic" (Estimated time: 30, Time spent:)
-"Create a ProfileNFTCells UI" (Estimated time: 40, Time spent:)
-"Implement the ProfileNFTScreen tableview and cells logic" (Estimated time: 40, Time spent:)
-"Implement a ProfileNFTScreen logic" (Estimated time: 30, Time spent:)
-"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent:)
-"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent:)
-"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent:)
-"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent:)
+"Configure a project for using a SwiftLint" (Estimated time: 15, Time spent: 5 min)\
+"Prepare the project for using a code-writed UI" (Estimated time: 5, Time spent: 5 min)\
+"Create a project's main TabBarController" (Estimated time: 30, Time spent: 30 min)\
+"Create a .md file with a project Workflow" (Estimated time: 15, Time spent: 25 min)\
+"Create a project's main NavigationController" (Estimated time: 15, Time spent: 10 min)\
+"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent:)\
+"Create a ProfileScreen UI" (Estimated time: 25, Time spent:)\
+"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent:)\
+"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)\
+"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent:)\
+"Implement the ProfileScreen logic" (Estimated time: 45, Time spent:)\
+"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent:)\
+"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent:)\
+"Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:)\
+"Change the logic of the default NavigationController when a ProfileNFTScreen is visible" (Estimated time: 10, Time spent:)\
+"Implement the ProfileNFTScreen sorting button logic" (Estimated time: 30, Time spent:)\
+"Create a ProfileNFTCells UI" (Estimated time: 40, Time spent:)\
+"Implement the ProfileNFTScreen tableview and cells logic" (Estimated time: 40, Time spent:)\
+"Implement a ProfileNFTScreen logic" (Estimated time: 30, Time spent:)\
+"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent:)\
+"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent:)\
+"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent:)\
+"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent:)\
 "Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent:)
 
-"Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)
-"Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)
-"Change the logic of the default NavigationController when a Cart Screen tab is selected" (Estimated time: 30 min, Time spent:)
-"Implement the Cart Screen logic" (Estimated time: 45 min, Time spent:)
-"Implement CartCollectionView cell logic (Cart Screen)" (Estimated time: 2 h, Time spent:)
+"Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)\
+"Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)\
+"Change the logic of the default NavigationController when a Cart Screen tab is selected" (Estimated time: 30 min, Time spent:)\
+"Implement the Cart Screen logic" (Estimated time: 45 min, Time spent:)\
+"Implement CartCollectionView cell logic (Cart Screen)" (Estimated time: 2 h, Time spent:)\
 "Creating the logic for the filter button" (Estimated time: 30 min, Time spent:)
