@@ -1,6 +1,5 @@
 FakeNFT Yandex Project Workflow
 
-Ilya Valito:
 "Configure a project for using a SwiftLint" (Estimated time: 15, Time spent: 5 min)
 "Prepare the project for using a code-writed UI" (Estimated time: 5, Time spent: 5 min)
 "Create a project's main TabBarController" (Estimated time: 30, Time spent: 30 min)
