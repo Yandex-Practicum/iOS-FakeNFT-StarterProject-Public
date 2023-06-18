@@ -24,3 +24,10 @@ FakeNFT Yandex Project Workflow
 "Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent:)
 "Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent:)
 "Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent:)
+
+"Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)
+"Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)
+"Change the logic of the default NavigationController when a Cart Screen tab is selected" (Estimated time: 30 min, Time spent:)
+"Implement the Cart Screen logic" (Estimated time: 45 min, Time spent:)
+"Implement CartCollectionView cell logic (Cart Screen)" (Estimated time: 2 h, Time spent:)
+"Creating the logic for the filter button" (Estimated time: 30 min, Time spent:)
