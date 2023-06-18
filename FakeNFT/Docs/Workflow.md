@@ -5,7 +5,7 @@ Ilya Valito:
 "Prepare the project for using a code-writed UI" (Estimated time: 5, Time spent: 5 min)
 "Create a project's main TabBarController" (Estimated time: 30, Time spent: 30 min)
 "Create a .md file with a project Workflow" (Estimated time: 15, Time spent: 25 min)
-"Create a project's main NavigationController" (Estimated time: 15, Time spent:)
+"Create a project's main NavigationController" (Estimated time: 15, Time spent: 10 min)
 "Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent:)
 "Create a ProfileScreen UI" (Estimated time: 25, Time spent:)
 "Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent:)
