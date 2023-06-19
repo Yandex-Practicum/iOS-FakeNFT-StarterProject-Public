@@ -30,6 +30,12 @@
 		61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */; };
 		61D7BED82A3F4FCF0059CE5A /* Workflow.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BED72A3F4FCF0059CE5A /* Workflow.md */; };
 		61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEE72A407EDE0059CE5A /* Observable.swift */; };
+		61D7BEF42A4082860059CE5A /* UICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEF32A4082860059CE5A /* UICreator.swift */; };
+		61D7BEFB2A4082C10059CE5A /* ProfileScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEF82A4082C10059CE5A /* ProfileScreenViewModel.swift */; };
+		61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEFA2A4082C10059CE5A /* ProfileScreenController.swift */; };
+		61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEFD2A4088160059CE5A /* UIView+Extensions.swift */; };
+		61D7BF012A408D390059CE5A /* ProfileMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BF002A408D390059CE5A /* ProfileMenuCell.swift */; };
+		61D7BF062A409B3F0059CE5A /* Epic - ProfileScreen.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,12 @@
 		61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		61D7BED72A3F4FCF0059CE5A /* Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Workflow.md; sourceTree = "<group>"; };
 		61D7BEE72A407EDE0059CE5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		61D7BEF32A4082860059CE5A /* UICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICreator.swift; sourceTree = "<group>"; };
+		61D7BEF82A4082C10059CE5A /* ProfileScreenViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreenViewModel.swift; sourceTree = "<group>"; };
+		61D7BEFA2A4082C10059CE5A /* ProfileScreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreenController.swift; sourceTree = "<group>"; };
+		61D7BEFD2A4088160059CE5A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		61D7BF002A408D390059CE5A /* ProfileMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuCell.swift; sourceTree = "<group>"; };
+		61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Epic - ProfileScreen.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +121,8 @@
 			children = (
 				3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */,
 				3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */,
+				61D7BEF32A4082860059CE5A /* UICreator.swift */,
+				61D7BEFD2A4088160059CE5A /* UIView+Extensions.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -116,6 +130,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				61D7BF022A409A120059CE5A /* Decomposition */,
 				61D7BED62A3F4FCF0059CE5A /* Docs */,
 				3FC8C39629D24D9D0081F015 /* .swiftlint.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
@@ -174,6 +189,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				61D7BEF52A4082C10059CE5A /* ProfileScene */,
 			);
 			path = "Scenes ";
 			sourceTree = "<group>";
@@ -261,6 +277,56 @@
 				61D7BED72A3F4FCF0059CE5A /* Workflow.md */,
 			);
 			path = Docs;
+			sourceTree = "<group>";
+		};
+		61D7BEF52A4082C10059CE5A /* ProfileScene */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
+			);
+			path = ProfileScene;
+			sourceTree = "<group>";
+		};
+		61D7BEF62A4082C10059CE5A /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BEF92A4082C10059CE5A /* View */,
+				61D7BEF72A4082C10059CE5A /* ViewModel */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		61D7BEF72A4082C10059CE5A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BEF82A4082C10059CE5A /* ProfileScreenViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61D7BEF92A4082C10059CE5A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BEFF2A408D060059CE5A /* Cells */,
+				61D7BEFA2A4082C10059CE5A /* ProfileScreenController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61D7BEFF2A408D060059CE5A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BF002A408D390059CE5A /* ProfileMenuCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		61D7BF022A409A120059CE5A /* Decomposition */ = {
+			isa = PBXGroup;
+			children = (
+				61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */,
+			);
+			path = Decomposition;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +446,7 @@
 				61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				61D7BED82A3F4FCF0059CE5A /* Workflow.md in Resources */,
+				61D7BF062A409B3F0059CE5A /* Epic - ProfileScreen.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,12 +501,17 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				61D7BEF42A4082860059CE5A /* UICreator.swift in Sources */,
 				61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */,
+				61D7BEFB2A4082C10059CE5A /* ProfileScreenViewModel.swift in Sources */,
+				61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */,
+				61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				61D4B0EF2A3EE8660082B4D2 /* TabBarController.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				61D7BF012A408D390059CE5A /* ProfileMenuCell.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
