@@ -13,6 +13,10 @@ struct K {
         static let catalogIcon = "person.crop.rectangle.stack.fill"
         static let cartIcon = "bag.fill"
         static let statistics = "flag.2.crossed.fill"
+        static let filterRightBarButtonIcon = "line.3.horizontal.decrease"
+        static let deleteItemFromCart = "bag.badge.minus"
+        static let activeStarRate = "activeStar"
+        static let notActiveStarRate = "notActiveStar"
     }
     
     struct Titles {

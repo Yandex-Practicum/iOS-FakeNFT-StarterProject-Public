@@ -30,7 +30,9 @@ final class ModulesFactory: ModulesFactoryProtocol {
     
     func makeCartScreenView() -> UIViewController {
         // можно настроить экран перед созданием - все зависимые свойства, делегаты и пр.
-        return CartViewController()
+        let dataSource = CartDataSourceManager()
+        let viewModel = CartViewModel()
+        return CartViewController(dataSource: dataSource, viewModel: viewModel)
     }
     
     
