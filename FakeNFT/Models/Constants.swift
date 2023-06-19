@@ -17,4 +17,12 @@ struct Constants {
         static let sort = "SortingIcon"
         static let edit = "EditingIcon"
     }
+
+    struct ImageNames {
+        static let profile = "ProfileImage"
+    }
+
+    struct CollectionElementNames {
+        static let profileMenuCell = "ProfileMenuCell"
+    }
 }
