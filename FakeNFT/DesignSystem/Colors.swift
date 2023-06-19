@@ -30,7 +30,9 @@ extension UIColor {
     // Primary Colors
     static let primary = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1.0)
     static let universalBlue = UIColor(red: 10 / 255, green: 132 / 255, blue: 255 / 255, alpha: 1)
-
+    static let universalYellow = UIColor(red: 254 / 255, green: 239 / 255, blue: 13 / 255, alpha: 1)
+    static let universalGreen = UIColor(red: 28 / 255, green: 159 / 255, blue: 0 / 255, alpha: 1)
+    
     // Secondary Colors
     static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
 
