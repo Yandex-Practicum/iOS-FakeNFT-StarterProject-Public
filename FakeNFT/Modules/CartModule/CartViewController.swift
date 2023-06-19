@@ -20,13 +20,13 @@ final class CartViewController: UIViewController {
     
     private lazy var totalNFTCount: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-        label.text = "3 NFT"
+        label.text = "3 NFT" // TODO: connect to data source
         return label
     }()
     
     private lazy var totalToPay: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .universalGreen)
-        label.text = "5,34 ETH"
+        label.text = "5,34 ETH" // TODO: connect to data source
         return label
     }()
     
@@ -41,11 +41,18 @@ final class CartViewController: UIViewController {
     
     private lazy var infoStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.backgroundColor = .ypLightGrey
+        
+        stackView.layer.cornerRadius = 12
+        stackView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
         stackView.axis = .horizontal
         stackView.spacing = 24
         stackView.distribution = .fill
+        
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
         stackView.addArrangedSubview(totalPurchasesStackView)
         stackView.addArrangedSubview(CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm))
         return stackView
@@ -54,6 +61,7 @@ final class CartViewController: UIViewController {
     private var dataSource: DataSourceManagerProtocol
     private var viewModel: CartViewModel
     
+    // MARK: Init
     init(dataSource: DataSourceManagerProtocol, viewModel: CartViewModel) {
         self.dataSource = dataSource
         self.viewModel = viewModel
@@ -64,6 +72,7 @@ final class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
