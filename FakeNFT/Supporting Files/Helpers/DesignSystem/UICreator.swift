@@ -32,12 +32,12 @@ struct UICreator {
 
     func makeImageView(withImage: String? = nil, cornerRadius: CGFloat?) -> UIImageView {
         let imageView = UIImageView()
-        guard let imageName = withImage else { return imageView }
-        imageView.image = UIImage(named: imageName)
         if let cornerRadius {
             imageView.layer.masksToBounds = true
             imageView.layer.cornerRadius = cornerRadius
         }
+        guard let imageName = withImage else { return imageView }
+        imageView.image = UIImage(named: imageName)
         return imageView
     }
 
@@ -51,6 +51,13 @@ struct UICreator {
         textView.dataDetectorTypes = .link
         textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: 0, right: 0)
         return textView
+    }
+
+    func makeActivityIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .appBlack
+        return activityIndicator
     }
 
     func makeTableView(isScrollable: Bool = true) -> UITableView {

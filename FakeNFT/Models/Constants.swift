@@ -20,6 +20,7 @@ struct Constants {
 
     struct ImageNames {
         static let profile = "ProfileImage"
+        static let placeholder = "ProfilePlaceholder"
     }
 
     struct CollectionElementNames {

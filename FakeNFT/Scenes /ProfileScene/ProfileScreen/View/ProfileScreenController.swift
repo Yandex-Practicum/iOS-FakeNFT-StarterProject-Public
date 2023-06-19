@@ -18,6 +18,7 @@ final class ProfileScreenController: UIViewController {
         label.isHidden = true
         return label
     }()
+    private let activityIndicator = UICreator.shared.makeActivityIndicator()
     private let profileImageView = UICreator.shared.makeImageView(cornerRadius: 35)
     private let profileNameLabel = UICreator.shared.makeLabel()
     private let profileDescriptionLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
@@ -41,10 +42,6 @@ final class ProfileScreenController: UIViewController {
         showOrHideUI()
         viewModel = ProfileScreenViewModel()
         bind()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         viewModel?.checkForData()
     }
 }
@@ -54,6 +51,7 @@ extension ProfileScreenController {
 
     private func setupAutolayout() {
         noInternetLabel.toAutolayout()
+        activityIndicator.toAutolayout()
         profileImageView.toAutolayout()
         profileNameLabel.toAutolayout()
         profileDescriptionLabel.toAutolayout()
@@ -63,6 +61,7 @@ extension ProfileScreenController {
 
     private func addSubviews() {
         view.addSubview(noInternetLabel)
+        view.addSubview(activityIndicator)
         view.addSubview(profileImageView)
         view.addSubview(profileNameLabel)
         view.addSubview(profileDescriptionLabel)
@@ -74,6 +73,8 @@ extension ProfileScreenController {
         NSLayoutConstraint.activate([
             noInternetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noInternetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             profileImageView.widthAnchor.constraint(equalToConstant: 70),
@@ -107,7 +108,11 @@ extension ProfileScreenController {
     }
 
     private func showOrHideUI() {
-        noInternetLabel.isHidden.toggle()
+        if activityIndicator.isAnimating {
+            activityIndicator.stopAnimating()
+        } else {
+            activityIndicator.startAnimating()
+        }
         profileImageView.isHidden.toggle()
         profileNameLabel.isHidden.toggle()
         profileDescriptionLabel.isHidden.toggle()
@@ -117,15 +122,12 @@ extension ProfileScreenController {
 
     private func fillUI() {
         guard let viewModel else { return }
-        profileImageView.image = UIImage(named: viewModel.giveData())
-        profileNameLabel.text = viewModel.giveData()
-        profileDescriptionLabel.text = """
-Here we stand, worlds apart, hearths broken in two, two, two...
-Slepless night, losing ground, i'm reaching for you, you, you...
-Feeling that it's gone can change your mind.
-If we can't go on to survive the tide, love divide.
-"""
-        profileLinkTextView.text = "www.google.com"
+        let profile = viewModel.giveData()
+        profileImageView.loadImage(urlString: profile?.avatar)
+        profileNameLabel.text = profile?.name
+        profileDescriptionLabel.text = profile?.description
+        profileLinkTextView.text = profile?.website
+        profileMenuTableView.reloadData()
     }
 }
 
