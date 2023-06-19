@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02A0CC152A40C97800AF0EA0 /* catalog_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 02A0CC142A40C97800AF0EA0 /* catalog_plan.md */; };
 		3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */; };
 		3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02A0CC142A40C97800AF0EA0 /* catalog_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = catalog_plan.md; path = ../../Downloads/catalog_plan.md; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02A0CC112A40C72000AF0EA0 /* Decomposition */ = {
+			isa = PBXGroup;
+			children = (
+				02A0CC142A40C97800AF0EA0 /* catalog_plan.md */,
+			);
+			path = Decomposition;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +126,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				02A0CC112A40C72000AF0EA0 /* Decomposition */,
 				61D7BED62A3F4FCF0059CE5A /* Docs */,
 				3FC8C39629D24D9D0081F015 /* .swiftlint.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
@@ -377,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */,
+				02A0CC152A40C97800AF0EA0 /* catalog_plan.md in Resources */,
 				61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				61D7BED82A3F4FCF0059CE5A /* Workflow.md in Resources */,
