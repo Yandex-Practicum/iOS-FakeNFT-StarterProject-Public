@@ -33,6 +33,10 @@ final class NavigationController: UINavigationController {
 // MARK: - Helpers
 extension NavigationController {
 
+    @objc private func editTapped() {
+        print("Edit tapped")
+    }
+
     @objc private func sortTapped() {
         print("Sorting Button Have Been Tapped On VC: \(viewControllers.first?.title ?? "None")")
     }
@@ -46,7 +50,12 @@ extension NavigationController {
         ]
 
         // configure a navigation controller for a currently selected TabBar tab (your epic's main VC)
-        if viewController is UIViewController {
+        if viewController is ProfileScreenController {
+            navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.edit),
+                                                                        style: .done,
+                                                                        target: nil,
+                                                                        action: #selector(editTapped))
+        } else {
             navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
                                                                         style: .done,
                                                                         target: nil,

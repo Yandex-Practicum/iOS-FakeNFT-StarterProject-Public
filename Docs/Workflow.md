@@ -6,12 +6,12 @@ FakeNFT Yandex Project Workflow
 "Create a .md file with a project Workflow" (Estimated time: 15, Time spent: 25 min)\
 "Create a project's main NavigationController" (Estimated time: 15, Time spent: 10 min)\
 "Add an Observable property wrapper file for MVVM realisation" (Estimated time: 5 min, Time spent: 5 min)\
-"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent:)\
-"Create a ProfileScreen UI" (Estimated time: 25, Time spent:)\
-"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent:)\
+"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent: 15 min)\
+"Create a ProfileScreen UI" (Estimated time: 25, Time spent: 30 min)\
+"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent: 10 min)\
 "Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)\
-"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent:)\
-"Implement the ProfileScreen logic" (Estimated time: 45, Time spent:)\
+"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent: 15 min)\
+"Implement the ProfileScreen logic" (Estimated time: 45, Time spent: 1hr)\
 "Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent:)\
 "Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent:)\
 "Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:)\

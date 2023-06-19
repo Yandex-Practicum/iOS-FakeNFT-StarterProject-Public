@@ -36,13 +36,13 @@ extension TabBarController {
         fourthMockViewController.title = "fourthVC"
 
         tabBar.backgroundColor = .appWhite
-        let profileNavigationController = NavigationController(rootViewController: firstMockViewController)
+
         let catalogNavigationController = NavigationController(rootViewController: secondMockViewController)
         let basketNavigationController = NavigationController(rootViewController: thirdMockViewController)
         let statisticsNavigationController = NavigationController(rootViewController: fourthMockViewController)
 
         self.viewControllers = [
-            configureTab(withController: profileNavigationController,
+            configureTab(withController: NavigationController(rootViewController: ProfileScreenController()),
                          title: "Профиль",
                          andImage: UIImage(named: Constants.IconNames.profile) ?? UIImage()),
             configureTab(withController: catalogNavigationController,
