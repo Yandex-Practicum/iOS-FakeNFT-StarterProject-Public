@@ -29,6 +29,7 @@
 		61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */; };
 		61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */; };
 		61D7BED82A3F4FCF0059CE5A /* Workflow.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BED72A3F4FCF0059CE5A /* Workflow.md */; };
+		61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEE72A407EDE0059CE5A /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		61D4B0F72A3EF5A10082B4D2 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		61D7BED72A3F4FCF0059CE5A /* Workflow.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Workflow.md; sourceTree = "<group>"; };
+		61D7BEE72A407EDE0059CE5A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 			children = (
 				3F6806D829CC979D00B4F915 /* Network */,
 				61D4B0F02A3EE9450082B4D2 /* Constants.swift */,
+				61D7BEE72A407EDE0059CE5A /* Observable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */,
+				61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */,
 				3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */,
