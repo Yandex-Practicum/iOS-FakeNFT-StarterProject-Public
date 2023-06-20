@@ -9,10 +9,10 @@ import Foundation
 
 // MARK: - ProfileModel
 struct ProfileModel: Codable {
-    let name: String
-    let avatar: String
-    let description: String
-    let website: String
-    let nfts, likes: [String]
-    let id: String
+    var name: String
+    var avatar: String
+    var description: String
+    var website: String
+    var nfts, likes: [String]
+    var id: String
 }

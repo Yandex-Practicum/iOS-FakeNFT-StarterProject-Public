@@ -12,8 +12,8 @@ FakeNFT Yandex Project Workflow
 "Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)\
 "Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent: 15 min)\
 "Implement the ProfileScreen logic" (Estimated time: 45, Time spent: 1hr)\
-"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent:)\
-"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent:)\
+"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent: 2hrs)\
+"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent: 2hrs)\
 "Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:)\
 "Change the logic of the default NavigationController when a ProfileNFTScreen is visible" (Estimated time: 10, Time spent:)\
 "Implement the ProfileNFTScreen sorting button logic" (Estimated time: 30, Time spent:)\

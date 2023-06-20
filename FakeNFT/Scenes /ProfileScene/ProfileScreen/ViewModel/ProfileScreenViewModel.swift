@@ -28,7 +28,7 @@ final class ProfileScreenViewModel {
 extension ProfileScreenViewModel {
 
     func checkForData() {
-        networkClient.send(request: ProfileRequest(), type: ProfileModel.self) { profile in
+        networkClient.send(request: ProfileRequest(httpMethod: .get), type: ProfileModel.self) { profile in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 self.profile = try? profile.get()
