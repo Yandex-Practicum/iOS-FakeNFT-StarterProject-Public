@@ -8,12 +8,12 @@
 import UIKit
 
 protocol Routable: AnyObject {
-    func setupRootViewController(viewController: UIViewController)
-    func presentViewController(_ viewController: UIViewController?, animated: Bool, presentationStyle: UIModalPresentationStyle)
-    func pushViewController(_ viewController: UIViewController?, animated: Bool)
-    func dismissViewController(_ viewController: UIViewController?, animated: Bool, completion: (() -> Void)?)
+    func setupRootViewController(viewController: Presentable)
+    func presentViewController(_ viewController: Presentable?, animated: Bool, presentationStyle: UIModalPresentationStyle)
+    func pushViewController(_ viewController: Presentable?, animated: Bool)
+    func dismissViewController(_ viewController: Presentable?, animated: Bool, completion: (() -> Void)?)
     func dismissToRootViewController(animated: Bool, completion: (() -> Void)?)
-    func addTabBarItem(_ tab: UIViewController?)
+    func addTabBarItem(_ tab: Presentable?)
     
 }
 
@@ -27,30 +27,31 @@ final class Router {
 }
 
 extension Router: Routable {
-    func setupRootViewController(viewController: UIViewController) {
-        currentViewController = viewController
+    func setupRootViewController(viewController: Presentable) {
+        guard let vc = viewController.getVC() else { return }
+        currentViewController = vc
         delegate?.setupRootViewController(currentViewController)
     }
     
-    func presentViewController(_ viewController: UIViewController?, animated: Bool, presentationStyle: UIModalPresentationStyle) {
-        guard let viewController else { return }
-        viewController.modalPresentationStyle = presentationStyle
-        currentViewController?.present(viewController, animated: true)
-        currentViewController = viewController
+    func presentViewController(_ viewController: Presentable?, animated: Bool, presentationStyle: UIModalPresentationStyle) {
+        guard let vc = viewController?.getVC() else { return }
+        vc.modalPresentationStyle = presentationStyle
+        currentViewController?.present(vc, animated: true)
+        currentViewController = vc
     }
     
-    func pushViewController(_ viewController: UIViewController?, animated: Bool) {
-        guard let viewController,
+    func pushViewController(_ viewController: Presentable?, animated: Bool) {
+        guard let vc = viewController?.getVC(),
               let rootVC = currentViewController as? UITabBarController,
               let navController = rootVC.selectedViewController as? UINavigationController
         else { return }
-        navController.pushViewController(viewController, animated: animated)
+        navController.pushViewController(vc, animated: animated)
     }
     
-    func dismissViewController(_ viewController: UIViewController?, animated: Bool, completion: (() -> Void)?) {
-        guard let viewController = viewController else { return }
-        self.currentViewController = viewController.presentingViewController
-        viewController.dismiss(animated: animated, completion: completion)
+    func dismissViewController(_ viewController: Presentable?, animated: Bool, completion: (() -> Void)?) {
+        guard let vc = viewController?.getVC() else { return }
+        self.currentViewController = vc.presentingViewController
+        vc.dismiss(animated: animated, completion: completion)
     }
     
     func dismissToRootViewController(animated: Bool, completion: (() -> Void)?) {
@@ -59,14 +60,14 @@ extension Router: Routable {
         delegate?.dismissAllPresentedViewControllers()
     }
     
-    func addTabBarItem(_ tab: UIViewController?) {
+    func addTabBarItem(_ tab: Presentable?) {
         guard
-            let tab,
+            let tabVC = tab?.getVC(),
             let rootViewController = currentViewController as? UITabBarController
         else { return }
         
         var viewControllers = rootViewController.viewControllers ?? []
-        viewControllers.append(tab)
+        viewControllers.append(tabVC)
         rootViewController.setViewControllers(viewControllers, animated: false)
     }
     

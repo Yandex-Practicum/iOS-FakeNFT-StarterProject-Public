@@ -10,9 +10,14 @@ import UIKit
 final class CartViewController: UIViewController, CoordinatableProtocol {
     // CoordinatableProtocol properties
     var onProceed: (() -> Void)?
+    func setupFilter(_ filter: CartFilter) {
+        self.chosenFilter = filter
+    }
     
-    private enum CartState {
-        case empty, notEmpty
+    private var chosenFilter: CartFilter? {
+        didSet {
+            print(chosenFilter)
+        }
     }
     
     // UI
@@ -74,9 +79,11 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
         return stackView
     }()
     
-    private lazy var emptyStateView: UIView = {
-        let view = UIView()
-        return view
+    private lazy var emptyStateLabel: CustomLabel = {
+        let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
+        label.text = NSLocalizedString("Корзина пуста", comment: "")
+        label.textAlignment = .center
+        return label
     }()
     
     private var dataSource: DataSourceManagerProtocol
@@ -101,6 +108,7 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
         setupConstraints()
         createDataSource()
         bind()
+        checkEmptyState()
         
     }
     
@@ -111,7 +119,15 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
     private func bind() {
         viewModel.$visibleRows.bind { [weak self] rows in
             self?.dataSource.updateTableView(with: rows)
+            self?.cartStackView.isHidden = rows.isEmpty
+            self?.emptyStateLabel.isHidden = !rows.isEmpty
+            
         }
+    }
+    
+    private func checkEmptyState() {
+        cartStackView.isHidden = viewModel.visibleRows.isEmpty
+        emptyStateLabel.isHidden = !viewModel.visibleRows.isEmpty
     }
 }
 
@@ -153,10 +169,17 @@ private extension CartViewController {
     }
 }
 
+extension CartViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
 // MARK: - Ext Constraints
 private extension CartViewController {
     func setupConstraints() {
         setupCartStackView()
+        setupEmptyStackView()
        
     }
     
@@ -169,6 +192,18 @@ private extension CartViewController {
             cartStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             cartStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             cartStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupEmptyStackView() {
+        view.addSubview(emptyStateLabel)
+        emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            emptyStateLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
