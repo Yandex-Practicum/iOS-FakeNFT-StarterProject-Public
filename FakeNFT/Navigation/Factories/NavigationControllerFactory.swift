@@ -14,7 +14,6 @@ protocol NavigationControllerFactoryProtocol {
 final class NavigationControllerFactory: NavigationControllerFactoryProtocol {
     func makeNavController(_ item: MainTabBarItem, rootViewController: UIViewController?) -> UIViewController {
         guard let rootVC = rootViewController else { return UIViewController() }
-        rootVC.navigationItem.title = item.title
         
         let navigationController = UINavigationController(rootViewController: rootVC)
         navigationController.tabBarItem.title = item.title
