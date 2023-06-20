@@ -33,7 +33,7 @@
 		61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEFA2A4082C10059CE5A /* ProfileScreenController.swift */; };
 		61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BEFD2A4088160059CE5A /* UIView+Extensions.swift */; };
 		61D7BF012A408D390059CE5A /* ProfileMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D7BF002A408D390059CE5A /* ProfileMenuCell.swift */; };
-		61D7BF062A409B3F0059CE5A /* Epic - ProfileScreen.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */; };
+		61D7BF062A409B3F0059CE5A /* Epic - Cart Screen.md in Resources */ = {isa = PBXBuildFile; fileRef = 61D7BF052A409B3F0059CE5A /* Epic - Cart Screen.md */; };
 		61DAB00C2A40C98300CC103B /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB00B2A40C98300CC103B /* ProfileModel.swift */; };
 		61DAB00E2A40CA3A00CC103B /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */; };
 		61DAB0122A40D69B00CC103B /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0112A40D69B00CC103B /* UIImageView+Extensions.swift */; };
@@ -88,7 +88,7 @@
 		61D7BEFA2A4082C10059CE5A /* ProfileScreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileScreenController.swift; sourceTree = "<group>"; };
 		61D7BEFD2A4088160059CE5A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		61D7BF002A408D390059CE5A /* ProfileMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuCell.swift; sourceTree = "<group>"; };
-		61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Epic - ProfileScreen.md"; sourceTree = "<group>"; };
+		61D7BF052A409B3F0059CE5A /* Epic - Cart Screen.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Epic - Cart Screen.md"; sourceTree = "<group>"; };
 		61DAB00B2A40C98300CC103B /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		61DAB0112A40D69B00CC103B /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 		61D7BF022A409A120059CE5A /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
-				61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */,
+				61D7BF052A409B3F0059CE5A /* Epic - Cart Screen.md */,
 			);
 			path = Decomposition;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 				61D4B0F92A3EF5A10082B4D2 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				61D7BED82A3F4FCF0059CE5A /* Workflow.md in Resources */,
-				61D7BF062A409B3F0059CE5A /* Epic - ProfileScreen.md in Resources */,
+				61D7BF062A409B3F0059CE5A /* Epic - Cart Screen.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
