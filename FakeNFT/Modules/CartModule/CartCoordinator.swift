@@ -5,7 +5,7 @@
 //  Created by Aleksandr Eliseev on 17.06.2023.
 //
 
-import Foundation
+import UIKit
 
 final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     
@@ -26,8 +26,12 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 
 private extension CartCoordinator {
     func createScreen() {
-        let cartScreen = factory.makeCartScreenView()
-        let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
+        var cartScreen = factory.makeCartScreenView()
+        let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen.getVC())
+        
+        cartScreen.onProceed = { [weak self] in
+            print("OnProceed")
+        }
         
         router.addTabBarItem(navController)
     }

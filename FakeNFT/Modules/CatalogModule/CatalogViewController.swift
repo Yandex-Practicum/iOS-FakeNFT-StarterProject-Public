@@ -20,6 +20,6 @@ final class CatalogViewController: UIViewController {
 
 }
 
-extension CatalogViewController: CoordinatableProtocol {
+//extension CatalogViewController: CoordinatableProtocol {
     // Здесь можно будет настроить реализацию событий из протокола, который видит координатор (returnOnCancel, returnOnSuccess и пр.)
-}
+//}

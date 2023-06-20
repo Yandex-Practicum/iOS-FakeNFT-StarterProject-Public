@@ -10,6 +10,7 @@ import UIKit
 protocol Routable: AnyObject {
     func setupRootViewController(viewController: UIViewController)
     func presentViewController(_ viewController: UIViewController?, animated: Bool, presentationStyle: UIModalPresentationStyle)
+    func pushViewController(_ viewController: UIViewController?, animated: Bool)
     func dismissViewController(_ viewController: UIViewController?, animated: Bool, completion: (() -> Void)?)
     func dismissToRootViewController(animated: Bool, completion: (() -> Void)?)
     func addTabBarItem(_ tab: UIViewController?)
@@ -36,6 +37,14 @@ extension Router: Routable {
         viewController.modalPresentationStyle = presentationStyle
         currentViewController?.present(viewController, animated: true)
         currentViewController = viewController
+    }
+    
+    func pushViewController(_ viewController: UIViewController?, animated: Bool) {
+        guard let viewController,
+              let rootVC = currentViewController as? UITabBarController,
+              let navController = rootVC.selectedViewController as? UINavigationController
+        else { return }
+        navController.pushViewController(viewController, animated: animated)
     }
     
     func dismissViewController(_ viewController: UIViewController?, animated: Bool, completion: (() -> Void)?) {

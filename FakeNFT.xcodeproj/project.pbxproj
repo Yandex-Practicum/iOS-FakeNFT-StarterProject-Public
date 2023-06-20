@@ -20,6 +20,7 @@
 		374EB04D2A3E1E7E00D57F36 /* CatalogCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB04C2A3E1E7E00D57F36 /* CatalogCoordinator.swift */; };
 		374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */; };
 		374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0522A3E1FE200D57F36 /* CartViewController.swift */; };
+		3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */; };
 		377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */; };
 		377DF5E32A3F954300090DCD /* CartRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5E22A3F954300090DCD /* CartRow.swift */; };
 		377DF5E52A3F961D00090DCD /* CartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5E42A3F961D00090DCD /* CartSection.swift */; };
@@ -81,6 +82,7 @@
 		374EB04C2A3E1E7E00D57F36 /* CatalogCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCoordinator.swift; sourceTree = "<group>"; };
 		374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		374EB0522A3E1FE200D57F36 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
 		377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		377DF5E22A3F954300090DCD /* CartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRow.swift; sourceTree = "<group>"; };
 		377DF5E42A3F961D00090DCD /* CartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartSection.swift; sourceTree = "<group>"; };
@@ -209,6 +211,22 @@
 			path = Factories;
 			sourceTree = "<group>";
 		};
+		3752302C2A41958700DE6F73 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3752303E2A41ABAA00DE6F73 /* CartModule */ = {
+			isa = PBXGroup;
+			children = (
+				377DF5F52A3FAC0700090DCD /* CentralStackView.swift */,
+			);
+			path = CartModule;
+			sourceTree = "<group>";
+		};
 		377DF5E12A3F953100090DCD /* DiffableDataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +248,7 @@
 		377DF5EB2A3FA08B00090DCD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3752302C2A41958700DE6F73 /* Extensions */,
 				377DF5EC2A3FA09C00090DCD /* CustomViews */,
 			);
 			path = Helpers;
@@ -238,10 +257,10 @@
 		377DF5EC2A3FA09C00090DCD /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				3752303E2A41ABAA00DE6F73 /* CartModule */,
 				377DF5EF2A3FA14900090DCD /* CustomLabel.swift */,
 				377DF5F12A3FA3CC00090DCD /* RateStackView.swift */,
 				377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */,
-				377DF5F52A3FAC0700090DCD /* CentralStackView.swift */,
 				37DFD1692A408F090020667A /* CustomActionButton.swift */,
 			);
 			path = CustomViews;
@@ -559,6 +578,7 @@
 				377DF5E52A3F961D00090DCD /* CartSection.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				377DF5E32A3F954300090DCD /* CartRow.swift in Sources */,
+				3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				374EB02E2A3DFBE500D57F36 /* Router.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
