@@ -7,11 +7,17 @@
 
 import UIKit
 
+// MARK: - ProfileEditingScreenDelegate protocol
+protocol ProfileEditingScreenDelegate: AnyObject {
+    func updateUI()
+}
+
 // MARK: - ProfileEditingScreenController
 final class ProfileEditingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
     private var viewModel: ProfileEditingScreenViewModel?
+    private var delegate: ProfileEditingScreenDelegate?
 
     private let closeButton = {
         let button = UICreator.shared.makeButton(action: #selector(closeTapped))
@@ -47,9 +53,10 @@ final class ProfileEditingScreenController: UIViewController {
     private let descriptionStackView = UICreator.shared.makeStackView()
     private let linkStackView = UICreator.shared.makeStackView()
 
-    convenience init(forProfile profile: ProfileModel) {
+    convenience init(forProfile profile: ProfileModel, delegate: ProfileEditingScreenDelegate) {
         self.init()
         self.viewModel = ProfileEditingScreenViewModel(profileToEdit: profile)
+        self.delegate = delegate
     }
 
     // MARK: - Life Cycle
@@ -72,6 +79,10 @@ final class ProfileEditingScreenController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeImageTapped))
         profileImageLabel.isUserInteractionEnabled = true
         profileImageLabel.addGestureRecognizer(tap)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        delegate?.updateUI()
     }
 }
 
@@ -114,6 +125,7 @@ extension ProfileEditingScreenController {
                 self.profileLoadImageLabel.isHidden = false
             }
         }))
+        alert.addAction(UIAlertAction(title: "Отменить", style: .destructive))
         self.present(alert, animated: true, completion: nil)
     }
 

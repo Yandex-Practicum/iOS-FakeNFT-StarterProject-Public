@@ -156,6 +156,19 @@ extension ProfileScreenController: UITableViewDelegate {
 extension ProfileScreenController: ProfileEditingButtonDelegate {
     func proceedToEditing() {
         guard let profile = viewModel?.giveData() else { return }
-        present(ProfileEditingScreenController(forProfile: profile), animated: true)
+        present(ProfileEditingScreenController(forProfile: profile, delegate: self), animated: true)
+    }
+}
+
+// MARK: - ProfileEditingScreenDelegate
+extension ProfileScreenController: ProfileEditingScreenDelegate {
+    func updateUI() {
+        print(123)
+        DispatchQueue.global().sync { [weak self] in
+            guard let self else { return }
+            self.viewModel?.checkForData()
+            self.fillUI()
+            self.showOrHideUI()
+        }
     }
 }
