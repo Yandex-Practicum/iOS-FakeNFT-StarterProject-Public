@@ -1,4 +1,6 @@
-I've took a ProfileScreen realisation for my epic.
-Decomposition have been made and saved to a Workflow.md file, which can be found at Docs folder of the project.
-
-
+"Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)
+"Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)
+"Change the logic of the default NavigationController when a Cart Screen tab is selected" (Estimated time: 30 min, Time spent:)
+"Implement the Cart Screen logic" (Estimated time: 45 min, Time spent:)
+"Implement CartCollectionView cell logic (Cart Screen)" (Estimated time: 2 h, Time spent:)
+"Creating the logic for the filter button" (Estimated time: 30 min, Time spent:)
