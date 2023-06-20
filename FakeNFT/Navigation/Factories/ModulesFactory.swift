@@ -10,11 +10,13 @@ import UIKit
 protocol CoordinatableProtocol {
     // передача универсальных событий в координатор: returnOnCancel, returnOnSuccess etc.
     var onProceed: (() -> Void)? { get set }
+    func setupFilter(_ filter: CartFilter)
 }
 
 protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
-    func makeCartScreenView() -> Presentable & CoordinatableProtocol // TODO: потом заменить на протокол CoordinatableProtocol
+    func makeCartScreenView() -> Presentable & CoordinatableProtocol
+    func makeCartFilterScreenView() -> UIAlertController
     
     // TODO: добавить два метода с основными экранами - профиль и статистика
     
@@ -34,6 +36,10 @@ final class ModulesFactory: ModulesFactoryProtocol {
         let dataSource = CartDataSourceManager()
         let viewModel = CartViewModel()
         return CartViewController(dataSource: dataSource, viewModel: viewModel)
+    }
+    
+    func makeCartFilterScreenView() -> UIAlertController {
+        return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
     }
     
     
