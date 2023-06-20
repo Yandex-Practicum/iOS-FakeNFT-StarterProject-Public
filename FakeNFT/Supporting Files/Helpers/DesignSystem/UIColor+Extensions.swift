@@ -26,6 +26,8 @@ extension UIColor {
 
     static var appBlack: UIColor { UIColor(named: "AppBlack") ?? .red }
     static var appBlue: UIColor { UIColor(named: "AppBlue") ?? .red }
+    static var appGray: UIColor { UIColor(named: "AppGray") ?? .red }
+    static var appLightGray: UIColor { UIColor(named: "AppLightGray") ?? .red}
     static var appRed: UIColor { UIColor(named: "AppRed") ?? .red }
     static var appWhite: UIColor { UIColor(named: "AppWhite") ?? .red }
 }

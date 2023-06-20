@@ -20,7 +20,6 @@
 		3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */; };
 		3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D429CBBEC700B4F915 /* NetworkTask.swift */; };
 		3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */; };
-		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 3FC8C39629D24D9D0081F015 /* .swiftlint.yml */; };
 		61D4B0EF2A3EE8660082B4D2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */; };
@@ -38,6 +37,9 @@
 		61DAB00C2A40C98300CC103B /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB00B2A40C98300CC103B /* ProfileModel.swift */; };
 		61DAB00E2A40CA3A00CC103B /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */; };
 		61DAB0122A40D69B00CC103B /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0112A40D69B00CC103B /* UIImageView+Extensions.swift */; };
+		61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */; };
+		61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */; };
+		61DAB01B2A41AD2D00CC103B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +75,6 @@
 		3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		3F6806D429CBBEC700B4F915 /* NetworkTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
 		3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsReusingUtils.swift; sourceTree = "<group>"; };
-		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		3FC8C39629D24D9D0081F015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -91,6 +92,9 @@
 		61DAB00B2A40C98300CC103B /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
 		61DAB0112A40D69B00CC103B /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenController.swift; sourceTree = "<group>"; };
+		61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenViewModel.swift; sourceTree = "<group>"; };
+		61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,7 @@
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */,
 				61D7BEF32A4082860059CE5A /* UICreator.swift */,
 				3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */,
 				3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */,
@@ -240,7 +245,6 @@
 		3FC8C38F29D245250081F015 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */,
 			);
 			path = Requests;
@@ -289,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
+				61DAB0132A41869B00CC103B /* ProfileEditingScreen */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -333,6 +338,31 @@
 				61D7BF052A409B3F0059CE5A /* Epic - ProfileScreen.md */,
 			);
 			path = Decomposition;
+			sourceTree = "<group>";
+		};
+		61DAB0132A41869B00CC103B /* ProfileEditingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0142A4186D900CC103B /* View */,
+				61DAB0152A4186E000CC103B /* ViewModel */,
+			);
+			path = ProfileEditingScreen;
+			sourceTree = "<group>";
+		};
+		61DAB0142A4186D900CC103B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61DAB0152A4186E000CC103B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -506,18 +536,20 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				61D7BEF42A4082860059CE5A /* UICreator.swift in Sources */,
 				61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */,
 				61D7BEFB2A4082C10059CE5A /* ProfileScreenViewModel.swift in Sources */,
 				61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */,
 				61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */,
-				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				61DAB00E2A40CA3A00CC103B /* ProfileRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				61DAB00C2A40C98300CC103B /* ProfileModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				61DAB01B2A41AD2D00CC103B /* CustomTextField.swift in Sources */,
 				61D4B0EF2A3EE8660082B4D2 /* TabBarController.swift in Sources */,
 				61D7BF012A408D390059CE5A /* ProfileMenuCell.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,

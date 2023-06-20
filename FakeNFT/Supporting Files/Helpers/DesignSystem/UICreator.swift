@@ -16,18 +16,43 @@ struct UICreator {
     func makeLabel(text: String? = nil,
                    font: UIFont = UIFont.appFont(.bold, withSize: 22),
                    color: UIColor = .appBlack,
+                   backgroundColor: UIColor = .clear,
                    alignment: NSTextAlignment = .left,
                    andNumberOfLines numberOfLines: Int = 0
     ) -> UILabel {
         let label = UILabel()
         label.font = font
         label.textColor = color
+        label.backgroundColor = backgroundColor
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.7
         label.text = text
         return label
+    }
+
+    func makeTextField(withTarget action: Selector? = nil,
+                       font: UIFont = UIFont.appFont(.regular, withSize: 17),
+                       tag: Int = 0
+    ) -> CustomTextField {
+        let textField = CustomTextField()
+        textField.backgroundColor = .appLightGray
+        textField.textColor = .appBlack
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
+        textField.leftViewMode = .always
+        textField.layer.masksToBounds = true
+        textField.layer.cornerRadius = 12
+        textField.tag = tag
+        if let button = textField.value(forKey: "clearButton") as? UIButton {
+            button.tintColor = .appGray
+            button.setImage(UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            textField.clearButtonMode = .whileEditing
+        }
+        if let action {
+            textField.addTarget(nil, action: action, for: .editingChanged)
+        }
+        return textField
     }
 
     func makeImageView(withImage: String? = nil, cornerRadius: CGFloat?) -> UIImageView {
@@ -41,16 +66,43 @@ struct UICreator {
         return imageView
     }
 
-    func makeLinkTextView(withFont font: UIFont = UIFont.appFont(.regular, withSize: 15)) -> UITextView {
+    func makeTextView(withFont font: UIFont = UIFont.appFont(.regular, withSize: 15),
+                      haveLinks: Bool = false,
+                      backgroundColor: UIColor = .appLightGray
+    ) -> UITextView {
         let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.textAlignment = .justified
+        textView.backgroundColor = backgroundColor
+        textView.textAlignment = .left
         textView.font = font
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.dataDetectorTypes = .link
-        textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: 0, right: 0)
+        textView.isEditable = !haveLinks
+        textView.isScrollEnabled = !haveLinks
+        textView.contentInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
+        if haveLinks {
+            textView.dataDetectorTypes = .link
+            textView.contentInset = UIEdgeInsets(top: -8, left: -5, bottom: 0, right: 0)
+        }
+        textView.layer.masksToBounds = true
+        textView.layer.cornerRadius = 12
         return textView
+    }
+
+    func makeButton(withTitle title: String? = nil,
+                    font: UIFont = UIFont.appFont(.medium, withSize: 17),
+                    fontColor: UIColor = .appBlack,
+                    backgroundColor: UIColor = .clear,
+                    cornerRadius: CGFloat = 12,
+                    action: Selector
+    ) -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = backgroundColor
+        button.titleLabel?.font = font
+        button.setTitleColor(fontColor, for: .normal)
+        button.setTitle(title, for: .normal)
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        button.addTarget(nil, action: action, for: .touchUpInside)
+        button.tintColor = .appBlack
+        return button
     }
 
     func makeActivityIndicator() -> UIActivityIndicatorView {
@@ -66,5 +118,19 @@ struct UICreator {
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = isScrollable
         return tableView
+    }
+
+    func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
+                       distribution: UIStackView.Distribution = .fill,
+                       align: UIStackView.Alignment = .fill,
+                       cornerRadius: CGFloat = 0.0,
+                       andSpacing spacing: CGFloat = 8
+    ) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = axis
+        stackView.distribution = distribution
+        stackView.spacing = spacing
+        stackView.layer.cornerRadius = cornerRadius
+        return stackView
     }
 }

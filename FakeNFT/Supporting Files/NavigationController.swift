@@ -7,6 +7,11 @@
 
 import UIKit
 
+// MARK: - ProfileEditingButtonDelegate protocol
+protocol ProfileEditingButtonDelegate: AnyObject {
+    func proceedToEditing()
+}
+
 // MARK: - NavigationController
 final class NavigationController: UINavigationController {
 
@@ -14,6 +19,8 @@ final class NavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return topViewController?.preferredStatusBarStyle ?? .default
     }
+
+    var profileEditingButtonDelegate: ProfileEditingButtonDelegate?
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -34,7 +41,7 @@ final class NavigationController: UINavigationController {
 extension NavigationController {
 
     @objc private func editTapped() {
-        print("Edit tapped")
+        profileEditingButtonDelegate?.proceedToEditing()
     }
 
     @objc private func sortTapped() {

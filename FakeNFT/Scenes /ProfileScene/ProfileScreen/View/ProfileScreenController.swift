@@ -22,7 +22,7 @@ final class ProfileScreenController: UIViewController {
     private let profileImageView = UICreator.shared.makeImageView(cornerRadius: 35)
     private let profileNameLabel = UICreator.shared.makeLabel()
     private let profileDescriptionLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
-    private let profileLinkTextView = UICreator.shared.makeLinkTextView()
+    private let profileLinkTextView = UICreator.shared.makeTextView(haveLinks: true, backgroundColor: .clear)
     private let profileMenuTableView = {
         let tableView = UICreator.shared.makeTableView(isScrollable: false)
         tableView.register(ProfileMenuCell.self,
@@ -37,6 +37,7 @@ final class ProfileScreenController: UIViewController {
         setupAutolayout()
         addSubviews()
         setupConstraints()
+        (navigationController as? NavigationController)?.profileEditingButtonDelegate = self
         profileMenuTableView.dataSource = self
         profileMenuTableView.delegate = self
         showOrHideUI()
@@ -148,5 +149,13 @@ extension ProfileScreenController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - ProfileEditingButtonDelegate
+extension ProfileScreenController: ProfileEditingButtonDelegate {
+    func proceedToEditing() {
+        guard let profile = viewModel?.giveData() else { return }
+        present(ProfileEditingScreenController(forProfile: profile), animated: true)
     }
 }
