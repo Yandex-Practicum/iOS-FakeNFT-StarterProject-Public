@@ -30,7 +30,7 @@ private extension CartCoordinator {
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen.getVC())
         
         cartScreen.onProceed = { [weak self] in
-            print("OnProceed")
+            
         }
         
         router.addTabBarItem(navController)

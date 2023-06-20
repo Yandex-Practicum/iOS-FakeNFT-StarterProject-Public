@@ -8,36 +8,35 @@
 import UIKit
 
 protocol DataSourceManagerProtocol {
-    func createDataSource(for tableView: UITableView)
-    func getRowHeight(for indexPath: IndexPath) -> CGFloat
+    func createDataSource(for tableView: UITableView, with data: [CartRow])
+    func updateTableView(with data: [CartRow])
+    func getRowHeight(for tableView: UITableView) -> CGFloat
 }
 
 final class CartDataSourceManager {
     typealias DataSource = UITableViewDiffableDataSource<CartSection, CartRow>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CartSection, CartRow>
     
-    private let mockData: [CartRow] = [
-        CartRow(imageName: "MockCard1", nftName: "Test 1", rate: 1, price: 3.87, coinName: "ETF"),
-        CartRow(imageName: "MockCard2", nftName: "Test 2", rate: 3, price: 5.55, coinName: "BTC"),
-        CartRow(imageName: "MockCard3", nftName: "Test 3", rate: 5, price: 9.86, coinName: "ETF")
-    ]
-    
     private var dataSource: DataSource?
     
 }
 
 extension CartDataSourceManager: DataSourceManagerProtocol {
-    func createDataSource(for tableView: UITableView) {
+    func createDataSource(for tableView: UITableView, with data: [CartRow]) {
         dataSource = DataSource(tableView: tableView) { tableView, indexPath, item in
             return self.cell(tableView: tableView, indexPath: indexPath, item: item)
         }
         
         dataSource?.defaultRowAnimation = .fade
-        dataSource?.apply(createSnapshot())
+        dataSource?.apply(createSnapshot(from: data))
     }
     
-    func getRowHeight(for indexPath: IndexPath) -> CGFloat {
-        return 140
+    func updateTableView(with data: [CartRow]) {
+        dataSource?.apply(createSnapshot(from: data), animatingDifferences: true, completion: nil)
+    }
+    
+    func getRowHeight(for tableView: UITableView) -> CGFloat {
+        return tableView.frame.height / 4.0
     }
 }
 
@@ -52,10 +51,10 @@ private extension CartDataSourceManager {
         return cell
     }
     
-    func createSnapshot() -> Snapshot {
+    func createSnapshot(from data: [CartRow]) -> Snapshot {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(mockData, toSection: .main)
+        snapshot.appendItems(data, toSection: .main)
         return snapshot
     }
 }

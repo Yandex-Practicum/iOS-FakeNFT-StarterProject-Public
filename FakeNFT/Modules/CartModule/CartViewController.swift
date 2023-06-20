@@ -7,10 +7,15 @@
 
 import UIKit
 
-final class CartViewController: UIViewController {
-    
+final class CartViewController: UIViewController, CoordinatableProtocol {
+    // CoordinatableProtocol properties
     var onProceed: (() -> Void)?
     
+    private enum CartState {
+        case empty, notEmpty
+    }
+    
+    // UI
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.defaultReuseIdentifier)
@@ -22,13 +27,13 @@ final class CartViewController: UIViewController {
     
     private lazy var totalNFTCount: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-        label.text = "3 NFT" // TODO: connect to data source
+        label.text = "3 NFT" // TODO: connect to data store
         return label
     }()
     
     private lazy var totalToPay: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .universalGreen)
-        label.text = "5,34 ETH" // TODO: connect to data source
+        label.text = "5,34 ETH" // TODO: connect to data store
         return label
     }()
     
@@ -54,10 +59,24 @@ final class CartViewController: UIViewController {
         
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        stackView.heightAnchor.constraint(equalToConstant: 74).isActive = true
         
         stackView.addArrangedSubview(totalPurchasesStackView)
         stackView.addArrangedSubview(CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm))
         return stackView
+    }()
+    
+    private lazy var cartStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.addArrangedSubview(tableView)
+        stackView.addArrangedSubview(infoStackView)
+        return stackView
+    }()
+    
+    private lazy var emptyStateView: UIView = {
+        let view = UIView()
+        return view
     }()
     
     private var dataSource: DataSourceManagerProtocol
@@ -81,23 +100,25 @@ final class CartViewController: UIViewController {
         setupNavigationBar()
         setupConstraints()
         createDataSource()
+        bind()
         
     }
     
     private func createDataSource() {
-        dataSource.createDataSource(for: tableView)
+        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
     }
-}
-
-extension CartViewController: CoordinatableProtocol {
-    // TODO: Populate
     
+    private func bind() {
+        viewModel.$visibleRows.bind { [weak self] rows in
+            self?.dataSource.updateTableView(with: rows)
+        }
+    }
 }
 
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getRowHeight(for: indexPath)
+        return dataSource.getRowHeight(for: tableView)
     }
 }
 
@@ -135,31 +156,19 @@ private extension CartViewController {
 // MARK: - Ext Constraints
 private extension CartViewController {
     func setupConstraints() {
-        setupInfoStackView()
-        setupTableView()
+        setupCartStackView()
        
     }
     
-    func setupInfoStackView() {
-        view.addSubview(infoStackView)
-        infoStackView.translatesAutoresizingMaskIntoConstraints = false
+    func setupCartStackView() {
+        view.addSubview(cartStackView)
+        cartStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            infoStackView.heightAnchor.constraint(equalToConstant: 76),
-            infoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            infoStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            infoStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-    
-    func setupTableView() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
-            tableView.bottomAnchor.constraint(equalTo: infoStackView.topAnchor)
+            cartStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            cartStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            cartStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            cartStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
