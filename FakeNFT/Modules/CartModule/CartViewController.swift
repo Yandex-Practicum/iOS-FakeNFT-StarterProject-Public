@@ -9,6 +9,8 @@ import UIKit
 
 final class CartViewController: UIViewController {
     
+    var onProceed: (() -> Void)?
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.defaultReuseIdentifier)
@@ -89,6 +91,7 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: CoordinatableProtocol {
     // TODO: Populate
+    
 }
 
 // MARK: - Ext TableView delegate
@@ -101,7 +104,7 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
-        print("filter tapped")
+        onProceed?()
     }
 }
 

@@ -9,11 +9,12 @@ import UIKit
 
 protocol CoordinatableProtocol {
     // передача универсальных событий в координатор: returnOnCancel, returnOnSuccess etc.
+    var onProceed: (() -> Void)? { get set }
 }
 
 protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
-    func makeCartScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
+    func makeCartScreenView() -> Presentable & CoordinatableProtocol // TODO: потом заменить на протокол CoordinatableProtocol
     
     // TODO: добавить два метода с основными экранами - профиль и статистика
     
@@ -28,7 +29,7 @@ final class ModulesFactory: ModulesFactoryProtocol {
         return CatalogViewController()
     }
     
-    func makeCartScreenView() -> UIViewController {
+    func makeCartScreenView() -> Presentable & CoordinatableProtocol {
         // можно настроить экран перед созданием - все зависимые свойства, делегаты и пр.
         let dataSource = CartDataSourceManager()
         let viewModel = CartViewModel()

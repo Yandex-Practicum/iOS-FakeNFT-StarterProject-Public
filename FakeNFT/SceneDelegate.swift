@@ -22,6 +22,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate: RouterDelegate {
     func setupRootViewController(_ viewController: UIViewController?) {
+        guard let viewController else { return }
         window?.rootViewController = viewController
     }
     
