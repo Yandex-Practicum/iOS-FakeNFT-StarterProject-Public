@@ -47,7 +47,7 @@ private extension CartDataSourceManager {
             for: indexPath
         ) as? CartTableViewCell
         else { return UITableViewCell(frame: .zero) }
-        cell.applyCellModel(from: item)
+        cell.viewModel = CartCellViewModel(cartRow: item)        
         return cell
     }
     

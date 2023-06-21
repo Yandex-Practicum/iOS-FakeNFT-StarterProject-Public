@@ -6,17 +6,27 @@
 //
 
 import UIKit
+import Combine
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
-    var cellModel: CartRow?
+    private var cancellables = Set<AnyCancellable>()
+        
+    var viewModel: CartCellViewModel? {
+        didSet {
+            viewModel?.$cartRow
+                .sink(receiveValue: { newCartRow in
+                    self.updateCell(with: newCartRow)
+                })
+                .store(in: &cancellables)
+        }
+    }
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: cellModel?.imageName ?? "")
         return imageView
     }()
     
@@ -36,12 +46,11 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftName: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
-        label.text = cellModel?.nftName
         return label
     }()
     
     private lazy var rateStackView: RateStackView = {
-        let stackView = RateStackView(rating: cellModel?.rate ?? 0)
+        let stackView = RateStackView(rating: 0)
         return stackView
     }()
     
@@ -53,7 +62,6 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftPriceLabel: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
-        label.text = "\(cellModel?.price ?? 99.99) \(cellModel?.coinName ?? "Error")"
         return label
     }()
     
@@ -96,14 +104,15 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
-        
     }
     
-    func applyCellModel(from model: CartRow) {
-        cellModel = model
+    private func updateCell(with newRow: CartRow ) {
+        nftImageView.image = UIImage(named: newRow.imageName)
+        nftName.text = newRow.nftName
+        rateStackView = RateStackView(rating: newRow.rate)
+        nftPriceLabel.text = "\(newRow.price) \(newRow.coinName)"
         
     }
-    
 }
 
 // MARK: - @objc
