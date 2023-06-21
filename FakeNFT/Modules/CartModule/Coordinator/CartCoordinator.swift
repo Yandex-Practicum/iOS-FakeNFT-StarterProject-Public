@@ -37,6 +37,7 @@ private extension CartCoordinator {
         
         cartScreen.onFilter = { [weak self]  in
             self?.showFilterAlert(from: cartScreen)
+            
         }
         
         router.addTabBarItem(navController)
@@ -44,10 +45,12 @@ private extension CartCoordinator {
     
     func showFilterAlert(from screen: CoordinatableProtocol) {
         let alert = alertConstructor.constructFilterAlert()
+        
         alertConstructor.addFilterAlertActions(from: alert) { [weak router] filter in
             filter == .cancel ? () : screen.setupFilter(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
+        
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 final class CartViewController: UIViewController, CoordinatableProtocol {
     // CoordinatableProtocol properties
     var onFilter: (() -> Void)?
+    var onDelete: (() -> Void)?
     func setupFilter(_ filter: CartFilter) {
         self.chosenFilter = filter
     }

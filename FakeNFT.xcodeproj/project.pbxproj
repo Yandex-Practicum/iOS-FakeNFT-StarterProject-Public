@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		373A29B32A434C0400F5BB83 /* AlertConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B22A434C0400F5BB83 /* AlertConstructor.swift */; };
+		373A29B62A43677100F5BB83 /* CartDeleteItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */; };
+		373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */; };
 		374EB02C2A3DFBCF00D57F36 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02B2A3DFBCF00D57F36 /* MainCoordinator.swift */; };
 		374EB02E2A3DFBE500D57F36 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02D2A3DFBE500D57F36 /* Router.swift */; };
 		374EB0302A3DFD5C00D57F36 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02F2A3DFD5C00D57F36 /* CoordinatorFactory.swift */; };
@@ -73,6 +75,8 @@
 
 /* Begin PBXFileReference section */
 		373A29B22A434C0400F5BB83 /* AlertConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertConstructor.swift; sourceTree = "<group>"; };
+		373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDeleteItemViewController.swift; sourceTree = "<group>"; };
+		373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
 		374EB02B2A3DFBCF00D57F36 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		374EB02D2A3DFBE500D57F36 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		374EB02F2A3DFD5C00D57F36 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
@@ -154,6 +158,14 @@
 				373A29B22A434C0400F5BB83 /* AlertConstructor.swift */,
 			);
 			path = AlertConstructor;
+			sourceTree = "<group>";
+		};
+		373A29B42A43675200F5BB83 /* CartDeleteItemScreen */ = {
+			isa = PBXGroup;
+			children = (
+				373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */,
+			);
+			path = CartDeleteItemScreen;
 			sourceTree = "<group>";
 		};
 		374EB02A2A3DFBC200D57F36 /* Navigation */ = {
@@ -269,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				377DF5E72A3F96B100090DCD /* CartTableViewCell.swift */,
+				373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				37B579FA2A41F6A3000FE88B /* CartMainScreen */,
+				373A29B42A43675200F5BB83 /* CartDeleteItemScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -627,6 +641,7 @@
 				377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */,
 				377DF5F42A3FA4DE00090DCD /* RateStarButton.swift in Sources */,
 				374EB0452A3E033800D57F36 /* MainTabBarController.swift in Sources */,
+				373A29B62A43677100F5BB83 /* CartDeleteItemViewController.swift in Sources */,
 				377DF5F22A3FA3CC00090DCD /* RateStackView.swift in Sources */,
 				374EB0432A3E030400D57F36 /* TabBarCoordinator.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
@@ -643,6 +658,7 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */,
 				374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */,
+				373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */,
 				37DFD16A2A408F090020667A /* CustomActionButton.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				374EB0402A3E029B00D57F36 /* CartCoordinator.swift in Sources */,
