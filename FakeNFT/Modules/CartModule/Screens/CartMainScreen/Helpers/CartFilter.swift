@@ -22,4 +22,17 @@ enum CartFilter: CaseIterable {
             return NSLocalizedString("Закрыть", comment: "")
         }
     }
+    
+    var style: UIAlertAction.Style {
+        switch self {
+        case .price:
+            return .default
+        case .rating:
+            return .default
+        case .name:
+            return .default
+        case .cancel:
+            return .cancel
+        }
+    }
 }

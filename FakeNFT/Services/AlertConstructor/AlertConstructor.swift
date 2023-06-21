@@ -21,11 +21,10 @@ extension AlertConstructor: AlertConstructable {
     
     func addFilterAlertActions(from alert: UIAlertController, handler: @escaping (CartFilter) -> Void) {
         CartFilter.allCases.forEach { filter in
-            let style: UIAlertAction.Style = filter == .cancel ? .cancel : .default
             alert.addAction(
                 UIAlertAction(
                     title: filter.description,
-                    style: style,
+                    style: filter.style,
                     handler: { _ in
                         handler(filter)
                     }))
