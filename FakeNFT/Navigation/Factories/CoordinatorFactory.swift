@@ -16,21 +16,32 @@ protocol CoordinatorFactoryProtocol {
 final class CoordinatorFactory  {
     private let modulesFactory: ModulesFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
+    private let alertConstructor: AlertConstructable = AlertConstructor()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
     func makeTabBarCoordinator(with router: Routable) -> CoordinatorProtocol {
-        TabBarCoordinator(factory: self, router: router) // создаем корневой координатор для управления модулями
+        TabBarCoordinator(
+            factory: self,
+            router: router) // создаем корневой координатор для управления модулями
     }
     
     func makeCatalogCoordinator(with router: Routable) -> CoordinatorProtocol {
         // создаем координатор модуля для настройки экрана, иконки таббара и всего остального
-        CatalogCoordinator(factory: modulesFactory, router: router, navigationControllerFactory: navigationControllerFactory)
+        CatalogCoordinator(
+            factory: modulesFactory,
+            router: router,
+            navigationControllerFactory: navigationControllerFactory)
     }
     
     func makeCartCoordinator(with router: Routable) -> CoordinatorProtocol {
         // создаем координатор модуля для настройки экрана, иконки таббара и всего остального
-        CartCoordinator(factory: modulesFactory, router: router, navigationControllerFactory: navigationControllerFactory)
+        CartCoordinator(
+            factory: modulesFactory,
+            router: router,
+            navigationControllerFactory: navigationControllerFactory,
+            alertConstructor: alertConstructor
+        )
     }
     
     // MARK: Инструкция по созданию модулей
