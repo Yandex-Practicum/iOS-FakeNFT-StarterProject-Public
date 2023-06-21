@@ -9,7 +9,7 @@ import UIKit
 
 protocol CoordinatableProtocol {
     // передача универсальных событий в координатор: returnOnCancel, returnOnSuccess etc.
-    var onProceed: (() -> Void)? { get set }
+    var onFilter: (() -> Void)? { get set }
     func setupFilter(_ filter: CartFilter)
 }
 
