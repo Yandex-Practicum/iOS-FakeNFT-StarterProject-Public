@@ -35,7 +35,7 @@ private extension CartCoordinator {
         var cartScreen = factory.makeCartScreenView()
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
-        cartScreen.onProceed = { [weak self]  in
+        cartScreen.onFilter = { [weak self]  in
             self?.showFilterAlert(from: cartScreen)
         }
         

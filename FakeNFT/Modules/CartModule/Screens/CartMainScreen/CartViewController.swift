@@ -9,7 +9,7 @@ import UIKit
 
 final class CartViewController: UIViewController, CoordinatableProtocol {
     // CoordinatableProtocol properties
-    var onProceed: (() -> Void)?
+    var onFilter: (() -> Void)?
     func setupFilter(_ filter: CartFilter) {
         self.chosenFilter = filter
     }
@@ -141,7 +141,7 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
-        onProceed?()
+        onFilter?()
     }
 }
 
