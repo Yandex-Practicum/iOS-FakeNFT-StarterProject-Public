@@ -12,11 +12,17 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var factory: ModulesFactoryProtocol
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
+    private var alertConstructor: AlertConstructable
     
-    init(factory: ModulesFactoryProtocol, router: Routable, navigationControllerFactory: NavigationControllerFactoryProtocol) {
+    init(factory: ModulesFactoryProtocol,
+         router: Routable,
+         navigationControllerFactory: NavigationControllerFactoryProtocol,
+         alertConstructor: AlertConstructable) {
+        
         self.factory = factory
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
+        self.alertConstructor = alertConstructor
     }
     
     func start() {
@@ -30,33 +36,18 @@ private extension CartCoordinator {
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onProceed = { [weak self]  in
-            self?.createFilterAlert(from: cartScreen)
+            self?.showFilterAlert(from: cartScreen)
         }
         
         router.addTabBarItem(navController)
     }
     
-    func createFilterAlert(from screen: CoordinatableProtocol) {
-        let alert = factory.makeCartFilterScreenView()
-        alert.addAction(UIAlertAction(title: CartFilter.price.description, style: .default, handler: { [weak router] _ in
-            screen.setupFilter(.price)
+    func showFilterAlert(from screen: CoordinatableProtocol) {
+        let alert = alertConstructor.constructFilterAlert()
+        alertConstructor.addFilterAlertActions(from: alert) { [weak router] filter in
+            filter == .cancel ? () : screen.setupFilter(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: CartFilter.rating.description, style: .default, handler: { [weak router] _ in
-            screen.setupFilter(.rating)
-            router?.dismissToRootViewController(animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: CartFilter.name.description, style: .default, handler: { [weak router] _ in
-            screen.setupFilter(.name)
-            router?.dismissToRootViewController(animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: CartFilter.cancel.description, style: .cancel, handler: { [weak router] _ in
-            router?.dismissToRootViewController(animated: true, completion: nil)
-        }))
-                
+        }
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
 }

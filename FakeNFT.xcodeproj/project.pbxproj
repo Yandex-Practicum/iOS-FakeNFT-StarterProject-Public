@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		373A29B32A434C0400F5BB83 /* AlertConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B22A434C0400F5BB83 /* AlertConstructor.swift */; };
 		374EB02C2A3DFBCF00D57F36 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02B2A3DFBCF00D57F36 /* MainCoordinator.swift */; };
 		374EB02E2A3DFBE500D57F36 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02D2A3DFBE500D57F36 /* Router.swift */; };
 		374EB0302A3DFD5C00D57F36 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB02F2A3DFD5C00D57F36 /* CoordinatorFactory.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		373A29B22A434C0400F5BB83 /* AlertConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertConstructor.swift; sourceTree = "<group>"; };
 		374EB02B2A3DFBCF00D57F36 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		374EB02D2A3DFBE500D57F36 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		374EB02F2A3DFD5C00D57F36 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
@@ -146,6 +148,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		373A29B12A434BF100F5BB83 /* AlertConstructor */ = {
+			isa = PBXGroup;
+			children = (
+				373A29B22A434C0400F5BB83 /* AlertConstructor.swift */,
+			);
+			path = AlertConstructor;
+			sourceTree = "<group>";
+		};
 		374EB02A2A3DFBC200D57F36 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +390,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				373A29B12A434BF100F5BB83 /* AlertConstructor */,
 				3FC8C38F29D245250081F015 /* Requests */,
 			);
 			path = Services;
@@ -636,6 +647,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				374EB0402A3E029B00D57F36 /* CartCoordinator.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				373A29B32A434C0400F5BB83 /* AlertConstructor.swift in Sources */,
 				374EB0382A3DFEB000D57F36 /* TabBarItem.swift in Sources */,
 				374EB04D2A3E1E7E00D57F36 /* CatalogCoordinator.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,

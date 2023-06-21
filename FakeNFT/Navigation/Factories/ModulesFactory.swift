@@ -16,7 +16,6 @@ protocol CoordinatableProtocol {
 protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
     func makeCartScreenView() -> Presentable & CoordinatableProtocol
-    func makeCartFilterScreenView() -> UIAlertController
     
     // TODO: добавить два метода с основными экранами - профиль и статистика
     
@@ -37,10 +36,4 @@ final class ModulesFactory: ModulesFactoryProtocol {
         let viewModel = CartViewModel()
         return CartViewController(dataSource: dataSource, viewModel: viewModel)
     }
-    
-    func makeCartFilterScreenView() -> UIAlertController {
-        return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
-    }
-    
-    
 }
