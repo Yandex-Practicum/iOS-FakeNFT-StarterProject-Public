@@ -16,6 +16,10 @@ struct Constants {
         static let statistics = "StatisticsIcon"
         static let sort = "SortingIcon"
         static let edit = "EditingIcon"
+        static let inactiveLike = "InactiveLike"
+        static let activeLike = "ActiveLike"
+        static let inactiveRating = "RatingInactive"
+        static let activeRating = "RatingActive"
     }
 
     struct ImageNames {
@@ -25,5 +29,6 @@ struct Constants {
 
     struct CollectionElementNames {
         static let profileMenuCell = "ProfileMenuCell"
+        static let profileNFTCell = "ProfileNFTCell"
     }
 }

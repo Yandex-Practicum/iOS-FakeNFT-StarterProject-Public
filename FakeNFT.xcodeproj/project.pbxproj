@@ -22,6 +22,7 @@
 		3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 3FC8C39629D24D9D0081F015 /* .swiftlint.yml */; };
+		618CD38D2A4449B1003612DD /* ProfileUIUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CD38C2A4449B1003612DD /* ProfileUIUpdateDelegate.swift */; };
 		61D4B0EF2A3EE8660082B4D2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */; };
 		61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F02A3EE9450082B4D2 /* Constants.swift */; };
 		61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */; };
@@ -40,6 +41,13 @@
 		61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */; };
 		61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */; };
 		61DAB01B2A41AD2D00CC103B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */; };
+		61DAB0202A42DD1F00CC103B /* ProfileNFTScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB01F2A42DD1F00CC103B /* ProfileNFTScreenController.swift */; };
+		61DAB0222A42DD8B00CC103B /* ProfileNFTScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0212A42DD8B00CC103B /* ProfileNFTScreenViewModel.swift */; };
+		61DAB0252A42E07600CC103B /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0242A42E07600CC103B /* NFTCell.swift */; };
+		61DAB0282A4305AD00CC103B /* ProfileNFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0272A4305AD00CC103B /* ProfileNFTRequest.swift */; };
+		61DAB02A2A4308FD00CC103B /* ProfileNFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0292A4308FD00CC103B /* ProfileNFTModel.swift */; };
+		61DAB0312A4323A900CC103B /* AuthorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0302A4323A900CC103B /* AuthorRequest.swift */; };
+		61DAB0332A43243900CC103B /* AuthorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0322A43243900CC103B /* AuthorModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +85,7 @@
 		3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsReusingUtils.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		3FC8C39629D24D9D0081F015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		618CD38C2A4449B1003612DD /* ProfileUIUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIUpdateDelegate.swift; sourceTree = "<group>"; };
 		61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		61D4B0F02A3EE9450082B4D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -95,6 +104,13 @@
 		61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenController.swift; sourceTree = "<group>"; };
 		61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenViewModel.swift; sourceTree = "<group>"; };
 		61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		61DAB01F2A42DD1F00CC103B /* ProfileNFTScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNFTScreenController.swift; sourceTree = "<group>"; };
+		61DAB0212A42DD8B00CC103B /* ProfileNFTScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNFTScreenViewModel.swift; sourceTree = "<group>"; };
+		61DAB0242A42E07600CC103B /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
+		61DAB0272A4305AD00CC103B /* ProfileNFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNFTRequest.swift; sourceTree = "<group>"; };
+		61DAB0292A4308FD00CC103B /* ProfileNFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNFTModel.swift; sourceTree = "<group>"; };
+		61DAB0302A4323A900CC103B /* AuthorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorRequest.swift; sourceTree = "<group>"; };
+		61DAB0322A43243900CC103B /* AuthorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				61DAB00B2A40C98300CC103B /* ProfileModel.swift */,
+				61DAB0292A4308FD00CC103B /* ProfileNFTModel.swift */,
+				61DAB0322A43243900CC103B /* AuthorModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -246,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				61DAB00D2A40CA3A00CC103B /* ProfileRequest.swift */,
+				61DAB0272A4305AD00CC103B /* ProfileNFTRequest.swift */,
+				61DAB0302A4323A900CC103B /* AuthorRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -292,8 +312,10 @@
 		61D7BEF52A4082C10059CE5A /* ProfileScene */ = {
 			isa = PBXGroup;
 			children = (
+				618CD38C2A4449B1003612DD /* ProfileUIUpdateDelegate.swift */,
 				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
 				61DAB0132A41869B00CC103B /* ProfileEditingScreen */,
+				61DAB01C2A42DCEE00CC103B /* ProfileNFTScreen */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -363,6 +385,40 @@
 				61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61DAB01C2A42DCEE00CC103B /* ProfileNFTScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB01E2A42DD0C00CC103B /* View */,
+				61DAB01D2A42DD0400CC103B /* ViewModel */,
+			);
+			path = ProfileNFTScreen;
+			sourceTree = "<group>";
+		};
+		61DAB01D2A42DD0400CC103B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0212A42DD8B00CC103B /* ProfileNFTScreenViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61DAB01E2A42DD0C00CC103B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0232A42E05800CC103B /* Cells */,
+				61DAB01F2A42DD1F00CC103B /* ProfileNFTScreenController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61DAB0232A42E05800CC103B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				61DAB0242A42E07600CC103B /* NFTCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -530,8 +586,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */,
+				61DAB0332A43243900CC103B /* AuthorModel.swift in Sources */,
 				61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */,
 				61DAB0122A40D69B00CC103B /* UIImageView+Extensions.swift in Sources */,
+				61DAB0222A42DD8B00CC103B /* ProfileNFTScreenViewModel.swift in Sources */,
+				618CD38D2A4449B1003612DD /* ProfileUIUpdateDelegate.swift in Sources */,
+				61DAB0252A42E07600CC103B /* NFTCell.swift in Sources */,
 				3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */,
@@ -539,9 +599,13 @@
 				61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */,
+				61DAB0282A4305AD00CC103B /* ProfileNFTRequest.swift in Sources */,
+				61DAB02A2A4308FD00CC103B /* ProfileNFTModel.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				61D7BEF42A4082860059CE5A /* UICreator.swift in Sources */,
+				61DAB0202A42DD1F00CC103B /* ProfileNFTScreenController.swift in Sources */,
 				61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */,
+				61DAB0312A4323A900CC103B /* AuthorRequest.swift in Sources */,
 				61D7BEFB2A4082C10059CE5A /* ProfileScreenViewModel.swift in Sources */,
 				61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */,
 				61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */,
