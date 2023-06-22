@@ -7,17 +7,12 @@
 
 import UIKit
 
-// MARK: - ProfileEditingScreenDelegate protocol
-protocol ProfileEditingScreenDelegate: AnyObject {
-    func updateUI()
-}
-
 // MARK: - ProfileEditingScreenController
 final class ProfileEditingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
     private var viewModel: ProfileEditingScreenViewModel?
-    private var delegate: ProfileEditingScreenDelegate?
+    private weak var delegate: ProfileUIUpdateDelegate?
 
     private let closeButton = {
         let button = UICreator.shared.makeButton(action: #selector(closeTapped))
@@ -53,7 +48,7 @@ final class ProfileEditingScreenController: UIViewController {
     private let descriptionStackView = UICreator.shared.makeStackView()
     private let linkStackView = UICreator.shared.makeStackView()
 
-    convenience init(forProfile profile: ProfileModel, delegate: ProfileEditingScreenDelegate) {
+    convenience init(forProfile profile: ProfileModel, delegate: ProfileUIUpdateDelegate) {
         self.init()
         self.viewModel = ProfileEditingScreenViewModel(profileToEdit: profile)
         self.delegate = delegate
@@ -61,6 +56,7 @@ final class ProfileEditingScreenController: UIViewController {
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.addKeyboardHiddingFeature()
         profileNameTextField.delegate = self
         profileLinkTextField.delegate = self
@@ -82,6 +78,7 @@ final class ProfileEditingScreenController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         delegate?.updateUI()
     }
 }

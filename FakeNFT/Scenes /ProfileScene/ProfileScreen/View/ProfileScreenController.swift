@@ -33,11 +33,13 @@ final class ProfileScreenController: UIViewController {
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .appWhite
         setupAutolayout()
         addSubviews()
         setupConstraints()
         (navigationController as? NavigationController)?.profileEditingButtonDelegate = self
+        navigationItem.backButtonTitle = ""
         profileMenuTableView.dataSource = self
         profileMenuTableView.delegate = self
         showOrHideUI()
@@ -149,6 +151,17 @@ extension ProfileScreenController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.row {
+        case 0:
+            navigationController?.pushViewController(
+                ProfileNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
+        case 1:
+            print(123)
+        case 2:
+            print(123)
+        default:
+            return
+        }
     }
 }
 
@@ -161,9 +174,8 @@ extension ProfileScreenController: ProfileEditingButtonDelegate {
 }
 
 // MARK: - ProfileEditingScreenDelegate
-extension ProfileScreenController: ProfileEditingScreenDelegate {
+extension ProfileScreenController: ProfileUIUpdateDelegate {
     func updateUI() {
-        print(123)
         DispatchQueue.global().sync { [weak self] in
             guard let self else { return }
             self.viewModel?.checkForData()
