@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol CartMainCoordinatableProtocol {
     var onFilter: (() -> Void)? { get set }
@@ -20,6 +21,9 @@ final class CartViewController: UIViewController {
     var onDelete: ((UUID?) -> Void)?
     var onProceed: (() -> Void)?
 
+    // Combine
+    private var cancellables = Set<AnyCancellable>()
+    
     // UI
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -122,12 +126,12 @@ final class CartViewController: UIViewController {
     }
     
     private func bind() {
-        viewModel.$visibleRows.bind { [weak self] rows in
+        viewModel.$visibleRows.sink { [weak self] rows in
             self?.dataSource.updateTableView(with: rows)
             self?.cartStackView.isHidden = rows.isEmpty
             self?.emptyStateLabel.isHidden = !rows.isEmpty
-            
         }
+        .store(in: &cancellables)
     }
     
     private func checkEmptyState() {

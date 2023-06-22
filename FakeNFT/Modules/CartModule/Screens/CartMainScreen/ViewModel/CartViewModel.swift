@@ -12,7 +12,7 @@ final class CartViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Observable private (set) var visibleRows: [CartRow] = []
+    @Published private (set) var visibleRows: [CartRow] = []
     private let dataStore: DataStorageProtocol
     
     var chosenFilter: CartFilter?
