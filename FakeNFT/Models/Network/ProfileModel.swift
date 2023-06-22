@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ProfileModel
-struct ProfileModel: Codable {
+class ProfileModel: Codable {
     var name: String
     var avatar: String
     var description: String

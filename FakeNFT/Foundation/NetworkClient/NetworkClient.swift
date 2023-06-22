@@ -74,6 +74,8 @@ struct DefaultNetworkClient: NetworkClient {
                 self.parse(data: data, type: type, onResponse: onResponse)
             case let .failure(error):
                 onResponse(.failure(error))
+                // TODO: Remove this print
+                print(error)
             }
         }
     }
@@ -102,8 +104,10 @@ struct DefaultNetworkClient: NetworkClient {
         do {
             let response = try decoder.decode(T.self, from: data)
             onResponse(.success(response))
-        } catch {
+        } catch let error {
             onResponse(.failure(NetworkClientError.parsingError))
+            // TODO: Remove this print
+            print(error)
         }
     }
 }
