@@ -36,13 +36,13 @@ final class CartViewController: UIViewController {
     
     private lazy var totalNFTCount: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-        label.text = "3 NFT" // TODO: connect to data store
+//        label.text = "3 NFT" // TODO: connect to data store
         return label
     }()
     
     private lazy var totalToPay: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .universalGreen)
-        label.text = "5,34 ETH" // TODO: connect to data store
+//        label.text = "5,34 ETH" // TODO: connect to data store
         return label
     }()
     
@@ -96,12 +96,12 @@ final class CartViewController: UIViewController {
         return label
     }()
     
-    private var dataSource: DataSourceManagerProtocol
+    private var diffableDataSource: DataSourceManagerProtocol
     private var viewModel: CartViewModel
     
     // MARK: Init
     init(dataSource: DataSourceManagerProtocol, viewModel: CartViewModel) {
-        self.dataSource = dataSource
+        self.diffableDataSource = dataSource
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -122,12 +122,13 @@ final class CartViewController: UIViewController {
     }
     
     private func createDataSource() {
-        dataSource.createDataSource(for: tableView, with: viewModel.getItems())
+        diffableDataSource.createDataSource(for: tableView, with: viewModel.getItems())
     }
     
     private func bind() {
         viewModel.$visibleRows.sink { [weak self] rows in
-            self?.dataSource.updateTableView(with: rows)
+            self?.diffableDataSource.updateTableView(with: rows)
+            self?.updateTotalLabels(from: rows)
             self?.cartStackView.isHidden = rows.isEmpty
             self?.emptyStateLabel.isHidden = !rows.isEmpty
         }
@@ -137,6 +138,11 @@ final class CartViewController: UIViewController {
     private func checkEmptyState() {
         cartStackView.isHidden = viewModel.visibleRows.isEmpty
         emptyStateLabel.isHidden = !viewModel.visibleRows.isEmpty
+    }
+    
+    private func updateTotalLabels(from rows: [CartRow]) {
+        totalNFTCount.text = "\(rows.count) NFT"
+        totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
     }
 }
 
@@ -150,7 +156,7 @@ extension CartViewController: CartMainCoordinatableProtocol {
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getRowHeight(for: tableView)
+        return diffableDataSource.getRowHeight(for: tableView)
     }
 }
 
