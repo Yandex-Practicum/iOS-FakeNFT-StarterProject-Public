@@ -7,20 +7,19 @@
 
 import UIKit
 
-final class CartViewController: UIViewController, CoordinatableProtocol {
-    // CoordinatableProtocol properties
+protocol CartMainCoordinatableProtocol {
+    var onFilter: (() -> Void)? { get set }
+    var onDelete: ((UUID?) -> Void)? { get set }
+    var onProceed: (() -> Void)? { get set }
+    func setupFilter(_ filter: CartFilter)
+}
+
+final class CartViewController: UIViewController {
+    // CartMainCoordinatableProtocol properties
     var onFilter: (() -> Void)?
-    var onDelete: (() -> Void)?
-    func setupFilter(_ filter: CartFilter) {
-        self.chosenFilter = filter
-    }
-    
-    private var chosenFilter: CartFilter? {
-        didSet {
-            print(chosenFilter)
-        }
-    }
-    
+    var onDelete: ((UUID?) -> Void)?
+    var onProceed: (() -> Void)?
+
     // UI
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -41,6 +40,12 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
         let label = CustomLabel(size: 17, weight: .bold, color: .universalGreen)
         label.text = "5,34 ETH" // TODO: connect to data store
         return label
+    }()
+    
+    private lazy var proceedButton: CustomActionButton = {
+        let button = CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm)
+        button.addTarget(self, action: #selector(proceedTapped), for: .touchUpInside)
+        return button
     }()
     
     private lazy var totalPurchasesStackView: UIStackView = {
@@ -68,7 +73,7 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
         stackView.heightAnchor.constraint(equalToConstant: 74).isActive = true
         
         stackView.addArrangedSubview(totalPurchasesStackView)
-        stackView.addArrangedSubview(CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm))
+        stackView.addArrangedSubview(proceedButton)
         return stackView
     }()
     
@@ -110,11 +115,10 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
         createDataSource()
         bind()
         checkEmptyState()
-        
     }
     
     private func createDataSource() {
-        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
+        dataSource.createDataSource(for: tableView, with: viewModel.getItems())
     }
     
     private func bind() {
@@ -132,6 +136,13 @@ final class CartViewController: UIViewController, CoordinatableProtocol {
     }
 }
 
+// MARK: - Ext CartMainCoordinatableProtocol {
+extension CartViewController: CartMainCoordinatableProtocol {
+    func setupFilter(_ filter: CartFilter) {
+        viewModel.chosenFilter = filter
+    }
+}
+
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -139,10 +150,21 @@ extension CartViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Ext CartCellDelegate
+extension CartViewController: CartCellDelegate {
+    func didDeletedItem(with id: UUID?) {
+        onDelete?(id)
+    }
+}
+
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
         onFilter?()
+    }
+    
+    func proceedTapped() {
+        onProceed?()
     }
 }
 

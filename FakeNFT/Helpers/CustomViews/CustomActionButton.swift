@@ -9,12 +9,23 @@ import UIKit
 
 final class CustomActionButton: UIButton {
     
-    init(title: String, appearance: Appearance) {
+    init(title: String, appearance: Appearance, cornerRadius: CGFloat? = nil, fontWeight: UIFont.Weight? = nil) {
         super.init(frame: .zero)
         setAppearance(for: appearance)
         setTitle(title, for: .normal)
-        layer.cornerRadius = 16
-        titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        
+        if let cornerRadius {
+            layer.cornerRadius = cornerRadius
+        } else {
+            layer.cornerRadius = 16
+        }
+        
+        if let fontWeight {
+            titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: fontWeight)
+        } else {
+            titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        }
+       
         titleLabel?.textAlignment = .center
     }
     
@@ -35,10 +46,8 @@ extension CustomActionButton {
             backgroundColor = .ypBlack
             isEnabled = true
         case .cancel:
-            setTitleColor(.red, for: .normal)
-            backgroundColor = .ypWhite
-            layer.borderWidth = 1
-            layer.borderColor = UIColor.red.cgColor
+            setTitleColor(.universalRed, for: .normal)
+            backgroundColor = .ypBlack
             isEnabled = true
         case .hidden:
             isHidden = true

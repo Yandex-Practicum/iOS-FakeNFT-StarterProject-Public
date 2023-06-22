@@ -17,6 +17,7 @@ final class CoordinatorFactory  {
     private let modulesFactory: ModulesFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable = AlertConstructor()
+    private let dataStore: DataStorageProtocol = DataStore()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -40,7 +41,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             factory: modulesFactory,
             router: router,
             navigationControllerFactory: navigationControllerFactory,
-            alertConstructor: alertConstructor
+            alertConstructor: alertConstructor,
+            dataStore: dataStore
         )
     }
     

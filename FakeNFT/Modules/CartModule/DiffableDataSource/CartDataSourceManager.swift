@@ -8,6 +8,7 @@
 import UIKit
 
 protocol DataSourceManagerProtocol {
+    var delegate: CartCellDelegate? { get set }
     func createDataSource(for tableView: UITableView, with data: [CartRow])
     func updateTableView(with data: [CartRow])
     func getRowHeight(for tableView: UITableView) -> CGFloat
@@ -18,7 +19,7 @@ final class CartDataSourceManager {
     typealias Snapshot = NSDiffableDataSourceSnapshot<CartSection, CartRow>
     
     private var dataSource: DataSource?
-    
+    weak var delegate: CartCellDelegate?
 }
 
 extension CartDataSourceManager: DataSourceManagerProtocol {
@@ -47,7 +48,8 @@ private extension CartDataSourceManager {
             for: indexPath
         ) as? CartTableViewCell
         else { return UITableViewCell(frame: .zero) }
-        cell.viewModel = CartCellViewModel(cartRow: item)        
+        cell.viewModel = CartCellViewModel(cartRow: item)
+        cell.delegate = delegate
         return cell
     }
     
