@@ -7,17 +7,10 @@
 
 import UIKit
 
-protocol CoordinatableProtocol {
-    // передача универсальных событий в координатор: returnOnCancel, returnOnSuccess etc.
-    var onFilter: (() -> Void)? { get set }
-    var onDelete: (() -> Void)? { get set }
-    func setupFilter(_ filter: CartFilter)
-}
-
 protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
-    func makeCartScreenView() -> Presentable & CoordinatableProtocol
-    
+    func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     // TODO: добавить два метода с основными экранами - профиль и статистика
     
     // Здесь создаем основной экран модуля таббара, затем здесь же можно создавать экраны для дальнейших переходов в рамках модуля
@@ -31,10 +24,18 @@ final class ModulesFactory: ModulesFactoryProtocol {
         return CatalogViewController()
     }
     
-    func makeCartScreenView() -> Presentable & CoordinatableProtocol {
+    func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol {
         // можно настроить экран перед созданием - все зависимые свойства, делегаты и пр.
         let dataSource = CartDataSourceManager()
-        let viewModel = CartViewModel()
-        return CartViewController(dataSource: dataSource, viewModel: viewModel)
+        let viewModel = CartViewModel(dataStore: dataStore)
+        let viewController = CartViewController(dataSource: dataSource, viewModel: viewModel)
+        dataSource.delegate = viewController
+        return viewController
+    }
+    
+    func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol {
+        let viewModel = CartDeleteViewModel(dataStore: dataStore)
+        let viewController = CartDeleteItemViewController(viewModel: viewModel)
+        return viewController
     }
 }

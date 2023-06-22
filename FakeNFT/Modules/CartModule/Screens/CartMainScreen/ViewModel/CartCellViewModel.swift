@@ -15,5 +15,4 @@ final class CartCellViewModel: ObservableObject {
     init(cartRow: CartRow) {
         self.cartRow = cartRow
     }
-    
 }

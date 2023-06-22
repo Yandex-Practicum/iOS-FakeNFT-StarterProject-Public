@@ -8,9 +8,14 @@
 import UIKit
 import Combine
 
+protocol CartCellDelegate: AnyObject {
+    func didDeletedItem(with id: UUID?)
+}
+
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var cancellables = Set<AnyCancellable>()
+    weak var delegate: CartCellDelegate?
         
     var viewModel: CartCellViewModel? {
         didSet {
@@ -21,6 +26,8 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
                 .store(in: &cancellables)
         }
     }
+    
+    private var id: UUID?
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -79,8 +86,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .leading
-        stackView.spacing = 12.75
-        stackView.distribution = .fillEqually
+        stackView.spacing = 12
         
         stackView.layoutMargins = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -111,6 +117,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         nftName.text = newRow.nftName
         rateStackView = RateStackView(rating: newRow.rate)
         nftPriceLabel.text = "\(newRow.price) \(newRow.coinName)"
+        id = newRow.id
         
     }
 }
@@ -118,7 +125,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
 // MARK: - @objc
 @objc private extension CartTableViewCell {
     func deleteTapped() {
-        print("delete tapped")
+        delegate?.didDeletedItem(with: id)
     }
 }
 
@@ -133,7 +140,6 @@ private extension CartTableViewCell {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)

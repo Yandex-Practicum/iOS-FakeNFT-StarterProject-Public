@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		372EEF7E2A447126008FDB16 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF7D2A447126008FDB16 /* DataStore.swift */; };
+		372EEF802A44729C008FDB16 /* CartDeleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF7F2A44729C008FDB16 /* CartDeleteViewModel.swift */; };
 		373A29B32A434C0400F5BB83 /* AlertConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B22A434C0400F5BB83 /* AlertConstructor.swift */; };
 		373A29B62A43677100F5BB83 /* CartDeleteItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */; };
 		373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */; };
@@ -74,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		372EEF7D2A447126008FDB16 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		372EEF7F2A44729C008FDB16 /* CartDeleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDeleteViewModel.swift; sourceTree = "<group>"; };
 		373A29B22A434C0400F5BB83 /* AlertConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertConstructor.swift; sourceTree = "<group>"; };
 		373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDeleteItemViewController.swift; sourceTree = "<group>"; };
 		373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
@@ -152,6 +156,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		372EEF792A445512008FDB16 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */,
+				373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		372EEF7C2A447115008FDB16 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				372EEF7D2A447126008FDB16 /* DataStore.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		372EEF812A4488C5008FDB16 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		372EEF822A4488CB008FDB16 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				372EEF7F2A44729C008FDB16 /* CartDeleteViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		373A29B12A434BF100F5BB83 /* AlertConstructor */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +200,8 @@
 		373A29B42A43675200F5BB83 /* CartDeleteItemScreen */ = {
 			isa = PBXGroup;
 			children = (
-				373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */,
+				372EEF812A4488C5008FDB16 /* View */,
+				372EEF822A4488CB008FDB16 /* ViewModel */,
 			);
 			path = CartDeleteItemScreen;
 			sourceTree = "<group>";
@@ -194,6 +232,7 @@
 				375230412A41B61F00DE6F73 /* Coordinator */,
 				37B579FB2A41F741000FE88B /* Screens */,
 				377DF5E12A3F953100090DCD /* DiffableDataSource */,
+				372EEF7C2A447115008FDB16 /* DataStore */,
 			);
 			path = CartModule;
 			sourceTree = "<group>";
@@ -280,8 +319,8 @@
 		377DF5E62A3F969E00090DCD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				374EB0522A3E1FE200D57F36 /* CartViewController.swift */,
 				377DF5E72A3F96B100090DCD /* CartTableViewCell.swift */,
-				373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -311,9 +350,8 @@
 		37B579FA2A41F6A3000FE88B /* CartMainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				374EB0522A3E1FE200D57F36 /* CartViewController.swift */,
-				377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */,
 				377DF5E62A3F969E00090DCD /* View */,
+				372EEF792A445512008FDB16 /* ViewModel */,
 				37B57A072A42310C000FE88B /* Helpers */,
 			);
 			path = CartMainScreen;
@@ -658,6 +696,8 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */,
 				374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */,
+				372EEF7E2A447126008FDB16 /* DataStore.swift in Sources */,
+				372EEF802A44729C008FDB16 /* CartDeleteViewModel.swift in Sources */,
 				373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */,
 				37DFD16A2A408F090020667A /* CustomActionButton.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
