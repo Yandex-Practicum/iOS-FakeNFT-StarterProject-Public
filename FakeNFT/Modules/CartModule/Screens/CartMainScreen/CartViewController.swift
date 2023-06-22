@@ -170,12 +170,6 @@ private extension CartViewController {
     }
 }
 
-extension CartViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-}
-
 // MARK: - Ext Constraints
 private extension CartViewController {
     func setupConstraints() {
