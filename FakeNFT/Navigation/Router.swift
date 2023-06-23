@@ -13,6 +13,7 @@ protocol Routable: AnyObject {
     func pushViewController(_ viewController: Presentable?, animated: Bool)
     func dismissViewController(_ viewController: Presentable?, animated: Bool, completion: (() -> Void)?)
     func dismissToRootViewController(animated: Bool, completion: (() -> Void)?)
+    func popToRootViewController(animated: Bool, completion: (() -> Void)?)
     func addTabBarItem(_ tab: Presentable?)
     
 }
@@ -45,6 +46,7 @@ extension Router: Routable {
               let rootVC = currentViewController as? UITabBarController,
               let navController = rootVC.selectedViewController as? UINavigationController
         else { return }
+        self.currentViewController = navController
         navController.pushViewController(vc, animated: animated)
     }
     
@@ -58,6 +60,12 @@ extension Router: Routable {
         let rootViewController = delegate?.returnRootViewController()
         self.currentViewController = rootViewController
         delegate?.dismissAllPresentedViewControllers()
+    }
+    
+    func popToRootViewController(animated: Bool, completion: (() -> Void)?) {
+        guard let pushedVC = currentViewController as? UINavigationController else { return }
+        pushedVC.popToRootViewController(animated: animated)
+        self.currentViewController = delegate?.returnRootViewController()
     }
     
     func addTabBarItem(_ tab: Presentable?) {

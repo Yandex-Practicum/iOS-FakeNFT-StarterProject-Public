@@ -10,11 +10,13 @@ import UIKit
 protocol CartPaymentMethodCoordinatableProtocol {
     var onProceed: (() -> Void)? { get set }
     var onTapUserLicense: (() -> Void)? { get set }
+    var onCancel: (() -> Void)? { get set }
 }
 
 final class CartPaymentMethodViewController: UIViewController, CartPaymentMethodCoordinatableProtocol {
     var onProceed: (() -> Void)?
     var onTapUserLicense: (() -> Void)?
+    var onCancel: (() -> Void)?
     
     private let viewModel: CartPaymentMethodViewModel
     private let dataSource: PaymentMethodDSManagerProtocol
@@ -99,7 +101,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = NSLocalizedString("Выберите способ оплаты", comment: "")
+        setupNavigationBar()
         setupConstraints()
         createDataSource()
     }
@@ -128,12 +130,35 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     func payTapped() {
         onProceed?()
     }
+    
+    func cancelTapped() {
+        onCancel?()
+    }
 }
 
+// MARK: - Ext DelegateFlowLayout
 extension CartPaymentMethodViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let interitemSpacing = 5.0
         return CGSize(width: collectionView.bounds.width * GridItemSize.half.rawValue - interitemSpacing, height: 46)
+    }
+}
+
+// MARK: - Ext Navigation Bar setup
+extension CartPaymentMethodViewController {
+    func setupNavigationBar() {
+        guard
+            let image = UIImage(systemName: K.Icons.chevronBackward)?
+                .withTintColor(
+                    .ypBlack ?? .red,
+                    renderingMode: .alwaysOriginal
+                )
+        else { return }
+        
+//        let leftItem = UIBarButtonItem(customView: UIImageView(image: image))
+        let customLeftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(cancelTapped))
+        navigationItem.title = NSLocalizedString("Выберите способ оплаты", comment: "")
+        navigationItem.leftBarButtonItem = customLeftItem
     }
 }
 
