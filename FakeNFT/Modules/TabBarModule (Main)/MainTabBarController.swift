@@ -26,7 +26,8 @@ private extension MainTabBarController {
         setTabBarItemColors(tabBarAppearance.inlineLayoutAppearance) // для ландшафтной ориентации на отдельных моделях
         setTabBarItemColors(tabBarAppearance.compactInlineLayoutAppearance) // для ландшафтной ориентации
         
-        tabBarAppearance.backgroundColor = .ypWhite
+        tabBarAppearance.backgroundColor = .systemBackground
+        tabBarAppearance.backgroundEffect = nil
         tabBar.standardAppearance = tabBarAppearance
         tabBar.tintColor = .ypBlack
     }
