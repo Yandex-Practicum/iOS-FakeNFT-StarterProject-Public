@@ -12,6 +12,7 @@ protocol ModulesFactoryProtocol {
     func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: PaymentMethodStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
+    func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
     // TODO: добавить два метода с основными экранами - профиль и статистика
     
     // Здесь создаем основной экран модуля таббара, затем здесь же можно создавать экраны для дальнейших переходов в рамках модуля
@@ -44,6 +45,12 @@ final class ModulesFactory: ModulesFactoryProtocol {
         let viewModel = CartPaymentMethodViewModel(dataStore: dataStore)
         let dataSource = PaymentMethodDataSourceManager()
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)
+        return viewController
+    }
+    
+    func makeCartWebViewScreenView() -> Presentable & WebViewProtocol {
+        let requestHandler = WebViewRequestHandler()
+        let viewController = WebViewController(requestHandler: requestHandler)
         return viewController
     }
 }

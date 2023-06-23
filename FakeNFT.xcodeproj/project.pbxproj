@@ -16,6 +16,8 @@
 		372EEF912A45D152008FDB16 /* PaymentMethodRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */; };
 		372EEF932A45D162008FDB16 /* PaymentMethodSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF922A45D162008FDB16 /* PaymentMethodSection.swift */; };
 		372EEF982A45D682008FDB16 /* PaymentMethodCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF972A45D682008FDB16 /* PaymentMethodCellViewModel.swift */; };
+		372EEF9E2A460AF3008FDB16 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEF9D2A460AF3008FDB16 /* WebViewController.swift */; };
+		372EEFA32A460F29008FDB16 /* WebViewRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372EEFA22A460F29008FDB16 /* WebViewRequestHandler.swift */; };
 		373A29B32A434C0400F5BB83 /* AlertConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B22A434C0400F5BB83 /* AlertConstructor.swift */; };
 		373A29B62A43677100F5BB83 /* CartDeleteItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */; };
 		373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */; };
@@ -92,6 +94,8 @@
 		372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodRow.swift; sourceTree = "<group>"; };
 		372EEF922A45D162008FDB16 /* PaymentMethodSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodSection.swift; sourceTree = "<group>"; };
 		372EEF972A45D682008FDB16 /* PaymentMethodCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodCellViewModel.swift; sourceTree = "<group>"; };
+		372EEF9D2A460AF3008FDB16 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		372EEFA22A460F29008FDB16 /* WebViewRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewRequestHandler.swift; sourceTree = "<group>"; };
 		373A29B22A434C0400F5BB83 /* AlertConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertConstructor.swift; sourceTree = "<group>"; };
 		373A29B52A43677100F5BB83 /* CartDeleteItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDeleteItemViewController.swift; sourceTree = "<group>"; };
 		373A29B72A43743D00F5BB83 /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 			children = (
 				372EEF882A449DD2008FDB16 /* View */,
 				372EEF8B2A449DF7008FDB16 /* ViewModel */,
+				372EEF8D2A45C7D2008FDB16 /* CollectionViewDiffableDS */,
 			);
 			path = CartPaymentMethodScreen;
 			sourceTree = "<group>";
@@ -248,6 +253,23 @@
 				372EEF922A45D162008FDB16 /* PaymentMethodSection.swift */,
 			);
 			path = CollectionViewDiffableDS;
+			sourceTree = "<group>";
+		};
+		372EEF9C2A460AD7008FDB16 /* WebViewScreen */ = {
+			isa = PBXGroup;
+			children = (
+				372EEF9D2A460AF3008FDB16 /* WebViewController.swift */,
+				372EEFA12A460F19008FDB16 /* Helper */,
+			);
+			path = WebViewScreen;
+			sourceTree = "<group>";
+		};
+		372EEFA12A460F19008FDB16 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				372EEFA22A460F29008FDB16 /* WebViewRequestHandler.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		373A29B12A434BF100F5BB83 /* AlertConstructor */ = {
@@ -292,7 +314,6 @@
 			children = (
 				375230412A41B61F00DE6F73 /* Coordinator */,
 				37B579FB2A41F741000FE88B /* Screens */,
-				377DF5E12A3F953100090DCD /* DiffableDataSource */,
 				372EEF7C2A447115008FDB16 /* DataStore */,
 			);
 			path = CartModule;
@@ -367,15 +388,6 @@
 			path = CartVMWrapper;
 			sourceTree = "<group>";
 		};
-		377DF5E12A3F953100090DCD /* DiffableDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				372EEF8C2A45C7BF008FDB16 /* TableViewDiffableDS */,
-				372EEF8D2A45C7D2008FDB16 /* CollectionViewDiffableDS */,
-			);
-			path = DiffableDataSource;
-			sourceTree = "<group>";
-		};
 		377DF5E62A3F969E00090DCD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +424,7 @@
 			children = (
 				377DF5E62A3F969E00090DCD /* View */,
 				372EEF792A445512008FDB16 /* ViewModel */,
+				372EEF8C2A45C7BF008FDB16 /* TableViewDiffableDS */,
 				37B57A072A42310C000FE88B /* Helpers */,
 			);
 			path = CartMainScreen;
@@ -423,6 +436,7 @@
 				37B579FA2A41F6A3000FE88B /* CartMainScreen */,
 				373A29B42A43675200F5BB83 /* CartDeleteItemScreen */,
 				372EEF832A44934A008FDB16 /* CartPaymentMethodScreen */,
+				372EEF9C2A460AD7008FDB16 /* WebViewScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -740,6 +754,7 @@
 				377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */,
 				377DF5F42A3FA4DE00090DCD /* RateStarButton.swift in Sources */,
 				372EEF852A449405008FDB16 /* CartPaymentMethodViewController.swift in Sources */,
+				372EEF9E2A460AF3008FDB16 /* WebViewController.swift in Sources */,
 				374EB0452A3E033800D57F36 /* MainTabBarController.swift in Sources */,
 				373A29B62A43677100F5BB83 /* CartDeleteItemViewController.swift in Sources */,
 				377DF5F22A3FA3CC00090DCD /* RateStackView.swift in Sources */,
@@ -760,6 +775,7 @@
 				372EEF982A45D682008FDB16 /* PaymentMethodCellViewModel.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				372EEF912A45D152008FDB16 /* PaymentMethodRow.swift in Sources */,
+				372EEFA32A460F29008FDB16 /* WebViewRequestHandler.swift in Sources */,
 				374EB02E2A3DFBE500D57F36 /* Router.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */,

@@ -43,7 +43,7 @@ extension Router: Routable {
     
     func pushViewController(_ viewController: Presentable?, animated: Bool) {
         guard let vc = viewController?.getVC(),
-              let rootVC = currentViewController as? UITabBarController,
+              let rootVC = delegate?.returnRootViewController() as? UITabBarController,
               let navController = rootVC.selectedViewController as? UINavigationController
         else { return }
         self.currentViewController = navController

@@ -34,6 +34,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 }
 
 private extension CartCoordinator {
+    // MARK: - Create CartScreen
     func createScreen() {
         var cartScreen = factory.makeCartScreenView(dataStore: dataStore)
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
@@ -53,6 +54,7 @@ private extension CartCoordinator {
         router.addTabBarItem(navController)
     }
     
+    // MARK: - FilterAlert
     func showFilterAlert(from screen: CartMainCoordinatableProtocol) {
         let alert = alertConstructor.constructFilterAlert()
         
@@ -64,6 +66,7 @@ private extension CartCoordinator {
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
     
+    // MARK: - DeleteItemScreen
     func showDeleteScreen(idToDelete: UUID?) {
         var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStore)
         deleteScreen.idToDelete = idToDelete
@@ -80,6 +83,7 @@ private extension CartCoordinator {
         router.presentViewController(deleteScreen, animated: true, presentationStyle: .overCurrentContext)
     }
     
+    // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
         var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore)
         
@@ -87,8 +91,8 @@ private extension CartCoordinator {
             
         }
         
-        paymentMethodScreen.onTapUserLicense = {
-            
+        paymentMethodScreen.onTapUserLicense = { [weak self] in
+            self?.showWebViewScreen()
         }
         
         paymentMethodScreen.onCancel = { [weak router] in
@@ -96,5 +100,12 @@ private extension CartCoordinator {
         }
         
         router.pushViewController(paymentMethodScreen, animated: true)
+    }
+    
+    func showWebViewScreen() {
+        var webView = factory.makeCartWebViewScreenView()
+        
+        
+        router.pushViewController(webView, animated: true)
     }
 }
