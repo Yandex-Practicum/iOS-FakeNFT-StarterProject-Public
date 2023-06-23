@@ -156,7 +156,8 @@ extension ProfileScreenController: UITableViewDelegate {
             navigationController?.pushViewController(
                 ProfileNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
         case 1:
-            print(123)
+            navigationController?.pushViewController(
+                ProfileFavoritedNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
         case 2:
             print(123)
         default:

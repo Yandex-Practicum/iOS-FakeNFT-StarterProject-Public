@@ -48,7 +48,6 @@ final class ProfileNFTScreenController: UIViewController {
         addSubviews()
         setupConstraints()
         nftTableView.dataSource = self
-        nftTableView.delegate = self
         showOrHideUI()
         bind()
     }
@@ -122,6 +121,7 @@ extension ProfileNFTScreenController {
             noNFTLabel.isHidden.toggle()
         }
     }
+
     private func showSortingAlert() {
         let alertController = UIAlertController(title: "Сортировка",
                                                 message: nil,
@@ -166,14 +166,6 @@ extension ProfileNFTScreenController: UITableViewDataSource {
         }
         cell.delegate = self
         return cell
-    }
-}
-
-// MARK: - UITableViewDataSourceDelegate
-extension ProfileNFTScreenController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -23,6 +23,9 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 3FC8C39629D24D9D0081F015 /* .swiftlint.yml */; };
 		618CD38D2A4449B1003612DD /* ProfileUIUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CD38C2A4449B1003612DD /* ProfileUIUpdateDelegate.swift */; };
+		618CD3922A45887D003612DD /* ProfileFavoritedNFTScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CD3912A45887D003612DD /* ProfileFavoritedNFTScreenController.swift */; };
+		618CD3942A458897003612DD /* ProfileFavoritedNFTScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CD3932A458897003612DD /* ProfileFavoritedNFTScreenViewModel.swift */; };
+		618CD3972A4588B6003612DD /* FavoritedNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CD3962A4588B6003612DD /* FavoritedNFTCell.swift */; };
 		61D4B0EF2A3EE8660082B4D2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */; };
 		61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F02A3EE9450082B4D2 /* Constants.swift */; };
 		61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */; };
@@ -86,6 +89,9 @@
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		3FC8C39629D24D9D0081F015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		618CD38C2A4449B1003612DD /* ProfileUIUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIUpdateDelegate.swift; sourceTree = "<group>"; };
+		618CD3912A45887D003612DD /* ProfileFavoritedNFTScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritedNFTScreenController.swift; sourceTree = "<group>"; };
+		618CD3932A458897003612DD /* ProfileFavoritedNFTScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritedNFTScreenViewModel.swift; sourceTree = "<group>"; };
+		618CD3962A4588B6003612DD /* FavoritedNFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedNFTCell.swift; sourceTree = "<group>"; };
 		61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		61D4B0F02A3EE9450082B4D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -270,6 +276,40 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		618CD38E2A45881D003612DD /* ProfileFavoritedNFTScreen */ = {
+			isa = PBXGroup;
+			children = (
+				618CD38F2A45884E003612DD /* View */,
+				618CD3902A45885C003612DD /* ViewModel */,
+			);
+			path = ProfileFavoritedNFTScreen;
+			sourceTree = "<group>";
+		};
+		618CD38F2A45884E003612DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				618CD3952A4588A6003612DD /* Cells */,
+				618CD3912A45887D003612DD /* ProfileFavoritedNFTScreenController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		618CD3902A45885C003612DD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				618CD3932A458897003612DD /* ProfileFavoritedNFTScreenViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		618CD3952A4588A6003612DD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				618CD3962A4588B6003612DD /* FavoritedNFTCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		61D4B0ED2A3EE7DA0082B4D2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +356,7 @@
 				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
 				61DAB0132A41869B00CC103B /* ProfileEditingScreen */,
 				61DAB01C2A42DCEE00CC103B /* ProfileNFTScreen */,
+				618CD38E2A45881D003612DD /* ProfileFavoritedNFTScreen */,
 			);
 			path = ProfileScene;
 			sourceTree = "<group>";
@@ -585,6 +626,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				618CD3942A458897003612DD /* ProfileFavoritedNFTScreenViewModel.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */,
 				61DAB0332A43243900CC103B /* AuthorModel.swift in Sources */,
 				61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */,
@@ -594,7 +636,9 @@
 				61DAB0252A42E07600CC103B /* NFTCell.swift in Sources */,
 				3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				618CD3972A4588B6003612DD /* FavoritedNFTCell.swift in Sources */,
 				61D4B0F12A3EE9450082B4D2 /* Constants.swift in Sources */,
+				618CD3922A45887D003612DD /* ProfileFavoritedNFTScreenController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,

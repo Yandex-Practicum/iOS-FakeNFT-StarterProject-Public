@@ -120,6 +120,15 @@ struct UICreator {
         return tableView
     }
 
+    func makeCollectionView() -> UICollectionView {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .clear
+        collectionView.allowsMultipleSelection = false
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
+        collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
+        return collectionView
+    }
+
     func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
                        distribution: UIStackView.Distribution = .fill,
                        align: UIStackView.Alignment = .fill,
