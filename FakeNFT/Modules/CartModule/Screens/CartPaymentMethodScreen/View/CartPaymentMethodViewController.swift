@@ -155,7 +155,6 @@ extension CartPaymentMethodViewController {
                 )
         else { return }
         
-//        let leftItem = UIBarButtonItem(customView: UIImageView(image: image))
         let customLeftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(cancelTapped))
         navigationItem.title = NSLocalizedString("Выберите способ оплаты", comment: "")
         navigationItem.leftBarButtonItem = customLeftItem
