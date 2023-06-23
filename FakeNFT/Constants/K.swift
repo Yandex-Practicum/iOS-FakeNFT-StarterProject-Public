@@ -17,6 +17,7 @@ struct K {
         static let deleteItemFromCart = "bag.badge.minus"
         static let activeStarRate = "activeStar"
         static let notActiveStarRate = "notActiveStar"
+        static let chevronBackward = "chevron.backward"
     }
     
     struct Titles {

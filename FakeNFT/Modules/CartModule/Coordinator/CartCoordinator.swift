@@ -91,6 +91,10 @@ private extension CartCoordinator {
             
         }
         
+        paymentMethodScreen.onCancel = { [weak router] in
+            router?.popToRootViewController(animated: true, completion: nil)
+        }
+        
         router.pushViewController(paymentMethodScreen, animated: true)
     }
 }
