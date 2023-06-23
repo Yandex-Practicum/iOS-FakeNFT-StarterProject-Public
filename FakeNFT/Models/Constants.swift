@@ -30,5 +30,6 @@ struct Constants {
     struct CollectionElementNames {
         static let profileMenuCell = "ProfileMenuCell"
         static let profileNFTCell = "ProfileNFTCell"
+        static let profileFavoritedNFTCell = "ProfileFavoritedNFTCell"
     }
 }
