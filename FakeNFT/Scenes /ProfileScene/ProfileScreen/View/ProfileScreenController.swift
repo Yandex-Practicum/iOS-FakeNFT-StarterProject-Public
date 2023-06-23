@@ -42,6 +42,7 @@ final class ProfileScreenController: UIViewController {
         navigationItem.backButtonTitle = ""
         profileMenuTableView.dataSource = self
         profileMenuTableView.delegate = self
+        profileLinkTextView.delegate = self
         showOrHideUI()
         viewModel = ProfileScreenViewModel()
         bind()
@@ -159,7 +160,8 @@ extension ProfileScreenController: UITableViewDelegate {
             navigationController?.pushViewController(
                 ProfileFavoritedNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
         case 2:
-            print(123)
+            guard let viewModel else { return }
+            navigationController?.pushViewController(viewModel.configureWebView(), animated: true)
         default:
             return
         }
@@ -183,5 +185,19 @@ extension ProfileScreenController: ProfileUIUpdateDelegate {
             self.fillUI()
             self.showOrHideUI()
         }
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension ProfileScreenController: UITextViewDelegate {
+
+    func textView(_ textView: UITextView,
+                  shouldInteractWith URL: URL,
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction
+    ) -> Bool {
+        guard let viewModel else { return true }
+        navigationController?.pushViewController(viewModel.configureWebView(), animated: true)
+        return false
     }
 }

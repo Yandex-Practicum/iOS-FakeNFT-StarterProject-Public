@@ -20,6 +20,9 @@ struct Constants {
         static let activeLike = "ActiveLike"
         static let inactiveRating = "RatingInactive"
         static let activeRating = "RatingActive"
+        static let arrowClockwise = "arrow.clockwise"
+        static let chevronRight = "chevron.right"
+        static let chevronLeft = "chevron.left"
     }
 
     struct ImageNames {

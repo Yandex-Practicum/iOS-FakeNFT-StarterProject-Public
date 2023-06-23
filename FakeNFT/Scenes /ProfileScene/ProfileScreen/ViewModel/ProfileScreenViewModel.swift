@@ -59,4 +59,13 @@ extension ProfileScreenViewModel {
         cell.accessoryView = chevronImage
         return cell
     }
+
+    func configureWebView() -> WebController {
+        let webController = WebController()
+        if let webURL = URL(string: profile?.website ?? "https:\\google.com") {
+            let request = URLRequest(url: webURL)
+            webController.webView.webView.load(request)
+        }
+        return webController
+    }
 }
