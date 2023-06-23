@@ -101,9 +101,14 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 20
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
         stackView.addArrangedSubview(nftImageView)
         stackView.addArrangedSubview(centralStackView)
         stackView.addArrangedSubview(deleteButton)
+        
         return stackView
     }()
     

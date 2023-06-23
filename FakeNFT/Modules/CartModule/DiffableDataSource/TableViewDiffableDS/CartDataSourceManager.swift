@@ -24,8 +24,8 @@ final class CartDataSourceManager {
 
 extension CartDataSourceManager: DataSourceManagerProtocol {
     func createDataSource(for tableView: UITableView, with data: [CartRow]) {
-        dataSource = DataSource(tableView: tableView) { tableView, indexPath, item in
-            return self.cell(tableView: tableView, indexPath: indexPath, item: item)
+        dataSource = DataSource(tableView: tableView) { [weak self] tableView, indexPath, item in
+            return self?.cell(tableView: tableView, indexPath: indexPath, item: item)
         }
         
         dataSource?.defaultRowAnimation = .fade
