@@ -13,13 +13,13 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: DataStorageProtocol
+    private var dataStore: DataStorageProtocol & PaymentMethodStorageProtocol
     
     init(factory: ModulesFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: DataStorageProtocol) {
+         dataStore: DataStorageProtocol & PaymentMethodStorageProtocol) {
         
         self.factory = factory
         self.router = router
@@ -47,7 +47,7 @@ private extension CartCoordinator {
         }
         
         cartScreen.onProceed = { [weak self] in
-            
+            self?.showPaymentMethodScreen()
         }
         
         router.addTabBarItem(navController)
@@ -78,5 +78,19 @@ private extension CartCoordinator {
         }
         
         router.presentViewController(deleteScreen, animated: true, presentationStyle: .overCurrentContext)
+    }
+    
+    func showPaymentMethodScreen() {
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore)
+        
+        paymentMethodScreen.onProceed = {
+            
+        }
+        
+        paymentMethodScreen.onTapUserLicense = {
+            
+        }
+        
+        router.pushViewController(paymentMethodScreen, animated: true)
     }
 }

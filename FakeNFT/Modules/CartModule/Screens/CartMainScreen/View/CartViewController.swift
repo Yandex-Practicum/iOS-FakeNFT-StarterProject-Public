@@ -29,20 +29,18 @@ final class CartViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.defaultReuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .ypWhite
+        tableView.backgroundColor = .systemBackground
         tableView.delegate = self
         return tableView
     }()
     
     private lazy var totalNFTCount: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-//        label.text = "3 NFT" // TODO: connect to data store
         return label
     }()
     
     private lazy var totalToPay: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .universalGreen)
-//        label.text = "5,34 ETH" // TODO: connect to data store
         return label
     }()
     
@@ -113,7 +111,7 @@ final class CartViewController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .ypWhite
+        view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupConstraints()
         createDataSource()
@@ -216,8 +214,8 @@ private extension CartViewController {
         
         NSLayoutConstraint.activate([
             cartStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            cartStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            cartStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            cartStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            cartStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             cartStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

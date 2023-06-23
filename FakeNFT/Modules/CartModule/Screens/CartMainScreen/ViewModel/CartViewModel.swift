@@ -41,6 +41,6 @@ final class CartViewModel {
 
 private extension CartViewModel {
     func loadItems() {
-        visibleRows = dataStore.getItems()
+        visibleRows = dataStore.getCartRowItems()
     }
 }

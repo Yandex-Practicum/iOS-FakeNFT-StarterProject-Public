@@ -30,8 +30,6 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.insetsLayoutMarginsFromSafeArea = true
-        imageView.layoutMargins = UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)
         return imageView
     }()
     
@@ -50,6 +48,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
             cornerRadius: 12,
             fontWeight: .regular
         )
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         return button
     }()
@@ -61,6 +60,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
             cornerRadius: 12,
             fontWeight: .regular
         )
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
     }()
@@ -82,9 +82,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 8
-        stackView.alignment = .center
         stackView.distribution = .fillEqually
-        stackView.heightAnchor.constraint(equalToConstant: 44).isActive = true
         stackView.addArrangedSubview(deleteButton)
         stackView.addArrangedSubview(backButton)
         return stackView

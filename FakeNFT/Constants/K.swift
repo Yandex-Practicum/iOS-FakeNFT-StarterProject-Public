@@ -25,4 +25,8 @@ struct K {
         static let cartTitle = NSLocalizedString("Корзина", comment: "")
         static let statisticsTitle = NSLocalizedString("Статистика", comment: "")
     }
+    
+    struct Links {
+        static let userLicenseLink = "https://yandex.ru/legal/practicum_termsofuse/"
+    }
 }
