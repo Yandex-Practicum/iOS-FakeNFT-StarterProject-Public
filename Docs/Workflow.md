@@ -20,10 +20,10 @@ FakeNFT Yandex Project Workflow
 "Create a ProfileNFTCells UI" (Estimated time: 40, Time spent: 1.5 hr)\
 "Implement the ProfileNFTScreen tableview and cells logic" (Estimated time: 40, Time spent: 1hr)\
 "Implement a ProfileNFTScreen logic" (Estimated time: 30, Time spent: 2 hr)\
-"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent:)\
-"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent:)\
-"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent:)\
-"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent:)\
+"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent: 20 min)\
+"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent: 30 min)\
+"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent: 30 min)\
+"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent: 40 min)\
 "Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent:)
 
 "Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)\
