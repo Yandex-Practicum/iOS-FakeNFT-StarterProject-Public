@@ -46,7 +46,11 @@ final class ProfileScreenController: UIViewController {
         showOrHideUI()
         viewModel = ProfileScreenViewModel()
         bind()
-        viewModel?.checkForData()
+        if InternetConnectionManager.isConnectedToNetwork() {
+            viewModel?.checkForData()
+        } else {
+            showNoInternetMessage()
+        }
     }
 }
 
@@ -109,6 +113,11 @@ extension ProfileScreenController {
                 self.showOrHideUI()
             }
         }
+    }
+
+    private func showNoInternetMessage() {
+        activityIndicator.stopAnimating()
+        noInternetLabel.isHidden = false
     }
 
     private func showOrHideUI() {

@@ -9,7 +9,7 @@ FakeNFT Yandex Project Workflow
 "Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent: 15 min)\
 "Create a ProfileScreen UI" (Estimated time: 25, Time spent: 30 min)\
 "Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent: 10 min)\
-"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)\
+"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent: 25)\
 "Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent: 15 min)\
 "Implement the ProfileScreen logic" (Estimated time: 45, Time spent: 1hr)\
 "Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent: 2hrs)\
@@ -24,7 +24,7 @@ FakeNFT Yandex Project Workflow
 "Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent: 30 min)\
 "Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent: 30 min)\
 "Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent: 40 min)\
-"Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent:)
+"Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent: 30 min)
 
 "Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)\
 "Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)\
