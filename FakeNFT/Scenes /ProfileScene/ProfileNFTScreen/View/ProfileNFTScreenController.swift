@@ -38,6 +38,7 @@ final class ProfileNFTScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.tabBar.isHidden = true
         title = "MY_NFT".localized
         view.backgroundColor = .appWhite
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),

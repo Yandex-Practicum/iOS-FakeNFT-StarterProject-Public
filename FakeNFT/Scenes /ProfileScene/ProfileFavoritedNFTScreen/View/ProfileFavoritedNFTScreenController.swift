@@ -36,6 +36,7 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
+        tabBarController?.tabBar.isHidden = true
         super.viewDidLoad()
         title = "FAVORITED_NFT".localized
         view.backgroundColor = .appWhite

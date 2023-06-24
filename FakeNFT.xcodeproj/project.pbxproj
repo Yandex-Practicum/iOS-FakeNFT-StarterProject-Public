@@ -357,8 +357,8 @@
 		61D4B0F22A3EEBD70082B4D2 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				618CD3A82A46E389003612DD /* String+Extensions.swift */,
+				3F478ECD29DB473000F6D39E /* DesignSystem */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

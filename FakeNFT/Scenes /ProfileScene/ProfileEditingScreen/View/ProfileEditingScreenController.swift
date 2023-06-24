@@ -57,6 +57,7 @@ final class ProfileEditingScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.tabBar.isHidden = true
         view.addKeyboardHiddingFeature()
         profileNameTextField.delegate = self
         profileLinkTextField.delegate = self
@@ -91,7 +92,7 @@ extension ProfileEditingScreenController {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if profileDescriptionTextView.isFirstResponder || profileLinkTextField.isFirstResponder {
                 if view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= keyboardSize.height
+                    self.view.frame.origin.y -= keyboardSize.height - (view.frame.height < 700 ? 0 : 80)
                 }
             }
         }
