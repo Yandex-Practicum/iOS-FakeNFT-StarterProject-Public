@@ -210,9 +210,10 @@
 		372EEF832A44934A008FDB16 /* CartPaymentMethodScreen */ = {
 			isa = PBXGroup;
 			children = (
+				377468692A472AD000E7EEEE /* Model */,
 				372EEF882A449DD2008FDB16 /* View */,
 				372EEF8B2A449DF7008FDB16 /* ViewModel */,
-				372EEF8D2A45C7D2008FDB16 /* CollectionViewDiffableDS */,
+				372EEF8D2A45C7D2008FDB16 /* Helpers */,
 			);
 			path = CartPaymentMethodScreen;
 			sourceTree = "<group>";
@@ -235,24 +236,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		372EEF8C2A45C7BF008FDB16 /* TableViewDiffableDS */ = {
-			isa = PBXGroup;
-			children = (
-				377DF5E92A3F9C7000090DCD /* CartDataSourceManager.swift */,
-				377DF5E22A3F954300090DCD /* CartRow.swift */,
-				377DF5E42A3F961D00090DCD /* CartSection.swift */,
-			);
-			path = TableViewDiffableDS;
-			sourceTree = "<group>";
-		};
-		372EEF8D2A45C7D2008FDB16 /* CollectionViewDiffableDS */ = {
+		372EEF8D2A45C7D2008FDB16 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				372EEF8E2A45D137008FDB16 /* PaymentMethodDataSourceManager.swift */,
-				372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */,
-				372EEF922A45D162008FDB16 /* PaymentMethodSection.swift */,
 			);
-			path = CollectionViewDiffableDS;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		372EEF9C2A460AD7008FDB16 /* WebViewScreen */ = {
@@ -388,6 +377,24 @@
 			path = CartVMWrapper;
 			sourceTree = "<group>";
 		};
+		377468682A472A9900E7EEEE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				377DF5E22A3F954300090DCD /* CartRow.swift */,
+				377DF5E42A3F961D00090DCD /* CartSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		377468692A472AD000E7EEEE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */,
+				372EEF922A45D162008FDB16 /* PaymentMethodSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		377DF5E62A3F969E00090DCD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,9 +429,9 @@
 		37B579FA2A41F6A3000FE88B /* CartMainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				377468682A472A9900E7EEEE /* Model */,
 				377DF5E62A3F969E00090DCD /* View */,
 				372EEF792A445512008FDB16 /* ViewModel */,
-				372EEF8C2A45C7BF008FDB16 /* TableViewDiffableDS */,
 				37B57A072A42310C000FE88B /* Helpers */,
 			);
 			path = CartMainScreen;
@@ -444,6 +451,7 @@
 		37B57A072A42310C000FE88B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				377DF5E92A3F9C7000090DCD /* CartDataSourceManager.swift */,
 				37B57A052A41F993000FE88B /* CartFilter.swift */,
 			);
 			path = Helpers;

@@ -12,10 +12,15 @@ final class CartViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private (set) var visibleRows: [CartRow] = []
+    @Published private (set) var visibleRows: [CartRow] = [] 
+    
     private let dataStore: DataStorageProtocol
     
-    var chosenFilter: CartFilter?
+    var chosenFilter: CartFilter? {
+        didSet {
+            loadItems()
+        }
+    }
     
     init(dataStore: DataStorageProtocol) {
         self.dataStore = dataStore
@@ -41,6 +46,6 @@ final class CartViewModel {
 
 private extension CartViewModel {
     func loadItems() {
-        visibleRows = dataStore.getCartRowItems()
+        visibleRows = dataStore.getCartRowItems(filteredBy: chosenFilter)
     }
 }

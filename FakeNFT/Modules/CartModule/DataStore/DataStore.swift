@@ -10,7 +10,7 @@ import Combine
 
 protocol DataStorageProtocol {
     var dataPublisher: AnyPublisher<[CartRow], Never> { get }
-    func getCartRowItems() -> [CartRow]
+    func getCartRowItems(filteredBy: CartFilter?) -> [CartRow]
     func deleteItem(with id: UUID?)
 }
 
@@ -23,20 +23,12 @@ final class DataStore {
     private var storedPublishedItems = CurrentValueSubject<[CartRow], Never>([])
     private var loadedPaymentMethods = CurrentValueSubject<[PaymentMethodRow], Never>([])
     
-    var dataPublisher: AnyPublisher<[CartRow], Never> {
-        return storedPublishedItems.eraseToAnyPublisher()
-    }
-    
-    var paymentMethodsPublisher: AnyPublisher<[PaymentMethodRow], Never> {
-        return loadedPaymentMethods.eraseToAnyPublisher()
-    }
-    
     private var storedItems: [CartRow] = [
         CartRow(imageName: "MockCard1", nftName: "Test 1", rate: 1, price: 3.87, coinName: "ETF"),
         CartRow(imageName: "MockCard2", nftName: "Test 2", rate: 3, price: 5.55, coinName: "BTC"),
-        CartRow(imageName: "MockCard3", nftName: "Test 3", rate: 5, price: 9.86, coinName: "ETF"),
+        CartRow(imageName: "MockCard3", nftName: "Test 1", rate: 5, price: 1.86, coinName: "ETF"),
         CartRow(imageName: "MockCard1", nftName: "Test 1", rate: 1, price: 3.87, coinName: "ETF"),
-        CartRow(imageName: "MockCard2", nftName: "Test 2", rate: 3, price: 5.55, coinName: "BTC"),
+        CartRow(imageName: "MockCard2", nftName: "Test 3", rate: 3, price: 10.55, coinName: "BTC"),
         CartRow(imageName: "MockCard3", nftName: "Test 3", rate: 5, price: 9.86, coinName: "ETF")
     ] {
         didSet {
@@ -66,9 +58,25 @@ final class DataStore {
     }
 }
 
+// MARK: - Ext DataStorageProtocol
 extension DataStore: DataStorageProtocol {
-    func getCartRowItems() -> [CartRow] {
-        return storedItems
+    
+    var dataPublisher: AnyPublisher<[CartRow], Never> {
+        return storedPublishedItems.eraseToAnyPublisher()
+    }
+    
+    func getCartRowItems(filteredBy: CartFilter?) -> [CartRow] {
+        guard let filteredBy else { return storedItems }
+        switch filteredBy {
+        case .price:
+            return storedItems.sorted(by: { $0.price > $1.price })
+        case .rating:
+            return storedItems.sorted(by: { $0.rate > $1.rate })
+        case .name:
+            return storedItems.sorted(by: { $0.nftName > $1.nftName })
+        case .cancel:
+            return storedItems
+        }
     }
     
     func deleteItem(with id: UUID?) {
@@ -77,7 +85,13 @@ extension DataStore: DataStorageProtocol {
     }
 }
 
+// MARK: - Ext PaymentMethodStorageProtocol
 extension DataStore: PaymentMethodStorageProtocol {
+    
+    var paymentMethodsPublisher: AnyPublisher<[PaymentMethodRow], Never> {
+        return loadedPaymentMethods.eraseToAnyPublisher()
+    }
+    
     func getPaymentMethods() -> [PaymentMethodRow] {
         return loadedMethods
     }
