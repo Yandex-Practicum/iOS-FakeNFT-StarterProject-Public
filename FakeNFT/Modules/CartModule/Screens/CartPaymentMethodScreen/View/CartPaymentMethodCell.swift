@@ -15,8 +15,8 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     var viewModel: PaymentMethodCellViewModel? {
         didSet {
             viewModel?.$paymentMethodRow
-                .sink(receiveValue: { paymentMethod in
-                    self.updateCell(with: paymentMethod)
+                .sink(receiveValue: { [weak self] paymentMethod in
+                    self?.updateCell(with: paymentMethod)
                 })
                 .store(in: &cancellables)
         }
@@ -68,10 +68,26 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var isSelected: Bool {
+        didSet {
+            isSelected ? selectCell() : deselectCell()
+        }
+    }
+    
     private func updateCell(with data: PaymentMethodRow) {
         coinImageView.image = UIImage(named: data.image)
         coinNameLabel.text = data.title
         coinCodeLabel.text = data.name
+    }
+    
+    private func selectCell() {
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.ypBlack?.cgColor
+    }
+    
+    private func deselectCell() {
+        layer.borderWidth = 0
+        layer.borderColor = UIColor.clear.cgColor
     }
 }
 

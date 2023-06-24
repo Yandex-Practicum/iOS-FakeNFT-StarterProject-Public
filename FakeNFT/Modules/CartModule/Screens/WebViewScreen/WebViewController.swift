@@ -51,7 +51,7 @@ final class WebViewController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .ypBlack
+        navigationController?.navigationBar.tintColor = .universalWhite
         addProgressObserver()
         setupConstraints()
         loadUserLicensePage()

@@ -31,6 +31,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.register(CartPaymentMethodCell.self, forCellWithReuseIdentifier: CartPaymentMethodCell.defaultReuseIdentifier)
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = false
         return collectionView
     }()
     
@@ -141,6 +142,14 @@ extension CartPaymentMethodViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let interitemSpacing = 5.0
         return CGSize(width: collectionView.bounds.width * GridItemSize.half.rawValue - interitemSpacing, height: 46)
+    }
+}
+
+// MARK: - Ext Collection Delegate
+extension CartPaymentMethodViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CartPaymentMethodCell else { return }
+        cell.isSelected = true
     }
 }
 
