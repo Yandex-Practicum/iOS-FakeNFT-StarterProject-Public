@@ -1,5 +1,5 @@
 //
-//  CartFilter.swift
+//  CartSortValue.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 20.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CartFilter: CaseIterable {
+enum CartSortValue: CaseIterable {
     case price, rating, name, cancel
     
     var description: String {

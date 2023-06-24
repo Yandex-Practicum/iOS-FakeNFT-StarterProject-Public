@@ -12,7 +12,7 @@ protocol CartMainCoordinatableProtocol {
     var onFilter: (() -> Void)? { get set }
     var onDelete: ((UUID?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
-    func setupFilter(_ filter: CartFilter)
+    func setupFilter(_ filter: CartSortValue)
 }
 
 final class CartViewController: UIViewController {
@@ -147,8 +147,8 @@ final class CartViewController: UIViewController {
 
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
-    func setupFilter(_ filter: CartFilter) {
-        viewModel.setupFilter(filter)
+    func setupFilter(_ filter: CartSortValue) {
+        viewModel.setupSortValue(filter)
     }
 }
 
