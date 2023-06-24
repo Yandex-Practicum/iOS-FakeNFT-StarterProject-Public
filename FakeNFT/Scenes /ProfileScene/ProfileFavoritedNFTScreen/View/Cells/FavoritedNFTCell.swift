@@ -105,6 +105,7 @@ extension FavoritedNFTCell {
         for _ in (rating + 1)...5 {
             let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.inactiveRating,
                                                       cornerRadius: 0)
+            star.image = star.image?.withTintColor(.appLightGray)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
             nftRatingStackView.addArrangedSubview(star)

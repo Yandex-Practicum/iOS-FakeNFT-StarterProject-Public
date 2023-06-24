@@ -125,6 +125,7 @@ extension ProfileNFTScreenViewModel {
         cell.selectionStyle = .none
         cell.isUserInteractionEnabled = true
         cell.contentView.isHidden = true
+        cell.backgroundColor = .clear
         return cell
     }
 

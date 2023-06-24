@@ -28,7 +28,8 @@ final class NFTCell: UITableViewCell {
     let nftAuthorLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
     let nftRatingStackView =  UICreator.shared.makeStackView(withAxis: .horizontal,
                                                              andSpacing: 2)
-    let nftPriceLabel = UICreator.shared.makeLabel(text: "PRICE".localized, font: UIFont.appFont(.regular, withSize: 13))
+    let nftPriceLabel = UICreator.shared.makeLabel(text: "PRICE".localized,
+                                                   font: UIFont.appFont(.regular, withSize: 13))
     let nftPriceAmountLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
     let nftLeftStackView = UICreator.shared.makeStackView(andSpacing: 21)
     let nftRightStackView = UICreator.shared.makeStackView(andSpacing: 2)
@@ -108,6 +109,7 @@ extension NFTCell {
         for _ in (rating + 1)...5 {
             let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.inactiveRating,
                                                       cornerRadius: 0)
+            star.image = star.image?.withTintColor(.appLightGray)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
             nftRatingStackView.addArrangedSubview(star)

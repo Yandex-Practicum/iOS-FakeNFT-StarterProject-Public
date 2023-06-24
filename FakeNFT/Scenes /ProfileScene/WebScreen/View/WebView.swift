@@ -45,6 +45,7 @@ final class WebView: UIView {
     let webView: WKWebView = {
         let webView = WKWebView()
         webView.toAutolayout()
+        webView.backgroundColor = .clear
         return webView
     }()
 
@@ -70,6 +71,7 @@ extension WebView {
 
     @objc private func forwardButtonTapped() {
         webView.goForward()
+        webView.reload()
     }
 
     @objc private func backwardButtonTapped() {

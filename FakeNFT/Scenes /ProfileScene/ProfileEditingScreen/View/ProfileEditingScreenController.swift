@@ -23,8 +23,8 @@ final class ProfileEditingScreenController: UIViewController {
     private let profileImageLabel = {
         let label = UICreator.shared.makeLabel(text: "CHANGE_PHOTO".localized,
                                                font: UIFont.appFont(.medium, withSize: 10),
-                                               color: .appWhite,
-                                               backgroundColor: .appBlack.withAlphaComponent(0.6),
+                                               color: .appWhiteOnly,
+                                               backgroundColor: .appBlackOnly.withAlphaComponent(0.6),
                                                alignment: .center)
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 35

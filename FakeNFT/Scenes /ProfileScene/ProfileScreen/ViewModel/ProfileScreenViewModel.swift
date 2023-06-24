@@ -57,6 +57,7 @@ extension ProfileScreenViewModel {
         let chevronImage = UIImageView(image: UIImage(systemName: Constants.IconNames.chevronRight))
         chevronImage.tintColor = .appBlack
         cell.accessoryView = chevronImage
+        cell.backgroundColor = .clear
         return cell
     }
 
