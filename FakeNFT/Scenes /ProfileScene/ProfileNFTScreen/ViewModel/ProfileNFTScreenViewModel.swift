@@ -130,7 +130,7 @@ extension ProfileNFTScreenViewModel {
 
     func proceedLike(forRow row: Int?) {
         guard let row,
-              var profile else { return }
+              let profile else { return }
         let nftToProceed = nftList[row]
         if profile.likes.contains(nftToProceed.id) {
             profile.likes.removeAll(where: {$0 == nftToProceed.id})

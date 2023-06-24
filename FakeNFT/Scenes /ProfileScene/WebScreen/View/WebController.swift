@@ -18,7 +18,7 @@ final class WebController: UIViewController {
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
-        title = "О разработчике NFT"
+        title = "ABOUT_NFT_DEVELOPER".localized
         super.viewDidLoad()
         view.backgroundColor = .appWhite
         view.addSubview(webView)

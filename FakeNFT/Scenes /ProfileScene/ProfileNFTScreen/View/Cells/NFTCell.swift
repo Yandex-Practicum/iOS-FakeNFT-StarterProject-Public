@@ -28,7 +28,7 @@ final class NFTCell: UITableViewCell {
     let nftAuthorLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
     let nftRatingStackView =  UICreator.shared.makeStackView(withAxis: .horizontal,
                                                              andSpacing: 2)
-    let nftPriceLabel = UICreator.shared.makeLabel(text: "Цена", font: UIFont.appFont(.regular, withSize: 13))
+    let nftPriceLabel = UICreator.shared.makeLabel(text: "PRICE".localized, font: UIFont.appFont(.regular, withSize: 13))
     let nftPriceAmountLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
     let nftLeftStackView = UICreator.shared.makeStackView(andSpacing: 21)
     let nftRightStackView = UICreator.shared.makeStackView(andSpacing: 2)

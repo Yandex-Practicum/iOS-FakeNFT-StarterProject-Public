@@ -15,7 +15,7 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
     private weak var delegate: ProfileUIUpdateDelegate?
 
     private let noNFTLabel = {
-       let label = UICreator.shared.makeLabel(text: "У Вас еще нет избранных NFT",
+        let label = UICreator.shared.makeLabel(text: "YOU_HAVE_NO_FAVORITED_NFT_YET".localized,
                                               font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
@@ -37,7 +37,7 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Избранные NFT"
+        title = "FAVORITED_NFT".localized
         view.backgroundColor = .appWhite
         setupAutolayout()
         addSubviews()
@@ -95,7 +95,6 @@ extension ProfileFavoritedNFTScreenController {
             guard let self else { return }
             if newValue {
                 self.nftCollectionView.reloadData()
-                print(123)
                 self.checkIfNoNFT()
             }
         }

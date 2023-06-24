@@ -14,7 +14,8 @@ final class ProfileScreenController: UIViewController {
     private var viewModel: ProfileScreenViewModel?
 
     private let noInternetLabel = {
-       let label = UICreator.shared.makeLabel(text: "Нет интернета", font: UIFont.appFont(.bold, withSize: 17))
+        let label = UICreator.shared.makeLabel(text: "NO_INTERNET_ERROR".localized,
+                                               font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
     }()

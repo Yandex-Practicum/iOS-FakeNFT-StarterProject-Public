@@ -18,9 +18,9 @@ final class ProfileScreenViewModel {
 
     private var profile: ProfileModel?
     private let menuButtons = [
-        "Мои NFT",
-        "Избранные NFT",
-        "О разработчике"
+        "MY_NFT".localized,
+        "FAVORITED_NFT".localized,
+        "ABOUT_DEVELOPER".localized
     ]
 }
 
@@ -54,7 +54,7 @@ extension ProfileScreenViewModel {
         } else {
             cell.menuCategoryLabel.text = menuButtons[row]
         }
-        let chevronImage = UIImageView(image: UIImage(systemName: "chevron.right"))
+        let chevronImage = UIImageView(image: UIImage(systemName: Constants.IconNames.chevronRight))
         chevronImage.tintColor = .appBlack
         cell.accessoryView = chevronImage
         return cell
@@ -62,7 +62,7 @@ extension ProfileScreenViewModel {
 
     func configureWebView() -> WebController {
         let webController = WebController()
-        if let webURL = URL(string: profile?.website ?? "https:\\google.com") {
+        if let webURL = URL(string: profile?.website ?? Constants.Links.defaultLink) {
             let request = URLRequest(url: webURL)
             webController.webView.webView.load(request)
         }

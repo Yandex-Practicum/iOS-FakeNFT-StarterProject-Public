@@ -23,6 +23,7 @@ struct Constants {
         static let arrowClockwise = "arrow.clockwise"
         static let chevronRight = "chevron.right"
         static let chevronLeft = "chevron.left"
+        static let xmark = "xmark"
     }
 
     struct ImageNames {
@@ -34,5 +35,9 @@ struct Constants {
         static let profileMenuCell = "ProfileMenuCell"
         static let profileNFTCell = "ProfileNFTCell"
         static let profileFavoritedNFTCell = "ProfileFavoritedNFTCell"
+    }
+
+    struct Links {
+        static let defaultLink = "https:\\google.com"
     }
 }

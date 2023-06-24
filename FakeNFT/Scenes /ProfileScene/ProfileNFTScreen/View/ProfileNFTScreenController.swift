@@ -15,7 +15,8 @@ final class ProfileNFTScreenController: UIViewController {
     private weak var delegate: ProfileUIUpdateDelegate?
 
     private let noNFTLabel = {
-       let label = UICreator.shared.makeLabel(text: "У Вас еще нет NFT", font: UIFont.appFont(.bold, withSize: 17))
+        let label = UICreator.shared.makeLabel(text: "YOU_HAVE_NO_NFT_YET".localized,
+                                               font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
     }()
@@ -37,7 +38,7 @@ final class ProfileNFTScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Мои NFT"
+        title = "MY_NFT".localized
         view.backgroundColor = .appWhite
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
                                                             style: .done,
@@ -123,28 +124,28 @@ extension ProfileNFTScreenController {
     }
 
     private func showSortingAlert() {
-        let alertController = UIAlertController(title: "Сортировка",
+        let alertController = UIAlertController(title: "SORTING".localized,
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        let byPriceAction = UIAlertAction(title: "По цене",
+        let byPriceAction = UIAlertAction(title: "BY_PRICE".localized,
                                     style: .default
         ) { [weak self] _ in
             guard let self else { return }
             self.viewModel?.sortNFT(by: .byPrice)
         }
-        let byRatingAction = UIAlertAction(title: "По рейтингу",
+        let byRatingAction = UIAlertAction(title: "BY_RATING".localized,
                                     style: .default
         ) { [weak self] _ in
             guard let self else { return }
             self.viewModel?.sortNFT(by: .byRating)
         }
-        let byNameAction = UIAlertAction(title: "По названию",
+        let byNameAction = UIAlertAction(title: "BY_NAME".localized,
                                     style: .default
         ) { [weak self] _ in
             guard let self else { return }
             self.viewModel?.sortNFT(by: .byName)
         }
-        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel)
+        let closeAction = UIAlertAction(title: "CLOSE".localized, style: .cancel)
         alertController.addAction(byPriceAction)
         alertController.addAction(byRatingAction)
         alertController.addAction(byNameAction)

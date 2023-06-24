@@ -16,12 +16,12 @@ final class ProfileEditingScreenController: UIViewController {
 
     private let closeButton = {
         let button = UICreator.shared.makeButton(action: #selector(closeTapped))
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(UIImage(systemName: Constants.IconNames.xmark), for: .normal)
         return button
     }()
     private let profileImageView = UICreator.shared.makeImageView(cornerRadius: 35)
     private let profileImageLabel = {
-        let label = UICreator.shared.makeLabel(text: "Сменить фото",
+        let label = UICreator.shared.makeLabel(text: "CHANGE_PHOTO".localized,
                                                font: UIFont.appFont(.medium, withSize: 10),
                                                color: .appWhite,
                                                backgroundColor: .appBlack.withAlphaComponent(0.6),
@@ -31,17 +31,17 @@ final class ProfileEditingScreenController: UIViewController {
         return label
     }()
     private let profileLoadImageLabel = {
-        let label = UICreator.shared.makeLabel(text: "Загрузить изображение",
+        let label = UICreator.shared.makeLabel(text: "DOWNLOAD_AN_IMAGE".localized,
                                                font: UIFont.appFont(.regular, withSize: 17))
         label.isHidden = true
         return label
     }()
-    private let profileNameLabel = UICreator.shared.makeLabel(text: "Имя")
+    private let profileNameLabel = UICreator.shared.makeLabel(text: "NAME".localized)
     private let profileNameTextField = UICreator.shared.makeTextField(tag: 1)
-    private let profileDescriptionLabel = UICreator.shared.makeLabel(text: "Описание")
+    private let profileDescriptionLabel = UICreator.shared.makeLabel(text: "DESCRIPTION".localized)
     private let profileDescriptionTextView = UICreator.shared.makeTextView(withFont: UIFont.appFont(.regular,
                                                                                                     withSize: 17))
-    private let profileLinkLabel = UICreator.shared.makeLabel(text: "Сайт")
+    private let profileLinkLabel = UICreator.shared.makeLabel(text: "WEBSITE".localized)
     private let profileLinkTextField = UICreator.shared.makeTextField(tag: 2)
     private let mainStackView = UICreator.shared.makeStackView(distribution: .fillProportionally, andSpacing: 24)
     private let nameStackView = UICreator.shared.makeStackView()
@@ -107,12 +107,12 @@ extension ProfileEditingScreenController {
     }
 
     @objc private func changeImageTapped() {
-        let alert = UIAlertController(title: "Изменение фото",
-                                      message: "Введите ссылку на новое фото", preferredStyle: .alert)
+        let alert = UIAlertController(title: "PHOTO_CHANGING".localized,
+                                      message: "ENTER_A_LINK_TO_A_NEW_PHOTO".localized, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.text = ""
         }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak alert] _ in
+        alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { [weak self, weak alert] _ in
             guard let self,
                   let alert else { return }
             if let textField = alert.textFields?[0],
@@ -122,7 +122,7 @@ extension ProfileEditingScreenController {
                 self.profileLoadImageLabel.isHidden = false
             }
         }))
-        alert.addAction(UIAlertAction(title: "Отменить", style: .destructive))
+        alert.addAction(UIAlertAction(title: "CANCEL".localized, style: .destructive))
         self.present(alert, animated: true, completion: nil)
     }
 
