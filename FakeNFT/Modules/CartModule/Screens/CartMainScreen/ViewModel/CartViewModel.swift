@@ -14,13 +14,7 @@ final class CartViewModel {
     
     @Published private (set) var visibleRows: [CartRow] = [] 
     
-    private let dataStore: DataStorageProtocol
-    
-    var chosenFilter: CartFilter? {
-        didSet {
-            loadItems()
-        }
-    }
+    private var dataStore: DataStorageProtocol
     
     init(dataStore: DataStorageProtocol) {
         self.dataStore = dataStore
@@ -29,8 +23,9 @@ final class CartViewModel {
             .store(in: &cancellables)
     }
     
-    func setupFilter(_ filter: CartFilter) {
-        self.chosenFilter = filter
+    func setupSortValue(_ sortBy: CartSortValue) {
+        dataStore.sortDescriptor = sortBy
+        
     }
     
     func getItems() -> [CartRow] {
@@ -46,6 +41,9 @@ final class CartViewModel {
 
 private extension CartViewModel {
     func loadItems() {
-        visibleRows = dataStore.getCartRowItems(filteredBy: chosenFilter)
+        visibleRows = dataStore.getCartRowItems()
     }
+    
+    
+    
 }

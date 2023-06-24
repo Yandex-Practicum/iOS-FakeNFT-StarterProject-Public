@@ -18,7 +18,7 @@ final class CartDeleteViewModel {
     
     func updateItemToDelete(with id: UUID?) {
         guard let id else { return }
-        itemToDelete = dataStore.getCartRowItems(filteredBy: nil).first(where: { $0.id == id })
+        itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })
     }
     
     func deleteItem(with id: UUID?) {

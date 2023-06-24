@@ -9,7 +9,7 @@ import UIKit
 
 protocol AlertConstructable {
     func constructSortAlert() -> UIAlertController
-    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartFilter) -> Void)
+    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void)
 }
 
 struct AlertConstructor { }
@@ -19,8 +19,8 @@ extension AlertConstructor: AlertConstructable {
         return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
     }
     
-    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartFilter) -> Void) {
-        CartFilter.allCases.forEach { filter in
+    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void) {
+        CartSortValue.allCases.forEach { filter in
             alert.addAction(
                 UIAlertAction(
                     title: filter.description,
