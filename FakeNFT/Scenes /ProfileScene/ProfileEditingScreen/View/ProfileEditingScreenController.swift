@@ -57,7 +57,6 @@ final class ProfileEditingScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
         view.addKeyboardHiddingFeature()
         profileNameTextField.delegate = self
         profileLinkTextField.delegate = self
@@ -76,6 +75,11 @@ final class ProfileEditingScreenController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeImageTapped))
         profileImageLabel.isUserInteractionEnabled = true
         profileImageLabel.addGestureRecognizer(tap)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {

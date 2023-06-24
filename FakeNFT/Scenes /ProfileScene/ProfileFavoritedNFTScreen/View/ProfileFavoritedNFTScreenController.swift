@@ -36,7 +36,6 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
-        tabBarController?.tabBar.isHidden = true
         super.viewDidLoad()
         title = "FAVORITED_NFT".localized
         view.backgroundColor = .appWhite
@@ -47,6 +46,11 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
         nftCollectionView.delegate = self
         showOrHideUI()
         bind()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {

@@ -38,7 +38,6 @@ final class ProfileNFTScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
         title = "MY_NFT".localized
         view.backgroundColor = .appWhite
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
@@ -52,6 +51,11 @@ final class ProfileNFTScreenController: UIViewController {
         nftTableView.dataSource = self
         showOrHideUI()
         bind()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
