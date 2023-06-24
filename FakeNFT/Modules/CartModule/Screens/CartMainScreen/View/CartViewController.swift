@@ -124,13 +124,14 @@ final class CartViewController: UIViewController {
     }
     
     private func bind() {
-        viewModel.$visibleRows.sink { [weak self] rows in
-            self?.diffableDataSource.updateTableView(with: rows)
-            self?.updateTotalLabels(from: rows)
-            self?.cartStackView.isHidden = rows.isEmpty
-            self?.emptyStateLabel.isHidden = !rows.isEmpty
-        }
-        .store(in: &cancellables)
+        viewModel.$visibleRows
+            .sink { [weak self] rows in
+                self?.diffableDataSource.updateTableView(with: rows)
+                self?.updateTotalLabels(from: rows)
+                self?.cartStackView.isHidden = rows.isEmpty
+                self?.emptyStateLabel.isHidden = !rows.isEmpty
+            }
+            .store(in: &cancellables)
     }
     
     private func checkEmptyState() {
@@ -147,7 +148,7 @@ final class CartViewController: UIViewController {
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
     func setupFilter(_ filter: CartFilter) {
-        viewModel.chosenFilter = filter
+        viewModel.setupFilter(filter)
     }
 }
 

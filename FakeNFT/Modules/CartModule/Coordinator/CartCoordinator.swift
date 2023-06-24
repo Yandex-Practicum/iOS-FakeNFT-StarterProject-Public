@@ -40,7 +40,7 @@ private extension CartCoordinator {
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
-            self?.showFilterAlert(from: cartScreen)
+            self?.showSortAlert(from: cartScreen)
         }
         
         cartScreen.onDelete = { [weak self] id in
@@ -55,10 +55,10 @@ private extension CartCoordinator {
     }
     
     // MARK: - FilterAlert
-    func showFilterAlert(from screen: CartMainCoordinatableProtocol) {
-        let alert = alertConstructor.constructFilterAlert()
+    func showSortAlert(from screen: CartMainCoordinatableProtocol) {
+        let alert = alertConstructor.constructSortAlert()
         
-        alertConstructor.addFilterAlertActions(from: alert) { [weak router] filter in
+        alertConstructor.addSortAlertActions(from: alert) { [weak router] filter in
             filter == .cancel ? () : screen.setupFilter(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
@@ -103,8 +103,7 @@ private extension CartCoordinator {
     }
     
     func showWebViewScreen() {
-        var webView = factory.makeCartWebViewScreenView()
-        
+        let webView = factory.makeCartWebViewScreenView()
         
         router.pushViewController(webView, animated: true)
     }
