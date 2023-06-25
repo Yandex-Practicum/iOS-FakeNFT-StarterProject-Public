@@ -9,6 +9,7 @@ import Foundation
 
 protocol NFTListViewModel {
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void)
+    func cellSelected(_ index: IndexPath)
 }
 
 final class NFTListViewModelImpl: NFTListViewModel {
@@ -19,6 +20,10 @@ final class NFTListViewModelImpl: NFTListViewModel {
 
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
+    }
+    
+    func cellSelected(_ index: IndexPath) {
+        print(index)
     }
 
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {

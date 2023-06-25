@@ -8,11 +8,16 @@
 import UIKit
 
 final class NFTListContainerView: UIView {
-    private let listView = NFTListView()
+    private lazy var listView = NFTListView { [weak self] index in
+        guard let self else { return }
+        self.cellSelected(index)
+    }
     private let loadingView = NFTLoadingView()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let cellSelected: (IndexPath) -> Void
+    
+    init(cellSelected: @escaping (IndexPath) -> Void) {
+        self.cellSelected = cellSelected
+        super.init(frame: .null)
         setupViews()
     }
 

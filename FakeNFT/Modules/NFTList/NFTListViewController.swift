@@ -10,7 +10,10 @@ import UIKit
 final class NFTListViewController: UIViewController {
 
     private let viewModel: NFTListViewModel
-    private let container = NFTListContainerView()
+    private lazy var container = NFTListContainerView { [weak self] indexPath in
+        guard let self else { return }
+        self.viewModel.cellSelected(indexPath)
+    }
 
     init(viewModel: NFTListViewModel) {
         self.viewModel = viewModel

@@ -8,6 +8,7 @@
 import UIKit
 
 final class NFTListView: UIView {
+    private let cellSelected: (IndexPath) -> Void
     private let tableView = UITableView()
     private var items: [NFTCollectionModel] = [] {
         didSet {
@@ -15,8 +16,9 @@ final class NFTListView: UIView {
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(cellSelected: @escaping (IndexPath) -> Void) {
+        self.cellSelected = cellSelected
+        super.init(frame: .null)
         setupTableView()
     }
 
@@ -45,7 +47,7 @@ final class NFTListView: UIView {
 
 extension NFTListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row selected", items[indexPath.row])
+        cellSelected(indexPath)
     }
 }
 
