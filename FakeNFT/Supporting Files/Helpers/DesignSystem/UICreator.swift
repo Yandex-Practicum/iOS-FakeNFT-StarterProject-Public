@@ -13,6 +13,10 @@ struct UICreator {
 
     static let shared = UICreator()
 
+    private init() {
+        print("Singleton initialized")
+    }
+
     func makeLabel(text: String? = nil,
                    font: UIFont = UIFont.appFont(.bold, withSize: 22),
                    color: UIColor = .appBlack,

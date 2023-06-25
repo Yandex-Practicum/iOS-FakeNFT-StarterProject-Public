@@ -345,8 +345,8 @@
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				61D4B0EE2A3EE8660082B4D2 /* TabBarController.swift */,
 				61D4B0F32A3EEE860082B4D2 /* NavigationController.swift */,
-				61D4B0F52A3EF5A10082B4D2 /* Fonts */,
 				61D4B0F22A3EEBD70082B4D2 /* Helpers */,
+				61D4B0F52A3EF5A10082B4D2 /* Fonts */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 				618CD3A62A46E33A003612DD /* Localizable.strings */,
@@ -563,7 +563,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					3F68069229CBBAF100B4F915 = {
 						CreatedOnToolsVersion = 14.2;

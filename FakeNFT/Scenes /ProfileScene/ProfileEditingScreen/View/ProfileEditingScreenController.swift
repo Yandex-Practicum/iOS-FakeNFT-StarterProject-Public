@@ -57,24 +57,17 @@ final class ProfileEditingScreenController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .appWhite
         view.addKeyboardHiddingFeature()
         profileNameTextField.delegate = self
         profileLinkTextField.delegate = self
         profileDescriptionTextView.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-        view.backgroundColor = .appWhite
+        addKeyboardShowingAndHidingFeatures()
         setupAutolayout()
         addSubviews()
         setupConstraints()
         fillUI()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(changeImageTapped))
         profileImageLabel.isUserInteractionEnabled = true
-        profileImageLabel.addGestureRecognizer(tap)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -178,6 +171,17 @@ extension ProfileEditingScreenController {
             mainStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 24),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+    }
+
+    private func addKeyboardShowingAndHidingFeatures() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeImageTapped))
+        profileImageLabel.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
 
     private func fillUI() {

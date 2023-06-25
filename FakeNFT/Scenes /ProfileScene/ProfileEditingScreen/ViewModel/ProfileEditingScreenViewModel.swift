@@ -16,7 +16,7 @@ final class ProfileEditingScreenViewModel {
 
     private let networkClient = DefaultNetworkClient()
 
-    private var profile: ProfileModel?
+    private weak var profile: ProfileModel?
 
     convenience init(profileToEdit: ProfileModel) {
         self.init()

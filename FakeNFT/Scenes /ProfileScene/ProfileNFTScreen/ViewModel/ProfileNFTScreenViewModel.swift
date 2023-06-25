@@ -24,7 +24,7 @@ final class ProfileNFTScreenViewModel {
     private(set) var canReloadTable: Bool = false
 
     private let networkClient = DefaultNetworkClient()
-    private var profile: ProfileModel?
+    private weak var profile: ProfileModel?
     private let dispatchGroup = DispatchGroup()
 
     private var nftList: [ProfileNFTModel] = []

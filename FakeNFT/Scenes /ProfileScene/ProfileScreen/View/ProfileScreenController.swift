@@ -47,11 +47,7 @@ final class ProfileScreenController: UIViewController {
         showOrHideUI()
         viewModel = ProfileScreenViewModel()
         bind()
-        if InternetConnectionManager.isConnectedToNetwork() {
-            viewModel?.checkForData()
-        } else {
-            showNoInternetMessage()
-        }
+        checkForNetworkConnection()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +114,14 @@ extension ProfileScreenController {
                 self.fillUI()
                 self.showOrHideUI()
             }
+        }
+    }
+
+    private func checkForNetworkConnection() {
+        if InternetConnectionManager.isConnectedToNetwork() {
+            viewModel?.checkForData()
+        } else {
+            showNoInternetMessage()
         }
     }
 
