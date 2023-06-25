@@ -25,9 +25,6 @@ extension TabBarController {
         let firstMockViewController = UIViewController()
         firstMockViewController.view.backgroundColor = .appWhite
         firstMockViewController.title = "firstVC"
-        let secondMockViewController = UIViewController()
-        secondMockViewController.view.backgroundColor = .appWhite
-        secondMockViewController.title = "secondVC"
         let thirdMockViewController = UIViewController()
         thirdMockViewController.view.backgroundColor = .appWhite
         thirdMockViewController.title = "thirdVC"
@@ -37,7 +34,7 @@ extension TabBarController {
 
         tabBar.backgroundColor = .appWhite
         let profileNavigationController = NavigationController(rootViewController: firstMockViewController)
-        let catalogNavigationController = NavigationController(rootViewController: secondMockViewController)
+        let catalogNavigationController = NFTListFactory.create()
         let basketNavigationController = NavigationController(rootViewController: thirdMockViewController)
         let statisticsNavigationController = NavigationController(rootViewController: fourthMockViewController)
 
