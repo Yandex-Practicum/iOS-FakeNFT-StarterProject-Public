@@ -19,17 +19,15 @@ final class CartPaymentResultViewModel {
         self.networkClient = networkClient
     }
     
-    func updatePaymentResultView() {
+    func pay() {
         guard let request else { return }
         requestResult = .loading
         networkClient.send(request: request) { [weak self] result in
             switch result {
             case .success(_):
                 self?.requestResult = .success
-                print("success")
             case .failure(_):
                 self?.requestResult = .failure
-                print("fail")
             }
         }
     }
