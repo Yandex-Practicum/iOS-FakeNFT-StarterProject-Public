@@ -12,7 +12,10 @@ final class NFTListViewController: UIViewController {
     private let viewModel: NFTListViewModel
     private lazy var container = NFTListContainerView { [weak self] indexPath in
         guard let self else { return }
-        self.viewModel.cellSelected(indexPath)
+        self.viewModel.cellSelected(indexPath) { [weak self] details in
+            guard let self else { return }
+            self.showNFTDetailsScreen(details)
+        }
     }
 
     init(viewModel: NFTListViewModel) {
@@ -48,5 +51,13 @@ final class NFTListViewController: UIViewController {
             .font: UIFont.appFont(.bold, withSize: 17),
             .foregroundColor: UIColor.appBlack
         ]
+    }
+}
+
+// MARK: Navigation
+private extension NFTListViewController {
+    func showNFTDetailsScreen(_ details: NFTDetails) {
+        let viewController = NFTDetailsFactory.create(details)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol NFTListViewModel {
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void)
-    func cellSelected(_ index: IndexPath)
+    func cellSelected(_ index: IndexPath, selectedItem: @escaping (NFTDetails) -> Void)
 }
 
 final class NFTListViewModelImpl: NFTListViewModel {
@@ -22,8 +22,17 @@ final class NFTListViewModelImpl: NFTListViewModel {
         self.networkClient = networkClient
     }
     
-    func cellSelected(_ index: IndexPath) {
-        print(index)
+    func cellSelected(_ index: IndexPath, selectedItem: @escaping (NFTDetails) -> Void) {
+            let selectedCollection = nftCollectionItems[index.row]
+            let collectionNfts = nftIndividualItems.filter { selectedCollection.nfts.contains($0.id) }
+
+            let nftDetails = NFTDetails(imageURL: selectedCollection.cover,
+                                        sectionName: selectedCollection.name,
+                                        sectionAuthor: selectedCollection.author,
+                                        sectionDescription: selectedCollection.description,
+                                        items: collectionNfts)
+
+            selectedItem(nftDetails)
     }
 
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {
