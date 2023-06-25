@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		022100A02A487C3E008B4F69 /* NFTCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221009F2A487C3E008B4F69 /* NFTCollectionModel.swift */; };
+		022100A22A487DC2008B4F69 /* NFTIndividualModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022100A12A487DC2008B4F69 /* NFTIndividualModel.swift */; };
 		02A0CC152A40C97800AF0EA0 /* catalog_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 02A0CC142A40C97800AF0EA0 /* catalog_plan.md */; };
 		3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */; };
 		3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		0221009F2A487C3E008B4F69 /* NFTCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionModel.swift; sourceTree = "<group>"; };
+		022100A12A487DC2008B4F69 /* NFTIndividualModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTIndividualModel.swift; sourceTree = "<group>"; };
 		02A0CC142A40C97800AF0EA0 /* catalog_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = catalog_plan.md; path = ../../Downloads/catalog_plan.md; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			children = (
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
 				0221009F2A487C3E008B4F69 /* NFTCollectionModel.swift */,
+				022100A12A487DC2008B4F69 /* NFTIndividualModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F478ECF29DB474E00F6D39E /* UIColor+Extensions.swift in Sources */,
+				022100A22A487DC2008B4F69 /* NFTIndividualModel.swift in Sources */,
 				61D7BEE82A407EDE0059CE5A /* Observable.swift in Sources */,
 				3F478ED129DB476500F6D39E /* UIFont+Extensions.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
