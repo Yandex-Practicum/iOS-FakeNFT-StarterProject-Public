@@ -125,7 +125,6 @@ private extension CartPaymentResultViewController {
     }
     
     func showLoadingView() {
-        actionButton.setTitle("Loading...", for: .normal)
         resultLabel.text = "Loading in progress"
         resultImageView.image = UIImage(named: K.Icons.circleDotted)
     }
