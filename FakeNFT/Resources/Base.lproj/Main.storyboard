@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,39 +40,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yEn-qE-qUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-720" y="50"/>
+            <point key="canvasLocation" x="205.34351145038167" y="50"/>
         </scene>
-        <!--Профиль-->
+        <!--Profile View Controller-->
         <scene sceneID="L5w-BP-CgG">
             <objects>
-                <viewController id="6i5-Qt-ukh" sceneMemberID="viewController">
+                <viewController id="6i5-Qt-ukh" customClass="ProfileViewController" customModule="FakeNFT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sqy-bH-JOA">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Профиль" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJe-qj-ep5">
-                                <rect key="frame" x="16" y="159" width="361" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="6VI-CQ-FAl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="n1C-DF-ZFC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="cJe-qj-ep5" firstAttribute="top" secondItem="n1C-DF-ZFC" secondAttribute="top" constant="100" id="4Fo-Tx-9Va"/>
-                            <constraint firstItem="n1C-DF-ZFC" firstAttribute="trailing" secondItem="cJe-qj-ep5" secondAttribute="trailing" constant="16" id="6sV-6P-M1p"/>
-                            <constraint firstItem="cJe-qj-ep5" firstAttribute="leading" secondItem="n1C-DF-ZFC" secondAttribute="leading" constant="16" id="876-Qa-CFn"/>
-                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Профиль" image="circle.fill" catalog="system" id="Bq6-vk-Wno"/>
+                    <navigationItem key="navigationItem" id="fNP-Ma-Omi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6rH-bA-XF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1532.06106870229" y="50"/>
+            <point key="canvasLocation" x="-605.3435114503817" y="50"/>
         </scene>
         <!--Корзина-->
         <scene sceneID="TUb-v3-7xB">
@@ -103,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqF-RD-h9V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="50"/>
+            <point key="canvasLocation" x="1052.6717557251909" y="50"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="za3-hk-cpw">
@@ -113,9 +98,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="Black"/>
+                        <color key="selectedImageTintColor" name="Black"/>
                     </tabBar>
                     <connections>
-                        <segue destination="6i5-Qt-ukh" kind="relationship" relationship="viewControllers" id="T9j-PL-Yhv"/>
+                        <segue destination="QpF-Ev-4iR" kind="relationship" relationship="viewControllers" id="T9j-PL-Yhv"/>
                         <segue destination="lvU-bz-Vrw" kind="relationship" relationship="viewControllers" id="UQk-8s-8v2"/>
                         <segue destination="ZuB-kp-v3h" kind="relationship" relationship="viewControllers" id="z6Y-lX-f3f"/>
                         <segue destination="qg2-Az-O78" kind="relationship" relationship="viewControllers" id="HDa-tO-gwF"/>
@@ -155,14 +142,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lQ-it-xtI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="941" y="50"/>
+            <point key="canvasLocation" x="1866.4122137404579" y="50"/>
+        </scene>
+        <!--Профиль-->
+        <scene sceneID="HNr-5t-XVd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QpF-Ev-4iR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Профиль" image="Profile Tab" landscapeImage="Profile Tab" selectedImage="Profile Tab" id="Bq6-vk-Wno"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="waF-wQ-nWl">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="6i5-Qt-ukh" kind="relationship" relationship="rootViewController" id="miJ-kz-a2u"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DIW-PD-ZXG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1532.06106870229" y="50"/>
         </scene>
     </scenes>
     <resources>
-        <image name="circle.fill" catalog="system" width="128" height="123"/>
+        <image name="Profile Tab" width="30" height="30"/>
         <image name="flag.2.crossed.fill" catalog="system" width="128" height="72"/>
         <image name="square.stack.3d.up.fill" catalog="system" width="128" height="125"/>
         <image name="trash" catalog="system" width="117" height="128"/>
+        <namedColor name="Black">
+            <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
