@@ -25,6 +25,8 @@ final class NFTListView: UIView {
     }
 
     private func setupTableView() {
+        tableView.register(NFTListCell.self, forCellReuseIdentifier: NFTListCell.reuseIdentifier)
+        
         tableView.delegate = self
         tableView.dataSource = self
 
@@ -53,8 +55,14 @@ extension NFTListView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = .red
+        guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: NFTListCell.reuseIdentifier
+                ) as? NFTListCell else {
+                    return UITableViewCell()
+                }
+                cell.configure(.init(imageUrl: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png",
+                                     collectionDescription: "Peach",
+                                     collectionItems: 11))
         return cell
     }
 }
