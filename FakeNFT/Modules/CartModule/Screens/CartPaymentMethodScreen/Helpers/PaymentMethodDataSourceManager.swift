@@ -9,6 +9,7 @@ import UIKit
 
 protocol PaymentMethodDSManagerProtocol {
     func createDataSource(with collectionView: UICollectionView, with data: [PaymentMethodRow])
+    func updateCollection(with data: [PaymentMethodRow])
 }
 
 final class PaymentMethodDataSourceManager: PaymentMethodDSManagerProtocol {
@@ -23,6 +24,10 @@ final class PaymentMethodDataSourceManager: PaymentMethodDSManagerProtocol {
             return self?.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
         dataSource?.apply(createSnapshot(from: data))
+    }
+    
+    func updateCollection(with data: [PaymentMethodRow]) {
+        dataSource?.apply(createSnapshot(from: data), animatingDifferences: true)
     }
 }
 

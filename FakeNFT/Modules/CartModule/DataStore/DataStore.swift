@@ -11,13 +11,9 @@ import Combine
 protocol DataStorageProtocol {
     var sortDescriptor: CartSortValue? { get set }
     var dataPublisher: AnyPublisher<[CartRow], Never> { get }
+    func addCartRowItem(_ item: CartRow)
     func getCartRowItems() -> [CartRow]
     func deleteItem(with id: UUID?)
-}
-
-protocol PaymentMethodStorageProtocol {
-    var paymentMethodsPublisher: AnyPublisher<[PaymentMethodRow], Never> { get }
-    func getPaymentMethods() -> [PaymentMethodRow]
 }
 
 final class DataStore {
@@ -42,19 +38,6 @@ final class DataStore {
             sendStoredItemsUpdates(newData: getSortedItems(by: sortDescriptor))
         }
     }
-    
-    private var loadedMethods: [PaymentMethodRow] = [
-        PaymentMethodRow(title: "Tether", name: "USDT", image: "Tether", id: "1"),
-        PaymentMethodRow(title: "Bitcoin", name: "BTC", image: "Bitcoin", id: "2"),
-        PaymentMethodRow(title: "Dogecoin", name: "DOGE", image: "Dogecoin", id: "3"),
-        PaymentMethodRow(title: "Tether", name: "USDT", image: "Tether", id: "4"),
-        PaymentMethodRow(title: "Bitcoin", name: "BTC", image: "Bitcoin", id: "5"),
-        PaymentMethodRow(title: "Dogecoin", name: "DOGE", image: "Dogecoin", id: "6"),
-    ] {
-        didSet {
-            sendLoadedPaymentMethods(newData: loadedMethods)
-        }
-    }
 }
 
 // MARK: - Ext DataStorageProtocol
@@ -64,6 +47,10 @@ extension DataStore: DataStorageProtocol {
         return storedPublishedItems.eraseToAnyPublisher()
     }
     
+    func addCartRowItem(_ item: CartRow) {
+        storedItems.append(item)
+    }
+    
     func getCartRowItems() -> [CartRow] {
         return storedItems
     }
@@ -71,18 +58,6 @@ extension DataStore: DataStorageProtocol {
     func deleteItem(with id: UUID?) {
         guard let id else { return }
         storedItems.removeAll(where: { $0.id == id })
-    }
-}
-
-// MARK: - Ext PaymentMethodStorageProtocol
-extension DataStore: PaymentMethodStorageProtocol {
-    
-    var paymentMethodsPublisher: AnyPublisher<[PaymentMethodRow], Never> {
-        return loadedPaymentMethods.eraseToAnyPublisher()
-    }
-    
-    func getPaymentMethods() -> [PaymentMethodRow] {
-        return loadedMethods
     }
 }
 

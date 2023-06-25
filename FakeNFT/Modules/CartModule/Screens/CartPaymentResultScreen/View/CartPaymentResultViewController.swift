@@ -27,7 +27,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
     
     private lazy var resultLabel: CustomLabel = {
         let label = CustomLabel(size: 22, weight: .bold, color: .ypBlack, alignment: .center)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
@@ -35,6 +35,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
+        imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         return imageView
     }()
     
@@ -126,7 +127,7 @@ private extension CartPaymentResultViewController {
     
     func showLoadingView() {
         resultLabel.text = "Loading in progress"
-        resultImageView.image = UIImage(named: K.Icons.circleDotted)
+        resultImageView.image = UIImage(systemName: K.Icons.circleDotted)
     }
     
     func hideOrShowTheActionButton(_ result: RequestResult) {
@@ -171,7 +172,7 @@ private extension CartPaymentResultViewController {
         NSLayoutConstraint.activate([
             resultStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
             resultStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
-            resultStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 152)
+            resultStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150)
         ])
     }
 }
