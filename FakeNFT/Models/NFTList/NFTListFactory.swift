@@ -10,8 +10,8 @@ import UIKit
 struct NFTListFactory {
     static func create() -> UINavigationController {
         let viewModel = NFTListViewModelImpl()
-        let vieController = NFTListViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: vieController)
+        let viewController = NFTListViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
         return navigationController
     }
 }
