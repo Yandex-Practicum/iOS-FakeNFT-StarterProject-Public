@@ -10,7 +10,6 @@ import Combine
 
 protocol PaymentResultCoordinatable {
     var onMain: (() -> Void)? { get set }
-    var onRetry: (() -> Void)? { get set }
 }
 
 final class CartPaymentResultViewController: UIViewController, PaymentResultCoordinatable {
@@ -67,7 +66,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         view.backgroundColor = .systemBackground
         setupConstraints()
         bind()
-        viewModel.updatePaymentResultView()
+        viewModel.pay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,28 +83,67 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
     
     private func bind() {
         viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
-                DispatchQueue.main.async {
-                    self?.updateUI(result)
-                }
+                self?.updateUI(result)
             }
             .store(in: &cancellables)
     }
+}
+
+// MARK: - Ext @objc
+@objc private extension CartPaymentResultViewController {
+    func returnToMainScreen() {
+        onMain?()
+    }
     
-    private func updateUI(_ result: RequestResult?) {
+    func tryAgain() {
+        viewModel.pay()
+    }
+}
+
+// MARK: - Ext private methods
+private extension CartPaymentResultViewController {
+    func updateUI(_ result: RequestResult?) {
         guard let result else { return }
         switch result {
         case .success, .failure:
-            self.actionButton.setTitle(result.buttonTitle, for: .normal)
-            self.resultLabel.text = result.description
-            self.resultImageView.image = result.image
+            self.updateUIProperties(by: result)
         case .loading:
-            self.actionButton.setTitle("Loading...", for: .normal)
-            self.resultLabel.text = "Loading in progress"
-            self.resultImageView.image = UIImage(named: K.Icons.circleDotted)
+            self.showLoadingView()
         }
+        
+        hideOrShowTheActionButton(result)
+        
+    }
+    
+    func updateUIProperties(by result: RequestResult) {
+        actionButton.setTitle(result.buttonTitle, for: .normal)
+        resultLabel.text = result.description
+        resultImageView.image = result.image
+        addButtonTarget(from: result)
+    }
+    
+    func showLoadingView() {
+        actionButton.setTitle("Loading...", for: .normal)
+        resultLabel.text = "Loading in progress"
+        resultImageView.image = UIImage(named: K.Icons.circleDotted)
+    }
+    
+    func hideOrShowTheActionButton(_ result: RequestResult) {
         self.actionButton.isHidden = result == .loading
-    }  
+    }
+    
+    func addButtonTarget(from result: RequestResult) {
+        switch result {
+        case .success:
+            actionButton.addTarget(self, action: #selector(returnToMainScreen), for: .touchUpInside)
+        case .failure:
+            actionButton.addTarget(self, action: #selector(tryAgain), for: .touchUpInside)
+        case .loading:
+            break
+        }
+    }
 }
 
 // MARK: - Ext Constraints

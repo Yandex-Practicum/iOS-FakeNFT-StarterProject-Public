@@ -112,10 +112,6 @@ private extension CartCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
-        paymentResultScreen.onRetry = {
-            
-        }
-        
         router.pushViewController(paymentResultScreen, animated: true)
     }
     
