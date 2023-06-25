@@ -9,35 +9,46 @@ import Foundation
 import Combine
 
 final class CartPaymentMethodViewModel {
-    private var cancellables = Set<AnyCancellable>()
     
-    private var visibleRows: [PaymentMethodRow] = []
+    @Published private (set) var visibleRows: [PaymentMethodRow] = []
     @Published private (set) var paymentRequest: NetworkRequest? 
     
-    private let dataStore: PaymentMethodStorageProtocol
     private let networkClient: NetworkClient
         
-    init(dataStore: PaymentMethodStorageProtocol, networkClient: NetworkClient) {
-        self.dataStore = dataStore
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
     
-    func getPaymentMethods() -> [PaymentMethodRow] {
+    func getPaymentMethods() {
         loadItems()
-        return visibleRows
     }
     
     func payTapped() {
-        paymentRequest = networkClient.constructRequest(
-            endpointString: K.Links.endPoint,
-            queryParam: nil,
-            method: .put
-        )
+//        paymentRequest = networkClient.constructRequest(
+//            endpointString: K.Links.apiLink,
+//            queryParam: nil,
+//            method: .put
+//        )
+        // TODO: Заменить за put-запрос
+        paymentRequest = RequestConstructor.constructCurrencyRequest()
     }
 }
 
 private extension CartPaymentMethodViewModel {
     func loadItems() {
-        visibleRows = dataStore.getPaymentMethods()
+        let request = RequestConstructor.constructCurrencyRequest()
+        
+        networkClient.send(request: request, type: [PaymentMethodRow].self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.populateVisibleRows(with: response)
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
+    
+    func populateVisibleRows(with data: [PaymentMethodRow]) {
+            visibleRows = data
     }
 }

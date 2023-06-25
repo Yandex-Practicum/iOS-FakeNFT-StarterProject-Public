@@ -11,8 +11,7 @@ protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
     func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
-    func makeCartPaymentMethodScreenView(dataStore: PaymentMethodStorageProtocol,
-                                         networkClient: NetworkClient) -> Presentable & CartPaymentMethodCoordinatableProtocol
+    func makeCartPaymentMethodScreenView(networkClient: NetworkClient) -> Presentable & CartPaymentMethodCoordinatableProtocol
     func makePaymentResultScreenView(networkClient: NetworkClient, request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
     // TODO: добавить два метода с основными экранами - профиль и статистика
@@ -43,8 +42,8 @@ final class ModulesFactory: ModulesFactoryProtocol {
         return viewController
     }
     
-    func makeCartPaymentMethodScreenView(dataStore: PaymentMethodStorageProtocol, networkClient: NetworkClient) -> Presentable & CartPaymentMethodCoordinatableProtocol {
-        let viewModel = CartPaymentMethodViewModel(dataStore: dataStore, networkClient: networkClient)
+    func makeCartPaymentMethodScreenView(networkClient: NetworkClient) -> Presentable & CartPaymentMethodCoordinatableProtocol {
+        let viewModel = CartPaymentMethodViewModel(networkClient: networkClient)
         let dataSource = PaymentMethodDataSourceManager()
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController

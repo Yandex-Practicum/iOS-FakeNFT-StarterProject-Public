@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Kingfisher
 
 final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     
@@ -26,6 +27,7 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
+        imageView.widthAnchor.constraint(equalToConstant: 36).isActive = true
         return imageView
     }()
     
@@ -75,7 +77,7 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func updateCell(with data: PaymentMethodRow) {
-        coinImageView.image = UIImage(named: data.image)
+        coinImageView.kf.setImage(with: URL(string: data.image))
         coinNameLabel.text = data.title
         coinCodeLabel.text = data.name
     }

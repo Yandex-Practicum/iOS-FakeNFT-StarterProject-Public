@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PaymentMethodRow: Hashable {
+struct PaymentMethodRow: Hashable, Decodable {
     let title: String
     let name: String
     let image: String

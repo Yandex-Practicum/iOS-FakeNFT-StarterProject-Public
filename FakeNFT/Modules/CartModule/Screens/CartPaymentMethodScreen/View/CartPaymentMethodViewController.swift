@@ -105,10 +105,11 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        bind()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
+        bind()
+        viewModel.getPaymentMethods()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,10 +128,16 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
                 self?.handleRequestUpdate(request)
             }
             .store(in: &cancellables)
+        
+        viewModel.$visibleRows
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] rows in
+                self?.dataSource.updateCollection(with: rows)
+            }.store(in: &cancellables)
     }
     
     private func createDataSource() {
-        dataSource.createDataSource(with: collectionView, with: viewModel.getPaymentMethods())
+        dataSource.createDataSource(with: collectionView, with: viewModel.visibleRows)
     }
     
     private func handleRequestUpdate(_ request: NetworkRequest?) {

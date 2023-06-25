@@ -13,14 +13,14 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: DataStorageProtocol & PaymentMethodStorageProtocol
+    private var dataStore: DataStorageProtocol
     private let networkClient: NetworkClient
     
     init(factory: ModulesFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: DataStorageProtocol & PaymentMethodStorageProtocol,
+         dataStore: DataStorageProtocol,
          networkClient: NetworkClient) {
         
         self.factory = factory
@@ -88,7 +88,7 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore, networkClient: networkClient)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(networkClient: networkClient)
         
         paymentMethodScreen.onProceed = { [weak self] request in
             self?.showPaymentResultScreen(with: request)

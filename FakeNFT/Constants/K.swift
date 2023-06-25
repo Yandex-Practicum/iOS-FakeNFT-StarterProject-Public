@@ -32,6 +32,10 @@ struct K {
     
     struct Links {
         static let userLicenseLink = "https://yandex.ru/legal/practicum_termsofuse/"
-        static let endPoint = "https://648cbbbe8620b8bae7ed5043.mockapi.io/"
+        static let apiLink = "https://648cbbbe8620b8bae7ed5043.mockapi.io/"
+    }
+    
+    struct EndPoints {
+        static let currencies = "api/v1/currencies"
     }
 }

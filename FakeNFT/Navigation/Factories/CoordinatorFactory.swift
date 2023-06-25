@@ -17,7 +17,7 @@ final class CoordinatorFactory  {
     private let modulesFactory: ModulesFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable = AlertConstructor()
-    private let dataStore: DataStorageProtocol & PaymentMethodStorageProtocol = DataStore()
+    private let dataStore: DataStorageProtocol = DataStore()
     private let networkClient: NetworkClient = DefaultNetworkClient()
 }
 
