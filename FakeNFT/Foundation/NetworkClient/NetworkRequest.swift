@@ -18,3 +18,9 @@ extension NetworkRequest {
     var queryParameters: [String: String]? { nil }
     var httpMethod: HttpMethod { .get }
 }
+
+struct Request: NetworkRequest {
+    var endpoint: URL?
+    var queryParameters: [String: String]? = nil
+    var httpMethod: HttpMethod = .get
+}

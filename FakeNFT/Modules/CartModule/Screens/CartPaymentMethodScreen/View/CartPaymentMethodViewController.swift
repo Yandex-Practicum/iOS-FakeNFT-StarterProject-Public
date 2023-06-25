@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 protocol CartPaymentMethodCoordinatableProtocol {
-    var onProceed: (() -> Void)? { get set }
+    var onProceed: ((NetworkRequest?) -> Void)? { get set }
     var onTapUserLicense: (() -> Void)? { get set }
     var onCancel: (() -> Void)? { get set }
 }
 
 final class CartPaymentMethodViewController: UIViewController, CartPaymentMethodCoordinatableProtocol {
-    var onProceed: (() -> Void)?
+    var onProceed: ((NetworkRequest?) -> Void)?
     var onTapUserLicense: (() -> Void)?
     var onCancel: (() -> Void)?
     
@@ -24,6 +25,8 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     private enum GridItemSize: CGFloat {
         case half = 0.5
     }
+    
+    private var cancellables = Set<AnyCancellable>()
    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -102,6 +105,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        bind()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
@@ -117,8 +121,21 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         tabBarController?.tabBar.isHidden = false
     }
     
+    private func bind() {
+        viewModel.$paymentRequest
+            .sink { [weak self] request in
+                self?.handleRequestUpdate(request)
+            }
+            .store(in: &cancellables)
+    }
+    
     private func createDataSource() {
         dataSource.createDataSource(with: collectionView, with: viewModel.getPaymentMethods())
+    }
+    
+    private func handleRequestUpdate(_ request: NetworkRequest?) {
+        guard let request else { return }
+        onProceed?(request)
     }
 }
 
@@ -129,7 +146,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }
     
     func payTapped() {
-        onProceed?()
+        viewModel.payTapped()
     }
     
     func cancelTapped() {

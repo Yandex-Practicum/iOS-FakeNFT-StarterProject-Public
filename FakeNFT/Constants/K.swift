@@ -18,6 +18,9 @@ struct K {
         static let activeStarRate = "activeStar"
         static let notActiveStarRate = "notActiveStar"
         static let chevronBackward = "chevron.backward"
+        static let checkmark = "checkmark"
+        static let xmark = "xmark"
+        static let circleDotted = "circle.dotted"
     }
     
     struct Titles {
@@ -29,5 +32,6 @@ struct K {
     
     struct Links {
         static let userLicenseLink = "https://yandex.ru/legal/practicum_termsofuse/"
+        static let endPoint = "https://648cbbbe8620b8bae7ed5043.mockapi.io/"
     }
 }

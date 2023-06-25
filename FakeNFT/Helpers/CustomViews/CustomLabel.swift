@@ -9,11 +9,15 @@ import UIKit
 
 class CustomLabel: UILabel {
     
-    init(size: CGFloat, weight: UIFont.Weight, color: UIColor?) {
+    init(size: CGFloat, weight: UIFont.Weight, color: UIColor?, alignment: NSTextAlignment? = nil) {
         super.init(frame: .zero)
         textColor = color
         font = UIFont.systemFont(ofSize: size, weight: weight)
-        textAlignment = .left
+        if let alignment {
+            textAlignment = alignment
+        } else {
+            textAlignment = .left
+        }
     }
     
     required init?(coder: NSCoder) {

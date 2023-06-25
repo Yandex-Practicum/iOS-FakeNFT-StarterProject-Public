@@ -18,6 +18,7 @@ final class CoordinatorFactory  {
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable = AlertConstructor()
     private let dataStore: DataStorageProtocol & PaymentMethodStorageProtocol = DataStore()
+    private let networkClient: NetworkClient = DefaultNetworkClient()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -42,7 +43,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             router: router,
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
-            dataStore: dataStore
+            dataStore: dataStore,
+            networkClient: networkClient
         )
     }
     
