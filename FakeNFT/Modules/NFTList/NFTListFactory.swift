@@ -9,7 +9,10 @@ import UIKit
 
 struct NFTListFactory {
     static func create() -> UINavigationController {
-        let viewModel = NFTListViewModelImpl()
+        let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+        let networkClient = DefaultNetworkClient(decoder: decoder)
+        let viewModel = NFTListViewModelImpl(networkClient: networkClient)
         let viewController = NFTListViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: viewController)
         return navigationController

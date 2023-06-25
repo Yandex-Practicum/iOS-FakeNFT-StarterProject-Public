@@ -16,3 +16,5 @@ struct NFTCollectionModel: Codable {
     let author: String
     let id: String
 }
+
+typealias NFTCollectionResponse = [NFTCollectionModel]

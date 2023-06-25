@@ -44,16 +44,19 @@ final class NFTListContainerView: UIView {
 extension NFTListContainerView {
     enum Configuration {
         case loading
-        case loaded([String])
+        case loaded([NFTCollectionModel])
     }
 
     func configure(configuration: Configuration) {
         switch configuration {
         case .loading:
+            loadingView.isHidden = false
             listView.isHidden = true
         case let .loaded(items):
             listView.configure(.init(items: items))
             loadingView.isHidden = true
+            listView.isHidden = false
+            listView.configure(.init(items: items))
         }
     }
 }

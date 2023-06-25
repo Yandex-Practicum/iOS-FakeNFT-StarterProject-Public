@@ -17,3 +17,5 @@ struct NFTIndividualModel: Codable {
     let author: String
     let id: String
 }
+
+typealias NFTIndividualResponse = [NFTIndividualModel]

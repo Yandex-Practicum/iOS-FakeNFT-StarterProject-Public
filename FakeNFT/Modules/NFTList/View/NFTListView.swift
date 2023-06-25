@@ -9,7 +9,7 @@ import UIKit
 
 final class NFTListView: UIView {
     private let tableView = UITableView()
-    private var items: [String] = [] {
+    private var items: [NFTCollectionModel] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -45,7 +45,7 @@ final class NFTListView: UIView {
 
 extension NFTListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row selected", indexPath)
+        print("row selected", items[indexPath.row])
     }
 }
 
@@ -56,20 +56,22 @@ extension NFTListView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: NFTListCell.reuseIdentifier
-                ) as? NFTListCell else {
-                    return UITableViewCell()
-                }
-                cell.configure(.init(imageUrl: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Beige.png",
-                                     collectionDescription: "Peach",
-                                     collectionItems: 11))
+            withIdentifier: NFTListCell.reuseIdentifier
+        ) as? NFTListCell else {
+            return UITableViewCell()
+        }
+        let item = items[indexPath.row]
+        
+        cell.configure(.init(imageUrl: item.cover,
+                             collectionDescription: item.name,
+                             collectionItems: item.nfts.count))
         return cell
     }
 }
 
 extension NFTListView {
     struct Configuration {
-        let items: [String]
+        let items: [NFTCollectionModel]
     }
 
     func configure(_ configuration: Configuration) {

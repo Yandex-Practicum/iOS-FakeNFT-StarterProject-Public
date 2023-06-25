@@ -29,7 +29,13 @@ final class NFTListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .appWhite
         configureNavigationController()
-        container.configure(configuration: .loaded(["Mock", "Mock 2"]))
+        container.configure(configuration: .loading)
+        viewModel.getItems { [weak self] items in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                self.container.configure(configuration: .loaded(items))
+            }
+        }
     }
 
     private func configureNavigationController() {
