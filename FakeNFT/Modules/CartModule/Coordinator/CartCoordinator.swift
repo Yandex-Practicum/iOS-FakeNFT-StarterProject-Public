@@ -14,18 +14,21 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
     private var dataStore: DataStorageProtocol & PaymentMethodStorageProtocol
+    private let networkClient: NetworkClient
     
     init(factory: ModulesFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: DataStorageProtocol & PaymentMethodStorageProtocol) {
+         dataStore: DataStorageProtocol & PaymentMethodStorageProtocol,
+         networkClient: NetworkClient) {
         
         self.factory = factory
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
+        self.networkClient = networkClient
     }
     
     func start() {
@@ -85,10 +88,10 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore, networkClient: networkClient)
         
-        paymentMethodScreen.onProceed = {
-            
+        paymentMethodScreen.onProceed = { [weak self] request in
+            self?.showPaymentResultScreen(with: request)
         }
         
         paymentMethodScreen.onTapUserLicense = { [weak self] in
@@ -100,6 +103,20 @@ private extension CartCoordinator {
         }
         
         router.pushViewController(paymentMethodScreen, animated: true)
+    }
+    
+    func showPaymentResultScreen(with request: NetworkRequest?) {
+        var paymentResultScreen = factory.makePaymentResultScreenView(networkClient: networkClient, request: request)
+        
+        paymentResultScreen.onMain = { [weak router] in
+            router?.popToRootViewController(animated: true, completion: nil)
+        }
+        
+        paymentResultScreen.onRetry = {
+            
+        }
+        
+        router.pushViewController(paymentResultScreen, animated: true)
     }
     
     func showWebViewScreen() {

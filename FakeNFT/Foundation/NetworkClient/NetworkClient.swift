@@ -16,6 +16,8 @@ protocol NetworkClient {
     func send<T: Decodable>(request: NetworkRequest,
                             type: T.Type,
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    
+    func constructRequest(endpointString: String, queryParam: [String : String]?, method: HttpMethod) -> NetworkRequest
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -74,6 +76,24 @@ struct DefaultNetworkClient: NetworkClient {
             }
         }
     }
+    
+    func constructRequest(endpointString: String, queryParam: [String : String]?, method: HttpMethod) -> NetworkRequest {
+        return Request(endpoint: URL(string: endpointString), queryParameters: queryParam, httpMethod: method)
+    }
+    
+    /*
+     task?.cancel()
+     let request = networkClient.constructRequest(endpointString: K.Links.endPoint, queryParam: nil, method: .put)
+     let sendTask = networkClient.send(request: request) { [weak self] result in
+         switch result {
+         case .success(_):
+             self?.paymentResult = .success
+         case .failure(_):
+             self?.paymentResult = .failure
+         }
+     }
+     self.task = sendTask
+     */
 
     // MARK: - Private
 

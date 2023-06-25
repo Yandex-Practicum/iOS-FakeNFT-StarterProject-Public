@@ -18,3 +18,9 @@ extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
 }
+
+struct Request: NetworkRequest {
+    var endpoint: URL?
+    var queryParameters: [String: String]? = nil
+    var httpMethod: HttpMethod = .get
+}
