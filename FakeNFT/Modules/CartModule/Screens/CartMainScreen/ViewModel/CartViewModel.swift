@@ -53,7 +53,7 @@ private extension CartViewModel {
                 DispatchQueue.main.async {
                     let convertedData = self.convert(data)
                     self.addRowsToStorage(convertedData)
-                    self.visibleRows = self.dataStore.getCartRowItems()
+                    self.updateVisibleRows()
                 }
                 
             case .failure(let error):
@@ -84,5 +84,9 @@ private extension CartViewModel {
         rows.forEach { row in
             dataStore.addCartRowItem(row)
         }
+    }
+    
+    func updateVisibleRows() {
+        visibleRows = dataStore.getCartRowItems()
     }
 }
