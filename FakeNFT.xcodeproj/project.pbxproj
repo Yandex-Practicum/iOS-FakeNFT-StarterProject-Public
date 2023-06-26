@@ -47,6 +47,7 @@
 		377DF5F22A3FA3CC00090DCD /* RateStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F12A3FA3CC00090DCD /* RateStackView.swift */; };
 		377DF5F42A3FA4DE00090DCD /* RateStarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */; };
 		377DF5F62A3FAC0700090DCD /* CentralStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F52A3FAC0700090DCD /* CentralStackView.swift */; };
+		378504F62A49D2C2000D6AC7 /* cart_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 378504F52A49D2C2000D6AC7 /* cart_plan.md */; };
 		37B57A062A41F993000FE88B /* CartSortValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B57A052A41F993000FE88B /* CartSortValue.swift */; };
 		37DFD16A2A408F090020667A /* CustomActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DFD1692A408F090020667A /* CustomActionButton.swift */; };
 		37E0EC442A48B24B00F17FC7 /* RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0EC432A48B24B00F17FC7 /* RequestResult.swift */; };
@@ -127,6 +128,7 @@
 		377DF5F12A3FA3CC00090DCD /* RateStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStackView.swift; sourceTree = "<group>"; };
 		377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarButton.swift; sourceTree = "<group>"; };
 		377DF5F52A3FAC0700090DCD /* CentralStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralStackView.swift; sourceTree = "<group>"; };
+		378504F52A49D2C2000D6AC7 /* cart_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = cart_plan.md; sourceTree = "<group>"; };
 		37B57A052A41F993000FE88B /* CartSortValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartSortValue.swift; sourceTree = "<group>"; };
 		37DFD1692A408F090020667A /* CustomActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionButton.swift; sourceTree = "<group>"; };
 		37E0EC432A48B24B00F17FC7 /* RequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResult.swift; sourceTree = "<group>"; };
@@ -440,6 +442,14 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		378504F42A49D2AA000D6AC7 /* Decomposition */ = {
+			isa = PBXGroup;
+			children = (
+				378504F52A49D2C2000D6AC7 /* cart_plan.md */,
+			);
+			path = Decomposition;
+			sourceTree = "<group>";
+		};
 		37B579FA2A41F6A3000FE88B /* CartMainScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +538,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				378504F42A49D2AA000D6AC7 /* Decomposition */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
@@ -728,6 +739,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				378504F62A49D2C2000D6AC7 /* cart_plan.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
