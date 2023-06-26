@@ -12,16 +12,6 @@ struct CartRow: Hashable {
     let imageName: String
     let nftName: String
     let rate: Int
-    let price: Double
+    let price: Float
     let coinName: String
-}
-
-struct NftCollection: Decodable {
-    let createdAt: String
-    let name: String
-    let cover: String
-    let nfts: [String]
-    let description: String
-    let author: String
-    let id: String
 }

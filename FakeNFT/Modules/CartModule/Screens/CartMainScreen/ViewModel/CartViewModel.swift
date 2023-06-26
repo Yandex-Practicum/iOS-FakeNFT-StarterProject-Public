@@ -15,22 +15,18 @@ final class CartViewModel {
     @Published private (set) var visibleRows: [CartRow] = [] 
     
     private var dataStore: DataStorageProtocol
+    private var networkClient: NetworkClient
     
-    init(dataStore: DataStorageProtocol) {
+    init(dataStore: DataStorageProtocol, networkClient: NetworkClient) {
         self.dataStore = dataStore
-        dataStore.dataPublisher
-            .sink { self.visibleRows = $0 }
-            .store(in: &cancellables)
+        self.networkClient = networkClient
+        
+        bind()
+        load()
     }
     
     func setupSortValue(_ sortBy: CartSortValue) {
         dataStore.sortDescriptor = sortBy
-        
-    }
-    
-    func getItems() -> [CartRow] {
-        loadItems()
-        return visibleRows
     }
     
     func deleteItem(with id: UUID?) {
@@ -39,11 +35,54 @@ final class CartViewModel {
     }
 }
 
+// MARK: - Ext Private methods
 private extension CartViewModel {
-    func loadItems() {
-        visibleRows = dataStore.getCartRowItems()
+    func bind() {
+        dataStore.dataPublisher
+            .sink { self.visibleRows = $0 }
+            .store(in: &cancellables)
     }
     
+    func load() {
+        // MARK: Replace for loading from userProfile
+        let request = RequestConstructor.constructNftCollectionRequest(method: .get)
+        networkClient.send(request: request, type: [NftSingleCollection].self) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    let convertedData = self.convert(data)
+                    self.addRowsToStorage(convertedData)
+                    self.visibleRows = self.dataStore.getCartRowItems()
+                }
+                
+            case .failure(let error):
+                print("error is: \(error)")
+            }
+        }
+    }
     
+    func convert(_ singeNft: [NftSingleCollection]) -> [CartRow] {
+        var rows: [CartRow] = []
+        
+        singeNft.forEach { collection in
+            let row = CartRow(
+                imageName: collection.images.first ?? "",
+                nftName: collection.name,
+                rate: collection.rating,
+                price: collection.price,
+                coinName: "ETF")
+            // MARK: connect to chosen currency
+            
+            rows.append(row)
+        }
+        
+        return rows
+    }
     
+    func addRowsToStorage(_ rows: [CartRow]) {
+        rows.forEach { row in
+            dataStore.addCartRowItem(row)
+        }
+    }
 }
