@@ -45,9 +45,17 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
 
+    private let favouriteImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = .init(named: "unselected_icon")
+        image.contentMode = .scaleAspectFill
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
     private let trashImageView: UIImageView = {
         let image = UIImageView()
-        image.image = .init(systemName: "trash")
+        image.image = .init(named: "empty_trash")
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -81,28 +89,88 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifier = description()
 
+    var action: ((Action) -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        _setupSubviews()
+        setupSubviews()
+        setupGestureRecognizers()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func _setupSubviews() {
+    private func setupGestureRecognizers() {
+        let trashImagetapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(trashImageTapped))
+        trashImageView.isUserInteractionEnabled = true
+        trashImageView.addGestureRecognizer(trashImagetapGestureRecognizer)
+
+        let favouriteImagetapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(favouriteImageTapped))
+        favouriteImageView.isUserInteractionEnabled = true
+        favouriteImageView.addGestureRecognizer(favouriteImagetapGestureRecognizer)
+    }
+
+    @objc private func trashImageTapped() {
+
+        if trashImageView.image == .init(named: "empty_trash") {
+            action?(.selectBasket)
+            DispatchQueue.main.async {
+                self.trashImageView.image = .init(named: "filled_trash")
+
+            }
+        } else {
+            action?(.unselectBasket)
+            DispatchQueue.main.async {
+                self.trashImageView.image = .init(named: "empty_trash")
+            }
+        }
+    }
+
+    @objc private func favouriteImageTapped() {
+
+        if favouriteImageView.image == .init(named: "unselected_icon") {
+            action?(.selectFavourite)
+            DispatchQueue.main.async {
+                self.favouriteImageView.image = .init(named: "selected_icon")
+            }
+        } else {
+            action?(.unselectFavourite)
+            DispatchQueue.main.async {
+                self.favouriteImageView.image = .init(named: "unselected_icon")
+            }
+        }
+    }
+
+    private func setupSubviews() {
         contentView.layer.cornerRadius = 12
 
         contentView.addSubview(stackView)
+        contentView.addSubview(favouriteImageView)
 
         NSLayoutConstraint.activate([
+
+            favouriteImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            favouriteImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             image.heightAnchor.constraint(equalToConstant: 108),
-            image.widthAnchor.constraint(equalToConstant: 108)
+            image.widthAnchor.constraint(equalToConstant: 108),
+
+            trashImageView.heightAnchor.constraint(equalToConstant: 40),
+            trashImageView.widthAnchor.constraint(equalToConstant: 40),
+
+            favouriteImageView.heightAnchor.constraint(equalToConstant: 40),
+            favouriteImageView.widthAnchor.constraint(equalToConstant: 40)
+
         ])
 
         stackView.addArrangedSubview(image)
@@ -114,6 +182,7 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
         verticalDetailsStackView.addArrangedSubview(priceLabel)
 
         horizontalDetailsStackView.addArrangedSubview(trashImageView)
+
     }
 }
 
@@ -148,5 +217,14 @@ extension NFTDetailsCollectionViewCell {
 
         let url = URL(string: configuration.imageUrl.encodeUrl)
         image.kf.setImage(with: url)
+    }
+}
+
+extension NFTDetailsCollectionViewCell {
+    enum Action {
+        case selectFavourite
+        case unselectFavourite
+        case selectBasket
+        case unselectBasket
     }
 }

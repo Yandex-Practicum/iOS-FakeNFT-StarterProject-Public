@@ -10,7 +10,19 @@ import UIKit
 class NFTDetailsViewController: UIViewController {
 
     private let viewModel: NFTDetailsViewModel
-    private lazy var container = NFTDetailsContainerView(details: viewModel.details)
+    private lazy var container = NFTDetailsContainerView(details: viewModel.details) { [weak self] event in
+            guard let self else { return }
+            switch event {
+            case let .selectFavourite(index):
+                self.viewModel.addTofavouriteNft(index: index)
+            case let .unselectFavourite(index):
+                self.viewModel.removeFromFavouriteNft(index: index)
+            case let .selectBasket(index):
+                self.viewModel.selectNft(index: index)
+            case let .unselectBasket(index):
+                self.viewModel.unselectNft(index: index)
+            }
+        }
 
     init(viewModel: NFTDetailsViewModel) {
         self.viewModel = viewModel

@@ -9,11 +9,14 @@ import UIKit
 
 class NFTDetailsContainerView: UIView {
     private let details: NFTDetails
-    
+
     private let collectionView = UICollectionView(frame: .null, collectionViewLayout: UICollectionViewFlowLayout())
 
-    init(details: NFTDetails) {
+    private let cellSelected: (Action) -> Void
+
+    init(details: NFTDetails, cellSelected: @escaping (Action) -> Void) {
         self.details = details
+        self.cellSelected = cellSelected
         super.init(frame: .null)
         setUpCollectionView()
         setupSubViews()
@@ -51,6 +54,7 @@ class NFTDetailsContainerView: UIView {
          layout.scrollDirection = .vertical
 //         layout.minimumLineSpacing = 8
 //         layout.minimumInteritemSpacing = 4
+
         collectionView.setCollectionViewLayout(layout, animated: true)
        }
 
@@ -105,6 +109,20 @@ extension NFTDetailsContainerView: UICollectionViewDataSource {
 
         cell.configure(.init(name: item.name, rating: item.rating, price: item.price, imageUrl: item.images[0]))
 
+        cell.action = { [weak self] event in
+            guard let self else { return }
+            switch event {
+            case .selectFavourite:
+                self.cellSelected(.selectFavourite(index: indexPath.row))
+            case .unselectFavourite:
+                self.cellSelected(.unselectFavourite(index: indexPath.row))
+            case .selectBasket:
+                self.cellSelected(.selectBasket(index: indexPath.row))
+            case .unselectBasket:
+                self.cellSelected(.unselectBasket(index: indexPath.row))
+            }
+        }
+
         return cell
     }
 }
@@ -138,5 +156,14 @@ extension NFTDetailsContainerView: UICollectionViewDelegateFlowLayout {
         let widthPerItem = collectionView.frame.width / 3 - lay.minimumInteritemSpacing
 
         return CGSize(width: widthPerItem - 8, height: 172)
+    }
+}
+
+extension NFTDetailsContainerView {
+    enum Action {
+        case selectFavourite(index: Int)
+        case unselectFavourite(index: Int)
+        case selectBasket(index: Int)
+        case unselectBasket(index: Int)
     }
 }
