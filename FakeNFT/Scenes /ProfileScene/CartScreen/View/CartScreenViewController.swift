@@ -24,6 +24,8 @@ final class CartScreenViewController: UIViewController {
     
     var cartArray: [CartStruct] = []
     
+    var indexNFTToDelete: Int?
+    
     private var window: UIWindow? {
         return UIApplication.shared.windows.first
     }
@@ -63,6 +65,7 @@ final class CartScreenViewController: UIViewController {
         button.layer.masksToBounds = true
         button.setTitle("Удалить", for: .normal)
         button.setTitleColor(.red, for: .normal)
+        button.addTarget(nil, action: #selector(deleteNFT), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -72,6 +75,7 @@ final class CartScreenViewController: UIViewController {
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
+        button.addTarget(nil, action: #selector(cancel), for: .touchUpInside)
         button.setTitle("Вернуться", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -96,11 +100,30 @@ final class CartScreenViewController: UIViewController {
     
     let cartInfo: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    let countOfNFTS: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let priceOfNFTS: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.numberOfLines = 0
+        label.textColor = UIColor(red: 0.11, green: 0.62, blue: 0, alpha: 1)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     // MARK: - Life cycle
@@ -125,7 +148,11 @@ extension CartScreenViewController {
             cartInfo.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             cartInfo.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cartInfo.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            cartInfo.heightAnchor.constraint(equalToConstant: 76)
+            cartInfo.heightAnchor.constraint(equalToConstant: 76),
+            countOfNFTS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            countOfNFTS.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            priceOfNFTS.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:  -16),
+            priceOfNFTS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
         ])
     }
     
@@ -134,6 +161,8 @@ extension CartScreenViewController {
         view.addSubview(cartTable)
         view.addSubview(imageToDelete)
         view.addSubview(cartInfo)
+        view.addSubview(countOfNFTS)
+        view.addSubview(priceOfNFTS)
         buttonStack.addArrangedSubview(deleteButton)
         buttonStack.addArrangedSubview(cancelButton)
         cartTable.dataSource = self
@@ -157,19 +186,47 @@ extension CartScreenViewController {
         imageToDelete.kf.setImage(with: url)
     }
     
+    func fillInfo() {
+        countOfNFTS.text = "\(cartArray.count) NFT"
+        var price = 0.0
+        cartArray.forEach { cart in
+            price += cart.nftPrice
+        }
+        priceOfNFTS.text = "\(price) ETH"
+    }
+    
+    @objc
+    func deleteNFT() {
+        print("DELETE \(indexNFTToDelete ?? 0) NFT")
+        blurView.removeFromSuperview()
+        imageToDelete.removeFromSuperview()
+        deleteText.removeFromSuperview()
+        buttonStack.removeFromSuperview()
+    }
+    
+    @objc
+    func cancel() {
+        print("CANCEL")
+        blurView.removeFromSuperview()
+        imageToDelete.removeFromSuperview()
+        deleteText.removeFromSuperview()
+        buttonStack.removeFromSuperview()
+    }
+    
 }
 
 // MARK: - Extension for CartCellDelegate
 extension CartScreenViewController: CartCellDelegate {
     
     func showDeleteView(index: Int) {
-        window?.addSubview(blurView)
-        window?.addSubview(imageToDelete)
-        window?.addSubview(deleteText)
-        window?.addSubview(buttonStack)
+        //window?.addSubview(blurView)
+        view.addSubview(blurView)
+        view.addSubview(imageToDelete)
+        view.addSubview(deleteText)
+        view.addSubview(buttonStack)
         let urlStr = cartArray[index].nftImages.first ?? ""
-        let url = URL(string: urlStr)
-        imageToDelete.kf.setImage(with: url)
+        fillPictureToDelete(urlStr: urlStr)
+        indexNFTToDelete = index
         UIView.animate(withDuration: 0.3) {
             self.blurView.alpha = 1.0
             NSLayoutConstraint.activate([
@@ -196,7 +253,8 @@ extension CartScreenViewController: CartCellDelegate {
 extension CartScreenViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cartArray.count
+        fillInfo()
+        return cartArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
