@@ -21,4 +21,9 @@ struct RequestConstructor {
             queryParameters: nil,
             httpMethod: method)
     }
+    
+    static func constructWebViewRequest() -> URLRequest? {
+        guard let url = URL(string: K.Links.userLicenseLink) else { return nil }
+        return URLRequest(url: url)
+    }
 }
