@@ -40,6 +40,12 @@
 		61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */; };
 		61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */; };
 		61DAB01B2A41AD2D00CC103B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */; };
+		B4EE05842A46E53600ABEE1B /* CartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05832A46E53600ABEE1B /* CartScreenViewController.swift */; };
+		B4EE05862A46E7F400ABEE1B /* CartMockDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05852A46E7F400ABEE1B /* CartMockDataClass.swift */; };
+		B4EE05882A46E90C00ABEE1B /* CartStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05872A46E90C00ABEE1B /* CartStruct.swift */; };
+		B4EE058C2A46EE3500ABEE1B /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE058B2A46EE3500ABEE1B /* CartCell.swift */; };
+		B4EE058F2A485CE500ABEE1B /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE058E2A485CE500ABEE1B /* CartViewModel.swift */; };
+		B4EE05922A485ECA00ABEE1B /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05912A485ECA00ABEE1B /* CartModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +101,12 @@
 		61DAB0162A41870800CC103B /* ProfileEditingScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenController.swift; sourceTree = "<group>"; };
 		61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingScreenViewModel.swift; sourceTree = "<group>"; };
 		61DAB01A2A41AD2D00CC103B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		B4EE05832A46E53600ABEE1B /* CartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartScreenViewController.swift; sourceTree = "<group>"; };
+		B4EE05852A46E7F400ABEE1B /* CartMockDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartMockDataClass.swift; sourceTree = "<group>"; };
+		B4EE05872A46E90C00ABEE1B /* CartStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartStruct.swift; sourceTree = "<group>"; };
+		B4EE058B2A46EE3500ABEE1B /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
+		B4EE058E2A485CE500ABEE1B /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		B4EE05912A485ECA00ABEE1B /* CartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				61DAB00B2A40C98300CC103B /* ProfileModel.swift */,
+				B4EE05872A46E90C00ABEE1B /* CartStruct.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -292,6 +305,7 @@
 		61D7BEF52A4082C10059CE5A /* ProfileScene */ = {
 			isa = PBXGroup;
 			children = (
+				B4EE05812A46E50000ABEE1B /* CartScreen */,
 				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
 				61DAB0132A41869B00CC103B /* ProfileEditingScreen */,
 			);
@@ -363,6 +377,42 @@
 				61DAB0182A418CED00CC103B /* ProfileEditingScreenViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B4EE05812A46E50000ABEE1B /* CartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE05902A485EBF00ABEE1B /* Model */,
+				B4EE058D2A47084D00ABEE1B /* ViewModel */,
+				B4EE05822A46E50C00ABEE1B /* View */,
+				B4EE05852A46E7F400ABEE1B /* CartMockDataClass.swift */,
+			);
+			path = CartScreen;
+			sourceTree = "<group>";
+		};
+		B4EE05822A46E50C00ABEE1B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE05832A46E53600ABEE1B /* CartScreenViewController.swift */,
+				B4EE058B2A46EE3500ABEE1B /* CartCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B4EE058D2A47084D00ABEE1B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE058E2A485CE500ABEE1B /* CartViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B4EE05902A485EBF00ABEE1B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE05912A485ECA00ABEE1B /* CartModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -538,11 +588,17 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				61DAB0172A41870800CC103B /* ProfileEditingScreenController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				B4EE05882A46E90C00ABEE1B /* CartStruct.swift in Sources */,
 				61DAB0192A418CED00CC103B /* ProfileEditingScreenViewModel.swift in Sources */,
+				B4EE058F2A485CE500ABEE1B /* CartViewModel.swift in Sources */,
+				B4EE05862A46E7F400ABEE1B /* CartMockDataClass.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				61D7BEF42A4082860059CE5A /* UICreator.swift in Sources */,
+				B4EE05922A485ECA00ABEE1B /* CartModel.swift in Sources */,
 				61D4B0F42A3EEE860082B4D2 /* NavigationController.swift in Sources */,
+				B4EE058C2A46EE3500ABEE1B /* CartCell.swift in Sources */,
 				61D7BEFB2A4082C10059CE5A /* ProfileScreenViewModel.swift in Sources */,
+				B4EE05842A46E53600ABEE1B /* CartScreenViewController.swift in Sources */,
 				61D7BEFC2A4082C10059CE5A /* ProfileScreenController.swift in Sources */,
 				61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */,
 				61DAB00E2A40CA3A00CC103B /* ProfileRequest.swift in Sources */,

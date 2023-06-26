@@ -28,9 +28,12 @@ extension TabBarController {
         let secondMockViewController = UIViewController()
         secondMockViewController.view.backgroundColor = .appWhite
         secondMockViewController.title = "secondVC"
-        let thirdMockViewController = UIViewController()
+        let thirdMockViewController = CartScreenViewController()
+        let cartViewModel = CartViewModel()
+        let cartModel = CartModel()
+        cartViewModel.model = cartModel
+        thirdMockViewController.viewModel = cartViewModel
         thirdMockViewController.view.backgroundColor = .appWhite
-        thirdMockViewController.title = "thirdVC"
         let fourthMockViewController = UIViewController()
         fourthMockViewController.view.backgroundColor = .appWhite
         fourthMockViewController.title = "fourthVC"
