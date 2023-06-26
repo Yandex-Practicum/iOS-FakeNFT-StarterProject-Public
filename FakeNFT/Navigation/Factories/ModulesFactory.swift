@@ -57,8 +57,7 @@ final class ModulesFactory: ModulesFactoryProtocol {
     }
     
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol {
-        let requestHandler = WebViewRequestHandler()
-        let viewController = WebViewController(requestHandler: requestHandler)
+        let viewController = WebViewController()
         return viewController
     }
 }
