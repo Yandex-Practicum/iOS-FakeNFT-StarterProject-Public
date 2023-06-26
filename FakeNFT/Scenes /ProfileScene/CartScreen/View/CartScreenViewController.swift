@@ -152,16 +152,24 @@ extension CartScreenViewController {
         }
     }
     
+    func fillPictureToDelete(urlStr: String) {
+        let url = URL(string: urlStr)
+        imageToDelete.kf.setImage(with: url)
+    }
+    
 }
 
 // MARK: - Extension for CartCellDelegate
 extension CartScreenViewController: CartCellDelegate {
     
-    func showDeleteView() {
+    func showDeleteView(index: Int) {
         window?.addSubview(blurView)
         window?.addSubview(imageToDelete)
         window?.addSubview(deleteText)
         window?.addSubview(buttonStack)
+        let urlStr = cartArray[index].nftImages.first ?? ""
+        let url = URL(string: urlStr)
+        imageToDelete.kf.setImage(with: url)
         UIView.animate(withDuration: 0.3) {
             self.blurView.alpha = 1.0
             NSLayoutConstraint.activate([
@@ -202,6 +210,7 @@ extension CartScreenViewController: UITableViewDataSource {
         cell.nftName.text = name
         cell.nftPrice.text = String(price)
         cell.nftImage.kf.setImage(with: imageURL)
+        cell.indexCell = indexPath.row
         cell.delegate = self
         return cell
     }

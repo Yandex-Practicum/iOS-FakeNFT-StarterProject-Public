@@ -10,7 +10,7 @@ import UIKit
 /// Delegate
 protocol CartCellDelegate {
     
-    func showDeleteView()
+    func showDeleteView(index: Int)
     
 }
 
@@ -33,6 +33,8 @@ final class CartCell: UITableViewCell {
     
     // MARK: - Properties & Init
     var delegate: CartCellDelegate?
+    
+    var indexCell: Int?
     
     let nftImage: UIImageView = {
         let image = UIImageView()
@@ -163,7 +165,7 @@ final class CartCell: UITableViewCell {
     
     @objc
     func deleteButtonTapped() {
-        delegate?.showDeleteView()
+        delegate?.showDeleteView(index: indexCell ?? 0)
     }
     
 }
