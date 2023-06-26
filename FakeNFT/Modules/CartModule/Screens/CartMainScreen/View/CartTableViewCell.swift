@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Kingfisher
 
 protocol CartCellDelegate: AnyObject {
     func didDeletedItem(with id: UUID?)
@@ -20,6 +21,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     var viewModel: CartCellViewModel? {
         didSet {
             viewModel?.$cartRow
+                .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { newCartRow in
                     self.updateCell(with: newCartRow)
                 })
@@ -34,6 +36,8 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.contentMode = .scaleAspectFit
+        imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
+        imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
         return imageView
     }()
     
@@ -100,6 +104,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
+        stackView.distribution = .fill
         stackView.spacing = 20
         
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
@@ -118,7 +123,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func updateCell(with newRow: CartRow ) {
-        nftImageView.image = UIImage(named: newRow.imageName)
+        nftImageView.kf.setImage(with: URL(string: newRow.imageName))
         nftName.text = newRow.nftName
         rateStackView = RateStackView(rating: newRow.rate)
         nftPriceLabel.text = "\(newRow.price) \(newRow.coinName)"

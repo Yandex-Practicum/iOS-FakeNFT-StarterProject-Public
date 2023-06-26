@@ -9,7 +9,7 @@ import UIKit
 
 protocol ModulesFactoryProtocol {
     func makeCatalogScreenView() -> UIViewController // TODO: потом заменить на протокол CoordinatableProtocol
-    func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartScreenView(dataStore: DataStorageProtocol, networkClient: NetworkClient) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(networkClient: NetworkClient) -> Presentable & CartPaymentMethodCoordinatableProtocol
     func makePaymentResultScreenView(networkClient: NetworkClient, request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable
@@ -27,10 +27,10 @@ final class ModulesFactory: ModulesFactoryProtocol {
         return CatalogViewController()
     }
     
-    func makeCartScreenView(dataStore: DataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol {
+    func makeCartScreenView(dataStore: DataStorageProtocol, networkClient: NetworkClient) -> Presentable & CartMainCoordinatableProtocol {
         // можно настроить экран перед созданием - все зависимые свойства, делегаты и пр.
         let dataSource = CartDataSourceManager()
-        let viewModel = CartViewModel(dataStore: dataStore)
+        let viewModel = CartViewModel(dataStore: dataStore, networkClient: networkClient)
         let viewController = CartViewController(dataSource: dataSource, viewModel: viewModel)
         dataSource.delegate = viewController
         return viewController

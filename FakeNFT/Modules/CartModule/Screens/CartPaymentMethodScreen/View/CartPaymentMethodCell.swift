@@ -16,6 +16,7 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     var viewModel: PaymentMethodCellViewModel? {
         didSet {
             viewModel?.$paymentMethodRow
+                .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { [weak self] paymentMethod in
                     self?.updateCell(with: paymentMethod)
                 })

@@ -22,6 +22,13 @@ struct RequestConstructor {
             httpMethod: method)
     }
     
+    static func constructNftCollectionRequest(method: HttpMethod) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection),
+            queryParameters: ["id" : "1"],
+            httpMethod: method)
+    }
+    
     static func constructWebViewRequest() -> URLRequest? {
         guard let url = URL(string: K.Links.userLicenseLink) else { return nil }
         return URLRequest(url: url)

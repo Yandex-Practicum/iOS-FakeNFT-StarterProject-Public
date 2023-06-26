@@ -112,15 +112,15 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        bind()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
-        bind()
         checkEmptyState()
     }
     
     private func createDataSource() {
-        diffableDataSource.createDataSource(for: tableView, with: viewModel.getItems())
+        diffableDataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
     }
     
     private func bind() {
