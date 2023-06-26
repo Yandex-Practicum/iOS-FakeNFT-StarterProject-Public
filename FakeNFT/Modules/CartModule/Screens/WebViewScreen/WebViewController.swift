@@ -15,7 +15,6 @@ protocol WebViewProtocol {
 final class WebViewController: UIViewController {
         
     private var estimatedProgressObservation: NSKeyValueObservation?
-    private let requestHandler: RequestHandling
     
     private lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
@@ -38,15 +37,6 @@ final class WebViewController: UIViewController {
         
         return stackView
     }()
-    
-    init(requestHandler: RequestHandling) {
-        self.requestHandler = requestHandler
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -71,8 +61,8 @@ final class WebViewController: UIViewController {
 // MARK: - Ext WebViewProtocol
 extension WebViewController: WebViewProtocol {
     func loadUserLicensePage() {
-        guard let request = requestHandler.createUserLicenseRequest() else { return }
-        webView.load(request)
+        guard let request1 = RequestConstructor.constructWebViewRequest() else { return }
+        webView.load(request1)
     }
 }
 
