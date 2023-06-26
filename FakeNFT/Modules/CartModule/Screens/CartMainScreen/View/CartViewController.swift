@@ -157,6 +157,11 @@ extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return diffableDataSource.getRowHeight(for: tableView)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        cell.selectionStyle = .none
+    }
 }
 
 // MARK: - Ext CartCellDelegate

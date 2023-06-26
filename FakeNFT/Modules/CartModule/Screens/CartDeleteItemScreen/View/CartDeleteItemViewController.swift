@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol CartDeleteCoordinatableProtocol {
     var idToDelete: UUID? { get set }
@@ -121,7 +122,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     private func bind() {
         viewModel.$itemToDelete.bind { [weak self] cartRow in
             guard let imageName = cartRow?.imageName else { return }
-            self?.itemImageView.image = UIImage(named: imageName)
+            self?.itemImageView.kf.setImage(with: URL(string: imageName))
         }
     }
     
