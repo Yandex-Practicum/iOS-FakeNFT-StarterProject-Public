@@ -37,5 +37,6 @@ struct K {
     
     struct EndPoints {
         static let currencies = "api/v1/currencies"
+        static let orders = "api/v1/orders/1"
     }
 }

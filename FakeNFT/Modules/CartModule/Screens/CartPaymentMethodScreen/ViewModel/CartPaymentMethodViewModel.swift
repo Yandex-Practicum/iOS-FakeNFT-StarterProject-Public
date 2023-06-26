@@ -24,19 +24,13 @@ final class CartPaymentMethodViewModel {
     }
     
     func payTapped() {
-//        paymentRequest = networkClient.constructRequest(
-//            endpointString: K.Links.apiLink,
-//            queryParam: nil,
-//            method: .put
-//        )
-        // TODO: Заменить за put-запрос
-        paymentRequest = RequestConstructor.constructCurrencyRequest()
+        paymentRequest = RequestConstructor.constructCurrencyRequest(method: .put, params: ["Name" : "nfts", "Description" : "array[Integer]"])
     }
 }
 
 private extension CartPaymentMethodViewModel {
     func loadItems() {
-        let request = RequestConstructor.constructCurrencyRequest()
+        let request = RequestConstructor.constructCurrencyRequest(method: .get)
         
         networkClient.send(request: request, type: [PaymentMethodRow].self) { [weak self] result in
             switch result {

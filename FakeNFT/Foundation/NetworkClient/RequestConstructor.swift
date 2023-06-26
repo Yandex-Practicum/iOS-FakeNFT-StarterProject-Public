@@ -8,21 +8,17 @@
 import Foundation
 
 struct RequestConstructor {
-    static func constructCurrencyRequest() -> NetworkRequest {
+    static func constructCurrencyRequest(method: HttpMethod, params: [String : String]? = nil) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.currencies),
+            queryParameters: params,
+            httpMethod: method)
+    }
+    
+    static func constructOrdersRequest(method: HttpMethod) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.orders),
             queryParameters: nil,
-            httpMethod: .get)
+            httpMethod: method)
     }
 }
-
-/*
- func constructRequest(endpointString: String, queryParam: [String : String]?, method: HttpMethod) -> NetworkRequest {
-     return Request(endpoint: URL(string: endpointString), queryParameters: queryParam, httpMethod: method)
- }
- 
- 
-     endpointString: K.Links.apiLink + K.EndPoints.currencies,
-     queryParam: nil,
-     method: .get
- */
