@@ -8,6 +8,9 @@
 import Foundation
 
 struct RequestConstructor {
+    
+    private init() {}
+    
     static func constructCurrencyRequest(method: HttpMethod, params: [String : String]? = nil) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.currencies),

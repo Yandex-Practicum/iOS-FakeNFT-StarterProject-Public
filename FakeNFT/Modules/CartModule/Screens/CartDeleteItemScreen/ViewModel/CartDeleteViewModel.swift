@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 final class CartDeleteViewModel {
-    @Observable private (set) var itemToDelete: CartRow?
+    @Published private (set) var itemToDelete: CartRow?
     
     private let dataStore: DataStorageProtocol
     
