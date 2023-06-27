@@ -112,7 +112,7 @@
             </objects>
             <point key="canvasLocation" x="-350" y="-784"/>
         </scene>
-        <!--Корзина-->
+        <!--Статистика-->
         <scene sceneID="3mo-mi-MIz">
             <objects>
                 <viewController id="qg2-Az-O78" sceneMemberID="viewController">
@@ -138,7 +138,7 @@
                             <constraint firstItem="5Kp-Ha-3xc" firstAttribute="trailing" secondItem="YLD-QU-GF5" secondAttribute="trailing" constant="16" id="nRx-wH-Ra1"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Корзина" image="flag.2.crossed.fill" catalog="system" id="xgD-9Y-EGT"/>
+                    <tabBarItem key="tabBarItem" title="Статистика" image="Statistics Tab" id="xgD-9Y-EGT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lQ-it-xtI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -166,7 +166,7 @@
     </scenes>
     <resources>
         <image name="Profile Tab" width="30" height="30"/>
-        <image name="flag.2.crossed.fill" catalog="system" width="128" height="72"/>
+        <image name="Statistics Tab" width="30" height="30"/>
         <image name="square.stack.3d.up.fill" catalog="system" width="128" height="125"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="Black">

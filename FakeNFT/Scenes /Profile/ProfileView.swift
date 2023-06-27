@@ -1,22 +1,26 @@
 import UIKit
+import Kingfisher
 
 final class ProfileView: UIView {
+    private var viewController: ProfileViewController?
     
-//MARK: - Elements
-    private lazy var userImage: UIImageView = {
+    // MARK: - Properties
+    private lazy var avatarImage: UIImageView = {
         let placeholder = UIImage(named: "UserImagePlaceholder")
-        let userImage = UIImageView(image: placeholder)
-        userImage.translatesAutoresizingMaskIntoConstraints = false
-        return userImage
+        let avatarImage = UIImageView(image: placeholder)
+                avatarImage.translatesAutoresizingMaskIntoConstraints = false
+                avatarImage.layer.cornerRadius = 35
+                avatarImage.layer.masksToBounds = true
+        return avatarImage
     }()
     
-    private lazy var userNameLabel: UILabel = {
-        let userNameLabel = UILabel()
-        userNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        userNameLabel.text = ""
-        userNameLabel.font = UIFont.boldSystemFont(ofSize: 22)
-        userNameLabel.textColor = .black
-        return userNameLabel
+    private lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.text = ""
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        nameLabel.textColor = .black
+        return nameLabel
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -32,17 +36,17 @@ final class ProfileView: UIView {
         return descriptionLabel
     }()
     
-    private lazy var siteAddressLabel: UILabel = {
-        let siteAddressLabel = UILabel()
-        siteAddressLabel.translatesAutoresizingMaskIntoConstraints = false
-        let tapAction = UITapGestureRecognizer(target: self, action:#selector(actionTapped(_:)))
-        siteAddressLabel.isUserInteractionEnabled = true
-        siteAddressLabel.addGestureRecognizer(tapAction)
-        siteAddressLabel.text = ""
-        siteAddressLabel.attributedText = NSAttributedString(string: siteAddressLabel.text ?? "", attributes: [.kern: 0.24])
-        siteAddressLabel.font = UIFont.systemFont(ofSize: 15)
-        siteAddressLabel.textColor = .blue
-        return siteAddressLabel
+    private lazy var websiteLabel: UILabel = {
+        let websiteLabel = UILabel()
+        websiteLabel.translatesAutoresizingMaskIntoConstraints = false
+        let tapAction = UITapGestureRecognizer(target: self, action:#selector(websiteDidTap(_:)))
+        websiteLabel.isUserInteractionEnabled = true
+        websiteLabel.addGestureRecognizer(tapAction)
+        websiteLabel.text = ""
+        websiteLabel.attributedText = NSAttributedString(string: websiteLabel.text ?? "", attributes: [.kern: 0.24])
+        websiteLabel.font = UIFont.systemFont(ofSize: 15)
+        websiteLabel.textColor = .blue
+        return websiteLabel
     }()
     
     private lazy var profileAssetsTable: UITableView = {
@@ -52,68 +56,68 @@ final class ProfileView: UIView {
         profileAssetsTable.dataSource = self
         profileAssetsTable.delegate = self
         profileAssetsTable.separatorStyle = .none
+        profileAssetsTable.allowsMultipleSelection = false
         return profileAssetsTable
     }()
-
-
-//MARK: - Init
-    override init(frame: CGRect) {
+    
+    
+    // MARK: - Lifecycle
+    init(frame: CGRect, viewController: ProfileViewController) {
         super.init(frame: .zero)
-                
+        self.viewController = viewController
+        
         self.backgroundColor = .white
         addUserImage()
         addUsernameLabel()
         addDescriptionLabel()
-        addSiteAddressLabel()
+        addWebsiteLabel()
         addProfileAssetsTable()
-        
-        fulfillDummy()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//MARK: - Constraints
+    //MARK: - Constraints
     private func addUserImage() {
-        self.addSubview(userImage)
+        self.addSubview(avatarImage)
         NSLayoutConstraint.activate([
-            userImage.heightAnchor.constraint(equalToConstant: 70),
-            userImage.widthAnchor.constraint(equalToConstant: 70),
-            userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            userImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+            avatarImage.heightAnchor.constraint(equalToConstant: 70),
+            avatarImage.widthAnchor.constraint(equalToConstant: 70),
+            avatarImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         ])
     }
     
     private func addUsernameLabel() {
-        self.addSubview(userNameLabel)
-        userNameLabel.topAnchor.constraint(equalTo: userImage.topAnchor, constant: 21).isActive = true
-        userNameLabel.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16).isActive = true
+        self.addSubview(nameLabel)
+        nameLabel.topAnchor.constraint(equalTo: avatarImage.topAnchor, constant: 21).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16).isActive = true
     }
     
     private func addDescriptionLabel() {
         self.addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
-        descriptionLabel.topAnchor.constraint(equalTo: userImage.bottomAnchor, constant: 20),
-        descriptionLabel.heightAnchor.constraint(equalToConstant: 72),
-        descriptionLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-        descriptionLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            descriptionLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 20),
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 72),
+            descriptionLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
     
-    private func addSiteAddressLabel() {
-        self.addSubview(siteAddressLabel)
+    private func addWebsiteLabel() {
+        self.addSubview(websiteLabel)
         NSLayoutConstraint.activate([
-            siteAddressLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-            siteAddressLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
-            siteAddressLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor)
+            websiteLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            websiteLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
+//            websiteLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor)
         ])
     }
     
     private func addProfileAssetsTable() {
         self.addSubview(profileAssetsTable)
         NSLayoutConstraint.activate([
-            profileAssetsTable.topAnchor.constraint(equalTo: siteAddressLabel.bottomAnchor, constant: 40),
+            profileAssetsTable.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 40),
             profileAssetsTable.heightAnchor.constraint(equalToConstant: 54 * 3),
             profileAssetsTable.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             profileAssetsTable.trailingAnchor.constraint(equalTo: self.trailingAnchor)
@@ -121,18 +125,23 @@ final class ProfileView: UIView {
     }
     
     @objc
-    func actionTapped(_ sender: UITapGestureRecognizer) {
-        print("ok")
+    func websiteDidTap(_ sender: UITapGestureRecognizer) {
+        viewController?.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
     }
     
-    // TODO: Remove for prod
-    func fulfillDummy() {
-        userImage.image = UIImage(named: "UserImageDummy")
-        userNameLabel.text = "Joaquin Phoenix"
-        descriptionLabel.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        siteAddressLabel.text = "JoaquinPhoenix.com"
+    func updateViews(userImageURL: URL?, userName: String?, description: String?, website: String?, nftCount: String?, likesCount: String?) {
+        avatarImage.kf.setImage(
+            with: userImageURL,
+            placeholder: UIImage(named: "UserImagePlaceholder"),
+            options: [.processor(RoundCornerImageProcessor(cornerRadius: 35))])
+        nameLabel.text = userName
+        descriptionLabel.text = description
+        websiteLabel.text = website
+        let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell
+        nftsCountLabel?.assetValue.text = nftCount
+        let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
+        likesCountLabel?.assetValue.text = likesCount
     }
-    
 }
 
 extension ProfileView: UITableViewDataSource {
@@ -156,7 +165,7 @@ extension ProfileView: UITableViewDataSource {
             cell.assetLabel.text = ""
             cell.assetValue.text = ""
         }
-
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -166,5 +175,16 @@ extension ProfileView: UITableViewDataSource {
 }
 
 extension ProfileView: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            print("Мои NFT")
+        case 1:
+            print("Избранные NFT")
+        case 2:
+            print("О разработчике")
+        default:
+            return
+        }
+    }
 }
