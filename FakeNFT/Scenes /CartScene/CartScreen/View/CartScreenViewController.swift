@@ -42,7 +42,6 @@ final class CartScreenViewController: UIViewController {
         let image = UIImageView()
         image.layer.cornerRadius = 12
         image.layer.masksToBounds = true
-        image.image = UIImage(systemName: "photo")
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -86,7 +85,7 @@ final class CartScreenViewController: UIViewController {
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
-        button.addTarget(nil, action: #selector(cancel), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(showPaymentScreen), for: .touchUpInside)
         button.setTitle("К оплате", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -213,6 +212,8 @@ extension CartScreenViewController {
         priceOfNFTS.text = "\(price) ETH"
     }
     
+    //MARK: - Actions
+    
     @objc
     func deleteNFT() {
         print("DELETE \(indexNFTToDelete ?? 0) NFT")
@@ -229,6 +230,14 @@ extension CartScreenViewController {
         imageToDelete.removeFromSuperview()
         deleteText.removeFromSuperview()
         buttonStack.removeFromSuperview()
+    }
+    
+    @objc
+    func showPaymentScreen() {
+        print("Open payment screen")
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let paymentVC = PaymentViewController()
+        navigationController?.pushViewController(paymentVC, animated: true)
     }
     
 }

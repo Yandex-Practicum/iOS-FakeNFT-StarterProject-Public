@@ -46,6 +46,7 @@
 		B4EE058C2A46EE3500ABEE1B /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE058B2A46EE3500ABEE1B /* CartCell.swift */; };
 		B4EE058F2A485CE500ABEE1B /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE058E2A485CE500ABEE1B /* CartViewModel.swift */; };
 		B4EE05922A485ECA00ABEE1B /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05912A485ECA00ABEE1B /* CartModel.swift */; };
+		B4EE05962A4AEB4900ABEE1B /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE05952A4AEB4900ABEE1B /* PaymentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		B4EE058B2A46EE3500ABEE1B /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		B4EE058E2A485CE500ABEE1B /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		B4EE05912A485ECA00ABEE1B /* CartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
+		B4EE05952A4AEB4900ABEE1B /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				B4EE05932A4AEA2000ABEE1B /* CartScene */,
 				61D7BEF52A4082C10059CE5A /* ProfileScene */,
 			);
 			path = "Scenes ";
@@ -305,7 +308,6 @@
 		61D7BEF52A4082C10059CE5A /* ProfileScene */ = {
 			isa = PBXGroup;
 			children = (
-				B4EE05812A46E50000ABEE1B /* CartScreen */,
 				61D7BEF62A4082C10059CE5A /* ProfileScreen */,
 				61DAB0132A41869B00CC103B /* ProfileEditingScreen */,
 			);
@@ -413,6 +415,23 @@
 				B4EE05912A485ECA00ABEE1B /* CartModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B4EE05932A4AEA2000ABEE1B /* CartScene */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE05942A4AEB3900ABEE1B /* PaymentScreen */,
+				B4EE05812A46E50000ABEE1B /* CartScreen */,
+			);
+			path = CartScene;
+			sourceTree = "<group>";
+		};
+		B4EE05942A4AEB3900ABEE1B /* PaymentScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4EE05952A4AEB4900ABEE1B /* PaymentViewController.swift */,
+			);
+			path = PaymentScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -603,6 +622,7 @@
 				61D7BEFE2A4088160059CE5A /* UIView+Extensions.swift in Sources */,
 				61DAB00E2A40CA3A00CC103B /* ProfileRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				B4EE05962A4AEB4900ABEE1B /* PaymentViewController.swift in Sources */,
 				61DAB00C2A40C98300CC103B /* ProfileModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				61DAB01B2A41AD2D00CC103B /* CustomTextField.swift in Sources */,
