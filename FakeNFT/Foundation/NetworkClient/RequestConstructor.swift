@@ -11,24 +11,23 @@ struct RequestConstructor {
     
     private init() {}
     
-    static func constructCurrencyRequest(method: HttpMethod, params: [String : String]? = nil) -> NetworkRequest {
+    static func constructCurrencyRequest(method: HttpMethod) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.currencies),
-            queryParameters: params,
             httpMethod: method)
+        
     }
     
-    static func constructOrdersRequest(method: HttpMethod, params: [String : String]? = nil) -> NetworkRequest {
+    static func constructOrdersRequest(method: HttpMethod, dto: Encodable) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.orders),
-            queryParameters: params,
-            httpMethod: method)
+            httpMethod: method,
+            dto: dto)
     }
     
     static func constructNftCollectionRequest(method: HttpMethod) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection),
-            queryParameters: ["id" : "1"],
             httpMethod: method)
     }
     

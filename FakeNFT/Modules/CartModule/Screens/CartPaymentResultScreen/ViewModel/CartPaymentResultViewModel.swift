@@ -25,6 +25,7 @@ final class CartPaymentResultViewModel {
         networkClient.send(request: request) { [weak self] result in
             switch result {
             case .success(_):
+                // TODO: clear the cart after success and proceed to catalog
                 self?.requestResult = .success
             case .failure(_):
                 self?.requestResult = .failure

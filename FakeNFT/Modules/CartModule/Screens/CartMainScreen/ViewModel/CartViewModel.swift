@@ -55,6 +55,7 @@ private extension CartViewModel {
             switch result {
             case .success(let data):
                     self.addRowsToStorage(data)
+//                self.dataStore.addCartRowItem(data)
                 
             case .failure(let error):
                 print("error is: \(error)")

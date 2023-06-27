@@ -9,6 +9,6 @@ import Foundation
 
 struct Request: NetworkRequest {
     var endpoint: URL?
-    var queryParameters: [String: String]? = nil
-    var httpMethod: HttpMethod = .get
+    var httpMethod: HttpMethod
+    var dto: Encodable?
 }
