@@ -61,7 +61,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }()
     
     private lazy var rateStackView: RateStackView = {
-        let stackView = RateStackView(rating: 0)
+        let stackView = RateStackView()
         return stackView
     }()
     
@@ -122,14 +122,21 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         setupConstraints()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        rateStackView.removeRating()
+    }
+    
     private func updateCell(with newRow: CartRow ) {
         nftImageView.kf.setImage(with: URL(string: newRow.imageName))
         nftName.text = newRow.nftName
-        rateStackView = RateStackView(rating: newRow.rate)
+        rateStackView.addRating(newRow.rate)
         nftPriceLabel.text = "\(newRow.price) \(newRow.coinName)"
         id = newRow.id
         
     }
+    
+    
 }
 
 // MARK: - @objc

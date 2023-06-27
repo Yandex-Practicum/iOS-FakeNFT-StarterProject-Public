@@ -9,27 +9,40 @@ import UIKit
 
 class RateStackView: UIStackView {
     
-    init(rating: Int) {
+    init() {
         super.init(frame: .zero)
         axis = .horizontal
         alignment = .leading
-        distribution = .fillEqually
         spacing = 2
-        addRating(rating)
-        
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addRating(_ rating: Int) {
+    func addRating(_ rating: Int) {
         for _ in 0..<rating {
-            addArrangedSubview(RateStarButton(appearance: .active))
+            addActiveStars()
         }
         
         for _ in 0..<5 - rating {
-            addArrangedSubview(RateStarButton(appearance: .notActive))
+            addNotActiveStars()
         }
+        
+    }
+    
+    func removeRating() {
+        arrangedSubviews.forEach { subview in
+            removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+    }
+    
+    private func addActiveStars() {
+        addArrangedSubview(RateStarImageView(appearance: .active))
+    }
+    
+    private func addNotActiveStars() {
+        addArrangedSubview(RateStarImageView(appearance: .notActive))
     }
 }

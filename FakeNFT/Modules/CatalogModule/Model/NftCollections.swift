@@ -11,7 +11,7 @@ struct NftCollections: Decodable {
     let createdAt: String
     let name: String
     let cover: String
-    let nfts: [String]
+    let nfts: [NftSingleCollection]
     let description: String
     let author: String
     let id: String

@@ -18,10 +18,10 @@ struct RequestConstructor {
             httpMethod: method)
     }
     
-    static func constructOrdersRequest(method: HttpMethod) -> NetworkRequest {
+    static func constructOrdersRequest(method: HttpMethod, params: [String : String]? = nil) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.orders),
-            queryParameters: nil,
+            queryParameters: params,
             httpMethod: method)
     }
     

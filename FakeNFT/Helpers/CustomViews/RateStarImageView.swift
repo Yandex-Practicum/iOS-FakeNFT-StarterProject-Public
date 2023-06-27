@@ -1,5 +1,5 @@
 //
-//  RateStarButton.swift
+//  RateStarImageView.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 18.06.2023.
@@ -7,14 +7,11 @@
 
 import UIKit
 
-class RateStarButton: UIButton {
+class RateStarImageView: UIImageView {
 
     init(appearance: Appearance) {
         super.init(frame: .zero)
         setAppearance(for: appearance)
-        
-        widthAnchor.constraint(equalToConstant: 11.75).isActive = true
-        heightAnchor.constraint(equalToConstant: 12).isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -23,20 +20,22 @@ class RateStarButton: UIButton {
     
 }
 
-extension RateStarButton {
+extension RateStarImageView {
     func setAppearance(for appearance: Appearance) {
         switch appearance {
         case .active:
-            setImage(UIImage(named: K.Icons.activeStarRate), for: .normal)
-            isEnabled = true
+//            setImage(UIImage(named: K.Icons.activeStarRate), for: .normal)
+//            isEnabled = false
+            image = UIImage(named: K.Icons.activeStarRate)
         case .notActive:
-            setImage(UIImage(named: K.Icons.notActiveStarRate), for: .normal)
-            isEnabled = false
+//            setImage(UIImage(named: K.Icons.notActiveStarRate), for: .normal)
+//            isEnabled = false
+            image = UIImage(named: K.Icons.notActiveStarRate)
         }
     }
 }
 
-extension RateStarButton {
+extension RateStarImageView {
     enum Appearance {
         case active, notActive
     }
