@@ -27,7 +27,7 @@ final class CartPaymentMethodViewModel {
     
     func payTapped() {
         // MARK: connect params to cartStoredItems
-        paymentRequest = RequestConstructor.constructCurrencyRequest(method: .put, params: ["Name" : "nfts", "Description" : "array[Integer]"])
+        paymentRequest = RequestConstructor.constructCurrencyRequest(method: .put, params: ["nfts" : "array[Int]"])
     }
 }
 

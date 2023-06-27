@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NftSingleCollection: Decodable {
+struct NftSingleCollection: Decodable, Hashable {
     let createdAt: String
     let name: String
     let images: [String]

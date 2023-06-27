@@ -70,7 +70,7 @@ private extension CartCoordinator {
     }
     
     // MARK: - DeleteItemScreen
-    func showDeleteScreen(idToDelete: UUID?) {
+    func showDeleteScreen(idToDelete: String?) {
         var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStore)
         deleteScreen.idToDelete = idToDelete
         

@@ -9,21 +9,21 @@ import UIKit
 
 protocol DataSourceManagerProtocol {
     var delegate: CartCellDelegate? { get set }
-    func createDataSource(for tableView: UITableView, with data: [CartRow])
-    func updateTableView(with data: [CartRow])
+    func createDataSource(for tableView: UITableView, with data: [NftSingleCollection])
+    func updateTableView(with data: [NftSingleCollection])
     func getRowHeight(for tableView: UITableView) -> CGFloat
 }
 
 final class CartDataSourceManager {
-    typealias DataSource = UITableViewDiffableDataSource<CartSection, CartRow>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<CartSection, CartRow>
+    typealias DataSource = UITableViewDiffableDataSource<CartSection, NftSingleCollection>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<CartSection, NftSingleCollection>
     
     private var dataSource: DataSource?
     weak var delegate: CartCellDelegate?
 }
 
 extension CartDataSourceManager: DataSourceManagerProtocol {
-    func createDataSource(for tableView: UITableView, with data: [CartRow]) {
+    func createDataSource(for tableView: UITableView, with data: [NftSingleCollection]) {
         dataSource = DataSource(tableView: tableView) { [weak self] tableView, indexPath, item in
             return self?.cell(tableView: tableView, indexPath: indexPath, item: item)
         }
@@ -32,7 +32,7 @@ extension CartDataSourceManager: DataSourceManagerProtocol {
         dataSource?.apply(createSnapshot(from: data))
     }
     
-    func updateTableView(with data: [CartRow]) {
+    func updateTableView(with data: [NftSingleCollection]) {
         dataSource?.apply(createSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
@@ -42,7 +42,7 @@ extension CartDataSourceManager: DataSourceManagerProtocol {
 }
 
 private extension CartDataSourceManager {
-    func cell(tableView: UITableView, indexPath: IndexPath, item: CartRow) -> UITableViewCell {
+    func cell(tableView: UITableView, indexPath: IndexPath, item: NftSingleCollection) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CartTableViewCell.defaultReuseIdentifier,
             for: indexPath
@@ -53,7 +53,7 @@ private extension CartDataSourceManager {
         return cell
     }
     
-    func createSnapshot(from data: [CartRow]) -> Snapshot {
+    func createSnapshot(from data: [NftSingleCollection]) -> Snapshot {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(data, toSection: .main)

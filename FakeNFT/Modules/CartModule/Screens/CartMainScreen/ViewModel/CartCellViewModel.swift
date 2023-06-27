@@ -10,9 +10,9 @@ import Combine
 
 final class CartCellViewModel: ObservableObject {
     
-    @Published private (set) var cartRow: CartRow
+    @Published private (set) var cartRow: NftSingleCollection
     
-    init(cartRow: CartRow) {
+    init(cartRow: NftSingleCollection) {
         self.cartRow = cartRow
     }
 }
