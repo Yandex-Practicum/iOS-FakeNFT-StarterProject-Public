@@ -81,6 +81,18 @@ final class CartScreenViewController: UIViewController {
         return button
     }()
     
+    let paymentButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        button.addTarget(nil, action: #selector(cancel), for: .touchUpInside)
+        button.setTitle("К оплате", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     let buttonStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -152,8 +164,13 @@ extension CartScreenViewController {
             countOfNFTS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             countOfNFTS.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
             priceOfNFTS.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:  -16),
-            priceOfNFTS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            priceOfNFTS.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            paymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            paymentButton.centerYAnchor.constraint(equalTo: cartInfo.centerYAnchor),
+            paymentButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 240),
+            paymentButton.heightAnchor.constraint(equalToConstant: 44),
         ])
+        paymentButton.contentCompressionResistancePriority(for: .horizontal)
     }
     
     /// Setting properties
@@ -163,6 +180,7 @@ extension CartScreenViewController {
         view.addSubview(cartInfo)
         view.addSubview(countOfNFTS)
         view.addSubview(priceOfNFTS)
+        view.addSubview(paymentButton)
         buttonStack.addArrangedSubview(deleteButton)
         buttonStack.addArrangedSubview(cancelButton)
         cartTable.dataSource = self
