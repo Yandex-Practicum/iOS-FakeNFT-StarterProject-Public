@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class CartDeleteViewModel {
-    @Published private (set) var itemToDelete: CartRow?
+    @Published private (set) var itemToDelete: NftSingleCollection?
     
     private let dataStore: DataStorageProtocol
     
@@ -17,12 +17,12 @@ final class CartDeleteViewModel {
         self.dataStore = dataStore
     }
     
-    func updateItemToDelete(with id: UUID?) {
+    func updateItemToDelete(with id: String?) {
         guard let id else { return }
         itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })
     }
     
-    func deleteItem(with id: UUID?) {
+    func deleteItem(with id: String?) {
         dataStore.deleteItem(with: id)
     }
 }

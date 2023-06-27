@@ -10,7 +10,7 @@ import Combine
 
 protocol CartMainCoordinatableProtocol {
     var onFilter: (() -> Void)? { get set }
-    var onDelete: ((UUID?) -> Void)? { get set }
+    var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     func setupFilter(_ filter: CartSortValue)
 }
@@ -18,7 +18,7 @@ protocol CartMainCoordinatableProtocol {
 final class CartViewController: UIViewController {
     // CartMainCoordinatableProtocol properties
     var onFilter: (() -> Void)?
-    var onDelete: ((UUID?) -> Void)?
+    var onDelete: ((String?) -> Void)?
     var onProceed: (() -> Void)?
 
     // Combine
@@ -139,7 +139,7 @@ final class CartViewController: UIViewController {
         emptyStateLabel.isHidden = !viewModel.visibleRows.isEmpty
     }
     
-    private func updateTotalLabels(from rows: [CartRow]) {
+    private func updateTotalLabels(from rows: [NftSingleCollection]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
     }
@@ -166,7 +166,7 @@ extension CartViewController: UITableViewDelegate {
 
 // MARK: - Ext CartCellDelegate
 extension CartViewController: CartCellDelegate {
-    func didDeletedItem(with id: UUID?) {
+    func didDeletedItem(with id: String?) {
         onDelete?(id)
     }
 }

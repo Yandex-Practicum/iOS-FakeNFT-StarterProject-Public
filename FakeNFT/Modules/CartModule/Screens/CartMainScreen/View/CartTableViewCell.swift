@@ -10,7 +10,7 @@ import Combine
 import Kingfisher
 
 protocol CartCellDelegate: AnyObject {
-    func didDeletedItem(with id: UUID?)
+    func didDeletedItem(with id: String?)
 }
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
@@ -29,7 +29,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         }
     }
     
-    private var id: UUID?
+    private var id: String?
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -127,11 +127,11 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         rateStackView.removeRating()
     }
     
-    private func updateCell(with newRow: CartRow ) {
-        nftImageView.kf.setImage(with: URL(string: newRow.imageName))
-        nftName.text = newRow.nftName
-        rateStackView.addRating(newRow.rate)
-        nftPriceLabel.text = "\(newRow.price) \(newRow.coinName)"
+    private func updateCell(with newRow: NftSingleCollection ) {
+        nftImageView.kf.setImage(with: URL(string: newRow.images.first ?? ""))
+        nftName.text = newRow.name
+        rateStackView.addRating(newRow.rating)
+        nftPriceLabel.text = "\(newRow.price) ETF"
         id = newRow.id
         
     }

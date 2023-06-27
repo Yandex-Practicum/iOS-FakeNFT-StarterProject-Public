@@ -10,15 +10,15 @@ import Combine
 import Kingfisher
 
 protocol CartDeleteCoordinatableProtocol {
-    var idToDelete: UUID? { get set }
+    var idToDelete: String? { get set }
     var onCancel: (() -> Void)? { get set }
     var onDelete: (() -> Void)? { get set }
-    func deleteItem(with id: UUID?)
+    func deleteItem(with id: String?)
 }
 
 final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinatableProtocol {
     // CartDeleteCoordinatableProtocol
-    var idToDelete: UUID?
+    var idToDelete: String?
     var onCancel: (() -> Void)?
     var onDelete: (() -> Void)?
     
@@ -29,10 +29,8 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     private lazy var itemImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.heightAnchor.constraint(equalToConstant: 108).isActive = true
-        imageView.layer.cornerRadius = 12
         return imageView
     }()
     
@@ -128,11 +126,11 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
             .store(in: &cancellables)
     }
     
-    func updateItemToDelete(with id: UUID?) {
+    func updateItemToDelete(with id: String?) {
         viewModel.updateItemToDelete(with: id)
     }
     
-    func deleteItem(with id: UUID?) {
+    func deleteItem(with id: String?) {
         viewModel.deleteItem(with: id)
     }
     
@@ -145,9 +143,8 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         
     }
     
-    private func setupImageView(for cartRow: CartRow?) {
-        guard let imageName = cartRow?.imageName else { return }
-//        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+    private func setupImageView(for cartRow: NftSingleCollection?) {
+        guard let imageName = cartRow?.images.first else { return }
         itemImageView.kf.setImage(with: URL(string: imageName))
     }
 }

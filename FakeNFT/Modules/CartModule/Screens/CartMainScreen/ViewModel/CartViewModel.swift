@@ -12,7 +12,7 @@ final class CartViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private (set) var visibleRows: [CartRow] = [] 
+    @Published private (set) var visibleRows: [NftSingleCollection] = []
     
     private var dataStore: DataStorageProtocol
     private var networkClient: NetworkClient
@@ -29,7 +29,7 @@ final class CartViewModel {
         dataStore.sortDescriptor = sortBy
     }
     
-    func deleteItem(with id: UUID?) {
+    func deleteItem(with id: String?) {
         guard let id else { return }
         visibleRows.removeAll(where: { $0.id == id })
     }
@@ -39,7 +39,11 @@ final class CartViewModel {
 private extension CartViewModel {
     func bind() {
         dataStore.dataPublisher
-            .sink { self.visibleRows = $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                self.visibleRows = $0
+            }
             .store(in: &cancellables)
     }
     
@@ -50,11 +54,7 @@ private extension CartViewModel {
             guard let self else { return }
             switch result {
             case .success(let data):
-                DispatchQueue.main.async {
-                    let convertedData = self.convert(data)
-                    self.addRowsToStorage(convertedData)
-                    self.updateVisibleRows()
-                }
+                    self.addRowsToStorage(data)
                 
             case .failure(let error):
                 print("error is: \(error)")
@@ -62,31 +62,9 @@ private extension CartViewModel {
         }
     }
     
-    func convert(_ singeNft: [NftSingleCollection]) -> [CartRow] {
-        var rows: [CartRow] = []
-        
-        singeNft.forEach { collection in
-            let row = CartRow(
-                imageName: collection.images.first ?? "",
-                nftName: collection.name,
-                rate: collection.rating,
-                price: collection.price,
-                coinName: "ETF")
-            // MARK: connect to chosen currency
-            
-            rows.append(row)
-        }
-        
-        return rows
-    }
-    
-    func addRowsToStorage(_ rows: [CartRow]) {
+    func addRowsToStorage(_ rows: [NftSingleCollection]) {
         rows.forEach { row in
             dataStore.addCartRowItem(row)
         }
-    }
-    
-    func updateVisibleRows() {
-        visibleRows = dataStore.getCartRowItems()
     }
 }
