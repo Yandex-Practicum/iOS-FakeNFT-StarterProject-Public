@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import Kingfisher
 
 protocol CartDeleteCoordinatableProtocol {
@@ -21,16 +22,17 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     var onCancel: (() -> Void)?
     var onDelete: (() -> Void)?
     
-    func deleteItem(with id: UUID?) {
-        viewModel.deleteItem(with: id)
-    }
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: CartDeleteViewModel
     
     private lazy var itemImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
+        imageView.heightAnchor.constraint(equalToConstant: 108).isActive = true
+        imageView.layer.cornerRadius = 12
         return imageView
     }()
     
@@ -72,8 +74,6 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 41, bottom: 0, right: 41)
         stackView.spacing = 12
-        stackView.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
-        stackView.setContentCompressionResistancePriority(.fittingSizeLevel, for: .horizontal)
         stackView.addArrangedSubview(itemImageView)
         stackView.addArrangedSubview(messageLabel)
         return stackView
@@ -120,14 +120,20 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     }
     
     private func bind() {
-        viewModel.$itemToDelete.bind { [weak self] cartRow in
-            guard let imageName = cartRow?.imageName else { return }
-            self?.itemImageView.kf.setImage(with: URL(string: imageName))
-        }
+        viewModel.$itemToDelete
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] cartRow in
+                self?.setupImageView(for: cartRow)
+            }
+            .store(in: &cancellables)
     }
     
     func updateItemToDelete(with id: UUID?) {
         viewModel.updateItemToDelete(with: id)
+    }
+    
+    func deleteItem(with id: UUID?) {
+        viewModel.deleteItem(with: id)
     }
     
     private func setupBlur() {
@@ -137,6 +143,12 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         
         view.addSubview(visualEffectView)
         
+    }
+    
+    private func setupImageView(for cartRow: CartRow?) {
+        guard let imageName = cartRow?.imageName else { return }
+//        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+        itemImageView.kf.setImage(with: URL(string: imageName))
     }
 }
 
