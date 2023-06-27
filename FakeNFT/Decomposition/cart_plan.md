@@ -1,4 +1,6 @@
 # NFTStore
+MVVM design pattern, code layout
+trello link: https://trello.com/b/jyPeNgzT/nftstore
 - CreateCartModule: 
 est: 52 hours
 act: 23 hours 25 min
