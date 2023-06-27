@@ -88,7 +88,7 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(networkClient: networkClient)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(networkClient: networkClient, dataStore: dataStore)
         
         paymentMethodScreen.onProceed = { [weak self] request in
             self?.showPaymentResultScreen(with: request)

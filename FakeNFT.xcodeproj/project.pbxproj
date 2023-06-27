@@ -43,7 +43,7 @@
 		377DF5EA2A3F9C7000090DCD /* CartDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5E92A3F9C7000090DCD /* CartDataSourceManager.swift */; };
 		377DF5F02A3FA14900090DCD /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5EF2A3FA14900090DCD /* CustomLabel.swift */; };
 		377DF5F22A3FA3CC00090DCD /* RateStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F12A3FA3CC00090DCD /* RateStackView.swift */; };
-		377DF5F42A3FA4DE00090DCD /* RateStarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */; };
+		377DF5F42A3FA4DE00090DCD /* RateStarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F32A3FA4DE00090DCD /* RateStarImageView.swift */; };
 		377DF5F62A3FAC0700090DCD /* CentralStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5F52A3FAC0700090DCD /* CentralStackView.swift */; };
 		378504F62A49D2C2000D6AC7 /* cart_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 378504F52A49D2C2000D6AC7 /* cart_plan.md */; };
 		378504F82A49E7DB000D6AC7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378504F72A49E7DB000D6AC7 /* Request.swift */; };
@@ -124,7 +124,7 @@
 		377DF5E92A3F9C7000090DCD /* CartDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartDataSourceManager.swift; sourceTree = "<group>"; };
 		377DF5EF2A3FA14900090DCD /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		377DF5F12A3FA3CC00090DCD /* RateStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStackView.swift; sourceTree = "<group>"; };
-		377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarButton.swift; sourceTree = "<group>"; };
+		377DF5F32A3FA4DE00090DCD /* RateStarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarImageView.swift; sourceTree = "<group>"; };
 		377DF5F52A3FAC0700090DCD /* CentralStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralStackView.swift; sourceTree = "<group>"; };
 		378504F52A49D2C2000D6AC7 /* cart_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = cart_plan.md; sourceTree = "<group>"; };
 		378504F72A49E7DB000D6AC7 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 				3752303E2A41ABAA00DE6F73 /* CartModule */,
 				377DF5EF2A3FA14900090DCD /* CustomLabel.swift */,
 				377DF5F12A3FA3CC00090DCD /* RateStackView.swift */,
-				377DF5F32A3FA4DE00090DCD /* RateStarButton.swift */,
+				377DF5F32A3FA4DE00090DCD /* RateStarImageView.swift */,
 				37DFD1692A408F090020667A /* CustomActionButton.swift */,
 			);
 			path = CustomViews;
@@ -787,7 +787,7 @@
 				377DF5F62A3FAC0700090DCD /* CentralStackView.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */,
-				377DF5F42A3FA4DE00090DCD /* RateStarButton.swift in Sources */,
+				377DF5F42A3FA4DE00090DCD /* RateStarImageView.swift in Sources */,
 				372EEF852A449405008FDB16 /* CartPaymentMethodViewController.swift in Sources */,
 				372EEF9E2A460AF3008FDB16 /* WebViewController.swift in Sources */,
 				374EB0452A3E033800D57F36 /* MainTabBarController.swift in Sources */,
