@@ -54,8 +54,8 @@ act total: 55 min
 
 Block 3.
 - Create PaymentMethodScreen
-est total: 9 hours
-act total: 5 hours 10 min
+est total: 11 hours
+act total: 9 hours 10 min
     - CustomizeNavigationBar
     est: 1 hour
     act: 30 min
@@ -71,6 +71,9 @@ act total: 5 hours 10 min
     - Create payButton
     est: 1 hour
     act: 20 min
+    - Create payLogic
+    est: 2 hours
+    act: 4 hours
 
 Block 4.
 - Create PaymentResultScreen
