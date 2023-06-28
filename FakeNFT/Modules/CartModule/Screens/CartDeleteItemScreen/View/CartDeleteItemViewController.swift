@@ -116,11 +116,21 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
+//        bind()
         setupBlur()
         setupConstraints()
         updateItemToDelete(with: idToDelete)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func bind() {

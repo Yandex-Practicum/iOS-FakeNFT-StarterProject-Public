@@ -108,18 +108,20 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         setupNavigationBar()
         setupConstraints()
         createDataSource()
-        bind()
+//        bind()
         viewModel.getPaymentMethods()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        bind()
         tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func bind() {

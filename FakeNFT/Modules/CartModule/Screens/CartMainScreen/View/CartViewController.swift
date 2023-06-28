@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-protocol CartMainCoordinatableProtocol {
+protocol CartMainCoordinatableProtocol: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
@@ -115,12 +115,22 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        bind()
+//        bind()
         load()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
         checkEmptyState()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func createDataSource() {

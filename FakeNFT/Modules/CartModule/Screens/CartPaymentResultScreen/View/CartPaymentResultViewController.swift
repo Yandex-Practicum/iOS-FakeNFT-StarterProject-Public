@@ -55,7 +55,6 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
-        bind()
         viewModel.pay()
     }
     
@@ -63,12 +62,15 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
+        bind()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = false
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func bind() {

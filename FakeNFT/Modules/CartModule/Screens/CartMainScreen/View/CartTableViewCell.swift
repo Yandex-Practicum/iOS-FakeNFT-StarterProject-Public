@@ -125,6 +125,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     override func prepareForReuse() {
         super.prepareForReuse()
         rateStackView.removeRating()
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func updateCell(with newRow: NftSingleCollection ) {

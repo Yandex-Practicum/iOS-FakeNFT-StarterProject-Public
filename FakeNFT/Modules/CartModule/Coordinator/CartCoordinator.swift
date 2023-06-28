@@ -66,12 +66,12 @@ private extension CartCoordinator {
         var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStore)
         deleteScreen.idToDelete = idToDelete
         
-        deleteScreen.onCancel = { [weak router] in
+        deleteScreen.onCancel = { [weak router, weak deleteScreen] in
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         
-        deleteScreen.onDelete = { [weak router] in
-            deleteScreen.deleteItem(with: idToDelete)
+        deleteScreen.onDelete = { [weak router, weak deleteScreen] in
+            deleteScreen?.deleteItem(with: idToDelete)
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         
@@ -119,8 +119,8 @@ private extension CartCoordinator {
     func showSortAlert(from screen: CartMainCoordinatableProtocol) {
         let alert = alertConstructor.constructSortAlert()
         
-        alertConstructor.addSortAlertActions(from: alert) { [weak router] filter in
-            filter == .cancel ? () : screen.setupFilter(filter)
+        alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] filter in
+            filter == .cancel ? () : screen?.setupFilter(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         

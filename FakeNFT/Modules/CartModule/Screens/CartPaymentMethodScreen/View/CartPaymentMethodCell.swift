@@ -11,7 +11,11 @@ import Kingfisher
 
 final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>() {
+        didSet {
+            print("added item to cancellable")
+        }
+    }
         
     var viewModel: PaymentMethodCellViewModel? {
         didSet {
@@ -69,6 +73,11 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables.forEach({ $0.cancel() })
     }
     
     override var isSelected: Bool {
