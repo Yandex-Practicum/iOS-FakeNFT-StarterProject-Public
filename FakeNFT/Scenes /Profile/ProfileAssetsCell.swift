@@ -63,3 +63,5 @@ final class ProfileAssetsCell: UITableViewCell {
         ])
     }
 }
+
+extension ProfileAssetsCell: ReuseIdentifying {}
