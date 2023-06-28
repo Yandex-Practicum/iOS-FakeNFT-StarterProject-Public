@@ -24,7 +24,6 @@ final class CartViewModel {
         self.networkClient = networkClient
         
         bind()
-//        load()
     }
     
     func setupSortValue(_ sortBy: CartSortValue) {

@@ -25,10 +25,13 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         return button
     }()
     
-    private lazy var resultLabel: CustomLabel = {
-        let label = CustomLabel(size: 22, weight: .bold, color: .ypBlack, alignment: .center)
-        label.numberOfLines = 0
-        return label
+    private lazy var resultLabel: UITextView = {
+        let view = UITextView()
+        view.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        view.textColor = .ypBlack
+        view.textAlignment = .center
+        view.textContainerInset.top = 0
+        return view
     }()
     
     private lazy var resultView: CustomAnimatedView = {
@@ -163,8 +166,8 @@ private extension CartPaymentResultViewController {
         NSLayoutConstraint.activate([
             resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
             resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
-            resultLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -152),
-            resultLabel.topAnchor.constraint(equalTo: resultView.bottomAnchor)
+            resultLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: 0),
+            resultLabel.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 36)
             
         ])
     }

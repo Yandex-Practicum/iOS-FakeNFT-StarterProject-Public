@@ -107,7 +107,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.distribution = .fill
         stackView.spacing = 20
         
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        stackView.layoutMargins = UIEdgeInsets(top: -20, left: 20, bottom: -20, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         stackView.addArrangedSubview(nftImageView)
