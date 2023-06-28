@@ -10,6 +10,7 @@ import Foundation
 protocol NFTListViewModel {
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void)
     func cellSelected(_ index: IndexPath, selectedItem: @escaping (NFTDetails) -> Void)
+    func sortItems(by category: SortingCategory, _ items: @escaping ([NFTCollectionModel]) -> Void)
 }
 
 final class NFTListViewModelImpl: NFTListViewModel {
@@ -38,7 +39,21 @@ final class NFTListViewModelImpl: NFTListViewModel {
     func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {
         loadItems(items)
     }
-
+    
+    func sortItems(by category: SortingCategory, _ items: @escaping ([NFTCollectionModel]) -> Void) {
+        let sortedItems = nftCollectionItems
+        switch category {
+        case .name:
+            items(sortedItems.sorted {
+                $0.name < $1.name
+            })
+        case .amount:
+            items(sortedItems.sorted {
+                $0.nfts.count > $1.nfts.count
+            })
+        }
+    }
+    
     private func loadItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {
         let group = DispatchGroup()
 
@@ -68,4 +83,9 @@ final class NFTListViewModelImpl: NFTListViewModel {
             items(self.nftCollectionItems)
         }
     }
+}
+
+enum SortingCategory {
+    case name
+    case amount
 }
