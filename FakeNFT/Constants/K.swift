@@ -40,5 +40,6 @@ struct K {
         static let orders = "api/v1/orders/1"
         static let collection = "api/v1/collections"
         static let singleCollection = "api/v1/nft"
+        static let pay = "api/v1/orders/1/payment/"
     }
 }

@@ -64,7 +64,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }()
     
     private lazy var proceedButton: CustomActionButton = {
-        let button = CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm)
+        let button = CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .disabled)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.addTarget(self, action: #selector(payTapped), for: .touchUpInside)
         return button
@@ -148,6 +148,17 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }
 }
 
+// MARK: - Ext Private methods
+private extension CartPaymentMethodViewController {
+    func transferPaymentMethodIdToViewModel(id: String?) {
+        viewModel.selectPaymentMethod(id: id)
+    }
+    
+    func enableProceedButton() {
+        proceedButton.setAppearance(for: .confirm)
+    }
+}
+
 // MARK: - Ext @objc
 @objc private extension CartPaymentMethodViewController {
     func labelTapped(_ gesture: UITapGestureRecognizer) {
@@ -176,6 +187,11 @@ extension CartPaymentMethodViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CartPaymentMethodCell else { return }
         cell.isSelected = true
+        
+        let selectedId = cell.viewModel?.paymentMethodRow.id
+        transferPaymentMethodIdToViewModel(id: selectedId)
+        
+        enableProceedButton()
     }
 }
 

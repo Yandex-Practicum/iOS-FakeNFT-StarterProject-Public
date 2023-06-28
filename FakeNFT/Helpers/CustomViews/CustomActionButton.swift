@@ -39,7 +39,7 @@ extension CustomActionButton {
         switch appearance {
         case .disabled:
             setTitleColor(.ypBlack, for: .normal)
-            backgroundColor = .ypLightGrey
+            backgroundColor = .universalBackground
             isEnabled = false
         case .confirm:
             setTitleColor(.ypWhite, for: .normal)

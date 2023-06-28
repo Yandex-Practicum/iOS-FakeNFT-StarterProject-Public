@@ -22,14 +22,19 @@ final class CartPaymentResultViewModel {
     func pay() {
         guard let request else { return }
         requestResult = .loading
-        networkClient.send(request: request) { [weak self] result in
+        networkClient.send(request: request, type: PaymentResultResponse.self) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success(let data):
                 // TODO: clear the cart after success and proceed to catalog
-                self?.requestResult = .success
+                self?.requestResult = data.success ? .success : .failure
             case .failure(_):
                 self?.requestResult = .failure
+                // TODO: Show alert
             }
         }
+    }
+    
+    private func test() {
+        
     }
 }

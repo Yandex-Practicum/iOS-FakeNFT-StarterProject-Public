@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct PaymentResultResponse: Decodable {
+    let success: Bool
+    let orderId: String
+    let id: String
+}
+
 enum RequestResult {
     case success, failure, loading
     

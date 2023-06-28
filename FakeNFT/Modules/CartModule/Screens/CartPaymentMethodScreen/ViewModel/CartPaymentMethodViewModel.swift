@@ -11,7 +11,9 @@ import Combine
 final class CartPaymentMethodViewModel {
     
     @Published private (set) var visibleRows: [PaymentMethodRow] = []
-    @Published private (set) var paymentRequest: NetworkRequest? 
+    @Published private (set) var paymentRequest: NetworkRequest?
+    
+    private var selectedId: String? 
     
     private let networkClient: NetworkClient
     private let dataStore: DataStorageProtocol
@@ -26,9 +28,12 @@ final class CartPaymentMethodViewModel {
     }
     
     func payTapped() {
-        // MARK: connect params to cartStoredItems
-        let test = dataStore.getCartRowItems().compactMap({ $0.id })
-        paymentRequest = RequestConstructor.constructOrdersRequest(method: .put, dto: test)
+        guard let selectedId else { return }
+        paymentRequest = RequestConstructor.constructPaymentRequest(method: .get, currencyId: selectedId)
+    }
+    
+    func selectPaymentMethod(id: String?) {
+        self.selectedId = id
     }
 }
 

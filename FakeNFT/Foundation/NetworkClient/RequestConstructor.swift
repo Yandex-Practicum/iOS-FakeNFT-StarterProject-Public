@@ -31,6 +31,12 @@ struct RequestConstructor {
             httpMethod: method)
     }
     
+    static func constructPaymentRequest(method: HttpMethod, currencyId: String) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.pay + currencyId),
+            httpMethod: method)
+    }
+    
     static func constructWebViewRequest() -> URLRequest? {
         guard let url = URL(string: K.Links.userLicenseLink) else { return nil }
         return URLRequest(url: url)
