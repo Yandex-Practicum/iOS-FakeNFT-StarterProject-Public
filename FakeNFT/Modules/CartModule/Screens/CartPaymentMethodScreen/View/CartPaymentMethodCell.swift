@@ -11,11 +11,7 @@ import Kingfisher
 
 final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     
-    private var cancellables = Set<AnyCancellable>() {
-        didSet {
-            print("added item to cancellable")
-        }
-    }
+    private var cancellables = Set<AnyCancellable>() 
         
     var viewModel: PaymentMethodCellViewModel? {
         didSet {
