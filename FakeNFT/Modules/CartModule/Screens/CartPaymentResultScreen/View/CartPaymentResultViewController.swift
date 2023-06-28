@@ -31,14 +31,6 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         return label
     }()
     
-    private lazy var resultImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        return imageView
-    }()
-    
     private lazy var resultView: CustomAnimatedView = {
         let view = CustomAnimatedView(frame: .zero)
         return view
@@ -111,28 +103,17 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
 private extension CartPaymentResultViewController {
     func updateUI(_ result: RequestResult?) {
         guard let result else { return }
-        switch result {
-        case .success, .failure:
-            self.updateUIProperties(by: result)
-        case .loading:
-            self.showLoadingView(result)
-        }
+        
+        updateUIProperties(by: result)
+        addButtonTarget(from: result)
+        hideOrShowTheActionButton(result)
         
         resultView.startAnimation()
-        hideOrShowTheActionButton(result)
         
     }
     
     func updateUIProperties(by result: RequestResult) {
         actionButton.setTitle(result.buttonTitle, for: .normal)
-        resultLabel.text = result.description
-        resultImageView.image = UIImage(named: K.Icons.checkmark)
-        resultView.result = result
-        
-        addButtonTarget(from: result)
-    }
-    
-    func showLoadingView(_ result: RequestResult) {
         resultLabel.text = result.description
         resultView.result = result
         
