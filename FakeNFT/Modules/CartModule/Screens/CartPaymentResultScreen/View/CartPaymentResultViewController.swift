@@ -36,17 +36,6 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         return view
     }()
     
-    private lazy var resultStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        stackView.addArrangedSubview(resultLabel)
-        
-        return stackView
-    }()
-    
     // MARK: Init
     init(viewModel: CartPaymentResultViewModel) {
         self.viewModel = viewModel
