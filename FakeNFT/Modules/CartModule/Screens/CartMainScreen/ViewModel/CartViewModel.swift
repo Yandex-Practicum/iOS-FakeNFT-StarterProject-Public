@@ -9,10 +9,12 @@ import Foundation
 import Combine
 
 final class CartViewModel {
+    var request: NetworkRequest?
     
     private var cancellables = Set<AnyCancellable>()
     
     @Published private (set) var visibleRows: [NftSingleCollection] = []
+    @Published private (set) var cartError: Error?
     
     private var dataStore: DataStorageProtocol
     private var networkClient: NetworkClient
@@ -22,7 +24,7 @@ final class CartViewModel {
         self.networkClient = networkClient
         
         bind()
-        load()
+//        load()
     }
     
     func setupSortValue(_ sortBy: CartSortValue) {
@@ -32,6 +34,20 @@ final class CartViewModel {
     func deleteItem(with id: String?) {
         guard let id else { return }
         visibleRows.removeAll(where: { $0.id == id })
+    }
+    
+    func load() {
+        // MARK: Replace for loading from userProfile
+        let request = RequestConstructor.constructNftCollectionRequest(method: .get)
+        networkClient.send(request: request, type: [NftSingleCollection].self) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let data):
+                self.addRowsToStorage(data)
+            case .failure(let error):
+                self.cartError = error
+            }
+        }
     }
 }
 
@@ -45,22 +61,6 @@ private extension CartViewModel {
                 self.visibleRows = $0
             }
             .store(in: &cancellables)
-    }
-    
-    func load() {
-        // MARK: Replace for loading from userProfile
-        let request = RequestConstructor.constructNftCollectionRequest(method: .get)
-        networkClient.send(request: request, type: [NftSingleCollection].self) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let data):
-                    self.addRowsToStorage(data)
-//                self.dataStore.addCartRowItem(data)
-                
-            case .failure(let error):
-                print("error is: \(error)")
-            }
-        }
     }
     
     func addRowsToStorage(_ rows: [NftSingleCollection]) {

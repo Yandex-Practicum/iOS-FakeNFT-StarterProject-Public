@@ -9,7 +9,9 @@ import UIKit
 
 protocol AlertConstructable {
     func constructSortAlert() -> UIAlertController
+    func constructCartLoadAlert(with error: Error) -> UIAlertController
     func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void)
+    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
 }
 
 struct AlertConstructor { }
@@ -30,4 +32,30 @@ extension AlertConstructor: AlertConstructable {
                     }))
         }
     }
+    
+    func constructCartLoadAlert(with error: Error) -> UIAlertController {
+        return UIAlertController(
+            title: NSLocalizedString("Что-то пошло не так!", comment: ""),
+            message: "Ошибка: \(error.localizedDescription)",
+            preferredStyle: .alert)
+    }
+    
+    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void) {
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Попробовать снова!", comment: ""),
+                style: .default,
+                handler: { action in
+                    handler(action)
+                }))
+        
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Оставить, как есть", comment: ""),
+                style: .cancel,
+                handler: { action in
+                    handler(action)
+                }))
+    }
+    
 }

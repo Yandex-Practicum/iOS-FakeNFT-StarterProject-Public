@@ -12,7 +12,9 @@ protocol CartMainCoordinatableProtocol {
     var onFilter: (() -> Void)? { get set }
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
+    var onError: ((Error?) -> Void)? { get set }
     func setupFilter(_ filter: CartSortValue)
+    func load()
 }
 
 final class CartViewController: UIViewController {
@@ -20,6 +22,7 @@ final class CartViewController: UIViewController {
     var onFilter: (() -> Void)?
     var onDelete: ((String?) -> Void)?
     var onProceed: (() -> Void)?
+    var onError: ((Error?) -> Void)?
 
     // Combine
     private var cancellables = Set<AnyCancellable>()
@@ -113,6 +116,7 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         bind()
+        load()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
@@ -132,6 +136,13 @@ final class CartViewController: UIViewController {
                 self?.emptyStateLabel.isHidden = !rows.isEmpty
             }
             .store(in: &cancellables)
+        
+        viewModel.$cartError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.onError?(error)
+            }
+            .store(in: &cancellables)
     }
     
     private func checkEmptyState() {
@@ -149,6 +160,10 @@ final class CartViewController: UIViewController {
 extension CartViewController: CartMainCoordinatableProtocol {
     func setupFilter(_ filter: CartSortValue) {
         viewModel.setupSortValue(filter)
+    }
+    
+    func load() {
+        viewModel.load()
     }
 }
 

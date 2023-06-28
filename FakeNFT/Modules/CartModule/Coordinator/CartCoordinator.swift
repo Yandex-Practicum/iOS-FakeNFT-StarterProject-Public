@@ -54,19 +54,11 @@ private extension CartCoordinator {
             self?.showPaymentMethodScreen()
         }
         
-        router.addTabBarItem(navController)
-    }
-    
-    // MARK: - FilterAlert
-    func showSortAlert(from screen: CartMainCoordinatableProtocol) {
-        let alert = alertConstructor.constructSortAlert()
-        
-        alertConstructor.addSortAlertActions(from: alert) { [weak router] filter in
-            filter == .cancel ? () : screen.setupFilter(filter)
-            router?.dismissToRootViewController(animated: true, completion: nil)
+        cartScreen.onError = { [weak self] error in
+            self?.showCartLoadAlert(with: error, from: cartScreen)
         }
         
-        router.presentViewController(alert, animated: true, presentationStyle: .popover)
+        router.addTabBarItem(navController)
     }
     
     // MARK: - DeleteItemScreen
@@ -119,5 +111,40 @@ private extension CartCoordinator {
         let webView = factory.makeCartWebViewScreenView()
         
         router.pushViewController(webView, animated: true)
+    }
+}
+
+// MARK: - Ext Alerts
+private extension CartCoordinator {
+    func showSortAlert(from screen: CartMainCoordinatableProtocol) {
+        let alert = alertConstructor.constructSortAlert()
+        
+        alertConstructor.addSortAlertActions(from: alert) { [weak router] filter in
+            filter == .cancel ? () : screen.setupFilter(filter)
+            router?.dismissToRootViewController(animated: true, completion: nil)
+        }
+        
+        router.presentViewController(alert, animated: true, presentationStyle: .popover)
+    }
+    
+    func showCartLoadAlert(with error: Error?, from screen: CartMainCoordinatableProtocol) {
+        guard let error else { return }
+        let alert = alertConstructor.constructCartLoadAlert(with: error)
+        
+        alertConstructor.addCartErrorAlertActions(from: alert) { [weak router] action in
+            switch action.style {
+            case .default:
+                screen.load()
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .cancel:
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .destructive:
+                break
+            @unknown default:
+                break
+            }
+        }
+        
+        router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
 }
