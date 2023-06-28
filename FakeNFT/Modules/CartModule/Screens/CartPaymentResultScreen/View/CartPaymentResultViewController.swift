@@ -168,7 +168,7 @@ private extension CartPaymentResultViewController {
             resultTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
             resultTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
             resultTextView.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: 0),
-            resultTextView.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 36)
+            resultTextView.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 5)
             
         ])
     }
