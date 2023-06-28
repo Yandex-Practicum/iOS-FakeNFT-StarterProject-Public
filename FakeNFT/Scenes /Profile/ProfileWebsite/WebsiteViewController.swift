@@ -3,9 +3,11 @@ import WebKit
 
 final class WebsiteViewController: UIViewController, WKUIDelegate {
     
+    // MARK: - Properties
     var webView: WKWebView?
     var websiteURL: String?
     
+    // MARK: - Lifecycle
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)

@@ -2,9 +2,11 @@ import UIKit
 import Kingfisher
 
 final class ProfileView: UIView {
-    private var viewController: ProfileViewController?
     
     // MARK: - Properties
+    private var viewController: ProfileViewController?
+    
+    //MARK: - Layout elements
     private lazy var avatarImage: UIImageView = {
         let placeholder = UIImage(named: "UserImagePlaceholder")
         let avatarImage = UIImageView(image: placeholder)
@@ -52,14 +54,13 @@ final class ProfileView: UIView {
     private lazy var profileAssetsTable: UITableView = {
         let profileAssetsTable = UITableView()
         profileAssetsTable.translatesAutoresizingMaskIntoConstraints = false
-        profileAssetsTable.register(ProfileAssetsCell.self, forCellReuseIdentifier: "ProfileAssetsCell")
+        profileAssetsTable.register(ProfileAssetsCell.self)
         profileAssetsTable.dataSource = self
         profileAssetsTable.delegate = self
         profileAssetsTable.separatorStyle = .none
         profileAssetsTable.allowsMultipleSelection = false
         return profileAssetsTable
     }()
-    
     
     // MARK: - Lifecycle
     init(frame: CGRect, viewController: ProfileViewController) {
@@ -78,7 +79,27 @@ final class ProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Constraints
+    // MARK: - Methods
+    @objc
+    func websiteDidTap(_ sender: UITapGestureRecognizer) {
+        viewController?.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
+    }
+    
+    func updateViews(avatarURL: URL?, userName: String?, description: String?, website: String?, nftCount: String?, likesCount: String?) {
+        avatarImage.kf.setImage(
+            with: avatarURL,
+            placeholder: UIImage(named: "UserImagePlaceholder"),
+            options: [.processor(RoundCornerImageProcessor(cornerRadius: 35))])
+        nameLabel.text = userName
+        descriptionLabel.text = description
+        websiteLabel.text = website
+        let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell
+        nftsCountLabel?.assetValue.text = nftCount
+        let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
+        likesCountLabel?.assetValue.text = likesCount
+    }
+    
+    //MARK: - Layout methods
     private func addUserImage() {
         self.addSubview(avatarImage)
         NSLayoutConstraint.activate([
@@ -110,7 +131,6 @@ final class ProfileView: UIView {
         NSLayoutConstraint.activate([
             websiteLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
             websiteLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
-//            websiteLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor)
         ])
     }
     
@@ -123,34 +143,17 @@ final class ProfileView: UIView {
             profileAssetsTable.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
-    
-    @objc
-    func websiteDidTap(_ sender: UITapGestureRecognizer) {
-        viewController?.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
-    }
-    
-    func updateViews(userImageURL: URL?, userName: String?, description: String?, website: String?, nftCount: String?, likesCount: String?) {
-        avatarImage.kf.setImage(
-            with: userImageURL,
-            placeholder: UIImage(named: "UserImagePlaceholder"),
-            options: [.processor(RoundCornerImageProcessor(cornerRadius: 35))])
-        nameLabel.text = userName
-        descriptionLabel.text = description
-        websiteLabel.text = website
-        let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell
-        nftsCountLabel?.assetValue.text = nftCount
-        let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
-        likesCountLabel?.assetValue.text = likesCount
-    }
 }
 
+// MARK: - Extensions
 extension ProfileView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileAssetsCell", for: indexPath as IndexPath) as? ProfileAssetsCell else { return ProfileAssetsCell() }
+        let cell: ProfileAssetsCell = tableView.dequeueReusableCell()
+        cell.backgroundColor = .white
         switch indexPath.row {
         case 0:
             cell.assetLabel.text = "Мои NFT"

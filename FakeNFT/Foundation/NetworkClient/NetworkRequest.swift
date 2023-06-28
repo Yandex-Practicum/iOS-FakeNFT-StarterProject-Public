@@ -10,11 +10,13 @@ enum HttpMethod: String {
 protocol NetworkRequest {
     var endpoint: URL? { get }
     var queryParameters: [String: String]? { get }
+    var body: Data? { get }
     var httpMethod: HttpMethod { get }
 }
 
 // default values
 extension NetworkRequest {
     var queryParameters: [String: String]? { nil }
+    var body: Data? { nil }
     var httpMethod: HttpMethod { .get }
 }

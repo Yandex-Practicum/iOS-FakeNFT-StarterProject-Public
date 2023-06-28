@@ -2,6 +2,10 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
+    // MARK: - Properties
+    private var viewModel: ProfileViewModel?
+    
+    //MARK: - Layout elements
     private lazy var editButton = UIBarButtonItem(
         image: UIImage.Icons.edit,
         style: .plain,
@@ -9,8 +13,7 @@ final class ProfileViewController: UIViewController {
         action: #selector(didTapEditButton)
     )
     
-    private var viewModel: ProfileViewModel?
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ProfileViewModel(viewController: self)
@@ -18,9 +21,11 @@ final class ProfileViewController: UIViewController {
         setupView()
     }
     
+    // MARK: - Methods
     @objc
     private func didTapEditButton() {
         let editProfileViewController = EditProfileViewController()
+        editProfileViewController.viewModel = viewModel
         editProfileViewController.modalPresentationStyle = .popover
         self.present(editProfileViewController, animated: true)
     }
@@ -30,8 +35,8 @@ final class ProfileViewController: UIViewController {
             viewModel.onChange = { [weak self] in
                 let view = self?.view as? ProfileView
                 view?.updateViews(
-                    userImageURL: viewModel.userImageURL,
-                    userName: viewModel.userName,
+                    avatarURL: viewModel.avatarURL,
+                    userName: viewModel.name,
                     description: viewModel.description,
                     website: viewModel.website,
                     nftCount: "(\(String(viewModel.nfts?.count ?? 0)))",

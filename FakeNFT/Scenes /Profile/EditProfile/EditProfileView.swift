@@ -2,9 +2,11 @@ import UIKit
 import Kingfisher
 
 final class EditProfileView: UIView {
-    private var viewController: EditProfileViewController?
     
     // MARK: - Properties
+    private var viewController: EditProfileViewController?
+    
+    //MARK: - Layout elements
     private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -14,7 +16,7 @@ final class EditProfileView: UIView {
     }()
     
     private lazy var avatarImage: UIImageView = {
-        let placeholder = UIImage(named: "UserImageDummy")
+        let placeholder = UIImage(named: "UserImagePlaceholder")
         let avatarImage = UIImageView(image: placeholder)
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
         avatarImage.layer.cornerRadius = 35
@@ -37,6 +39,19 @@ final class EditProfileView: UIView {
         changeAvatarLabel.isUserInteractionEnabled = true
         changeAvatarLabel.addGestureRecognizer(tapAction)
         return changeAvatarLabel
+    }()
+    
+    private lazy var loadImageDummyLabel: UILabel = {
+        let loadImageDummyLabel = UILabel()
+        loadImageDummyLabel.translatesAutoresizingMaskIntoConstraints = false
+        loadImageDummyLabel.layer.cornerRadius = 16
+        loadImageDummyLabel.layer.masksToBounds = true
+        loadImageDummyLabel.backgroundColor = .white
+        loadImageDummyLabel.text = "Загрузить изображение"
+        loadImageDummyLabel.font = .systemFont(ofSize: 17)
+        loadImageDummyLabel.textAlignment = .center
+        loadImageDummyLabel.isHidden = true
+        return loadImageDummyLabel
     }()
     
     private lazy var nameLabel: UILabel = {
@@ -73,7 +88,6 @@ final class EditProfileView: UIView {
     private lazy var descriptionTextView: UITextView = {
         let descriptionTextField = UITextView()
         descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
-//        descriptionTextField.insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 41)
         descriptionTextField.font = .systemFont(ofSize: 17)
         descriptionTextField.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
         descriptionTextField.backgroundColor = .lightGray
@@ -116,13 +130,64 @@ final class EditProfileView: UIView {
         addNameLabel()
         addDescriptionLabel()
         addWebsiteLabel()
+        
+        getDataFromViewModel()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Constraints
+    // MARK: - Methods
+    func getDataFromViewModel() {
+        guard let viewModel = viewController?.viewModel else { return }
+        avatarImage.kf.setImage(
+            with: viewModel.avatarURL,
+            placeholder: UIImage(named: "UserImagePlaceholder"),
+            options: [.processor(RoundCornerImageProcessor(cornerRadius: 35))])
+        nameTextField.text = viewModel.name
+        descriptionTextView.text = viewModel.description
+        websiteTextField.text = viewModel.website
+    }
+    
+    @objc
+    func closeDidTap(_ sender: UITapGestureRecognizer) {
+        guard let viewModel = viewController?.viewModel,
+              let name = nameTextField.text, name != "",
+              let description = descriptionTextView.text, description != "",
+              let website = websiteTextField.text, website != "",
+              let likes = viewModel.likes else { return }
+        
+        viewModel.putProfileData(
+            name: name,
+            description: description,
+            website: website,
+            likes: likes
+        )
+        viewController?.dismiss(animated: true)
+    }
+    
+    @objc
+    func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
+        loadImageDummyLabel.isHidden = false
+        // Так в ТЗ ¯\_(ツ)_/¯
+        // В Фигме нарисована только эта плашка, а в АПИ не указано поле изображения
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            if touch.view != descriptionTextView &&
+                touch.view != nameTextField &&
+                touch.view != websiteTextField {
+                descriptionTextView.resignFirstResponder()
+                nameTextField.resignFirstResponder()
+                websiteTextField.resignFirstResponder()
+            }
+        }
+        super.touchesBegan(touches, with: event)
+    }
+    
+    //MARK: - Layout methods
     private func addCloseButton() {
         self.addSubview(closeButton)
         NSLayoutConstraint.activate([
@@ -136,6 +201,7 @@ final class EditProfileView: UIView {
     private func addAvatar() {
         self.addSubview(avatarImage)
         self.addSubview(changeAvatarLabel)
+        self.addSubview(loadImageDummyLabel)
         NSLayoutConstraint.activate([
             avatarImage.heightAnchor.constraint(equalToConstant: 70),
             avatarImage.widthAnchor.constraint(equalToConstant: 70),
@@ -144,7 +210,11 @@ final class EditProfileView: UIView {
             changeAvatarLabel.heightAnchor.constraint(equalToConstant: 70),
             changeAvatarLabel.widthAnchor.constraint(equalToConstant: 70),
             changeAvatarLabel.topAnchor.constraint(equalTo: topAnchor, constant: 94),
-            changeAvatarLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
+            changeAvatarLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            loadImageDummyLabel.topAnchor.constraint(equalTo: changeAvatarLabel.bottomAnchor, constant: 4),
+            loadImageDummyLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadImageDummyLabel.heightAnchor.constraint(equalToConstant: 44),
+            loadImageDummyLabel.widthAnchor.constraint(equalToConstant: 250)
             
         ])
     }
@@ -187,18 +257,9 @@ final class EditProfileView: UIView {
             websiteTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
-    
-    @objc
-    func closeDidTap(_ sender: UITapGestureRecognizer) {
-        viewController?.dismiss(animated: true)
-    }
-    
-    @objc
-    func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
-        print("change!")
-    }
 }
 
+// MARK: - Extensions
 extension EditProfileView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -207,7 +268,5 @@ extension EditProfileView: UITextFieldDelegate {
 }
 
 extension EditProfileView: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
-        textView.resignFirstResponder()
-    }
+    
 }

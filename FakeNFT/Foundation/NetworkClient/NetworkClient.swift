@@ -89,6 +89,10 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.httpBody = request.body
+
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
 
         return urlRequest
     }
