@@ -61,20 +61,20 @@ final class NFTListViewController: UIViewController {
     }
     
     @objc private func sortTapped() {
-        let alertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: Localized.sortTitle, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: Localized.byTitle, style: .default) { [weak self] _ in
             guard let self else { return }
             self.viewModel.sortItems(by: .name) { _ in
                 self.viewModel.sortItems(by: .name) { self.container.configure(configuration: .loaded($0))}
             }
         })
-        alertController.addAction(UIAlertAction(title: "По коливчеству NFT", style: .default) { [weak self] _ in
+        alertController.addAction(UIAlertAction(title: Localized.byCount, style: .default) { [weak self] _ in
             guard let self else { return }
             self.viewModel.sortItems(by: .amount) { _ in
                 self.viewModel.sortItems(by: .amount) { self.container.configure(configuration: .loaded($0))}
             }
         })
-        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: Localized.close, style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
 }

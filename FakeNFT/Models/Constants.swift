@@ -17,4 +17,5 @@ struct Constants {
         static let sort = "SortingIcon"
         static let edit = "EditingIcon"
     }
+    
 }
