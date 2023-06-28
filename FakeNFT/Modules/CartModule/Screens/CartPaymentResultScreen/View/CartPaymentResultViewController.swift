@@ -174,8 +174,8 @@ private extension CartPaymentResultViewController {
         NSLayoutConstraint.activate([
             resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
             resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
-            resultLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
-            resultLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 500)
+            resultLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -152),
+            resultLabel.topAnchor.constraint(equalTo: resultView.bottomAnchor)
             
         ])
     }
