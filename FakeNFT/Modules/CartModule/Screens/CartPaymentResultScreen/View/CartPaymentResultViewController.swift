@@ -25,13 +25,14 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         return button
     }()
     
-    private lazy var resultLabel: UITextView = {
-        let view = UITextView()
-        view.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        view.textColor = .ypBlack
-        view.textAlignment = .center
-        view.textContainerInset.top = 0
-        return view
+    private lazy var resultTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        textView.textColor = .ypBlack
+        textView.textAlignment = .center
+        textView.textContainerInset.top = 0
+        textView.backgroundColor = .clear
+        return textView
     }()
     
     private lazy var resultView: CustomAnimatedView = {
@@ -106,7 +107,7 @@ private extension CartPaymentResultViewController {
     
     func updateUIProperties(by result: RequestResult) {
         actionButton.setTitle(result.buttonTitle, for: .normal)
-        resultLabel.text = result.description
+        resultTextView.text = result.description
         resultView.result = result
         
     }
@@ -160,14 +161,14 @@ private extension CartPaymentResultViewController {
     }
     
     func setupResultStackView() {
-        view.addSubview(resultLabel)
-        resultLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(resultTextView)
+        resultTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
-            resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
-            resultLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: 0),
-            resultLabel.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 36)
+            resultTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+            resultTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
+            resultTextView.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: 0),
+            resultTextView.topAnchor.constraint(equalTo: resultView.bottomAnchor, constant: 36)
             
         ])
     }

@@ -30,16 +30,19 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.heightAnchor.constraint(equalToConstant: 108).isActive = true
         return imageView
     }()
     
-    private lazy var messageLabel: CustomLabel = {
-        let label = CustomLabel(size: 13, weight: .regular, color: .ypBlack)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = NSLocalizedString("Вы уверены, что хотите удалить объект из корзины?", comment: "")
-        return label
+    private lazy var messageTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        textView.textColor = .ypBlack
+        textView.backgroundColor = .clear
+        textView.textAlignment = .center
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        textView.text = NSLocalizedString("Вы уверены, что хотите удалить объект из корзины?", comment: "")
+        return textView
     }()
     
     private lazy var deleteButton: CustomActionButton = {
@@ -73,7 +76,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 41, bottom: 0, right: 41)
         stackView.spacing = 12
         stackView.addArrangedSubview(itemImageView)
-        stackView.addArrangedSubview(messageLabel)
+        stackView.addArrangedSubview(messageTextView)
         return stackView
     }()
     
@@ -90,8 +93,11 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.addArrangedSubview(upperStackView)
+        stackView.spacing = 10
+        stackView.distribution = .fill
+        
+        stackView.addArrangedSubview(itemImageView)
+        stackView.addArrangedSubview(messageTextView)
         stackView.addArrangedSubview(buttonStackView)
         
         return stackView
@@ -166,11 +172,14 @@ extension CartDeleteItemViewController {
         view.addSubview(mainStackView)
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
+        
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 244),
+            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: (view.bounds.height * 0.3)),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 56),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -56),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -348)
+            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(view.bounds.height * 0.35)),
+            
+            messageTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
         ])
     }
 }
