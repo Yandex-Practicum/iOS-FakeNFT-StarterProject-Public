@@ -34,6 +34,7 @@
 		374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */; };
 		374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0522A3E1FE200D57F36 /* CartViewController.swift */; };
 		3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */; };
+		375859952A4B4C88007AF92B /* CheckMarkAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375859942A4B4C88007AF92B /* CheckMarkAnimatedView.swift */; };
 		3774686C2A47414300E7EEEE /* CartPaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */; };
 		3774686E2A47415000E7EEEE /* CartPaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */; };
 		377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */; };
@@ -114,6 +115,7 @@
 		374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		374EB0522A3E1FE200D57F36 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
+		375859942A4B4C88007AF92B /* CheckMarkAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkAnimatedView.swift; sourceTree = "<group>"; };
 		3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewController.swift; sourceTree = "<group>"; };
 		3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewModel.swift; sourceTree = "<group>"; };
 		377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				377DF5F12A3FA3CC00090DCD /* RateStackView.swift */,
 				377DF5F32A3FA4DE00090DCD /* RateStarImageView.swift */,
 				37DFD1692A408F090020667A /* CustomActionButton.swift */,
+				375859942A4B4C88007AF92B /* CheckMarkAnimatedView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				37E0EC442A48B24B00F17FC7 /* RequestResult.swift in Sources */,
 				378504F82A49E7DB000D6AC7 /* Request.swift in Sources */,
+				375859952A4B4C88007AF92B /* CheckMarkAnimatedView.swift in Sources */,
 				374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */,
 				374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */,
 				372EEF7E2A447126008FDB16 /* DataStore.swift in Sources */,

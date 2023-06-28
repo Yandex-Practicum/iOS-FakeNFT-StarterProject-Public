@@ -39,13 +39,17 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         return imageView
     }()
     
+    private lazy var resultView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     private lazy var resultStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
-        stackView.addArrangedSubview(resultImageView)
         stackView.addArrangedSubview(resultLabel)
         
         return stackView
@@ -111,9 +115,10 @@ private extension CartPaymentResultViewController {
         case .success, .failure:
             self.updateUIProperties(by: result)
         case .loading:
-            self.showLoadingView()
+            self.showLoadingView(result)
         }
         
+        resultView.startAnimation()
         hideOrShowTheActionButton(result)
         
     }
@@ -121,13 +126,16 @@ private extension CartPaymentResultViewController {
     func updateUIProperties(by result: RequestResult) {
         actionButton.setTitle(result.buttonTitle, for: .normal)
         resultLabel.text = result.description
-        resultImageView.image = result.image
+        resultImageView.image = UIImage(named: K.Icons.checkmark)
+        resultView.result = result
+        
         addButtonTarget(from: result)
     }
     
-    func showLoadingView() {
-        resultLabel.text = "Loading in progress"
-        resultImageView.image = UIImage(systemName: K.Icons.circleDotted)
+    func showLoadingView(_ result: RequestResult) {
+        resultLabel.text = result.description
+        resultView.result = result
+        
     }
     
     func hideOrShowTheActionButton(_ result: RequestResult) {
@@ -150,6 +158,7 @@ private extension CartPaymentResultViewController {
 private extension CartPaymentResultViewController {
     func setupConstraints() {
         setupActionButton()
+        setupAnimatedView()
         setupResultStackView()
     }
     
@@ -165,14 +174,28 @@ private extension CartPaymentResultViewController {
         ])
     }
     
-    func setupResultStackView() {
-        view.addSubview(resultStackView)
-        resultStackView.translatesAutoresizingMaskIntoConstraints = false
+    func setupAnimatedView() {
+        view.addSubview(resultView)
+        resultView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            resultStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
-            resultStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
-            resultStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150)
+            resultView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resultView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            resultView.heightAnchor.constraint(equalToConstant: 150),
+            resultView.widthAnchor.constraint(equalToConstant: 150)
+        ])
+    }
+    
+    func setupResultStackView() {
+        view.addSubview(resultLabel)
+        resultLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+            resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
+            resultLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            resultLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 500)
+            
         ])
     }
 }

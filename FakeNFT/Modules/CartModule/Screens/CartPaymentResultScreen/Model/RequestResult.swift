@@ -17,7 +17,7 @@ enum RequestResult {
         case .failure:
             return NSLocalizedString("Упс! Что-то пошло не так :(\n Попробуйте ещё раз!", comment: "")
         case .loading:
-            return NSLocalizedString("Ваша покупка обрабатывается, пожалуйста, ожидайте", comment: "")
+            return NSLocalizedString("Загружаем данные, пожалуйста, ожидайте", comment: "")
         }
     }
     
