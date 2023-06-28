@@ -45,7 +45,8 @@ extension NavigationController {
     }
 
     @objc private func sortTapped() {
-        print("Sorting Button Have Been Tapped On VC: \(viewControllers.first?.title ?? "None")")
+        guard let cartVC = viewControllers.first as? CartScreenViewController else { return }
+        cartVC.filterButtonTapped()
     }
 
     private func configureNavigationController(forVC viewController: UIViewController) {
@@ -65,7 +66,7 @@ extension NavigationController {
         } else {
             navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
                                                                         style: .done,
-                                                                        target: nil,
+                                                                        target: self,
                                                                         action: #selector(sortTapped))
         }
     }

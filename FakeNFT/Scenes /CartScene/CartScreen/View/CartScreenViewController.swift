@@ -30,6 +30,16 @@ final class CartScreenViewController: UIViewController {
         return UIApplication.shared.windows.first
     }
     
+    let cartIsEmpty: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = "Корзина пуста"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     lazy var blurView: UIVisualEffectView = {
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -152,6 +162,8 @@ extension CartScreenViewController {
     /// Appearance customisation
     private func setupView() {
         NSLayoutConstraint.activate([
+            cartIsEmpty.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cartIsEmpty.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             cartTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cartTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             cartTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -174,6 +186,7 @@ extension CartScreenViewController {
     
     /// Setting properties
     private func setupProperties() {
+        view.addSubview(cartIsEmpty)
         view.addSubview(cartTable)
         view.addSubview(imageToDelete)
         view.addSubview(cartInfo)
@@ -184,7 +197,7 @@ extension CartScreenViewController {
         buttonStack.addArrangedSubview(cancelButton)
         cartTable.dataSource = self
         cartTable.delegate = self
-        getData(ids: ["1", "2", "4", "6"])
+        getData(ids: ["1", "2", "3", "4"])
     }
     
     private func getData(ids: [String]) {
@@ -211,6 +224,45 @@ extension CartScreenViewController {
         }
         priceOfNFTS.text = "\(price) ETH"
     }
+    
+    func filterButtonTapped() {
+        showMenu()
+    }
+    
+    func showMenu() {
+        let alertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.sortByPrice()
+        }
+        alertController.addAction(sortByPriceAction)
+        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            self.sortByRating()
+        }
+        alertController.addAction(sortByRatingAction)
+        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { _ in
+            self.sortByName()
+        }
+        alertController.addAction(sortByNameAction)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func sortByPrice() {
+        cartArray = cartArray.sorted(by: { $0.nftPrice > $1.nftPrice })
+        cartTable.reloadData()
+    }
+
+    func sortByRating() {
+        cartArray = cartArray.sorted(by: { $0.nftRating > $1.nftRating })
+        cartTable.reloadData()
+    }
+
+    func sortByName() {
+        cartArray = cartArray.sorted(by: { $0.nftName < $1.nftName })
+        cartTable.reloadData()
+    }
+
     
     //MARK: - Actions
     
@@ -251,25 +303,26 @@ extension CartScreenViewController: CartCellDelegate {
     
     func showDeleteView(index: Int) {
         //window?.addSubview(blurView)
+        blurView.isUserInteractionEnabled = true
         view.addSubview(blurView)
-        view.addSubview(imageToDelete)
-        view.addSubview(deleteText)
-        view.addSubview(buttonStack)
+        blurView.contentView.addSubview(imageToDelete)
+        blurView.contentView.addSubview(deleteText)
+        blurView.contentView.addSubview(buttonStack)
         let urlStr = cartArray[index].nftImages.first ?? ""
         fillPictureToDelete(urlStr: urlStr)
         indexNFTToDelete = index
         UIView.animate(withDuration: 0.3) {
             self.blurView.alpha = 1.0
             NSLayoutConstraint.activate([
-                self.deleteText.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                self.deleteText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.deleteText.centerYAnchor.constraint(equalTo: self.blurView.centerYAnchor),
+                self.deleteText.centerXAnchor.constraint(equalTo: self.blurView.centerXAnchor),
                 self.deleteText.widthAnchor.constraint(equalToConstant: Constants.labelWidth),
-                self.imageToDelete.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.imageToDelete.centerXAnchor.constraint(equalTo: self.blurView.centerXAnchor),
                 self.imageToDelete.bottomAnchor.constraint(equalTo: self.deleteText.topAnchor, constant: -12),
                 self.imageToDelete.widthAnchor.constraint(equalToConstant: Constants.imageHeightWidth),
                 self.imageToDelete.heightAnchor.constraint(equalToConstant: Constants.imageHeightWidth),
                 self.buttonStack.topAnchor.constraint(equalTo: self.deleteText.bottomAnchor, constant: 20),
-                self.buttonStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.buttonStack.centerXAnchor.constraint(equalTo: self.blurView.centerXAnchor),
                 self.deleteButton.widthAnchor.constraint(equalToConstant: 127),
                 self.cancelButton.widthAnchor.constraint(equalToConstant: 127),
                 self.deleteButton.heightAnchor.constraint(equalToConstant: 44),
@@ -285,6 +338,21 @@ extension CartScreenViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         fillInfo()
+        if cartArray.isEmpty {
+            tableView.isHidden = true
+            cartInfo.isHidden = true
+            cartTable.isHidden = true
+            countOfNFTS.isHidden = true
+            priceOfNFTS.isHidden = true
+            paymentButton.isHidden = true
+        } else {
+            tableView.isHidden = false
+            cartInfo.isHidden = false
+            cartTable.isHidden = false
+            countOfNFTS.isHidden = false
+            priceOfNFTS.isHidden = false
+            paymentButton.isHidden = false
+        }
         return cartArray.count
     }
     
