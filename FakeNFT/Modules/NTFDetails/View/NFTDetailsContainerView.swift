@@ -97,6 +97,11 @@ extension NFTDetailsContainerView: UICollectionViewDataSource {
             cell.configure(.init(sectionName: details.sectionName,
                                  authorName: details.sectionAuthor,
                                  description: details.sectionDescription))
+            
+            cell.action = { [weak self] in
+                guard let self else { return }
+                self.cellSelected(.openWebView)
+            }
             return cell
         }
         guard let cell = collectionView.dequeueReusableCell(
@@ -165,5 +170,6 @@ extension NFTDetailsContainerView {
         case unselectFavourite(index: Int)
         case selectBasket(index: Int)
         case unselectBasket(index: Int)
+        case openWebView
     }
 }

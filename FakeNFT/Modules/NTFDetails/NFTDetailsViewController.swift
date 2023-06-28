@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class NFTDetailsViewController: UIViewController {
 
@@ -21,6 +22,9 @@ class NFTDetailsViewController: UIViewController {
                 self.viewModel.selectNft(index: index)
             case let .unselectBasket(index):
                 self.viewModel.unselectNft(index: index)
+            case .openWebView:
+                let vc = SFSafariViewController(url: .init(string: "https://yandex.ru")!)
+                self.present(vc, animated: true)
             }
         }
 

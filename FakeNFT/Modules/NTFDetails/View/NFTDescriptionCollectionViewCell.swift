@@ -17,6 +17,15 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
 
+    private let horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+//        stackView.alignment = .leading
+//        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
     private let sectionNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -35,6 +44,16 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    private let authorLabelName: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .link
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        return label
+    }()
+
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -46,13 +65,28 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifier = description()
 
+    var action: (() -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         _setupSubviews()
+        setupGestureRecognizers()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(authotTapped))
+        authorLabelName.isUserInteractionEnabled = true
+        authorLabelName.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc private func authotTapped() {
+        action?()
     }
 
     private func _setupSubviews() {
@@ -66,7 +100,10 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
         ])
         stackView.addArrangedSubview(sectionNameLabel)
         stackView.setCustomSpacing(8, after: sectionNameLabel)
-        stackView.addArrangedSubview(authorLabel)
+        stackView.addArrangedSubview(horizontalStackView)
+        horizontalStackView.addArrangedSubview(authorLabel)
+        stackView.setCustomSpacing(8, after: authorLabel)
+        horizontalStackView.addArrangedSubview(authorLabelName)
         stackView.addArrangedSubview(descriptionLabel)
     }
 }
@@ -80,7 +117,8 @@ extension NFTDescriptionCollectionViewCell {
 
     func configure(_ configuration: Configuration) {
         sectionNameLabel.text = configuration.sectionName
-        authorLabel.text = "Автор коллекции: \(configuration.authorName)"
+        authorLabel.text = "Автор коллекции: "
+        authorLabelName.text = configuration.authorName
         descriptionLabel.text = configuration.description
     }
 }
