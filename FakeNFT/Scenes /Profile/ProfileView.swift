@@ -6,6 +6,18 @@ final class ProfileView: UIView {
     // MARK: - Properties
     private var viewController: ProfileViewController?
     
+    private let assetLabel: [String] = [
+        "Мои NFT",
+        "Избранные NFT",
+        "О разработчике"
+    ]
+    
+    private let assetViewController: [UIViewController] = [
+    ProfileMyNFTViewController(),
+    ProfileFavoritesViewController(),
+    ProfileDevelopersViewController()
+    ]
+    
     //MARK: - Layout elements
     private lazy var avatarImage: UIImageView = {
         let placeholder = UIImage(named: "UserImagePlaceholder")
@@ -154,20 +166,8 @@ extension ProfileView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileAssetsCell = tableView.dequeueReusableCell()
         cell.backgroundColor = .white
-        switch indexPath.row {
-        case 0:
-            cell.assetLabel.text = "Мои NFT"
-            cell.assetValue.text = "(0)"
-        case 1:
-            cell.assetLabel.text = "Избранные NFT"
-            cell.assetValue.text = "(0)"
-        case 2:
-            cell.assetLabel.text = "О разработчике"
-            cell.assetValue.text = ""
-        default:
-            cell.assetLabel.text = ""
-            cell.assetValue.text = ""
-        }
+        cell.assetLabel.text = assetLabel[indexPath.row]
+        cell.assetValue.text = ""
         cell.selectionStyle = .none
         return cell
     }
@@ -179,15 +179,6 @@ extension ProfileView: UITableViewDataSource {
 
 extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
-            print("Мои NFT")
-        case 1:
-            print("Избранные NFT")
-        case 2:
-            print("О разработчике")
-        default:
-            return
-        }
+        viewController?.navigationController?.pushViewController(assetViewController[indexPath.row], animated: true)
     }
 }
