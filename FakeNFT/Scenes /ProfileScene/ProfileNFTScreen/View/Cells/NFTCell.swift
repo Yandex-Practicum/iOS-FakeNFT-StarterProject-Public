@@ -16,23 +16,24 @@ protocol NFTCellDelegate: AnyObject {
 final class NFTCell: UITableViewCell {
 
     // MARK: - Properties and Initializers
+    static let reuseIdentifier = "ProfileNFTCell"
     var delegate: NFTCellDelegate?
 
-    let nftImageView = UICreator.shared.makeImageView(cornerRadius: 12)
+    let nftImageView = UICreator.makeImageView(cornerRadius: 12)
     let nftLikeButton = {
-        let button = UICreator.shared.makeButton(cornerRadius: 0, action: #selector(likeTapped))
+        let button = UICreator.makeButton(cornerRadius: 0, action: #selector(likeTapped))
         button.setImage(UIImage(named: Constants.IconNames.inactiveLike), for: .normal)
         return button
     }()
-    let nftNameLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
-    let nftAuthorLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
-    let nftRatingStackView =  UICreator.shared.makeStackView(withAxis: .horizontal,
+    let nftNameLabel = UICreator.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
+    let nftAuthorLabel = UICreator.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
+    let nftRatingStackView =  UICreator.makeStackView(withAxis: .horizontal,
                                                              andSpacing: 2)
-    let nftPriceLabel = UICreator.shared.makeLabel(text: "PRICE".localized,
-                                                   font: UIFont.appFont(.regular, withSize: 13))
-    let nftPriceAmountLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
-    let nftLeftStackView = UICreator.shared.makeStackView(andSpacing: 21)
-    let nftRightStackView = UICreator.shared.makeStackView(andSpacing: 2)
+    let nftPriceLabel = UICreator.makeLabel(text: "PRICE".localized,
+                                            font: UIFont.appFont(.regular, withSize: 13))
+    let nftPriceAmountLabel = UICreator.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
+    let nftLeftStackView = UICreator.makeStackView(andSpacing: 21)
+    let nftRightStackView = UICreator.makeStackView(andSpacing: 2)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -97,8 +98,8 @@ extension NFTCell {
 
     func setRating(to rating: Int) {
         for _ in 1...rating {
-            let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.activeRating,
-                                                      cornerRadius: 0)
+            let star = UICreator.makeImageView(withImage: Constants.IconNames.activeRating,
+                                               cornerRadius: 0)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
             nftRatingStackView.addArrangedSubview(star)
@@ -107,8 +108,8 @@ extension NFTCell {
             return
         }
         for _ in (rating + 1)...5 {
-            let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.inactiveRating,
-                                                      cornerRadius: 0)
+            let star = UICreator.makeImageView(withImage: Constants.IconNames.inactiveRating,
+                                               cornerRadius: 0)
             star.image = star.image?.withTintColor(.appLightGray)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true

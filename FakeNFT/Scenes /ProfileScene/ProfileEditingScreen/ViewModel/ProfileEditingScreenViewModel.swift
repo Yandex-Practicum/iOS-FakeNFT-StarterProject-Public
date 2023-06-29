@@ -16,7 +16,7 @@ final class ProfileEditingScreenViewModel {
 
     private let networkClient = DefaultNetworkClient()
 
-    private weak var profile: ProfileModel?
+    weak var profile: ProfileModel?
 
     convenience init(profileToEdit: ProfileModel) {
         self.init()
@@ -34,10 +34,6 @@ extension ProfileEditingScreenViewModel {
         ) { _ in
             return
         }
-    }
-
-    func giveData() -> ProfileModel? {
-        profile
     }
 
     func updateAvatar(withLink newLink: String) {

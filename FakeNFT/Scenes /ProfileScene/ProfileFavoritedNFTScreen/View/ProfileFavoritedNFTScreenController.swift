@@ -15,22 +15,22 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
     private weak var delegate: ProfileUIUpdateDelegate?
 
     private let noNFTLabel = {
-        let label = UICreator.shared.makeLabel(text: "YOU_HAVE_NO_FAVORITED_NFT_YET".localized,
-                                              font: UIFont.appFont(.bold, withSize: 17))
+        let label = UICreator.makeLabel(text: "YOU_HAVE_NO_FAVORITED_NFT_YET".localized,
+                                        font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
     }()
-    private let activityIndicator = UICreator.shared.makeActivityIndicator()
+    private let activityIndicator = UICreator.makeActivityIndicator()
     private let nftCollectionView = {
-        let collectionView = UICreator.shared.makeCollectionView()
+        let collectionView = UICreator.makeCollectionView()
         collectionView.register(FavoritedNFTCell.self,
-                                forCellWithReuseIdentifier: Constants.CollectionElementNames.profileFavoritedNFTCell)
+                                forCellWithReuseIdentifier: FavoritedNFTCell.reuseIdentifier)
         return collectionView
     }()
 
-    convenience init(profile: ProfileModel?, delegate: ProfileUIUpdateDelegate) {
+    convenience init(viewModel: ProfileFavoritedNFTScreenViewModel, delegate: ProfileUIUpdateDelegate) {
         self.init()
-        self.viewModel = ProfileFavoritedNFTScreenViewModel(profile: profile)
+        self.viewModel = viewModel
         self.delegate = delegate
     }
 

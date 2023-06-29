@@ -16,19 +16,20 @@ protocol FavoritedNFTCellDelegate: AnyObject {
 final class FavoritedNFTCell: UICollectionViewCell {
 
     // MARK: - Properties and Initializers
+    static let reuseIdentifier = "ProfileFavoritedNFTCell"
     var delegate: FavoritedNFTCellDelegate?
 
-    let nftImageView = UICreator.shared.makeImageView(cornerRadius: 12)
+    let nftImageView = UICreator.makeImageView(cornerRadius: 12)
     let nftLikeButton = {
-        let button = UICreator.shared.makeButton(cornerRadius: 0, action: #selector(likeTapped))
+        let button = UICreator.makeButton(cornerRadius: 0, action: #selector(likeTapped))
         button.setImage(UIImage(named: Constants.IconNames.activeLike), for: .normal)
         return button
     }()
-    let nftNameLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
-    let nftRatingStackView =  UICreator.shared.makeStackView(withAxis: .horizontal,
+    let nftNameLabel = UICreator.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
+    let nftRatingStackView =  UICreator.makeStackView(withAxis: .horizontal,
                                                              andSpacing: 2)
-    let nftPriceAmountLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 15))
-    let stackView = UICreator.shared.makeStackView(andSpacing: 24)
+    let nftPriceAmountLabel = UICreator.makeLabel(font: UIFont.appFont(.regular, withSize: 15))
+    let stackView = UICreator.makeStackView(andSpacing: 24)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,8 +94,8 @@ extension FavoritedNFTCell {
 
     func setRating(to rating: Int) {
         for _ in 1...rating {
-            let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.activeRating,
-                                                      cornerRadius: 0)
+            let star = UICreator.makeImageView(withImage: Constants.IconNames.activeRating,
+                                               cornerRadius: 0)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
             nftRatingStackView.addArrangedSubview(star)
@@ -103,8 +104,8 @@ extension FavoritedNFTCell {
             return
         }
         for _ in (rating + 1)...5 {
-            let star = UICreator.shared.makeImageView(withImage: Constants.IconNames.inactiveRating,
-                                                      cornerRadius: 0)
+            let star = UICreator.makeImageView(withImage: Constants.IconNames.inactiveRating,
+                                               cornerRadius: 0)
             star.image = star.image?.withTintColor(.appLightGray)
             star.widthAnchor.constraint(equalToConstant: 12).isActive = true
             star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true

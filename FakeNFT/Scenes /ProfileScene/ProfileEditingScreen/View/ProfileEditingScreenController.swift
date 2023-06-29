@@ -15,42 +15,42 @@ final class ProfileEditingScreenController: UIViewController {
     private weak var delegate: ProfileUIUpdateDelegate?
 
     private let closeButton = {
-        let button = UICreator.shared.makeButton(action: #selector(closeTapped))
+        let button = UICreator.makeButton(action: #selector(closeTapped))
         button.setImage(UIImage(systemName: Constants.IconNames.xmark), for: .normal)
         return button
     }()
-    private let profileImageView = UICreator.shared.makeImageView(cornerRadius: 35)
+    private let profileImageView = UICreator.makeImageView(cornerRadius: 35)
     private let profileImageLabel = {
-        let label = UICreator.shared.makeLabel(text: "CHANGE_PHOTO".localized,
-                                               font: UIFont.appFont(.medium, withSize: 10),
-                                               color: .appWhiteOnly,
-                                               backgroundColor: .appBlackOnly.withAlphaComponent(0.6),
-                                               alignment: .center)
+        let label = UICreator.makeLabel(text: "CHANGE_PHOTO".localized,
+                                        font: UIFont.appFont(.medium, withSize: 10),
+                                        color: .appWhiteOnly,
+                                        backgroundColor: .appBlackOnly.withAlphaComponent(0.6),
+                                        alignment: .center)
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 35
         return label
     }()
     private let profileLoadImageLabel = {
-        let label = UICreator.shared.makeLabel(text: "DOWNLOAD_AN_IMAGE".localized,
-                                               font: UIFont.appFont(.regular, withSize: 17))
+        let label = UICreator.makeLabel(text: "DOWNLOAD_AN_IMAGE".localized,
+                                        font: UIFont.appFont(.regular, withSize: 17))
         label.isHidden = true
         return label
     }()
-    private let profileNameLabel = UICreator.shared.makeLabel(text: "NAME".localized)
-    private let profileNameTextField = UICreator.shared.makeTextField(tag: 1)
-    private let profileDescriptionLabel = UICreator.shared.makeLabel(text: "DESCRIPTION".localized)
-    private let profileDescriptionTextView = UICreator.shared.makeTextView(withFont: UIFont.appFont(.regular,
+    private let profileNameLabel = UICreator.makeLabel(text: "NAME".localized)
+    private let profileNameTextField = UICreator.makeTextField(tag: 1)
+    private let profileDescriptionLabel = UICreator.makeLabel(text: "DESCRIPTION".localized)
+    private let profileDescriptionTextView = UICreator.makeTextView(withFont: UIFont.appFont(.regular,
                                                                                                     withSize: 17))
-    private let profileLinkLabel = UICreator.shared.makeLabel(text: "WEBSITE".localized)
-    private let profileLinkTextField = UICreator.shared.makeTextField(tag: 2)
-    private let mainStackView = UICreator.shared.makeStackView(distribution: .fillProportionally, andSpacing: 24)
-    private let nameStackView = UICreator.shared.makeStackView()
-    private let descriptionStackView = UICreator.shared.makeStackView()
-    private let linkStackView = UICreator.shared.makeStackView()
+    private let profileLinkLabel = UICreator.makeLabel(text: "WEBSITE".localized)
+    private let profileLinkTextField = UICreator.makeTextField(tag: 2)
+    private let mainStackView = UICreator.makeStackView(distribution: .fillProportionally, andSpacing: 24)
+    private let nameStackView = UICreator.makeStackView()
+    private let descriptionStackView = UICreator.makeStackView()
+    private let linkStackView = UICreator.makeStackView()
 
-    convenience init(forProfile profile: ProfileModel, delegate: ProfileUIUpdateDelegate) {
+    convenience init(viewModel: ProfileEditingScreenViewModel, delegate: ProfileUIUpdateDelegate) {
         self.init()
-        self.viewModel = ProfileEditingScreenViewModel(profileToEdit: profile)
+        self.viewModel = viewModel
         self.delegate = delegate
     }
 
@@ -186,7 +186,7 @@ extension ProfileEditingScreenController {
 
     private func fillUI() {
         guard let viewModel else { return }
-        let profile = viewModel.giveData()
+        let profile = viewModel.profile
         profileImageView.loadImage(urlString: profile?.avatar)
         profileNameTextField.text = profile?.name
         profileDescriptionTextView.text = profile?.description

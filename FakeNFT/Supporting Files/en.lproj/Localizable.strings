@@ -11,6 +11,7 @@ BASKET = "Basket";
 STATISTICS = "Statistics";
 ABOUT_NFT_DEVELOPER = "About NFT developer";
 NO_INTERNET_ERROR = "No Internet";
+RETRY = "Retry";
 MY_NFT = "My NFT";
 FAVORITED_NFT = "Favorited NFT";
 ABOUT_DEVELOPER = "About developer";

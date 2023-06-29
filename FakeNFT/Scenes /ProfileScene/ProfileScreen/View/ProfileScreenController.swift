@@ -14,20 +14,28 @@ final class ProfileScreenController: UIViewController {
     private var viewModel: ProfileScreenViewModel?
 
     private let noInternetLabel = {
-        let label = UICreator.shared.makeLabel(text: "NO_INTERNET_ERROR".localized,
-                                               font: UIFont.appFont(.bold, withSize: 17))
+        let label = UICreator.makeLabel(text: "NO_INTERNET_ERROR".localized,
+                                        font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
     }()
-    private let activityIndicator = UICreator.shared.makeActivityIndicator()
-    private let profileImageView = UICreator.shared.makeImageView(cornerRadius: 35)
-    private let profileNameLabel = UICreator.shared.makeLabel()
-    private let profileDescriptionLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
-    private let profileLinkTextView = UICreator.shared.makeTextView(haveLinks: true, backgroundColor: .clear)
+    private let retryButton = {
+        let button = UICreator.makeButton(withTitle: "RETRY".localized,
+                                          fontColor: UIColor.appWhite,
+                                          backgroundColor: UIColor.appBlack,
+                                          action: #selector(retryConnection))
+        button.isHidden = true
+        return button
+    }()
+    private let activityIndicator = UICreator.makeActivityIndicator()
+    private let profileImageView = UICreator.makeImageView(cornerRadius: 35)
+    private let profileNameLabel = UICreator.makeLabel()
+    private let profileDescriptionLabel = UICreator.makeLabel(font: UIFont.appFont(.regular, withSize: 13))
+    private let profileLinkTextView = UICreator.makeTextView(haveLinks: true, backgroundColor: .clear)
     private let profileMenuTableView = {
-        let tableView = UICreator.shared.makeTableView(isScrollable: false)
+        let tableView = UICreator.makeTableView(isScrollable: false)
         tableView.register(ProfileMenuCell.self,
-                           forCellReuseIdentifier: Constants.CollectionElementNames.profileMenuCell)
+                           forCellReuseIdentifier: ProfileMenuCell.reuseIdentifier)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -59,8 +67,16 @@ final class ProfileScreenController: UIViewController {
 // MARK: - Helpers
 extension ProfileScreenController {
 
+    @objc private func retryConnection() {
+        activityIndicator.startAnimating()
+        noInternetLabel.isHidden = true
+        retryButton.isHidden = true
+        checkForNetworkConnection()
+    }
+
     private func setupAutolayout() {
         noInternetLabel.toAutolayout()
+        retryButton.toAutolayout()
         activityIndicator.toAutolayout()
         profileImageView.toAutolayout()
         profileNameLabel.toAutolayout()
@@ -71,6 +87,7 @@ extension ProfileScreenController {
 
     private func addSubviews() {
         view.addSubview(noInternetLabel)
+        view.addSubview(retryButton)
         view.addSubview(activityIndicator)
         view.addSubview(profileImageView)
         view.addSubview(profileNameLabel)
@@ -83,6 +100,9 @@ extension ProfileScreenController {
         NSLayoutConstraint.activate([
             noInternetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noInternetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            retryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            retryButton.topAnchor.constraint(equalTo: noInternetLabel.bottomAnchor, constant: 16),
+            retryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -128,6 +148,7 @@ extension ProfileScreenController {
     private func showNoInternetMessage() {
         activityIndicator.stopAnimating()
         noInternetLabel.isHidden = false
+        retryButton.isHidden = false
     }
 
     private func showOrHideUI() {
@@ -145,7 +166,7 @@ extension ProfileScreenController {
 
     private func fillUI() {
         guard let viewModel else { return }
-        let profile = viewModel.giveData()
+        let profile = viewModel.profile
         profileImageView.loadImage(urlString: profile?.avatar)
         profileNameLabel.text = profile?.name
         profileDescriptionLabel.text = profile?.description
@@ -174,10 +195,13 @@ extension ProfileScreenController: UITableViewDelegate {
         switch indexPath.row {
         case 0:
             navigationController?.pushViewController(
-                ProfileNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
+                ProfileNFTScreenController(viewModel: ProfileNFTScreenViewModel(profile: viewModel?.profile),
+                                           delegate: self), animated: true)
         case 1:
             navigationController?.pushViewController(
-                ProfileFavoritedNFTScreenController(profile: viewModel?.giveData(), delegate: self), animated: true)
+                ProfileFavoritedNFTScreenController(
+                    viewModel: ProfileFavoritedNFTScreenViewModel(profile: viewModel?.profile),
+                    delegate: self), animated: true)
         case 2:
             guard let viewModel else { return }
             navigationController?.pushViewController(viewModel.configureWebView(), animated: true)
@@ -190,8 +214,9 @@ extension ProfileScreenController: UITableViewDelegate {
 // MARK: - ProfileEditingButtonDelegate
 extension ProfileScreenController: ProfileEditingButtonDelegate {
     func proceedToEditing() {
-        guard let profile = viewModel?.giveData() else { return }
-        present(ProfileEditingScreenController(forProfile: profile, delegate: self), animated: true)
+        guard let profile = viewModel?.profile else { return }
+        present(ProfileEditingScreenController(viewModel: ProfileEditingScreenViewModel(profileToEdit: profile),
+                                               delegate: self), animated: true)
     }
 }
 

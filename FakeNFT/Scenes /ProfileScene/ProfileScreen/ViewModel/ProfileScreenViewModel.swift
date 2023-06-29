@@ -16,7 +16,7 @@ final class ProfileScreenViewModel {
 
     private let networkClient = DefaultNetworkClient()
 
-    private var profile: ProfileModel?
+    var profile: ProfileModel?
     private let menuButtons = [
         "MY_NFT".localized,
         "FAVORITED_NFT".localized,
@@ -35,10 +35,6 @@ extension ProfileScreenViewModel {
                 self.canShowUI = true
             }
         }
-    }
-
-    func giveData() -> ProfileModel? {
-        profile
     }
 
     func giveNumberOfMenuCells() -> Int {

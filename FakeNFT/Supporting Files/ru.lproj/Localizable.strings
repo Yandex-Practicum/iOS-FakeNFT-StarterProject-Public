@@ -11,6 +11,7 @@ BASKET = "Корозина";
 STATISTICS = "Статистика";
 ABOUT_NFT_DEVELOPER = "О разработчике NFT";
 NO_INTERNET_ERROR = "Нет интернета";
+RETRY = "Попробовать снова";
 MY_NFT = "Мои NFT";
 FAVORITED_NFT = "Избранные NFT";
 ABOUT_DEVELOPER = "О разработчике";

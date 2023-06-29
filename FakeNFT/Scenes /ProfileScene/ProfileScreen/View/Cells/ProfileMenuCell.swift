@@ -11,7 +11,8 @@ import UIKit
 final class ProfileMenuCell: UITableViewCell {
 
     // MARK: - Properties and Initializers
-    let menuCategoryLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
+    static let reuseIdentifier = "ProfileMenuCell"
+    let menuCategoryLabel = UICreator.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

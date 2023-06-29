@@ -11,18 +11,12 @@ import UIKit
 
 struct UICreator {
 
-    static let shared = UICreator()
-
-    private init() {
-        print("Singleton initialized")
-    }
-
-    func makeLabel(text: String? = nil,
-                   font: UIFont = UIFont.appFont(.bold, withSize: 22),
-                   color: UIColor = .appBlack,
-                   backgroundColor: UIColor = .clear,
-                   alignment: NSTextAlignment = .left,
-                   andNumberOfLines numberOfLines: Int = 0
+    static func makeLabel(text: String? = nil,
+                          font: UIFont = UIFont.appFont(.bold, withSize: 22),
+                          color: UIColor = .appBlack,
+                          backgroundColor: UIColor = .clear,
+                          alignment: NSTextAlignment = .left,
+                          andNumberOfLines numberOfLines: Int = 0
     ) -> UILabel {
         let label = UILabel()
         label.font = font
@@ -36,9 +30,9 @@ struct UICreator {
         return label
     }
 
-    func makeTextField(withTarget action: Selector? = nil,
-                       font: UIFont = UIFont.appFont(.regular, withSize: 17),
-                       tag: Int = 0
+    static func makeTextField(withTarget action: Selector? = nil,
+                              font: UIFont = UIFont.appFont(.regular, withSize: 17),
+                              tag: Int = 0
     ) -> CustomTextField {
         let textField = CustomTextField()
         textField.backgroundColor = .appLightGray
@@ -59,7 +53,7 @@ struct UICreator {
         return textField
     }
 
-    func makeImageView(withImage: String? = nil, cornerRadius: CGFloat?) -> UIImageView {
+    static func makeImageView(withImage: String? = nil, cornerRadius: CGFloat?) -> UIImageView {
         let imageView = UIImageView()
         if let cornerRadius {
             imageView.layer.masksToBounds = true
@@ -67,12 +61,13 @@ struct UICreator {
         }
         guard let imageName = withImage else { return imageView }
         imageView.image = UIImage(named: imageName)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }
 
-    func makeTextView(withFont font: UIFont = UIFont.appFont(.regular, withSize: 15),
-                      haveLinks: Bool = false,
-                      backgroundColor: UIColor = .appLightGray
+    static func makeTextView(withFont font: UIFont = UIFont.appFont(.regular, withSize: 15),
+                             haveLinks: Bool = false,
+                             backgroundColor: UIColor = .appLightGray
     ) -> UITextView {
         let textView = UITextView()
         textView.backgroundColor = backgroundColor
@@ -90,12 +85,12 @@ struct UICreator {
         return textView
     }
 
-    func makeButton(withTitle title: String? = nil,
-                    font: UIFont = UIFont.appFont(.medium, withSize: 17),
-                    fontColor: UIColor = .appBlack,
-                    backgroundColor: UIColor = .clear,
-                    cornerRadius: CGFloat = 12,
-                    action: Selector
+    static func makeButton(withTitle title: String? = nil,
+                           font: UIFont = UIFont.appFont(.medium, withSize: 17),
+                           fontColor: UIColor = .appBlack,
+                           backgroundColor: UIColor = .clear,
+                           cornerRadius: CGFloat = 12,
+                           action: Selector
     ) -> UIButton {
         let button = UIButton()
         button.backgroundColor = backgroundColor
@@ -109,14 +104,14 @@ struct UICreator {
         return button
     }
 
-    func makeActivityIndicator() -> UIActivityIndicatorView {
+    static func makeActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .appBlack
         return activityIndicator
     }
 
-    func makeTableView(isScrollable: Bool = true) -> UITableView {
+    static func makeTableView(isScrollable: Bool = true) -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -124,7 +119,7 @@ struct UICreator {
         return tableView
     }
 
-    func makeCollectionView() -> UICollectionView {
+    static func makeCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = false
@@ -133,11 +128,11 @@ struct UICreator {
         return collectionView
     }
 
-    func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
-                       distribution: UIStackView.Distribution = .fill,
-                       align: UIStackView.Alignment = .fill,
-                       cornerRadius: CGFloat = 0.0,
-                       andSpacing spacing: CGFloat = 8
+    static func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
+                              distribution: UIStackView.Distribution = .fill,
+                              align: UIStackView.Alignment = .fill,
+                              cornerRadius: CGFloat = 0.0,
+                              andSpacing spacing: CGFloat = 8
     ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = axis

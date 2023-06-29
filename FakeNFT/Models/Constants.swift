@@ -31,12 +31,6 @@ struct Constants {
         static let placeholder = "ProfilePlaceholder"
     }
 
-    struct CollectionElementNames {
-        static let profileMenuCell = "ProfileMenuCell"
-        static let profileNFTCell = "ProfileNFTCell"
-        static let profileFavoritedNFTCell = "ProfileFavoritedNFTCell"
-    }
-
     struct Links {
         static let defaultLink = "https:\\google.com"
     }

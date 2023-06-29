@@ -78,7 +78,7 @@ extension ProfileFavoritedNFTScreenViewModel {
     func configureCell(forCollectionView collectionView: UICollectionView,
                        indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: Constants.CollectionElementNames.profileFavoritedNFTCell,
+            withReuseIdentifier: FavoritedNFTCell.reuseIdentifier,
             for: indexPath
         ) as? FavoritedNFTCell else {
             return UICollectionViewCell()

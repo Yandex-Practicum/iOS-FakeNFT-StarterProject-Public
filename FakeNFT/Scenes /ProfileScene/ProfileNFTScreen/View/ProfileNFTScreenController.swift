@@ -15,23 +15,23 @@ final class ProfileNFTScreenController: UIViewController {
     private weak var delegate: ProfileUIUpdateDelegate?
 
     private let noNFTLabel = {
-        let label = UICreator.shared.makeLabel(text: "YOU_HAVE_NO_NFT_YET".localized,
-                                               font: UIFont.appFont(.bold, withSize: 17))
+        let label = UICreator.makeLabel(text: "YOU_HAVE_NO_NFT_YET".localized,
+                                        font: UIFont.appFont(.bold, withSize: 17))
         label.isHidden = true
         return label
     }()
-    private let activityIndicator = UICreator.shared.makeActivityIndicator()
+    private let activityIndicator = UICreator.makeActivityIndicator()
     private let nftTableView = {
-        let tableView = UICreator.shared.makeTableView()
+        let tableView = UICreator.makeTableView()
         tableView.register(NFTCell.self,
-                           forCellReuseIdentifier: Constants.CollectionElementNames.profileNFTCell)
+                           forCellReuseIdentifier: NFTCell.reuseIdentifier)
 
         return tableView
     }()
 
-    convenience init(profile: ProfileModel?, delegate: ProfileUIUpdateDelegate) {
+    convenience init(viewModel: ProfileNFTScreenViewModel, delegate: ProfileUIUpdateDelegate) {
         self.init()
-        self.viewModel = ProfileNFTScreenViewModel(profile: profile)
+        self.viewModel = viewModel
         self.delegate = delegate
     }
 

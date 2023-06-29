@@ -101,10 +101,6 @@ extension ProfileNFTScreenViewModel {
         canReloadTable = true
     }
 
-    func giveData() -> ProfileModel? {
-        profile
-    }
-
     func giveNumberOfNFTCells() -> Int {
         return nftList.count
     }
