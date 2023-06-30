@@ -33,8 +33,4 @@ final class CartPaymentResultViewModel {
             }
         }
     }
-    
-    private func test() {
-        
-    }
 }
