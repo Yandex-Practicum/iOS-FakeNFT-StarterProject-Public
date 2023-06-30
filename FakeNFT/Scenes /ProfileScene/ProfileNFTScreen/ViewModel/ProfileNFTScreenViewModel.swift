@@ -137,4 +137,11 @@ extension ProfileNFTScreenViewModel {
         uploadData()
         canReloadTable = true
     }
+
+    func deleteNFT(atRow row: Int?) {
+        guard let row else { return }
+        let nftToRemove = nftList.remove(at: row)
+        profile?.nfts.removeAll(where: {$0 == nftToRemove.id})
+        uploadData()
+    }
 }

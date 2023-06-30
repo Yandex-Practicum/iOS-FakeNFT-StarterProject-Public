@@ -54,6 +54,7 @@ final class ProfileNFTScreenController: UIViewController {
         addSubviews()
         setupConstraints()
         nftTableView.dataSource = self
+        nftTableView.delegate = self
         showOrHideUI()
         bind()
     }
@@ -183,6 +184,50 @@ extension ProfileNFTScreenController: UITableViewDataSource {
         }
         cell.delegate = self
         return cell
+    }
+}
+
+// MARK: - UITAbleViewDelegate
+extension ProfileNFTScreenController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let removeButton = UIContextualAction(style: .destructive,
+                                              title: "DELETE".localized) { [weak self] _, _, _ in
+            guard let self else { return }
+            let alertController = UIAlertController(title: "SURE_TO_DELETE".localized,
+                                                    message: nil,
+                                                    preferredStyle: .actionSheet)
+            let deleteAction = UIAlertAction(title: "DELETE".localized, style: .destructive) { _ in
+                self.viewModel?.deleteNFT(atRow: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel) { _ in
+                tableView.reloadRows(at: [indexPath], with: .none)
+            }
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true)
+        }
+        removeButton.backgroundColor = .appRed.withAlphaComponent(0)
+        let config = UISwipeActionsConfiguration(actions: [removeButton])
+        config.performsFirstActionWithFullSwipe = true
+        return config
+    }
+
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        tableView.subviews.forEach { subview in
+            if String(describing: type(of: subview)) == "_UITableViewCellSwipeContainerView" {
+                if let actionView = subview.subviews.first,
+                   String(describing: type(of: actionView)) == "UISwipeActionPullView" {
+                    actionView.layer.cornerRadius = 12
+                    actionView.layer.masksToBounds = true
+                    actionView.backgroundColor = .appRed
+                    (actionView.subviews.first as? UIButton)?.titleLabel?.font = UIFont.appFont(.bold, withSize: 17)
+                }
+            }
+        }
     }
 }
 
