@@ -13,6 +13,12 @@ final class ProfileNFTScreenController: UIViewController {
     // MARK: - Properties and Initializers
     private var viewModel: ProfileNFTScreenViewModel?
     private weak var delegate: ProfileUIUpdateDelegate?
+    private let refreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "PULL_TO_REFRESH".localized)
+        refreshControl.addTarget(nil, action: #selector(refreshTable), for: .valueChanged)
+        return refreshControl
+    }()
 
     private let noNFTLabel = {
         let label = UICreator.makeLabel(text: "YOU_HAVE_NO_NFT_YET".localized,
@@ -25,7 +31,6 @@ final class ProfileNFTScreenController: UIViewController {
         let tableView = UICreator.makeTableView()
         tableView.register(NFTCell.self,
                            forCellReuseIdentifier: NFTCell.reuseIdentifier)
-
         return tableView
     }()
 
@@ -67,6 +72,11 @@ final class ProfileNFTScreenController: UIViewController {
 // MARK: - Helpers
 extension ProfileNFTScreenController {
 
+    @objc private func refreshTable() {
+        nftTableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+
     private func setupAutolayout() {
         noNFTLabel.toAutolayout()
         activityIndicator.toAutolayout()
@@ -76,6 +86,7 @@ extension ProfileNFTScreenController {
     private func addSubviews() {
         view.addSubview(noNFTLabel)
         view.addSubview(activityIndicator)
+        nftTableView.addSubview(refreshControl)
         view.addSubview(nftTableView)
     }
 

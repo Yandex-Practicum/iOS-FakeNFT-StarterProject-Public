@@ -13,6 +13,12 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
     // MARK: - Properties and Initializers
     private var viewModel: ProfileFavoritedNFTScreenViewModel?
     private weak var delegate: ProfileUIUpdateDelegate?
+    private let refreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "PULL_TO_REFRESH".localized)
+        refreshControl.addTarget(nil, action: #selector(refreshCollection), for: .valueChanged)
+        return refreshControl
+    }()
 
     private let noNFTLabel = {
         let label = UICreator.makeLabel(text: "YOU_HAVE_NO_FAVORITED_NFT_YET".localized,
@@ -62,6 +68,11 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
 // MARK: - Helpers
 extension ProfileFavoritedNFTScreenController {
 
+    @objc private func refreshCollection() {
+        nftCollectionView.reloadData()
+        refreshControl.endRefreshing()
+    }
+
     private func setupAutolayout() {
         noNFTLabel.toAutolayout()
         activityIndicator.toAutolayout()
@@ -71,6 +82,7 @@ extension ProfileFavoritedNFTScreenController {
     private func addSubviews() {
         view.addSubview(noNFTLabel)
         view.addSubview(activityIndicator)
+        nftCollectionView.refreshControl = refreshControl
         view.addSubview(nftCollectionView)
     }
 

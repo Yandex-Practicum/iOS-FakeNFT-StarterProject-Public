@@ -32,3 +32,4 @@ BY_RATING = "By rating";
 BY_NAME = "By name";
 CLOSE = "Close";
 YOU_HAVE_NO_FAVORITED_NFT_YET = "You have no favorited NFT yet";
+PULL_TO_REFRESH = "Pull to refresh";
