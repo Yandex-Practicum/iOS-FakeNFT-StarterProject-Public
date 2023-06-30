@@ -39,7 +39,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
-        var cartScreen = factory.makeCartScreenView(dataStore: dataStore, networkClient: networkClient)
+        let cartScreen = factory.makeCartScreenView(dataStore: dataStore, networkClient: networkClient)
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in

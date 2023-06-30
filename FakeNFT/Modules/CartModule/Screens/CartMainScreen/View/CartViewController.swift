@@ -115,7 +115,6 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-//        bind()
         load()
         setupNavigationBar()
         setupConstraints()
@@ -186,6 +185,19 @@ extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         cell.selectionStyle = .none
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(
+            style: .destructive,
+            title: NSLocalizedString("Удалить", comment: "")) { [weak self] action, view, handler in
+                guard let cell = tableView.cellForRow(at: indexPath) as? CartTableViewCell else { return }
+                let id = cell.viewModel?.cartRow.id
+                self?.viewModel.deleteItem(with: id)
+            }
+        
+        return UISwipeActionsConfiguration(actions: [action])
+        
     }
 }
 
