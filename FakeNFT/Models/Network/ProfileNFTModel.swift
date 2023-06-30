@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ProfileNFTModel
-struct ProfileNFTModel: Codable {
+struct ProfileNFTModel: Codable, Hashable {
     let createdAt: String
     let name: String
     let images: [String]

@@ -69,8 +69,7 @@ final class ProfileFavoritedNFTScreenController: UIViewController {
 extension ProfileFavoritedNFTScreenController {
 
     @objc private func refreshCollection() {
-        nftCollectionView.reloadData()
-        refreshControl.endRefreshing()
+        viewModel?.loadFavoritedNFTList()
     }
 
     private func setupAutolayout() {
@@ -104,7 +103,12 @@ extension ProfileFavoritedNFTScreenController {
         viewModel.$canShowUI.bind { [weak self] newValue in
             guard let self else { return }
             if newValue {
-                self.showOrHideUI()
+                if refreshControl.isRefreshing {
+                    refreshControl.endRefreshing()
+                    nftCollectionView.reloadData()
+                } else {
+                    self.showOrHideUI()
+                }
                 self.checkIfNoNFT()
             }
         }

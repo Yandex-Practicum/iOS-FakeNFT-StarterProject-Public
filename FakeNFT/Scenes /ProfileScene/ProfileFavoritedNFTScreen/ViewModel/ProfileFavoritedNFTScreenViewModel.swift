@@ -52,7 +52,7 @@ extension ProfileFavoritedNFTScreenViewModel {
         }
     }
 
-    private func loadFavoritedNFTList() {
+    func loadFavoritedNFTList() {
         guard let profile else { return }
         for nftID in profile.likes {
             dispatchGroup.enter()
@@ -72,6 +72,7 @@ extension ProfileFavoritedNFTScreenViewModel {
     }
 
     func giveNumberOfFavoritedNFTCells() -> Int {
+        nftList = Array(Set(nftList))
         return nftList.count
     }
 

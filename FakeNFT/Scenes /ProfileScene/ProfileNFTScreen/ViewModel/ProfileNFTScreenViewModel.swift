@@ -70,7 +70,7 @@ extension ProfileNFTScreenViewModel {
         }
     }
 
-    private func loadNFTList() {
+    func loadNFTList() {
         guard let profile else { return }
         for nftID in profile.nfts {
             dispatchGroup.enter()
@@ -102,6 +102,7 @@ extension ProfileNFTScreenViewModel {
     }
 
     func giveNumberOfNFTCells() -> Int {
+        nftList = Array(Set(nftList))
         return nftList.count
     }
 

@@ -74,8 +74,7 @@ final class ProfileNFTScreenController: UIViewController {
 extension ProfileNFTScreenController {
 
     @objc private func refreshTable() {
-        nftTableView.reloadData()
-        refreshControl.endRefreshing()
+        viewModel?.loadNFTList()
     }
 
     private func setupAutolayout() {
@@ -109,7 +108,12 @@ extension ProfileNFTScreenController {
         viewModel.$canShowUI.bind { [weak self] newValue in
             guard let self else { return }
             if newValue {
-                self.showOrHideUI()
+                if refreshControl.isRefreshing {
+                    refreshControl.endRefreshing()
+                    nftTableView.reloadData()
+                } else {
+                    self.showOrHideUI()
+                }
                 self.checkIfNoNFT()
             }
         }
