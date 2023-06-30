@@ -27,6 +27,8 @@ FakeNFT Yandex Project Workflow
 "Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent: 30 min)
 "Implement an App localization file and localise a ProfileScene" (Estimated time: 40 min, Time spent: 30 min)
 "Implement an App dark\light mode for ProfileScene" (Estimated time: 40 min, Time spent: 30 min)
+"Implement a pull to refresh logic for NFTTable and FavoritedNFTCollection" (Estimated time: 40 min, Time spent: 40 min)
+"Implement a swipe to delete logic for NFTTable" (Estimated time 30 min, Time spent: 30 min)
 
 "Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)\
 "Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)\
