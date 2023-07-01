@@ -69,6 +69,8 @@ final class ProfileViewModel {
                     self.id = profile.id
                 case .failure(let error):
                     print(error)
+                    self.viewController?.view = NoInternetView()
+                    self.viewController?.navigationController?.navigationBar.isHidden = true
                 }
                 UIBlockingProgressHUD.dismiss()
             }

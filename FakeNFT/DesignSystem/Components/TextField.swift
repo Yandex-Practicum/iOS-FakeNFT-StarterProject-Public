@@ -1,6 +1,6 @@
 import UIKit
 
-class TextField: UITextField {
+final class TextField: UITextField {
 
     var insets: UIEdgeInsets = UIEdgeInsets()
 

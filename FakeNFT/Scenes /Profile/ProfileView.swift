@@ -40,10 +40,9 @@ final class ProfileView: UIView {
     private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.text = ""
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = 18
-        descriptionLabel.attributedText = NSAttributedString(string: descriptionLabel.text ?? "", attributes: [.kern: 0.08, NSAttributedString.Key.paragraphStyle : paragraphStyle])
+        descriptionLabel.attributedText = NSAttributedString(string: "", attributes: [.kern: 0.08, NSAttributedString.Key.paragraphStyle : paragraphStyle])
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         descriptionLabel.textColor = .black
@@ -56,8 +55,7 @@ final class ProfileView: UIView {
         let tapAction = UITapGestureRecognizer(target: self, action:#selector(websiteDidTap(_:)))
         websiteLabel.isUserInteractionEnabled = true
         websiteLabel.addGestureRecognizer(tapAction)
-        websiteLabel.text = ""
-        websiteLabel.attributedText = NSAttributedString(string: websiteLabel.text ?? "", attributes: [.kern: 0.24])
+        websiteLabel.attributedText = NSAttributedString(string: "", attributes: [.kern: 0.24])
         websiteLabel.font = UIFont.systemFont(ofSize: 15)
         websiteLabel.textColor = .blue
         return websiteLabel
@@ -97,7 +95,14 @@ final class ProfileView: UIView {
         viewController?.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
     }
     
-    func updateViews(avatarURL: URL?, userName: String?, description: String?, website: String?, nftCount: String?, likesCount: String?) {
+    func updateViews(
+        avatarURL: URL?,
+        userName: String?,
+        description: String?,
+        website: String?,
+        nftCount: String?,
+        likesCount: String?
+    ) {
         avatarImage.kf.setImage(
             with: avatarURL,
             placeholder: UIImage(named: "UserImagePlaceholder"),

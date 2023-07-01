@@ -29,14 +29,14 @@ final class ProfileDevelopersViewController: UIViewController, WKUIDelegate {
         
         addWebView()
         
-        guard let myURL = URL(string:"https://practicum.yandex.ru/ios-developer") else { return }
+        guard let myURL = URL(string: Constants.url) else { return }
         webView.load(URLRequest(url: myURL))
     }
     
     // MARK: - Methods
     @objc
     private func didTapBackButton() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Layout methods
@@ -57,5 +57,13 @@ final class ProfileDevelopersViewController: UIViewController, WKUIDelegate {
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+}
+
+// MARK: - Nested types
+private extension ProfileDevelopersViewController {
+
+    enum Constants {
+        static let url = "https://practicum.yandex.ru/ios-developer"
     }
 }

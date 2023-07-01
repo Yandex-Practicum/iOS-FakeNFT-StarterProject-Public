@@ -33,6 +33,7 @@
 		559CF0052A3E2FE7006B6B88 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559CF0042A3E2FE7006B6B88 /* Icons.swift */; };
 		D03C0ACF2A4E07B600915774 /* ProfileFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03C0ACE2A4E07B600915774 /* ProfileFavoritesViewController.swift */; };
 		D03C0AD12A4E083600915774 /* ProfileMyNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03C0AD02A4E083600915774 /* ProfileMyNFTViewController.swift */; };
+		D03C0AD32A4F021D00915774 /* NoInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03C0AD22A4F021D00915774 /* NoInternetView.swift */; };
 		D06ADCFE2A4853E000F6E948 /* ProfileAssetsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADCFD2A4853E000F6E948 /* ProfileAssetsCell.swift */; };
 		D06ADD032A4894C300F6E948 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADD022A4894C300F6E948 /* EditProfileViewController.swift */; };
 		D06ADD052A48AA6700F6E948 /* GetProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADD042A48AA6700F6E948 /* GetProfileRequest.swift */; };
@@ -94,6 +95,7 @@
 		559CF0042A3E2FE7006B6B88 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		D03C0ACE2A4E07B600915774 /* ProfileFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesViewController.swift; sourceTree = "<group>"; };
 		D03C0AD02A4E083600915774 /* ProfileMyNFTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMyNFTViewController.swift; sourceTree = "<group>"; };
+		D03C0AD22A4F021D00915774 /* NoInternetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetView.swift; sourceTree = "<group>"; };
 		D06ADCFD2A4853E000F6E948 /* ProfileAssetsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAssetsCell.swift; sourceTree = "<group>"; };
 		D06ADD022A4894C300F6E948 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		D06ADD042A48AA6700F6E948 /* GetProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileRequest.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				D0D4F1F32A47153B00A0922B /* ProfileView.swift */,
 				D0D4F1F52A47159600A0922B /* ProfileViewModel.swift */,
 				D06ADCFD2A4853E000F6E948 /* ProfileAssetsCell.swift */,
+				D03C0AD22A4F021D00915774 /* NoInternetView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				D06ADD0C2A48D08F00F6E948 /* UIBlockingProgressHUD.swift in Sources */,
 				D03C0ACF2A4E07B600915774 /* ProfileFavoritesViewController.swift in Sources */,
 				559CF0002A3E18C4006B6B88 /* Button.swift in Sources */,
+				D03C0AD32A4F021D00915774 /* NoInternetView.swift in Sources */,
 				D03C0AD12A4E083600915774 /* ProfileMyNFTViewController.swift in Sources */,
 				D0D1719B2A4A05FE00EDC080 /* TextField.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
