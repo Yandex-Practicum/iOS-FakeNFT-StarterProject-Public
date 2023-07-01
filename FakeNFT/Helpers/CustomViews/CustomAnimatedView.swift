@@ -1,5 +1,5 @@
 //
-//  CheckMarkAnimatedView.swift
+//  CustomAnimatedView.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 27.06.2023.
@@ -14,7 +14,6 @@ class CustomAnimatedView: UIView {
     var result: RequestResult? {
         didSet {
             guard let result else { return }
-            removeTheLayer()
             createLayer(for: result)
         }
     }
@@ -32,6 +31,10 @@ class CustomAnimatedView: UIView {
         guard let shapeLayer = shapeLayer, let result else { return }
         layer.addSublayer(shapeLayer)
         createAnimationLayer(for: shapeLayer, with: result)
+    }
+    
+    func stopAnimation() {
+        removeTheLayer()
     }
 }
 

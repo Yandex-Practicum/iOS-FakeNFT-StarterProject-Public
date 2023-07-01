@@ -37,6 +37,11 @@ final class CartViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     private lazy var totalNFTCount: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
         return label
@@ -115,11 +120,10 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        load()
         setupNavigationBar()
         setupConstraints()
         createDataSource()
-        checkEmptyState()
+        load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,10 +143,9 @@ final class CartViewController: UIViewController {
     private func bind() {
         viewModel.$visibleRows
             .sink { [weak self] rows in
-                self?.diffableDataSource.updateTableView(with: rows)
+                self?.updateTableView(with: rows)
                 self?.updateTotalLabels(from: rows)
-                self?.cartStackView.isHidden = rows.isEmpty
-                self?.emptyStateLabel.isHidden = !rows.isEmpty
+                self?.showTheNeededView(for: rows)
             }
             .store(in: &cancellables)
         
@@ -152,16 +155,41 @@ final class CartViewController: UIViewController {
                 self?.onError?(error)
             }
             .store(in: &cancellables)
-    }
-    
-    private func checkEmptyState() {
-        cartStackView.isHidden = viewModel.visibleRows.isEmpty
-        emptyStateLabel.isHidden = !viewModel.visibleRows.isEmpty
+        
+        viewModel.$requestResult.receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] requestResult in
+                self?.showOrHideAnimation(for: requestResult)
+            })
+            .store(in: &cancellables)
+
     }
     
     private func updateTotalLabels(from rows: [NftSingleCollection]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
+    }
+    
+    private func updateTableView(with rows: [NftSingleCollection]) {
+        diffableDataSource.updateTableView(with: rows)
+    }
+    
+    private func showTheNeededView(for rows: [NftSingleCollection]) {
+        let isLoading = viewModel.requestResult != nil
+        cartStackView.isHidden = rows.isEmpty
+        emptyStateLabel.isHidden = !rows.isEmpty || isLoading
+    }
+    
+    private func showOrHideAnimation(for requestResult: RequestResult?) {
+        
+        guard let requestResult
+        else {
+            loadingView.stopAnimation()
+            return
+        }
+        
+        loadingView.result = requestResult
+        loadingView.startAnimation()
+       
     }
 }
 
@@ -248,7 +276,7 @@ private extension CartViewController {
     func setupConstraints() {
         setupCartStackView()
         setupEmptyStackView()
-       
+        setupLoadingView()
     }
     
     func setupCartStackView() {
@@ -273,5 +301,17 @@ private extension CartViewController {
             emptyStateLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             emptyStateLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 75),
+            loadingView.widthAnchor.constraint(equalToConstant: 75)
+        ])        
     }
 }

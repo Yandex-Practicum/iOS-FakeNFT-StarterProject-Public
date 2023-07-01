@@ -9,12 +9,11 @@ import Foundation
 import Combine
 
 final class CartViewModel {
-    var request: NetworkRequest?
-    
     private var cancellables = Set<AnyCancellable>()
     
     @Published private (set) var visibleRows: [NftSingleCollection] = []
     @Published private (set) var cartError: Error?
+    @Published private (set) var requestResult: RequestResult?
     
     private var dataStore: DataStorageProtocol
     private var networkClient: NetworkClient
@@ -25,7 +24,7 @@ final class CartViewModel {
         
         bind()
     }
-    
+        
     func setupSortValue(_ sortBy: CartSortValue) {
         dataStore.sortDescriptor = sortBy
     }
@@ -36,15 +35,18 @@ final class CartViewModel {
     }
     
     func load() {
-        // MARK: Replace for loading from userProfile
+        // MARK: Replace for loading from userProfile        
         let request = RequestConstructor.constructNftCollectionRequest(method: .get)
+        requestResult = .loading
         networkClient.send(request: request, type: [NftSingleCollection].self) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let data):
                 self.addRowsToStorage(data)
+                requestResult = nil
             case .failure(let error):
                 self.cartError = error
+                requestResult = nil
             }
         }
     }

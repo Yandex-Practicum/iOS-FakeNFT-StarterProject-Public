@@ -55,7 +55,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
-        viewModel.pay()
+        pay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,7 +89,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         onMain?()
     }
     
-    func tryAgain() {
+    func pay() {
         viewModel.pay()
     }
 }
@@ -108,6 +108,7 @@ private extension CartPaymentResultViewController {
     }
     
     func updateUIProperties(by result: RequestResult) {
+        resultView.stopAnimation()
         actionButton.setTitle(result.buttonTitle, for: .normal)
         resultTextView.text = result.description
         resultView.result = result
@@ -123,7 +124,7 @@ private extension CartPaymentResultViewController {
         case .success:
             actionButton.addTarget(self, action: #selector(returnToMainScreen), for: .touchUpInside)
         case .failure:
-            actionButton.addTarget(self, action: #selector(tryAgain), for: .touchUpInside)
+            actionButton.addTarget(self, action: #selector(pay), for: .touchUpInside)
         case .loading:
             break
         }
