@@ -98,25 +98,29 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
 private extension CartPaymentResultViewController {
     func updateUI(_ result: RequestResult?) {
         guard let result else { return }
-        
-        updateUIProperties(by: result)
-        addButtonTarget(from: result)
-        hideOrShowTheActionButton(result)
-        
-        resultView.startAnimation()
-        
+        stopAnimation()
+        updateTextView(by: result)
+        updateResult(by: result)
+        updateActionButton(result)
+        startAnimation()
     }
     
-    func updateUIProperties(by result: RequestResult) {
+    func stopAnimation() {
         resultView.stopAnimation()
-        actionButton.setTitle(result.buttonTitle, for: .normal)
-        resultTextView.text = result.description
-        resultView.result = result
-        
     }
     
-    func hideOrShowTheActionButton(_ result: RequestResult) {
-        self.actionButton.isHidden = result == .loading
+    func updateTextView(by result: RequestResult) {
+        resultTextView.text = result.description
+    }
+    
+    func updateResult(by result: RequestResult) {
+        resultView.result = result
+    }
+    
+    func updateActionButton(_ result: RequestResult) {
+        actionButton.setTitle(result.buttonTitle, for: .normal)
+        addButtonTarget(from: result)
+        hideOrShowActionButton(by: result)
     }
     
     func addButtonTarget(from result: RequestResult) {
@@ -128,6 +132,14 @@ private extension CartPaymentResultViewController {
         case .loading:
             break
         }
+    }
+    
+    func hideOrShowActionButton(by result: RequestResult) {
+        actionButton.isHidden = result == .loading
+    }
+    
+    func startAnimation() {
+        resultView.startAnimation()
     }
 }
 
