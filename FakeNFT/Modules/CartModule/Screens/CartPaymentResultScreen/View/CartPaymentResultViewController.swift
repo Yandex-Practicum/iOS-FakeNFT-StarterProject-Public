@@ -158,8 +158,8 @@ private extension CartPaymentResultViewController {
         NSLayoutConstraint.activate([
             resultView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            resultView.heightAnchor.constraint(equalToConstant: 150),
-            resultView.widthAnchor.constraint(equalToConstant: 150)
+            resultView.heightAnchor.constraint(equalToConstant: 75),
+            resultView.widthAnchor.constraint(equalToConstant: 75)
         ])
     }
     
