@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "statisticsTabBarImageNoActive.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
