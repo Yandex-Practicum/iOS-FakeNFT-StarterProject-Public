@@ -14,46 +14,41 @@ protocol CoordinatorFactoryProtocol {
 }
 
 final class CoordinatorFactory  {
-    private let modulesFactory: ModulesFactoryProtocol = ModulesFactory()
+    private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
-    private let alertConstructor: AlertConstructable = AlertConstructor()
+    private let alertConstructor: AlertConstructable & CartAlertConstructable & CatalogAlertConstructuble = AlertConstructor()
     private let dataStore: DataStorageProtocol = DataStore()
     private let networkClient: NetworkClient = DefaultNetworkClient()
+    private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol = TableViewDataSource()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
     func makeTabBarCoordinator(with router: Routable) -> CoordinatorProtocol {
         TabBarCoordinator(
             factory: self,
-            router: router) // создаем корневой координатор для управления модулями
+            router: router)
     }
     
     func makeCatalogCoordinator(with router: Routable) -> CoordinatorProtocol {
-        // создаем координатор модуля для настройки экрана, иконки таббара и всего остального
         CatalogCoordinator(
             factory: modulesFactory,
             router: router,
-            navigationControllerFactory: navigationControllerFactory)
+            navigationControllerFactory: navigationControllerFactory,
+            alertConstructor: alertConstructor,
+            dataStore: dataStore,
+            networkClient: networkClient,
+            dataSource: tableViewDataSource)
     }
     
     func makeCartCoordinator(with router: Routable) -> CoordinatorProtocol {
-        // создаем координатор модуля для настройки экрана, иконки таббара и всего остального
         CartCoordinator(
             factory: modulesFactory,
             router: router,
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
             dataStore: dataStore,
-            networkClient: networkClient
+            networkClient: networkClient,
+            tableViewDataSource: tableViewDataSource
         )
     }
-    
-    // MARK: Инструкция по созданию модулей
-    // Для создания нового модуля нужно добавить сюда метод создания нового координатора
-    // Координатор должен иметь фабрику модулей, роутер и фабрику навигационных контроллеров
-    // Дальше нужно перейти в TabBarCoordinator, создать там метод создания нового ScreenView по аналогии с уже имеющимися и добавить его в метод start() TabBarCoordinator'а
-    // Затем в ModulesFactory необходимо создать новый метод с созданием нужного экрана и добавить его в протокол
-    // В новом координаторе создать метод createScreen()
-    // Прописать реализацию метода createScreen() - создание самого экрана через ModulesFactory, добавление его в навигационный стек через NavControllerFactory и финальное добавление навигационного контроллера в таббар через router.addTabBarItem
-    // Дальше можно работать только в нужном координаторе, все настройка, все реакции на события будут обрабатываться там
 }

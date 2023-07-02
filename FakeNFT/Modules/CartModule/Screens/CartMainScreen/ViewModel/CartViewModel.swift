@@ -15,6 +15,8 @@ final class CartViewModel {
     @Published private (set) var cartError: Error?
     @Published private (set) var requestResult: RequestResult?
     
+    private var idToDelete: String?
+    
     private var dataStore: DataStorageProtocol
     private var networkClient: NetworkClient
     
@@ -31,7 +33,7 @@ final class CartViewModel {
     
     func deleteItem(with id: String?) {
         guard let id else { return }
-        visibleRows.removeAll(where: { $0.id == id })
+        dataStore.deleteItem(with: id)
     }
     
     func load() {

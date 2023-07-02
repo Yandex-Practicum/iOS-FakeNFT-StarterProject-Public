@@ -9,18 +9,26 @@ import UIKit
 
 protocol AlertConstructable {
     func constructSortAlert() -> UIAlertController
+}
+
+protocol CartAlertConstructable {
     func constructCartLoadAlert(with error: Error) -> UIAlertController
     func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void)
     func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
 }
 
-struct AlertConstructor { }
+protocol CatalogAlertConstructuble {
+    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CatalogSortValue) -> Void)
+}
 
-extension AlertConstructor: AlertConstructable {
+struct AlertConstructor: AlertConstructable {
     func constructSortAlert() -> UIAlertController {
         return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
     }
-    
+}
+
+// MARK: - Ext CartAlertConstructuble
+extension AlertConstructor: CartAlertConstructable {
     func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void) {
         CartSortValue.allCases.forEach { filter in
             alert.addAction(
@@ -57,5 +65,19 @@ extension AlertConstructor: AlertConstructable {
                     handler(action)
                 }))
     }
-    
+}
+
+// MARK: - Ext CatalogAlertConstructuble
+extension AlertConstructor: CatalogAlertConstructuble {
+    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CatalogSortValue) -> Void) {
+        CatalogSortValue.allCases.forEach { filter in
+            alert.addAction(
+                UIAlertAction(
+                    title: filter.description,
+                    style: filter.style,
+                    handler: { action in
+                        handler(filter)
+                    }))
+        }
+    }
 }

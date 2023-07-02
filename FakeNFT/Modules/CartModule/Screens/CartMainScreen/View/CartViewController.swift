@@ -102,11 +102,11 @@ final class CartViewController: UIViewController {
         return label
     }()
     
-    private var diffableDataSource: DataSourceManagerProtocol
+    private var diffableDataSource: CartDataSourceManagerProtocol
     private var viewModel: CartViewModel
     
     // MARK: Init
-    init(dataSource: DataSourceManagerProtocol, viewModel: CartViewModel) {
+    init(dataSource: CartDataSourceManagerProtocol, viewModel: CartViewModel) {
         self.diffableDataSource = dataSource
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -137,7 +137,10 @@ final class CartViewController: UIViewController {
     }
     
     private func createDataSource() {
-        diffableDataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
+        diffableDataSource.createCartDataSource(for: tableView, with: viewModel.visibleRows)
+        diffableDataSource.onDeleteHandler = { [weak self] id in
+            self?.onDelete?(id)
+        }
     }
     
     private func bind() {
@@ -161,7 +164,6 @@ final class CartViewController: UIViewController {
                 self?.showOrHideAnimation(for: requestResult)
             })
             .store(in: &cancellables)
-
     }
     
     private func updateTotalLabels(from rows: [NftSingleCollection]) {
@@ -226,13 +228,6 @@ extension CartViewController: UITableViewDelegate {
         
         return UISwipeActionsConfiguration(actions: [action])
         
-    }
-}
-
-// MARK: - Ext CartCellDelegate
-extension CartViewController: CartCellDelegate {
-    func didDeletedItem(with id: String?) {
-        onDelete?(id)
     }
 }
 

@@ -9,15 +9,12 @@ import UIKit
 import Combine
 import Kingfisher
 
-protocol CartCellDelegate: AnyObject {
-    func didDeletedItem(with id: String?)
-}
-
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var cancellables = Set<AnyCancellable>()
-    weak var delegate: CartCellDelegate?
         
+    var onDelete: ((String?) -> Void)?
+    
     var viewModel: CartCellViewModel? {
         didSet {
             viewModel?.$cartRow
@@ -134,16 +131,13 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         rateStackView.addRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"
         id = newRow.id
-        
     }
-    
-    
 }
 
 // MARK: - @objc
 @objc private extension CartTableViewCell {
     func deleteTapped() {
-        delegate?.didDeletedItem(with: id)
+        onDelete?(id)
     }
 }
 

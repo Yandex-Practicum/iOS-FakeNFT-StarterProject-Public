@@ -9,19 +9,22 @@ import Foundation
 
 final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     
-    private var factory: ModulesFactoryProtocol
+    private var factory: CartModuleFactoryProtocol
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
-    private var alertConstructor: AlertConstructable
+    private var alertConstructor: AlertConstructable & CartAlertConstructable
     private var dataStore: DataStorageProtocol
     private let networkClient: NetworkClient
+    private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
     
-    init(factory: ModulesFactoryProtocol,
+    init(factory: CartModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
-         alertConstructor: AlertConstructable,
+         alertConstructor: AlertConstructable & CartAlertConstructable,
          dataStore: DataStorageProtocol,
-         networkClient: NetworkClient) {
+         networkClient: NetworkClient,
+         tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
+    ) {
         
         self.factory = factory
         self.router = router
@@ -29,6 +32,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
         self.networkClient = networkClient
+        self.tableViewDataSource = tableViewDataSource
     }
     
     func start() {
@@ -39,7 +43,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
-        let cartScreen = factory.makeCartScreenView(dataStore: dataStore, networkClient: networkClient)
+        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore, networkClient: networkClient)
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
