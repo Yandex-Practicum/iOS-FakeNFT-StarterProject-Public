@@ -2,6 +2,7 @@ import UIKit
 
 final class ProfileAssetsCell: UITableViewCell {
     
+    //MARK: - Layout elements
     var assetLabel: UILabel = {
         var assetLabel = UILabel()
         assetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +28,7 @@ final class ProfileAssetsCell: UITableViewCell {
         return disclosureIndicator
     }()
     
+    // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addAssetLabel()
@@ -38,12 +40,12 @@ final class ProfileAssetsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Layout methods
     func addAssetLabel() {
         addSubview(assetLabel)
         NSLayoutConstraint.activate([
             assetLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             assetLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-//            assetLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     

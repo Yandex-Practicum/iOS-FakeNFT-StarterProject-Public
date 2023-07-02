@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-final class ProfileDevelopersViewController: UIViewController, WKUIDelegate {
+final class DevelopersViewController: UIViewController, WKUIDelegate {
     
     //MARK: - Layout elements
     private lazy var backButton = UIBarButtonItem(
@@ -61,7 +61,7 @@ final class ProfileDevelopersViewController: UIViewController, WKUIDelegate {
 }
 
 // MARK: - Nested types
-private extension ProfileDevelopersViewController {
+private extension DevelopersViewController {
 
     enum Constants {
         static let url = "https://practicum.yandex.ru/ios-developer"
