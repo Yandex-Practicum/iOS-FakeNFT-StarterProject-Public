@@ -2,6 +2,6 @@ import Foundation
 
 struct ExampleRequest: NetworkRequest {
     var endpoint: URL? {
-        URL(string: "INSERT_URL_HERE")
+        URL(string: "https://64a03ffded3c41bdd7a723cb.mockapi.io/api/v1/:endpoint")
     }
 }
