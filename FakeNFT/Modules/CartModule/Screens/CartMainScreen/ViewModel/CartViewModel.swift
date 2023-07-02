@@ -17,10 +17,10 @@ final class CartViewModel {
     
     private var idToDelete: String?
     
-    private var dataStore: DataStorageProtocol
+    private var dataStore: CartDataStorageProtocol
     private var networkClient: NetworkClient
     
-    init(dataStore: DataStorageProtocol, networkClient: NetworkClient) {
+    init(dataStore: CartDataStorageProtocol, networkClient: NetworkClient) {
         self.dataStore = dataStore
         self.networkClient = networkClient
         
@@ -28,7 +28,7 @@ final class CartViewModel {
     }
         
     func setupSortValue(_ sortBy: CartSortValue) {
-        dataStore.sortDescriptor = sortBy
+        dataStore.cartSortDescriptor = sortBy
     }
     
     func deleteItem(with id: String?) {
@@ -57,7 +57,7 @@ final class CartViewModel {
 // MARK: - Ext Private methods
 private extension CartViewModel {
     func bind() {
-        dataStore.dataPublisher
+        dataStore.cartDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }

@@ -11,9 +11,9 @@ import Combine
 final class CartDeleteViewModel {
     @Published private (set) var itemToDelete: NftSingleCollection?
     
-    private let dataStore: DataStorageProtocol
+    private let dataStore: CartDataStorageProtocol
     
-    init(dataStore: DataStorageProtocol) {
+    init(dataStore: CartDataStorageProtocol) {
         self.dataStore = dataStore
     }
     

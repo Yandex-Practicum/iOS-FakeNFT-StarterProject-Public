@@ -88,7 +88,7 @@ private extension TableViewDataSource {
             for: indexPath
         ) as? CatalogTableViewCell
         else { return UITableViewCell(frame: .zero) }
-        
+        cell.viewModel = CatalogCellViewModel(catalogRows: item)
         return cell
     }
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import Kingfisher
 
 protocol CartDeleteCoordinatableProtocol {
     var idToDelete: String? { get set }
@@ -161,7 +160,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     
     private func setupImageView(for cartRow: NftSingleCollection?) {
         guard let imageName = cartRow?.images.first else { return }
-        itemImageView.kf.setImage(with: URL(string: imageName))
+        itemImageView.setImage(from: URL(string: imageName))
     }
 }
 

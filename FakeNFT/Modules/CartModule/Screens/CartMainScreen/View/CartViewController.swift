@@ -13,7 +13,7 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
-    func setupFilter(_ filter: CartSortValue)
+    func setupSortDescriptor(_ filter: CartSortValue)
     func load()
 }
 
@@ -197,7 +197,7 @@ final class CartViewController: UIViewController {
 
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
-    func setupFilter(_ filter: CartSortValue) {
+    func setupSortDescriptor(_ filter: CartSortValue) {
         viewModel.setupSortValue(filter)
     }
     

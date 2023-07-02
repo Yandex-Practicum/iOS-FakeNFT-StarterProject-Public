@@ -11,12 +11,15 @@ import Combine
 protocol CatalogMainScreenCoordinatable {
     var onFilter: (() -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
+    var onError: ((Error?) -> Void)? { get set }
+    func setupSortDescriptor(_ filter: CatalogSortValue)
 }
 
-final class CatalogViewController: UIViewController, CatalogMainScreenCoordinatable {
+final class CatalogViewController: UIViewController {
 
     var onFilter: (() -> Void)?
     var onProceed: (() -> Void)?
+    var onError: ((Error?) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -44,6 +47,8 @@ final class CatalogViewController: UIViewController, CatalogMainScreenCoordinata
         view.backgroundColor = .ypLightGrey
         setupConstraints()
         setupNavigationBar()
+        createDataSource()
+        load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +60,43 @@ final class CatalogViewController: UIViewController, CatalogMainScreenCoordinata
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
     }
+    
+    private func createDataSource() {
+        dataSource.createCatalogDataSource(for: tableView, with: viewModel.visibleRows)
+    }
 
     private func bind() {
+        viewModel.$visibleRows
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] collections in
+                self?.updateTableView(with: collections)
+            }
+            .store(in: &cancellables)
         
+        viewModel.$catalogError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.onError?(error)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func load() {
+        viewModel.load()
+    }
+    
+    private func updateTableView(with rows: [NftCollections]) {
+        dataSource.updateTableView(with: rows)
     }
     
 
+}
+
+// MARK: - Ext CatalogMainScreenCoordinatable
+extension CatalogViewController: CatalogMainScreenCoordinatable {
+    func setupSortDescriptor(_ filter: CatalogSortValue) {
+        viewModel.setupSortValue(filter)
+    }
 }
 
 // MARK: - Ext OBJC

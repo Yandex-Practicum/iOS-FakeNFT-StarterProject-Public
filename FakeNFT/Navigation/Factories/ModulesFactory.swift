@@ -8,15 +8,17 @@
 import Foundation
 
 protocol CatalogModuleFactoryProtocol {
-    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable
+    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
+                               dataStore: CatalogDataStorageProtocol,
+                               networkClient: NetworkClient) -> Presentable & CatalogMainScreenCoordinatable
 }
 
 protocol CartModuleFactoryProtocol {
-    func makeCartScreenView(dataSource: CartDataSourceManagerProtocol, dataStore: DataStorageProtocol,
+    func makeCartScreenView(dataSource: CartDataSourceManagerProtocol, dataStore: CartDataStorageProtocol,
                             networkClient: NetworkClient) -> Presentable & CartMainCoordinatableProtocol
-    func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
+    func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(networkClient: NetworkClient,
-                                         dataStore: DataStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
+                                         dataStore: CartDataStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
     func makePaymentResultScreenView(networkClient: NetworkClient,
                                      request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
@@ -27,8 +29,10 @@ final class ModulesFactory {}
 
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
-    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable {
-        let viewModel = CatalogViewModel()
+    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
+                               dataStore: CatalogDataStorageProtocol,
+                               networkClient: NetworkClient) -> Presentable & CatalogMainScreenCoordinatable {
+        let viewModel = CatalogViewModel(dataStore: dataStore, networkClient: networkClient)
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
     }
 }
@@ -36,7 +40,7 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
 // MARK: - Ext CartModuleFactoryProtocol
 extension ModulesFactory: CartModuleFactoryProtocol {
     func makeCartScreenView(dataSource: CartDataSourceManagerProtocol,
-                            dataStore: DataStorageProtocol,
+                            dataStore: CartDataStorageProtocol,
                             networkClient: NetworkClient) -> Presentable & CartMainCoordinatableProtocol {
         let viewModel = CartViewModel(dataStore: dataStore, networkClient: networkClient)
         let viewController = CartViewController(dataSource: dataSource, viewModel: viewModel)
@@ -44,14 +48,14 @@ extension ModulesFactory: CartModuleFactoryProtocol {
         return viewController
     }
     
-    func makeCartDeleteScreenView(dataStore: DataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol {
+    func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol {
         let viewModel = CartDeleteViewModel(dataStore: dataStore)
         let viewController = CartDeleteItemViewController(viewModel: viewModel)
         return viewController
     }
     
     func makeCartPaymentMethodScreenView(networkClient: NetworkClient,
-                                         dataStore: DataStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
+                                         dataStore: CartDataStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
         let viewModel = CartPaymentMethodViewModel(networkClient: networkClient, dataStore: dataStore)
         let dataSource = PaymentMethodDataSourceManager()
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)

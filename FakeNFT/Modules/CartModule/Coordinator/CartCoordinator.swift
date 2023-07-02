@@ -13,7 +13,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable & CartAlertConstructable
-    private var dataStore: DataStorageProtocol
+    private var dataStore: CartDataStorageProtocol
     private let networkClient: NetworkClient
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
     
@@ -21,7 +21,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable & CartAlertConstructable,
-         dataStore: DataStorageProtocol,
+         dataStore: CartDataStorageProtocol,
          networkClient: NetworkClient,
          tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
     ) {
@@ -124,7 +124,7 @@ private extension CartCoordinator {
         let alert = alertConstructor.constructSortAlert()
         
         alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] filter in
-            filter == .cancel ? () : screen?.setupFilter(filter)
+            filter == .cancel ? () : screen?.setupSortDescriptor(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         

@@ -17,7 +17,7 @@ final class CoordinatorFactory  {
     private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable & CartAlertConstructable & CatalogAlertConstructuble = AlertConstructor()
-    private let dataStore: DataStorageProtocol = DataStore()
+    private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
     private let networkClient: NetworkClient = DefaultNetworkClient()
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol = TableViewDataSource()
 }

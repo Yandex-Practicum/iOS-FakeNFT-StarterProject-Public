@@ -37,6 +37,12 @@ struct RequestConstructor {
             httpMethod: method)
     }
     
+    static func constructCatalogRequest(method: HttpMethod) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.collection),
+            httpMethod: method)
+    }
+    
     static func constructWebViewRequest() -> URLRequest? {
         guard let url = URL(string: K.Links.userLicenseLink) else { return nil }
         return URLRequest(url: url)

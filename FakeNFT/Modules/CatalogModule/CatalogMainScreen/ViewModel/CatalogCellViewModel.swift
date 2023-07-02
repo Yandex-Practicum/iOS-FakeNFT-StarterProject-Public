@@ -6,7 +6,12 @@
 //
 
 import Foundation
+import Combine
 
-final class CatalogCellViewModel {
+final class CatalogCellViewModel: ObservableObject {
+    @Published private (set) var catalogRows: NftCollections
     
+    init(catalogRows: NftCollections) {
+        self.catalogRows = catalogRows
+    }
 }

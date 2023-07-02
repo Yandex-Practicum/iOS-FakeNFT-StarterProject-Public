@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import Kingfisher
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
@@ -126,7 +125,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func updateCell(with newRow: NftSingleCollection ) {
-        nftImageView.kf.setImage(with: URL(string: newRow.images.first ?? ""))
+        nftImageView.setImage(from: URL(string: newRow.images.first ?? ""))
         nftName.text = newRow.name
         rateStackView.addRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"

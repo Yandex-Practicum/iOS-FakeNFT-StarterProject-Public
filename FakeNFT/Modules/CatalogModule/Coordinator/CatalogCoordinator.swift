@@ -13,7 +13,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable & CatalogAlertConstructuble
-    private var dataStore: DataStorageProtocol
+    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol
     private let networkClient: NetworkClient
     private let dataSource: CatalogDataSourceManagerProtocol
     
@@ -21,7 +21,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable & CatalogAlertConstructuble,
-         dataStore: DataStorageProtocol,
+         dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol,
          networkClient: NetworkClient,
          dataSource: CatalogDataSourceManagerProtocol) {
         
@@ -42,7 +42,10 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
 // MARK: - Ext Private
 private extension CatalogCoordinator {
     func createScreen() {
-        var catalogScreen = factory.makeCatalogScreenView(dataSource: dataSource)
+        var catalogScreen = factory.makeCatalogScreenView(dataSource: dataSource,
+                                                          dataStore: dataStore,
+                                                          networkClient: networkClient)
+        
         let navController = navigationControllerFactory.makeNavController(.catalog, rootViewController: catalogScreen) // навигационный стек
         
         catalogScreen.onFilter = { [weak self] in
