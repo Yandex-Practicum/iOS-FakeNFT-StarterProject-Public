@@ -32,6 +32,8 @@
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		EDB0A0B12A51ECC90019D61F /* NFTStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */; };
+		EDB0A0B32A51EDC00019D61F /* MockCartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B22A51EDC00019D61F /* MockCartData.swift */; };
+		EDB0A0B52A51EDE70019D61F /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B42A51EDE70019D61F /* NFTCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTStruct.swift; sourceTree = "<group>"; };
+		EDB0A0B22A51EDC00019D61F /* MockCartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCartData.swift; sourceTree = "<group>"; };
+		EDB0A0B42A51EDE70019D61F /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,8 @@
 			children = (
 				325684CB2A515DB9000AC9E3 /* CartViewController.swift */,
 				EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */,
+				EDB0A0B22A51EDC00019D61F /* MockCartData.swift */,
+				EDB0A0B42A51EDE70019D61F /* NFTCell.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 				325684C82A515D90000AC9E3 /* ProfileViewController.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				325684D02A515DDF000AC9E3 /* CatalogViewController.swift in Sources */,
+				EDB0A0B32A51EDC00019D61F /* MockCartData.swift in Sources */,
 				EDB0A0B12A51ECC90019D61F /* NFTStruct.swift in Sources */,
 				325684CE2A515DCD000AC9E3 /* TabBarController.swift in Sources */,
 				325684CA2A515DA5000AC9E3 /* StatisticsViewController.swift in Sources */,
@@ -463,6 +470,7 @@
 				325684CC2A515DB9000AC9E3 /* CartViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				EDB0A0B52A51EDE70019D61F /* NFTCell.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
