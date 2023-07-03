@@ -30,6 +30,8 @@ extension UIColor {
 
     // Background Colors
     static let background = UIColor.white
+    static let ypGreen = UIColor(named: "ypGreen")
+    static let ypLightGrey = UIColor(named: "ypLightGrey")
 
     // Text Colors
     static let textPrimary = UIColor.black

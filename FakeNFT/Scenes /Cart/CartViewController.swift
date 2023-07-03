@@ -19,6 +19,17 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // Элементы для нижней панели оплаты
+    
+    private let paymentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .ypLightGrey
+        view.layer.cornerRadius = 12
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +50,7 @@ final class CartViewController: UIViewController {
         } else {
             emptyLabel.isHidden = true
             setupTableView()
+            setupPaymentView()
         }
     }
     
@@ -68,6 +80,18 @@ final class CartViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
         ])
     }
+    
+    private func setupPaymentView() {
+        // Добавляем элементы для нижней панели оплаты
+        view.addSubview(paymentView)
+        
+        NSLayoutConstraint.activate([
+            paymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -83),
+            paymentView.heightAnchor.constraint(equalToConstant: 76),
+            paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
 }
 
 // Реализация UITableViewDataSource
@@ -90,6 +114,6 @@ extension CartViewController: UITableViewDataSource {
 // Реализация UITableViewDelegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140 // Установите желаемую высоту для ячейки
+        return 140 
     }
 }

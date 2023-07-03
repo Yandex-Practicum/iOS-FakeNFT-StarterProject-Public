@@ -2,6 +2,8 @@ import UIKit
 
 class NFTCell: UITableViewCell {
     static let reuseIdentifier = "NFTCellReuseIdentifier"
+    
+    // Элементы для NFT в корзине
 
     private let pictureImageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,7 +50,7 @@ class NFTCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()
@@ -59,15 +61,14 @@ class NFTCell: UITableViewCell {
     }
 
     private func setupSubviews() {
-        // Добавьте pictureImageView, nameLabel, ratingLabel и priceLabel в contentView ячейки.
-        // Установите правильные ограничения для каждого из них.
+        // Добавляем элементы для корзины NFT
         contentView.addSubview(pictureImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(ratingStackView)
         contentView.addSubview(priceLabelName)
         contentView.addSubview(priceLabel)
         contentView.addSubview(cartImageView)
-        
+    
         NSLayoutConstraint.activate([
             pictureImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             pictureImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
