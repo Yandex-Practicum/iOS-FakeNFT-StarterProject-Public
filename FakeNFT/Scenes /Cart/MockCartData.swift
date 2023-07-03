@@ -11,7 +11,7 @@ class MockCartData {
     NFT(id: UUID(),
         name: "Greena",
         picture: UIImage(named: "NFT2") ?? .checkmark,
-        price: 4.54,
-        rating: 4)
+        price: 1.78,
+        rating: 3)
     ]
 }

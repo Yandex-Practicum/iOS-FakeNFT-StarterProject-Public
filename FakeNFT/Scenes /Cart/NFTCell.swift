@@ -32,6 +32,14 @@ class NFTCell: UITableViewCell {
         return label
     }()
     
+    private let ratingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     private let priceLabelName: UILabel = {
         let label = UILabel()
         label.font = .caption2
@@ -63,7 +71,8 @@ class NFTCell: UITableViewCell {
         // Установите правильные ограничения для каждого из них.
         contentView.addSubview(pictureImageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(ratingLabel)
+        //contentView.addSubview(ratingLabel)
+        contentView.addSubview(ratingStackView)
         contentView.addSubview(priceLabelName)
         contentView.addSubview(priceLabel)
         contentView.addSubview(cartImageView)
@@ -79,11 +88,15 @@ class NFTCell: UITableViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
             nameLabel.widthAnchor.constraint(equalToConstant: 100),
             
-            ratingLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
-            ratingLabel.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
-            ratingLabel.widthAnchor.constraint(equalToConstant: 100),
+//            ratingLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+//            ratingLabel.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
+//            ratingLabel.widthAnchor.constraint(equalToConstant: 100),
             
-            priceLabelName.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 12),
+            ratingStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+            ratingStackView.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
+            //ratingStackView.widthAnchor.constraint(equalToConstant: 68),
+            
+            priceLabelName.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 12),
             priceLabelName.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
             priceLabelName.widthAnchor.constraint(equalToConstant: 100),
             
@@ -105,5 +118,25 @@ class NFTCell: UITableViewCell {
         nameLabel.text = nft.name
         ratingLabel.text = "Rating: \(nft.rating)"
         priceLabel.text = "\(nft.price)" + " ETH"
+        
+        // Очищаем стек предыдущих звездочек
+        for subview in ratingStackView.arrangedSubviews {
+            subview.removeFromSuperview()
+        }
+        
+        // Создаем новые звездочки в соответствии с рейтингом
+        for _ in 0..<nft.rating {
+            let starImageView = UIImageView(image: UIImage(named: "starActive"))
+            ratingStackView.addArrangedSubview(starImageView)
+            starImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        }
+        
+        for _ in nft.rating..<5 {
+            let starImageView = UIImageView(image: UIImage(named: "starInactive"))
+            ratingStackView.addArrangedSubview(starImageView)
+            starImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        }
     }
 }
