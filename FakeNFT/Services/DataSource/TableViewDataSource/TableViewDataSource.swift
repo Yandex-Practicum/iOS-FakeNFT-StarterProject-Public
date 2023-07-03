@@ -17,10 +17,10 @@ protocol CartDataSourceManagerProtocol {
 }
 
 protocol CatalogDataSourceManagerProtocol {
-    typealias CatalogDataSource = UITableViewDiffableDataSource<NftTableViewSection, NftCollections>
-    typealias CatalogSnapshot = NSDiffableDataSourceSnapshot<NftTableViewSection, NftCollections>
-    func createCatalogDataSource(for tableView: UITableView, with data: [NftCollections])
-    func updateTableView(with data: [NftCollections])
+    typealias CatalogDataSource = UITableViewDiffableDataSource<NftTableViewSection, NftCollection>
+    typealias CatalogSnapshot = NSDiffableDataSourceSnapshot<NftTableViewSection, NftCollection>
+    func createCatalogDataSource(for tableView: UITableView, with data: [NftCollection])
+    func updateTableView(with data: [NftCollection])
     func getCatalogRowHeight(for tableView: UITableView) -> CGFloat
 }
 
@@ -53,7 +53,7 @@ extension TableViewDataSource: CartDataSourceManagerProtocol {
 
 // MARK: - Ext CatalogDataSourceManagerProtocol
 extension TableViewDataSource: CatalogDataSourceManagerProtocol {
-    func createCatalogDataSource(for tableView: UITableView, with data: [NftCollections]) {
+    func createCatalogDataSource(for tableView: UITableView, with data: [NftCollection]) {
         catalogDataSource = CatalogDataSource(tableView: tableView, cellProvider: { [weak self] tableView, indexPath, itemIdentifier in
             return self?.catalogCell(tableView: tableView, indexPath: indexPath, item: itemIdentifier)
         })
@@ -62,7 +62,7 @@ extension TableViewDataSource: CatalogDataSourceManagerProtocol {
         catalogDataSource?.apply(createCatalogSnapshot(from: data))
     }
     
-    func updateTableView(with data: [NftCollections]) {
+    func updateTableView(with data: [NftCollection]) {
         catalogDataSource?.apply(createCatalogSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
@@ -87,7 +87,7 @@ private extension TableViewDataSource {
         return cell
     }
     
-    func catalogCell(tableView: UITableView, indexPath: IndexPath, item: NftCollections) -> UITableViewCell {
+    func catalogCell(tableView: UITableView, indexPath: IndexPath, item: NftCollection) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CatalogTableViewCell.defaultReuseIdentifier,
             for: indexPath
@@ -107,7 +107,7 @@ private extension TableViewDataSource {
         return snapshot
     }
     
-    func createCatalogSnapshot(from data: [NftCollections]) -> CatalogSnapshot {
+    func createCatalogSnapshot(from data: [NftCollection]) -> CatalogSnapshot {
         var snapshot = CatalogSnapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(data, toSection: .main)

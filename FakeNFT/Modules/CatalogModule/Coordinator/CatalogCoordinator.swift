@@ -39,7 +39,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
     }
 }
 
-// MARK: - Ext Private
+// MARK: - Ext Screens
 private extension CatalogCoordinator {
     func createScreen() {
         var catalogScreen = factory.makeCatalogScreenView(dataSource: dataSource,
@@ -52,11 +52,21 @@ private extension CatalogCoordinator {
             self?.showSortAlert(from: catalogScreen)
         }
         
-        catalogScreen.onProceed = { [weak self] in
-            
+        catalogScreen.onProceed = { [weak self] collection in
+            self?.showCatalogCollectionScreen(with: collection)
         }
         
         router.addTabBarItem(navController)
+    }
+    
+    func showCatalogCollectionScreen(with collection: NftCollection) {
+        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection)
+        
+        collectionScreen.onCancel = { [weak router] in
+            router?.popToRootViewController(animated: true, completion: nil)
+        }
+        
+        router.pushViewController(collectionScreen, animated: true)
     }
 }
 

@@ -120,7 +120,7 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupNavigationBar()
+        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
         setupConstraints()
         createDataSource()
         load()
@@ -239,30 +239,6 @@ extension CartViewController: UITableViewDelegate {
     
     func proceedTapped() {
         onProceed?()
-    }
-}
-
-// MARK: - Ext NavigationBar
-private extension CartViewController {
-    func setupNavigationBar() {
-        setupRightBarButton()
-        setupNavBarTitle()
-    }
-    
-    func setupRightBarButton() {
-        let rightItem = UIBarButtonItem(
-            image: UIImage(systemName: K.Icons.filterRightBarButtonIcon),
-            style: .plain,
-            target: self,
-            action: #selector(filterTapped)
-        )
-        
-        rightItem.tintColor = .ypBlack
-        navigationItem.rightBarButtonItem = rightItem
-    }
-    
-    func setupNavBarTitle() {
-        navigationController?.navigationBar.topItem?.title = nil
     }
 }
 

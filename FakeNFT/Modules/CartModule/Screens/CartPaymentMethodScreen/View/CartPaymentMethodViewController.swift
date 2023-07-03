@@ -105,10 +105,9 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupNavigationBar()
+        setupLeftNavBarItem(with: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
         setupConstraints()
         createDataSource()
-//        bind()
         viewModel.getPaymentMethods()
     }
     
@@ -192,23 +191,6 @@ extension CartPaymentMethodViewController: UICollectionViewDelegate {
         transferPaymentMethodIdToViewModel(id: selectedId)
         
         enableProceedButton()
-    }
-}
-
-// MARK: - Ext Navigation Bar setup
-extension CartPaymentMethodViewController {
-    func setupNavigationBar() {
-        guard
-            let image = UIImage(systemName: K.Icons.chevronBackward)?
-                .withTintColor(
-                    .ypBlack ?? .red,
-                    renderingMode: .alwaysOriginal
-                )
-        else { return }
-        
-        let customLeftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(cancelTapped))
-        navigationItem.title = NSLocalizedString("Выберите способ оплаты", comment: "")
-        navigationItem.leftBarButtonItem = customLeftItem
     }
 }
 

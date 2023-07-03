@@ -1,5 +1,5 @@
 //
-//  PaymentMethodDataSourceManager.swift
+//  CollectionViewDataSourceManager.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 23.06.2023.
@@ -12,7 +12,7 @@ protocol PaymentMethodDSManagerProtocol {
     func updateCollection(with data: [PaymentMethodRow])
 }
 
-final class PaymentMethodDataSourceManager: PaymentMethodDSManagerProtocol {
+final class CollectionViewDataSourceManager: PaymentMethodDSManagerProtocol {
     
     typealias DataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, PaymentMethodRow>
     typealias Snapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, PaymentMethodRow>
@@ -31,7 +31,7 @@ final class PaymentMethodDataSourceManager: PaymentMethodDSManagerProtocol {
     }
 }
 
-private extension PaymentMethodDataSourceManager {
+private extension CollectionViewDataSourceManager {
     func cell(collectionView: UICollectionView, indexPath: IndexPath, item: PaymentMethodRow) -> UICollectionViewCell {
         guard
             let cell = collectionView

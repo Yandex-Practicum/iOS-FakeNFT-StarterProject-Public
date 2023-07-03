@@ -10,7 +10,7 @@ import Combine
 
 protocol CatalogMainScreenCoordinatable {
     var onFilter: (() -> Void)? { get set }
-    var onProceed: (() -> Void)? { get set }
+    var onProceed: ((NftCollection) -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CatalogSortValue)
 }
@@ -18,7 +18,7 @@ protocol CatalogMainScreenCoordinatable {
 final class CatalogViewController: UIViewController {
 
     var onFilter: (() -> Void)?
-    var onProceed: (() -> Void)?
+    var onProceed: ((NftCollection) -> Void)?
     var onError: ((Error?) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
@@ -35,6 +35,7 @@ final class CatalogViewController: UIViewController {
     let dataSource: CatalogDataSourceManagerProtocol
     let viewModel: CatalogViewModel
     
+    // MARK: Init
     init(dataSource: CatalogDataSourceManagerProtocol, viewModel: CatalogViewModel) {
         self.dataSource = dataSource
         self.viewModel = viewModel
@@ -45,11 +46,12 @@ final class CatalogViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
         setupConstraints()
-        setupNavigationBar()
+        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
         createDataSource()
         load()
     }
@@ -88,7 +90,7 @@ final class CatalogViewController: UIViewController {
         viewModel.load()
     }
     
-    private func updateTableView(with rows: [NftCollections]) {
+    private func updateTableView(with rows: [NftCollection]) {
         dataSource.updateTableView(with: rows)
     }
     
@@ -101,7 +103,13 @@ extension CatalogViewController: UITableViewDelegate {
         return dataSource.getCatalogRowHeight(for: tableView)
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? CatalogTableViewCell,
+              let collection = cell.viewModel?.catalogRows
+        else { return }
+        onProceed?(collection)
+        cell.selectionStyle = .none
+    }
 }
 
 // MARK: - Ext CatalogMainScreenCoordinatable
@@ -115,30 +123,6 @@ extension CatalogViewController: CatalogMainScreenCoordinatable {
 @objc private extension CatalogViewController {
     func filterTapped() {
         onFilter?()
-    }
-}
-
-// MARK: - Ext NavigationBar
-private extension CatalogViewController {
-    func setupNavigationBar() {
-        setupRightBarButton()
-        setupNavBarTitle()
-    }
-    
-    func setupRightBarButton() {
-        let rightItem = UIBarButtonItem(
-            image: UIImage(systemName: K.Icons.filterRightBarButtonIcon),
-            style: .plain,
-            target: self,
-            action: #selector(filterTapped)
-        )
-        
-        rightItem.tintColor = .ypBlack
-        navigationItem.rightBarButtonItem = rightItem
-    }
-    
-    func setupNavBarTitle() {
-        navigationController?.navigationBar.topItem?.title = nil
     }
 }
 

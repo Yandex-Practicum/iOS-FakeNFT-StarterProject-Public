@@ -11,6 +11,7 @@ protocol CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
                                dataStore: CatalogDataStorageProtocol,
                                networkClient: NetworkClient) -> Presentable & CatalogMainScreenCoordinatable
+    func makeCatalogCollectionScreenView(with collection: NftCollection) -> Presentable & CatalogCollectionCoordinatable
 }
 
 protocol CartModuleFactoryProtocol {
@@ -24,7 +25,6 @@ protocol CartModuleFactoryProtocol {
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
 
-// MARK: Инъекция зависимостей тут
 final class ModulesFactory {}
 
 // MARK: - Ext CatalogModuleFactoryProtocol
@@ -34,6 +34,12 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
                                networkClient: NetworkClient) -> Presentable & CatalogMainScreenCoordinatable {
         let viewModel = CatalogViewModel(dataStore: dataStore, networkClient: networkClient)
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
+    }
+    
+    func makeCatalogCollectionScreenView(with collection: NftCollection) -> Presentable & CatalogCollectionCoordinatable {
+        let viewModel = CatalogCollectionViewModel(nftCollection: collection)
+        let viewController = CatalogCollectionViewController(viewModel: viewModel)
+        return viewController
     }
 }
 
@@ -57,7 +63,7 @@ extension ModulesFactory: CartModuleFactoryProtocol {
     func makeCartPaymentMethodScreenView(networkClient: NetworkClient,
                                          dataStore: CartDataStorageProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
         let viewModel = CartPaymentMethodViewModel(networkClient: networkClient, dataStore: dataStore)
-        let dataSource = PaymentMethodDataSourceManager()
+        let dataSource = CollectionViewDataSourceManager()
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }

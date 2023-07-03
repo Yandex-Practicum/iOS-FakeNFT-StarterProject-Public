@@ -28,10 +28,12 @@ struct K {
         static let catalogTitle = NSLocalizedString("Каталог", comment: "")
         static let cartTitle = NSLocalizedString("Корзина", comment: "")
         static let statisticsTitle = NSLocalizedString("Статистика", comment: "")
+        static let paymentMethodScreenTitle = NSLocalizedString("Выберите способ оплаты", comment: "")
     }
     
     struct Links {
         static let userLicenseLink = "https://yandex.ru/legal/practicum_termsofuse/"
+        static let authorInformationLink = "https://www.ridejohndoe.com"
         static let apiLink = "https://648cbbbe8620b8bae7ed5043.mockapi.io/"
     }
     

@@ -10,7 +10,7 @@ import Combine
 
 final class CatalogViewModel {
     
-    @Published private (set) var visibleRows: [NftCollections] = []
+    @Published private (set) var visibleRows: [NftCollection] = []
     @Published private (set) var catalogError: Error?
     
     private var cancellables = Set<AnyCancellable>()
@@ -32,7 +32,7 @@ final class CatalogViewModel {
         // MARK: Replace for loading from userProfile
         let request = RequestConstructor.constructCatalogRequest(method: .get)
 //        requestResult = .loading
-        networkClient.send(request: request, type: [NftCollections].self) { [weak self] result in
+        networkClient.send(request: request, type: [NftCollection].self) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let data):
@@ -58,7 +58,7 @@ private extension CatalogViewModel {
             .store(in: &cancellables)
     }
     
-    func addRowsToStorage(_ rows: [NftCollections]) {
+    func addRowsToStorage(_ rows: [NftCollection]) {
         rows.forEach { row in
             dataStore.addCatalogRowItem(row)
         }
