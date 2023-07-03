@@ -3,6 +3,8 @@ import UIKit
 final class MyNFTViewController: UIViewController {
     
     // MARK: - Properties
+    var nftIDs: [String]?
+    
     private var viewModel: MyNFTViewModel?
     
     //MARK: - Layout elements
@@ -32,9 +34,20 @@ final class MyNFTViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = MyNFTViewModel(viewController: self)
+        guard let nftIDs = nftIDs else { return }
+        viewModel = MyNFTViewModel(viewController: self, nftIDs: nftIDs)
         bind()
         setupView()
+    }
+    
+    init(nftIDs: [String]) {
+        self.nftIDs = nftIDs
+        super.init(nibName: nil, bundle: nil)
+        UIBlockingProgressHUD.show()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
@@ -60,15 +73,25 @@ final class MyNFTViewController: UIViewController {
 
     // MARK: - Layout methods
     func setupView() {
+        guard let nftIDs = nftIDs else { return }
+        if nftIDs.isEmpty {
+            view.backgroundColor = .white
+            setupNavBar(emptyNFTs: true)
+            addEmptyLabel()
+            UIBlockingProgressHUD.dismiss()
+        } else {
             self.view = MyNFTView(frame: .zero, viewController: self)
-            setupNavBar()
+            setupNavBar(emptyNFTs: false)
+        }
     }
     
-    func setupNavBar() {
+    func setupNavBar(emptyNFTs: Bool) {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
-        navigationItem.rightBarButtonItem = sortButton
-        navigationItem.title = "Мои NFT"
+        if !emptyNFTs {
+            navigationItem.rightBarButtonItem = sortButton
+            navigationItem.title = "Мои NFT"
+        }
     }
     
     func getAuthorById(id: String) -> String {

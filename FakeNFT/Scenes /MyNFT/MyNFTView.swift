@@ -37,6 +37,7 @@ final class MyNFTView: UIView {
     func updateNFT(nfts: [NFTNetworkModel]) {
         self.myNFTs = nfts
         myNFTTable.reloadData()
+        UIBlockingProgressHUD.dismiss()
     }
     
     //MARK: - Layout methods

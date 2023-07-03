@@ -6,14 +6,16 @@ final class ProfileView: UIView {
     // MARK: - Properties
     private var viewController: ProfileViewController?
     
-    private let assetLabel: [String] = [
+    private lazy var assetLabel: [String] = [
         "Мои NFT",
         "Избранные NFT",
         "О разработчике"
     ]
     
-    private let assetViewController: [UIViewController] = [
-    MyNFTViewController(),
+    private lazy var assetViewController: [UIViewController] = [
+        MyNFTViewController(nftIDs: {
+            return self.viewController?.getNftIDsFromViewModel() ?? []
+        }()),
     FavoritesViewController(),
     DevelopersViewController()
     ]

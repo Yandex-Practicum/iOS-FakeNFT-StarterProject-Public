@@ -18,40 +18,30 @@ final class MyNFTViewModel {
     private(set) var authors: [String: String] = [:]
     
     // MARK: - Lifecycle
-    init(viewController: UIViewController){
+    init(viewController: UIViewController, nftIDs: [String]){
         self.viewController = viewController
         self.myNFTs = []
-        getNFT(nfts: [ "5",
-                       "13",
-                       "19",
-                       "26",
-                       "27",
-                       "33",
-                       "35",
-                       "39",
-                       "41",
-                       "47",
-                       "56",
-                       "66"])
+        getMyNFTs(nftIDs: nftIDs)
     }
     
     // MARK: - Methods
-    func getNFT(nfts: [String]) {
+    func getMyNFTs(nftIDs: [String]) {
         var loadedNFTs: [NFTNetworkModel] = []
         
-        nfts.forEach { id in
+        nftIDs.forEach { id in
             networkClient.send(request: GetNFTByIdRequest(id: id), type: NFTNetworkModel.self) { [self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let nft):
                         loadedNFTs.append(nft)
-                        if loadedNFTs.count == nfts.count {
+                        if loadedNFTs.count == nftIDs.count {
                             self.getAuthors(nfts: loadedNFTs)
                             self.myNFTs? = loadedNFTs
                         }
                     case .failure(_):
                         self.viewController?.view = NoInternetView()
                         self.viewController?.navigationController?.navigationBar.isHidden = true
+                        UIBlockingProgressHUD.dismiss()
                     }
                 }
             }

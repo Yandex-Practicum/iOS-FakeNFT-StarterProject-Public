@@ -55,4 +55,9 @@ final class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = editButton
     }
+    
+    func getNftIDsFromViewModel() -> [String] {
+        guard let nfts = viewModel?.nfts else { return [] }
+        return nfts
+    }
 }
