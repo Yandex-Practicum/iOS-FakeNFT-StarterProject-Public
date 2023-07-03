@@ -23,14 +23,6 @@ class NFTCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    private let ratingLabel: UILabel = {
-        let label = UILabel()
-        label.font = .caption2
-        label.textColor = .textOnSecondary
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private let ratingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -71,7 +63,6 @@ class NFTCell: UITableViewCell {
         // Установите правильные ограничения для каждого из них.
         contentView.addSubview(pictureImageView)
         contentView.addSubview(nameLabel)
-        //contentView.addSubview(ratingLabel)
         contentView.addSubview(ratingStackView)
         contentView.addSubview(priceLabelName)
         contentView.addSubview(priceLabel)
@@ -88,13 +79,8 @@ class NFTCell: UITableViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
             nameLabel.widthAnchor.constraint(equalToConstant: 100),
             
-//            ratingLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
-//            ratingLabel.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
-//            ratingLabel.widthAnchor.constraint(equalToConstant: 100),
-            
             ratingStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
             ratingStackView.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
-            //ratingStackView.widthAnchor.constraint(equalToConstant: 68),
             
             priceLabelName.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 12),
             priceLabelName.leadingAnchor.constraint(equalTo: pictureImageView.trailingAnchor, constant: 20),
@@ -116,7 +102,6 @@ class NFTCell: UITableViewCell {
     func configure(with nft: NFT) {
         pictureImageView.image = nft.picture
         nameLabel.text = nft.name
-        ratingLabel.text = "Rating: \(nft.rating)"
         priceLabel.text = "\(nft.price)" + " ETH"
         
         // Очищаем стек предыдущих звездочек
