@@ -53,7 +53,6 @@
 		37D36BA82A51B71800662D2C /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BA72A51B71800662D2C /* CatalogViewModel.swift */; };
 		37D36BAD2A51BBF600662D2C /* CatalogSortValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BAC2A51BBF600662D2C /* CatalogSortValue.swift */; };
 		37D36BB12A51C08300662D2C /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BB02A51C08300662D2C /* CatalogTableViewCell.swift */; };
-		37D36BB42A51C21B00662D2C /* CatalogCustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BB32A51C21B00662D2C /* CatalogCustomImageView.swift */; };
 		37D36BB62A51C31600662D2C /* CatalogCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BB52A51C31600662D2C /* CatalogCellViewModel.swift */; };
 		37D36BBA2A51FBA800662D2C /* UIImageView + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BB92A51FBA800662D2C /* UIImageView + Ext.swift */; };
 		37DFD16A2A408F090020667A /* CustomActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DFD1692A408F090020667A /* CustomActionButton.swift */; };
@@ -140,7 +139,6 @@
 		37D36BA72A51B71800662D2C /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
 		37D36BAC2A51BBF600662D2C /* CatalogSortValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSortValue.swift; sourceTree = "<group>"; };
 		37D36BB02A51C08300662D2C /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
-		37D36BB32A51C21B00662D2C /* CatalogCustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCustomImageView.swift; sourceTree = "<group>"; };
 		37D36BB52A51C31600662D2C /* CatalogCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCellViewModel.swift; sourceTree = "<group>"; };
 		37D36BB92A51FBA800662D2C /* UIImageView + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Ext.swift"; sourceTree = "<group>"; };
 		37DFD1692A408F090020667A /* CustomActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionButton.swift; sourceTree = "<group>"; };
@@ -428,7 +426,6 @@
 		377DF5EC2A3FA09C00090DCD /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				37D36BB22A51C20100662D2C /* CatalogModule */,
 				3752303E2A41ABAA00DE6F73 /* CartModule */,
 				377DF5EF2A3FA14900090DCD /* CustomLabel.swift */,
 				377DF5F12A3FA3CC00090DCD /* RateStackView.swift */,
@@ -522,14 +519,6 @@
 				37D36BB52A51C31600662D2C /* CatalogCellViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		37D36BB22A51C20100662D2C /* CatalogModule */ = {
-			isa = PBXGroup;
-			children = (
-				37D36BB32A51C21B00662D2C /* CatalogCustomImageView.swift */,
-			);
-			path = CatalogModule;
 			sourceTree = "<group>";
 		};
 		37E0EC402A48ACAA00F17FC7 /* View */ = {
@@ -881,7 +870,6 @@
 				372EEF802A44729C008FDB16 /* CartDeleteViewModel.swift in Sources */,
 				378504FE2A49F02A000D6AC7 /* NftSingleCollection.swift in Sources */,
 				373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */,
-				37D36BB42A51C21B00662D2C /* CatalogCustomImageView.swift in Sources */,
 				37DFD16A2A408F090020667A /* CustomActionButton.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				374EB0402A3E029B00D57F36 /* CartCoordinator.swift in Sources */,

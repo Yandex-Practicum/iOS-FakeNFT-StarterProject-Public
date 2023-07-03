@@ -22,28 +22,42 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
         }
     }
 
-    private lazy var coverImageView: CatalogCustomImageView = {
-        let imageView = CatalogCustomImageView(frame: .zero)
+    private lazy var coverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
         return imageView
     }()
     
     private lazy var quantityLabel: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
-        label.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        label.contentMode = .topLeft
         return label
     }()
     
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 2
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 6)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
         stackView.addArrangedSubview(coverImageView)
         stackView.addArrangedSubview(quantityLabel)
         return stackView
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .clear
         setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func loadCover(from stringUrl: String) {
@@ -67,7 +81,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
 }
 
 // MARK: - Ext Constraints
-extension CatalogTableViewCell {
+private extension CatalogTableViewCell {
     func setupConstraints() {
         setupMainStackView()
     }

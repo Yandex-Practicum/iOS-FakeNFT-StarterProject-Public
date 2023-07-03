@@ -25,7 +25,10 @@ final class CatalogViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .clear
         tableView.register(CatalogTableViewCell.self, forCellReuseIdentifier: CatalogTableViewCell.defaultReuseIdentifier)
+        tableView.delegate = self
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -44,7 +47,7 @@ final class CatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .ypLightGrey
+        view.backgroundColor = .ypWhite
         setupConstraints()
         setupNavigationBar()
         createDataSource()
@@ -90,6 +93,15 @@ final class CatalogViewController: UIViewController {
     }
     
 
+}
+
+// MARK: - Ext TableViewDelegate
+extension CatalogViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return dataSource.getCatalogRowHeight(for: tableView)
+    }
+    
+    
 }
 
 // MARK: - Ext CatalogMainScreenCoordinatable
@@ -141,9 +153,9 @@ extension CatalogViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }

@@ -13,7 +13,7 @@ protocol CartDataSourceManagerProtocol {
     var onDeleteHandler: ((String?) -> Void)? { get set }
     func createCartDataSource(for tableView: UITableView, with data: [NftSingleCollection])
     func updateTableView(with data: [NftSingleCollection])
-    func getRowHeight(for tableView: UITableView) -> CGFloat
+    func getCartRowHeight(for tableView: UITableView) -> CGFloat
 }
 
 protocol CatalogDataSourceManagerProtocol {
@@ -21,6 +21,7 @@ protocol CatalogDataSourceManagerProtocol {
     typealias CatalogSnapshot = NSDiffableDataSourceSnapshot<NftTableViewSection, NftCollections>
     func createCatalogDataSource(for tableView: UITableView, with data: [NftCollections])
     func updateTableView(with data: [NftCollections])
+    func getCatalogRowHeight(for tableView: UITableView) -> CGFloat
 }
 
 final class TableViewDataSource {
@@ -45,7 +46,7 @@ extension TableViewDataSource: CartDataSourceManagerProtocol {
         cartDataSource?.apply(createCartSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
-    func getRowHeight(for tableView: UITableView) -> CGFloat {
+    func getCartRowHeight(for tableView: UITableView) -> CGFloat {
         return tableView.frame.height / 4.0
     }
 }
@@ -63,6 +64,10 @@ extension TableViewDataSource: CatalogDataSourceManagerProtocol {
     
     func updateTableView(with data: [NftCollections]) {
         catalogDataSource?.apply(createCatalogSnapshot(from: data), animatingDifferences: true, completion: nil)
+    }
+    
+    func getCatalogRowHeight(for tableView: UITableView) -> CGFloat {
+        return tableView.frame.height / 3.0
     }
 }
 

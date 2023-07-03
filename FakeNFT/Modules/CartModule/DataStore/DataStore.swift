@@ -19,20 +19,20 @@ protocol CartDataStorageProtocol {
 protocol CatalogDataStorageProtocol {
     var catalogSortDescriptor: CatalogSortValue? { get set }
     var catalogDataPublisher: AnyPublisher<[NftCollections], Never> { get }
-    func addCartRowItem(_ item: NftCollections)
-    func getCartRowItems() -> [NftCollections]
+    func addCatalogRowItem(_ item: NftCollections)
+    func getCatalogRowItems() -> [NftCollections]
 }
 
 final class DataStore {
     var cartSortDescriptor: CartSortValue? {
         didSet {
-            sendCartStoredItemsUpdates(newData: getSortedItems(by: cartSortDescriptor))
+            sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor))
         }
     }
     
     var catalogSortDescriptor: CatalogSortValue? {
         didSet {
-            
+            sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor))
         }
     }
     
@@ -43,13 +43,13 @@ final class DataStore {
         
     ] {
         didSet {
-            sendCartStoredItemsUpdates(newData: getSortedItems(by: cartSortDescriptor))
+            sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor))
         }
     }
     
     private var catalogStoredItems: [NftCollections] = [] {
         didSet {
-            
+            sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor))
         }
     }
 }
@@ -81,11 +81,11 @@ extension DataStore: CatalogDataStorageProtocol {
         return storedCatalogPublishedItems.eraseToAnyPublisher()
     }
     
-    func addCartRowItem(_ item: NftCollections) {
+    func addCatalogRowItem(_ item: NftCollections) {
         catalogStoredItems.append(item)
     }
     
-    func getCartRowItems() -> [NftCollections] {
+    func getCatalogRowItems() -> [NftCollections] {
         return catalogStoredItems
     }
     
@@ -103,9 +103,33 @@ private extension DataStore {
     }
 }
 
+// MARK: - Ext Private CAtalog Sorting
+private extension DataStore {
+    func getCatalogSortedItems(by sortDescriptor: CatalogSortValue?) -> [NftCollections] {
+        guard let sortDescriptor else { return catalogStoredItems }
+        switch sortDescriptor {
+        case .name:
+            return sortByName()
+        case .quantity:
+            return sortByQuantity()
+        case .cancel:
+            return catalogStoredItems
+        }
+    }
+    
+    func sortByName() -> [NftCollections] {
+        return catalogStoredItems.sorted(by: { $0.name > $1.name })
+    }
+    
+    func sortByQuantity() -> [NftCollections] {
+        return catalogStoredItems.sorted(by: { $0.nfts.count > $1.nfts.count })
+    }
+    
+}
+
 // MARK: - Ext Private Cart Sorting
 private extension DataStore {
-    func getSortedItems(by sortDescriptor: CartSortValue?) -> [NftSingleCollection] {
+    func getCartSortedItems(by sortDescriptor: CartSortValue?) -> [NftSingleCollection] {
         guard let sortDescriptor else { return cartStoredItems }
         switch sortDescriptor {
         case .price:

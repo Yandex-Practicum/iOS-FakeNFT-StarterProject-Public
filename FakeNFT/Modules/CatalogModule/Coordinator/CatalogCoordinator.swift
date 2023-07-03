@@ -66,7 +66,7 @@ private extension CatalogCoordinator {
         let alert = alertConstructor.constructSortAlert()
         
         alertConstructor.addSortAlertActions(from: alert) { [weak router] sortValue in
-            sortValue == .cancel ? () : () // set filter on the screen
+            sortValue == .cancel ? () : screen.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         
