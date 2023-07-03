@@ -3,8 +3,11 @@ import UIKit
 final class CartViewController: UIViewController {
     
     private var addedNFTs: [NFT] = []
+    private var totalPrice: Float = 0
     
-    private let tableView: UITableView = {
+    // Элементы NFT - корзины
+    
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(NFTCell.self, forCellReuseIdentifier: NFTCell.reuseIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,13 +25,43 @@ final class CartViewController: UIViewController {
     
     // Элементы для нижней панели оплаты
     
-    private let paymentView: UIView = {
+    private lazy var paymentView: UIView = {
         let view = UIView()
         view.backgroundColor = .ypLightGrey
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private lazy var nftCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(addedNFTs.count)" + " NFT"
+        label.font = .caption1
+        label.textColor = .textOnSecondary
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var totalPriceLabel: UILabel = {
+        let label = UILabel()
+        let formattedPrice = String(format: "%.2f", totalPrice)
+        label.text = formattedPrice + " ETH"
+        label.font = .bodyBold
+        label.textColor = .ypGreen
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var paymentButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("К оплате", for: .normal)
+        button.backgroundColor = .ypBlack
+        button.tintColor = .white
+        button.layer.cornerRadius = 16
+        button.titleLabel?.font = .bodyBold
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
 
     override func viewDidLoad() {
@@ -49,6 +82,7 @@ final class CartViewController: UIViewController {
             setupEmptyView()
         } else {
             emptyLabel.isHidden = true
+            totalPrice = countPrice(addedNFTs)
             setupTableView()
             setupPaymentView()
         }
@@ -84,13 +118,39 @@ final class CartViewController: UIViewController {
     private func setupPaymentView() {
         // Добавляем элементы для нижней панели оплаты
         view.addSubview(paymentView)
+        paymentView.addSubview(nftCountLabel)
+        paymentView.addSubview(totalPriceLabel)
+        paymentView.addSubview(paymentButton)
         
         NSLayoutConstraint.activate([
             paymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -83),
             paymentView.heightAnchor.constraint(equalToConstant: 76),
             paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            nftCountLabel.topAnchor.constraint(equalTo: paymentView.topAnchor, constant: 16),
+            nftCountLabel.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
+            nftCountLabel.widthAnchor.constraint(equalToConstant: 79),
+            nftCountLabel.heightAnchor.constraint(equalToConstant: 20),
+            
+            totalPriceLabel.topAnchor.constraint(equalTo: nftCountLabel.bottomAnchor, constant: 2),
+            totalPriceLabel.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
+            totalPriceLabel.widthAnchor.constraint(equalToConstant: 79),
+            totalPriceLabel.heightAnchor.constraint(equalToConstant: 22),
+            
+            paymentButton.centerYAnchor.constraint(equalTo: paymentView.centerYAnchor),
+            paymentButton.trailingAnchor.constraint(equalTo: paymentView.trailingAnchor, constant: -16),
+            paymentButton.heightAnchor.constraint(equalToConstant: 44),
+            paymentButton.widthAnchor.constraint(equalToConstant: 240)
         ])
+    }
+    
+    private func countPrice(_ nftArray: [NFT]) -> Float {
+        var totalPrice: Float = 0
+        for nft in nftArray {
+            totalPrice += nft.price
+        }
+        return totalPrice
     }
 }
 
