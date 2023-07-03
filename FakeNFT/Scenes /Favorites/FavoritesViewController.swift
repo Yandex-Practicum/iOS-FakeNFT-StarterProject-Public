@@ -1,6 +1,6 @@
 import UIKit
 
-final class ProfileMyNFTViewController: UIViewController {
+final class FavoritesViewController: UIViewController {
     
     //MARK: - Layout elements
     private lazy var backButton = UIBarButtonItem(
@@ -13,7 +13,7 @@ final class ProfileMyNFTViewController: UIViewController {
     private lazy var emptyLabel: UILabel = {
         let emptyLabel = UILabel()
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
-        emptyLabel.text = "У Вас ещё нет NFT"
+        emptyLabel.text = "У Вас ещё нет избранных NFT"
         emptyLabel.font = UIFont.boldSystemFont(ofSize: 17)
         emptyLabel.textColor = .black
         return emptyLabel

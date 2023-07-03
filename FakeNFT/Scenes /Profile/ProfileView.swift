@@ -13,9 +13,9 @@ final class ProfileView: UIView {
     ]
     
     private let assetViewController: [UIViewController] = [
-    ProfileMyNFTViewController(),
-    ProfileFavoritesViewController(),
-    ProfileDevelopersViewController()
+    MyNFTViewController(),
+    FavoritesViewController(),
+    DevelopersViewController()
     ]
     
     //MARK: - Layout elements
