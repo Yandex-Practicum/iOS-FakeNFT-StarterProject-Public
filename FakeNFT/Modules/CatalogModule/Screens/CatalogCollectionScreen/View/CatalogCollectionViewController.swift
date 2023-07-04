@@ -20,7 +20,8 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     
     var cancellables = Set<AnyCancellable>()
     
-    let viewModel: CatalogCollectionViewModel
+    private let viewModel: CatalogCollectionViewModel
+    private let diffableDataSource: NftCollectionDSManagerProtocol
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -101,8 +102,9 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }()
     
     // MARK: Init
-    init(viewModel: CatalogCollectionViewModel) {
+    init(viewModel: CatalogCollectionViewModel, diffableDataSource: NftCollectionDSManagerProtocol) {
         self.viewModel = viewModel
+        self.diffableDataSource = diffableDataSource
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -185,6 +187,7 @@ private extension CatalogCollectionViewController {
     func setupConstraints() {
         setupCoverImageView()
         setupMainStackView()
+        setupCollectionView()
     }
     
     func setupCoverImageView() {
@@ -208,6 +211,18 @@ private extension CatalogCollectionViewController {
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mainStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 136)
+        ])
+    }
+    
+    func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 24),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

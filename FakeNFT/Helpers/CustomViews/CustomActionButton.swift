@@ -14,18 +14,8 @@ final class CustomActionButton: UIButton {
         setAppearance(for: appearance)
         setTitle(title, for: .normal)
         
-        if let cornerRadius {
-            layer.cornerRadius = cornerRadius
-        } else {
-            layer.cornerRadius = 16
-        }
-        
-        if let fontWeight {
-            titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: fontWeight)
-        } else {
-            titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        }
-       
+        layer.cornerRadius = cornerRadius ?? 16
+        titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: fontWeight ?? .bold)
         titleLabel?.textAlignment = .center
     }
     

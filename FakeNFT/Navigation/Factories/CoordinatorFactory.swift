@@ -18,8 +18,8 @@ final class CoordinatorFactory  {
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable & CartAlertConstructable & CatalogAlertConstructuble = AlertConstructor()
     private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
-    private let networkClient: NetworkClient = DefaultNetworkClient()
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol = TableViewDataSource()
+    private let collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol = CollectionViewDataSourceManager()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -36,8 +36,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
             dataStore: dataStore,
-            networkClient: networkClient,
-            dataSource: tableViewDataSource)
+            tableViewDataSource: tableViewDataSource,
+            collectionViewDataSource: collectionViewDataSource)
     }
     
     func makeCartCoordinator(with router: Routable) -> CoordinatorProtocol {
@@ -47,8 +47,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
             dataStore: dataStore,
-            networkClient: networkClient,
-            tableViewDataSource: tableViewDataSource
+            tableViewDataSource: tableViewDataSource,
+            collectionViewDataSource: collectionViewDataSource
         )
     }
 }

@@ -14,24 +14,25 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable & CatalogAlertConstructuble
     private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol
-    private let networkClient: NetworkClient
-    private let dataSource: CatalogDataSourceManagerProtocol
+    private let tableViewDataSource: CatalogDataSourceManagerProtocol
+    private let collectionViewDataSource: NftCollectionDSManagerProtocol
     
     init(factory: CatalogModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable & CatalogAlertConstructuble,
          dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol,
-         networkClient: NetworkClient,
-         dataSource: CatalogDataSourceManagerProtocol) {
+         tableViewDataSource: CatalogDataSourceManagerProtocol,
+         collectionViewDataSource: NftCollectionDSManagerProtocol
+    ) {
         
         self.factory = factory
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
-        self.networkClient = networkClient
-        self.dataSource = dataSource
+        self.tableViewDataSource = tableViewDataSource
+        self.collectionViewDataSource = collectionViewDataSource
     }
     
     func start() {
@@ -42,9 +43,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
 // MARK: - Ext Screens
 private extension CatalogCoordinator {
     func createScreen() {
-        var catalogScreen = factory.makeCatalogScreenView(dataSource: dataSource,
-                                                          dataStore: dataStore,
-                                                          networkClient: networkClient)
+        var catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         
         let navController = navigationControllerFactory.makeNavController(.catalog, rootViewController: catalogScreen) // навигационный стек
         
@@ -60,7 +59,7 @@ private extension CatalogCoordinator {
     }
     
     func showCatalogCollectionScreen(with collection: NftCollection) {
-        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection)
+        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource)
         
         collectionScreen.onCancel = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)

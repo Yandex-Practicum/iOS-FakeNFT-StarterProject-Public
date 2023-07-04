@@ -158,7 +158,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         
     }
     
-    private func setupImageView(for cartRow: NftSingleCollection?) {
+    private func setupImageView(for cartRow: SingleNft?) {
         guard let imageName = cartRow?.images.first else { return }
         itemImageView.setImage(from: URL(string: imageName))
     }

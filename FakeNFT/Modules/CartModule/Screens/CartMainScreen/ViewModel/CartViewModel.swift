@@ -11,7 +11,7 @@ import Combine
 final class CartViewModel {
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private (set) var visibleRows: [NftSingleCollection] = []
+    @Published private (set) var visibleRows: [SingleNft] = []
     @Published private (set) var cartError: Error?
     @Published private (set) var requestResult: RequestResult?
     
@@ -40,7 +40,7 @@ final class CartViewModel {
         // MARK: Replace for loading from userProfile        
         let request = RequestConstructor.constructNftCollectionRequest(method: .get)
         requestResult = .loading
-        networkClient.send(request: request, type: [NftSingleCollection].self) { [weak self] result in
+        networkClient.send(request: request, type: [SingleNft].self) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let data):
@@ -66,7 +66,7 @@ private extension CartViewModel {
             .store(in: &cancellables)
     }
     
-    func addRowsToStorage(_ rows: [NftSingleCollection]) {
+    func addRowsToStorage(_ rows: [SingleNft]) {
         rows.forEach { row in
             dataStore.addCartRowItem(row)
         }

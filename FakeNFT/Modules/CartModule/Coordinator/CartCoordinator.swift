@@ -14,16 +14,16 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable & CartAlertConstructable
     private var dataStore: CartDataStorageProtocol
-    private let networkClient: NetworkClient
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
+    private let collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
     
     init(factory: CartModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable & CartAlertConstructable,
          dataStore: CartDataStorageProtocol,
-         networkClient: NetworkClient,
-         tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
+         tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol,
+         collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
     ) {
         
         self.factory = factory
@@ -31,8 +31,8 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
-        self.networkClient = networkClient
         self.tableViewDataSource = tableViewDataSource
+        self.collectionViewDataSource = collectionViewDataSource
     }
     
     func start() {
@@ -43,7 +43,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
-        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore, networkClient: networkClient)
+        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
@@ -84,7 +84,7 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(networkClient: networkClient, dataStore: dataStore)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore, dataSource: collectionViewDataSource)
         
         paymentMethodScreen.onProceed = { [weak self] request in
             self?.showPaymentResultScreen(with: request)
@@ -102,7 +102,7 @@ private extension CartCoordinator {
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
-        var paymentResultScreen = factory.makePaymentResultScreenView(networkClient: networkClient, request: request)
+        var paymentResultScreen = factory.makePaymentResultScreenView(request: request)
         
         paymentResultScreen.onMain = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)

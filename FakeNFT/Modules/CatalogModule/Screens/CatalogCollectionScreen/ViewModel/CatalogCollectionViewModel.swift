@@ -11,7 +11,10 @@ import Combine
 final class CatalogCollectionViewModel {
     @Published private (set) var nftCollection: NftCollection
     
-    init(nftCollection: NftCollection) {
+    private let networkClient: NetworkClient
+    
+    init(nftCollection: NftCollection, networkClient: NetworkClient) {
         self.nftCollection = nftCollection
+        self.networkClient = networkClient
     }
 }

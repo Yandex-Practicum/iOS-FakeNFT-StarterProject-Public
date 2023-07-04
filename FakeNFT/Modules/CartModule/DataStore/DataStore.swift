@@ -10,9 +10,9 @@ import Combine
 
 protocol CartDataStorageProtocol {
     var cartSortDescriptor: CartSortValue? { get set }
-    var cartDataPublisher: AnyPublisher<[NftSingleCollection], Never> { get }
-    func addCartRowItem(_ item: NftSingleCollection)
-    func getCartRowItems() -> [NftSingleCollection]
+    var cartDataPublisher: AnyPublisher<[SingleNft], Never> { get }
+    func addCartRowItem(_ item: SingleNft)
+    func getCartRowItems() -> [SingleNft]
     func deleteItem(with id: String?)
 }
 
@@ -36,10 +36,10 @@ final class DataStore {
         }
     }
     
-    private var storedCartPublishedItems = CurrentValueSubject<[NftSingleCollection], Never>([])
+    private var storedCartPublishedItems = CurrentValueSubject<[SingleNft], Never>([])
     private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([])
     
-    private var cartStoredItems: [NftSingleCollection] = [
+    private var cartStoredItems: [SingleNft] = [
         
     ] {
         didSet {
@@ -57,15 +57,15 @@ final class DataStore {
 // MARK: - Ext CartDataStorageProtocol
 extension DataStore: CartDataStorageProtocol {
     
-    var cartDataPublisher: AnyPublisher<[NftSingleCollection], Never> {
+    var cartDataPublisher: AnyPublisher<[SingleNft], Never> {
         return storedCartPublishedItems.eraseToAnyPublisher()
     }
     
-    func addCartRowItem(_ item: NftSingleCollection) {
+    func addCartRowItem(_ item: SingleNft) {
         cartStoredItems.append(item)
     }
     
-    func getCartRowItems() -> [NftSingleCollection] {
+    func getCartRowItems() -> [SingleNft] {
         return cartStoredItems
     }
     
@@ -94,7 +94,7 @@ extension DataStore: CatalogDataStorageProtocol {
 
 // MARK: - Ext Private Sending
 private extension DataStore {
-    func sendCartStoredItemsUpdates(newData: [NftSingleCollection]) {
+    func sendCartStoredItemsUpdates(newData: [SingleNft]) {
         storedCartPublishedItems.send(newData)
     }
     
@@ -129,7 +129,7 @@ private extension DataStore {
 
 // MARK: - Ext Private Cart Sorting
 private extension DataStore {
-    func getCartSortedItems(by sortDescriptor: CartSortValue?) -> [NftSingleCollection] {
+    func getCartSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNft] {
         guard let sortDescriptor else { return cartStoredItems }
         switch sortDescriptor {
         case .price:
@@ -143,15 +143,15 @@ private extension DataStore {
         }
     }
     
-    func sortByPrice() -> [NftSingleCollection] {
+    func sortByPrice() -> [SingleNft] {
         return cartStoredItems.sorted(by: { $0.price < $1.price })
     }
     
-    func sortByRate() -> [NftSingleCollection] {
+    func sortByRate() -> [SingleNft] {
         return cartStoredItems.sorted(by: { $0.rating > $1.rating })
     }
     
-    func sortByName() -> [NftSingleCollection] {
+    func sortByName() -> [SingleNft] {
         return cartStoredItems.sorted(by: { $0.name > $1.name })
     }
 }

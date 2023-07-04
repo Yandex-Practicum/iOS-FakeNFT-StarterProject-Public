@@ -8,11 +8,11 @@
 import UIKit
 
 protocol CartDataSourceManagerProtocol {
-    typealias CartDataSource = UITableViewDiffableDataSource<NftTableViewSection, NftSingleCollection>
-    typealias CartSnapshot = NSDiffableDataSourceSnapshot<NftTableViewSection, NftSingleCollection>
+    typealias CartDataSource = UITableViewDiffableDataSource<NftTableViewSection, SingleNft>
+    typealias CartSnapshot = NSDiffableDataSourceSnapshot<NftTableViewSection, SingleNft>
     var onDeleteHandler: ((String?) -> Void)? { get set }
-    func createCartDataSource(for tableView: UITableView, with data: [NftSingleCollection])
-    func updateTableView(with data: [NftSingleCollection])
+    func createCartDataSource(for tableView: UITableView, with data: [SingleNft])
+    func updateTableView(with data: [SingleNft])
     func getCartRowHeight(for tableView: UITableView) -> CGFloat
 }
 
@@ -33,7 +33,7 @@ final class TableViewDataSource {
 
 // MARK: - Ext CartDataSourceManagerProtocol
 extension TableViewDataSource: CartDataSourceManagerProtocol {
-    func createCartDataSource(for tableView: UITableView, with data: [NftSingleCollection]) {
+    func createCartDataSource(for tableView: UITableView, with data: [SingleNft]) {
         cartDataSource = CartDataSource(tableView: tableView) { [weak self] tableView, indexPath, item in
             return self?.cartCell(tableView: tableView, indexPath: indexPath, item: item)
         }
@@ -42,7 +42,7 @@ extension TableViewDataSource: CartDataSourceManagerProtocol {
         cartDataSource?.apply(createCartSnapshot(from: data))
     }
     
-    func updateTableView(with data: [NftSingleCollection]) {
+    func updateTableView(with data: [SingleNft]) {
         cartDataSource?.apply(createCartSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
@@ -73,7 +73,7 @@ extension TableViewDataSource: CatalogDataSourceManagerProtocol {
 
 // MARK: - Ext Cells
 private extension TableViewDataSource {
-    func cartCell(tableView: UITableView, indexPath: IndexPath, item: NftSingleCollection) -> UITableViewCell {
+    func cartCell(tableView: UITableView, indexPath: IndexPath, item: SingleNft) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CartTableViewCell.defaultReuseIdentifier,
             for: indexPath
@@ -100,7 +100,7 @@ private extension TableViewDataSource {
 
 // MARK: - Ext Shapshots
 private extension TableViewDataSource {
-    func createCartSnapshot(from data: [NftSingleCollection]) -> CartSnapshot {
+    func createCartSnapshot(from data: [SingleNft]) -> CartSnapshot {
         var snapshot = CartSnapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(data, toSection: .main)

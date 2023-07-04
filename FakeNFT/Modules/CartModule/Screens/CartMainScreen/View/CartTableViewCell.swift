@@ -124,7 +124,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         cancellables.forEach({ $0.cancel() })
     }
     
-    private func updateCell(with newRow: NftSingleCollection ) {
+    private func updateCell(with newRow: SingleNft ) {
         nftImageView.setImage(from: URL(string: newRow.images.first ?? ""))
         nftName.text = newRow.name
         rateStackView.addRating(newRow.rating)

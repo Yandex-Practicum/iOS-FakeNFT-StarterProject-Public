@@ -166,16 +166,16 @@ final class CartViewController: UIViewController {
             .store(in: &cancellables)
     }
     
-    private func updateTotalLabels(from rows: [NftSingleCollection]) {
+    private func updateTotalLabels(from rows: [SingleNft]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
     }
     
-    private func updateTableView(with rows: [NftSingleCollection]) {
+    private func updateTableView(with rows: [SingleNft]) {
         diffableDataSource.updateTableView(with: rows)
     }
     
-    private func showTheNeededView(for rows: [NftSingleCollection]) {
+    private func showTheNeededView(for rows: [SingleNft]) {
         let isLoading = viewModel.requestResult != nil
         cartStackView.isHidden = rows.isEmpty
         emptyStateLabel.isHidden = !rows.isEmpty || isLoading

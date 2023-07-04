@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class CartDeleteViewModel {
-    @Published private (set) var itemToDelete: NftSingleCollection?
+    @Published private (set) var itemToDelete: SingleNft?
     
     private let dataStore: CartDataStorageProtocol
     

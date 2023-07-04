@@ -24,12 +24,8 @@ extension RateStarImageView {
     func setAppearance(for appearance: Appearance) {
         switch appearance {
         case .active:
-//            setImage(UIImage(named: K.Icons.activeStarRate), for: .normal)
-//            isEnabled = false
             image = UIImage(named: K.Icons.activeStarRate)
         case .notActive:
-//            setImage(UIImage(named: K.Icons.notActiveStarRate), for: .normal)
-//            isEnabled = false
             image = UIImage(named: K.Icons.notActiveStarRate)
         }
     }
