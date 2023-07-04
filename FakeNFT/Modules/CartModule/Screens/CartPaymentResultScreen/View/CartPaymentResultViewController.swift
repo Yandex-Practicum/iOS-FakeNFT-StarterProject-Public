@@ -71,6 +71,7 @@ final class CartPaymentResultViewController: UIViewController, PaymentResultCoor
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = false
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {

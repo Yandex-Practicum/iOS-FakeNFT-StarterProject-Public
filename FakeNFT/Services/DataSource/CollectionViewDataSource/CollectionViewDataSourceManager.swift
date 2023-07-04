@@ -15,41 +15,61 @@ protocol PaymentMethodDSManagerProtocol {
 }
 
 protocol NftCollectionDSManagerProtocol {
-    typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, PaymentMethodRow>
-    typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, PaymentMethodRow>
-    func createDataSource(with collectionView: UICollectionView, with data: NftCollection)
-    func updateCollection(with data: NftCollection)
+    typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, SingleNft>
+    typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, SingleNft>
+    func createDataSource(with collectionView: UICollectionView, with data: [SingleNft])
+    func updateCollection(with data: [SingleNft])
 }
 
-final class CollectionViewDataSourceManager: PaymentMethodDSManagerProtocol {
-    private var dataSource: CartDataSource?
-    
-    func createDataSource(with collectionView: UICollectionView, with data: [PaymentMethodRow]) {
-        dataSource = CartDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
-            return self?.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
-        })
-        dataSource?.apply(createSnapshot(from: data))
-    }
-    
-    func updateCollection(with data: [PaymentMethodRow]) {
-        dataSource?.apply(createSnapshot(from: data), animatingDifferences: true)
-    }
+final class CollectionViewDataSourceManager {
+    private var cartDataSource: CartDataSource?
+    private var collectionDataSource: CollectionDataSource?
 }
 
 // MARK: - Ext NftCollectionDSManagerProtocol
 extension CollectionViewDataSourceManager: NftCollectionDSManagerProtocol {
-    func createDataSource(with collectionView: UICollectionView, with data: NftCollection) {
-        
+    func createDataSource(with collectionView: UICollectionView, with data: [SingleNft]) {
+        collectionDataSource = CollectionDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+            return self?.catalogCollectionCell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
+        })
     }
     
-    func updateCollection(with data: NftCollection) {
-        
+    func updateCollection(with data: [SingleNft]) {
+        collectionDataSource?.apply(createCatalogSingleCollectionSnapshot(from: data), animatingDifferences: true, completion: nil)
+    }
+    
+    private func catalogCollectionCell(collectionView: UICollectionView, indexPath: IndexPath, item: SingleNft) -> UICollectionViewCell {
+        guard let cell = collectionView
+            .dequeueReusableCell(
+                withReuseIdentifier: CatalogCollectionViewCell.defaultReuseIdentifier,
+                for: indexPath) as? CatalogCollectionViewCell
+        else { return UICollectionViewCell(frame: .zero) }
+        cell.viewModel = CatalogCollectionCellViewModel(nftRow: item)
+        return cell
+    }
+    
+    private func createCatalogSingleCollectionSnapshot(from data: [SingleNft]) -> CollectionSnapshot {
+        var snapshot = CollectionSnapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(data, toSection: .main)
+        return snapshot
     }
 }
 
-// MARK: - Ext
-private extension CollectionViewDataSourceManager {
-    func cell(collectionView: UICollectionView, indexPath: IndexPath, item: PaymentMethodRow) -> UICollectionViewCell {
+// MARK: - Ext PaymentMethodDSManagerProtocol
+extension CollectionViewDataSourceManager: PaymentMethodDSManagerProtocol {
+    func createDataSource(with collectionView: UICollectionView, with data: [PaymentMethodRow]) {
+        cartDataSource = CartDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+            return self?.cartPaymentMethodCell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
+        })
+        cartDataSource?.apply(createCartPaymentMethodSnapshot(from: data))
+    }
+    
+    func updateCollection(with data: [PaymentMethodRow]) {
+        cartDataSource?.apply(createCartPaymentMethodSnapshot(from: data), animatingDifferences: true)
+    }
+    
+    private func cartPaymentMethodCell(collectionView: UICollectionView, indexPath: IndexPath, item: PaymentMethodRow) -> UICollectionViewCell {
         guard
             let cell = collectionView
                 .dequeueReusableCell(
@@ -60,7 +80,7 @@ private extension CollectionViewDataSourceManager {
         return cell
     }
     
-    func createSnapshot(from data: [PaymentMethodRow]) -> CartSnapshot {
+    private func createCartPaymentMethodSnapshot(from data: [PaymentMethodRow]) -> CartSnapshot {
         var snapshot = CartSnapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(data, toSection: .main)

@@ -27,26 +27,15 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var id: String?
     
-    private lazy var nftImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
-        imageView.contentMode = .scaleAspectFit
+    private lazy var nftImageView: NftIMageView = {
+        let imageView = NftIMageView(frame: .zero)
         imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
         imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
         return imageView
     }()
     
-    private lazy var deleteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(
-            UIImage(
-                systemName: K.Icons.deleteItemFromCart)?
-                .withTintColor(
-                    .ypBlack ?? .black,
-                    renderingMode: .alwaysOriginal
-                ),
-            for: .normal)
+    private lazy var deleteButton: CustomAddOrDeleteButton = {
+        let button = CustomAddOrDeleteButton(appearance: .delete)
         button.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         return button
     }()
@@ -122,6 +111,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         super.prepareForReuse()
         rateStackView.removeRating()
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func updateCell(with newRow: SingleNft ) {

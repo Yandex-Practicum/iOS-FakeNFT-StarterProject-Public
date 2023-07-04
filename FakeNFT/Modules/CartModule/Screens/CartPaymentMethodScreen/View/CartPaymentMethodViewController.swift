@@ -22,9 +22,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     private let viewModel: CartPaymentMethodViewModel
     private let dataSource: PaymentMethodDSManagerProtocol
     
-    private enum GridItemSize: CGFloat {
-        case half = 0.5
-    }
+    
     
     private var cancellables = Set<AnyCancellable>()
    
@@ -121,6 +119,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {
@@ -177,7 +176,7 @@ private extension CartPaymentMethodViewController {
 extension CartPaymentMethodViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let interitemSpacing = 5.0
-        return CGSize(width: collectionView.bounds.width * GridItemSize.half.rawValue - interitemSpacing, height: 46)
+        return CGSize(width: collectionView.bounds.width / GridItemSize.twoInRow.rawValue - interitemSpacing, height: 46)
     }
 }
 

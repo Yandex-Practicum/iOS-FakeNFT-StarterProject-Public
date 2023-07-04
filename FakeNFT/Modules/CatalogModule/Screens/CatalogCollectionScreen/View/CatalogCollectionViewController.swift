@@ -23,9 +23,17 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     private let viewModel: CatalogCollectionViewModel
     private let diffableDataSource: NftCollectionDSManagerProtocol
     
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 8
+        return layout
+    }()
+    
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: CatalogCollectionViewCell.defaultReuseIdentifier)
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -70,7 +78,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-
+        
         return textView
     }()
     
@@ -80,7 +88,6 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         stackView.distribution = .fill
         stackView.spacing = 8
         
-        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(authorDescriptionLabel)
         return stackView
@@ -89,11 +96,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fill
         stackView.spacing = 5
-        
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 18)
         
         stackView.addArrangedSubview(titleStackView)
         stackView.addArrangedSubview(collectionDescriptionTextView)
@@ -118,8 +121,20 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         view.backgroundColor = .ypWhite
         setupLeftNavBarItem(with: nil, action: #selector(cancelTapped))
         setupConstraints()
-        bind()
         createCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+        bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+        cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
 }
 
@@ -142,17 +157,23 @@ private extension CatalogCollectionViewController {
                 self?.updateUI(with: collection)
             }
             .store(in: &cancellables)
+        
+        viewModel.$visibleNfts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] rows in
+                self?.updateCollectionView(with: rows)
+            }.store(in: &cancellables)
     }
     
     func createCollectionView() {
-        
+        diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
     }
     
     func updateUI(with collection: NftCollection) {
         updateCoverImage(for: collection)
         updateTitleLabelText(for: collection)
         updateDescriptionTextView(for: collection)
-        updateCollectionView(for: collection)
+        updateSingleNfts(for: collection)
         
     }
     
@@ -175,10 +196,27 @@ private extension CatalogCollectionViewController {
     
     func updateDescriptionTextView(for collection: NftCollection) {
         collectionDescriptionTextView.text = collection.description
+        updateTextViewHeight()
     }
     
-    func updateCollectionView(for collection: NftCollection) {
-        
+    func updateTextViewHeight() {
+        let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
+    
+    func updateSingleNfts(for collection: NftCollection) {
+        viewModel.updateNfts(from: collection)
+    }
+    
+    func updateCollectionView(with data: [SingleNft]) {
+        diffableDataSource.updateCollection(with: data)
+    }
+}
+
+// MARK: - Ext DelegateFlowLayout
+extension CatalogCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: (collectionView.bounds.width / GridItemSize.threeInRow.rawValue - 1), height: view.bounds.height / 4)
     }
 }
 
@@ -208,9 +246,8 @@ private extension CatalogCollectionViewController {
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 16),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 136)
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
@@ -219,10 +256,10 @@ private extension CatalogCollectionViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 24),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 16),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }

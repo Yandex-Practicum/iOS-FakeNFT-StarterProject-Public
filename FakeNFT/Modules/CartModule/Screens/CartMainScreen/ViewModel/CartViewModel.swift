@@ -38,13 +38,13 @@ final class CartViewModel {
     
     func load() {
         // MARK: Replace for loading from userProfile        
-        let request = RequestConstructor.constructNftCollectionRequest(method: .get)
+        let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: "1")
         requestResult = .loading
-        networkClient.send(request: request, type: [SingleNft].self) { [weak self] result in
+        networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let data):
-                self.addRowsToStorage(data)
+                self.dataStore.addCartRowItem(data)
                 requestResult = nil
             case .failure(let error):
                 self.cartError = error
@@ -66,9 +66,9 @@ private extension CartViewModel {
             .store(in: &cancellables)
     }
     
-    func addRowsToStorage(_ rows: [SingleNft]) {
-        rows.forEach { row in
-            dataStore.addCartRowItem(row)
-        }
-    }
+//    func addRowsToStorage(_ rows: [SingleNft]) {
+//        rows.forEach { row in
+//            dataStore.addCartRowItem(row)
+//        }
+//    }
 }

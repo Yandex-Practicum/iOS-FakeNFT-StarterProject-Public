@@ -25,9 +25,9 @@ struct RequestConstructor {
             dto: dto)
     }
     
-    static func constructNftCollectionRequest(method: HttpMethod) -> NetworkRequest {
+    static func constructNftCollectionRequest(method: HttpMethod, collectionId: String) -> NetworkRequest {
         return Request(
-            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection),
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection + collectionId),
             httpMethod: method)
     }
     

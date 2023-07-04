@@ -25,10 +25,8 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     
     private let viewModel: CartDeleteViewModel
     
-    private lazy var itemImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+    private lazy var itemImageView: NftIMageView = {
+        let imageView = NftIMageView(frame: .zero)
         return imageView
     }()
     
@@ -115,7 +113,6 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        bind()
         setupBlur()
         setupConstraints()
         updateItemToDelete(with: idToDelete)
@@ -130,6 +127,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {

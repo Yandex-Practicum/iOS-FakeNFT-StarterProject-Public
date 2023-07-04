@@ -134,6 +134,7 @@ final class CartViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func createDataSource() {
