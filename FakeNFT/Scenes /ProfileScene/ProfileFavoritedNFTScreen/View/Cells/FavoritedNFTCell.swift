@@ -92,7 +92,8 @@ extension FavoritedNFTCell {
                                                         constant: LocalConstants.defaultLeadingSpacing),
             stackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
-                                               constant: LocalConstants.defaultLeadingSpacing)
+                                               constant: LocalConstants.defaultLeadingSpacing),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 

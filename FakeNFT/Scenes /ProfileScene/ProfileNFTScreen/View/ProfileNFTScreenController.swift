@@ -208,8 +208,7 @@ extension ProfileNFTScreenController: UITableViewDelegate {
                 self.viewModel?.deleteNFT(atRow: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-            let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel) { [weak self] _ in
-                guard let self else { return }
+            let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel) { _ in
                 tableView.reloadRows(at: [indexPath], with: .none)
             }
             alertController.addAction(deleteAction)
