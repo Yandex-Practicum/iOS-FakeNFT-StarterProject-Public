@@ -26,7 +26,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 8
+        layout.minimumLineSpacing = 10
         return layout
     }()
     
@@ -216,7 +216,7 @@ private extension CatalogCollectionViewController {
 // MARK: - Ext DelegateFlowLayout
 extension CatalogCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (collectionView.bounds.width / GridItemSize.threeInRow.rawValue - 1), height: view.bounds.height / 4)
+        CGSize(width: (collectionView.bounds.width / GridItemSize.threeInRow.rawValue - 1), height: 170)
     }
 }
 
