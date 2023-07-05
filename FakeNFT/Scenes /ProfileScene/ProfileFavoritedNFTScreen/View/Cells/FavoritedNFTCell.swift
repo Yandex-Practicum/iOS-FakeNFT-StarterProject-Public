@@ -94,22 +94,27 @@ extension FavoritedNFTCell {
 
     func setRating(to rating: Int) {
         for _ in 1...rating {
-            let star = UICreator.makeImageView(withImage: Constants.IconNames.activeRating,
-                                               cornerRadius: 0)
-            star.widthAnchor.constraint(equalToConstant: 12).isActive = true
-            star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
-            nftRatingStackView.addArrangedSubview(star)
+            addStar(withState: Constants.IconNames.activeRating)
         }
         if rating == 5 {
             return
         }
         for _ in (rating + 1)...5 {
-            let star = UICreator.makeImageView(withImage: Constants.IconNames.inactiveRating,
-                                               cornerRadius: 0)
-            star.image = star.image?.withTintColor(.appLightGray)
-            star.widthAnchor.constraint(equalToConstant: 12).isActive = true
-            star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
-            nftRatingStackView.addArrangedSubview(star)
+            addStar(withState: Constants.IconNames.inactiveRating)
         }
+    }
+}
+
+extension FavoritedNFTCell {
+
+    private func addStar(withState ratingState: String) {
+        let star = UICreator.makeImageView(withImage: ratingState,
+                                           cornerRadius: 0)
+        if ratingState == Constants.IconNames.inactiveRating {
+            star.image = star.image?.withTintColor(.appLightGray)
+        }
+        star.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
+        nftRatingStackView.addArrangedSubview(star)
     }
 }
