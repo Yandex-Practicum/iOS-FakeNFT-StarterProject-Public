@@ -35,3 +35,4 @@ YOU_HAVE_NO_FAVORITED_NFT_YET = "У Вас еще нет избранных NFT"
 PULL_TO_REFRESH = "Потяните чтобы обновить список";
 DELETE = "Удалить";
 SURE_TO_DELETE = "Вы уверены что хотите удалить этот NFT?";
+SOMETHING_WENT_WRONG = "Что-то пошло не так";

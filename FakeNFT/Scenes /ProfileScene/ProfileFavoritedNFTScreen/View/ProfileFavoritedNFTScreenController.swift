@@ -119,6 +119,11 @@ extension ProfileFavoritedNFTScreenController {
                 self.checkIfNoNFT()
             }
         }
+        viewModel.$shouldShowNetworkError.bind { [weak self] newValue in
+            guard let self else { return }
+            let errorHandler = ErrorHandler(delegate: self)
+            present(errorHandler.giveAlert(withMessage: newValue), animated: true)
+        }
     }
 
     private func showOrHideUI() {
@@ -209,6 +214,14 @@ extension ProfileFavoritedNFTScreenController: FavoritedNFTCellDelegate {
     func proceedLike(_ cell: FavoritedNFTCell) {
         guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
         viewModel?.proceedLike(forItem: indexPath.row)
+    }
+}
+
+// MARK: - ErrorHandlerDelegate
+extension ProfileFavoritedNFTScreenController: ErrorHandlerDelegate {
+
+    func proceedError() {
+        viewModel?.loadFavoritedNFTList()
     }
 }
 

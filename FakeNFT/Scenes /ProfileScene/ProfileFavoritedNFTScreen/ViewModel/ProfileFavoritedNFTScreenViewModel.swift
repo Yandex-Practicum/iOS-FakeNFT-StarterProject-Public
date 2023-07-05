@@ -23,6 +23,9 @@ final class ProfileFavoritedNFTScreenViewModel {
     @Observable
     private(set) var canReloadCollection: Bool = false
 
+    @Observable
+    private(set) var shouldShowNetworkError: String = ""
+
     private let networkClient = DefaultNetworkClient()
     private weak var profile: ProfileModel?
     private let dispatchGroup = DispatchGroup()
@@ -44,9 +47,12 @@ extension ProfileFavoritedNFTScreenViewModel {
                            type: ProfileNFTModel.self) { nft in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
-                if let unwrappedNFT = try? nft.get() {
+                do {
+                    let unwrappedNFT = try nft.get()
                     self.nftList.append(unwrappedNFT)
                     dispatchGroup.leave()
+                } catch let error {
+                    shouldShowNetworkError = "\(error)"
                 }
             }
         }

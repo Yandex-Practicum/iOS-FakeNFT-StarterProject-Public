@@ -23,6 +23,9 @@ final class ProfileNFTScreenViewModel {
     @Observable
     private(set) var canReloadTable: Bool = false
 
+    @Observable
+    private(set) var shouldShowNetworkError: String = ""
+
     private let networkClient = DefaultNetworkClient()
     private weak var profile: ProfileModel?
     private let dispatchGroup = DispatchGroup()
@@ -62,9 +65,12 @@ extension ProfileNFTScreenViewModel {
                            type: ProfileNFTModel.self) { nft in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
-                if let unwrappedNFT = try? nft.get() {
+                do {
+                    let unwrappedNFT = try nft.get()
                     self.nftList.append(unwrappedNFT)
                     self.checkForAuthorData(withAuthorID: "\(unwrappedNFT.author)")
+                } catch let error {
+                    shouldShowNetworkError = "\(error)"
                 }
             }
         }
