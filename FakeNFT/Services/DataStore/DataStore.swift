@@ -19,8 +19,12 @@ protocol CartDataStorageProtocol {
 protocol CatalogDataStorageProtocol {
     var catalogSortDescriptor: CatalogSortValue? { get set }
     var catalogDataPublisher: AnyPublisher<[NftCollection], Never> { get }
+    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> { get }
     func addCatalogRowItem(_ item: NftCollection)
     func getCatalogRowItems() -> [NftCollection]
+    func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
+    func addNftRowItem(_ item: SingleNft)
+    func updateLike(for itemId: String?)
 }
 
 final class DataStore {
@@ -36,8 +40,9 @@ final class DataStore {
         }
     }
     
-    private var storedCartPublishedItems = CurrentValueSubject<[SingleNft], Never>([])
-    private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([])
+    private var storedCartPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // items in the cart
+    private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([]) // items on the main catalog screen
+    private var storedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // stored collectionNfts
     
     private var cartStoredItems: [SingleNft] = [
         
@@ -50,6 +55,12 @@ final class DataStore {
     private var catalogStoredItems: [NftCollection] = [] {
         didSet {
             sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor))
+        }
+    }
+    
+    private var nftCollectionStoredItems: Set<SingleNft> = [] {
+        didSet {
+            sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems)
         }
     }
 }
@@ -81,15 +92,27 @@ extension DataStore: CatalogDataStorageProtocol {
         return storedCatalogPublishedItems.eraseToAnyPublisher()
     }
     
+    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> {
+        return storedCatalogNftsPublishedItems.eraseToAnyPublisher()
+    }
+    
     func addCatalogRowItem(_ item: NftCollection) {
         catalogStoredItems.append(item)
+    }
+    
+    func addNftRowItem(_ item: SingleNft) {
+        nftCollectionStoredItems.insert(item)
     }
     
     func getCatalogRowItems() -> [NftCollection] {
         return catalogStoredItems
     }
     
-    
+    func getCatalogNfts(from collection: NftCollection) -> [SingleNft] {
+        return nftCollectionStoredItems.filter { singeNft in
+            collection.nfts.contains(where: { $0 == singeNft.id })
+        }
+    }
 }
 
 // MARK: - Ext Private Sending
@@ -101,9 +124,13 @@ private extension DataStore {
     func sendCatalogStoredItemsUpdates(newData: [NftCollection]) {
         storedCatalogPublishedItems.send(newData)
     }
+    
+    func sendCatalogStoredNftsUpdates(newNfts: Set<SingleNft>) {
+        storedCatalogNftsPublishedItems.send(Array(newNfts))
+    }
 }
 
-// MARK: - Ext Private CAtalog Sorting
+// MARK: - Ext Private Catalog Sorting
 private extension DataStore {
     func getCatalogSortedItems(by sortDescriptor: CatalogSortValue?) -> [NftCollection] {
         guard let sortDescriptor else { return catalogStoredItems }

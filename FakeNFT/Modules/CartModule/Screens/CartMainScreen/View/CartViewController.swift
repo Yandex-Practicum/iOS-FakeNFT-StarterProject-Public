@@ -103,7 +103,7 @@ final class CartViewController: UIViewController {
     }()
     
     private var diffableDataSource: CartDataSourceManagerProtocol
-    private var viewModel: CartViewModel
+    private let viewModel: CartViewModel
     
     // MARK: Init
     init(dataSource: CartDataSourceManagerProtocol, viewModel: CartViewModel) {

@@ -21,7 +21,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     var cancellables = Set<AnyCancellable>()
     
     private let viewModel: CatalogCollectionViewModel
-    private let diffableDataSource: NftCollectionDSManagerProtocol
+    private var diffableDataSource: NftCollectionDSManagerProtocol
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -167,6 +167,9 @@ private extension CatalogCollectionViewController {
     
     func createCollectionView() {
         diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
+        diffableDataSource.onLikeHandler = { [weak self] id in
+            
+        }
     }
     
     func updateUI(with collection: NftCollection) {

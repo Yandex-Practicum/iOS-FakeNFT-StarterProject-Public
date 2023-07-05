@@ -13,6 +13,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     private var cancellables = Set<AnyCancellable>()
     private var id: String?
     
+    var onLike: ((String?) -> Void)?
+    
     var viewModel: CatalogCollectionCellViewModel? {
         didSet {
             viewModel?.$nftRow
@@ -70,7 +72,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var namePriceAndButtonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.alignment = .trailing
+        stackView.alignment = .center
         stackView.addArrangedSubview(labelsStackView)
         stackView.addArrangedSubview(addOrDeleteButton)
         return stackView
@@ -136,10 +138,21 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
 }
 
+// MARK: - Ext @objc
+@objc private extension CatalogCollectionViewCell {
+    func likeTapped() {
+        onLike?(id)
+    }
+}
+
 // MARK: - Ext Constraints
 private extension CatalogCollectionViewCell {
     func setupConstraints() {
         setupMainStackView()
+        setupLabelHeights()
+        setupNftImageViewSize()
+        setupNamePriceAndButtonStackView()
+        setupHeartButton()
     }
     
     func setupMainStackView() {
@@ -152,13 +165,36 @@ private extension CatalogCollectionViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+    }
+    
+    func setupLabelHeights() {
+        NSLayoutConstraint.activate([
+            nftName.heightAnchor.constraint(greaterThanOrEqualToConstant: 22),
+            nftPriceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 12)
+        ])
+    }
+    
+    func setupNftImageViewSize() {
+        NSLayoutConstraint.activate([
+            nftImageView.heightAnchor.constraint(equalTo: nftImageView.widthAnchor)
+        ])
+    }
+    
+    func setupNamePriceAndButtonStackView() {
+        NSLayoutConstraint.activate([
+            namePriceAndButtonStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
+        ])
+    }
+    
+    func setupHeartButton() {
+        addSubview(heartButton)
+        heartButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nftImageView.heightAnchor.constraint(equalTo: nftImageView.widthAnchor),
-            nftName.heightAnchor.constraint(greaterThanOrEqualToConstant: 22),
-            nftPriceLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 12),
-            addOrDeleteButton.trailingAnchor.constraint(equalTo: namePriceAndButtonStackView.trailingAnchor),
-            namePriceAndButtonStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
+            heartButton.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 10),
+            heartButton.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -10),
+            heartButton.heightAnchor.constraint(equalToConstant: 18),
+            heartButton.widthAnchor.constraint(equalToConstant: 21)
         ])
     }
 }

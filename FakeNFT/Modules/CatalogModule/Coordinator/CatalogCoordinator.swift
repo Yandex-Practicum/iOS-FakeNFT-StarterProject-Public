@@ -59,7 +59,7 @@ private extension CatalogCoordinator {
     }
     
     func showCatalogCollectionScreen(with collection: NftCollection) {
-        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource)
+        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource, dataStore: dataStore)
         
         collectionScreen.onCancel = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)

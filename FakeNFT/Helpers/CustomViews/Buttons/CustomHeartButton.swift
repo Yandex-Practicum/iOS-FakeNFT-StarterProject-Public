@@ -24,9 +24,11 @@ extension CustomHeartButton {
     func setAppearance(for appearance: Appearance) {
         switch appearance {
         case .favourite:
-            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed), for: .normal)
+//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed), for: .normal)
+            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed, renderingMode: .alwaysOriginal), for: .normal)
         case .normal:
-            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite), for: .normal)
+//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite), for: .normal)
+            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite, renderingMode: .alwaysOriginal), for: .normal)
         }
         
     }
