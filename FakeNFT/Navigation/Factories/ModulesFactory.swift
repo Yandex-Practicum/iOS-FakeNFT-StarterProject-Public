@@ -11,7 +11,8 @@ protocol CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
                                dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable
     func makeCatalogCollectionScreenView(with collection: NftCollection,
-                                         dataSource: NftCollectionDSManagerProtocol) -> Presentable & CatalogCollectionCoordinatable
+                                         dataSource: NftCollectionDSManagerProtocol,
+                                         dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable
 }
 
 protocol CartModuleFactoryProtocol {
@@ -34,9 +35,9 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
     }
     
-    func makeCatalogCollectionScreenView(with collection: NftCollection, dataSource: NftCollectionDSManagerProtocol) -> Presentable & CatalogCollectionCoordinatable {
+    func makeCatalogCollectionScreenView(with collection: NftCollection, dataSource: NftCollectionDSManagerProtocol, dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable {
         let networkClient = DefaultNetworkClient()
-        let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient)
+        let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
         let viewController = CatalogCollectionViewController(viewModel: viewModel, diffableDataSource: dataSource)
         return viewController
     }
