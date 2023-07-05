@@ -203,11 +203,13 @@ extension ProfileNFTScreenController: UITableViewDelegate {
             let alertController = UIAlertController(title: "SURE_TO_DELETE".localized,
                                                     message: nil,
                                                     preferredStyle: .actionSheet)
-            let deleteAction = UIAlertAction(title: "DELETE".localized, style: .destructive) { _ in
+            let deleteAction = UIAlertAction(title: "DELETE".localized, style: .destructive) { [weak self] _ in
+                guard let self else { return }
                 self.viewModel?.deleteNFT(atRow: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-            let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel) { _ in
+            let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel) { [weak self] _ in
+                guard let self else { return }
                 tableView.reloadRows(at: [indexPath], with: .none)
             }
             alertController.addAction(deleteAction)
