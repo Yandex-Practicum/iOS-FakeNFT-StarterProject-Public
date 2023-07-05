@@ -76,23 +76,29 @@ extension NFTCell {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            nftImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            nftImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            nftImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            nftImageView.heightAnchor.constraint(equalToConstant: 108),
+            nftImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LocalConstants.defaultSpacing),
+            nftImageView.topAnchor.constraint(equalTo: topAnchor, constant: LocalConstants.defaultSpacing),
+            nftImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LocalConstants.defaultSpacing),
+            nftImageView.heightAnchor.constraint(equalToConstant: LocalConstants.imageSize),
             nftImageView.widthAnchor.constraint(equalTo: nftImageView.heightAnchor),
-            nftLikeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12),
-            nftLikeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -11.36),
-            nftLikeButton.widthAnchor.constraint(equalToConstant: 17.64),
-            nftLikeButton.heightAnchor.constraint(equalToConstant: 15.75),
+            nftLikeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor,
+                                               constant: LocalConstants.likeButtonTopSpacing),
+            nftLikeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                    constant: -LocalConstants.likeButtonTrailingSpacing),
+            nftLikeButton.widthAnchor.constraint(equalToConstant: LocalConstants.likeButtonWidth),
+            nftLikeButton.heightAnchor.constraint(equalToConstant: LocalConstants.likeButtonHeight),
             nftRatingStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
-            nftRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftLeftStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftLeftStackView.trailingAnchor.constraint(equalTo: nftRightStackView.leadingAnchor, constant: -4),
+            nftRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                        constant: LocalConstants.defaultLeadingSpacing),
+            nftLeftStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                      constant: LocalConstants.defaultLeadingSpacing),
+            nftLeftStackView.trailingAnchor.constraint(equalTo: nftRightStackView.leadingAnchor,
+                                                       constant: -LocalConstants.leftStackViewTrailingSpacing),
             nftLeftStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            nftRightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -39),
+            nftRightStackView.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                                        constant: -LocalConstants.rightStackViewTrailingSpacing),
             nftRightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            nftRightStackView.widthAnchor.constraint(equalToConstant: 85)
+            nftRightStackView.widthAnchor.constraint(equalToConstant: LocalConstants.rightStackViewWidth)
         ])
     }
 
@@ -100,8 +106,8 @@ extension NFTCell {
         for _ in 1...rating {
             let star = UICreator.makeImageView(withImage: Constants.IconNames.activeRating,
                                                cornerRadius: 0)
-            star.widthAnchor.constraint(equalToConstant: 12).isActive = true
-            star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
+            star.widthAnchor.constraint(equalToConstant: LocalConstants.starWidth).isActive = true
+            star.heightAnchor.constraint(equalToConstant: LocalConstants.starHeight).isActive = true
             nftRatingStackView.addArrangedSubview(star)
         }
         if rating == 5 {
@@ -111,9 +117,26 @@ extension NFTCell {
             let star = UICreator.makeImageView(withImage: Constants.IconNames.inactiveRating,
                                                cornerRadius: 0)
             star.image = star.image?.withTintColor(.appLightGray)
-            star.widthAnchor.constraint(equalToConstant: 12).isActive = true
-            star.heightAnchor.constraint(equalToConstant: 11.25).isActive = true
+            star.widthAnchor.constraint(equalToConstant: LocalConstants.starWidth).isActive = true
+            star.heightAnchor.constraint(equalToConstant: LocalConstants.starHeight).isActive = true
             nftRatingStackView.addArrangedSubview(star)
         }
     }
+}
+
+// MARK: - NFTCell LocalConstants
+private enum LocalConstants {
+
+    static let defaultSpacing: CGFloat = 16
+    static let defaultLeadingSpacing: CGFloat = 20
+    static let imageSize: CGFloat = 108
+    static let likeButtonTopSpacing: CGFloat = 12
+    static let likeButtonTrailingSpacing: CGFloat = 11.36
+    static let likeButtonWidth: CGFloat = 17.64
+    static let likeButtonHeight: CGFloat = 15.75
+    static let leftStackViewTrailingSpacing: CGFloat = 4
+    static let rightStackViewTrailingSpacing: CGFloat = 39
+    static let rightStackViewWidth: CGFloat = 85
+    static let starWidth: CGFloat = 12
+    static let starHeight: CGFloat = 11.25
 }

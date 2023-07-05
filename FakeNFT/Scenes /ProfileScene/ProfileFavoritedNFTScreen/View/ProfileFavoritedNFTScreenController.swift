@@ -178,7 +178,7 @@ extension ProfileFavoritedNFTScreenController: UICollectionViewDelegateFlowLayou
         let availableWidth = collectionView.frame.width - 40
         let cellWidth =  availableWidth / CGFloat(2)
         return CGSize(width: cellWidth,
-                      height: 80)
+                      height: LocalConstants.collectionCellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -192,22 +192,30 @@ extension ProfileFavoritedNFTScreenController: UICollectionViewDelegateFlowLayou
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 20
+        LocalConstants.collectionMinimumLineSpacing
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 7
+        LocalConstants.collectionInteritemSpacing
     }
 }
 
-// MARK: - NFTCellDelegate
+// MARK: - FavoritedNFTCellDelegate
 extension ProfileFavoritedNFTScreenController: FavoritedNFTCellDelegate {
 
     func proceedLike(_ cell: FavoritedNFTCell) {
         guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
         viewModel?.proceedLike(forItem: indexPath.row)
     }
+}
+
+// MARK: - ProfileFavoritedNFTScreenController LocalConstants
+private enum LocalConstants {
+
+    static let collectionCellHeight: CGFloat = 80
+    static let collectionMinimumLineSpacing: CGFloat = 20
+    static let collectionInteritemSpacing: CGFloat = 7
 }

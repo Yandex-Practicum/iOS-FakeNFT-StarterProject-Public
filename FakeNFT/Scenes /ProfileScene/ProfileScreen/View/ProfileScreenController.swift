@@ -100,27 +100,41 @@ extension ProfileScreenController {
         NSLayoutConstraint.activate([
             noInternetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noInternetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            retryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            retryButton.topAnchor.constraint(equalTo: noInternetLabel.bottomAnchor, constant: 16),
-            retryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            retryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                 constant: LocalConstants.defaultSpacing),
+            retryButton.topAnchor.constraint(equalTo: noInternetLabel.bottomAnchor,
+                                             constant: LocalConstants.defaultSpacing),
+            retryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                  constant: -LocalConstants.defaultSpacing),
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            profileImageView.widthAnchor.constraint(equalToConstant: 70),
+            profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                      constant: LocalConstants.defaultSpacing),
+            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                  constant: LocalConstants.defaultTopSpacing),
+            profileImageView.widthAnchor.constraint(equalToConstant: LocalConstants.profileImageSize),
             profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor),
-            profileNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
-            profileNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            profileNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor,
+                                                      constant: LocalConstants.defaultSpacing),
+            profileNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                       constant: -LocalConstants.defaultSpacing),
             profileNameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            profileDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileDescriptionLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
-            profileDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-            profileLinkTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileLinkTextView.topAnchor.constraint(equalTo: profileDescriptionLabel.bottomAnchor, constant: 12),
-            profileLinkTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
-            profileLinkTextView.heightAnchor.constraint(equalToConstant: 20),
+            profileDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                             constant: LocalConstants.defaultSpacing),
+            profileDescriptionLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor,
+                                                         constant: LocalConstants.defaultTopSpacing),
+            profileDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                              constant: -LocalConstants.defaultTrailingSpacing),
+            profileLinkTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                         constant: LocalConstants.defaultSpacing),
+            profileLinkTextView.topAnchor.constraint(equalTo: profileDescriptionLabel.bottomAnchor,
+                                                     constant: LocalConstants.profileLinkTopSpacing),
+            profileLinkTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                          constant: -LocalConstants.defaultTrailingSpacing),
+            profileLinkTextView.heightAnchor.constraint(equalToConstant: LocalConstants.profileLinkHeight),
             profileMenuTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileMenuTableView.topAnchor.constraint(equalTo: profileLinkTextView.bottomAnchor, constant: 44),
+            profileMenuTableView.topAnchor.constraint(equalTo: profileLinkTextView.bottomAnchor,
+                                                      constant: LocalConstants.profileMenuTopSpacing),
             profileMenuTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             profileMenuTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
@@ -244,4 +258,16 @@ extension ProfileScreenController: UITextViewDelegate {
         navigationController?.pushViewController(viewModel.configureWebView(), animated: true)
         return false
     }
+}
+
+// MARK: - ProfileScreenController LocalConstants
+private enum LocalConstants {
+
+    static let defaultSpacing: CGFloat = 16
+    static let defaultTopSpacing: CGFloat = 20
+    static let defaultTrailingSpacing: CGFloat = 18
+    static let profileImageSize: CGFloat = 70
+    static let profileLinkTopSpacing: CGFloat = 12
+    static let profileLinkHeight: CGFloat = 20
+    static let profileMenuTopSpacing: CGFloat = 44
 }

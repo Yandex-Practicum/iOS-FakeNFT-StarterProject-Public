@@ -152,24 +152,31 @@ extension ProfileEditingScreenController {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -23.42),
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 23.92),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                  constant: -LocalConstants.closeButtonTrailingSpacing),
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor,
+                                             constant: LocalConstants.closeButtonTopSpacing),
             profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            profileImageView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 29.92),
-            profileImageView.widthAnchor.constraint(equalToConstant: 70),
+            profileImageView.topAnchor.constraint(equalTo: closeButton.bottomAnchor,
+                                                  constant: LocalConstants.profileImageTopSpacing),
+            profileImageView.widthAnchor.constraint(equalToConstant: LocalConstants.profileImageSize),
             profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor),
             profileImageLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor),
             profileImageLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
             profileImageLabel.widthAnchor.constraint(equalTo: profileImageView.widthAnchor),
             profileImageLabel.heightAnchor.constraint(equalTo: profileImageView.widthAnchor),
             profileLoadImageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            profileLoadImageLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 15),
-            profileNameTextField.heightAnchor.constraint(equalToConstant: 46),
-            profileDescriptionTextView.heightAnchor.constraint(equalToConstant: 132),
-            profileLinkTextField.heightAnchor.constraint(equalToConstant: 46),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            mainStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 24),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            profileLoadImageLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor,
+                                                       constant: LocalConstants.loadImageLabelTopSpacing),
+            profileNameTextField.heightAnchor.constraint(equalToConstant: LocalConstants.defaultHeight),
+            profileDescriptionTextView.heightAnchor.constraint(equalToConstant: LocalConstants.descriprionHeight),
+            profileLinkTextField.heightAnchor.constraint(equalToConstant: LocalConstants.defaultHeight),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: LocalConstants.defaultSpacing),
+            mainStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor,
+                                               constant: LocalConstants.mainStackViewTopSpacing),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: -LocalConstants.defaultSpacing)
         ])
     }
 
@@ -216,4 +223,18 @@ extension ProfileEditingScreenController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         viewModel?.updateDescription(withDescription: textView.text ?? "")
     }
+}
+
+// MARK: - ProfileEditingScreenController LocalConstants
+private enum LocalConstants {
+
+    static let closeButtonTrailingSpacing: CGFloat = 23.42
+    static let closeButtonTopSpacing: CGFloat = 23.92
+    static let profileImageTopSpacing: CGFloat = 29.92
+    static let profileImageSize: CGFloat = 70
+    static let loadImageLabelTopSpacing: CGFloat = 15
+    static let defaultHeight: CGFloat = 46
+    static let descriprionHeight: CGFloat = 132
+    static let defaultSpacing: CGFloat = 16
+    static let mainStackViewTopSpacing: CGFloat = 24
 }
