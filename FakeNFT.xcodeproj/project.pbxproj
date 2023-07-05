@@ -34,6 +34,9 @@
 		EDB0A0B12A51ECC90019D61F /* NFTStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */; };
 		EDB0A0B32A51EDC00019D61F /* MockCartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B22A51EDC00019D61F /* MockCartData.swift */; };
 		EDB0A0B52A51EDE70019D61F /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B42A51EDE70019D61F /* NFTCell.swift */; };
+		EDB0A0B72A54481B0019D61F /* CryptoCurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B62A54481B0019D61F /* CryptoCurrencyViewController.swift */; };
+		EDB0A0B92A544ED50019D61F /* PaymentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0B82A544ED50019D61F /* PaymentCell.swift */; };
+		EDB0A0BB2A548CC20019D61F /* PurchaseResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A0BA2A548CC20019D61F /* PurchaseResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTStruct.swift; sourceTree = "<group>"; };
 		EDB0A0B22A51EDC00019D61F /* MockCartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCartData.swift; sourceTree = "<group>"; };
 		EDB0A0B42A51EDE70019D61F /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
+		EDB0A0B62A54481B0019D61F /* CryptoCurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyViewController.swift; sourceTree = "<group>"; };
+		EDB0A0B82A544ED50019D61F /* PaymentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCell.swift; sourceTree = "<group>"; };
+		EDB0A0BA2A548CC20019D61F /* PurchaseResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,10 +137,10 @@
 		325684C42A515CFC000AC9E3 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
-				325684CB2A515DB9000AC9E3 /* CartViewController.swift */,
+				EDB0A0BC2A548D230019D61F /* VC */,
+				EDB0A0BD2A548D3C0019D61F /* Cell */,
 				EDB0A0B02A51ECC90019D61F /* NFTStruct.swift */,
 				EDB0A0B22A51EDC00019D61F /* MockCartData.swift */,
-				EDB0A0B42A51EDE70019D61F /* NFTCell.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -289,6 +295,25 @@
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		EDB0A0BC2A548D230019D61F /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				325684CB2A515DB9000AC9E3 /* CartViewController.swift */,
+				EDB0A0B62A54481B0019D61F /* CryptoCurrencyViewController.swift */,
+				EDB0A0BA2A548CC20019D61F /* PurchaseResultViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		EDB0A0BD2A548D3C0019D61F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EDB0A0B82A544ED50019D61F /* PaymentCell.swift */,
+				EDB0A0B42A51EDE70019D61F /* NFTCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,16 +482,19 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				325684C82A515D90000AC9E3 /* ProfileViewController.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				EDB0A0BB2A548CC20019D61F /* PurchaseResultViewController.swift in Sources */,
 				325684D02A515DDF000AC9E3 /* CatalogViewController.swift in Sources */,
 				EDB0A0B32A51EDC00019D61F /* MockCartData.swift in Sources */,
 				EDB0A0B12A51ECC90019D61F /* NFTStruct.swift in Sources */,
 				325684CE2A515DCD000AC9E3 /* TabBarController.swift in Sources */,
+				EDB0A0B92A544ED50019D61F /* PaymentCell.swift in Sources */,
 				325684CA2A515DA5000AC9E3 /* StatisticsViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				EDB0A0B72A54481B0019D61F /* CryptoCurrencyViewController.swift in Sources */,
 				325684CC2A515DB9000AC9E3 /* CartViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,

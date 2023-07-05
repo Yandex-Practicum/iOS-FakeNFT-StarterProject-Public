@@ -33,6 +33,7 @@ extension UIColor {
     static let ypGreen = UIColor(named: "ypGreen")
     static let ypLightGrey = UIColor(named: "ypLightGrey")
     static let ypBlack = UIColor(named: "ypBlack")
+    static let ypBlue = UIColor(named: "ypBlue")
 
     // Text Colors
     static let textPrimary = UIColor(named: "ypBlack")

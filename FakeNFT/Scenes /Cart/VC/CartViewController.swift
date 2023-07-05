@@ -60,9 +60,12 @@ final class CartViewController: UIViewController {
         button.tintColor = .white
         button.layer.cornerRadius = 16
         button.titleLabel?.font = .bodyBold
+        button.addTarget(self, action: #selector(toPaymentMethod), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    // Работа экрана
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +84,7 @@ final class CartViewController: UIViewController {
         if addedNFTs.isEmpty {
             setupEmptyView()
         } else {
+            setupNavBar()
             emptyLabel.isHidden = true
             totalPrice = countPrice(addedNFTs)
             setupTableView()
@@ -88,6 +92,24 @@ final class CartViewController: UIViewController {
         }
     }
     
+    private func setupNavBar() {
+        if let navBar = navigationController?.navigationBar {
+            // Creating a button with a picture
+            let sortButton = UIButton(type: .custom)
+            sortButton.setImage(UIImage(named: "navSortButton"), for: .normal)
+            sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+            sortButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+
+            let imageBarButtonItem = UIBarButtonItem(customView: sortButton)
+
+            navBar.topItem?.setRightBarButton(imageBarButtonItem, animated: false)
+        }
+    }
+
+    @objc private func sortButtonTapped() {
+        // Processing of clicking a button with a picture
+    }
+
     private func setupEmptyView() {
         emptyLabel.isHidden = false
         view.addSubview(emptyLabel)
@@ -116,7 +138,7 @@ final class CartViewController: UIViewController {
     }
     
     private func setupPaymentView() {
-        // Добавляем элементы для нижней панели оплаты
+        // Adding elements for the lower payment panel
         view.addSubview(paymentView)
         paymentView.addSubview(nftCountLabel)
         paymentView.addSubview(totalPriceLabel)
@@ -151,6 +173,12 @@ final class CartViewController: UIViewController {
             totalPrice += nft.price
         }
         return totalPrice
+    }
+    
+    @objc private func toPaymentMethod() {
+        let cryptoCurrencyViewController = CryptoCurrencyViewController()
+        cryptoCurrencyViewController.modalPresentationStyle = .fullScreen
+        present(cryptoCurrencyViewController, animated: true, completion: nil)
     }
 }
 
