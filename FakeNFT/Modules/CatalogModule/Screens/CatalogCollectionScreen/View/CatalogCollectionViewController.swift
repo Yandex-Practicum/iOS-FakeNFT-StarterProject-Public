@@ -167,9 +167,6 @@ private extension CatalogCollectionViewController {
     
     func createCollectionView() {
         diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
-        diffableDataSource.onLikeHandler = { [weak self] id in
-            
-        }
     }
     
     func updateUI(with collection: NftCollection) {

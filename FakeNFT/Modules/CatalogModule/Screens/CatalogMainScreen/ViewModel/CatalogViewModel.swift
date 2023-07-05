@@ -59,8 +59,8 @@ private extension CatalogViewModel {
     }
     
     func addRowsToStorage(_ rows: [NftCollection]) {
-        rows.forEach { row in
-            dataStore.addCatalogRowItem(row)
+        rows.forEach { [weak dataStore] row in
+            dataStore?.addCatalogRowItem(row)
         }
     }
 }

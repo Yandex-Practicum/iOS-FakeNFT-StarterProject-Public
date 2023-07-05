@@ -19,8 +19,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         didSet {
             viewModel?.$nftRow
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { nftRow in
-                    self.updateCell(with: nftRow)
+                .sink(receiveValue: { [weak self] nftRow in
+                    self?.updateCell(with: nftRow)
                 })
                 .store(in: &cancellables)
         }

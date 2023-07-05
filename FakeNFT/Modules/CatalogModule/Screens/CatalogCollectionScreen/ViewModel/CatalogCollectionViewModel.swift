@@ -35,9 +35,9 @@ final class CatalogCollectionViewModel {
     }
     
     func load(collection: NftCollection) {
-        collection.nfts.forEach { [weak self] id in
+        collection.nfts.forEach { id in
             let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: id)
-            self?.networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
+            networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
                 guard let self else { return }
                 switch result {
                 case .success(let nft):
@@ -48,10 +48,6 @@ final class CatalogCollectionViewModel {
                 }
             }
         }
-    }
-    
-    func updateLikeImage(with id: String) {
-        
     }
     
     func sendNftToStorage(nft: SingleNft) {

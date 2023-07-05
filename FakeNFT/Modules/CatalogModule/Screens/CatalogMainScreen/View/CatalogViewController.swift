@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-protocol CatalogMainScreenCoordinatable {
+protocol CatalogMainScreenCoordinatable: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onProceed: ((NftCollection) -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }

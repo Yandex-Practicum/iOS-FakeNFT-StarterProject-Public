@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol CartDataStorageProtocol {
+protocol CartDataStorageProtocol: AnyObject {
     var cartSortDescriptor: CartSortValue? { get set }
     var cartDataPublisher: AnyPublisher<[SingleNft], Never> { get }
     func addCartRowItem(_ item: SingleNft)
@@ -16,7 +16,7 @@ protocol CartDataStorageProtocol {
     func deleteItem(with id: String?)
 }
 
-protocol CatalogDataStorageProtocol {
+protocol CatalogDataStorageProtocol: AnyObject {
     var catalogSortDescriptor: CatalogSortValue? { get set }
     var catalogDataPublisher: AnyPublisher<[NftCollection], Never> { get }
     var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> { get }
@@ -24,7 +24,6 @@ protocol CatalogDataStorageProtocol {
     func getCatalogRowItems() -> [NftCollection]
     func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
     func addNftRowItem(_ item: SingleNft)
-    func updateLike(for itemId: String?)
 }
 
 final class DataStore {

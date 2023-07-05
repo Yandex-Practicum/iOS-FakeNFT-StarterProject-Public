@@ -47,8 +47,9 @@ private extension CatalogCoordinator {
         
         let navController = navigationControllerFactory.makeNavController(.catalog, rootViewController: catalogScreen) // навигационный стек
         
-        catalogScreen.onFilter = { [weak self] in
-            self?.showSortAlert(from: catalogScreen)
+        catalogScreen.onFilter = { [weak self, weak catalogScreen] in
+            guard let self, let catalogScreen else { return }
+            self.showSortAlert(from: catalogScreen)
         }
         
         catalogScreen.onProceed = { [weak self] collection in
@@ -74,8 +75,8 @@ private extension CatalogCoordinator {
     func showSortAlert(from screen: CatalogMainScreenCoordinatable) {
         let alert = alertConstructor.constructSortAlert()
         
-        alertConstructor.addSortAlertActions(from: alert) { [weak router] sortValue in
-            sortValue == .cancel ? () : screen.setupSortDescriptor(sortValue) // set filter on the screen
+        alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] sortValue in
+            sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         
