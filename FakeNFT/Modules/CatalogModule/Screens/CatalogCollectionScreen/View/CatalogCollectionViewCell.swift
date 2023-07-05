@@ -14,6 +14,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     private var id: String?
     
     var onLike: ((String?) -> Void)?
+    var onCart: ((String?) ->Void)?
     
     var viewModel: CatalogCollectionCellViewModel? {
         didSet {
@@ -53,6 +54,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var addOrDeleteButton: CustomAddOrDeleteButton = {
         let button = CustomAddOrDeleteButton(appearance: .add)
+        button.addTarget(self, action: #selector(cartTapped), for: .touchUpInside)
         return button
     }()
     
@@ -142,6 +144,10 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 @objc private extension CatalogCollectionViewCell {
     func likeTapped() {
         onLike?(id)
+    }
+    
+    func cartTapped() {
+        onCart?(id)
     }
 }
 

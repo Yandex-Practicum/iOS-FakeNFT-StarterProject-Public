@@ -24,6 +24,7 @@ protocol CatalogDataStorageProtocol: AnyObject {
     func getCatalogRowItems() -> [NftCollection]
     func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
     func addNftRowItem(_ item: SingleNft)
+    func addOrDeleteNftToCart(_ id: String)
 }
 
 final class DataStore {
@@ -43,24 +44,16 @@ final class DataStore {
     private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([]) // items on the main catalog screen
     private var storedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // stored collectionNfts
     
-    private var cartStoredItems: [SingleNft] = [
-        
-    ] {
-        didSet {
-            sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor))
-        }
+    private var cartStoredItems: [SingleNft] = [] {
+        didSet { sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor)) }
     }
     
     private var catalogStoredItems: [NftCollection] = [] {
-        didSet {
-            sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor))
-        }
+        didSet { sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor)) }
     }
     
     private var nftCollectionStoredItems: Set<SingleNft> = [] {
-        didSet {
-            sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems)
-        }
+        didSet { sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems) }
     }
 }
 
@@ -112,6 +105,11 @@ extension DataStore: CatalogDataStorageProtocol {
             collection.nfts.contains(where: { $0 == singeNft.id })
         }
     }
+    
+    func addOrDeleteNftToCart(_ id: String) {
+        guard let element = nftCollectionStoredItems.first(where: { $0.id == id }) else { fatalError("addOrDeleteNftToCart error") }
+        cartStoredItems.contains(where: { $0 == element }) ? deleteItemFromCart(element) : addItemToCart(element)
+    }
 }
 
 // MARK: - Ext Private Sending
@@ -150,7 +148,6 @@ private extension DataStore {
     func sortByQuantity() -> [NftCollection] {
         return catalogStoredItems.sorted(by: { $0.nfts.count > $1.nfts.count })
     }
-    
 }
 
 // MARK: - Ext Private Cart Sorting
@@ -179,5 +176,16 @@ private extension DataStore {
     
     func sortByName() -> [SingleNft] {
         return cartStoredItems.sorted(by: { $0.name > $1.name })
+    }
+}
+
+// MARK: - Ext Add / Delete to cart
+private extension DataStore {
+    func addItemToCart(_ item: SingleNft) {
+        cartStoredItems.append(item)
+    }
+    
+    func deleteItemFromCart(_ item: SingleNft) {
+        cartStoredItems.removeAll(where: { $0 == item })
     }
 }

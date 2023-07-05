@@ -78,7 +78,8 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-        
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
         return textView
     }()
     
@@ -167,6 +168,9 @@ private extension CatalogCollectionViewController {
     
     func createCollectionView() {
         diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
+        diffableDataSource.onCartHandler = { [weak viewModel] id in
+            viewModel?.addOrDeleteNftFromCart(with: id)
+        }
     }
     
     func updateUI(with collection: NftCollection) {

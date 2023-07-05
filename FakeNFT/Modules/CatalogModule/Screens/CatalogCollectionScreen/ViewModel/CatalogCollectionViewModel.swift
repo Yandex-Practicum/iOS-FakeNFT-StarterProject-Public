@@ -50,8 +50,9 @@ final class CatalogCollectionViewModel {
         }
     }
     
-    func sendNftToStorage(nft: SingleNft) {
-        dataStore.addNftRowItem(nft)
+    func addOrDeleteNftFromCart(with id: String?) {
+        guard let id else { return }
+        dataStore.addOrDeleteNftToCart(id)
     }
 }
 
@@ -63,6 +64,10 @@ private extension CatalogCollectionViewModel{
                 self?.showNeededNfts(from: nfts)
             }
             .store(in: &cancellables)
+    }
+    
+    func sendNftToStorage(nft: SingleNft) {
+        dataStore.addNftRowItem(nft)
     }
     
     func showNeededNfts(from nfts: [SingleNft]) {

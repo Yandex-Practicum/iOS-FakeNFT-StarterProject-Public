@@ -14,7 +14,7 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CartSortValue)
-    func load()
+    func reloadCart()
 }
 
 final class CartViewController: UIViewController {
@@ -123,7 +123,6 @@ final class CartViewController: UIViewController {
         setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
         setupConstraints()
         createDataSource()
-        load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -202,8 +201,8 @@ extension CartViewController: CartMainCoordinatableProtocol {
         viewModel.setupSortValue(filter)
     }
     
-    func load() {
-        viewModel.load()
+    func reloadCart() {
+        viewModel.reload()
     }
 }
 

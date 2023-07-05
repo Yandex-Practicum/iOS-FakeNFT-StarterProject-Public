@@ -58,8 +58,9 @@ private extension CartCoordinator {
             self?.showPaymentMethodScreen()
         }
         
-        cartScreen.onError = { [weak self] error in
-            self?.showCartLoadAlert(with: error, from: cartScreen)
+        cartScreen.onError = { [weak self, weak cartScreen] error in
+            guard let self, let cartScreen else { return }
+            self.showCartLoadAlert(with: error, from: cartScreen)
         }
         
         router.addTabBarItem(navController)
@@ -138,7 +139,7 @@ private extension CartCoordinator {
         alertConstructor.addCartErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:
-                screen.load()
+                screen.reloadCart()
                 router?.dismissToRootViewController(animated: true, completion: nil)
             case .cancel:
                 router?.dismissToRootViewController(animated: true, completion: nil)

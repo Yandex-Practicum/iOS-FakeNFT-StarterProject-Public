@@ -17,6 +17,7 @@ protocol PaymentMethodDSManagerProtocol {
 protocol NftCollectionDSManagerProtocol {
     typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, SingleNft>
     typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, SingleNft>
+    var onCartHandler: ((String?) -> Void)? { get set }
     func createDataSource(with collectionView: UICollectionView, with data: [SingleNft])
     func updateCollection(with data: [SingleNft])
 }
@@ -24,6 +25,9 @@ protocol NftCollectionDSManagerProtocol {
 final class CollectionViewDataSourceManager {
     private var cartDataSource: CartDataSource?
     private var collectionDataSource: CollectionDataSource?
+    
+    // NftCollectionDSManagerProtocol
+    var onCartHandler: ((String?) -> Void)?
 }
 
 // MARK: - Ext NftCollectionDSManagerProtocol
@@ -45,6 +49,9 @@ extension CollectionViewDataSourceManager: NftCollectionDSManagerProtocol {
                 for: indexPath) as? CatalogCollectionViewCell
         else { return UICollectionViewCell(frame: .zero) }
         cell.viewModel = CatalogCollectionCellViewModel(nftRow: item)
+        cell.onCart = { [weak self] id in
+            self?.onCartHandler?(id)
+        }
         return cell
     }
     
