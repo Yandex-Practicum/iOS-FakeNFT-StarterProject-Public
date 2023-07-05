@@ -38,16 +38,20 @@ final class MyNFTViewController: UIViewController {
         viewModel = MyNFTViewModel(viewController: self, nftIDs: nftIDs)
         bind()
         setupView()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     init(nftIDs: [String]) {
         self.nftIDs = nftIDs
         super.init(nibName: nil, bundle: nil)
-        UIBlockingProgressHUD.show()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     // MARK: - Methods
@@ -59,6 +63,10 @@ final class MyNFTViewController: UIViewController {
                 view.updateNFT(nfts: nfts)
             }
         }
+    }
+    
+    func getAuthorById(id: String) -> String {
+        return viewModel?.authors[id] ?? ""
     }
     
     @objc
@@ -94,10 +102,6 @@ final class MyNFTViewController: UIViewController {
         }
     }
     
-    func getAuthorById(id: String) -> String {
-        return viewModel?.authors[id] ?? ""
-    }
-    
     func addEmptyLabel() {
         view.addSubview(emptyLabel)
         
@@ -108,3 +112,5 @@ final class MyNFTViewController: UIViewController {
 
     }
 }
+
+extension MyNFTViewController: UIGestureRecognizerDelegate {}

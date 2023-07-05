@@ -1,6 +1,6 @@
 import UIKit
 
-final class MyNFTCell: UITableViewCell {
+final class FavoritesCell: UICollectionViewCell {
     
     //MARK: - Layout elements
     var nftImage: UIImageView = {
@@ -35,32 +35,6 @@ final class MyNFTCell: UITableViewCell {
         return nftRating
     }()
     
-    var nftAuthor: UILabel = {
-        let nftName = UILabel()
-        nftName.translatesAutoresizingMaskIntoConstraints = false
-        nftName.font = .systemFont(ofSize: 13)
-        nftName.textColor = .black
-        return nftName
-    }()
-    
-    var nftPriceStack: UIStackView = {
-        let nftPriceStack = UIStackView()
-        nftPriceStack.translatesAutoresizingMaskIntoConstraints = false
-        nftPriceStack.axis = .vertical
-        nftPriceStack.distribution = .equalSpacing
-        nftPriceStack.alignment = .leading
-        nftPriceStack.spacing = 2
-        return nftPriceStack
-    }()
-    
-    var nftPriceLabel: UILabel = {
-        let nftPriceLabel = UILabel()
-        nftPriceLabel.translatesAutoresizingMaskIntoConstraints = false
-        nftPriceLabel.font = .systemFont(ofSize: 13)
-        nftPriceLabel.text = "Цена"
-        return nftPriceLabel
-    }()
-    
     var nftPriceValue: UILabel = {
         let nftPriceValue = UILabel()
         nftPriceValue.translatesAutoresizingMaskIntoConstraints = false
@@ -76,13 +50,11 @@ final class MyNFTCell: UITableViewCell {
     }()
     
     // MARK: - Lifecycle
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
         addImage()
-        addNFTStack()
-        addNFTPriceStack()
         addFavoriteButton()
+        addNFTStack()
     }
     
     required init?(coder: NSCoder) {
@@ -92,19 +64,20 @@ final class MyNFTCell: UITableViewCell {
     // MARK: - Layout methods
     func addImage() {
         contentView.addSubview(nftImage)
+        nftImage.image = UIImage(named: "UserImagePlaceholder")
         NSLayoutConstraint.activate([
             nftImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            nftImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            nftImage.heightAnchor.constraint(equalToConstant: 108),
-            nftImage.widthAnchor.constraint(equalToConstant: 108)
+            nftImage.leadingAnchor.constraint(equalTo: leadingAnchor),
+            nftImage.heightAnchor.constraint(equalToConstant: 80),
+            nftImage.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     
     func addFavoriteButton() {
         contentView.addSubview(nftFavorite)
         NSLayoutConstraint.activate([
-            nftFavorite.topAnchor.constraint(equalTo: nftImage.topAnchor),
-            nftFavorite.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
+            nftFavorite.topAnchor.constraint(equalTo: nftImage.topAnchor, constant: -6),
+            nftFavorite.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 6),
             nftFavorite.heightAnchor.constraint(equalToConstant: 42),
             nftFavorite.widthAnchor.constraint(equalToConstant: 42)
         ])
@@ -114,24 +87,13 @@ final class MyNFTCell: UITableViewCell {
         contentView.addSubview(nftStack)
         nftStack.addArrangedSubview(nftName)
         nftStack.addArrangedSubview(nftRating)
-        nftStack.addArrangedSubview(nftAuthor)
+        nftStack.addArrangedSubview(nftPriceValue)
         NSLayoutConstraint.activate([
             nftStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            nftStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 144),
-            nftStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -88),
+            nftStack.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 12),
             nftRating.heightAnchor.constraint(equalToConstant: 12)
-        ])
-    }
-    
-    func addNFTPriceStack() {
-        contentView.addSubview(nftPriceStack)
-        nftPriceStack.addArrangedSubview(nftPriceLabel)
-        nftPriceStack.addArrangedSubview(nftPriceValue)
-        NSLayoutConstraint.activate([
-            nftPriceStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            nftPriceStack.leadingAnchor.constraint(equalTo: nftStack.trailingAnchor)
         ])
     }
 }
 
-extension MyNFTCell: ReuseIdentifying {}
+extension FavoritesCell: ReuseIdentifying {}

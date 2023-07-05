@@ -19,6 +19,12 @@ final class ProfileViewController: UIViewController {
         viewModel = ProfileViewModel(viewController: self)
         bind()
         setupView()
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     // MARK: - Methods
@@ -61,3 +67,5 @@ final class ProfileViewController: UIViewController {
         return nfts
     }
 }
+
+extension ProfileViewController: UIGestureRecognizerDelegate {}

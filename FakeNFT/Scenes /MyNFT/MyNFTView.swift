@@ -14,6 +14,7 @@ final class MyNFTView: UIView {
         myNFTTable.register(MyNFTCell.self)
         myNFTTable.dataSource = self
         myNFTTable.delegate = self
+        myNFTTable.backgroundColor = .white
         myNFTTable.separatorStyle = .none
         myNFTTable.allowsMultipleSelection = false
         myNFTTable.isUserInteractionEnabled = true

@@ -16,7 +16,7 @@ final class ProfileView: UIView {
         MyNFTViewController(nftIDs: {
             return self.viewController?.getNftIDsFromViewModel() ?? []
         }()),
-    FavoritesViewController(),
+    FavoritesViewController(likedIDs: ["5"]),
     DevelopersViewController()
     ]
     

@@ -24,13 +24,17 @@ final class DevelopersViewController: UIViewController, WKUIDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
-        
         addWebView()
         
         guard let myURL = URL(string: Constants.url) else { return }
         webView.load(URLRequest(url: myURL))
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     // MARK: - Methods
@@ -59,6 +63,8 @@ final class DevelopersViewController: UIViewController, WKUIDelegate {
         ])
     }
 }
+
+extension DevelopersViewController: UIGestureRecognizerDelegate {}
 
 // MARK: - Nested types
 private extension DevelopersViewController {
