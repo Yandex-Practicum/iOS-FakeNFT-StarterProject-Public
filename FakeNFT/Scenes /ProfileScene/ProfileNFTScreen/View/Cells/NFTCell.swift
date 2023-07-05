@@ -32,7 +32,6 @@ final class NFTCell: UITableViewCell {
     let nftPriceLabel = UICreator.makeLabel(text: "PRICE".localized,
                                             font: UIFont.appFont(.regular, withSize: 13))
     let nftPriceAmountLabel = UICreator.makeLabel(font: UIFont.appFont(.bold, withSize: 17))
-    let nftLeftStackView = UICreator.makeStackView(andSpacing: 21)
     let nftRightStackView = UICreator.makeStackView(andSpacing: 2)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,8 +55,9 @@ extension NFTCell {
 
     private func setupAutolayout() {
         nftImageView.toAutolayout()
+        nftNameLabel.toAutolayout()
+        nftAuthorLabel.toAutolayout()
         nftLikeButton.toAutolayout()
-        nftLeftStackView.toAutolayout()
         nftRightStackView.toAutolayout()
         nftRatingStackView.toAutolayout()
     }
@@ -66,9 +66,8 @@ extension NFTCell {
         addSubview(nftImageView)
         addSubview(nftLikeButton)
         addSubview(nftRatingStackView)
-        nftLeftStackView.addArrangedSubview(nftNameLabel)
-        nftLeftStackView.addArrangedSubview(nftAuthorLabel)
-        addSubview(nftLeftStackView)
+        addSubview(nftNameLabel)
+        addSubview(nftAuthorLabel)
         nftRightStackView.addArrangedSubview(nftPriceLabel)
         nftRightStackView.addArrangedSubview(nftPriceAmountLabel)
         addSubview(nftRightStackView)
@@ -87,14 +86,18 @@ extension NFTCell {
                                                     constant: -LocalConstants.likeButtonTrailingSpacing),
             nftLikeButton.widthAnchor.constraint(equalToConstant: LocalConstants.likeButtonWidth),
             nftLikeButton.heightAnchor.constraint(equalToConstant: LocalConstants.likeButtonHeight),
-            nftRatingStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
+            nftNameLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                  constant: LocalConstants.defaultLeadingSpacing),
+            nftNameLabel.topAnchor.constraint(greaterThanOrEqualTo: nftImageView.topAnchor,
+                                              constant: LocalConstants.nftNameTopSpacing),
+            nftRatingStackView.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor,
+                                                    constant: LocalConstants.verticalSpacing),
             nftRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
                                                         constant: LocalConstants.defaultLeadingSpacing),
-            nftLeftStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
-                                                      constant: LocalConstants.defaultLeadingSpacing),
-            nftLeftStackView.trailingAnchor.constraint(equalTo: nftRightStackView.leadingAnchor,
-                                                       constant: -LocalConstants.leftStackViewTrailingSpacing),
-            nftLeftStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            nftAuthorLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                    constant: LocalConstants.defaultLeadingSpacing),
+            nftAuthorLabel.topAnchor.constraint(equalTo: nftRatingStackView.bottomAnchor,
+                                                constant: LocalConstants.verticalSpacing),
             nftRightStackView.trailingAnchor.constraint(equalTo: trailingAnchor,
                                                         constant: -LocalConstants.rightStackViewTrailingSpacing),
             nftRightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -136,7 +139,8 @@ private enum LocalConstants {
     static let likeButtonTrailingSpacing: CGFloat = 11.36
     static let likeButtonWidth: CGFloat = 17.64
     static let likeButtonHeight: CGFloat = 15.75
-    static let leftStackViewTrailingSpacing: CGFloat = 4
+    static let nftNameTopSpacing: CGFloat = 23
+    static let verticalSpacing: CGFloat = 4
     static let rightStackViewTrailingSpacing: CGFloat = 39
     static let rightStackViewWidth: CGFloat = 85
     static let starWidth: CGFloat = 12
