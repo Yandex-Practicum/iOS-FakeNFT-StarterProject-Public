@@ -99,12 +99,42 @@ final class CartViewController: UIViewController {
             sortButton.setImage(UIImage(named: "navSortButton"), for: .normal)
             sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
             sortButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            sortButton.addTarget(self, action: #selector(showSortingOptions), for: .touchUpInside)
 
             let imageBarButtonItem = UIBarButtonItem(customView: sortButton)
 
             navBar.topItem?.setRightBarButton(imageBarButtonItem, animated: false)
         }
     }
+    
+    @objc private func showSortingOptions() {
+        let actionSheet = UIAlertController(title: nil, message: "Сортировка", preferredStyle: .actionSheet)
+        
+        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { _ in
+            // Действие для сортировки по цене
+            self.sortByPrice()
+        }
+        
+        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            // Действие для сортировки по рейтингу
+            self.sortByRating()
+        }
+        
+        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { _ in
+            // Действие для сортировки по названию
+            self.sortByName()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(sortByPriceAction)
+        actionSheet.addAction(sortByRatingAction)
+        actionSheet.addAction(sortByNameAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+
 
     @objc private func sortButtonTapped() {
         // Processing of clicking a button with a picture
@@ -174,6 +204,25 @@ final class CartViewController: UIViewController {
         }
         return totalPrice
     }
+    
+    private func sortByPrice() {
+        // Реализация сортировки по цене
+        addedNFTs.sort { $0.price < $1.price }
+        tableView.reloadData()
+    }
+
+    private func sortByRating() {
+        // Реализация сортировки по рейтингу
+        addedNFTs.sort { $0.rating > $1.rating }
+        tableView.reloadData()
+    }
+
+    private func sortByName() {
+        // Реализация сортировки по названию
+        addedNFTs.sort { $0.name < $1.name }
+        tableView.reloadData()
+    }
+
     
     @objc private func toPaymentMethod() {
         let cryptoCurrencyViewController = CryptoCurrencyViewController()
