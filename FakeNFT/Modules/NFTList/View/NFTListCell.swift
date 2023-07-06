@@ -50,14 +50,14 @@ final class NFTListCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         selectionStyle = .none
-        _setupSubviews()
+        setupSubviews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func _setupSubviews() {
+    private func setupSubviews() {
         contentView.layer.cornerRadius = 12
 
         contentView.addSubview(stackView)
@@ -91,14 +91,5 @@ extension NFTListCell {
         detailsLabel.text = configuration.collectionDescription + " " + "(\(configuration.collectionItems))"
         let url = URL(string: configuration.imageUrl.encodeUrl)
         image.kf.setImage(with: url)
-    }
-}
-
-extension String {
-    var encodeUrl: String {
-        return self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
-    }
-    var decodeUrl: String {
-        return self.removingPercentEncoding!
     }
 }

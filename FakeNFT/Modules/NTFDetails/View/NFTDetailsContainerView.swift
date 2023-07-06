@@ -7,16 +7,38 @@
 
 import UIKit
 
-class NFTDetailsContainerView: UIView {
-    private let details: NFTDetails
+enum NFTDetailSectionKind: Int, CaseIterable {
+    case imageSection = 0
+    case descripionSection
+    case itemsSection
+}
+
+final class NFTDetailsContainerView: UIView {
+
+    private var imageURL: String
+    private var sectionName: String
+    private var sectionAuthor: String
+    private var sectionDescription: String
+    private var items: [NFT] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
 
     private let collectionView = UICollectionView(frame: .null, collectionViewLayout: UICollectionViewFlowLayout())
 
     private let cellSelected: (Action) -> Void
 
-    init(details: NFTDetails, cellSelected: @escaping (Action) -> Void) {
-        self.details = details
+    init(imageURL: String,
+         sectionName: String,
+         sectionAuthor: String,
+         sectionDescription: String,
+         cellSelected: @escaping (Action) -> Void) {
         self.cellSelected = cellSelected
+        self.imageURL = imageURL
+        self.sectionName = sectionName
+        self.sectionAuthor = sectionAuthor
+        self.sectionDescription = sectionDescription
         super.init(frame: .null)
         setUpCollectionView()
         setupSubViews()
@@ -32,7 +54,7 @@ class NFTDetailsContainerView: UIView {
         addSubview(collectionView)
 
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.topAnchor.constraint(equalTo: topAnchor, constant: -100),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor)
@@ -52,8 +74,6 @@ class NFTDetailsContainerView: UIView {
 
          let layout = UICollectionViewFlowLayout()
          layout.scrollDirection = .vertical
-//         layout.minimumLineSpacing = 8
-//         layout.minimumInteritemSpacing = 4
 
         collectionView.setCollectionViewLayout(layout, animated: true)
        }
@@ -65,43 +85,44 @@ extension NFTDetailsContainerView: UICollectionViewDataSource {
         if section <= 1 {
             return 1
         } else {
-            return details.items.count
+            return items.count
         }
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        NFTDetailSectionKind.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        if indexPath.section == 0 {
+        if indexPath.section == NFTDetailSectionKind.imageSection.rawValue {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NFTDetailsImageCollectionViewCell.reuseIdentifier,
                 for: indexPath) as? NFTDetailsImageCollectionViewCell else {
                 return UICollectionViewCell()
             }
 
-            cell.configure(.init(imageUrl: details.imageURL))
+            cell.configure(.init(imageUrl: imageURL))
             return cell
         }
 
-        if indexPath.section == 1 {
+        if indexPath.section == NFTDetailSectionKind.descripionSection.rawValue {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NFTDescriptionCollectionViewCell.reuseIdentifier,
                 for: indexPath) as? NFTDescriptionCollectionViewCell else {
                 return UICollectionViewCell()
             }
 
-            cell.configure(.init(sectionName: details.sectionName,
-                                 authorName: details.sectionAuthor,
-                                 description: details.sectionDescription))
-            
+            cell.configure(.init(sectionName: sectionName,
+                                 authorName: sectionAuthor,
+                                 description: sectionDescription))
+
             cell.action = { [weak self] in
                 guard let self else { return }
                 self.cellSelected(.openWebView)
             }
+
             return cell
         }
         guard let cell = collectionView.dequeueReusableCell(
@@ -110,21 +131,22 @@ extension NFTDetailsContainerView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let item = details.items[indexPath.row]
+        let item = items[indexPath.row]
 
-        cell.configure(.init(name: item.name, rating: item.rating, price: item.price, imageUrl: item.images[0]))
+        cell.configure(.init(name: item.name,
+                             rating: item.rating,
+                             price: item.price,
+                             imageUrl: item.images[0],
+                             isFavourite: item.isFavourite,
+                             addedToBasket: item.isSelected))
 
         cell.action = { [weak self] event in
             guard let self else { return }
             switch event {
-            case .selectFavourite:
+            case .tapFavourite:
                 self.cellSelected(.selectFavourite(index: indexPath.row))
-            case .unselectFavourite:
-                self.cellSelected(.unselectFavourite(index: indexPath.row))
-            case .selectBasket:
+            case .tapOnBasket:
                 self.cellSelected(.selectBasket(index: indexPath.row))
-            case .unselectBasket:
-                self.cellSelected(.unselectBasket(index: indexPath.row))
             }
         }
 
@@ -137,7 +159,7 @@ extension NFTDetailsContainerView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
+        if section == NFTDetailSectionKind.imageSection.rawValue {
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
             return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -148,12 +170,12 @@ extension NFTDetailsContainerView: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        if indexPath.section == 0 {
+        if indexPath.section == NFTDetailSectionKind.imageSection.rawValue {
             return CGSize(width: collectionView.frame.width, height: 310)
         }
 
-        if indexPath.section == 1 {
-            return CGSize(width: collectionView.frame.width - 32, height: 136)
+        if indexPath.section == NFTDetailSectionKind.descripionSection.rawValue {
+            return CGSize(width: collectionView.frame.width - 32, height: 126)
         }
 
         let lay = collectionViewLayout as? UICollectionViewFlowLayout ?? UICollectionViewFlowLayout()
@@ -167,9 +189,17 @@ extension NFTDetailsContainerView: UICollectionViewDelegateFlowLayout {
 extension NFTDetailsContainerView {
     enum Action {
         case selectFavourite(index: Int)
-        case unselectFavourite(index: Int)
         case selectBasket(index: Int)
-        case unselectBasket(index: Int)
         case openWebView
+    }
+}
+
+extension NFTDetailsContainerView {
+    struct Configuration {
+        let nfts: [NFT]
+    }
+
+    func configure(_ configuration: Configuration) {
+        items = configuration.nfts
     }
 }

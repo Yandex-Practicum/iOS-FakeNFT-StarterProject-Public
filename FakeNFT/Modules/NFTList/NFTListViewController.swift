@@ -12,10 +12,7 @@ final class NFTListViewController: UIViewController {
     private let viewModel: NFTListViewModel
     private lazy var container = NFTListContainerView { [weak self] indexPath in
         guard let self else { return }
-        self.viewModel.cellSelected(indexPath) { [weak self] details in
-            guard let self else { return }
-            self.showNFTDetailsScreen(details)
-        }
+        self.viewModel.cellSelected(indexPath)
     }
 
     init(viewModel: NFTListViewModel) {
@@ -35,14 +32,40 @@ final class NFTListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .appWhite
         configureNavigationController()
-        container.configure(configuration: .loading)
-        viewModel.getItems { [weak self] items in
-            guard let self else { return }
-            DispatchQueue.main.async {
-                self.container.configure(configuration: .loaded(items))
+        viewModel.viewDidLoad()
+        viewModel.state.bind { [weak self] state in
+            switch state {
+            case .loading:
+                DispatchQueue.main.async {
+                    self?.container.configure(configuration: .loading)
+                    self?.navigationController?.navigationBar.isHidden = true
+                }
+            case let .loaded(items):
+                DispatchQueue.main.async {
+                    self?.container.configure(configuration: .loaded(items))
+                    self?.navigationController?.navigationBar.isHidden = false
+                }
             }
         }
-        configureNavigationController()
+
+        viewModel.nftToShow.bind { [weak self] cellDetails in
+            guard let self else { return }
+            if let cellDetails {
+                self.showNFTDetailsScreen(cellDetails)
+            }
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupAppearance()
+    }
+
+    private func setupAppearance() {
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.backgroundColor = .appWhite
+
+        tabBarController?.tabBar.isHidden = false
     }
 
     private func configureNavigationController() {
@@ -56,26 +79,16 @@ final class NFTListViewController: UIViewController {
                                       style: .done,
                                       target: self,
                                       action: #selector(sortTapped))
-        
+
         navigationController?.navigationBar.topItem?.rightBarButtonItem = barItem
     }
-    
+
     @objc private func sortTapped() {
-        let alertController = UIAlertController(title: Localized.sortTitle, message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: Localized.byTitle, style: .default) { [weak self] _ in
+        let alertViewController = NFTSortingFactory.create { [weak self] output in
             guard let self else { return }
-            self.viewModel.sortItems(by: .name) { _ in
-                self.viewModel.sortItems(by: .name) { self.container.configure(configuration: .loaded($0))}
-            }
-        })
-        alertController.addAction(UIAlertAction(title: Localized.byCount, style: .default) { [weak self] _ in
-            guard let self else { return }
-            self.viewModel.sortItems(by: .amount) { _ in
-                self.viewModel.sortItems(by: .amount) { self.container.configure(configuration: .loaded($0))}
-            }
-        })
-        alertController.addAction(UIAlertAction(title: Localized.close, style: .cancel, handler: nil))
-        present(alertController, animated: true)
+            self.viewModel.sortItems(by: output)
+        }
+        present(alertViewController, animated: true)
     }
 }
 

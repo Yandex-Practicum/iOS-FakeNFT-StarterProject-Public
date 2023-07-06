@@ -7,24 +7,35 @@
 
 import Foundation
 
+enum NFTListState {
+    case loading
+    case loaded([NFTCollectionModel])
+}
+
 protocol NFTListViewModel {
-    func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void)
-    func cellSelected(_ index: IndexPath, selectedItem: @escaping (NFTDetails) -> Void)
-    func sortItems(by category: SortingCategory, _ items: @escaping ([NFTCollectionModel]) -> Void)
+    var state: Box<NFTListState> { get }
+    var nftToShow: Box<NFTDetails?> { get }
+    func viewDidLoad()
+    func cellSelected(_ index: IndexPath)
+    func sortItems(by category: SortingCategory)
 }
 
 final class NFTListViewModelImpl: NFTListViewModel {
+    private(set) var state: Box<NFTListState> = .init(.loading)
+    private(set) var nftToShow: Box<NFTDetails?> = .init(nil)
 
     private let networkClient: NetworkClient
-    private var nftCollectionItems: [NFTCollectionModel] = []
     private var nftIndividualItems: [NFTIndividualModel] = []
 
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-    
-    func cellSelected(_ index: IndexPath, selectedItem: @escaping (NFTDetails) -> Void) {
+
+    func cellSelected(_ index: IndexPath) {
+
+        if case let .loaded(nftCollectionItems) = state.value {
             let selectedCollection = nftCollectionItems[index.row]
+
             let collectionNfts = nftIndividualItems.filter { selectedCollection.nfts.contains($0.id) }
 
             let nftDetails = NFTDetails(imageURL: selectedCollection.cover,
@@ -32,39 +43,45 @@ final class NFTListViewModelImpl: NFTListViewModel {
                                         sectionAuthor: selectedCollection.author,
                                         sectionDescription: selectedCollection.description,
                                         items: collectionNfts)
-
-            selectedItem(nftDetails)
-    }
-
-    func getItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {
-        loadItems(items)
-    }
-    
-    func sortItems(by category: SortingCategory, _ items: @escaping ([NFTCollectionModel]) -> Void) {
-        let sortedItems = nftCollectionItems
-        switch category {
-        case .name:
-            items(sortedItems.sorted {
-                $0.name < $1.name
-            })
-        case .amount:
-            items(sortedItems.sorted {
-                $0.nfts.count > $1.nfts.count
-            })
+            nftToShow.value = nftDetails
         }
     }
-    
-    private func loadItems(_ items: @escaping ([NFTCollectionModel]) -> Void) {
+
+    func viewDidLoad() {
+        loadItems()
+    }
+
+    func sortItems(by category: SortingCategory) {
+        if case let .loaded(nftCollectionItems) = state.value {
+            let sortedItems = nftCollectionItems
+            switch category {
+            case .name:
+                state.value = .loaded(sortedItems.sorted {
+                    $0.name < $1.name
+                })
+            case .amount:
+                state.value = .loaded(sortedItems.sorted {
+                    $0.nfts.count > $1.nfts.count
+                })
+            }
+        }
+    }
+
+    private func loadItems() {
+        state.value = .loading
+        var nftCollectionItems: [NFTCollectionModel] = []
+        var nftIndividualItems: [NFTIndividualModel] = []
         let group = DispatchGroup()
 
         group.enter()
         networkClient.getCollectionNFT { result in
             switch result {
             case let .success(data):
-                self.nftCollectionItems = data
+                nftCollectionItems = data
                 group.leave()
             case let .failure(error):
                 print(error)
+                group.leave()
             }
         }
 
@@ -72,15 +89,17 @@ final class NFTListViewModelImpl: NFTListViewModel {
         networkClient.getIndividualNFT { result in
             switch result {
             case let .success(data):
-                self.nftIndividualItems = data
+                nftIndividualItems = data
                 group.leave()
             case let .failure(error):
                 print(error)
+                group.leave()
             }
         }
 
-        group.notify(queue: DispatchQueue.global()) {
-            items(self.nftCollectionItems)
+        group.notify(queue: DispatchQueue.global()) { [weak self] in
+            self?.state.value = .loaded(nftCollectionItems)
+            self?.nftIndividualItems = nftIndividualItems
         }
     }
 }
@@ -89,3 +108,4 @@ enum SortingCategory {
     case name
     case amount
 }
+

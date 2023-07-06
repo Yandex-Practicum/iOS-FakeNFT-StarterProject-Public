@@ -8,25 +8,24 @@
 import UIKit
 import SafariServices
 
-class NFTDetailsViewController: UIViewController {
+final class NFTDetailsViewController: UIViewController {
 
     private let viewModel: NFTDetailsViewModel
-    private lazy var container = NFTDetailsContainerView(details: viewModel.details) { [weak self] event in
-            guard let self else { return }
-            switch event {
-            case let .selectFavourite(index):
-                self.viewModel.addTofavouriteNft(index: index)
-            case let .unselectFavourite(index):
-                self.viewModel.removeFromFavouriteNft(index: index)
-            case let .selectBasket(index):
-                self.viewModel.selectNft(index: index)
-            case let .unselectBasket(index):
-                self.viewModel.unselectNft(index: index)
-            case .openWebView:
-                let vc = SFSafariViewController(url: .init(string: "https://yandex.ru")!)
-                self.present(vc, animated: true)
-            }
+    private lazy var container = NFTDetailsContainerView(
+        imageURL: viewModel.imageURL,
+        sectionName: viewModel.sectionName,
+        sectionAuthor: viewModel.sectionAuthor,
+        sectionDescription: viewModel.sectionDescription) { [weak self] event in
+        guard let self else { return }
+        switch event {
+        case let .selectFavourite(index):
+            self.viewModel.selectFavourite(index: index)
+        case let .selectBasket(index):
+            self.viewModel.selectedNft(index: index)
+        case .openWebView:
+            self.pushWebView()
         }
+    }
 
     init(viewModel: NFTDetailsViewModel) {
         self.viewModel = viewModel
@@ -43,25 +42,30 @@ class NFTDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.nfts.bind { [weak self] items in
+            self?.container.configure(.init(nfts: items))
+        }
+        setupAppearance()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        //        self.navigationController?.navigationBar.shadowImage = UIImage()
-        //        self.navigationController?.navigationBar.backgroundColor = .clear
-        //        self.navigationController?.navigationBar.isTranslucent = true
+
+    private func setupAppearance() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .clear
+
+        tabBarController?.tabBar.isHidden = true
+
+        navigationController?.navigationBar.topItem?.title = " "
+
+
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        //        self.navigationController?.navigationBar.shadowImage = nil
-        //        self.navigationController?.navigationBar.isTranslucent = false
-        //        self.navigationController?.navigationBar.backgroundColor = .appWhite
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController?.navigationBar.backgroundColor = .appWhite
+}
+
+// MARK: = Navigation
+private extension NFTDetailsViewController {
+    func pushWebView() {
+        let url = "https://www.yandex.com"
+        let webView = WebViewFactory.create(dependency: .init(url: url))
+        self.navigationController?.pushViewController(webView, animated: true)
     }
 }

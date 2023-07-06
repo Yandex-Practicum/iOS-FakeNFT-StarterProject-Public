@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NFTLoadingView: UIView {
+final class NFTLoadingView: UIView {
     private let _indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
@@ -18,7 +18,7 @@ class NFTLoadingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        _setupSubviews()
+        setupSubviews()
         backgroundColor = .appWhite
     }
 
@@ -26,7 +26,7 @@ class NFTLoadingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func _setupSubviews() {
+    private func setupSubviews() {
         _indicator.translatesAutoresizingMaskIntoConstraints = false
         addSubview(_indicator)
         NSLayoutConstraint.activate([

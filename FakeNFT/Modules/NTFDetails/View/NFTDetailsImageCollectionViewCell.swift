@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class NFTDetailsImageCollectionViewCell: UICollectionViewCell {
+final class NFTDetailsImageCollectionViewCell: UICollectionViewCell {
     private let image: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -23,14 +23,14 @@ class NFTDetailsImageCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        _setupSubviews()
+        setupSubviews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func _setupSubviews() {
+    private func setupSubviews() {
         contentView.addSubview(image)
 
         NSLayoutConstraint.activate([

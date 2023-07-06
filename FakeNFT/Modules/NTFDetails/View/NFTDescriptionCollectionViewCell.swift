@@ -7,12 +7,10 @@
 
 import UIKit
 
-class NFTDescriptionCollectionViewCell: UICollectionViewCell {
+final class NFTDescriptionCollectionViewCell: UICollectionViewCell {
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-//        stackView.alignment = .fill
-//        stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -20,8 +18,6 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
     private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-//        stackView.alignment = .leading
-//        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -69,7 +65,7 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        _setupSubviews()
+        setupSubviews()
         setupGestureRecognizers()
     }
 
@@ -89,20 +85,21 @@ class NFTDescriptionCollectionViewCell: UICollectionViewCell {
         action?()
     }
 
-    private func _setupSubviews() {
+    private func setupSubviews() {
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
+
+            authorLabel.widthAnchor.constraint(equalToConstant: 120)
         ])
         stackView.addArrangedSubview(sectionNameLabel)
-        stackView.setCustomSpacing(8, after: sectionNameLabel)
+        stackView.setCustomSpacing(5, after: sectionNameLabel)
         stackView.addArrangedSubview(horizontalStackView)
         horizontalStackView.addArrangedSubview(authorLabel)
-        stackView.setCustomSpacing(8, after: authorLabel)
         horizontalStackView.addArrangedSubview(authorLabelName)
         stackView.addArrangedSubview(descriptionLabel)
     }

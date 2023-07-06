@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NFTDetailsCollectionViewCell: UICollectionViewCell {
+final class NFTDetailsCollectionViewCell: UICollectionViewCell {
 
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -47,7 +47,6 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
 
     private let favouriteImageView: UIImageView = {
         let image = UIImageView()
-        image.image = .init(named: "unselected_icon")
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -55,7 +54,6 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
 
     private let trashImageView: UIImageView = {
         let image = UIImageView()
-        image.image = .init(named: "empty_trash")
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -116,34 +114,11 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func trashImageTapped() {
-
-        if trashImageView.image == .init(named: "empty_trash") {
-            action?(.selectBasket)
-            DispatchQueue.main.async {
-                self.trashImageView.image = .init(named: "filled_trash")
-
-            }
-        } else {
-            action?(.unselectBasket)
-            DispatchQueue.main.async {
-                self.trashImageView.image = .init(named: "empty_trash")
-            }
-        }
+        action?(.tapOnBasket)
     }
 
     @objc private func favouriteImageTapped() {
-
-        if favouriteImageView.image == .init(named: "unselected_icon") {
-            action?(.selectFavourite)
-            DispatchQueue.main.async {
-                self.favouriteImageView.image = .init(named: "selected_icon")
-            }
-        } else {
-            action?(.unselectFavourite)
-            DispatchQueue.main.async {
-                self.favouriteImageView.image = .init(named: "unselected_icon")
-            }
-        }
+        action?(.tapFavourite)
     }
 
     private func setupSubviews() {
@@ -175,6 +150,8 @@ class NFTDetailsCollectionViewCell: UICollectionViewCell {
 
         stackView.addArrangedSubview(image)
         stackView.addArrangedSubview(stackViewRating)
+        stackViewRating.isLayoutMarginsRelativeArrangement = true
+        stackViewRating.layoutMargins = .init(top: 0, left: 0, bottom: 0, right: 40)
         stackView.addArrangedSubview(horizontalDetailsStackView)
         horizontalDetailsStackView.addArrangedSubview(verticalDetailsStackView)
 
@@ -192,21 +169,33 @@ extension NFTDetailsCollectionViewCell {
         let rating: Int
         let price: Double
         let imageUrl: String
-
+        let isFavourite: Bool
+        let addedToBasket: Bool
     }
 
     func configure(_ configuration: Configuration) {
         nameLabel.text = configuration.name
         priceLabel.text = "\(configuration.price) ETH"
 
-        let starImage = UIImage(systemName: "star")
-        let starImageFilled = UIImage(systemName: "star.fill")
+        favouriteImageView.image = configuration.isFavourite
+        ? .init(named: "selected_icon")
+        : .init(named: "unselected_icon")
+
+        trashImageView.image = configuration.addedToBasket
+        ? .init(named: "filled_trash")
+        : .init(named: "empty_trash")
+
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 12, weight: .regular, scale: .unspecified)
+        let starImage = UIImage(systemName: "star", withConfiguration: symbolConfiguration)
+        let starImageFilled = UIImage(systemName: "star.fill", withConfiguration: symbolConfiguration)
 
         for index in 1...5 {
             let imageViewFilled = UIImageView(image: starImageFilled)
+            imageViewFilled.contentMode = .scaleAspectFit
             imageViewFilled.tintColor = .yellow
 
             let imageViewEmpty = UIImageView(image: starImage)
+            imageViewEmpty.contentMode = .scaleAspectFit
             imageViewEmpty.tintColor = .lightGray
             if index <= configuration.rating {
                 stackViewRating.addArrangedSubview(imageViewFilled)
@@ -222,9 +211,7 @@ extension NFTDetailsCollectionViewCell {
 
 extension NFTDetailsCollectionViewCell {
     enum Action {
-        case selectFavourite
-        case unselectFavourite
-        case selectBasket
-        case unselectBasket
+        case tapFavourite
+        case tapOnBasket
     }
 }

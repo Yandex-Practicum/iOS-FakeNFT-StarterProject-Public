@@ -6,37 +6,47 @@
 //
 
 protocol NFTDetailsViewModel {
-    var details: NFTDetails { get }
-    
-    func selectNft(index: Int)
-    
-    func unselectNft(index: Int)
-    
-    func addTofavouriteNft(index: Int)
-    
-    func removeFromFavouriteNft(index: Int)
+    var imageURL: String { get }
+    var sectionName: String { get }
+    var sectionAuthor: String { get }
+    var sectionDescription: String { get }
+    var nfts: Box<[NFT]> { get }
+    func selectedNft(index: Int)
+    func selectFavourite(index: Int)
 }
 
 final class NFTDetailsViewModelImpl: NFTDetailsViewModel {
-    private(set) var details: NFTDetails
+    private(set) var nfts: Box<[NFT]>
+    let imageURL: String
+    let sectionName: String
+    let sectionAuthor: String
+    let sectionDescription: String
 
-    init(details: NFTDetails) {
-        self.details = details
+    private let nftstorageService: NFtStorageService
+
+    init(nftstorageService: NFtStorageService, details: NFTDetails) {
+        self.nftstorageService = nftstorageService
+        imageURL = details.imageURL
+        sectionName = details.sectionName
+        sectionAuthor = details.sectionAuthor
+        sectionDescription = details.sectionDescription
+        nfts = .init(details.items.map { NFT($0) })
     }
-    
-    func selectNft(index: Int) {
-        print(details.items[index])
+
+    func selectedNft(index: Int) {
+        nfts.value[index].isSelected.toggle()
+
+        nfts.value[index].isSelected
+        ? nftstorageService.selectNft(nfts.value[index])
+        : nftstorageService.unselectNft(nfts.value[index])
+
     }
-    
-    func unselectNft(index: Int) {
-        print(details.items[index])
-    }
-    
-    func addTofavouriteNft(index: Int) {
-        print(details.items[index])
-    }
-    
-    func removeFromFavouriteNft(index: Int) {
-        print(details.items[index])
+
+    func selectFavourite(index: Int) {
+        nfts.value[index].isFavourite.toggle()
+
+        nfts.value[index].isSelected
+        ? nftstorageService.addToFavourite(nfts.value[index])
+        : nftstorageService.removeFromFavourite(nfts.value[index])
     }
 }
