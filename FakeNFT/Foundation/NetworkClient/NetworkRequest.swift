@@ -2,6 +2,7 @@ import Foundation
 
 enum NetworkConstants {
     static let baseUrl = URL(string: "https://648cbbf38620b8bae7ed510b.mockapi.io/api/v1")!
+    static let profileEndpoint = "profile/1"
 }
 
 enum HttpMethod: String {

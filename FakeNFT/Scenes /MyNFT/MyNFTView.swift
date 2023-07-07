@@ -3,7 +3,7 @@ import Kingfisher
 
 final class MyNFTView: UIView {
     // MARK: - Properties
-    private var viewController: MyNFTViewController?
+    private var viewModel: MyNFTViewModel
     
     private(set) var myNFTs: [NFTNetworkModel]?
     
@@ -22,9 +22,10 @@ final class MyNFTView: UIView {
     }()
     
     // MARK: - Lifecycle
-    init(frame: CGRect, viewController: MyNFTViewController) {
+    init(frame: CGRect, viewModel: MyNFTViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
-        self.viewController = viewController
+        
         
         self.backgroundColor = .white
         addTable()
@@ -44,7 +45,7 @@ final class MyNFTView: UIView {
     //MARK: - Layout methods
     private func addTable() {
         addSubview(myNFTTable)
-
+        
         NSLayoutConstraint.activate([
             myNFTTable.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             myNFTTable.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
@@ -54,7 +55,7 @@ final class MyNFTView: UIView {
     }
 }
 
-extension MyNFTView: UITableViewDataSource {
+extension MyNFTView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let myNFTs = myNFTs else { return 0 }
         return myNFTs.count
@@ -65,29 +66,26 @@ extension MyNFTView: UITableViewDataSource {
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         guard let myNFT = myNFTs?[indexPath.row] else { return MyNFTCell() }
-        cell.nftImage.kf.setImage(with: URL(string: myNFT.images[0]))
-        cell.nftName.text = myNFT.name
-        cell.nftRating.setStarsRating(rating: myNFT.rating)
-        if let authorName = viewController?.getAuthorById(id: myNFT.author) {
-            cell.nftAuthor.text = "от \(authorName)"}
-        cell.nftPriceValue.text = "\(myNFT.price) ETH"
-        cell.nftFavorite.nftID = myNFT.id
-        cell.nftFavorite.isFavorite = false
-        cell.nftFavorite.addTarget(self, action: #selector(didTapFavoriteButton(sender:)), for: .touchUpInside)
+        
+        let model = MyNFTCell.Model(
+            image: myNFT.images[0],
+            name: myNFT.name,
+            rating: myNFT.rating,
+            author: viewModel.authors[myNFT.author] ?? "",
+            price: myNFT.price,
+            isFavorite: false,
+            id: myNFT.id
+        )
+        
+        cell.tapAction = { [weak self] in
+            // TODO: Favorite functionality
+            print(model.id)
+        }
+        cell.configureCell(with: model)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
-    
-    @objc
-    func didTapFavoriteButton(sender: FavoriteButton) {
-        sender.isFavorite.toggle()
-        // TODO: Favorite functionality
-    }
-}
-
-extension MyNFTView: UITableViewDelegate {
-    
 }

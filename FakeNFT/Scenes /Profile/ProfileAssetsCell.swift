@@ -1,9 +1,9 @@
 import UIKit
 
-final class ProfileAssetsCell: UITableViewCell {
+final class ProfileAssetsCell: UITableViewCell, ReuseIdentifying {
     
     //MARK: - Layout elements
-    var assetLabel: UILabel = {
+    private lazy var assetLabel: UILabel = {
         var assetLabel = UILabel()
         assetLabel.translatesAutoresizingMaskIntoConstraints = false
         assetLabel.font = .boldSystemFont(ofSize: 17)
@@ -11,7 +11,7 @@ final class ProfileAssetsCell: UITableViewCell {
         return assetLabel
     }()
     
-    var assetValue: UILabel = {
+    private lazy var assetValue: UILabel = {
         var assetValue = UILabel()
         assetValue.translatesAutoresizingMaskIntoConstraints = false
         assetValue.font = .boldSystemFont(ofSize: 17)
@@ -19,7 +19,7 @@ final class ProfileAssetsCell: UITableViewCell {
         return assetValue
     }()
     
-    var disclosureIndicator: UIImageView = {
+    private lazy var disclosureIndicator: UIImageView = {
         var disclosureIndicator = UIImageView()
         disclosureIndicator.translatesAutoresizingMaskIntoConstraints = false
         disclosureIndicator.image = UIImage(systemName: "chevron.forward")
@@ -40,8 +40,14 @@ final class ProfileAssetsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    func setAssets(label: String?, value: String?) {
+        if let label = label { assetLabel.text = label }
+        if let value = value { assetValue.text = value }
+    }
+    
     // MARK: - Layout methods
-    func addAssetLabel() {
+    private func addAssetLabel() {
         addSubview(assetLabel)
         NSLayoutConstraint.activate([
             assetLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -49,7 +55,7 @@ final class ProfileAssetsCell: UITableViewCell {
         ])
     }
     
-    func addAssetValue() {
+    private func addAssetValue() {
         addSubview(assetValue)
         NSLayoutConstraint.activate([
             assetValue.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -57,7 +63,7 @@ final class ProfileAssetsCell: UITableViewCell {
         ])
     }
     
-    func addDisclosureIndicator() {
+    private func addDisclosureIndicator() {
         addSubview(disclosureIndicator)
         NSLayoutConstraint.activate([
             disclosureIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -65,5 +71,3 @@ final class ProfileAssetsCell: UITableViewCell {
         ])
     }
 }
-
-extension ProfileAssetsCell: ReuseIdentifying {}

@@ -5,7 +5,7 @@ final class FavoritesViewController: UIViewController {
     // MARK: - Properties
     var likedIDs: [String]?
     
-    private var viewModel: FavoritesViewModel?
+    private var viewModel: FavoritesViewModel
     
     
     //MARK: - Layout elements
@@ -28,8 +28,7 @@ final class FavoritesViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let likedIDs = likedIDs else { return }
-        viewModel = FavoritesViewModel(viewController: self, likedIDs: likedIDs)
+        
         bind()
         setupView()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -37,8 +36,9 @@ final class FavoritesViewController: UIViewController {
     
     init(likedIDs: [String]) {
         self.likedIDs = likedIDs
+        self.viewModel = FavoritesViewModel(likedIDs: likedIDs)
         super.init(nibName: nil, bundle: nil)
-//        UIBlockingProgressHUD.show()
+        //        UIBlockingProgressHUD.show()
     }
     
     required init?(coder: NSCoder) {
@@ -51,12 +51,22 @@ final class FavoritesViewController: UIViewController {
     
     // MARK: - Methods
     private func bind() {
-        if let viewModel = viewModel {
-            viewModel.onChange = { [weak self] in
-                guard let view = self?.view as? FavoritesView,
-                      let nfts = viewModel.likedNFTs else { return }
-                view.updateNFT(nfts: nfts)
+        viewModel.onChange = { [weak self] in
+            guard let view = self?.view as? FavoritesView,
+                  let nfts = self?.viewModel.likedNFTs else { return }
+            view.updateNFT(nfts: nfts)
+        }
+        
+        viewModel.onError = { [weak self] in
+            let alert = UIAlertController(
+                title: "Нет интернета",
+                message: "Пропал интернет :(",
+                preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
+                self?.navigationController?.popViewController(animated: true)
             }
+            alert.addAction(action)
+            self?.present(alert, animated: true)
         }
     }
     
@@ -64,7 +74,7 @@ final class FavoritesViewController: UIViewController {
     private func didTapBackButton() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     // MARK: - Layout methods
     func setupView() {
         guard let likedIDs = likedIDs else { return }
@@ -72,9 +82,9 @@ final class FavoritesViewController: UIViewController {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             addEmptyLabel()
-//            UIBlockingProgressHUD.dismiss()
+            UIBlockingProgressHUD.dismiss()
         } else {
-            self.view = FavoritesView(frame: .zero, viewController: self)
+            self.view = FavoritesView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
         }
     }
@@ -94,7 +104,7 @@ final class FavoritesViewController: UIViewController {
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-
+        
     }
 }
 

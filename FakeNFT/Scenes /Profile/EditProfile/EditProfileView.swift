@@ -3,8 +3,16 @@ import Kingfisher
 
 final class EditProfileView: UIView {
     
+    enum Constraints {
+        static let basicLeading = 16.0
+        static let basicTrailing = -16.0
+        static let basicInterim = 8.0
+        static let avatarDimensions = 70.0
+    }
+    
     // MARK: - Properties
-    private var viewController: EditProfileViewController?
+    private var viewModel: ProfileViewModel
+    private var viewController: EditProfileViewController
     
     //MARK: - Layout elements
     private lazy var closeButton: UIButton = {
@@ -41,17 +49,17 @@ final class EditProfileView: UIView {
         return changeAvatarLabel
     }()
     
-    private lazy var loadImageDummyLabel: UILabel = {
-        let loadImageDummyLabel = UILabel()
-        loadImageDummyLabel.translatesAutoresizingMaskIntoConstraints = false
-        loadImageDummyLabel.layer.cornerRadius = 16
-        loadImageDummyLabel.layer.masksToBounds = true
-        loadImageDummyLabel.backgroundColor = .white
-        loadImageDummyLabel.text = "Загрузить изображение"
-        loadImageDummyLabel.font = .systemFont(ofSize: 17)
-        loadImageDummyLabel.textAlignment = .center
-        loadImageDummyLabel.isHidden = true
-        return loadImageDummyLabel
+    private lazy var avatarUpdatedURLLabel: UILabel = {
+        let avatarUpdatedURLLabel = UILabel()
+        avatarUpdatedURLLabel.translatesAutoresizingMaskIntoConstraints = false
+        avatarUpdatedURLLabel.layer.cornerRadius = 16
+        avatarUpdatedURLLabel.layer.masksToBounds = true
+        avatarUpdatedURLLabel.backgroundColor = .white
+        avatarUpdatedURLLabel.text = "Загрузить изображение"
+        avatarUpdatedURLLabel.font = .systemFont(ofSize: 17)
+        avatarUpdatedURLLabel.textAlignment = .center
+        avatarUpdatedURLLabel.isHidden = true
+        return avatarUpdatedURLLabel
     }()
     
     private lazy var nameLabel: UILabel = {
@@ -120,9 +128,10 @@ final class EditProfileView: UIView {
     }()
     
     // MARK: - Lifecycle
-    init(frame: CGRect, viewController: EditProfileViewController) {
-        super.init(frame: .zero)
+    init(frame: CGRect, viewController: EditProfileViewController, viewModel: ProfileViewModel) {
         self.viewController = viewController
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         
         self.backgroundColor = .white
         addCloseButton()
@@ -139,39 +148,73 @@ final class EditProfileView: UIView {
     }
     
     // MARK: - Methods
-    func getDataFromViewModel() {
-        guard let viewModel = viewController?.viewModel else { return }
+    private func getDataFromViewModel() {
         avatarImage.kf.setImage(
             with: viewModel.avatarURL,
             placeholder: UIImage(named: "UserImagePlaceholder"),
             options: [.processor(RoundCornerImageProcessor(cornerRadius: 35))])
+        avatarUpdatedURLLabel.text = viewModel.avatarURL?.absoluteString
         nameTextField.text = viewModel.name
         descriptionTextView.text = viewModel.description
         websiteTextField.text = viewModel.website
     }
     
     @objc
-    func closeDidTap(_ sender: UITapGestureRecognizer) {
-        guard let viewModel = viewController?.viewModel,
-              let name = nameTextField.text, name != "",
-              let description = descriptionTextView.text, description != "",
-              let website = websiteTextField.text, website != "",
+    private func closeDidTap(_ sender: UITapGestureRecognizer) {
+        guard let name = nameTextField.text, !name.isEmpty,
+              let avatar = avatarUpdatedURLLabel.text,
+              let description = descriptionTextView.text, !description.isEmpty,
+              let website = websiteTextField.text, !website.isEmpty,
               let likes = viewModel.likes else { return }
         
         viewModel.putProfileData(
             name: name,
+            avatar: avatar,
             description: description,
             website: website,
             likes: likes
         )
-        viewController?.dismiss(animated: true)
+        viewController.dismiss(animated: true)
     }
     
     @objc
-    func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
-        loadImageDummyLabel.isHidden = false
-        // Так в ТЗ ¯\_(ツ)_/¯
-        // В Фигме нарисована только эта плашка, а в АПИ не указано поле изображения
+    private func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
+        avatarUpdatedURLLabel.isHidden = false
+        let alert = UIAlertController(
+            title: "Загрузить изображение",
+            message: "Укажите ссылку на аватар",
+            preferredStyle: UIAlertController.Style.alert)
+        alert.addTextField(configurationHandler: {(textField: UITextField) in
+            textField.placeholder = "Введите ссылку:"
+        })
+        alert.addAction(UIAlertAction(
+            title: "Ok",
+            style: UIAlertAction.Style.default,
+            handler: {_ in
+                guard let textField = alert.textFields?[0],
+                      let updatedURL = textField.text else { return }
+                
+                if self.verifyUrl(urlString: updatedURL) {
+                    self.avatarUpdatedURLLabel.text = updatedURL
+                } else {
+                    let wrongURLalert = UIAlertController(
+                        title: "Неверная ссылка",
+                        message: "Проверьте формат ссылки",
+                        preferredStyle: .alert)
+                    wrongURLalert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                    self.viewController.present(wrongURLalert, animated: true)
+                }
+            }))
+        self.viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    private func verifyUrl (urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url as URL)
+            }
+        }
+        return false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -194,27 +237,27 @@ final class EditProfileView: UIView {
             closeButton.heightAnchor.constraint(equalToConstant: 42),
             closeButton.widthAnchor.constraint(equalToConstant: 42),
             closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constraints.basicTrailing)
         ])
     }
     
     private func addAvatar() {
         self.addSubview(avatarImage)
         self.addSubview(changeAvatarLabel)
-        self.addSubview(loadImageDummyLabel)
+        self.addSubview(avatarUpdatedURLLabel)
         NSLayoutConstraint.activate([
-            avatarImage.heightAnchor.constraint(equalToConstant: 70),
-            avatarImage.widthAnchor.constraint(equalToConstant: 70),
+            avatarImage.heightAnchor.constraint(equalToConstant: Constraints.avatarDimensions),
+            avatarImage.widthAnchor.constraint(equalToConstant: Constraints.avatarDimensions),
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 94),
             avatarImage.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            changeAvatarLabel.heightAnchor.constraint(equalToConstant: 70),
-            changeAvatarLabel.widthAnchor.constraint(equalToConstant: 70),
-            changeAvatarLabel.topAnchor.constraint(equalTo: topAnchor, constant: 94),
+            changeAvatarLabel.heightAnchor.constraint(equalTo: avatarImage.heightAnchor),
+            changeAvatarLabel.widthAnchor.constraint(equalTo: avatarImage.widthAnchor),
+            changeAvatarLabel.topAnchor.constraint(equalTo: avatarImage.topAnchor),
             changeAvatarLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            loadImageDummyLabel.topAnchor.constraint(equalTo: changeAvatarLabel.bottomAnchor, constant: 4),
-            loadImageDummyLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            loadImageDummyLabel.heightAnchor.constraint(equalToConstant: 44),
-            loadImageDummyLabel.widthAnchor.constraint(equalToConstant: 250)
+            avatarUpdatedURLLabel.topAnchor.constraint(equalTo: changeAvatarLabel.bottomAnchor, constant: 4),
+            avatarUpdatedURLLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            avatarUpdatedURLLabel.heightAnchor.constraint(equalToConstant: 44),
+            avatarUpdatedURLLabel.widthAnchor.constraint(equalToConstant: 250)
             
         ])
     }
@@ -224,11 +267,11 @@ final class EditProfileView: UIView {
         self.addSubview(nameTextField)
         NSLayoutConstraint.activate([
         nameLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 24),
-        nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-        nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+        nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+        nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Constraints.basicInterim),
         nameTextField.heightAnchor.constraint(equalToConstant: 46),
-        nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-        nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+        nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constraints.basicTrailing)
         ])
     }
     
@@ -237,11 +280,11 @@ final class EditProfileView: UIView {
         self.addSubview(descriptionTextView)
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 22),
-            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            descriptionTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+            descriptionTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Constraints.basicInterim),
             descriptionTextView.heightAnchor.constraint(equalToConstant: 132),
-            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constraints.basicTrailing)
         ])
     }
     
@@ -250,11 +293,11 @@ final class EditProfileView: UIView {
         self.addSubview(websiteTextField)
         NSLayoutConstraint.activate([
             websiteLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 24),
-            websiteLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            websiteTextField.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 8),
+            websiteLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+            websiteTextField.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: Constraints.basicInterim),
             websiteTextField.heightAnchor.constraint(equalToConstant: 46),
-            websiteTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            websiteTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            websiteTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.basicLeading),
+            websiteTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constraints.basicTrailing)
         ])
     }
 }

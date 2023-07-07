@@ -4,9 +4,10 @@ final class ProfileViewModel {
     
     // MARK: - Properties
     var onChange: (() -> Void)?
+    var onError: (() -> Void)?
     
-    private weak var viewController: UIViewController?
-    
+    private let networkClient = DefaultNetworkClient()
+        
     private(set) var avatarURL: URL? {
         didSet {
             onChange?()
@@ -46,60 +47,59 @@ final class ProfileViewModel {
     private(set) var id: String?
     
     // MARK: - Lifecycle
-    init(viewController: UIViewController){
-        self.viewController = viewController
+    init(){
         getProfileData()
     }
     
     // MARK: - Methods
     func getProfileData() {
         UIBlockingProgressHUD.show()
-        let networkClient = DefaultNetworkClient()
         
-        networkClient.send(request: GetProfileRequest(), type: ProfileNetworkModel.self) { [self] result in
+        networkClient.send(request: GetProfileRequest(), type: ProfileNetworkModel.self) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let profile):
-                    self.avatarURL = URL(string: profile.avatar)
-                    self.name = profile.name
-                    self.description = profile.description
-                    self.website = profile.website
-                    self.nfts = profile.nfts
-                    self.likes = profile.likes
-                    self.id = profile.id
+                    self?.avatarURL = URL(string: profile.avatar)
+                    self?.name = profile.name
+                    self?.description = profile.description
+                    self?.website = profile.website
+                    self?.nfts = profile.nfts
+                    self?.likes = profile.likes
+                    self?.id = profile.id
                 case .failure(let error):
                     print(error)
-                    self.viewController?.view = NoInternetView()
-                    self.viewController?.navigationController?.navigationBar.isHidden = true
+                    self?.onError?()
                 }
                 UIBlockingProgressHUD.dismiss()
             }
         }
     }
     
-    func putProfileData(name: String, description: String, website: String, likes: [String]) {
+    func putProfileData(name: String, avatar: String, description: String, website: String, likes: [String]) {
         let networkClient = DefaultNetworkClient()
                 
         let request = PutProfileRequest(
             name: name,
+            avatar: avatar,
             description: description,
             website: website,
             likes: likes
         )
             
-        networkClient.send(request: request, type: ProfileNetworkModel.self) { [self] result in
+        networkClient.send(request: request, type: ProfileNetworkModel.self) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let profile):
-                    self.avatarURL = URL(string: profile.avatar)
-                    self.name = profile.name
-                    self.description = profile.description
-                    self.website = profile.website
-                    self.nfts = profile.nfts
-                    self.likes = profile.likes
-                    self.id = profile.id
+                    self?.avatarURL = URL(string: profile.avatar)
+                    self?.name = profile.name
+                    self?.description = profile.description
+                    self?.website = profile.website
+                    self?.nfts = profile.nfts
+                    self?.likes = profile.likes
+                    self?.id = profile.id
                 case .failure(let error):
                     print(error)
+                    self?.onError?()
                 }
             }
         }

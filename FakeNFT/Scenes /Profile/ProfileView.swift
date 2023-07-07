@@ -4,7 +4,8 @@ import Kingfisher
 final class ProfileView: UIView {
     
     // MARK: - Properties
-    private var viewController: ProfileViewController?
+    private var viewModel: ProfileViewModel
+    private var viewController: ProfileViewController
     
     private lazy var assetLabel: [String] = [
         "Мои NFT",
@@ -14,7 +15,7 @@ final class ProfileView: UIView {
     
     private lazy var assetViewController: [UIViewController] = [
         MyNFTViewController(nftIDs: {
-            return self.viewController?.getNftIDsFromViewModel() ?? []
+            return self.viewController.getNftIDsFromViewModel() ?? []
         }()),
     FavoritesViewController(likedIDs: ["5"]),
     DevelopersViewController()
@@ -75,9 +76,10 @@ final class ProfileView: UIView {
     }()
     
     // MARK: - Lifecycle
-    init(frame: CGRect, viewController: ProfileViewController) {
-        super.init(frame: .zero)
+    init(frame: CGRect, viewModel: ProfileViewModel, viewController: ProfileViewController) {
+        self.viewModel = viewModel
         self.viewController = viewController
+        super.init(frame: .zero)
         
         self.backgroundColor = .white
         addUserImage()
@@ -93,8 +95,8 @@ final class ProfileView: UIView {
     
     // MARK: - Methods
     @objc
-    func websiteDidTap(_ sender: UITapGestureRecognizer) {
-        viewController?.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
+    private func websiteDidTap(_ sender: UITapGestureRecognizer) {
+        viewController.present(WebsiteViewController(webView: nil, websiteURL: websiteLabel.text), animated: true)
     }
     
     func updateViews(
@@ -112,10 +114,12 @@ final class ProfileView: UIView {
         nameLabel.text = userName
         descriptionLabel.text = description
         websiteLabel.text = website
-        let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell
-        nftsCountLabel?.assetValue.text = nftCount
-        let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
-        likesCountLabel?.assetValue.text = likesCount
+        if let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell {
+            nftsCountLabel.setAssets(label: nil, value: nftCount)
+        }
+        if let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell {
+            likesCountLabel.setAssets(label: nil, value: likesCount)
+        }
     }
     
     //MARK: - Layout methods
@@ -173,8 +177,7 @@ extension ProfileView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileAssetsCell = tableView.dequeueReusableCell()
         cell.backgroundColor = .white
-        cell.assetLabel.text = assetLabel[indexPath.row]
-        cell.assetValue.text = ""
+        cell.setAssets(label: assetLabel[indexPath.row], value: nil)
         cell.selectionStyle = .none
         return cell
     }
@@ -186,6 +189,6 @@ extension ProfileView: UITableViewDataSource {
 
 extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewController?.navigationController?.pushViewController(assetViewController[indexPath.row], animated: true)
+        viewController.navigationController?.pushViewController(assetViewController[indexPath.row], animated: true)
     }
 }

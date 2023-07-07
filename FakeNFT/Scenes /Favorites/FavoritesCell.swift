@@ -1,9 +1,20 @@
 import UIKit
 
-final class FavoritesCell: UICollectionViewCell {
+final class FavoritesCell: UICollectionViewCell, ReuseIdentifying {
+    
+    struct Model {
+        let image: String
+        let name: String
+        let rating: Int
+        let price: Float
+        let isFavorite: Bool
+        let id: String
+    }
+    
+    var tapAction: (() -> Void)?
     
     //MARK: - Layout elements
-    var nftImage: UIImageView = {
+    private lazy var nftImage: UIImageView = {
         let nftImage = UIImageView()
         nftImage.translatesAutoresizingMaskIntoConstraints = false
         nftImage.layer.cornerRadius = 12
@@ -11,7 +22,7 @@ final class FavoritesCell: UICollectionViewCell {
         return nftImage
     }()
     
-    var nftStack: UIStackView = {
+    private lazy var nftStack: UIStackView = {
         let nftStack = UIStackView()
         nftStack.translatesAutoresizingMaskIntoConstraints = false
         nftStack.axis = .vertical
@@ -21,7 +32,7 @@ final class FavoritesCell: UICollectionViewCell {
         return nftStack
     }()
     
-    var nftName: UILabel = {
+    private lazy var nftName: UILabel = {
         let nftName = UILabel()
         nftName.translatesAutoresizingMaskIntoConstraints = false
         nftName.font = .boldSystemFont(ofSize: 17)
@@ -29,13 +40,13 @@ final class FavoritesCell: UICollectionViewCell {
         return nftName
     }()
     
-    var nftRating: StarRatingController = {
+    private lazy var nftRating: StarRatingController = {
         let nftRating = StarRatingController(starsRating: 5)
         nftRating.translatesAutoresizingMaskIntoConstraints = false
         return nftRating
     }()
     
-    var nftPriceValue: UILabel = {
+    private lazy var nftPriceValue: UILabel = {
         let nftPriceValue = UILabel()
         nftPriceValue.translatesAutoresizingMaskIntoConstraints = false
         nftPriceValue.font = .boldSystemFont(ofSize: 17)
@@ -43,9 +54,10 @@ final class FavoritesCell: UICollectionViewCell {
         return nftPriceValue
     }()
     
-    var nftFavorite: FavoriteButton = {
+    private lazy var nftFavorite: FavoriteButton = {
         let nftFavorite = FavoriteButton()
         nftFavorite.translatesAutoresizingMaskIntoConstraints = false
+        nftFavorite.addTarget(self, action: #selector(self.didTapFavoriteButton(sender:)), for: .touchUpInside)
         return nftFavorite
     }()
     
@@ -61,8 +73,24 @@ final class FavoritesCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
+    @objc
+    private func didTapFavoriteButton(sender: FavoriteButton) {
+        sender.isFavorite.toggle()
+        if let tapAction = tapAction { tapAction() }
+    }
+    
+    func configureCell(with model: Model) {
+        nftImage.kf.setImage(with: URL(string: model.image))
+        nftName.text = model.name
+        nftRating.setStarsRating(rating: model.rating)
+        nftPriceValue.text = "\(model.price) ETH"
+        nftFavorite.isFavorite = model.isFavorite
+        nftFavorite.nftID = model.id
+    }
+    
     // MARK: - Layout methods
-    func addImage() {
+    private func addImage() {
         contentView.addSubview(nftImage)
         nftImage.image = UIImage(named: "UserImagePlaceholder")
         NSLayoutConstraint.activate([
@@ -73,7 +101,7 @@ final class FavoritesCell: UICollectionViewCell {
         ])
     }
     
-    func addFavoriteButton() {
+    private func addFavoriteButton() {
         contentView.addSubview(nftFavorite)
         NSLayoutConstraint.activate([
             nftFavorite.topAnchor.constraint(equalTo: nftImage.topAnchor, constant: -6),
@@ -83,7 +111,7 @@ final class FavoritesCell: UICollectionViewCell {
         ])
     }
     
-    func addNFTStack() {
+    private func addNFTStack() {
         contentView.addSubview(nftStack)
         nftStack.addArrangedSubview(nftName)
         nftStack.addArrangedSubview(nftRating)
@@ -95,5 +123,3 @@ final class FavoritesCell: UICollectionViewCell {
         ])
     }
 }
-
-extension FavoritesCell: ReuseIdentifying {}
