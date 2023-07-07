@@ -1,9 +1,9 @@
 import UIKit
 
-class StarRatingController: UIStackView {
+final class StarRatingController: UIStackView {
     
     //MARK: - Properties
-    var starsRating = 0
+    private var starsRating = 0
     
     private var starsEmptyPicName = "Star Empty"
     private var starsFilledPicName = "Star Filled"
@@ -36,7 +36,7 @@ class StarRatingController: UIStackView {
             if let image = subView as? UIImageView{
                 if image.tag > starsRating {
                     image.image = UIImage(named: starsEmptyPicName)
-                }else{
+                } else {
                     image.image = UIImage(named: starsFilledPicName)
                 }
             }

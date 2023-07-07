@@ -3,9 +3,9 @@ import UIKit
 final class MyNFTViewController: UIViewController {
     
     // MARK: - Properties
-    var nftIDs: [String]?
+    var nftIDs: [String]
     
-    private var viewModel: MyNFTViewModel?
+    private var viewModel: MyNFTViewModel
     
     //MARK: - Layout elements
     private lazy var backButton = UIBarButtonItem(
@@ -34,31 +34,51 @@ final class MyNFTViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let nftIDs = nftIDs else { return }
-        viewModel = MyNFTViewModel(viewController: self, nftIDs: nftIDs)
+        
         bind()
         setupView()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     init(nftIDs: [String]) {
         self.nftIDs = nftIDs
+        self.viewModel = MyNFTViewModel(nftIDs: nftIDs)
         super.init(nibName: nil, bundle: nil)
-        UIBlockingProgressHUD.show()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        viewModel.getMyNFTs(nftIDs: nftIDs)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
     // MARK: - Methods
     private func bind() {
-        if let viewModel = viewModel {
-            viewModel.onChange = { [weak self] in
-                guard let view = self?.view as? MyNFTView,
-                      let nfts = viewModel.myNFTs else { return }
-                view.updateNFT(nfts: nfts)
-            }
+        viewModel.onChange = { [weak self] in
+            guard let view = self?.view as? MyNFTView,
+                  let nfts = self?.viewModel.myNFTs else { return }
+            view.updateNFT(nfts: nfts)
         }
+        
+        viewModel.onError = { [weak self] in
+            let alert = UIAlertController(
+                title: "Нет интернета",
+                message: "Пропал интернет :(",
+                preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            alert.addAction(action)
+            self?.present(alert, animated: true)
+        }
+    }
+    
+    func getAuthorById(id: String) -> String {
+        return viewModel.authors[id] ?? ""
     }
     
     @objc
@@ -70,17 +90,16 @@ final class MyNFTViewController: UIViewController {
     private func didTapSortButton() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     // MARK: - Layout methods
     func setupView() {
-        guard let nftIDs = nftIDs else { return }
         if nftIDs.isEmpty {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             addEmptyLabel()
             UIBlockingProgressHUD.dismiss()
         } else {
-            self.view = MyNFTView(frame: .zero, viewController: self)
+            self.view = MyNFTView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
         }
     }
@@ -94,10 +113,6 @@ final class MyNFTViewController: UIViewController {
         }
     }
     
-    func getAuthorById(id: String) -> String {
-        return viewModel?.authors[id] ?? ""
-    }
-    
     func addEmptyLabel() {
         view.addSubview(emptyLabel)
         
@@ -105,6 +120,8 @@ final class MyNFTViewController: UIViewController {
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-
+        
     }
 }
+
+extension MyNFTViewController: UIGestureRecognizerDelegate {}

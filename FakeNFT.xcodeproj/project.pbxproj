@@ -49,10 +49,13 @@
 		D06ADD072A48AF7C00F6E948 /* ProfileNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADD062A48AF7C00F6E948 /* ProfileNetworkModel.swift */; };
 		D06ADD0A2A48CC1F00F6E948 /* WebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADD092A48CC1F00F6E948 /* WebsiteViewController.swift */; };
 		D06ADD0C2A48D08F00F6E948 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06ADD0B2A48D08F00F6E948 /* UIBlockingProgressHUD.swift */; };
+		D06CC3692A557D0B00B7B117 /* FavoritesVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CC3682A557D0B00B7B117 /* FavoritesVeiwModel.swift */; };
 		D0853BFA2A4B0143004385C6 /* PutProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0853BF92A4B0143004385C6 /* PutProfileRequest.swift */; };
 		D09584402A53131500DEDF82 /* API.html in Resources */ = {isa = PBXBuildFile; fileRef = D095843D2A53131500DEDF82 /* API.html */; };
 		D09584412A53131500DEDF82 /* Group3_Decomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = D095843E2A53131500DEDF82 /* Group3_Decomposition.md */; };
 		D09584422A53131500DEDF82 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = D095843F2A53131500DEDF82 /* Readme.md */; };
+		D09584442A53573800DEDF82 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09584432A53573800DEDF82 /* FavoritesView.swift */; };
+		D09584462A5447A500DEDF82 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09584452A5447A500DEDF82 /* FavoritesCell.swift */; };
 		D0A6C2F72A4CBCB400329E5D /* DevelopersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A6C2F62A4CBCB400329E5D /* DevelopersViewController.swift */; };
 		D0D171992A49F9BB00EDC080 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D171982A49F9BB00EDC080 /* EditProfileView.swift */; };
 		D0D1719B2A4A05FE00EDC080 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D1719A2A4A05FE00EDC080 /* TextField.swift */; };
@@ -123,10 +126,13 @@
 		D06ADD062A48AF7C00F6E948 /* ProfileNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkModel.swift; sourceTree = "<group>"; };
 		D06ADD092A48CC1F00F6E948 /* WebsiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteViewController.swift; sourceTree = "<group>"; };
 		D06ADD0B2A48D08F00F6E948 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		D06CC3682A557D0B00B7B117 /* FavoritesVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVeiwModel.swift; sourceTree = "<group>"; };
 		D0853BF92A4B0143004385C6 /* PutProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutProfileRequest.swift; sourceTree = "<group>"; };
 		D095843D2A53131500DEDF82 /* API.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = API.html; sourceTree = SOURCE_ROOT; };
 		D095843E2A53131500DEDF82 /* Group3_Decomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Group3_Decomposition.md; sourceTree = SOURCE_ROOT; };
 		D095843F2A53131500DEDF82 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = SOURCE_ROOT; };
+		D09584432A53573800DEDF82 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		D09584452A5447A500DEDF82 /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		D0A6C2F62A4CBCB400329E5D /* DevelopersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewController.swift; sourceTree = "<group>"; };
 		D0D171982A49F9BB00EDC080 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		D0D1719A2A4A05FE00EDC080 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -344,6 +350,9 @@
 			isa = PBXGroup;
 			children = (
 				D03C0ACE2A4E07B600915774 /* FavoritesViewController.swift */,
+				D09584432A53573800DEDF82 /* FavoritesView.swift */,
+				D09584452A5447A500DEDF82 /* FavoritesCell.swift */,
+				D06CC3682A557D0B00B7B117 /* FavoritesVeiwModel.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -567,11 +576,13 @@
 				D03C0AE42A520F1200915774 /* AuthorNetworkModel.swift in Sources */,
 				D0D4F1F62A47159600A0922B /* ProfileViewModel.swift in Sources */,
 				D03C0AE22A520D7400915774 /* GetAuthorByIdRequest.swift in Sources */,
+				D09584462A5447A500DEDF82 /* FavoritesCell.swift in Sources */,
 				D06ADD052A48AA6700F6E948 /* GetProfileRequest.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				559CF0052A3E2FE7006B6B88 /* Icons.swift in Sources */,
 				D03C0ADC2A5082A100915774 /* MyNFTViewModel.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				D06CC3692A557D0B00B7B117 /* FavoritesVeiwModel.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				D03C0AD52A50709700915774 /* StarRating.swift in Sources */,
@@ -595,6 +606,7 @@
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				D06ADD0A2A48CC1F00F6E948 /* WebsiteViewController.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				D09584442A53573800DEDF82 /* FavoritesView.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				D03C0AD92A507E8200915774 /* GetNFTByIdRequest.swift in Sources */,

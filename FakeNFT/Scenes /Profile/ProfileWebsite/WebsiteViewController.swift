@@ -4,8 +4,8 @@ import WebKit
 final class WebsiteViewController: UIViewController, WKUIDelegate {
     
     // MARK: - Properties
-    var webView: WKWebView?
-    var websiteURL: String?
+    private var webView: WKWebView?
+    private var websiteURL: String?
     
     // MARK: - Lifecycle
     override func loadView() {
