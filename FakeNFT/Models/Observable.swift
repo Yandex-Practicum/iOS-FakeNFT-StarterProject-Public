@@ -4,7 +4,7 @@
 //
 //  Created by Илья Валито on 19.06.2023.
 //
- 
+
 @propertyWrapper
 final class Observable<Value> {
 

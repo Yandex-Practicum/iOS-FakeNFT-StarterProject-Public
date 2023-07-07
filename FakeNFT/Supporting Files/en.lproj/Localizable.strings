@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Илья Валито on 24.06.2023.
+  
+*/
+PROFILE = "Profile";
+CATALOG = "Catalog";
+BASKET = "Basket";
+STATISTICS = "Statistics";
+ABOUT_NFT_DEVELOPER = "About NFT developer";
+NO_INTERNET_ERROR = "No Internet";
+RETRY = "Retry";
+MY_NFT = "My NFT";
+FAVORITED_NFT = "Favorited NFT";
+ABOUT_DEVELOPER = "About developer";
+CHANGE_PHOTO = "Change photo";
+DOWNLOAD_AN_IMAGE = "Download an image";
+NAME = "Name";
+DESCRIPTION = "Description";
+WEBSITE = "Website";
+PHOTO_CHANGING = "Photo changing";
+ENTER_A_LINK_TO_A_NEW_PHOTO = "Enter a link to a new photo";
+OK = "OK";
+CANCEL = "Cancel";
+PRICE = "Price";
+YOU_HAVE_NO_NFT_YET = "You have no NFT yet";
+SORTING = "Sorting";
+BY_PRICE = "By price";
+BY_RATING = "By rating";
+BY_NAME = "By name";
+CLOSE = "Close";
+YOU_HAVE_NO_FAVORITED_NFT_YET = "You have no favorited NFT yet";
+PULL_TO_REFRESH = "Pull to refresh";
+DELETE = "Delete";
+SURE_TO_DELETE = "Are you sure want to delete this NFT?";
+SOMETHING_WENT_WRONG = "Something went wrong";
