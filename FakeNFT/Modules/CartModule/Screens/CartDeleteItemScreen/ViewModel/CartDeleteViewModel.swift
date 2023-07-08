@@ -17,6 +17,15 @@ final class CartDeleteViewModel {
         self.dataStore = dataStore
     }
     
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
+    }
+    
     func updateItemToDelete(with id: String?) {
         guard let id else { return }
         itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })

@@ -1,5 +1,5 @@
 //
-//  CustomHeartButton.swift
+//  CustomLikeButton.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 04.07.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomHeartButton: UIButton {
+class CustomLikeButton: UIButton {
 
     init(appearance: Appearance) {
         super.init(frame: .zero)
@@ -20,21 +20,22 @@ class CustomHeartButton: UIButton {
 
 }
 
-extension CustomHeartButton {
+extension CustomLikeButton {
     func setAppearance(for appearance: Appearance) {
         switch appearance {
         case .favourite:
-//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed), for: .normal)
             setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed, renderingMode: .alwaysOriginal), for: .normal)
         case .normal:
-//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite), for: .normal)
             setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite, renderingMode: .alwaysOriginal), for: .normal)
         }
-        
+    }
+    
+    func updateButtonAppearence(isLiked: Bool) {
+        isLiked ? setAppearance(for: .favourite) : setAppearance(for: .normal)
     }
 }
 
-extension CustomHeartButton {
+extension CustomLikeButton {
     enum Appearance {
         case favourite, normal
     }

@@ -18,6 +18,7 @@ protocol NftCollectionDSManagerProtocol {
     typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, VisibleSingleNfts>
     typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, VisibleSingleNfts>
     var onCartHandler: ((String?) -> Void)? { get set }
+    var onLikeHandler: ((String?) -> Void)? { get set }
     func createDataSource(with collectionView: UICollectionView, with data: [VisibleSingleNfts])
     func updateCollection(with data: [VisibleSingleNfts])
 }
@@ -26,6 +27,7 @@ final class CollectionViewDataSourceManager {
     private var cartDataSource: CartDataSource?
     private var collectionDataSource: CollectionDataSource?
     var onCartHandler: ((String?) -> Void)?
+    var onLikeHandler: ((String?) -> Void)?
 }
 
 // MARK: - Ext NftCollectionDSManagerProtocol
@@ -49,6 +51,9 @@ extension CollectionViewDataSourceManager: NftCollectionDSManagerProtocol {
         cell.viewModel = CatalogCollectionCellViewModel(nftRow: item)
         cell.onCart = { [weak self] id in
             self?.onCartHandler?(id)
+        }
+        cell.onLike = { [weak self] id in
+            self?.onLikeHandler?(id)
         }
         return cell
     }

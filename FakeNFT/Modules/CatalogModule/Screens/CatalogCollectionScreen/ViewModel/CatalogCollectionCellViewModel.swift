@@ -15,6 +15,15 @@ final class CatalogCollectionCellViewModel: ObservableObject {
         self.nftRow = nftRow
     }
     
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
+    }
+    
     func updateIsLiked() {
         let newRow = VisibleSingleNfts(
             name: nftRow.name,
@@ -41,7 +50,6 @@ final class CatalogCollectionCellViewModel: ObservableObject {
             id: nftRow.id,
             isStored: !nftRow.isStored,
             isLiked: nftRow.isLiked)
-        print("isStored updated")
         self.nftRow = newRow
     }
 }

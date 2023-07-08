@@ -15,4 +15,13 @@ final class PaymentMethodCellViewModel {
     init(paymentMethodRow: PaymentMethodRow) {
         self.paymentMethodRow = paymentMethodRow
     }
+    
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
+    }
 }

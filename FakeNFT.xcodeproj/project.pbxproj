@@ -22,7 +22,7 @@
 		3733F20E2A53112000ED681C /* CatalogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F20D2A53112000ED681C /* CatalogCollectionViewCell.swift */; };
 		3733F2102A53123B00ED681C /* UIViewController + Ext navBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F20F2A53123B00ED681C /* UIViewController + Ext navBar.swift */; };
 		3733F21A2A5496F100ED681C /* CatalogCollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F2192A5496F100ED681C /* CatalogCollectionCellViewModel.swift */; };
-		3733F21C2A5498CE00ED681C /* CustomHeartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F21B2A5498CE00ED681C /* CustomHeartButton.swift */; };
+		3733F21C2A5498CE00ED681C /* CustomLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F21B2A5498CE00ED681C /* CustomLikeButton.swift */; };
 		3733F21E2A549AE700ED681C /* CustomAddOrDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F21D2A549AE700ED681C /* CustomAddOrDeleteButton.swift */; };
 		3733F2202A549D0700ED681C /* NftIMageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F21F2A549D0700ED681C /* NftIMageView.swift */; };
 		3733F2272A54A53500ED681C /* GridItemSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733F2262A54A53500ED681C /* GridItemSize.swift */; };
@@ -118,7 +118,7 @@
 		3733F20D2A53112000ED681C /* CatalogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCollectionViewCell.swift; sourceTree = "<group>"; };
 		3733F20F2A53123B00ED681C /* UIViewController + Ext navBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext navBar.swift"; sourceTree = "<group>"; };
 		3733F2192A5496F100ED681C /* CatalogCollectionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCollectionCellViewModel.swift; sourceTree = "<group>"; };
-		3733F21B2A5498CE00ED681C /* CustomHeartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeartButton.swift; sourceTree = "<group>"; };
+		3733F21B2A5498CE00ED681C /* CustomLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLikeButton.swift; sourceTree = "<group>"; };
 		3733F21D2A549AE700ED681C /* CustomAddOrDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAddOrDeleteButton.swift; sourceTree = "<group>"; };
 		3733F21F2A549D0700ED681C /* NftIMageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftIMageView.swift; sourceTree = "<group>"; };
 		3733F2262A54A53500ED681C /* GridItemSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemSize.swift; sourceTree = "<group>"; };
@@ -362,7 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				37DFD1692A408F090020667A /* CustomActionButton.swift */,
-				3733F21B2A5498CE00ED681C /* CustomHeartButton.swift */,
+				3733F21B2A5498CE00ED681C /* CustomLikeButton.swift */,
 				3733F21D2A549AE700ED681C /* CustomAddOrDeleteButton.swift */,
 			);
 			path = Buttons;
@@ -958,7 +958,7 @@
 				377DF5F42A3FA4DE00090DCD /* RateStarImageView.swift in Sources */,
 				372EEF852A449405008FDB16 /* CartPaymentMethodViewController.swift in Sources */,
 				37D36BB62A51C31600662D2C /* CatalogCellViewModel.swift in Sources */,
-				3733F21C2A5498CE00ED681C /* CustomHeartButton.swift in Sources */,
+				3733F21C2A5498CE00ED681C /* CustomLikeButton.swift in Sources */,
 				3733F21A2A5496F100ED681C /* CatalogCollectionCellViewModel.swift in Sources */,
 				372EEF9E2A460AF3008FDB16 /* WebViewController.swift in Sources */,
 				374EB0452A3E033800D57F36 /* MainTabBarController.swift in Sources */,

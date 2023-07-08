@@ -15,4 +15,13 @@ final class CartCellViewModel: ObservableObject {
     init(cartRow: SingleNft) {
         self.cartRow = cartRow
     }
+    
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
+    }
 }

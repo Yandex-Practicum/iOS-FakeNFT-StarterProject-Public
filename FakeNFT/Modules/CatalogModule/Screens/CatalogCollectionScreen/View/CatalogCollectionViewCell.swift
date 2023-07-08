@@ -27,8 +27,9 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
-    private lazy var heartButton: CustomHeartButton = {
-        let button = CustomHeartButton(appearance: .normal)
+    private lazy var likeButton: CustomLikeButton = {
+        let button = CustomLikeButton(appearance: .normal)
+        button.addTarget(self, action: #selector(likeTapped), for: .touchUpInside)
         return button
     }()
     
@@ -123,25 +124,19 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         nftPriceLabel.text = "\(newRow.price) ETH"
         id = newRow.id
         updateAddOrDeleteButton(from: newRow)
-        //MARK: рейтинг плывет
+        updateLikeButton(from: newRow)
     }
     
     private func updateAddOrDeleteButton(from nft: VisibleSingleNfts) {
         addOrDeleteButton.updateAppearence(isInCart: nft.isStored)
-        print("nft \(nft.name) is stored: \(nft.isStored)")
+    }
+    
+    private func updateLikeButton(from nft: VisibleSingleNfts) {
+        likeButton.updateButtonAppearence(isLiked: nft.isLiked)
     }
     
     private func loadCover(from stringUrl: String?) {
-        guard
-            let nftUrl = stringUrl,
-            let encodedStringUrl = nftUrl.addingPercentEncoding(
-                withAllowedCharacters: .urlQueryAllowed
-            ),
-            let url = URL(string: encodedStringUrl)
-        else {
-            return
-        }
-        
+        guard let url = viewModel?.createUrl(from: stringUrl) else { return }
         nftImageView.setImage(from: url)
     }
     
@@ -150,7 +145,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 // MARK: - Ext @objc
 @objc private extension CatalogCollectionViewCell {
     func likeTapped() {
-//        onLike?(id)
+        onLike?(id)
         viewModel?.updateIsLiked()
     }
     
@@ -202,14 +197,14 @@ private extension CatalogCollectionViewCell {
     }
     
     func setupHeartButton() {
-        addSubview(heartButton)
-        heartButton.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(likeButton)
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            heartButton.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 10),
-            heartButton.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -10),
-            heartButton.heightAnchor.constraint(equalToConstant: 18),
-            heartButton.widthAnchor.constraint(equalToConstant: 21)
+            likeButton.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 10),
+            likeButton.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -10),
+            likeButton.heightAnchor.constraint(equalToConstant: 18),
+            likeButton.widthAnchor.constraint(equalToConstant: 21)
         ])
     }
 }

@@ -177,6 +177,12 @@ private extension CatalogCollectionViewController {
         }
     }
     
+    func setOnLikeClosure() {
+        diffableDataSource.onLikeHandler = { [weak viewModel] id in
+            viewModel
+        }
+    }
+    
     func updateUI(with collection: NftCollection) {
         updateCoverImage(for: collection)
         updateTitleLabelText(for: collection)

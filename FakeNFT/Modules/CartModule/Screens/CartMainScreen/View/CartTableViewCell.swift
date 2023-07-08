@@ -115,11 +115,16 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func updateCell(with newRow: SingleNft ) {
-        nftImageView.setImage(from: URL(string: newRow.images.first ?? ""))
+        loadCover(from: newRow.images.first)
         nftName.text = newRow.name
         rateStackView.addRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"
         id = newRow.id
+    }
+    
+    private func loadCover(from stringUrl: String?) {
+        guard let url = viewModel?.createUrl(from: stringUrl) else { return }
+        nftImageView.setImage(from: url)
     }
 }
 

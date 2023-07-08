@@ -55,6 +55,11 @@ final class CatalogCollectionViewModel {
         guard let id else { return }
         dataStore.addOrDeleteNftToCart(id)
     }
+    
+    func addOrDeleteLike(to id: String?) {
+        guard let id else { return }
+        dataStore
+    }
 }
 
 // MARK: - Ext Private

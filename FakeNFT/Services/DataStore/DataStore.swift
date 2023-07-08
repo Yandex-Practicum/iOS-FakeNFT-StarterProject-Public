@@ -50,8 +50,6 @@ final class DataStore {
         didSet { sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor)) }
     }
     
-    private var cartLikedItems: [SingleNft] = []
-    
     private var catalogStoredItems: [NftCollection] = [] {
         didSet { sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor)) }
     }
@@ -60,7 +58,11 @@ final class DataStore {
         didSet { sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems) }
     }
     
-    private var likedNftCollectionStoredItems: Set<SingleNft> = []
+    private var cartLikedItems: [SingleNft] = [] {
+        didSet {
+            print("like changed")
+        }
+    }
 }
 
 // MARK: - Ext CartDataStorageProtocol
@@ -120,13 +122,14 @@ extension DataStore: CatalogDataStorageProtocol {
         return cartLikedItems.contains(where: { $0 == item })
     }
     
-//    func getLikedNfts() -> [SingleNft] {
-//        return Array(likedNftCollectionStoredItems)
-//    }
-    
     func addOrDeleteNftToCart(_ id: String) {
         guard let element = nftCollectionStoredItems.first(where: { $0.id == id }) else { fatalError("addOrDeleteNftToCart error") }
         cartStoredItems.contains(where: { $0 == element }) ? deleteItemFromCart(element) : addItemToCart(element)
+    }
+    
+    func addOrDeleteLike(to id: String) {
+        guard let element = nftCollectionStoredItems.first(where: { $0.id == id }) else { fatalError("addOrDeleteNftToCart error") }
+        cartLikedItems.contains(where: { $0 == element }) ? deleteLike(element) : addLike(element)
     }
 }
 
@@ -205,5 +208,16 @@ private extension DataStore {
     
     func deleteItemFromCart(_ item: SingleNft) {
         cartStoredItems.removeAll(where: { $0 == item })
+    }
+}
+
+// MARK: - Ext Add / Delete like
+private extension DataStore {
+    func addLike(_ item: SingleNft) {
+        cartLikedItems.append(item)
+    }
+    
+    func deleteLike(_ item: SingleNft) {
+        cartLikedItems.removeAll(where: { $0 == item })
     }
 }

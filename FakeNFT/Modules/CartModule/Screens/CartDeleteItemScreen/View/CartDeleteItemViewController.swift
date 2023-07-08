@@ -134,7 +134,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         viewModel.$itemToDelete
             .receive(on: DispatchQueue.main)
             .sink { [weak self] cartRow in
-                self?.setupImageView(for: cartRow)
+                self?.loadCover(for: cartRow?.images.first)
             }
             .store(in: &cancellables)
     }
@@ -156,9 +156,9 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         
     }
     
-    private func setupImageView(for cartRow: SingleNft?) {
-        guard let imageName = cartRow?.images.first else { return }
-        itemImageView.setImage(from: URL(string: imageName))
+    private func loadCover(for stringUrl: String?) {
+        guard let url = viewModel.createUrl(from: stringUrl) else { return }
+        itemImageView.setImage(from: url)
     }
 }
 
