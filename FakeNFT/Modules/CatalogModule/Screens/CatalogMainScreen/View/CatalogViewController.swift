@@ -32,6 +32,11 @@ final class CatalogViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     let dataSource: CatalogDataSourceManagerProtocol
     let viewModel: CatalogViewModel
     
@@ -85,6 +90,13 @@ final class CatalogViewController: UIViewController {
                 self?.onError?(error)
             }
             .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                self?.showOrHideAnimation(for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
     private func load() {
@@ -95,7 +107,16 @@ final class CatalogViewController: UIViewController {
         dataSource.updateTableView(with: rows)
     }
     
-
+    private func showOrHideAnimation(for requestResult: RequestResult?) {
+        guard let requestResult
+        else {
+            loadingView.stopAnimation()
+            return
+        }
+        
+        loadingView.result = requestResult
+        loadingView.startAnimation()
+    }
 }
 
 // MARK: - Ext TableViewDelegate
@@ -131,6 +152,7 @@ extension CatalogViewController: CatalogMainScreenCoordinatable {
 extension CatalogViewController {
     func setupConstraints() {
         setupTableView()
+        setupLoadingView()
     }
     
     func setupTableView() {
@@ -142,6 +164,18 @@ extension CatalogViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 75),
+            loadingView.widthAnchor.constraint(equalToConstant: 75)
         ])
     }
 }
