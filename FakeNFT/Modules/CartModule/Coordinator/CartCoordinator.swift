@@ -122,7 +122,7 @@ private extension CartCoordinator {
 // MARK: - Ext Alerts
 private extension CartCoordinator {
     func showSortAlert(from screen: CartMainCoordinatableProtocol) {
-        let alert = alertConstructor.constructSortAlert()
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
         alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] filter in
             filter == .cancel ? () : screen?.setupSortDescriptor(filter)
@@ -134,9 +134,9 @@ private extension CartCoordinator {
     
     func showCartLoadAlert(with error: Error?, from screen: CartMainCoordinatableProtocol) {
         guard let error else { return }
-        let alert = alertConstructor.constructCartLoadAlert(with: error)
-        
-        alertConstructor.addCartErrorAlertActions(from: alert) { [weak router] action in
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
+
+        alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:
                 screen.reloadCart()

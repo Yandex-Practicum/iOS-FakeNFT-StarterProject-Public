@@ -13,6 +13,7 @@ protocol CatalogModuleFactoryProtocol {
     func makeCatalogCollectionScreenView(with collection: NftCollection,
                                          dataSource: NftCollectionDSManagerProtocol,
                                          dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable
+    func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol
 }
 
 protocol CartModuleFactoryProtocol {
@@ -39,6 +40,12 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
         let viewController = CatalogCollectionViewController(viewModel: viewModel, diffableDataSource: dataSource)
+        return viewController
+    }
+    
+    func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol {
+        let viewController = WebViewController(webViewUrlSource: .author)
+        viewController.website = address
         return viewController
     }
 }
@@ -77,7 +84,7 @@ extension ModulesFactory: CartModuleFactoryProtocol {
     }
     
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol {
-        let viewController = WebViewController()
+        let viewController = WebViewController(webViewUrlSource: .licence)
         return viewController
     }
 }

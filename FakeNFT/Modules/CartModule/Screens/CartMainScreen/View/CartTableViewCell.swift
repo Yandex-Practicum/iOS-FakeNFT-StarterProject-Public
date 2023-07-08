@@ -117,7 +117,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     private func updateCell(with newRow: SingleNft ) {
         loadCover(from: newRow.images.first)
         nftName.text = newRow.name
-        rateStackView.addRating(newRow.rating)
+        rateStackView.updateRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"
         id = newRow.id
     }

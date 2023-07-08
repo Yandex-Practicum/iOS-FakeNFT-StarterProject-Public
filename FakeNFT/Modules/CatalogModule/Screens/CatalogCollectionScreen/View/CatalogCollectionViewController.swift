@@ -10,13 +10,13 @@ import Combine
 
 protocol CatalogCollectionCoordinatable {
     var onCancel: (() -> Void)? { get set }
-    var onWebView: (() -> Void)? { get set }
+    var onWebView: ((String) -> Void)? { get set }
 }
 
 final class CatalogCollectionViewController: UIViewController & CatalogCollectionCoordinatable {
 
     var onCancel: (() -> Void)?
-    var onWebView: (() -> Void)?
+    var onWebView: ((String) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
     
@@ -54,21 +54,8 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         return label
     }()
     
-    private lazy var authorDescriptionLabel: CustomLabel = {
-        let label = CustomLabel(size: 13, weight: .regular, color: .ypBlack)
-        
-        let attrString = NSMutableAttributedString()
-        let firstLineAttrText = NSMutableAttributedString(string: NSLocalizedString("Автор коллекции: ", comment: ""))
-        let secondLineAttrText = NSMutableAttributedString(string: NSLocalizedString("John Doe", comment: ""))
-        let range = NSRange(location: 0, length: secondLineAttrText.length)
-        
-        secondLineAttrText.addAttribute(.link, value: K.Links.authorInformationLink, range: range)
-        secondLineAttrText.addAttribute(.font, value: UIFont.systemFont(ofSize: 15, weight: .regular), range: range)
-        attrString.append(firstLineAttrText)
-        attrString.append(secondLineAttrText)
-        
-        label.attributedText = attrString
-        label.isUserInteractionEnabled = true
+    private lazy var authorDescriptionLabel: AuthorDescriptionLabel = {
+        let label = AuthorDescriptionLabel(size: 13, weight: .regular, color: .ypBlack)
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:))))
         
         return label
@@ -139,13 +126,15 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }
 }
 
+// MARK: - Ext @Objc
 @objc private extension CatalogCollectionViewController {
     func cancelTapped() {
         onCancel?()
     }
     
     func labelTapped(_ gesture: UITapGestureRecognizer) {
-        onWebView?()
+        guard let author = viewModel.author else { return }
+        onWebView?(author.website)
     }
 }
 
@@ -155,6 +144,7 @@ private extension CatalogCollectionViewController {
         viewModel.$nftCollection
             .receive(on: DispatchQueue.main)
             .sink { [weak self] collection in
+                self?.loadAuthorData(for: collection)
                 self?.updateUI(with: collection)
             }
             .store(in: &cancellables)
@@ -163,7 +153,19 @@ private extension CatalogCollectionViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] rows in
                 self?.updateCollectionView(with: rows)
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$author
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] author in
+                self?.updateAuthorTextLabelLink(for: author)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func loadAuthorData(for collection: NftCollection) {
+        viewModel.loadAuthorData(of: collection)
     }
     
     func createCollectionView() {
@@ -187,6 +189,7 @@ private extension CatalogCollectionViewController {
     func updateUI(with collection: NftCollection) {
         updateCoverImage(for: collection)
         updateTitleLabelText(for: collection)
+        updateAuthorTextLabel(for: collection)
         updateDescriptionTextView(for: collection)
         updateSingleNfts(for: collection)
         
@@ -207,6 +210,15 @@ private extension CatalogCollectionViewController {
     
     func updateTitleLabelText(for collection: NftCollection) {
         titleLabel.text = collection.name
+    }
+    
+    func updateAuthorTextLabel(for collection: NftCollection) {
+        authorDescriptionLabel.setupAttributedText(authorName: collection.author)
+    }
+    
+    func updateAuthorTextLabelLink(for author: Author?) {
+        guard let author else { return }
+        authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
     }
     
     func updateDescriptionTextView(for collection: NftCollection) {

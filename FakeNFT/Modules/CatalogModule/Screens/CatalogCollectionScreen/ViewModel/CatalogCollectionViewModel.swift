@@ -11,6 +11,7 @@ import Combine
 final class CatalogCollectionViewModel {
     @Published private (set) var nftCollection: NftCollection
     @Published private (set) var visibleNfts: [VisibleSingleNfts] = []
+    @Published private (set) var author: Author?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -30,12 +31,25 @@ final class CatalogCollectionViewModel {
         let storedCollectionNfts = dataStore.getCatalogNfts(from: collection)
         
         storedCollectionNfts.isEmpty || storedCollectionNfts.count != collection.nfts.count ?
-        load(collection: collection) : (self.visibleNfts = convertToSingleNftViewModel(storedCollectionNfts))
-        
+        loadNfts(collection: collection) : (self.visibleNfts = convertToSingleNftViewModel(storedCollectionNfts))
         
     }
     
-    func load(collection: NftCollection) {
+    func loadAuthorData(of collection: NftCollection) {
+        let request = RequestConstructor.constructCollectionAuthorRequest(for: collection.author)
+        
+        networkClient.send(request: request, type: Author.self) { [weak self] result in
+            switch result {
+            case .success(let author):
+                self?.author = author
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    func loadNfts(collection: NftCollection) {
         collection.nfts.forEach { id in
             let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: id)
             networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
@@ -43,9 +57,9 @@ final class CatalogCollectionViewModel {
                 switch result {
                 case .success(let nft):
                     self.sendNftToStorage(nft: nft)
-                case .failure(_):
+                case .failure(let error):
                     // TODO: make a mock error element
-                    print("Failure")
+                    print(error.localizedDescription)
                 }
             }
         }

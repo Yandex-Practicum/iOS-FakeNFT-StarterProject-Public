@@ -8,13 +8,12 @@
 import UIKit
 
 protocol AlertConstructable {
-    func constructSortAlert() -> UIAlertController
+    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController
+    func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
 }
 
 protocol CartAlertConstructable {
-    func constructCartLoadAlert(with error: Error) -> UIAlertController
     func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void)
-    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
 }
 
 protocol CatalogAlertConstructuble {
@@ -22,8 +21,25 @@ protocol CatalogAlertConstructuble {
 }
 
 struct AlertConstructor: AlertConstructable {
-    func constructSortAlert() -> UIAlertController {
-        return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
+    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController {
+        return UIAlertController(
+            title: NSLocalizedString(title, comment: ""),
+            message: NSLocalizedString("Ошибка: ", comment: "") + "\(error?.localizedDescription ?? "Unknown error occured")",
+            preferredStyle: style)
+    }
+    
+    func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void) {
+        AlertErrorActions.allCases.forEach { alertCase in
+            alert.addAction(
+                UIAlertAction(
+                    title: alertCase.title,
+                    style: alertCase.action,
+                    handler: { action in
+                        handler(action)
+                    }
+                )
+            )
+        }
     }
 }
 
@@ -39,31 +55,6 @@ extension AlertConstructor: CartAlertConstructable {
                         handler(filter)
                     }))
         }
-    }
-    
-    func constructCartLoadAlert(with error: Error) -> UIAlertController {
-        return UIAlertController(
-            title: NSLocalizedString("Что-то пошло не так!", comment: ""),
-            message: "Ошибка: \(error.localizedDescription)",
-            preferredStyle: .alert)
-    }
-    
-    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void) {
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Попробовать снова!", comment: ""),
-                style: .default,
-                handler: { action in
-                    handler(action)
-                }))
-        
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Оставить, как есть", comment: ""),
-                style: .cancel,
-                handler: { action in
-                    handler(action)
-                }))
     }
 }
 

@@ -20,7 +20,7 @@ class RateStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addRating(_ rating: Int) {
+    func updateRating(_ rating: Int) {
         removeRating()
         
         for _ in 0..<rating {

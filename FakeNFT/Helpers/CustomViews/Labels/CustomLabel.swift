@@ -13,11 +13,7 @@ class CustomLabel: UILabel {
         super.init(frame: .zero)
         textColor = color
         font = UIFont.systemFont(ofSize: size, weight: weight)
-        if let alignment {
-            textAlignment = alignment
-        } else {
-            textAlignment = .left
-        }
+        textAlignment = alignment ?? .left
     }
     
     required init?(coder: NSCoder) {

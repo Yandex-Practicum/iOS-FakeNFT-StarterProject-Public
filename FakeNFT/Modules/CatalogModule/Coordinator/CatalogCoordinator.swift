@@ -43,7 +43,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
 // MARK: - Ext Screens
 private extension CatalogCoordinator {
     func createScreen() {
-        var catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
+        let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         
         let navController = navigationControllerFactory.makeNavController(.catalog, rootViewController: catalogScreen) // навигационный стек
         
@@ -66,14 +66,24 @@ private extension CatalogCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
+        collectionScreen.onWebView = { [weak self] website in
+            self?.showWebViewScreen(with: website)
+        }
+        
         router.pushViewController(collectionScreen, animated: true)
+    }
+    
+    func showWebViewScreen(with website: String) {
+        let webView = factory.makeCatalogWebViewScreenView(with: website)
+        
+        router.pushViewController(webView, animated: true)
     }
 }
 
 // MARK: - Ext Alerts
 private extension CatalogCoordinator {
     func showSortAlert(from screen: CatalogMainScreenCoordinatable) {
-        let alert = alertConstructor.constructSortAlert()
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
         alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen

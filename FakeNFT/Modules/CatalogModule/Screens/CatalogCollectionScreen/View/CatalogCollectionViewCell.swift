@@ -120,7 +120,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     private func updateCell(with newRow: VisibleSingleNfts ) {
         loadCover(from: newRow.images.first)
         nftName.text = newRow.name
-        rateStackView.addRating(newRow.rating)
+        rateStackView.updateRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETH"
         id = newRow.id
         updateAddOrDeleteButton(from: newRow)
