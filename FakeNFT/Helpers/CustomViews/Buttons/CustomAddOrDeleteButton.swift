@@ -43,6 +43,10 @@ extension CustomAddOrDeleteButton {
                 for: .normal)
         }
     }
+    
+    func updateAppearence(isInCart: Bool) {
+        isInCart ? setAppearance(for: .delete) : setAppearance(for: .add)
+    }
 }
 
 extension CustomAddOrDeleteButton {

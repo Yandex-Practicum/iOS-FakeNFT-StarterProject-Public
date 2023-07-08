@@ -10,13 +10,14 @@ import Combine
 
 final class CatalogCollectionViewModel {
     @Published private (set) var nftCollection: NftCollection
-    @Published private (set) var visibleNfts: [SingleNft] = []
+    @Published private (set) var visibleNfts: [VisibleSingleNfts] = []
     
     private var cancellables = Set<AnyCancellable>()
     
     private let networkClient: NetworkClient
     private let dataStore: CatalogDataStorageProtocol
-        
+    
+    // MARK: Init
     init(nftCollection: NftCollection, networkClient: NetworkClient, dataStore: CatalogDataStorageProtocol) {
         self.nftCollection = nftCollection
         self.networkClient = networkClient
@@ -29,7 +30,7 @@ final class CatalogCollectionViewModel {
         let storedCollectionNfts = dataStore.getCatalogNfts(from: collection)
         
         storedCollectionNfts.isEmpty || storedCollectionNfts.count != collection.nfts.count ?
-        load(collection: collection) : (self.visibleNfts = storedCollectionNfts)
+        load(collection: collection) : (self.visibleNfts = convertToSingleNftViewModel(storedCollectionNfts))
         
         
     }
@@ -56,6 +57,7 @@ final class CatalogCollectionViewModel {
     }
 }
 
+// MARK: - Ext Private
 private extension CatalogCollectionViewModel{
     func bind() {
         dataStore.catalogNftCollectionDataPublisher
@@ -75,6 +77,40 @@ private extension CatalogCollectionViewModel{
             nftCollection.nfts.contains(where: { $0 == nft.id })
         }
         
-        self.visibleNfts = visibleNfts
+        self.visibleNfts = convertToSingleNftViewModel(visibleNfts)
+    }
+    
+    // MARK: Convert
+    func convertToSingleNftViewModel(_ nfts: [SingleNft]) -> [VisibleSingleNfts] {
+        var result: [VisibleSingleNfts] = []
+        
+        nfts.forEach { singleNft in
+            let isStored = itemIsStored(singleNft)
+            let isLiked = itemIsLiked(singleNft)
+            
+            let visibleNft = VisibleSingleNfts(
+                name: singleNft.name,
+                images: singleNft.images,
+                rating: singleNft.rating,
+                description: singleNft.description,
+                price: singleNft.price,
+                author: singleNft.author,
+                id: singleNft.id,
+                isStored: isStored,
+                isLiked: isLiked
+            )
+            
+            result.append(visibleNft)
+        }
+        
+        return result
+    }
+    
+    func itemIsStored(_ item: SingleNft) -> Bool {
+        return dataStore.checkIfItemIsStored(item)
+    }
+    
+    func itemIsLiked(_ item: SingleNft) -> Bool {
+        return dataStore.checkIfItemIsLiked(item)
     }
 }

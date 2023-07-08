@@ -168,6 +168,10 @@ private extension CatalogCollectionViewController {
     
     func createCollectionView() {
         diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
+        setOnCartClosure()
+    }
+    
+    func setOnCartClosure() {
         diffableDataSource.onCartHandler = { [weak viewModel] id in
             viewModel?.addOrDeleteNftFromCart(with: id)
         }
@@ -212,7 +216,7 @@ private extension CatalogCollectionViewController {
         viewModel.updateNfts(from: collection)
     }
     
-    func updateCollectionView(with data: [SingleNft]) {
+    func updateCollectionView(with data: [VisibleSingleNfts]) {
         diffableDataSource.updateCollection(with: data)
     }
 }

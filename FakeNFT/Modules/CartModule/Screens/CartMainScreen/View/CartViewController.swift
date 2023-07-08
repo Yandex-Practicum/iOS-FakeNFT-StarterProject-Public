@@ -143,8 +143,10 @@ final class CartViewController: UIViewController {
         }
     }
     
+    // MARK: bind
     private func bind() {
         viewModel.$visibleRows
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] rows in
                 self?.updateTableView(with: rows)
                 self?.updateTotalLabels(from: rows)
@@ -159,7 +161,8 @@ final class CartViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.$requestResult.receive(on: DispatchQueue.main)
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] requestResult in
                 self?.showOrHideAnimation(for: requestResult)
             })

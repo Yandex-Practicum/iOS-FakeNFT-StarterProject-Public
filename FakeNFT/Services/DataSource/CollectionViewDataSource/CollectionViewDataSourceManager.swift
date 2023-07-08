@@ -15,34 +15,32 @@ protocol PaymentMethodDSManagerProtocol {
 }
 
 protocol NftCollectionDSManagerProtocol {
-    typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, SingleNft>
-    typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, SingleNft>
+    typealias CollectionDataSource = UICollectionViewDiffableDataSource<PaymentMethodSection, VisibleSingleNfts>
+    typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<PaymentMethodSection, VisibleSingleNfts>
     var onCartHandler: ((String?) -> Void)? { get set }
-    func createDataSource(with collectionView: UICollectionView, with data: [SingleNft])
-    func updateCollection(with data: [SingleNft])
+    func createDataSource(with collectionView: UICollectionView, with data: [VisibleSingleNfts])
+    func updateCollection(with data: [VisibleSingleNfts])
 }
 
 final class CollectionViewDataSourceManager {
     private var cartDataSource: CartDataSource?
     private var collectionDataSource: CollectionDataSource?
-    
-    // NftCollectionDSManagerProtocol
     var onCartHandler: ((String?) -> Void)?
 }
 
 // MARK: - Ext NftCollectionDSManagerProtocol
 extension CollectionViewDataSourceManager: NftCollectionDSManagerProtocol {
-    func createDataSource(with collectionView: UICollectionView, with data: [SingleNft]) {
+    func createDataSource(with collectionView: UICollectionView, with data: [VisibleSingleNfts]) {
         collectionDataSource = CollectionDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
             return self?.catalogCollectionCell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
     }
     
-    func updateCollection(with data: [SingleNft]) {
+    func updateCollection(with data: [VisibleSingleNfts]) {
         collectionDataSource?.apply(createCatalogSingleCollectionSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
-    private func catalogCollectionCell(collectionView: UICollectionView, indexPath: IndexPath, item: SingleNft) -> UICollectionViewCell {
+    private func catalogCollectionCell(collectionView: UICollectionView, indexPath: IndexPath, item: VisibleSingleNfts) -> UICollectionViewCell {
         guard let cell = collectionView
             .dequeueReusableCell(
                 withReuseIdentifier: CatalogCollectionViewCell.defaultReuseIdentifier,
@@ -55,7 +53,7 @@ extension CollectionViewDataSourceManager: NftCollectionDSManagerProtocol {
         return cell
     }
     
-    private func createCatalogSingleCollectionSnapshot(from data: [SingleNft]) -> CollectionSnapshot {
+    private func createCatalogSingleCollectionSnapshot(from data: [VisibleSingleNfts]) -> CollectionSnapshot {
         var snapshot = CollectionSnapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(data, toSection: .main)

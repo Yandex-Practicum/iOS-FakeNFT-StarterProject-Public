@@ -21,6 +21,8 @@ class RateStackView: UIStackView {
     }
     
     func addRating(_ rating: Int) {
+        removeRating()
+        
         for _ in 0..<rating {
             addActiveStars()
         }

@@ -116,12 +116,19 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     // MARK: Methods
-    private func updateCell(with newRow: SingleNft ) {
+    private func updateCell(with newRow: VisibleSingleNfts ) {
         loadCover(from: newRow.images.first)
         nftName.text = newRow.name
         rateStackView.addRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETH"
         id = newRow.id
+        updateAddOrDeleteButton(from: newRow)
+        //MARK: рейтинг плывет
+    }
+    
+    private func updateAddOrDeleteButton(from nft: VisibleSingleNfts) {
+        addOrDeleteButton.updateAppearence(isInCart: nft.isStored)
+        print("nft \(nft.name) is stored: \(nft.isStored)")
     }
     
     private func loadCover(from stringUrl: String?) {
@@ -143,11 +150,13 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 // MARK: - Ext @objc
 @objc private extension CatalogCollectionViewCell {
     func likeTapped() {
-        onLike?(id)
+//        onLike?(id)
+        viewModel?.updateIsLiked()
     }
     
     func cartTapped() {
         onCart?(id)
+        viewModel?.updateIsStored()
     }
 }
 

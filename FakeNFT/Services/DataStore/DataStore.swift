@@ -23,6 +23,8 @@ protocol CatalogDataStorageProtocol: AnyObject {
     func addCatalogRowItem(_ item: NftCollection)
     func getCatalogRowItems() -> [NftCollection]
     func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
+    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
+    func checkIfItemIsStored(_ item: SingleNft) -> Bool
     func addNftRowItem(_ item: SingleNft)
     func addOrDeleteNftToCart(_ id: String)
 }
@@ -48,6 +50,8 @@ final class DataStore {
         didSet { sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor)) }
     }
     
+    private var cartLikedItems: [SingleNft] = []
+    
     private var catalogStoredItems: [NftCollection] = [] {
         didSet { sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor)) }
     }
@@ -55,6 +59,8 @@ final class DataStore {
     private var nftCollectionStoredItems: Set<SingleNft> = [] {
         didSet { sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems) }
     }
+    
+    private var likedNftCollectionStoredItems: Set<SingleNft> = []
 }
 
 // MARK: - Ext CartDataStorageProtocol
@@ -101,10 +107,22 @@ extension DataStore: CatalogDataStorageProtocol {
     }
     
     func getCatalogNfts(from collection: NftCollection) -> [SingleNft] {
-        return nftCollectionStoredItems.filter { singeNft in
+        return Array(nftCollectionStoredItems).filter { singeNft in
             collection.nfts.contains(where: { $0 == singeNft.id })
         }
     }
+    
+    func checkIfItemIsStored(_ item: SingleNft) -> Bool {
+        return cartStoredItems.contains(where: { $0 == item })
+    }
+    
+    func checkIfItemIsLiked(_ item: SingleNft) -> Bool {
+        return cartLikedItems.contains(where: { $0 == item })
+    }
+    
+//    func getLikedNfts() -> [SingleNft] {
+//        return Array(likedNftCollectionStoredItems)
+//    }
     
     func addOrDeleteNftToCart(_ id: String) {
         guard let element = nftCollectionStoredItems.first(where: { $0.id == id }) else { fatalError("addOrDeleteNftToCart error") }
