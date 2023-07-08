@@ -58,7 +58,7 @@ final class CatalogCollectionViewModel {
     
     func addOrDeleteLike(to id: String?) {
         guard let id else { return }
-        dataStore
+        dataStore.addOrDeleteLike(id)
     }
 }
 

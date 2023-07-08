@@ -169,6 +169,7 @@ private extension CatalogCollectionViewController {
     func createCollectionView() {
         diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
         setOnCartClosure()
+        setOnLikeClosure()
     }
     
     func setOnCartClosure() {
@@ -179,7 +180,7 @@ private extension CatalogCollectionViewController {
     
     func setOnLikeClosure() {
         diffableDataSource.onLikeHandler = { [weak viewModel] id in
-            viewModel
+            viewModel?.addOrDeleteLike(to: id)
         }
     }
     
