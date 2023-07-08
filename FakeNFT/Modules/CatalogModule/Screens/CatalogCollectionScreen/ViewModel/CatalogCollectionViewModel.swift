@@ -12,6 +12,7 @@ final class CatalogCollectionViewModel {
     @Published private (set) var nftCollection: NftCollection
     @Published private (set) var visibleNfts: [VisibleSingleNfts] = []
     @Published private (set) var author: Author?
+    @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -50,6 +51,7 @@ final class CatalogCollectionViewModel {
     }
     
     func loadNfts(collection: NftCollection) {
+        requestResult = .loading
         collection.nfts.forEach { id in
             let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: id)
             networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
@@ -57,9 +59,11 @@ final class CatalogCollectionViewModel {
                 switch result {
                 case .success(let nft):
                     self.sendNftToStorage(nft: nft)
+                    requestResult = nil
                 case .failure(let error):
                     // TODO: make a mock error element
                     print(error.localizedDescription)
+                    requestResult = nil
                 }
             }
         }

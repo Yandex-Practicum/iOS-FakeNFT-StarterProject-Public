@@ -37,6 +37,11 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         return collectionView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -162,6 +167,13 @@ private extension CatalogCollectionViewController {
                 self?.updateAuthorTextLabelLink(for: author)
             }
             .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                self?.showOrHideAnimation(for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
     func loadAuthorData(for collection: NftCollection) {
@@ -238,6 +250,17 @@ private extension CatalogCollectionViewController {
     func updateCollectionView(with data: [VisibleSingleNfts]) {
         diffableDataSource.updateCollection(with: data)
     }
+    
+    func showOrHideAnimation(for requestResult: RequestResult?) {
+        guard let requestResult
+        else {
+            loadingView.stopAnimation()
+            return
+        }
+        
+        loadingView.result = requestResult
+        loadingView.startAnimation()
+    }
 }
 
 // MARK: - Ext DelegateFlowLayout
@@ -253,6 +276,7 @@ private extension CatalogCollectionViewController {
         setupCoverImageView()
         setupMainStackView()
         setupCollectionView()
+        setupLoadingView()
     }
     
     func setupCoverImageView() {
@@ -287,6 +311,18 @@ private extension CatalogCollectionViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

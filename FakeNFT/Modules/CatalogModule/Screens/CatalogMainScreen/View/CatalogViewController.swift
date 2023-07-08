@@ -11,15 +11,16 @@ import Combine
 protocol CatalogMainScreenCoordinatable: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onProceed: ((NftCollection) -> Void)? { get set }
-    var onError: ((Error?) -> Void)? { get set }
+    var onError: ((Error) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CatalogSortValue)
+    func reload()
 }
 
 final class CatalogViewController: UIViewController {
 
     var onFilter: (() -> Void)?
     var onProceed: ((NftCollection) -> Void)?
-    var onError: ((Error?) -> Void)?
+    var onError: ((Error) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -87,7 +88,7 @@ final class CatalogViewController: UIViewController {
         viewModel.$catalogError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-                self?.onError?(error)
+                self?.catchError(error)
             }
             .store(in: &cancellables)
         
@@ -105,6 +106,11 @@ final class CatalogViewController: UIViewController {
     
     private func updateTableView(with rows: [NftCollection]) {
         dataSource.updateTableView(with: rows)
+    }
+    
+    private func catchError(_ error: Error?) {
+        guard let error else { return }
+        onError?(error)
     }
     
     private func showOrHideAnimation(for requestResult: RequestResult?) {
@@ -138,6 +144,10 @@ extension CatalogViewController: UITableViewDelegate {
 extension CatalogViewController: CatalogMainScreenCoordinatable {
     func setupSortDescriptor(_ filter: CatalogSortValue) {
         viewModel.setupSortValue(filter)
+    }
+    
+    func reload() {
+        viewModel.load()
     }
 }
 

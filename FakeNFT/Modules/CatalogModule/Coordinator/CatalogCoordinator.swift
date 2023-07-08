@@ -56,6 +56,11 @@ private extension CatalogCoordinator {
             self?.showCatalogCollectionScreen(with: collection)
         }
         
+        catalogScreen.onError = { [weak self, weak catalogScreen] error in
+            guard let self, let catalogScreen else { return }
+            self.showLoadAlert(from: catalogScreen, with: error)
+        }
+        
         router.addTabBarItem(navController)
     }
     
@@ -88,6 +93,26 @@ private extension CatalogCoordinator {
         alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
+        }
+        
+        router.presentViewController(alert, animated: true, presentationStyle: .popover)
+    }
+    
+    func showLoadAlert(from screen: CatalogMainScreenCoordinatable, with error: Error?) {
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
+        
+        alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
+            switch action.style {
+            case .default:
+                screen.reload()
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .cancel:
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .destructive:
+                break
+            @unknown default:
+                break
+            }
         }
         
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
