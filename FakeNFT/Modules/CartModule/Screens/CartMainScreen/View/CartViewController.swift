@@ -102,11 +102,11 @@ final class CartViewController: UIViewController {
         return label
     }()
     
-    private var diffableDataSource: CartDataSourceManagerProtocol
+    private var diffableDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
     private let viewModel: CartViewModel
     
     // MARK: Init
-    init(dataSource: CartDataSourceManagerProtocol, viewModel: CartViewModel) {
+    init(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable, viewModel: CartViewModel) {
         self.diffableDataSource = dataSource
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -122,11 +122,12 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
         setupConstraints()
-        createDataSource()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        createDataSource()
         bind()
     }
     
@@ -137,7 +138,7 @@ final class CartViewController: UIViewController {
     }
     
     private func createDataSource() {
-        diffableDataSource.createCartDataSource(for: tableView, with: viewModel.visibleRows)
+        diffableDataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
         diffableDataSource.onDeleteHandler = { [weak self] id in
             self?.onDelete?(id)
         }
@@ -212,7 +213,7 @@ extension CartViewController: CartMainCoordinatableProtocol {
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return diffableDataSource.getCartRowHeight(for: tableView)
+        return diffableDataSource.getCartRowHeight(for: tableView, in: .cart)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

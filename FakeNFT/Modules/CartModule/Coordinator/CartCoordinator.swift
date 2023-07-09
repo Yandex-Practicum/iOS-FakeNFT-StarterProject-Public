@@ -14,16 +14,16 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
     private var dataStore: CartDataStorageProtocol
-    private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
-    private let collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
+    private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
+    private let collectionViewDataSource: GenericDataSourceManagerProtocol
     
     init(factory: CartModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol,
-         tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol,
-         collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
+         tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
+         collectionViewDataSource: GenericDataSourceManagerProtocol
     ) {
         
         self.factory = factory

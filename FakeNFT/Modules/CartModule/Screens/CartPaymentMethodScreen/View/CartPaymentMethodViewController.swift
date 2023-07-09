@@ -20,9 +20,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     var onCancel: (() -> Void)?
     
     private let viewModel: CartPaymentMethodViewModel
-    private let dataSource: PaymentMethodDSManagerProtocol
-    
-    
+    private let dataSource: GenericDataSourceManagerProtocol
     
     private var cancellables = Set<AnyCancellable>()
    
@@ -89,7 +87,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }()
     
     // MARK: Init
-    init(viewModel: CartPaymentMethodViewModel, dataSource: PaymentMethodDSManagerProtocol) {
+    init(viewModel: CartPaymentMethodViewModel, dataSource: GenericDataSourceManagerProtocol) {
         self.viewModel = viewModel
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
