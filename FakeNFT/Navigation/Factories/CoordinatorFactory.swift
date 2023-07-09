@@ -19,7 +19,7 @@ final class CoordinatorFactory  {
     private let alertConstructor: AlertConstructable = AlertConstructor()
     private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable = TableViewDataSource()
-    private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable = CollectionViewDataSourceManager<CommonCollectionDataSourceItem>()
+    private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable = CollectionViewDataSourceManager()
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {

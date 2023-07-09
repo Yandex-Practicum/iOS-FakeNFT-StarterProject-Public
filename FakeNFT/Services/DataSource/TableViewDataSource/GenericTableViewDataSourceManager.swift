@@ -17,6 +17,7 @@ protocol TableViewDataSourceCoordinatable {
     var onDeleteHandler: ((String?) -> Void)? { get set }
 }
 
+// MARK: Final class
 final class TableViewDataSource: TableViewDataSourceCoordinatable {
     typealias DataSource = UITableViewDiffableDataSource<TableViewDiffableDataSourceSection, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<TableViewDiffableDataSourceSection, AnyHashable>

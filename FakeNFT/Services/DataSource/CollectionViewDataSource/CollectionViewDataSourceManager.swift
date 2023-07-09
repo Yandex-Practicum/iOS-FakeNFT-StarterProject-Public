@@ -18,7 +18,7 @@ protocol CollectionViewDataSourceCoordinatable {
 }
 
 // MARK: - Final class
-final class CollectionViewDataSourceManager<T: Hashable>: CollectionViewDataSourceCoordinatable {
+final class CollectionViewDataSourceManager: CollectionViewDataSourceCoordinatable {
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionDiffableDataSourceSection, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CollectionDiffableDataSourceSection, AnyHashable>
     
