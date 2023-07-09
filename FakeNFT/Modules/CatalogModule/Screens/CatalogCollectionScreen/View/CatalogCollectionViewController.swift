@@ -21,7 +21,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     var cancellables = Set<AnyCancellable>()
     
     private let viewModel: CatalogCollectionViewModel
-    private var diffableDataSource: NftCollectionDSManagerProtocol
+    private var diffableDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -98,7 +98,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }()
     
     // MARK: Init
-    init(viewModel: CatalogCollectionViewModel, diffableDataSource: NftCollectionDSManagerProtocol) {
+    init(viewModel: CatalogCollectionViewModel, diffableDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable) {
         self.viewModel = viewModel
         self.diffableDataSource = diffableDataSource
         super.init(nibName: nil, bundle: nil)

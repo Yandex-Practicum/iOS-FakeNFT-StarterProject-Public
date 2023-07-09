@@ -8,19 +8,19 @@
 import Foundation
 
 protocol CatalogModuleFactoryProtocol {
-    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
+    func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
                                dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable
     func makeCatalogCollectionScreenView(with collection: NftCollection,
-                                         dataSource: NftCollectionDSManagerProtocol,
+                                         dataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable,
                                          dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable
     func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol
 }
 
 protocol CartModuleFactoryProtocol {
-    func makeCartScreenView(dataSource: CartDataSourceManagerProtocol, dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable, dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: PaymentMethodDSManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
+                                         dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
     func makePaymentResultScreenView(request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
@@ -29,14 +29,16 @@ final class ModulesFactory {}
 
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
-    func makeCatalogScreenView(dataSource: CatalogDataSourceManagerProtocol,
+    func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
                                dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogViewModel(dataStore: dataStore, networkClient: networkClient)
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
     }
     
-    func makeCatalogCollectionScreenView(with collection: NftCollection, dataSource: NftCollectionDSManagerProtocol, dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable {
+    func makeCatalogCollectionScreenView(with collection: NftCollection,
+                                         dataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable,
+                                         dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
         let viewController = CatalogCollectionViewController(viewModel: viewModel, diffableDataSource: dataSource)
@@ -52,7 +54,7 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
 
 // MARK: - Ext CartModuleFactoryProtocol
 extension ModulesFactory: CartModuleFactoryProtocol {
-    func makeCartScreenView(dataSource: CartDataSourceManagerProtocol,
+    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
                             dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = CartViewModel(dataStore: dataStore, networkClient: networkClient)
@@ -68,7 +70,7 @@ extension ModulesFactory: CartModuleFactoryProtocol {
     }
     
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: PaymentMethodDSManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
+                                         dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = CartPaymentMethodViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)

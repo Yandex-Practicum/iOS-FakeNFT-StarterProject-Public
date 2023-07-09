@@ -38,11 +38,11 @@ final class CatalogViewController: UIViewController {
         return view
     }()
     
-    let dataSource: CatalogDataSourceManagerProtocol
+    let dataSource: GenericTableViewDataSourceProtocol
     let viewModel: CatalogViewModel
     
     // MARK: Init
-    init(dataSource: CatalogDataSourceManagerProtocol, viewModel: CatalogViewModel) {
+    init(dataSource: GenericTableViewDataSourceProtocol, viewModel: CatalogViewModel) {
         self.dataSource = dataSource
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -58,12 +58,12 @@ final class CatalogViewController: UIViewController {
         view.backgroundColor = .ypWhite
         setupConstraints()
         setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
-        createDataSource()
         load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        createDataSource()
         bind()
     }
     
@@ -74,7 +74,7 @@ final class CatalogViewController: UIViewController {
     }
     
     private func createDataSource() {
-        dataSource.createCatalogDataSource(for: tableView, with: viewModel.visibleRows)
+        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
     }
 
     private func bind() {
@@ -128,7 +128,7 @@ final class CatalogViewController: UIViewController {
 // MARK: - Ext TableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getCatalogRowHeight(for: tableView)
+        return dataSource.getCartRowHeight(for: tableView, in: .catalog)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
