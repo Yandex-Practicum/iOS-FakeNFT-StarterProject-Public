@@ -16,7 +16,7 @@ protocol CoordinatorFactoryProtocol {
 final class CoordinatorFactory  {
     private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
-    private let alertConstructor: AlertConstructable & CartAlertConstructable & CatalogAlertConstructuble = AlertConstructor()
+    private let alertConstructor: AlertConstructable = AlertConstructor()
     private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol = TableViewDataSource()
     private let collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol = CollectionViewDataSourceManager()

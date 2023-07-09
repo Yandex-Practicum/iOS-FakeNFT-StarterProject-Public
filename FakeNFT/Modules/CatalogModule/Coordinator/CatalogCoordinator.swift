@@ -12,7 +12,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
     private var factory: CatalogModuleFactoryProtocol
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
-    private var alertConstructor: AlertConstructable & CatalogAlertConstructuble
+    private var alertConstructor: AlertConstructable
     private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol
     private let tableViewDataSource: CatalogDataSourceManagerProtocol
     private let collectionViewDataSource: NftCollectionDSManagerProtocol
@@ -20,7 +20,7 @@ final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
     init(factory: CatalogModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
-         alertConstructor: AlertConstructable & CatalogAlertConstructuble,
+         alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol,
          tableViewDataSource: CatalogDataSourceManagerProtocol,
          collectionViewDataSource: NftCollectionDSManagerProtocol
@@ -90,7 +90,7 @@ private extension CatalogCoordinator {
     func showSortAlert(from screen: CatalogMainScreenCoordinatable) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] sortValue in
+        alertConstructor.addSortAlertActions(for: alert, values: CatalogSortValue.allCases) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }

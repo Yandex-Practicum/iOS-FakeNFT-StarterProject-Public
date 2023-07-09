@@ -12,7 +12,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     private var factory: CartModuleFactoryProtocol
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
-    private var alertConstructor: AlertConstructable & CartAlertConstructable
+    private var alertConstructor: AlertConstructable
     private var dataStore: CartDataStorageProtocol
     private let tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol
     private let collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
@@ -20,7 +20,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     init(factory: CartModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
-         alertConstructor: AlertConstructable & CartAlertConstructable,
+         alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol,
          tableViewDataSource: CartDataSourceManagerProtocol & CatalogDataSourceManagerProtocol,
          collectionViewDataSource: PaymentMethodDSManagerProtocol & NftCollectionDSManagerProtocol
@@ -124,7 +124,7 @@ private extension CartCoordinator {
     func showSortAlert(from screen: CartMainCoordinatableProtocol) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] filter in
+        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] filter in
             filter == .cancel ? () : screen?.setupSortDescriptor(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }

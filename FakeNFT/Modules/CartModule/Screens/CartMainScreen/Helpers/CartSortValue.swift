@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CartSortValue: CaseIterable {
+enum CartSortValue: CaseIterable, Sortable {
     case price, rating, name, cancel
     
     var description: String {
