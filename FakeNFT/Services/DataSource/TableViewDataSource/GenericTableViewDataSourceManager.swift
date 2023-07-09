@@ -40,7 +40,6 @@ extension TableViewDataSource: GenericTableViewDataSourceProtocol {
         genericDataSource?.apply(createSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
-    // MARK: differenciate modules
     func getCartRowHeight(for tableView: UITableView, in module: TableViewHeight) -> CGFloat {
         return tableView.frame.height / module.height
     }
