@@ -17,18 +17,23 @@ protocol CartDataStorageProtocol: AnyObject {
 }
 
 protocol CatalogDataStorageProtocol: AnyObject {
+    // sort
     var catalogSortDescriptor: CatalogSortValue? { get set }
+    // publishers
     var catalogDataPublisher: AnyPublisher<[NftCollection], Never> { get }
     var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> { get }
     var likedNftDataPublisher: AnyPublisher<[SingleNft], Never> { get }
+    // add
     func addCatalogRowItem(_ item: NftCollection)
-    func getCatalogRowItems() -> [NftCollection]
-    func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
-    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
-    func checkIfItemIsStored(_ item: SingleNft) -> Bool
     func addNftRowItem(_ item: SingleNft)
     func addOrDeleteNftToCart(_ id: String)
     func addOrDeleteLike(_ id: String)
+    // get
+    func getCatalogRowItems() -> [NftCollection]
+    func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
+    // check
+    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
+    func checkIfItemIsStored(_ item: SingleNft) -> Bool
 }
 
 // MARK: Final class DataStore

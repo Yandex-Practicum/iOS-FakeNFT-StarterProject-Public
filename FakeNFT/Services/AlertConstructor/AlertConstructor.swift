@@ -24,7 +24,7 @@ struct AlertConstructor: AlertConstructable {
     func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController {
         return UIAlertController(
             title: NSLocalizedString(title, comment: ""),
-            message: NSLocalizedString("Ошибка: ", comment: "") + "\(error?.localizedDescription ?? "Unknown error occured")",
+            message: error?.localizedDescription,
             preferredStyle: style)
     }
     
