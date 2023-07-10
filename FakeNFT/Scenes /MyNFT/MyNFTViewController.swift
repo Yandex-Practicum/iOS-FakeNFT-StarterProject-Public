@@ -1,11 +1,13 @@
 import UIKit
 
-final class MyNFTViewController: UIViewController {
+final class MyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     var nftIDs: [String]
+    var likedIDs: [String]
     
     private var viewModel: MyNFTViewModel
+    private var badConnection: Bool = false
     
     //MARK: - Layout elements
     private lazy var backButton = UIBarButtonItem(
@@ -40,11 +42,11 @@ final class MyNFTViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
-    init(nftIDs: [String]) {
+    init(nftIDs: [String], likedIDs: [String]) {
         self.nftIDs = nftIDs
-        self.viewModel = MyNFTViewModel(nftIDs: nftIDs)
+        self.likedIDs = likedIDs
+        self.viewModel = MyNFTViewModel(nftIDs: nftIDs, likedIDs: likedIDs)
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -52,19 +54,21 @@ final class MyNFTViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.getMyNFTs(nftIDs: nftIDs)
+        if badConnection { viewModel.getMyNFTs(nftIDs: nftIDs) }
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     // MARK: - Methods
     private func bind() {
         viewModel.onChange = { [weak self] in
+            self?.badConnection = false
             guard let view = self?.view as? MyNFTView,
                   let nfts = self?.viewModel.myNFTs else { return }
             view.updateNFT(nfts: nfts)
         }
         
         viewModel.onError = { [weak self] in
+            self?.badConnection = true
             let alert = UIAlertController(
                 title: "Нет интернета",
                 message: "Пропал интернет :(",
@@ -97,7 +101,6 @@ final class MyNFTViewController: UIViewController {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             addEmptyLabel()
-            UIBlockingProgressHUD.dismiss()
         } else {
             self.view = MyNFTView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
@@ -123,5 +126,3 @@ final class MyNFTViewController: UIViewController {
         
     }
 }
-
-extension MyNFTViewController: UIGestureRecognizerDelegate {}

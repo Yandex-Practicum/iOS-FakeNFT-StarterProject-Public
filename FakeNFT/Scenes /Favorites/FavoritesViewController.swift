@@ -1,12 +1,12 @@
 import UIKit
 
-final class FavoritesViewController: UIViewController {
+final class FavoritesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    var likedIDs: [String]?
+    var likedIDs: [String]
     
     private var viewModel: FavoritesViewModel
-    
+    private var badConnection: Bool = false
     
     //MARK: - Layout elements
     private lazy var backButton = UIBarButtonItem(
@@ -38,7 +38,6 @@ final class FavoritesViewController: UIViewController {
         self.likedIDs = likedIDs
         self.viewModel = FavoritesViewModel(likedIDs: likedIDs)
         super.init(nibName: nil, bundle: nil)
-        //        UIBlockingProgressHUD.show()
     }
     
     required init?(coder: NSCoder) {
@@ -46,18 +45,21 @@ final class FavoritesViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if badConnection { viewModel.getLikedNFTs(likedIDs: likedIDs) }
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     // MARK: - Methods
     private func bind() {
         viewModel.onChange = { [weak self] in
+            self?.badConnection = false
             guard let view = self?.view as? FavoritesView,
                   let nfts = self?.viewModel.likedNFTs else { return }
             view.updateNFT(nfts: nfts)
         }
         
         viewModel.onError = { [weak self] in
+            self?.badConnection = true
             let alert = UIAlertController(
                 title: "Нет интернета",
                 message: "Пропал интернет :(",
@@ -77,12 +79,10 @@ final class FavoritesViewController: UIViewController {
     
     // MARK: - Layout methods
     func setupView() {
-        guard let likedIDs = likedIDs else { return }
         if likedIDs.isEmpty {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             addEmptyLabel()
-            UIBlockingProgressHUD.dismiss()
         } else {
             self.view = FavoritesView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
@@ -107,5 +107,3 @@ final class FavoritesViewController: UIViewController {
         
     }
 }
-
-extension FavoritesViewController: UIGestureRecognizerDelegate {}
