@@ -34,6 +34,7 @@ extension UIColor {
     static let ypLightGrey = UIColor(named: "ypLightGrey")
     static let ypBlack = UIColor(named: "ypBlack")
     static let ypBlue = UIColor(named: "ypBlue")
+    static let ypRed = UIColor(named: "ypRed")
 
     // Text Colors
     static let textPrimary = UIColor(named: "ypBlack")

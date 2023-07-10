@@ -1,7 +1,15 @@
 import UIKit
 
+protocol CartCellDelegate {
+    func showDeleteView(index: Int)
+}
+
 class NFTCell: UITableViewCell {
+    
     static let reuseIdentifier = "NFTCellReuseIdentifier"
+    var delegate: CartCellDelegate?
+    var indexCell: Int?
+    
     
     // Элементы для NFT в корзине
 
@@ -11,11 +19,12 @@ class NFTCell: UITableViewCell {
         return imageView
     }()
     
-    private let cartImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "cartImage")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private let cartDeleteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cartImage"), for: .normal)
+        button.addTarget(self, action: #selector(cartDeleteButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
 
     private let nameLabel: UILabel = {
@@ -67,7 +76,7 @@ class NFTCell: UITableViewCell {
         contentView.addSubview(ratingStackView)
         contentView.addSubview(priceLabelName)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(cartImageView)
+        contentView.addSubview(cartDeleteButton)
     
         NSLayoutConstraint.activate([
             pictureImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -92,13 +101,12 @@ class NFTCell: UITableViewCell {
             priceLabel.heightAnchor.constraint(equalToConstant: 22),
             priceLabel.widthAnchor.constraint(equalToConstant: 100),
             
-            cartImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28),
-            cartImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            cartImageView.heightAnchor.constraint(equalToConstant: 19),
-            cartImageView.widthAnchor.constraint(equalToConstant: 16)
+            cartDeleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28),
+            cartDeleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            cartDeleteButton.heightAnchor.constraint(equalToConstant: 19),
+            cartDeleteButton.widthAnchor.constraint(equalToConstant: 16)
         ])
     }
-    
 
     func configure(with nft: NFT) {
         pictureImageView.image = nft.picture
@@ -124,5 +132,9 @@ class NFTCell: UITableViewCell {
             starImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
             starImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
         }
+    }
+    
+    @objc func cartDeleteButtonTapped() {
+        delegate?.showDeleteView(index: indexCell ?? 0)
     }
 }

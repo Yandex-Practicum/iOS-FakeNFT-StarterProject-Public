@@ -310,8 +310,8 @@
 		EDB0A0BD2A548D3C0019D61F /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				EDB0A0B82A544ED50019D61F /* PaymentCell.swift */,
 				EDB0A0B42A51EDE70019D61F /* NFTCell.swift */,
+				EDB0A0B82A544ED50019D61F /* PaymentCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
