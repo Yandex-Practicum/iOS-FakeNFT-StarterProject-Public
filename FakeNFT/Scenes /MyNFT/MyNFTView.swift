@@ -24,8 +24,8 @@ final class MyNFTView: UIView {
     // MARK: - Lifecycle
     init(frame: CGRect, viewModel: MyNFTViewModel) {
         self.viewModel = viewModel
+        self.myNFTs = viewModel.myNFTs
         super.init(frame: .zero)
-        
         
         self.backgroundColor = .white
         addTable()
@@ -39,7 +39,6 @@ final class MyNFTView: UIView {
     func updateNFT(nfts: [NFTNetworkModel]) {
         self.myNFTs = nfts
         myNFTTable.reloadData()
-        UIBlockingProgressHUD.dismiss()
     }
     
     //MARK: - Layout methods
@@ -73,13 +72,14 @@ extension MyNFTView: UITableViewDataSource, UITableViewDelegate {
             rating: myNFT.rating,
             author: viewModel.authors[myNFT.author] ?? "",
             price: myNFT.price,
-            isFavorite: false,
+            isFavorite: viewModel.likedIDs?.contains(myNFT.id) ?? false,
             id: myNFT.id
         )
         
-        cell.tapAction = { [weak self] in
-            // TODO: Favorite functionality
-            print(model.id)
+        cell.tapAction = {
+            let tappedNFT = self.myNFTs?.filter({ $0.id == myNFT.id })[0]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "myNFTliked"), object: tappedNFT)
+            if let tappedNFTid = tappedNFT?.id { self.viewModel.toggleLikeFromMyNFT(id: tappedNFTid) }
         }
         cell.configureCell(with: model)
         return cell

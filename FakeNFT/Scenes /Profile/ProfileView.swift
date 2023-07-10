@@ -6,6 +6,7 @@ final class ProfileView: UIView {
     // MARK: - Properties
     private var viewModel: ProfileViewModel
     private var viewController: ProfileViewController
+    private var assetViewControllers: [UIViewController] = []
     
     private lazy var assetLabel: [String] = [
         "Мои NFT",
@@ -13,21 +14,19 @@ final class ProfileView: UIView {
         "О разработчике"
     ]
     
-    private lazy var assetViewController: [UIViewController] = [
-        MyNFTViewController(nftIDs: {
-            return self.viewController.getNftIDsFromViewModel() ?? []
-        }()),
-    FavoritesViewController(likedIDs: ["5"]),
-    DevelopersViewController()
+    private lazy var assetValue: [String?] = [
+        "(\(viewModel.nfts?.count ?? 0))",
+        "(\(viewModel.likes?.count ?? 0))",
+        nil
     ]
     
     //MARK: - Layout elements
     private lazy var avatarImage: UIImageView = {
         let placeholder = UIImage(named: "UserImagePlaceholder")
         let avatarImage = UIImageView(image: placeholder)
-                avatarImage.translatesAutoresizingMaskIntoConstraints = false
-                avatarImage.layer.cornerRadius = 35
-                avatarImage.layer.masksToBounds = true
+        avatarImage.translatesAutoresizingMaskIntoConstraints = false
+        avatarImage.layer.cornerRadius = 35
+        avatarImage.layer.masksToBounds = true
         return avatarImage
     }()
     
@@ -87,6 +86,19 @@ final class ProfileView: UIView {
         addDescriptionLabel()
         addWebsiteLabel()
         addProfileAssetsTable()
+        
+        let myNFTViewController = MyNFTViewController(nftIDs: viewModel.nfts ?? [], likedIDs: viewModel.likes ?? [])
+        let favoritesViewController = FavoritesViewController(likedIDs: viewModel.likes ?? [])
+        let developersViewController = DevelopersViewController()
+        
+        assetViewControllers = [myNFTViewController, favoritesViewController, developersViewController]
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(likesUpdated),
+            name: NSNotification.Name(rawValue: "likesUpdated"),
+            object: nil
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -114,12 +126,13 @@ final class ProfileView: UIView {
         nameLabel.text = userName
         descriptionLabel.text = description
         websiteLabel.text = website
-        if let nftsCountLabel = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell {
-            nftsCountLabel.setAssets(label: nil, value: nftCount)
-        }
-        if let likesCountLabel = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell {
-            likesCountLabel.setAssets(label: nil, value: likesCount)
-        }
+    }
+    
+    @objc
+    private func likesUpdated(notification: Notification) {
+        guard let likesUpdated = notification.object as? Int else { return }
+        let cell = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
+        cell?.setAssets(label: nil, value: "(\(likesUpdated))")
     }
     
     //MARK: - Layout methods
@@ -177,7 +190,7 @@ extension ProfileView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileAssetsCell = tableView.dequeueReusableCell()
         cell.backgroundColor = .white
-        cell.setAssets(label: assetLabel[indexPath.row], value: nil)
+        cell.setAssets(label: assetLabel[indexPath.row], value: assetValue[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }
@@ -189,6 +202,6 @@ extension ProfileView: UITableViewDataSource {
 
 extension ProfileView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewController.navigationController?.pushViewController(assetViewController[indexPath.row], animated: true)
+        viewController.navigationController?.pushViewController(self.assetViewControllers[indexPath.row], animated: true)
     }
 }

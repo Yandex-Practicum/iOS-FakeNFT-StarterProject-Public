@@ -4,6 +4,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     private var viewModel: ProfileViewModel
+    private var badConnection: Bool = false
     
     //MARK: - Layout elements
     private lazy var editButton = UIBarButtonItem(
@@ -16,22 +17,21 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         bind()
         setupView()
-        
+        viewModel.getProfileData()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        viewModel.getProfileData()
+        if badConnection { viewModel.getProfileData() }
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
 
     
     required init?(coder aDecoder: NSCoder) {
         self.viewModel = ProfileViewModel()
-       super.init(coder: aDecoder)
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Methods
@@ -44,6 +44,7 @@ final class ProfileViewController: UIViewController {
     
     private func bind() {
         viewModel.onChange = { [weak self] in
+            self?.badConnection = false
             self?.setupView()
             let view = self?.view as? ProfileView
             view?.updateViews(
@@ -57,6 +58,7 @@ final class ProfileViewController: UIViewController {
         }
         
         viewModel.onError = { [weak self] in
+            self?.badConnection = true
             self?.view = NoInternetView()
             self?.navigationController?.navigationBar.isHidden = true
         }
@@ -71,11 +73,6 @@ final class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = editButton
         self.navigationController?.navigationBar.isHidden = false
-    }
-    
-    func getNftIDsFromViewModel() -> [String] {
-        guard let nfts = viewModel.nfts else { return [] }
-        return nfts
     }
 }
 

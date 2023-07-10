@@ -14,16 +14,31 @@ final class MyNFTViewModel {
         }
     }
     
+    private(set) var likedIDs: [String]? {
+        didSet {
+            onChange?()
+        }
+    }
+    
     private(set) var authors: [String: String] = [:]
     
     // MARK: - Lifecycle
-    init(nftIDs: [String]){
+    init(nftIDs: [String], likedIDs: [String]){
         self.myNFTs = []
+        self.likedIDs = likedIDs
         getMyNFTs(nftIDs: nftIDs)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(unlikeMyNFTfromFavorites),
+            name: NSNotification.Name(rawValue: "favoriteUnliked"),
+            object: nil
+        )
     }
     
     // MARK: - Methods
     func getMyNFTs(nftIDs: [String]) {
+        UIBlockingProgressHUD.show()
         var loadedNFTs: [NFTNetworkModel] = []
         
         nftIDs.forEach { id in
@@ -35,6 +50,7 @@ final class MyNFTViewModel {
                         if loadedNFTs.count == nftIDs.count {
                             self?.getAuthors(nfts: loadedNFTs)
                             self?.myNFTs? = loadedNFTs
+                            UIBlockingProgressHUD.dismiss()
                         }
                     case .failure(let error):
                         print(error)
@@ -66,5 +82,21 @@ final class MyNFTViewModel {
             }
         }
         semaphore.wait()
+    }
+    
+    @objc
+    private func unlikeMyNFTfromFavorites(notification: Notification) {
+        let nftID = notification.object as? String
+        self.likedIDs = likedIDs?.filter({ $0 != nftID })
+    }
+    
+    func toggleLikeFromMyNFT(id: String) {
+        guard var likedIDs = self.likedIDs else { return }
+        if likedIDs.contains(id) {
+            self.likedIDs = likedIDs.filter({ $0 != id })
+        } else {
+            likedIDs.append(id)
+            self.likedIDs = likedIDs
+        }
     }
 }

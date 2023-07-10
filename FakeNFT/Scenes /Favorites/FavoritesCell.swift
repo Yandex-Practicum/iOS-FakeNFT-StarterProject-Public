@@ -43,13 +43,14 @@ final class FavoritesCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var nftRating: StarRatingController = {
         let nftRating = StarRatingController(starsRating: 5)
         nftRating.translatesAutoresizingMaskIntoConstraints = false
+        nftRating.spacing = 2
         return nftRating
     }()
     
     private lazy var nftPriceValue: UILabel = {
         let nftPriceValue = UILabel()
         nftPriceValue.translatesAutoresizingMaskIntoConstraints = false
-        nftPriceValue.font = .boldSystemFont(ofSize: 17)
+        nftPriceValue.font = .systemFont(ofSize: 15)
         nftPriceValue.text = "0 ETH"
         return nftPriceValue
     }()

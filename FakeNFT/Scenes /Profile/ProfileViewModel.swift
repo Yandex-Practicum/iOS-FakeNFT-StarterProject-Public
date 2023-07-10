@@ -47,9 +47,7 @@ final class ProfileViewModel {
     private(set) var id: String?
     
     // MARK: - Lifecycle
-    init(){
-        getProfileData()
-    }
+    init(){}
     
     // MARK: - Methods
     func getProfileData() {
@@ -66,18 +64,17 @@ final class ProfileViewModel {
                     self?.nfts = profile.nfts
                     self?.likes = profile.likes
                     self?.id = profile.id
+                    UIBlockingProgressHUD.dismiss()
                 case .failure(let error):
                     print(error)
                     self?.onError?()
+                    UIBlockingProgressHUD.dismiss()
                 }
-                UIBlockingProgressHUD.dismiss()
             }
         }
     }
     
     func putProfileData(name: String, avatar: String, description: String, website: String, likes: [String]) {
-        let networkClient = DefaultNetworkClient()
-                
         let request = PutProfileRequest(
             name: name,
             avatar: avatar,

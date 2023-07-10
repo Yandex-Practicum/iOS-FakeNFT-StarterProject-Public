@@ -23,8 +23,8 @@ final class FavoritesView: UIView {
     // MARK: - Lifecycle
     init(frame: CGRect, viewModel: FavoritesViewModel) {
         self.viewModel = viewModel
+        self.likedNFTs = viewModel.likedNFTs
         super.init(frame: frame)
-
         
         self.backgroundColor = .white
         addCollection()
@@ -38,7 +38,6 @@ final class FavoritesView: UIView {
     func updateNFT(nfts: [NFTNetworkModel]) {
         self.likedNFTs = nfts
         favoriteNFTCollection.reloadData()
-//        UIBlockingProgressHUD.dismiss()
     }
     
     //MARK: - Layout methods
@@ -77,15 +76,12 @@ extension FavoritesView: UICollectionViewDataSource {
             isFavorite: true,
             id: likedNFT.id
         )
+        cell.tapAction = { [weak self] in
+            self?.viewModel.favoriteUnliked(id: likedNFT.id)
+        }
         cell.configureCell(with: model)
         
         return cell
-    }
-    
-    @objc
-    func didTapFavoriteButton(sender: FavoriteButton) {
-        sender.isFavorite.toggle()
-        // TODO: Favorite functionality
     }
 }
 
@@ -100,7 +96,7 @@ extension FavoritesView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
