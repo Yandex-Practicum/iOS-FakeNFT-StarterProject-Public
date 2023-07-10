@@ -92,7 +92,29 @@ final class MyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc
     private func didTapSortButton() {
-        self.navigationController?.popViewController(animated: true)
+        let alert = UIAlertController(
+            title: nil,
+            message: "Сортировка",
+            preferredStyle: .actionSheet
+        )
+        
+        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { [weak self] _ in
+            self?.viewModel.sort = .price
+        }
+        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+            self?.viewModel.sort = .rating
+        }
+        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
+            self?.viewModel.sort = .name
+        }
+        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel)
+        
+        alert.addAction(sortByPriceAction)
+        alert.addAction(sortByRatingAction)
+        alert.addAction(sortByNameAction)
+        alert.addAction(closeAction)
+        
+        present(alert, animated: true)
     }
     
     // MARK: - Layout methods

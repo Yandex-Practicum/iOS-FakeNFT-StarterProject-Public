@@ -22,6 +22,13 @@ final class MyNFTViewModel {
     
     private(set) var authors: [String: String] = [:]
     
+    var sort: Sort? {
+        didSet {
+            guard let sort else { return }
+            myNFTs = applySort(by: sort)
+        }
+    }
+    
     // MARK: - Lifecycle
     init(nftIDs: [String], likedIDs: [String]){
         self.myNFTs = []
@@ -98,5 +105,27 @@ final class MyNFTViewModel {
             likedIDs.append(id)
             self.likedIDs = likedIDs
         }
+    }
+    
+    private func applySort(by value: Sort) -> [NFTNetworkModel] {
+        guard let myNFTs = myNFTs else { return [] }
+        switch value {
+        case .price:
+            return myNFTs.sorted(by: { $0.price < $1.price })
+        case .rating:
+            return myNFTs.sorted(by: { $0.rating < $1.rating })
+        case .name:
+            return myNFTs.sorted(by: { $0.name < $1.name })
+        }
+    }
+}
+
+// MARK: - Nested types
+extension MyNFTViewModel {
+    
+    enum Sort {
+        case price
+        case rating
+        case name
     }
 }
