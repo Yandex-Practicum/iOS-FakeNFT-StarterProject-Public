@@ -38,12 +38,12 @@ final class NFTListViewController: UIViewController {
             case .loading:
                 DispatchQueue.main.async {
                     self?.container.configure(configuration: .loading)
-                    self?.navigationController?.navigationBar.isHidden = true
+                    self?.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = .clear
                 }
             case let .loaded(items):
                 DispatchQueue.main.async {
                     self?.container.configure(configuration: .loaded(items))
-                    self?.navigationController?.navigationBar.isHidden = false
+                    self?.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = .black
                 }
             }
         }
@@ -99,3 +99,4 @@ private extension NFTListViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
+

@@ -57,7 +57,6 @@ final class NFTDetailsViewController: UIViewController {
 
         navigationController?.navigationBar.topItem?.title = " "
 
-
     }
 }
 

@@ -24,11 +24,11 @@ final class NFTListViewModelImpl: NFTListViewModel {
     private(set) var state: Box<NFTListState> = .init(.loading)
     private(set) var nftToShow: Box<NFTDetails?> = .init(nil)
 
-    private let networkClient: NetworkClient
+    private let nftNetworkService: NFTNetworkService
     private var nftIndividualItems: [NFTIndividualModel] = []
 
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
+    init(nftNetworkService: NFTNetworkService) {
+        self.nftNetworkService = nftNetworkService
     }
 
     func cellSelected(_ index: IndexPath) {
@@ -74,7 +74,7 @@ final class NFTListViewModelImpl: NFTListViewModel {
         let group = DispatchGroup()
 
         group.enter()
-        networkClient.getCollectionNFT { result in
+        nftNetworkService.getCollectionNFT { result in
             switch result {
             case let .success(data):
                 nftCollectionItems = data
@@ -86,7 +86,7 @@ final class NFTListViewModelImpl: NFTListViewModel {
         }
 
         group.enter()
-        networkClient.getIndividualNFT { result in
+        nftNetworkService.getIndividualNFT { result in
             switch result {
             case let .success(data):
                 nftIndividualItems = data
@@ -108,4 +108,3 @@ enum SortingCategory {
     case name
     case amount
 }
-

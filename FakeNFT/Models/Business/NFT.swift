@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NFT: Codable {
+struct NFT: Codable, Hashable {
     let createdAt: Date
     let name: String
     let images: [String]
@@ -18,6 +18,19 @@ struct NFT: Codable {
     let id: String
     var isFavourite = false
     var isSelected = false
+}
+
+extension NFT {
+    var formattedPrice: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "ETH"
+        formatter.maximumFractionDigits = 0
+        formatter.locale = Locale(identifier: "ru_RU")
+
+        let number = NSNumber(value: price)
+        return formatter.string(from: number)!
+    }
 }
 
 extension NFT {

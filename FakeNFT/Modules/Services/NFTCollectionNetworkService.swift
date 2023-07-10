@@ -2,19 +2,13 @@
 //  NFTCollectionNetworkService.swift
 //  FakeNFT
 //
-//  Created by Kirill on 25.06.2023.
+//  Created by Kirill on 10.07.2023.
 //
 
 import Foundation
 
-extension NetworkClient {
-    func getCollectionNFT(result: @escaping (Result<NFTCollectionResponse, Error>) -> Void) {
-        send(request: NFTCollectionRequest(), type: NFTCollectionResponse.self, onResponse: result)
-    }
+protocol NFTNetworkService {
+    func getCollectionNFT(result: @escaping (Result<NFTCollectionResponse, Error>) -> Void)
+    func getIndividualNFT(result: @escaping (Result<NFTIndividualResponse, Error>) -> Void)
 }
 
-struct NFTCollectionRequest: NetworkRequest {
-    var endpoint: URL? {
-        .init(string: "https://648cbc0b8620b8bae7ed515f.mockapi.io/api/v1/collections")
-    }
-}

@@ -10,11 +10,12 @@ import UIKit
 struct NFTListFactory {
     static func create() -> UINavigationController {
         let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .iso8601
         let networkClient = DefaultNetworkClient(decoder: decoder)
-        let viewModel = NFTListViewModelImpl(networkClient: networkClient)
-        let viewController = NFTListViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let nftNetworkService = NFTNetworkServiceImpl(networkClient: networkClient)
+        let viewModel = NFTListViewModelImpl(nftNetworkService: nftNetworkService)
+        let vieController = NFTListViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: vieController)
         return navigationController
     }
 }

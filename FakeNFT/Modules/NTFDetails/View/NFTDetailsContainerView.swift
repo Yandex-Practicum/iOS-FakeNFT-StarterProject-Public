@@ -135,7 +135,7 @@ extension NFTDetailsContainerView: UICollectionViewDataSource {
 
         cell.configure(.init(name: item.name,
                              rating: item.rating,
-                             price: item.price,
+                             price: item.formattedPrice,
                              imageUrl: item.images[0],
                              isFavourite: item.isFavourite,
                              addedToBasket: item.isSelected))

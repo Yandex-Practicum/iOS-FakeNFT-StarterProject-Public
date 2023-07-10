@@ -28,15 +28,16 @@ final class NFTListView: UIView {
 
     private func setupTableView() {
         tableView.register(NFTListCell.self, forCellReuseIdentifier: NFTListCell.reuseIdentifier)
-        
+
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.topAnchor.constraint(equalTo: topAnchor, constant: 108),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -63,7 +64,7 @@ extension NFTListView: UITableViewDataSource {
             return UITableViewCell()
         }
         let item = items[indexPath.row]
-        
+
         cell.configure(.init(imageUrl: item.cover,
                              collectionDescription: item.name,
                              collectionItems: item.nfts.count))

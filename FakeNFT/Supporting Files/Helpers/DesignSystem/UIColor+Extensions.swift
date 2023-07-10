@@ -28,4 +28,6 @@ extension UIColor {
     static var appBlue: UIColor { UIColor(named: "AppBlue") ?? .red }
     static var appRed: UIColor { UIColor(named: "AppRed") ?? .red }
     static var appWhite: UIColor { UIColor(named: "AppWhite") ?? .red }
+    static var yellowUniversal: UIColor { UIColor(named: "YellowUniversal") ?? .red }
+    static var lightGrey: UIColor { UIColor(named: "LightGray") ?? .red }
 }

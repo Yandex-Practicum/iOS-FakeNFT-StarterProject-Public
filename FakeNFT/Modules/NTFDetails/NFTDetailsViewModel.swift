@@ -22,10 +22,10 @@ final class NFTDetailsViewModelImpl: NFTDetailsViewModel {
     let sectionAuthor: String
     let sectionDescription: String
 
-    private let nftstorageService: NFtStorageService
+    private let nftStorageService: NFtStorageService
 
-    init(nftstorageService: NFtStorageService, details: NFTDetails) {
-        self.nftstorageService = nftstorageService
+    init(nftStorageService: NFtStorageService, details: NFTDetails) {
+        self.nftStorageService = nftStorageService
         imageURL = details.imageURL
         sectionName = details.sectionName
         sectionAuthor = details.sectionAuthor
@@ -37,8 +37,8 @@ final class NFTDetailsViewModelImpl: NFTDetailsViewModel {
         nfts.value[index].isSelected.toggle()
 
         nfts.value[index].isSelected
-        ? nftstorageService.selectNft(nfts.value[index])
-        : nftstorageService.unselectNft(nfts.value[index])
+        ? nftStorageService.selectNft(nfts.value[index])
+        : nftStorageService.unselectNft(nfts.value[index])
 
     }
 
@@ -46,7 +46,7 @@ final class NFTDetailsViewModelImpl: NFTDetailsViewModel {
         nfts.value[index].isFavourite.toggle()
 
         nfts.value[index].isSelected
-        ? nftstorageService.addToFavourite(nfts.value[index])
-        : nftstorageService.removeFromFavourite(nfts.value[index])
+        ? nftStorageService.addToFavourite(nfts.value[index])
+        : nftStorageService.removeFromFavourite(nfts.value[index])
     }
 }

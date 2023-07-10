@@ -167,7 +167,7 @@ extension NFTDetailsCollectionViewCell {
     struct Configuration {
         let name: String
         let rating: Int
-        let price: Double
+        let price: String
         let imageUrl: String
         let isFavourite: Bool
         let addedToBasket: Bool
@@ -175,7 +175,7 @@ extension NFTDetailsCollectionViewCell {
 
     func configure(_ configuration: Configuration) {
         nameLabel.text = configuration.name
-        priceLabel.text = "\(configuration.price) ETH"
+        priceLabel.text = configuration.price
 
         favouriteImageView.image = configuration.isFavourite
         ? .init(named: "selected_icon")
@@ -186,17 +186,17 @@ extension NFTDetailsCollectionViewCell {
         : .init(named: "empty_trash")
 
         let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 12, weight: .regular, scale: .unspecified)
-        let starImage = UIImage(systemName: "star", withConfiguration: symbolConfiguration)
+        let starImage = UIImage(systemName: "star.fill", withConfiguration: symbolConfiguration)
         let starImageFilled = UIImage(systemName: "star.fill", withConfiguration: symbolConfiguration)
 
         for index in 1...5 {
             let imageViewFilled = UIImageView(image: starImageFilled)
             imageViewFilled.contentMode = .scaleAspectFit
-            imageViewFilled.tintColor = .yellow
+            imageViewFilled.tintColor = .yellowUniversal
 
             let imageViewEmpty = UIImageView(image: starImage)
             imageViewEmpty.contentMode = .scaleAspectFit
-            imageViewEmpty.tintColor = .lightGray
+            imageViewEmpty.tintColor = .lightGrey
             if index <= configuration.rating {
                 stackViewRating.addArrangedSubview(imageViewFilled)
             } else {
@@ -215,3 +215,4 @@ extension NFTDetailsCollectionViewCell {
         case tapOnBasket
     }
 }
+

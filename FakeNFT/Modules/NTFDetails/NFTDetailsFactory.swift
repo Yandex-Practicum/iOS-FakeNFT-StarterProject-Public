@@ -9,10 +9,12 @@ import UIKit
 
 struct NFTDetailsFactory {
     static func create(_ details: NFTDetails) -> UIViewController {
-        let storage = NFtStorageServiceImpl()
-        let viewModel = NFTDetailsViewModelImpl(nftstorageService: storage, details: details)
+        let storageService = StorageServiceImpl()
+        let storage = NFtStorageServiceImpl(storageService: storageService)
+        let viewModel = NFTDetailsViewModelImpl(nftStorageService: storage, details: details)
         let viewController = NFTDetailsViewController(viewModel: viewModel)
         return viewController
     }
 }
+
 
