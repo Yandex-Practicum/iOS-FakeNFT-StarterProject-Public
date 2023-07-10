@@ -52,33 +52,3 @@ struct AlertConstructor: AlertConstructable {
         }
     }
 }
-
-// MARK: - Ext CartAlertConstructuble
-//extension AlertConstructor: CartAlertConstructable {
-//    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void) {
-//        CartSortValue.allCases.forEach { filter in
-//            alert.addAction(
-//                UIAlertAction(
-//                    title: filter.description,
-//                    style: filter.style,
-//                    handler: { _ in
-//                        handler(filter)
-//                    }))
-//        }
-//    }
-//}
-
-// MARK: - Ext CatalogAlertConstructuble
-//extension AlertConstructor: CatalogAlertConstructuble {
-//    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CatalogSortValue) -> Void) {
-//        CatalogSortValue.allCases.forEach { filter in
-//            alert.addAction(
-//                UIAlertAction(
-//                    title: filter.description,
-//                    style: filter.style,
-//                    handler: { action in
-//                        handler(filter)
-//                    }))
-//        }
-//    }
-//}
