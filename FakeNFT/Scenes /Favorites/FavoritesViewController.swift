@@ -62,7 +62,7 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
             self?.badConnection = true
             let alert = UIAlertController(
                 title: "Нет интернета",
-                message: "Пропал интернет :(",
+                message: "Что-то не так со связью :(",
                 preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
                 self?.navigationController?.popViewController(animated: true)
