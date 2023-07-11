@@ -59,10 +59,16 @@
 		378504F82A49E7DB000D6AC7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378504F72A49E7DB000D6AC7 /* Request.swift */; };
 		378504FB2A49F007000D6AC7 /* NftCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378504FA2A49F007000D6AC7 /* NftCollection.swift */; };
 		378504FE2A49F02A000D6AC7 /* SingleNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378504FD2A49F02A000D6AC7 /* SingleNft.swift */; };
+		3789F9072A5C38F300C975E2 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789F9062A5C38F300C975E2 /* LoginCoordinator.swift */; };
+		3789F90A2A5C3BC700C975E2 /* LoginMainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789F9092A5C3BC700C975E2 /* LoginMainScreenViewController.swift */; };
+		3789F90E2A5C3C2400C975E2 /* LoginMainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789F90D2A5C3C2400C975E2 /* LoginMainScreenViewModel.swift */; };
 		379033AC2A5988C000BBE812 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379033AB2A5988C000BBE812 /* Author.swift */; };
 		379033AE2A598D5600BBE812 /* AuthorDescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379033AD2A598D5600BBE812 /* AuthorDescriptionLabel.swift */; };
 		379033B02A59A7A000BBE812 /* AlertErrorActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379033AF2A59A7A000BBE812 /* AlertErrorActions.swift */; };
 		379033B22A59B71C00BBE812 /* WebViewUrlSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379033B12A59B71C00BBE812 /* WebViewUrlSource.swift */; };
+		3792C1BB2A5D7F2D004E443B /* FlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3792C1BA2A5D7F2D004E443B /* FlowCoordinator.swift */; };
+		3792C1BE2A5D9692004E443B /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3792C1BD2A5D9692004E443B /* LoginTextField.swift */; };
+		3792C1C02A5DAF67004E443B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3792C1BF2A5DAF67004E443B /* Profile.swift */; };
 		37B57A062A41F993000FE88B /* CartSortValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B57A052A41F993000FE88B /* CartSortValue.swift */; };
 		37D36BA82A51B71800662D2C /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BA72A51B71800662D2C /* CatalogViewModel.swift */; };
 		37D36BAD2A51BBF600662D2C /* CatalogSortValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D36BAC2A51BBF600662D2C /* CatalogSortValue.swift */; };
@@ -159,10 +165,16 @@
 		378504F72A49E7DB000D6AC7 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		378504FA2A49F007000D6AC7 /* NftCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollection.swift; sourceTree = "<group>"; };
 		378504FD2A49F02A000D6AC7 /* SingleNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNft.swift; sourceTree = "<group>"; };
+		3789F9062A5C38F300C975E2 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		3789F9092A5C3BC700C975E2 /* LoginMainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginMainScreenViewController.swift; sourceTree = "<group>"; };
+		3789F90D2A5C3C2400C975E2 /* LoginMainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginMainScreenViewModel.swift; sourceTree = "<group>"; };
 		379033AB2A5988C000BBE812 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		379033AD2A598D5600BBE812 /* AuthorDescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorDescriptionLabel.swift; sourceTree = "<group>"; };
 		379033AF2A59A7A000BBE812 /* AlertErrorActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertErrorActions.swift; sourceTree = "<group>"; };
 		379033B12A59B71C00BBE812 /* WebViewUrlSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewUrlSource.swift; sourceTree = "<group>"; };
+		3792C1BA2A5D7F2D004E443B /* FlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinator.swift; sourceTree = "<group>"; };
+		3792C1BD2A5D9692004E443B /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		3792C1BF2A5DAF67004E443B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		37B57A052A41F993000FE88B /* CartSortValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartSortValue.swift; sourceTree = "<group>"; };
 		37D36BA72A51B71800662D2C /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
 		37D36BAC2A51BBF600662D2C /* CatalogSortValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSortValue.swift; sourceTree = "<group>"; };
@@ -428,6 +440,8 @@
 		374EB03D2A3E028200D57F36 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				3792C1B92A5D7F1B004E443B /* FlowCoordinator */,
+				3789F9032A5C373A00C975E2 /* LoginModule */,
 				374EB0462A3E10D400D57F36 /* TabBarModule (Main) */,
 				374EB0482A3E1E3500D57F36 /* CatalogModule */,
 				374EB03E2A3E028D00D57F36 /* CartModule */,
@@ -547,6 +561,7 @@
 		377DF5EC2A3FA09C00090DCD /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				3792C1BC2A5D9676004E443B /* TextFields */,
 				3733F2252A54A04900ED681C /* StackViews */,
 				3733F2242A54A03C00ED681C /* ImageViews */,
 				3733F2232A54A03100ED681C /* Buttons */,
@@ -562,6 +577,72 @@
 				378504F52A49D2C2000D6AC7 /* cart_plan.md */,
 			);
 			path = Decomposition;
+			sourceTree = "<group>";
+		};
+		3789F9032A5C373A00C975E2 /* LoginModule */ = {
+			isa = PBXGroup;
+			children = (
+				3789F9042A5C386C00C975E2 /* Coordinator */,
+				3789F9052A5C387300C975E2 /* Screens */,
+			);
+			path = LoginModule;
+			sourceTree = "<group>";
+		};
+		3789F9042A5C386C00C975E2 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				3789F9062A5C38F300C975E2 /* LoginCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		3789F9052A5C387300C975E2 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				3789F9082A5C3BAA00C975E2 /* LoginMainScreen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3789F9082A5C3BAA00C975E2 /* LoginMainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3789F90B2A5C3C1100C975E2 /* View */,
+				3789F90C2A5C3C1500C975E2 /* ViewModel */,
+			);
+			path = LoginMainScreen;
+			sourceTree = "<group>";
+		};
+		3789F90B2A5C3C1100C975E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3789F9092A5C3BC700C975E2 /* LoginMainScreenViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3789F90C2A5C3C1500C975E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3789F90D2A5C3C2400C975E2 /* LoginMainScreenViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3792C1B92A5D7F1B004E443B /* FlowCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				3792C1BA2A5D7F2D004E443B /* FlowCoordinator.swift */,
+			);
+			path = FlowCoordinator;
+			sourceTree = "<group>";
+		};
+		3792C1BC2A5D9676004E443B /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				3792C1BD2A5D9692004E443B /* LoginTextField.swift */,
+			);
+			path = TextFields;
 			sourceTree = "<group>";
 		};
 		37B579FA2A41F6A3000FE88B /* CartMainScreen */ = {
@@ -782,6 +863,7 @@
 				378504FA2A49F007000D6AC7 /* NftCollection.swift */,
 				372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */,
 				379033AB2A5988C000BBE812 /* Author.swift */,
+				3792C1BF2A5DAF67004E443B /* Profile.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -956,6 +1038,7 @@
 			files = (
 				37E0EC4F2A48DA5900F17FC7 /* RequestConstructor.swift in Sources */,
 				374EB03C2A3DFFD400D57F36 /* K.swift in Sources */,
+				3792C1BB2A5D7F2D004E443B /* FlowCoordinator.swift in Sources */,
 				3733F2272A54A53500ED681C /* GridItemSize.swift in Sources */,
 				3774686E2A47415000E7EEEE /* CartPaymentResultViewModel.swift in Sources */,
 				3733F2202A549D0700ED681C /* NftIMageView.swift in Sources */,
@@ -981,6 +1064,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3733F20E2A53112000ED681C /* CatalogCollectionViewCell.swift in Sources */,
 				377DF5F02A3FA14900090DCD /* CustomLabel.swift in Sources */,
+				3789F90A2A5C3BC700C975E2 /* LoginMainScreenViewController.swift in Sources */,
 				374EB0352A3DFE5B00D57F36 /* NavigationControllerFactory.swift in Sources */,
 				372EEF932A45D162008FDB16 /* CollectionDiffableDataSourceSection.swift in Sources */,
 				3777816E2A5B4490007F4C28 /* GenericTableViewDataSourceManager.swift in Sources */,
@@ -993,18 +1077,22 @@
 				37B57A062A41F993000FE88B /* CartSortValue.swift in Sources */,
 				3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */,
 				372EEF872A449413008FDB16 /* CartPaymentMethodViewModel.swift in Sources */,
+				3792C1C02A5DAF67004E443B /* Profile.swift in Sources */,
 				372EEF8A2A449DF1008FDB16 /* CartPaymentMethodCell.swift in Sources */,
 				3733F20A2A530FDE00ED681C /* CatalogCollectionViewController.swift in Sources */,
 				372EEF982A45D682008FDB16 /* PaymentMethodCellViewModel.swift in Sources */,
+				3789F9072A5C38F300C975E2 /* LoginCoordinator.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				372EEF912A45D152008FDB16 /* PaymentMethodRow.swift in Sources */,
 				374EB02E2A3DFBE500D57F36 /* Router.swift in Sources */,
+				3789F90E2A5C3C2400C975E2 /* LoginMainScreenViewModel.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				37E0EC442A48B24B00F17FC7 /* RequestResult.swift in Sources */,
 				378504F82A49E7DB000D6AC7 /* Request.swift in Sources */,
 				3777816A2A5B35BF007F4C28 /* CollectionViewDataSourceManager.swift in Sources */,
 				375859952A4B4C88007AF92B /* CustomAnimatedView.swift in Sources */,
 				374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */,
+				3792C1BE2A5D9692004E443B /* LoginTextField.swift in Sources */,
 				374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */,
 				372EEF7E2A447126008FDB16 /* DataStore.swift in Sources */,
 				372EEF802A44729C008FDB16 /* CartDeleteViewModel.swift in Sources */,

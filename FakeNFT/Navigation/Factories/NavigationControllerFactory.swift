@@ -8,17 +8,27 @@
 import UIKit
 
 protocol NavigationControllerFactoryProtocol {
-    func makeNavController(_ item: MainTabBarItem, rootViewController: Presentable?) -> UIViewController
+    func makeTabNavigationController(tab item: MainTabBarItem?, rootViewController: Presentable?) -> UIViewController
 }
 
 final class NavigationControllerFactory: NavigationControllerFactoryProtocol {
-    func makeNavController(_ item: MainTabBarItem, rootViewController: Presentable?) -> UIViewController {
+    func makeTabNavigationController(tab item: MainTabBarItem?, rootViewController: Presentable?) -> UIViewController {
         guard let rootVC = rootViewController?.getVC() else { return UIViewController() }
         
         let navigationController = UINavigationController(rootViewController: rootVC)
-        navigationController.tabBarItem.title = item.title
-        navigationController.tabBarItem.image = item.tabImage
+        
+        if let item {
+            setItems(from: item, to: navigationController)
+        }
+        
         
         return navigationController
+    }
+}
+
+private extension NavigationControllerFactory {
+    func setItems(from item: MainTabBarItem, to controller: UIViewController) {
+        controller.tabBarItem.title = item.title
+        controller.tabBarItem.image = item.tabImage
     }
 }

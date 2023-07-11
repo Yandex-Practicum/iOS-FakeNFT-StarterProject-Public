@@ -31,6 +31,14 @@ struct K {
         static let cartTitle = NSLocalizedString("Корзина", comment: "")
         static let statisticsTitle = NSLocalizedString("Статистика", comment: "")
         static let paymentMethodScreenTitle = NSLocalizedString("Выберите способ оплаты", comment: "")
+        static let emailTextFieldTitle = NSLocalizedString("Email", comment: "")
+        static let passwordTextFieldTitle = NSLocalizedString("Пароль", comment: "")
+        static let enterButtonTitle = NSLocalizedString("Войти", comment: "")
+        static let demoButtonTitle = NSLocalizedString("Демо", comment: "")
+        static let registerButtonTitle = NSLocalizedString("Зарегистрироваться", comment: "")
+        static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
+        static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
+        static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
     }
     
     struct AlertTitles {

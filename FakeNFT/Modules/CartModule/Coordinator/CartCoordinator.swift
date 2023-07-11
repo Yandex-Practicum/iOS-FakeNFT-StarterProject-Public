@@ -7,7 +7,8 @@
 
 import Foundation
 
-final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
+final class CartCoordinator: CoordinatorProtocol {
+    var finishFlow: (() -> Void)?
     
     private var factory: CartModuleFactoryProtocol
     private var router: Routable
@@ -44,7 +45,7 @@ private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
         let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
-        let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
             self?.showSortAlert(from: cartScreen)

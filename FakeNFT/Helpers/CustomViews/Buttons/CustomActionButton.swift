@@ -39,16 +39,20 @@ extension CustomActionButton {
             setTitleColor(.universalRed, for: .normal)
             backgroundColor = .ypBlack
             isEnabled = true
-        case .hidden:
-            isHidden = true
-            isEnabled = false
+        case .transparent:
+            setTitleColor(.ypBlack, for: .normal)
+            backgroundColor = .clear
+            isEnabled = true
+        case .demo:
+            setTitleColor(.universalBlue, for: .normal)
+            backgroundColor = .clear
+            isEnabled = true
         }
-        
     }
 }
 
 extension CustomActionButton {
     enum Appearance {
-        case disabled, confirm, cancel, hidden
+        case disabled, confirm, cancel, transparent, demo
     }
 }

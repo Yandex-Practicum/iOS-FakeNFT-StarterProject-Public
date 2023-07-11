@@ -17,7 +17,8 @@ protocol CatalogModuleFactoryProtocol {
 }
 
 protocol CartModuleFactoryProtocol {
-    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable, dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
+                            dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
                                          dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
@@ -25,7 +26,21 @@ protocol CartModuleFactoryProtocol {
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
 
+protocol LoginModuleFactoryProtocol {
+    func makeLoginScreenView() -> Presentable & LoginMainCoordinatableProtocol
+}
+
 final class ModulesFactory {}
+
+// MARK: - Ext LoginModuleFactoryProtocol
+extension ModulesFactory: LoginModuleFactoryProtocol {
+    func makeLoginScreenView() -> Presentable & LoginMainCoordinatableProtocol {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = LoginMainScreenViewModel(networkClient: networkClient)
+        let viewController = LoginMainScreenViewController(viewModel: viewModel)
+        return viewController
+    }
+}
 
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
