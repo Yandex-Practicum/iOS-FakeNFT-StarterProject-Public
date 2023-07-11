@@ -39,6 +39,7 @@ struct K {
         static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
         static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
         static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
+        static let loginErrorLabelTitle = NSLocalizedString("Введен неверный логин или пароль", comment: "")
     }
     
     struct AlertTitles {
@@ -58,5 +59,9 @@ struct K {
         static let singleCollection = "api/v1/nft/"
         static let pay = "api/v1/orders/1/payment/"
         static let author = "/api/v1/users/"
+    }
+    
+    struct KeyChainServices {
+        static let profileLogin = "profile.login"
     }
 }

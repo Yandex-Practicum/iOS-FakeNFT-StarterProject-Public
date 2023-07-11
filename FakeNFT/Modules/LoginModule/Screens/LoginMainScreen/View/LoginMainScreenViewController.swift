@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol LoginMainCoordinatableProtocol {
     var onEnter: (() -> Void)? { get set }
@@ -20,6 +21,8 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     var onRegister: (() -> Void)?
     var onForgottenPassword: (() -> Void)?
     var onDemo: (() -> Void)?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private let viewModel: LoginMainScreenViewModel
     
@@ -49,6 +52,8 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     
     private lazy var errorLabel: CustomLabel = {
         let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .left)
+        label.text = K.Titles.loginErrorLabelTitle
+        label.alpha = 0
         return label
     }()
     
@@ -60,6 +65,10 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     private lazy var actionView: UIView = {
         let view = UIView()
         view.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        view.addSubview(errorLabel)
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.frame = view.bounds
+        
         return view
     }()
     
@@ -125,8 +134,6 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         return stackView
     }()
     
-    
-    
     // MARK: Init
     init(viewModel: LoginMainScreenViewModel) {
         self.viewModel = viewModel
@@ -142,14 +149,72 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
+        bind()
         hideKeyboardWhenTappedAround()
-    } 
+    }
+    
+    private func bind() {
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] loginResult in
+                self?.updateLoginResult(loginResult)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateLoginResult(_ result: RequestResult?) {
+        guard let result else { return }
+        switch result {
+        case .success:
+            showAnimation(for: result)
+            stopAnimation()
+        case .failure:
+            showAnimation(for: result)
+            showCredentialsErrorState()
+            stopAnimation()
+        case .loading:
+            hideCredentialsErrorState()
+            showAnimation(for: result)
+        }
+    }
+    
+    private func showAnimation(for result: RequestResult) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.loadingView.stopAnimation()
+            self.loadingView.result = result
+            self.loadingView.startAnimation()
+        }
+        
+    }
+    
+    private func stopAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.loadingView.stopAnimation()
+        }
+    }
+    
+    private func showCredentialsErrorState() {
+        emailTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderWidth = 1
+        errorLabel.animateLabelAppearance()
+//        errorLabel.isHidden = false
+        
+    }
+    
+    private func hideCredentialsErrorState() {
+        emailTextField.layer.borderWidth = 0
+        passwordTextField.layer.borderWidth = 0
+//        errorLabel.isHidden = true
+        errorLabel.alpha = 0
+    }
 }
 
 // MARK: - Ext @objc
 @objc private extension LoginMainScreenViewController {
     func enterTapped() {
-        viewModel.enterTapped()
+        let userCredentials = LoginCredentials(email: emailTextField.text, password: passwordTextField.text)
+        viewModel.enterProfile(with: userCredentials)
     }
     
     func registerTapped() {
@@ -169,6 +234,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
 private extension LoginMainScreenViewController {
     func setupConstraints() {
         setupEnterStackView()
+        setupLoadingView()
     }
     
     func setupEnterStackView() {
@@ -180,6 +246,18 @@ private extension LoginMainScreenViewController {
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -26)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.heightAnchor.constraint(equalToConstant: 20),
+            loadingView.widthAnchor.constraint(equalToConstant: 20),
+            loadingView.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: mainStackView.centerYAnchor, constant: -20)
         ])
     }
 }

@@ -13,23 +13,48 @@ final class LoginMainScreenViewModel {
     @Published private (set) var requestResult: RequestResult?
     
     let networkClient: NetworkClient
+    let keyChainManager: SecureDataProtocol
     
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClient, keyChainManager: SecureDataProtocol) {
         self.networkClient = networkClient
+        self.keyChainManager = keyChainManager
     }
     
-    func enterTapped() {
+    func enterProfile(with userCredentials: LoginCredentials) {
+        guard
+            let name = userCredentials.email,
+            let password = userCredentials.password
+        else {
+            requestResult = .failure
+            return
+        }
+        
+        sendLoginRequest(name: name, password: password)
         
     }
 }
 
 // MARK: - Ext Private
 private extension LoginMainScreenViewModel {
-    func sendLoginRequest() {
+    func sendLoginRequest(name: String, password: String) {
         requestResult = .loading
-        let request = RequestConstructor.constructCatalogRequest(method: .get)
-        networkClient.send(request: request, type: [NftCollection].self) { [weak self] result in
-            
+        let isLoggedIn = keyChainManager.checkCredentials(username: name, password: password)
+
+        proceedLogin(isLoggedIn)
+    }
+    
+    func proceedLogin(_ isLoggedIn: Bool) {
+        // mock loading
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            isLoggedIn ? self?.loginSuccess() : self?.loginFailure()
         }
+    }
+    
+    func loginFailure() {
+        requestResult = .failure
+    }
+    
+    func loginSuccess() {
+        requestResult = .success
     }
 }

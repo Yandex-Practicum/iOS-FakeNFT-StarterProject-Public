@@ -23,6 +23,7 @@ class LoginTextField: UITextField {
         heightAnchor.constraint(equalToConstant: 46).isActive = true
         placeholder = title
         clearButtonMode = .whileEditing
+        layer.borderColor = UIColor.universalRed.cgColor
     }
     
     required init?(coder: NSCoder) {

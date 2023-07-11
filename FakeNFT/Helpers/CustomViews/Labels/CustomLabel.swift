@@ -19,4 +19,11 @@ class CustomLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func animateLabelAppearance() {
+        alpha = 0.0
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.alpha = 1.0
+        }
+    }
 }

@@ -35,8 +35,9 @@ final class ModulesFactory {}
 // MARK: - Ext LoginModuleFactoryProtocol
 extension ModulesFactory: LoginModuleFactoryProtocol {
     func makeLoginScreenView() -> Presentable & LoginMainCoordinatableProtocol {
+        let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
         let networkClient = DefaultNetworkClient()
-        let viewModel = LoginMainScreenViewModel(networkClient: networkClient)
+        let viewModel = LoginMainScreenViewModel(networkClient: networkClient, keyChainManager: keyChainManager)
         let viewController = LoginMainScreenViewController(viewModel: viewModel)
         return viewController
     }
