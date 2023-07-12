@@ -33,13 +33,13 @@ struct K {
         static let paymentMethodScreenTitle = NSLocalizedString("Выберите способ оплаты", comment: "")
         static let emailTextFieldTitle = NSLocalizedString("Email", comment: "")
         static let passwordTextFieldTitle = NSLocalizedString("Пароль", comment: "")
-        static let enterButtonTitle = NSLocalizedString("Войти", comment: "")
+        static let loginButtonTitle = NSLocalizedString("Войти", comment: "")
         static let demoButtonTitle = NSLocalizedString("Демо", comment: "")
         static let registerButtonTitle = NSLocalizedString("Зарегистрироваться", comment: "")
         static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
         static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
         static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
-        static let loginErrorLabelTitle = NSLocalizedString("Введен неверный логин или пароль", comment: "")
+//        static let loginErrorLabelTitle = NSLocalizedString("Введен неверный логин или пароль", comment: "")
     }
     
     struct AlertTitles {
@@ -63,5 +63,12 @@ struct K {
     
     struct KeyChainServices {
         static let profileLogin = "profile.login"
+    }
+    
+    struct LogInErrors {
+        static let invalidData = NSLocalizedString("Введен неверный логин или пароль", comment: "")
+        static let userExists = NSLocalizedString("Пользователь с таким адресом уже зарегистрирован", comment: "")
+        static let textFieldEmpty = NSLocalizedString("Одно из полей не заполнено", comment: "")
+        static let internalError = NSLocalizedString("Внутренняя ошибка, попробуйте позже", comment: "")
     }
 }

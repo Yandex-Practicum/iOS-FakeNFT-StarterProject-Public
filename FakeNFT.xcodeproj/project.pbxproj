@@ -42,6 +42,8 @@
 		374EB0512A3E1FD800D57F36 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */; };
 		374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374EB0522A3E1FE200D57F36 /* CartViewController.swift */; };
 		3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */; };
+		3753785D2A5E9366009A5598 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753785C2A5E9366009A5598 /* ActionType.swift */; };
+		375378602A5EA1B3009A5598 /* LoginErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753785F2A5EA1B3009A5598 /* LoginErrors.swift */; };
 		375859952A4B4C88007AF92B /* CustomAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375859942A4B4C88007AF92B /* CustomAnimatedView.swift */; };
 		3774686C2A47414300E7EEEE /* CartPaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */; };
 		3774686E2A47415000E7EEEE /* CartPaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */; };
@@ -150,6 +152,8 @@
 		374EB0502A3E1FD800D57F36 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		374EB0522A3E1FE200D57F36 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
+		3753785C2A5E9366009A5598 /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
+		3753785F2A5EA1B3009A5598 /* LoginErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginErrors.swift; sourceTree = "<group>"; };
 		375859942A4B4C88007AF92B /* CustomAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedView.swift; sourceTree = "<group>"; };
 		3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewController.swift; sourceTree = "<group>"; };
 		3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewModel.swift; sourceTree = "<group>"; };
@@ -518,6 +522,14 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		3753785E2A5E938A009A5598 /* KeyChainManager */ = {
+			isa = PBXGroup;
+			children = (
+				3792C1C22A5DB20D004E443B /* KeyChainManager.swift */,
+			);
+			path = KeyChainManager;
+			sourceTree = "<group>";
+		};
 		377468682A472A9900E7EEEE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,7 +615,9 @@
 		3789F9052A5C387300C975E2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3792C1C12A5DB1F0004E443B /* Helpers */,
 				3789F9082A5C3BAA00C975E2 /* LoginMainScreen */,
+				3792C1C82A5DDFBC004E443B /* PasswordResetScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -613,7 +627,6 @@
 			children = (
 				3789F90B2A5C3C1100C975E2 /* View */,
 				3789F90C2A5C3C1500C975E2 /* ViewModel */,
-				3792C1C12A5DB1F0004E443B /* Helpers */,
 			);
 			path = LoginMainScreen;
 			sourceTree = "<group>";
@@ -653,7 +666,8 @@
 		3792C1C12A5DB1F0004E443B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				3792C1C22A5DB20D004E443B /* KeyChainManager.swift */,
+				3753785C2A5E9366009A5598 /* ActionType.swift */,
+				3753785F2A5EA1B3009A5598 /* LoginErrors.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -664,6 +678,13 @@
 				3792C1C52A5DB5A4004E443B /* LoginCredentials.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		3792C1C82A5DDFBC004E443B /* PasswordResetScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PasswordResetScreen;
 			sourceTree = "<group>";
 		};
 		37B579FA2A41F6A3000FE88B /* CartMainScreen */ = {
@@ -840,6 +861,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3753785E2A5E938A009A5598 /* KeyChainManager */,
 				372EEF7C2A447115008FDB16 /* DataStore */,
 				3733F2142A5324DD00ED681C /* DataSource */,
 				373A29B12A434BF100F5BB83 /* AlertConstructor */,
@@ -1092,6 +1114,7 @@
 				374EB0352A3DFE5B00D57F36 /* NavigationControllerFactory.swift in Sources */,
 				372EEF932A45D162008FDB16 /* CollectionDiffableDataSourceSection.swift in Sources */,
 				3777816E2A5B4490007F4C28 /* GenericTableViewDataSourceManager.swift in Sources */,
+				375378602A5EA1B3009A5598 /* LoginErrors.swift in Sources */,
 				37D36BAD2A51BBF600662D2C /* CatalogSortValue.swift in Sources */,
 				377DF5E52A3F961D00090DCD /* TableViewDiffableDataSourceSection.swift in Sources */,
 				3774686C2A47414300E7EEEE /* CartPaymentResultViewController.swift in Sources */,
@@ -1120,6 +1143,7 @@
 				374EB0532A3E1FE200D57F36 /* CartViewController.swift in Sources */,
 				372EEF7E2A447126008FDB16 /* DataStore.swift in Sources */,
 				372EEF802A44729C008FDB16 /* CartDeleteViewModel.swift in Sources */,
+				3753785D2A5E9366009A5598 /* ActionType.swift in Sources */,
 				378504FE2A49F02A000D6AC7 /* SingleNft.swift in Sources */,
 				373A29B82A43743D00F5BB83 /* CartCellViewModel.swift in Sources */,
 				379033AC2A5988C000BBE812 /* Author.swift in Sources */,

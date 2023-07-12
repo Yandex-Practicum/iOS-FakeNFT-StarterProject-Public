@@ -44,15 +44,14 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     }()
     
     private lazy var enterButton: CustomActionButton = {
-        let button = CustomActionButton(title: K.Titles.enterButtonTitle, appearance: .confirm)
+        let button = CustomActionButton(title: K.Titles.loginButtonTitle, appearance: .confirm)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        button.addTarget(self, action: #selector(enterTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var errorLabel: CustomLabel = {
         let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .left)
-        label.text = K.Titles.loginErrorLabelTitle
+//        label.text = K.Titles.loginErrorLabelTitle
         label.alpha = 0
         return label
     }()
@@ -149,8 +148,18 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
-        bind()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {
@@ -160,65 +169,123 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
                 self?.updateLoginResult(loginResult)
             }
             .store(in: &cancellables)
-    }
-    
-    private func updateLoginResult(_ result: RequestResult?) {
-        guard let result else { return }
-        switch result {
-        case .success:
-            showAnimation(for: result)
-            stopAnimation()
-        case .failure:
-            showAnimation(for: result)
-            showCredentialsErrorState()
-            stopAnimation()
-        case .loading:
-            hideCredentialsErrorState()
-            showAnimation(for: result)
-        }
-    }
-    
-    private func showAnimation(for result: RequestResult) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.loadingView.stopAnimation()
-            self.loadingView.result = result
-            self.loadingView.startAnimation()
-        }
         
+        viewModel.$actionType
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] actionType in
+                self?.updateCurrentView(for: actionType)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .sink { [weak self] message in
+                self?.updateErrorLabel(message)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Ext actions
+private extension LoginMainScreenViewController {
+    func createCredentials() -> LoginCredentials {
+        LoginCredentials(email: emailTextField.text, password: passwordTextField.text)
+    }
+}
+
+// MARK: - Ext ErrorMessage
+private extension LoginMainScreenViewController {
+    func updateErrorLabel(_ message: String?) {
+        guard let message else { return }
+        errorLabel.text = message
+    }
+}
+
+// MARK: - Ext Result animation
+private extension LoginMainScreenViewController {
+    func updateLoginResult(_ result: RequestResult?) {
+        guard let result else { return }
+        stopLoadingAnimation()
+        showLoadingAnimation(for: result)
+        changeCredentialsErrorState(for: result)
     }
     
-    private func stopAnimation() {
+    func stopLoadingAnimation() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.loadingView.stopAnimation()
         }
     }
     
-    private func showCredentialsErrorState() {
-        emailTextField.layer.borderWidth = 1
-        passwordTextField.layer.borderWidth = 1
+    func showLoadingAnimation(for result: RequestResult) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.loadingView.result = result
+            self.loadingView.startAnimation()
+        }
+    }
+    
+    func changeCredentialsErrorState(for result: RequestResult) {
+        result == .failure ? showCredentialsErrorState() : hideCredentialsErrorState()
+    }
+    
+    func showCredentialsErrorState() {
+        setErrorState(with: 1)
         errorLabel.animateLabelAppearance()
-//        errorLabel.isHidden = false
         
     }
     
-    private func hideCredentialsErrorState() {
-        emailTextField.layer.borderWidth = 0
-        passwordTextField.layer.borderWidth = 0
-//        errorLabel.isHidden = true
+    func hideCredentialsErrorState() {
+        setErrorState(with: 0)
         errorLabel.alpha = 0
+    }
+    
+    func setErrorState(with borderWidth: CGFloat) {
+        emailTextField.layer.borderWidth = borderWidth
+        passwordTextField.layer.borderWidth = borderWidth
+    }
+}
+
+// MARK: - login/register view change
+private extension LoginMainScreenViewController {
+    func updateCurrentView(for action: ActionType) {
+        addButtonTarget(from: action)
+        changeActionButtonTitle(for: action)
+        hideOrShowLowerButtons(for: action)
+    }
+    
+    func addButtonTarget(from action: ActionType) {
+        switch action {
+        case .login:
+            enterButton.removeTarget(self, action: #selector(registerTapped), for: .touchUpInside)
+            enterButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+        case .register:
+            enterButton.removeTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+            enterButton.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
+        }
+    }
+    
+    func changeActionButtonTitle(for action: ActionType) {
+        enterButton.setTitle(action.buttonTitle, for: .normal)
+    }
+    
+    func hideOrShowLowerButtons(for action: ActionType) {
+        lowerButtonsHiddenState(action.hiddenState)
+    }
+    
+    func lowerButtonsHiddenState(_ isHidden: Bool) {
+        forgotPasswordButton.isHidden = isHidden
+        demoButton.isHidden = isHidden
+        registerButton.isHidden = isHidden
     }
 }
 
 // MARK: - Ext @objc
 @objc private extension LoginMainScreenViewController {
-    func enterTapped() {
-        let userCredentials = LoginCredentials(email: emailTextField.text, password: passwordTextField.text)
-        viewModel.enterProfile(with: userCredentials)
+    func loginTapped() {
+        viewModel.login(with: createCredentials())
     }
     
     func registerTapped() {
-        onRegister?()
+        viewModel.register(with: createCredentials())
     }
     
     func forgotPasswordTapped() {

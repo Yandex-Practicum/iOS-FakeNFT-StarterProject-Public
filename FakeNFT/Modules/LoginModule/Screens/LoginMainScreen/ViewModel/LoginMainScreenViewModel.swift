@@ -11,6 +11,8 @@ import Combine
 final class LoginMainScreenViewModel {
     
     @Published private (set) var requestResult: RequestResult?
+    @Published private (set) var actionType: ActionType = .login
+    @Published private (set) var errorMessage: String?
     
     let networkClient: NetworkClient
     let keyChainManager: SecureDataProtocol
@@ -18,9 +20,16 @@ final class LoginMainScreenViewModel {
     init(networkClient: NetworkClient, keyChainManager: SecureDataProtocol) {
         self.networkClient = networkClient
         self.keyChainManager = keyChainManager
+        
+//        clear()
     }
     
-    func enterProfile(with userCredentials: LoginCredentials) {
+//    func clear() {
+//        keyChainManager.clearAllKeychainData()
+//        print("Cleared")
+//    }
+    
+    func login(with userCredentials: LoginCredentials) {
         guard
             let name = userCredentials.email,
             let password = userCredentials.password
@@ -32,15 +41,50 @@ final class LoginMainScreenViewModel {
         sendLoginRequest(name: name, password: password)
         
     }
+    
+    func register(with userCredentials: LoginCredentials) {
+        changeActionTypeOrRegister(with: userCredentials)
+    }
 }
 
 // MARK: - Ext Private
 private extension LoginMainScreenViewModel {
+    func changeActionTypeOrRegister(with userCredentials: LoginCredentials) {
+        actionType == .login ? switchToRegister() : sendRegisterRequest(with: userCredentials)
+    }
+    
+    func switchToRegister() {
+        actionType = .register
+    }
+    
     func sendLoginRequest(name: String, password: String) {
         requestResult = .loading
         let isLoggedIn = keyChainManager.checkCredentials(username: name, password: password)
 
         proceedLogin(isLoggedIn)
+    }
+    
+    func sendRegisterRequest(with userCredentials: LoginCredentials) {
+        guard
+            let name = userCredentials.email,
+            !name.isEmpty,
+            let password = userCredentials.password,
+            !password.isEmpty
+        else {
+            requestResult = .failure
+            return
+        }
+        
+        requestResult = .loading
+        userExists(name) ? proceedLogin(false) : proceedLogin(keyChainManager.saveValue(password, forKey: name))
+    }
+    
+    func userExists(_ name: String) -> Bool {
+        keyChainManager.checkIfUserExists(username: name)
+    }
+    
+    func userSaved(name: String, password: String) -> Bool {
+        keyChainManager.saveValue(password, forKey: name)
     }
     
     func proceedLogin(_ isLoggedIn: Bool) {
