@@ -34,7 +34,7 @@ final class LoginMainScreenViewModel {
             let name = userCredentials.email,
             let password = userCredentials.password
         else {
-            requestResult = .failure
+            loginFailure(.textFieldEmpty)
             return
         }
         
@@ -47,7 +47,7 @@ final class LoginMainScreenViewModel {
     }
 }
 
-// MARK: - Ext Private
+// MARK: - Ext check register state
 private extension LoginMainScreenViewModel {
     func changeActionTypeOrRegister(with userCredentials: LoginCredentials) {
         actionType == .login ? switchToRegister() : sendRegisterRequest(with: userCredentials)
@@ -56,27 +56,43 @@ private extension LoginMainScreenViewModel {
     func switchToRegister() {
         actionType = .register
     }
-    
+}
+
+// MARK: - Ext Login
+private extension LoginMainScreenViewModel {
     func sendLoginRequest(name: String, password: String) {
         requestResult = .loading
         let isLoggedIn = keyChainManager.checkCredentials(username: name, password: password)
 
-        proceedLogin(isLoggedIn)
+        isLoggedIn ? loginSuccess() : loginFailure(.invalidData)
     }
-    
+}
+
+// MARK: - Ext register
+private extension LoginMainScreenViewModel {
     func sendRegisterRequest(with userCredentials: LoginCredentials) {
         guard
-            let name = userCredentials.email,
-            !name.isEmpty,
+            let userName = userCredentials.email,
+            !userName.isEmpty,
             let password = userCredentials.password,
             !password.isEmpty
         else {
-            requestResult = .failure
+            loginFailure(.textFieldEmpty)
             return
         }
         
         requestResult = .loading
-        userExists(name) ? proceedLogin(false) : proceedLogin(keyChainManager.saveValue(password, forKey: name))
+        
+        guard !userExists(userName) else {
+            loginFailure(.userExists)
+            return
+        }
+        
+        finishRegistration(userName: userName, password: password) ? loginSuccess() : loginFailure(.internalError)
+    }
+    
+    func finishRegistration(userName: String, password: String) -> Bool {
+        keyChainManager.saveValue(password, forKey: userName)
     }
     
     func userExists(_ name: String) -> Bool {
@@ -86,19 +102,22 @@ private extension LoginMainScreenViewModel {
     func userSaved(name: String, password: String) -> Bool {
         keyChainManager.saveValue(password, forKey: name)
     }
-    
-    func proceedLogin(_ isLoggedIn: Bool) {
-        // mock loading
+}
+
+// MARK: - Login/register result
+private extension LoginMainScreenViewModel {
+    func loginFailure(_ reason: LoginErrors) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            isLoggedIn ? self?.loginSuccess() : self?.loginFailure()
+            self?.requestResult = .failure
+            self?.errorMessage = reason.message
         }
-    }
-    
-    func loginFailure() {
-        requestResult = .failure
+        
     }
     
     func loginSuccess() {
-        requestResult = .success
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.requestResult = .success
+        }
+        
     }
 }

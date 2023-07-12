@@ -51,7 +51,6 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     
     private lazy var errorLabel: CustomLabel = {
         let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .left)
-//        label.text = K.Titles.loginErrorLabelTitle
         label.alpha = 0
         return label
     }()
