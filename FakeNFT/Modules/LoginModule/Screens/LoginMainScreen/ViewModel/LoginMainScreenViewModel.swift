@@ -71,6 +71,8 @@ private extension LoginMainScreenViewModel {
 // MARK: - Ext register
 private extension LoginMainScreenViewModel {
     func sendRegisterRequest(with userCredentials: LoginCredentials) {
+        requestResult = .loading
+        
         guard
             let userName = userCredentials.email,
             !userName.isEmpty,
@@ -80,8 +82,6 @@ private extension LoginMainScreenViewModel {
             loginFailure(.textFieldEmpty)
             return
         }
-        
-        requestResult = .loading
         
         guard !userExists(userName) else {
             loginFailure(.userExists)

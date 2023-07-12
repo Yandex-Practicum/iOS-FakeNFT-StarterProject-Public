@@ -52,6 +52,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     private lazy var errorLabel: CustomLabel = {
         let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .left)
         label.alpha = 0
+        label.numberOfLines = 0
         return label
     }()
     
@@ -161,6 +162,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         cancellables.removeAll()
     }
     
+    // MARK: bind
     private func bind() {
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
@@ -203,9 +205,20 @@ private extension LoginMainScreenViewController {
 private extension LoginMainScreenViewController {
     func updateLoginResult(_ result: RequestResult?) {
         guard let result else { return }
+        disableActionButtonWhileLoading(result)
         stopLoadingAnimation()
         showLoadingAnimation(for: result)
         changeCredentialsErrorState(for: result)
+    }
+    
+    func disableActionButtonWhileLoading(_ result: RequestResult) {
+        if result == .loading {
+            enterButton.setAppearance(for: .disabled)
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.enterButton.setAppearance(for: .confirm)
+            }
+        }
     }
     
     func stopLoadingAnimation() {
