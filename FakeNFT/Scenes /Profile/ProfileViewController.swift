@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
 
     
     required init?(coder aDecoder: NSCoder) {
-        self.viewModel = ProfileViewModel()
+        self.viewModel = ProfileViewModel(networkClient: nil)
         super.init(coder: aDecoder)
     }
     

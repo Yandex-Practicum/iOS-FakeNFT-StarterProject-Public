@@ -35,6 +35,7 @@ final class EditProfileView: UIView {
     private lazy var changeAvatarLabel: UILabel = {
         let changeAvatarLabel = UILabel()
         changeAvatarLabel.translatesAutoresizingMaskIntoConstraints = false
+        changeAvatarLabel.accessibilityIdentifier = "changeAvatarLabel"
         changeAvatarLabel.backgroundColor = .black.withAlphaComponent(0.6)
         changeAvatarLabel.layer.cornerRadius = 35
         changeAvatarLabel.layer.masksToBounds = true

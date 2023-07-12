@@ -6,7 +6,7 @@ final class ProfileViewModel {
     var onChange: (() -> Void)?
     var onError: (() -> Void)?
     
-    private let networkClient = DefaultNetworkClient()
+    private var networkClient: NetworkClient = DefaultNetworkClient()
         
     private(set) var avatarURL: URL? {
         didSet {
@@ -45,15 +45,19 @@ final class ProfileViewModel {
     }
     
     private(set) var id: String?
+    private(set) var error: Error?
     
     // MARK: - Lifecycle
-    init(){}
+    init(networkClient: NetworkClient?){
+        if let networkClient = networkClient { self.networkClient = networkClient }
+    }
     
     // MARK: - Methods
     func getProfileData() {
         UIBlockingProgressHUD.show()
         
         networkClient.send(request: GetProfileRequest(), type: ProfileNetworkModel.self) { [weak self] result in
+            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let profile):
@@ -66,7 +70,7 @@ final class ProfileViewModel {
                     self?.id = profile.id
                     UIBlockingProgressHUD.dismiss()
                 case .failure(let error):
-                    print(error)
+                    self?.error = error
                     self?.onError?()
                     UIBlockingProgressHUD.dismiss()
                 }
@@ -75,6 +79,8 @@ final class ProfileViewModel {
     }
     
     func putProfileData(name: String, avatar: String, description: String, website: String, likes: [String]) {
+        UIBlockingProgressHUD.show()
+        
         let request = PutProfileRequest(
             name: name,
             avatar: avatar,
@@ -94,9 +100,11 @@ final class ProfileViewModel {
                     self?.nfts = profile.nfts
                     self?.likes = profile.likes
                     self?.id = profile.id
+                    UIBlockingProgressHUD.dismiss()
                 case .failure(let error):
-                    print(error)
+                    self?.error = error
                     self?.onError?()
+                    UIBlockingProgressHUD.dismiss()
                 }
             }
         }
