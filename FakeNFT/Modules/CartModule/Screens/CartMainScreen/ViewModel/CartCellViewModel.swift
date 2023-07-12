@@ -10,9 +10,18 @@ import Combine
 
 final class CartCellViewModel: ObservableObject {
     
-    @Published private (set) var cartRow: NftSingleCollection
+    @Published private (set) var cartRow: SingleNft
     
-    init(cartRow: NftSingleCollection) {
+    init(cartRow: SingleNft) {
         self.cartRow = cartRow
+    }
+    
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
     }
 }

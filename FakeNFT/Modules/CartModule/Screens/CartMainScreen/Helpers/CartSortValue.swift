@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CartSortValue: CaseIterable {
+enum CartSortValue: CaseIterable, Sortable {
     case price, rating, name, cancel
     
     var description: String {
@@ -25,11 +25,7 @@ enum CartSortValue: CaseIterable {
     
     var style: UIAlertAction.Style {
         switch self {
-        case .price:
-            return .default
-        case .rating:
-            return .default
-        case .name:
+        case .price, .rating, .name:
             return .default
         case .cancel:
             return .cancel

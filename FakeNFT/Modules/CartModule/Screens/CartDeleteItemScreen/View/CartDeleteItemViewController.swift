@@ -7,7 +7,6 @@
 
 import UIKit
 import Combine
-import Kingfisher
 
 protocol CartDeleteCoordinatableProtocol {
     var idToDelete: String? { get set }
@@ -26,10 +25,8 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     
     private let viewModel: CartDeleteViewModel
     
-    private lazy var itemImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+    private lazy var itemImageView: NftIMageView = {
+        let imageView = NftIMageView(frame: .zero)
         return imageView
     }()
     
@@ -116,7 +113,6 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        bind()
         setupBlur()
         setupConstraints()
         updateItemToDelete(with: idToDelete)
@@ -131,13 +127,14 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {
         viewModel.$itemToDelete
             .receive(on: DispatchQueue.main)
             .sink { [weak self] cartRow in
-                self?.setupImageView(for: cartRow)
+                self?.loadCover(for: cartRow?.images.first)
             }
             .store(in: &cancellables)
     }
@@ -159,9 +156,9 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         
     }
     
-    private func setupImageView(for cartRow: NftSingleCollection?) {
-        guard let imageName = cartRow?.images.first else { return }
-        itemImageView.kf.setImage(with: URL(string: imageName))
+    private func loadCover(for stringUrl: String?) {
+        guard let url = viewModel.createUrl(from: stringUrl) else { return }
+        itemImageView.setImage(from: url)
     }
 }
 

@@ -9,26 +9,30 @@ import Foundation
 
 final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
     
-    private var factory: ModulesFactoryProtocol
+    private var factory: CartModuleFactoryProtocol
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: DataStorageProtocol
-    private let networkClient: NetworkClient
+    private var dataStore: CartDataStorageProtocol
+    private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
+    private let collectionViewDataSource: GenericDataSourceManagerProtocol
     
-    init(factory: ModulesFactoryProtocol,
+    init(factory: CartModuleFactoryProtocol,
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: DataStorageProtocol,
-         networkClient: NetworkClient) {
+         dataStore: CartDataStorageProtocol,
+         tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
+         collectionViewDataSource: GenericDataSourceManagerProtocol
+    ) {
         
         self.factory = factory
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
-        self.networkClient = networkClient
+        self.tableViewDataSource = tableViewDataSource
+        self.collectionViewDataSource = collectionViewDataSource
     }
     
     func start() {
@@ -39,7 +43,7 @@ final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
 private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
-        let cartScreen = factory.makeCartScreenView(dataStore: dataStore, networkClient: networkClient)
+        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
@@ -54,8 +58,9 @@ private extension CartCoordinator {
             self?.showPaymentMethodScreen()
         }
         
-        cartScreen.onError = { [weak self] error in
-            self?.showCartLoadAlert(with: error, from: cartScreen)
+        cartScreen.onError = { [weak self, weak cartScreen] error in
+            guard let self, let cartScreen else { return }
+            self.showCartLoadAlert(with: error, from: cartScreen)
         }
         
         router.addTabBarItem(navController)
@@ -80,7 +85,7 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(networkClient: networkClient, dataStore: dataStore)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore, dataSource: collectionViewDataSource)
         
         paymentMethodScreen.onProceed = { [weak self] request in
             self?.showPaymentResultScreen(with: request)
@@ -98,7 +103,7 @@ private extension CartCoordinator {
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
-        var paymentResultScreen = factory.makePaymentResultScreenView(networkClient: networkClient, request: request)
+        var paymentResultScreen = factory.makePaymentResultScreenView(request: request)
         
         paymentResultScreen.onMain = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)
@@ -117,10 +122,10 @@ private extension CartCoordinator {
 // MARK: - Ext Alerts
 private extension CartCoordinator {
     func showSortAlert(from screen: CartMainCoordinatableProtocol) {
-        let alert = alertConstructor.constructSortAlert()
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(from: alert) { [weak router, weak screen] filter in
-            filter == .cancel ? () : screen?.setupFilter(filter)
+        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] filter in
+            filter == .cancel ? () : screen?.setupSortDescriptor(filter)
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         
@@ -129,12 +134,12 @@ private extension CartCoordinator {
     
     func showCartLoadAlert(with error: Error?, from screen: CartMainCoordinatableProtocol) {
         guard let error else { return }
-        let alert = alertConstructor.constructCartLoadAlert(with: error)
-        
-        alertConstructor.addCartErrorAlertActions(from: alert) { [weak router] action in
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
+
+        alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:
-                screen.load()
+                screen.reloadCart()
                 router?.dismissToRootViewController(animated: true, completion: nil)
             case .cancel:
                 router?.dismissToRootViewController(animated: true, completion: nil)

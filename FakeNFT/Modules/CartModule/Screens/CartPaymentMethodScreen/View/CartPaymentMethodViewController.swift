@@ -20,11 +20,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     var onCancel: (() -> Void)?
     
     private let viewModel: CartPaymentMethodViewModel
-    private let dataSource: PaymentMethodDSManagerProtocol
-    
-    private enum GridItemSize: CGFloat {
-        case half = 0.5
-    }
+    private let dataSource: GenericDataSourceManagerProtocol
     
     private var cancellables = Set<AnyCancellable>()
    
@@ -91,7 +87,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }()
     
     // MARK: Init
-    init(viewModel: CartPaymentMethodViewModel, dataSource: PaymentMethodDSManagerProtocol) {
+    init(viewModel: CartPaymentMethodViewModel, dataSource: GenericDataSourceManagerProtocol) {
         self.viewModel = viewModel
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
@@ -105,10 +101,9 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupNavigationBar()
+        setupLeftNavBarItem(with: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
         setupConstraints()
         createDataSource()
-//        bind()
         viewModel.getPaymentMethods()
     }
     
@@ -122,6 +117,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func bind() {
@@ -178,7 +174,7 @@ private extension CartPaymentMethodViewController {
 extension CartPaymentMethodViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let interitemSpacing = 5.0
-        return CGSize(width: collectionView.bounds.width * GridItemSize.half.rawValue - interitemSpacing, height: 46)
+        return CGSize(width: collectionView.bounds.width / GridItemSize.twoInRow.rawValue - interitemSpacing, height: 46)
     }
 }
 
@@ -192,23 +188,6 @@ extension CartPaymentMethodViewController: UICollectionViewDelegate {
         transferPaymentMethodIdToViewModel(id: selectedId)
         
         enableProceedButton()
-    }
-}
-
-// MARK: - Ext Navigation Bar setup
-extension CartPaymentMethodViewController {
-    func setupNavigationBar() {
-        guard
-            let image = UIImage(systemName: K.Icons.chevronBackward)?
-                .withTintColor(
-                    .ypBlack ?? .red,
-                    renderingMode: .alwaysOriginal
-                )
-        else { return }
-        
-        let customLeftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(cancelTapped))
-        navigationItem.title = NSLocalizedString("Выберите способ оплаты", comment: "")
-        navigationItem.leftBarButtonItem = customLeftItem
     }
 }
 

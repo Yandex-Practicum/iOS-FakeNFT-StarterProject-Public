@@ -7,17 +7,13 @@
 
 import UIKit
 import Combine
-import Kingfisher
-
-protocol CartCellDelegate: AnyObject {
-    func didDeletedItem(with id: String?)
-}
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var cancellables = Set<AnyCancellable>()
-    weak var delegate: CartCellDelegate?
         
+    var onDelete: ((String?) -> Void)?
+    
     var viewModel: CartCellViewModel? {
         didSet {
             viewModel?.$cartRow
@@ -31,26 +27,15 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var id: String?
     
-    private lazy var nftImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
-        imageView.contentMode = .scaleAspectFit
+    private lazy var nftImageView: NftIMageView = {
+        let imageView = NftIMageView(frame: .zero)
         imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
         imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 108).isActive = true
         return imageView
     }()
     
-    private lazy var deleteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(
-            UIImage(
-                systemName: K.Icons.deleteItemFromCart)?
-                .withTintColor(
-                    .ypBlack ?? .black,
-                    renderingMode: .alwaysOriginal
-                ),
-            for: .normal)
+    private lazy var deleteButton: CustomAddOrDeleteButton = {
+        let button = CustomAddOrDeleteButton(appearance: .delete)
         button.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         return button
     }()
@@ -126,24 +111,27 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         super.prepareForReuse()
         rateStackView.removeRating()
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
-    private func updateCell(with newRow: NftSingleCollection ) {
-        nftImageView.kf.setImage(with: URL(string: newRow.images.first ?? ""))
+    private func updateCell(with newRow: SingleNft ) {
+        loadCover(from: newRow.images.first)
         nftName.text = newRow.name
-        rateStackView.addRating(newRow.rating)
+        rateStackView.updateRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"
         id = newRow.id
-        
     }
     
-    
+    private func loadCover(from stringUrl: String?) {
+        guard let url = viewModel?.createUrl(from: stringUrl) else { return }
+        nftImageView.setImage(from: url)
+    }
 }
 
 // MARK: - @objc
 @objc private extension CartTableViewCell {
     func deleteTapped() {
-        delegate?.didDeletedItem(with: id)
+        onDelete?(id)
     }
 }
 

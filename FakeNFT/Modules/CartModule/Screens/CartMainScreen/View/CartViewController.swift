@@ -13,8 +13,8 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
-    func setupFilter(_ filter: CartSortValue)
-    func load()
+    func setupSortDescriptor(_ filter: CartSortValue)
+    func reloadCart()
 }
 
 final class CartViewController: UIViewController {
@@ -102,11 +102,11 @@ final class CartViewController: UIViewController {
         return label
     }()
     
-    private var diffableDataSource: DataSourceManagerProtocol
-    private var viewModel: CartViewModel
+    private var diffableDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
+    private let viewModel: CartViewModel
     
     // MARK: Init
-    init(dataSource: DataSourceManagerProtocol, viewModel: CartViewModel) {
+    init(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable, viewModel: CartViewModel) {
         self.diffableDataSource = dataSource
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -120,28 +120,34 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupNavigationBar()
+        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
         setupConstraints()
-        createDataSource()
-        load()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        createDataSource()
         bind()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
+        cancellables.removeAll()
     }
     
     private func createDataSource() {
         diffableDataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
+        diffableDataSource.onDeleteHandler = { [weak self] id in
+            self?.onDelete?(id)
+        }
     }
     
+    // MARK: bind
     private func bind() {
         viewModel.$visibleRows
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] rows in
                 self?.updateTableView(with: rows)
                 self?.updateTotalLabels(from: rows)
@@ -156,24 +162,24 @@ final class CartViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.$requestResult.receive(on: DispatchQueue.main)
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] requestResult in
                 self?.showOrHideAnimation(for: requestResult)
             })
             .store(in: &cancellables)
-
     }
     
-    private func updateTotalLabels(from rows: [NftSingleCollection]) {
+    private func updateTotalLabels(from rows: [SingleNft]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
     }
     
-    private func updateTableView(with rows: [NftSingleCollection]) {
+    private func updateTableView(with rows: [SingleNft]) {
         diffableDataSource.updateTableView(with: rows)
     }
     
-    private func showTheNeededView(for rows: [NftSingleCollection]) {
+    private func showTheNeededView(for rows: [SingleNft]) {
         let isLoading = viewModel.requestResult != nil
         cartStackView.isHidden = rows.isEmpty
         emptyStateLabel.isHidden = !rows.isEmpty || isLoading
@@ -195,19 +201,19 @@ final class CartViewController: UIViewController {
 
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
-    func setupFilter(_ filter: CartSortValue) {
+    func setupSortDescriptor(_ filter: CartSortValue) {
         viewModel.setupSortValue(filter)
     }
     
-    func load() {
-        viewModel.load()
+    func reloadCart() {
+        viewModel.reload()
     }
 }
 
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return diffableDataSource.getRowHeight(for: tableView)
+        return diffableDataSource.getCartRowHeight(for: tableView, in: .cart)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -229,13 +235,6 @@ extension CartViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Ext CartCellDelegate
-extension CartViewController: CartCellDelegate {
-    func didDeletedItem(with id: String?) {
-        onDelete?(id)
-    }
-}
-
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
@@ -244,30 +243,6 @@ extension CartViewController: CartCellDelegate {
     
     func proceedTapped() {
         onProceed?()
-    }
-}
-
-// MARK: - Ext NavigationBar
-private extension CartViewController {
-    func setupNavigationBar() {
-        setupRightBarButton()
-        setupNavBarTitle()
-    }
-    
-    func setupRightBarButton() {
-        let rightItem = UIBarButtonItem(
-            image: UIImage(systemName: K.Icons.filterRightBarButtonIcon),
-            style: .plain,
-            target: self,
-            action: #selector(filterTapped)
-        )
-        
-        rightItem.tintColor = .ypBlack
-        navigationItem.rightBarButtonItem = rightItem
-    }
-    
-    func setupNavBarTitle() {
-        navigationController?.navigationBar.topItem?.title = nil
     }
 }
 

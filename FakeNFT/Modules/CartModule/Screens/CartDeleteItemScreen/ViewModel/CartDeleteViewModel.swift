@@ -9,12 +9,21 @@ import Foundation
 import Combine
 
 final class CartDeleteViewModel {
-    @Published private (set) var itemToDelete: NftSingleCollection?
+    @Published private (set) var itemToDelete: SingleNft?
     
-    private let dataStore: DataStorageProtocol
+    private let dataStore: CartDataStorageProtocol
     
-    init(dataStore: DataStorageProtocol) {
+    init(dataStore: CartDataStorageProtocol) {
         self.dataStore = dataStore
+    }
+    
+    func createUrl(from stringUrl: String?) -> URL? {
+        guard let stringUrl,
+              let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed)
+        else { return nil }
+        
+        return URL(string: encodedStringUrl)
     }
     
     func updateItemToDelete(with id: String?) {

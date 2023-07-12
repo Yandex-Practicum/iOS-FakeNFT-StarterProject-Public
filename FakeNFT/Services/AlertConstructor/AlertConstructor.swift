@@ -7,55 +7,48 @@
 
 import UIKit
 
-protocol AlertConstructable {
-    func constructSortAlert() -> UIAlertController
-    func constructCartLoadAlert(with error: Error) -> UIAlertController
-    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void)
-    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
+protocol Sortable {
+    var description: String { get }
+    var style: UIAlertAction.Style { get }
 }
 
-struct AlertConstructor { }
+protocol AlertConstructable {
+    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController
+    func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
+    func addSortAlertActions<T: CaseIterable & Sortable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void)
+}
 
-extension AlertConstructor: AlertConstructable {
-    func constructSortAlert() -> UIAlertController {
-        return UIAlertController(title: NSLocalizedString("Сортировка", comment: ""), message: nil, preferredStyle: .actionSheet)
+struct AlertConstructor: AlertConstructable {
+    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController {
+        return UIAlertController(
+            title: NSLocalizedString(title, comment: ""),
+            message: error?.localizedDescription,
+            preferredStyle: style)
     }
     
-    func addSortAlertActions(from alert: UIAlertController, handler: @escaping (CartSortValue) -> Void) {
-        CartSortValue.allCases.forEach { filter in
+    func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void) {
+        AlertErrorActions.allCases.forEach { alertCase in
             alert.addAction(
                 UIAlertAction(
-                    title: filter.description,
-                    style: filter.style,
-                    handler: { _ in
-                        handler(filter)
-                    }))
+                    title: alertCase.title,
+                    style: alertCase.action,
+                    handler: { action in
+                        handler(action)
+                    }
+                )
+            )
         }
     }
     
-    func constructCartLoadAlert(with error: Error) -> UIAlertController {
-        return UIAlertController(
-            title: NSLocalizedString("Что-то пошло не так!", comment: ""),
-            message: "Ошибка: \(error.localizedDescription)",
-            preferredStyle: .alert)
+    func addSortAlertActions<T: CaseIterable & Sortable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void) {
+        for value in T.allCases {
+            alert.addAction(
+                UIAlertAction(
+                    title: value.description,
+                    style: value.style,
+                    handler: { _ in
+                        completion(value)
+                    }))
+        }
     }
-    
-    func addCartErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void) {
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Попробовать снова!", comment: ""),
-                style: .default,
-                handler: { action in
-                    handler(action)
-                }))
-        
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Оставить, как есть", comment: ""),
-                style: .cancel,
-                handler: { action in
-                    handler(action)
-                }))
-    }
-    
 }

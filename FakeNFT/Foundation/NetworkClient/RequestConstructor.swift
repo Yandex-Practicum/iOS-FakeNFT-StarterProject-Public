@@ -25,9 +25,9 @@ struct RequestConstructor {
             dto: dto)
     }
     
-    static func constructNftCollectionRequest(method: HttpMethod) -> NetworkRequest {
+    static func constructNftCollectionRequest(method: HttpMethod, collectionId: String) -> NetworkRequest {
         return Request(
-            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection),
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection + collectionId),
             httpMethod: method)
     }
     
@@ -37,7 +37,24 @@ struct RequestConstructor {
             httpMethod: method)
     }
     
-    static func constructWebViewRequest() -> URLRequest? {
+    static func constructCatalogRequest(method: HttpMethod) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.collection),
+            httpMethod: method)
+    }
+    
+    static func constructCollectionAuthorRequest(for author: String) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.author + author),
+            httpMethod: .get)
+    }
+    
+    static func constructWebViewAuthorRequest(for website: String?) -> URLRequest? {
+        guard let website, let url = URL(string: website) else { return nil }
+        return URLRequest(url: url)
+    }
+    
+    static func constructWebViewLicenceRequest() -> URLRequest? {
         guard let url = URL(string: K.Links.userLicenseLink) else { return nil }
         return URLRequest(url: url)
     }
