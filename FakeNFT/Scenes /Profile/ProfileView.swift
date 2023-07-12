@@ -25,6 +25,7 @@ final class ProfileView: UIView {
         let placeholder = UIImage(named: "UserImagePlaceholder")
         let avatarImage = UIImageView(image: placeholder)
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
+        avatarImage.accessibilityIdentifier = "avatarImage"
         avatarImage.layer.cornerRadius = 35
         avatarImage.layer.masksToBounds = true
         return avatarImage
@@ -33,6 +34,7 @@ final class ProfileView: UIView {
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.accessibilityIdentifier = "nameLabel"
         nameLabel.text = ""
         nameLabel.font = UIFont.boldSystemFont(ofSize: 22)
         nameLabel.textColor = .black
@@ -42,6 +44,7 @@ final class ProfileView: UIView {
     private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.accessibilityIdentifier = "descriptionLabel"
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = 18
         descriptionLabel.attributedText = NSAttributedString(string: "", attributes: [.kern: 0.08, NSAttributedString.Key.paragraphStyle : paragraphStyle])
@@ -54,6 +57,7 @@ final class ProfileView: UIView {
     private lazy var websiteLabel: UILabel = {
         let websiteLabel = UILabel()
         websiteLabel.translatesAutoresizingMaskIntoConstraints = false
+        websiteLabel.accessibilityIdentifier = "websiteLabel"
         let tapAction = UITapGestureRecognizer(target: self, action:#selector(websiteDidTap(_:)))
         websiteLabel.isUserInteractionEnabled = true
         websiteLabel.addGestureRecognizer(tapAction)
@@ -66,6 +70,7 @@ final class ProfileView: UIView {
     private lazy var profileAssetsTable: UITableView = {
         let profileAssetsTable = UITableView()
         profileAssetsTable.translatesAutoresizingMaskIntoConstraints = false
+        profileAssetsTable.accessibilityIdentifier = "profileAssetsTable"
         profileAssetsTable.register(ProfileAssetsCell.self)
         profileAssetsTable.dataSource = self
         profileAssetsTable.delegate = self

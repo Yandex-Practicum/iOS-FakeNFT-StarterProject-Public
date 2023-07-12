@@ -92,6 +92,7 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     func setupNavBar(emptyNFTs: Bool) {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
+        backButton.accessibilityIdentifier = "backButton"
         if !emptyNFTs {
             navigationItem.title = "Избранные NFT"
         }

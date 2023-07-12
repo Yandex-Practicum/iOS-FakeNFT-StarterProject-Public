@@ -47,6 +47,7 @@ final class DevelopersViewController: UIViewController, WKUIDelegate {
     func setupView() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
+        backButton.accessibilityIdentifier = "backButton"
         
         view.backgroundColor = .white
         

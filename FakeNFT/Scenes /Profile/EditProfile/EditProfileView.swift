@@ -18,6 +18,7 @@ final class EditProfileView: UIView {
     private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.accessibilityIdentifier = "closeButton"
         closeButton.setImage(UIImage.Icons.close, for: .normal)
         closeButton.addTarget(self, action: #selector(closeDidTap), for: .touchUpInside)
         return closeButton

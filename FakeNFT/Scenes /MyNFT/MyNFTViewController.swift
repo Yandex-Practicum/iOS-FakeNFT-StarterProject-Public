@@ -132,6 +132,7 @@ final class MyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     func setupNavBar(emptyNFTs: Bool) {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = backButton
+        backButton.accessibilityIdentifier = "backButton"
         if !emptyNFTs {
             navigationItem.rightBarButtonItem = sortButton
             navigationItem.title = "Мои NFT"

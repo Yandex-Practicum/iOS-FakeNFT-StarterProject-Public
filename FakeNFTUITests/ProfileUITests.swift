@@ -19,18 +19,54 @@ final class FakeNFTUITests: XCTestCase {
         app = nil
     }
     
-    func elementsExistence() {
-        XCTAssertTrue(app.staticTexts["Имя"].exists)
-        XCTAssertTrue(app.staticTexts["Описание"].exists)
-        XCTAssertTrue(app.staticTexts["Сайт"].exists)
+    func testElementsExistence() {
+        XCTAssertTrue(app.images["avatarImage"].exists)
+        XCTAssertTrue(app.staticTexts["nameLabel"].exists)
+        XCTAssertTrue(app.staticTexts["descriptionLabel"].exists)
+        XCTAssertTrue(app.buttons["websiteLabel"].exists)
+        XCTAssertTrue(app.tables["profileAssetsTable"].exists)
         XCTAssertTrue(app.staticTexts["Мои NFT"].exists)
         XCTAssertTrue(app.staticTexts["Избранные NFT"].exists)
         XCTAssertTrue(app.staticTexts["О разработчике"].exists)
     }
     
-    func testEditButton() {
-        sleep(3)
+    func testEditButtonTap() {
         app.navigationBars.buttons.firstMatch.tap()
-        print(app.buttons["changeAvatarLabel"].exists)
+        XCTAssertTrue(app.buttons["changeAvatarLabel"].exists)
+    }
+    
+    func testWebsiteLinkTap() {
+        app.buttons["websiteLabel"].tap()
+        XCTAssertTrue(app.webViews.firstMatch.exists)
+    }
+    
+    func testMyNFTsTap() {
+        app.tables["profileAssetsTable"].staticTexts["Мои NFT"].tap()
+        XCTAssertEqual(app.navigationBars.staticTexts.firstMatch.label, "Мои NFT")
+    }
+    
+    func testFavoriteNFTsTap() {
+        app.tables["profileAssetsTable"].staticTexts["Избранные NFT"].tap()
+        XCTAssertEqual(app.navigationBars.staticTexts.firstMatch.label, "Избранные NFT")
+    }
+    
+    func testDeveloperTap() {
+        app.tables["profileAssetsTable"].staticTexts["О разработчике"].tap()
+        XCTAssertTrue(app.webViews.firstMatch.exists)
+    }
+    
+    //Если делать тесты по одному, API падает с 429 статусом
+    func testAllTogether() {
+        testElementsExistence()
+        testEditButtonTap()
+        app.buttons["closeButton"].tap()
+        testWebsiteLinkTap()
+        app.swipeDown(velocity: .fast)
+        testMyNFTsTap()
+        app.buttons["backButton"].tap()
+        testFavoriteNFTsTap()
+        app.buttons["backButton"].tap()
+        testDeveloperTap()
+        app.buttons["backButton"].tap()
     }
 }
