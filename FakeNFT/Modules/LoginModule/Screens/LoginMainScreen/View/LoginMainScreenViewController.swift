@@ -205,19 +205,22 @@ private extension LoginMainScreenViewController {
 private extension LoginMainScreenViewController {
     func updateLoginResult(_ result: RequestResult?) {
         guard let result else { return }
-        disableActionButtonWhileLoading(result)
+        disableEnterButtonWhileLoading(result)
         stopLoadingAnimation()
         showLoadingAnimation(for: result)
         changeCredentialsErrorState(for: result)
     }
     
-    func disableActionButtonWhileLoading(_ result: RequestResult) {
-        if result == .loading {
-            enterButton.setAppearance(for: .disabled)
-        } else {
+    func disableEnterButtonWhileLoading(_ result: RequestResult) {
+        switch result {
+        case .success:
+            break
+        case .failure:
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.enterButton.setAppearance(for: .confirm)
             }
+        case .loading:
+            enterButton.setAppearance(for: .disabled)
         }
     }
     
