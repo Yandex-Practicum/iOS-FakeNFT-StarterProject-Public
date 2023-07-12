@@ -456,7 +456,7 @@
 			children = (
 				3792C1B92A5D7F1B004E443B /* FlowCoordinator */,
 				3789F9032A5C373A00C975E2 /* LoginModule */,
-				374EB0462A3E10D400D57F36 /* TabBarModule (Main) */,
+				374EB0462A3E10D400D57F36 /* TabBarModule */,
 				374EB0482A3E1E3500D57F36 /* CatalogModule */,
 				374EB03E2A3E028D00D57F36 /* CartModule */,
 				372EEF9C2A460AD7008FDB16 /* WebViewScreen */,
@@ -481,14 +481,14 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		374EB0462A3E10D400D57F36 /* TabBarModule (Main) */ = {
+		374EB0462A3E10D400D57F36 /* TabBarModule */ = {
 			isa = PBXGroup;
 			children = (
 				374EB0422A3E030400D57F36 /* TabBarCoordinator.swift */,
 				374EB0442A3E033800D57F36 /* MainTabBarController.swift */,
 				374EB0372A3DFEB000D57F36 /* TabBarItem.swift */,
 			);
-			path = "TabBarModule (Main)";
+			path = TabBarModule;
 			sourceTree = "<group>";
 		};
 		374EB0482A3E1E3500D57F36 /* CatalogModule */ = {

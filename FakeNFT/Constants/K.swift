@@ -23,6 +23,7 @@ struct K {
         static let xmark = "xmark"
         static let circleDotted = "circle.dotted"
         static let heart = "heart"
+        static let placeholder = "placeholder"
     }
     
     struct Titles {
