@@ -166,6 +166,8 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         super.viewWillDisappear(animated)
         cancellables.forEach({ $0.cancel() })
         cancellables.removeAll()
+        viewModel.clearRequest()
+        hideCredentialsErrorState()
     }
     
     // MARK: bind

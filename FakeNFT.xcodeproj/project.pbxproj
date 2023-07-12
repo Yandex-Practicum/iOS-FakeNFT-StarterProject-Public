@@ -446,7 +446,6 @@
 			children = (
 				374EB02B2A3DFBCF00D57F36 /* MainCoordinator.swift */,
 				374EB02D2A3DFBE500D57F36 /* Router.swift */,
-				374EB0542A3E231900D57F36 /* Factories */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -869,6 +868,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				374EB0542A3E231900D57F36 /* Factories */,
 				3753785E2A5E938A009A5598 /* KeyChainManager */,
 				372EEF7C2A447115008FDB16 /* DataStore */,
 				3733F2142A5324DD00ED681C /* DataSource */,

@@ -8,7 +8,6 @@
 import Foundation
 
 protocol SecureDataProtocol {
-//    func clearAllKeychainData()
     func checkIfUserExists(username: String) -> Bool
     func checkCredentials(username: String, password: String) -> Bool
     func saveValue(_ value: String, forKey key: String) -> Bool
@@ -25,17 +24,6 @@ final class KeyChainManager {
 
 // MARK: - Ext SecureDataProtocol
 extension KeyChainManager: SecureDataProtocol {
-//    func clearAllKeychainData() {
-//        let query: [CFString: Any] = [
-//            kSecClass: kSecClassGenericPassword,
-//        ]
-//        
-//        let status = SecItemDelete(query as CFDictionary)
-//        if status != errSecSuccess {
-//            // Handle the error, if any
-//            print("Error deleting Keychain data: \(status)")
-//        }
-//    }
     
     func checkIfUserExists(username: String) -> Bool {
         // Create a dictionary of attributes to search for.
@@ -53,10 +41,8 @@ extension KeyChainManager: SecureDataProtocol {
     
     func checkCredentials(username: String, password: String) -> Bool {
             if let savedPassword = getValue(forKey: username), savedPassword == password {
-                // Username and password are correct
                 return true
             } else {
-                // Username or password is incorrect
                 return false
             }
         }

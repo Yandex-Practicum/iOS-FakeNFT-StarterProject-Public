@@ -20,14 +20,7 @@ final class LoginMainScreenViewModel {
     init(networkClient: NetworkClient, keyChainManager: SecureDataProtocol) {
         self.networkClient = networkClient
         self.keyChainManager = keyChainManager
-        
-//        clear()
     }
-    
-//    func clear() {
-//        keyChainManager.clearAllKeychainData()
-//        print("Cleared")
-//    }
     
     func login(with userCredentials: LoginCredentials) {
         guard
@@ -44,6 +37,10 @@ final class LoginMainScreenViewModel {
     
     func register(with userCredentials: LoginCredentials) {
         changeActionTypeOrRegister(with: userCredentials)
+    }
+    
+    func clearRequest() {
+        requestResult = nil
     }
 }
 
