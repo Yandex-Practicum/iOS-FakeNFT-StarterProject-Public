@@ -98,10 +98,6 @@ private extension LoginMainScreenViewModel {
     func userExists(_ name: String) -> Bool {
         keyChainManager.checkIfUserExists(username: name)
     }
-    
-    func userSaved(name: String, password: String) -> Bool {
-        keyChainManager.saveValue(password, forKey: name)
-    }
 }
 
 // MARK: - Login/register result
