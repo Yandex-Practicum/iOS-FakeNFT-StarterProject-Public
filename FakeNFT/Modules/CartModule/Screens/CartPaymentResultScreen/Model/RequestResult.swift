@@ -7,12 +7,6 @@
 
 import UIKit
 
-struct PaymentResultResponse: Decodable {
-    let success: Bool
-    let orderId: String
-    let id: String
-}
-
 enum RequestResult {
     case success, failure, loading
     
@@ -46,6 +40,28 @@ enum RequestResult {
             return UIImage(systemName: K.Icons.xmark)
         case .loading:
             return UIImage(systemName: K.Icons.circleDotted)
+        }
+    }
+    
+    var passwordResetTextColor: UIColor {
+        switch self {
+        case .success:
+            return .universalGreen
+        case .failure:
+            return .universalRed
+        case .loading:
+            return .ypBlack ?? .universalGreen
+        }
+    }
+    
+    var passwordResetResultMessage: String? {
+        switch self {
+        case .success:
+            return K.PasswordResetMessages.passwordResetSuccess
+        case .failure:
+            return K.PasswordResetMessages.passwordResetFailure
+        case .loading:
+            return nil
         }
     }
 }

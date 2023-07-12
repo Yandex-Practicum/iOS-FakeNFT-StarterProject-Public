@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CoordinatorProtocol: AnyObject {
+    var finishFlow: (() -> Void)? { get set }
     func start()
 }
 

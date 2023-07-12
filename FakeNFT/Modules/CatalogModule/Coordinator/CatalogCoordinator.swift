@@ -7,7 +7,8 @@
 
 import Foundation
 
-final class CatalogCoordinator: MainCoordinator, CoordinatorProtocol {
+final class CatalogCoordinator: CoordinatorProtocol {
+    var finishFlow: (() -> Void)?
     
     private var factory: CatalogModuleFactoryProtocol
     private var router: Routable
@@ -45,7 +46,7 @@ private extension CatalogCoordinator {
     func createScreen() {
         let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         
-        let navController = navigationControllerFactory.makeNavController(.catalog, rootViewController: catalogScreen) // навигационный стек
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .catalog, rootViewController: catalogScreen) 
         
         catalogScreen.onFilter = { [weak self, weak catalogScreen] in
             guard let self, let catalogScreen else { return }
@@ -75,13 +76,13 @@ private extension CatalogCoordinator {
             self?.showWebViewScreen(with: website)
         }
         
-        router.pushViewController(collectionScreen, animated: true)
+        router.pushViewControllerFromTabbar(collectionScreen, animated: true)
     }
     
     func showWebViewScreen(with website: String) {
         let webView = factory.makeCatalogWebViewScreenView(with: website)
         
-        router.pushViewController(webView, animated: true)
+        router.pushViewControllerFromTabbar(webView, animated: true)
     }
 }
 

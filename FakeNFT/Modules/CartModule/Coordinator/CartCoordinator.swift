@@ -7,7 +7,8 @@
 
 import Foundation
 
-final class CartCoordinator: MainCoordinator, CoordinatorProtocol {
+final class CartCoordinator: CoordinatorProtocol {
+    var finishFlow: (() -> Void)?
     
     private var factory: CartModuleFactoryProtocol
     private var router: Routable
@@ -44,7 +45,7 @@ private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
         let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
-        let navController = navigationControllerFactory.makeNavController(.cart, rootViewController: cartScreen)
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
             self?.showSortAlert(from: cartScreen)
@@ -99,7 +100,7 @@ private extension CartCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
-        router.pushViewController(paymentMethodScreen, animated: true)
+        router.pushViewControllerFromTabbar(paymentMethodScreen, animated: true)
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
@@ -109,13 +110,13 @@ private extension CartCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
-        router.pushViewController(paymentResultScreen, animated: true)
+        router.pushViewControllerFromTabbar(paymentResultScreen, animated: true)
     }
     
     func showWebViewScreen() {
         let webView = factory.makeCartWebViewScreenView()
         
-        router.pushViewController(webView, animated: true)
+        router.pushViewControllerFromTabbar(webView, animated: true)
     }
 }
 

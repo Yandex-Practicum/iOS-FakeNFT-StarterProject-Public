@@ -17,7 +17,8 @@ protocol CatalogModuleFactoryProtocol {
 }
 
 protocol CartModuleFactoryProtocol {
-    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable, dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
+                            dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
                                          dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
@@ -25,7 +26,28 @@ protocol CartModuleFactoryProtocol {
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
 
+protocol LoginModuleFactoryProtocol {
+    func makeLoginScreenView(keyChainManager: SecureDataProtocol) -> Presentable & LoginMainCoordinatableProtocol
+    func makeResetPasswordScreenView(keyChainManager: SecureDataProtocol) -> Presentable & ResetPasswordCoordinatable
+}
+
 final class ModulesFactory {}
+
+// MARK: - Ext LoginModuleFactoryProtocol
+extension ModulesFactory: LoginModuleFactoryProtocol {
+    func makeLoginScreenView(keyChainManager: SecureDataProtocol) -> Presentable & LoginMainCoordinatableProtocol {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = LoginMainScreenViewModel(networkClient: networkClient, keyChainManager: keyChainManager)
+        let viewController = LoginMainScreenViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    func makeResetPasswordScreenView(keyChainManager: SecureDataProtocol) -> Presentable & ResetPasswordCoordinatable {
+        let viewModel = ResetPasswordViewModel(keyChainManager: keyChainManager)
+        let viewController = ResetPasswordViewController(viewModel: viewModel)
+        return viewController
+    }
+}
 
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {

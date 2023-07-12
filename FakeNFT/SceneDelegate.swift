@@ -10,7 +10,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let factory = CoordinatorFactory()
     lazy private var router: Routable = Router(routerDelegate: self)
-    lazy private var coordinator = factory.makeTabBarCoordinator(with: router)
+    lazy private var coordinator = factory.makeFlowCoordinator(with: router)
     
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }

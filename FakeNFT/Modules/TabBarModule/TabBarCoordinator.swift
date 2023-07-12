@@ -8,6 +8,7 @@
 import Foundation
 
 final class TabBarCoordinator: MainCoordinator, CoordinatorProtocol {
+    var finishFlow: (() -> Void)?
     
     private var factory: CoordinatorFactoryProtocol
     private var router: Routable
