@@ -27,18 +27,24 @@ protocol CartModuleFactoryProtocol {
 }
 
 protocol LoginModuleFactoryProtocol {
-    func makeLoginScreenView() -> Presentable & LoginMainCoordinatableProtocol
+    func makeLoginScreenView(keyChainManager: SecureDataProtocol) -> Presentable & LoginMainCoordinatableProtocol
+    func makeResetPasswordScreenView(keyChainManager: SecureDataProtocol) -> Presentable & ResetPasswordCoordinatable
 }
 
 final class ModulesFactory {}
 
 // MARK: - Ext LoginModuleFactoryProtocol
 extension ModulesFactory: LoginModuleFactoryProtocol {
-    func makeLoginScreenView() -> Presentable & LoginMainCoordinatableProtocol {
-        let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
+    func makeLoginScreenView(keyChainManager: SecureDataProtocol) -> Presentable & LoginMainCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = LoginMainScreenViewModel(networkClient: networkClient, keyChainManager: keyChainManager)
         let viewController = LoginMainScreenViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    func makeResetPasswordScreenView(keyChainManager: SecureDataProtocol) -> Presentable & ResetPasswordCoordinatable {
+        let viewModel = ResetPasswordViewModel(keyChainManager: keyChainManager)
+        let viewController = ResetPasswordViewController(viewModel: viewModel)
         return viewController
     }
 }

@@ -44,6 +44,9 @@
 		3752302E2A419EC100DE6F73 /* UIViewController + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */; };
 		3753785D2A5E9366009A5598 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753785C2A5E9366009A5598 /* ActionType.swift */; };
 		375378602A5EA1B3009A5598 /* LoginErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753785F2A5EA1B3009A5598 /* LoginErrors.swift */; };
+		375378622A5ECD09009A5598 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375378612A5ECD09009A5598 /* ResetPasswordViewController.swift */; };
+		375378642A5ECDDD009A5598 /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375378632A5ECDDD009A5598 /* ResetPasswordViewModel.swift */; };
+		375378682A5ED57E009A5598 /* PaymentResultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375378672A5ED57E009A5598 /* PaymentResultResponse.swift */; };
 		375859952A4B4C88007AF92B /* CustomAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375859942A4B4C88007AF92B /* CustomAnimatedView.swift */; };
 		3774686C2A47414300E7EEEE /* CartPaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */; };
 		3774686E2A47415000E7EEEE /* CartPaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */; };
@@ -154,6 +157,9 @@
 		3752302D2A419EC100DE6F73 /* UIViewController + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext.swift"; sourceTree = "<group>"; };
 		3753785C2A5E9366009A5598 /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		3753785F2A5EA1B3009A5598 /* LoginErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginErrors.swift; sourceTree = "<group>"; };
+		375378612A5ECD09009A5598 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		375378632A5ECDDD009A5598 /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
+		375378672A5ED57E009A5598 /* PaymentResultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultResponse.swift; sourceTree = "<group>"; };
 		375859942A4B4C88007AF92B /* CustomAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedView.swift; sourceTree = "<group>"; };
 		3774686B2A47414300E7EEEE /* CartPaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewController.swift; sourceTree = "<group>"; };
 		3774686D2A47415000E7EEEE /* CartPaymentResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentResultViewModel.swift; sourceTree = "<group>"; };
@@ -683,6 +689,8 @@
 		3792C1C82A5DDFBC004E443B /* PasswordResetScreen */ = {
 			isa = PBXGroup;
 			children = (
+				375378612A5ECD09009A5598 /* ResetPasswordViewController.swift */,
+				375378632A5ECDDD009A5598 /* ResetPasswordViewModel.swift */,
 			);
 			path = PasswordResetScreen;
 			sourceTree = "<group>";
@@ -908,6 +916,7 @@
 				372EEF902A45D152008FDB16 /* PaymentMethodRow.swift */,
 				379033AB2A5988C000BBE812 /* Author.swift */,
 				3792C1BF2A5DAF67004E443B /* Profile.swift */,
+				375378672A5ED57E009A5598 /* PaymentResultResponse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1082,6 +1091,7 @@
 			files = (
 				37E0EC4F2A48DA5900F17FC7 /* RequestConstructor.swift in Sources */,
 				374EB03C2A3DFFD400D57F36 /* K.swift in Sources */,
+				375378622A5ECD09009A5598 /* ResetPasswordViewController.swift in Sources */,
 				3792C1BB2A5D7F2D004E443B /* FlowCoordinator.swift in Sources */,
 				3792C1C62A5DB5A4004E443B /* LoginCredentials.swift in Sources */,
 				3733F2272A54A53500ED681C /* GridItemSize.swift in Sources */,
@@ -1112,6 +1122,8 @@
 				377DF5F02A3FA14900090DCD /* CustomLabel.swift in Sources */,
 				3789F90A2A5C3BC700C975E2 /* LoginMainScreenViewController.swift in Sources */,
 				374EB0352A3DFE5B00D57F36 /* NavigationControllerFactory.swift in Sources */,
+				375378682A5ED57E009A5598 /* PaymentResultResponse.swift in Sources */,
+				375378642A5ECDDD009A5598 /* ResetPasswordViewModel.swift in Sources */,
 				372EEF932A45D162008FDB16 /* CollectionDiffableDataSourceSection.swift in Sources */,
 				3777816E2A5B4490007F4C28 /* GenericTableViewDataSourceManager.swift in Sources */,
 				375378602A5EA1B3009A5598 /* LoginErrors.swift in Sources */,

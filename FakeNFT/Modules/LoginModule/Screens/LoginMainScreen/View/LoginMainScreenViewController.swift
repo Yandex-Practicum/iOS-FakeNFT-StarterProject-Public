@@ -10,7 +10,6 @@ import Combine
 
 protocol LoginMainCoordinatableProtocol {
     var onEnter: (() -> Void)? { get set }
-    var onRegister: (() -> Void)? { get set }
     var onForgottenPassword: (() -> Void)? { get set }
     var onDemo: (() -> Void)? { get set }
 }
@@ -18,7 +17,6 @@ protocol LoginMainCoordinatableProtocol {
 final class LoginMainScreenViewController: UIViewController & LoginMainCoordinatableProtocol {
 
     var onEnter: (() -> Void)?
-    var onRegister: (() -> Void)?
     var onForgottenPassword: (() -> Void)?
     var onDemo: (() -> Void)?
     
@@ -33,12 +31,12 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     }()
     
     private lazy var emailTextField: LoginTextField = {
-        let textField = LoginTextField(title: K.Titles.emailTextFieldTitle)
+        let textField = LoginTextField(labelPlaceholder: K.Titles.emailTextFieldTitle)
         return textField
     }()
     
     private lazy var passwordTextField: LoginTextField = {
-        let textField = LoginTextField(title: K.Titles.passwordTextFieldTitle)
+        let textField = LoginTextField(labelPlaceholder: K.Titles.passwordTextFieldTitle)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -63,10 +61,18 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     
     private lazy var actionView: UIView = {
         let view = UIView()
-        view.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        view.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        view.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
         view.addSubview(errorLabel)
+        view.addSubview(loadingView)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.frame = view.bounds
+        
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        loadingView.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         return view
     }()
@@ -125,7 +131,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = view.frame.height * 0.075
+        stackView.spacing = view.frame.height * K.Spacing.loginBaseSpacingCoefficient
         stackView.addArrangedSubview(loginLabel)
         stackView.addArrangedSubview(textFieldStackView)
         stackView.addArrangedSubview(enterAndForgotStackView)
@@ -184,11 +190,8 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
             }
             .store(in: &cancellables)
     }
-}
-
-// MARK: - Ext actions
-private extension LoginMainScreenViewController {
-    func createCredentials() -> LoginCredentials {
+    
+    private func createCredentials() -> LoginCredentials {
         LoginCredentials(email: emailTextField.text, password: passwordTextField.text)
     }
 }
@@ -209,6 +212,7 @@ private extension LoginMainScreenViewController {
         stopLoadingAnimation()
         showLoadingAnimation(for: result)
         changeCredentialsErrorState(for: result)
+        proceedToCatalog(result)
     }
     
     func disableEnterButtonWhileLoading(_ result: RequestResult) {
@@ -242,6 +246,14 @@ private extension LoginMainScreenViewController {
         result == .failure ? showCredentialsErrorState() : hideCredentialsErrorState()
     }
     
+    func proceedToCatalog(_ result: RequestResult?) {
+        guard let result else { return }
+        if result == .success { onEnter?() }
+    }
+}
+
+// MARK: - error state
+private extension LoginMainScreenViewController {
     func showCredentialsErrorState() {
         setErrorState(with: 1)
         errorLabel.animateLabelAppearance()
@@ -316,7 +328,6 @@ private extension LoginMainScreenViewController {
 private extension LoginMainScreenViewController {
     func setupConstraints() {
         setupEnterStackView()
-        setupLoadingView()
     }
     
     func setupEnterStackView() {
@@ -328,18 +339,6 @@ private extension LoginMainScreenViewController {
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -26)
-        ])
-    }
-    
-    func setupLoadingView() {
-        view.addSubview(loadingView)
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            loadingView.heightAnchor.constraint(equalToConstant: 20),
-            loadingView.widthAnchor.constraint(equalToConstant: 20),
-            loadingView.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
-            loadingView.centerYAnchor.constraint(equalTo: mainStackView.centerYAnchor, constant: -20)
         ])
     }
 }

@@ -100,7 +100,7 @@ private extension CartCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
-        router.pushViewController(paymentMethodScreen, animated: true)
+        router.pushViewControllerFromTabbar(paymentMethodScreen, animated: true)
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
@@ -110,13 +110,13 @@ private extension CartCoordinator {
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
-        router.pushViewController(paymentResultScreen, animated: true)
+        router.pushViewControllerFromTabbar(paymentResultScreen, animated: true)
     }
     
     func showWebViewScreen() {
         let webView = factory.makeCartWebViewScreenView()
         
-        router.pushViewController(webView, animated: true)
+        router.pushViewControllerFromTabbar(webView, animated: true)
     }
 }
 

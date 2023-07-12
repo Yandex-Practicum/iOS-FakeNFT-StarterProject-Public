@@ -39,7 +39,6 @@ struct K {
         static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
         static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
         static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
-//        static let loginErrorLabelTitle = NSLocalizedString("Введен неверный логин или пароль", comment: "")
     }
     
     struct AlertTitles {
@@ -70,5 +69,14 @@ struct K {
         static let userExists = NSLocalizedString("Пользователь с таким адресом уже зарегистрирован", comment: "")
         static let textFieldEmpty = NSLocalizedString("Одно из полей не заполнено", comment: "")
         static let internalError = NSLocalizedString("Внутренняя ошибка, попробуйте позже", comment: "")
+    }
+    
+    struct PasswordResetMessages {
+        static let passwordResetSuccess = NSLocalizedString("Инструкции по восстановлению пароля высланы на указанный email", comment: "")
+        static let passwordResetFailure = NSLocalizedString("Пользователь не найден", comment: "")
+    }
+    
+    struct Spacing {
+        static let loginBaseSpacingCoefficient = 0.075
     }
 }

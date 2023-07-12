@@ -14,6 +14,7 @@ class CustomLabel: UILabel {
         textColor = color
         font = UIFont.systemFont(ofSize: size, weight: weight)
         textAlignment = alignment ?? .left
+//        adjustsFontSizeToFitWidth = true
     }
     
     required init?(coder: NSCoder) {

@@ -16,12 +16,12 @@ class LoginTextField: UITextField {
             right: 16
         )
 
-    init(title: String) {
+    init(labelPlaceholder: String) {
         super.init(frame: .zero)
         backgroundColor = .ypLightGrey
         layer.cornerRadius = 12
         heightAnchor.constraint(equalToConstant: 46).isActive = true
-        placeholder = title
+        placeholder = labelPlaceholder
         clearButtonMode = .whileEditing
         layer.borderColor = UIColor.universalRed.cgColor
     }

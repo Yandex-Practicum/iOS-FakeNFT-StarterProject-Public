@@ -46,7 +46,7 @@ private extension CatalogCoordinator {
     func createScreen() {
         let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
         
-        let navController = navigationControllerFactory.makeTabNavigationController(tab: .catalog, rootViewController: catalogScreen) // навигационный стек
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .catalog, rootViewController: catalogScreen) 
         
         catalogScreen.onFilter = { [weak self, weak catalogScreen] in
             guard let self, let catalogScreen else { return }
@@ -76,13 +76,13 @@ private extension CatalogCoordinator {
             self?.showWebViewScreen(with: website)
         }
         
-        router.pushViewController(collectionScreen, animated: true)
+        router.pushViewControllerFromTabbar(collectionScreen, animated: true)
     }
     
     func showWebViewScreen(with website: String) {
         let webView = factory.makeCatalogWebViewScreenView(with: website)
         
-        router.pushViewController(webView, animated: true)
+        router.pushViewControllerFromTabbar(webView, animated: true)
     }
 }
 

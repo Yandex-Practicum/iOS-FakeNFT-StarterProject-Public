@@ -22,6 +22,7 @@ final class CoordinatorFactory  {
     private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable = TableViewDataSource()
     private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable = CollectionViewDataSourceManager()
+    private let keyChainManager: SecureDataProtocol = KeyChainManager(service: K.KeyChainServices.profileLogin)
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -34,7 +35,9 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             modulesFactory: modulesFactory,
             router: router,
             navigationControllerFactory: navigationControllerFactory,
-            alertConstructor: alertConstructor)
+            alertConstructor: alertConstructor,
+            keychainManager: keyChainManager
+        )
     }
     
     func makeTabBarCoordinator(with router: Routable) -> CoordinatorProtocol {
@@ -49,7 +52,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             alertConstructor: alertConstructor,
             dataStore: dataStore,
             tableViewDataSource: tableViewDataSource,
-            collectionViewDataSource: collectionViewDataSource)
+            collectionViewDataSource: collectionViewDataSource
+        )
     }
     
     func makeCartCoordinator(with router: Routable) -> CoordinatorProtocol {
