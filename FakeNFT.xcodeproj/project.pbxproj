@@ -115,7 +115,7 @@
 		027802312A5700660067582B /* WebViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewFactory.swift; sourceTree = "<group>"; };
 		027802342A5701700067582B /* NFtStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFtStorageService.swift; sourceTree = "<group>"; };
 		027802362A5701800067582B /* NFTStorageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTStorageServiceImpl.swift; sourceTree = "<group>"; };
-		02A0CC142A40C97800AF0EA0 /* catalog_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = catalog_plan.md; path = ../../Downloads/catalog_plan.md; sourceTree = "<group>"; };
+		02A0CC142A40C97800AF0EA0 /* catalog_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = catalog_plan.md; sourceTree = "<group>"; };
 		02F9E2F22A5C112A00823379 /* NFTCollectionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionNetworkService.swift; sourceTree = "<group>"; };
 		02F9E2F42A5C113C00823379 /* NFTNerworkServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTNerworkServiceImpl.swift; sourceTree = "<group>"; };
 		02F9E2F62A5C114F00823379 /* NFTCollectionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionRequest.swift; sourceTree = "<group>"; };
