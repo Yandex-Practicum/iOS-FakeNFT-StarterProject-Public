@@ -12,6 +12,7 @@ class NftIMageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        layer.masksToBounds = true
         layer.cornerRadius = 12
         contentMode = .scaleAspectFit
     }

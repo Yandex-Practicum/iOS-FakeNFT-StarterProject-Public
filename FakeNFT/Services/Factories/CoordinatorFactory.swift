@@ -9,6 +9,7 @@ import Foundation
 
 protocol CoordinatorFactoryProtocol {
     func makeFlowCoordinator(with router: Routable) -> CoordinatorProtocol
+    func makeOnboardingCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeLoginCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeTabBarCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeCatalogCoordinator(with router: Routable) -> CoordinatorProtocol
@@ -16,18 +17,25 @@ protocol CoordinatorFactoryProtocol {
 }
 
 final class CoordinatorFactory  {
-    private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol & LoginModuleFactoryProtocol = ModulesFactory()
+    private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol & LoginModuleFactoryProtocol & OnboardingModuleFactoryProtocol = ModulesFactory()
     private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
     private let alertConstructor: AlertConstructable = AlertConstructor()
     private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable = TableViewDataSource()
     private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable = CollectionViewDataSourceManager()
     private let keyChainManager: SecureDataProtocol = KeyChainManager(service: K.KeyChainServices.profileLogin)
+    private let firstEnterChecker: FirstEnterCheckableProtocol = OnboardingFirstEnterChecker(onboardingFirstEnterStorage: OnboardingFirstEnterStorage())
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
     func makeFlowCoordinator(with router: Routable) -> CoordinatorProtocol {
-        FlowCoordinator(factory: self, router: router)
+        FlowCoordinator(factory: self, router: router, firstEnterChecker: firstEnterChecker)
+    }
+    
+    func makeOnboardingCoordinator(with router: Routable) -> CoordinatorProtocol {
+        OnboardingCoordinator(
+            modulesFactory: modulesFactory,
+            router: router)
     }
     
     func makeLoginCoordinator(with router: Routable) -> CoordinatorProtocol {
