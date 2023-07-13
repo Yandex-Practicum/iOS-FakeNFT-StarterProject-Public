@@ -10,6 +10,7 @@ import Foundation
 enum NFTListState {
     case loading
     case loaded([NFTCollectionModel])
+    case error
 }
 
 protocol NFTListViewModel {
@@ -18,6 +19,7 @@ protocol NFTListViewModel {
     func viewDidLoad()
     func cellSelected(_ index: IndexPath)
     func sortItems(by category: SortingCategory)
+    func reload()
 }
 
 final class NFTListViewModelImpl: NFTListViewModel {
@@ -51,6 +53,10 @@ final class NFTListViewModelImpl: NFTListViewModel {
         loadItems()
     }
 
+    func reload() {
+        loadItems()
+    }
+
     func sortItems(by category: SortingCategory) {
         if case let .loaded(nftCollectionItems) = state.value {
             let sortedItems = nftCollectionItems
@@ -71,35 +77,37 @@ final class NFTListViewModelImpl: NFTListViewModel {
         state.value = .loading
         var nftCollectionItems: [NFTCollectionModel] = []
         var nftIndividualItems: [NFTIndividualModel] = []
+        var state: NFTListState = .loading
         let group = DispatchGroup()
 
         group.enter()
-        nftNetworkService.getCollectionNFT { result in
+        nftNetworkService.getCollectionNFT { [weak self] result in
             switch result {
             case let .success(data):
                 nftCollectionItems = data
+                state = .loaded(nftCollectionItems)
                 group.leave()
-            case let .failure(error):
-                print(error)
+            case .failure:
+                state = .error
                 group.leave()
             }
         }
 
         group.enter()
-        nftNetworkService.getIndividualNFT { result in
+        nftNetworkService.getIndividualNFT { [weak self] result in
             switch result {
             case let .success(data):
-                nftIndividualItems = data
+                state = .loaded(nftCollectionItems)
+                self?.nftIndividualItems = data
                 group.leave()
-            case let .failure(error):
-                print(error)
+            case .failure:
+                state = .error
                 group.leave()
             }
         }
 
         group.notify(queue: DispatchQueue.global()) { [weak self] in
-            self?.state.value = .loaded(nftCollectionItems)
-            self?.nftIndividualItems = nftIndividualItems
+            self?.state.value = state
         }
     }
 }

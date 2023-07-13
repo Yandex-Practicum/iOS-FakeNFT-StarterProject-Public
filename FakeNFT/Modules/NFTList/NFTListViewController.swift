@@ -10,9 +10,15 @@ import UIKit
 final class NFTListViewController: UIViewController {
 
     private let viewModel: NFTListViewModel
-    private lazy var container = NFTListContainerView { [weak self] indexPath in
+    private lazy var container = NFTListContainerView { [weak self] event in
         guard let self else { return }
-        self.viewModel.cellSelected(indexPath)
+        switch event {
+
+        case let .cellSelected(index):
+            self.viewModel.cellSelected(index)
+        case .reload:
+            self.viewModel.reload()
+        }
     }
 
     init(viewModel: NFTListViewModel) {
@@ -39,11 +45,19 @@ final class NFTListViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.container.configure(configuration: .loading)
                     self?.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = .clear
+                    self?.tabBarController?.tabBar.isHidden = false
                 }
             case let .loaded(items):
                 DispatchQueue.main.async {
                     self?.container.configure(configuration: .loaded(items))
                     self?.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = .black
+                    self?.tabBarController?.tabBar.isHidden = false
+                }
+            case .error:
+                DispatchQueue.main.async {
+                    self?.container.configure(configuration: .error)
+                    self?.navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = .clear
+                    self?.tabBarController?.tabBar.isHidden = true
                 }
             }
         }
@@ -99,4 +113,3 @@ private extension NFTListViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
-

@@ -21,8 +21,9 @@ final class NFTDetailsCollectionViewCell: UICollectionViewCell {
     private let stackViewRating: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fill
+        stackView.alignment = .leading
+//        stackView.distribution = .fill
+        stackView.spacing = 2
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -149,6 +150,7 @@ final class NFTDetailsCollectionViewCell: UICollectionViewCell {
         ])
 
         stackView.addArrangedSubview(image)
+        stackView.setCustomSpacing(8, after: image)
         stackView.addArrangedSubview(stackViewRating)
         stackViewRating.isLayoutMarginsRelativeArrangement = true
         stackViewRating.layoutMargins = .init(top: 0, left: 0, bottom: 0, right: 40)
@@ -189,6 +191,11 @@ extension NFTDetailsCollectionViewCell {
         let starImage = UIImage(systemName: "star.fill", withConfiguration: symbolConfiguration)
         let starImageFilled = UIImage(systemName: "star.fill", withConfiguration: symbolConfiguration)
 
+        stackViewRating.arrangedSubviews.forEach { view in
+            view.removeFromSuperview()
+            stackViewRating.removeArrangedSubview(view)
+        }
+
         for index in 1...5 {
             let imageViewFilled = UIImageView(image: starImageFilled)
             imageViewFilled.contentMode = .scaleAspectFit
@@ -215,4 +222,3 @@ extension NFTDetailsCollectionViewCell {
         case tapOnBasket
     }
 }
-
