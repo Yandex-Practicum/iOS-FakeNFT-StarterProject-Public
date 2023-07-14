@@ -24,9 +24,9 @@ extension CustomAddOrDeleteButton {
     func setAppearance(for appearance: Appearance) {
         switch appearance {
         case .add:
-            setImage(UIImage(named: K.Icons.addToCart), for: .normal)
+            setImage(UIImage(named: K.Icons.addToCart)?.withTintColor(.ypBlack ?? .black, renderingMode: .alwaysOriginal), for: .normal)
         case .delete:
-            setImage(UIImage(named: K.Icons.deleteFromCart), for: .normal)
+            setImage(UIImage(named: K.Icons.deleteFromCart)?.withTintColor(.ypBlack ?? .black, renderingMode: .alwaysOriginal), for: .normal)
         }
     }
     
