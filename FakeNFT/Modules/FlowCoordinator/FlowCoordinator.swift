@@ -22,7 +22,6 @@ final class FlowCoordinator: MainCoordinator, CoordinatorProtocol {
     
     func start() {
         firstEnterChecker.shouldShowOnboarding() ? createOnboardingFlow() : createLoginFlow()
-//        createLoginFlow()
     }
 }
 
@@ -33,6 +32,7 @@ private extension FlowCoordinator {
         addViewController(coordinator)
         
         coordinator.finishFlow = { [weak self] in
+            self?.firstEnterChecker.didCompleteOnboarding()
             self?.createLoginFlow()
         }
         

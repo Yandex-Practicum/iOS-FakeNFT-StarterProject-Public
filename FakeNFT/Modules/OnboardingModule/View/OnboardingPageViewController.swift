@@ -84,11 +84,6 @@ private extension OnboardingPageViewController {
 
 // MARK: - Ext @objc
 @objc private extension OnboardingPageViewController {
-//    func changeViewControllerOnTap(_ sender: UIPageControl) {
-//        let selectedPage = sender.currentPage < pages.count - 1 ? sender.currentPage + 1 : sender.currentPage - 1
-//        self.setViewControllers([pages[selectedPage]], direction: .forward, animated: true, completion: nil)
-//    }
-    
     func changeViewControllerOnTap(_ sender: UIButton) {
         let selectedPage = sender.tag
         self.setViewControllers([pages[selectedPage]], direction: .forward, animated: true)

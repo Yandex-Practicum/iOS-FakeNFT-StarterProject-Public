@@ -34,6 +34,5 @@ private extension OnboardingCoordinator {
             self?.finishFlow?()
         }
         router.setupRootViewController(viewController: onboardingScreenView)
-//        router.presentViewController(onboardingScreenView, animated: true, presentationStyle: .fullScreen)
     }
 }
