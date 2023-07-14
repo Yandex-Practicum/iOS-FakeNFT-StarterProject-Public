@@ -32,6 +32,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = .ypWhite
         collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: CatalogCollectionViewCell.defaultReuseIdentifier)
         collectionView.delegate = self
         return collectionView
@@ -68,6 +69,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     
     private lazy var collectionDescriptionTextView: UITextView = {
         let textView = UITextView()
+        textView.backgroundColor = .clear
         textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
         textView.isScrollEnabled = false
