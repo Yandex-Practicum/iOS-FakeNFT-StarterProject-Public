@@ -21,7 +21,7 @@ protocol AlertConstructable {
 struct AlertConstructor: AlertConstructable {
     func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController {
         return UIAlertController(
-            title: NSLocalizedString(title, comment: ""),
+            title: title,
             message: error?.localizedDescription,
             preferredStyle: style)
     }

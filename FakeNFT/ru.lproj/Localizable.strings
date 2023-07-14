@@ -1,0 +1,68 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Aleksandr Eliseev on 14.07.2023.
+  
+*/
+
+// Titles
+"profileTitle" = "Профиль";
+"catalogTitle" = "Каталог";
+"cartTitle" = "Корзина";
+"statisticsTitle" = "Статистика";
+"paymentMethodScreenTitle" = "Выберите способ оплаты";
+"toPayment" = "К оплате";
+"userLicenceLineOne" = "Совершая покупку, вы соглашаетесь с условиями\n";
+"userLicenceLineTwo" = "Пользовательского соглашения";
+"price" = "Цена";
+"collectionAuthor" = "Автор коллекции: ";
+"paymentMethodScreenTitle" = "Выберите способ оплаты";
+"emptyCart" = "Корзина пуста";
+// DeleteScreenTitles
+"questionBeforeDelete" = "Вы уверены, что хотите удалить объект из корзины?";
+"delete" = "Удалить";
+"goBack" = "Вернуться";
+// Login
+"emailTextFieldTitle" = "Email";
+"passwordTextFieldTitle" = "Пароль";
+"loginButtonTitle" = "Войти";
+"demoButtonTitle" = "Демо";
+"registerButtonTitle" = "Зарегистрироваться";
+"forgotPasswordButtonTitle" = "Забыли пароль?";
+"loginLabelEnterTitle" = "Вход";
+"loginLabelChangePasswordTitle" = "Сброс пароля";
+// OnboardingButton
+"onboardingProceedButtonTitle" = "Что внутри?";
+// Alerts
+"sortAlertTitle" = "Сортировка";
+"loadingAlertTitle" = "Ошибка загрузки";
+"nameSort" = "По названию";
+"cancel" = "Закрыть";
+"dependingOnQuantity" = "По количеству NFT";
+"dependingOnPrice" = "По цене";
+"dependingOnRate" = "По рейтингу";
+"dependingOnName" = "По названию";
+// LogInErrors
+"invalidData" = "Введен неверный логин или пароль";
+"userExists" = "Пользователь с таким адресом уже зарегистрирован";
+"textFieldEmpty" = "Одно из полей не заполнено";
+"internalError" = "Внутренняя ошибка, попробуйте позже";
+// PasswordResetMessages
+"passwordResetSuccess" = "Инструкции по восстановлению пароля высланы на указанный email";
+"passwordResetFailure" = "Пользователь не найден";
+// Onboarding Titles
+"discoverOnboardingPageTitle" = "Исследуйте";
+"collectOnboardingPageTitle" = "Коллекционируйте";
+"competeOnboardingPageTitle" = "Состязайтесь";
+// Onboarding Descriptions
+"discoverOnboardingPageDescription" = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров";
+"collectOnboardingPageDescription" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
+"competeOnboardingPageDescription" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
+// Purchase results
+"tryAgain" = "Попробовать снова";
+"leaveAsItIs" = "Оставить как есть";
+"successfulPurchase" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"unSuccessfulPurchase" = "Упс! Что-то пошло не так :(\nПопробуйте ещё раз!";
+"loadingData" = "Загружаем данные...";
+"backToCatalog" = "Назад в каталог";

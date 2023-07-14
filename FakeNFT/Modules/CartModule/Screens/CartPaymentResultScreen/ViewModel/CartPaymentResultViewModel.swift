@@ -12,11 +12,13 @@ final class CartPaymentResultViewModel {
     var request: NetworkRequest?
     
     private let networkClient: NetworkClient
+    private let dataStore: CartDataStorageProtocol
     
     @Published private (set) var requestResult: RequestResult?
     
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClient, dataStore: CartDataStorageProtocol) {
         self.networkClient = networkClient
+        self.dataStore = dataStore
     }
     
     func pay() {
@@ -26,11 +28,18 @@ final class CartPaymentResultViewModel {
             switch result {
             case .success(let data):
                 // TODO: clear the cart after success and proceed to catalog
-                self?.requestResult = data.success ? .success : .failure
+                self?.requestResult = data.success ? self?.successCase() : .failure
             case .failure(_):
                 self?.requestResult = .failure
                 // TODO: Show alert
             }
         }
+    }
+}
+
+private extension CartPaymentResultViewModel {
+    func successCase() -> RequestResult {
+        dataStore.deleteItemsFromCart()
+        return .success
     }
 }

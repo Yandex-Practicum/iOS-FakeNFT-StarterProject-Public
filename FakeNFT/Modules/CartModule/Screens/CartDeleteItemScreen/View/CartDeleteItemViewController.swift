@@ -38,13 +38,13 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         textView.textAlignment = .center
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
-        textView.text = NSLocalizedString("Вы уверены, что хотите удалить объект из корзины?", comment: "")
+        textView.text = K.Titles.questionBeforeDelete
         return textView
     }()
     
     private lazy var deleteButton: CustomActionButton = {
         let button = CustomActionButton(
-            title: NSLocalizedString("Удалить", comment: ""),
+            title: K.Titles.delete,
             appearance: .cancel,
             cornerRadius: 12,
             fontWeight: .regular
@@ -56,7 +56,7 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
     
     private lazy var backButton: CustomActionButton = {
         let button = CustomActionButton(
-            title: NSLocalizedString("Вернуться", comment: ""),
+            title: K.Titles.goBack,
             appearance: .confirm,
             cornerRadius: 12,
             fontWeight: .regular

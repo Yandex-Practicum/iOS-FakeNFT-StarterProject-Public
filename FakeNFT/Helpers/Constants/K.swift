@@ -30,25 +30,45 @@ struct K {
     }
     
     struct Titles {
-        static let profileTitle = NSLocalizedString("Профиль", comment: "")
-        static let catalogTitle = NSLocalizedString("Каталог", comment: "")
-        static let cartTitle = NSLocalizedString("Корзина", comment: "")
-        static let statisticsTitle = NSLocalizedString("Статистика", comment: "")
-        static let paymentMethodScreenTitle = NSLocalizedString("Выберите способ оплаты", comment: "")
+        static let profileTitle = NSLocalizedString("profileTitle", comment: "")
+        static let catalogTitle = NSLocalizedString("catalogTitle", comment: "")
+        static let cartTitle = NSLocalizedString("cartTitle", comment: "")
+        static let statisticsTitle = NSLocalizedString("statisticsTitle", comment: "")
+        static let paymentMethodScreenTitle = NSLocalizedString("paymentMethodScreenTitle", comment: "")
         static let emailTextFieldTitle = NSLocalizedString("Email", comment: "")
-        static let passwordTextFieldTitle = NSLocalizedString("Пароль", comment: "")
-        static let loginButtonTitle = NSLocalizedString("Войти", comment: "")
-        static let demoButtonTitle = NSLocalizedString("Демо", comment: "")
-        static let registerButtonTitle = NSLocalizedString("Зарегистрироваться", comment: "")
-        static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
-        static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
-        static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
-        static let onboardingProceedButtonTitle = NSLocalizedString("Что внутри?", comment: "")
+        static let passwordTextFieldTitle = NSLocalizedString("passwordTextFieldTitle", comment: "")
+        static let loginButtonTitle = NSLocalizedString("loginButtonTitle", comment: "")
+        static let demoButtonTitle = NSLocalizedString("demoButtonTitle", comment: "")
+        static let registerButtonTitle = NSLocalizedString("registerButtonTitle", comment: "")
+        static let forgotPasswordButtonTitle = NSLocalizedString("forgotPasswordButtonTitle", comment: "")
+        static let loginLabelEnterTitle = NSLocalizedString("loginLabelEnterTitle", comment: "")
+        static let loginLabelChangePasswordTitle = NSLocalizedString("loginLabelChangePasswordTitle", comment: "")
+        static let onboardingProceedButtonTitle = NSLocalizedString("onboardingProceedButtonTitle", comment: "")
+        static let toPayment = NSLocalizedString("toPayment", comment: "")
+        static let emptyCart = NSLocalizedString("emptyCart", comment: "")
+        static let delete = NSLocalizedString("delete", comment: "")
+        static let price = NSLocalizedString("price", comment: "")
+        static let questionBeforeDelete = NSLocalizedString("questionBeforeDelete", comment: "")
+        static let goBack = NSLocalizedString("goBack", comment: "")
+        static let userLicenceLineOne = NSLocalizedString("userLicenceLineOne", comment: "")
+        static let userLicenceLineTwo = NSLocalizedString("userLicenceLineTwo", comment: "")
+        static let tryAgain = NSLocalizedString("tryAgain", comment: "")
+        static let leaveAsItIs = NSLocalizedString("leaveAsItIs", comment: "")
+        static let successfulPurchase = NSLocalizedString("successfulPurchase", comment: "")
+        static let unSuccessfulPurchase = NSLocalizedString("unSuccessfulPurchase", comment: "")
+        static let loadingData = NSLocalizedString("loadingData", comment: "")
+        static let backToCatalog = NSLocalizedString("backToCatalog", comment: "")
     }
     
     struct AlertTitles {
-        static let sortAlertTitle = NSLocalizedString("Сортировка", comment: "")
-        static let loadingAlertTitle = NSLocalizedString("Ошибка загрузки", comment: "")
+        static let sortAlertTitle = NSLocalizedString("sortAlertTitle", comment: "")
+        static let loadingAlertTitle = NSLocalizedString("loadingAlertTitle", comment: "")
+        static let nameSort = NSLocalizedString("nameSort", comment: "")
+        static let cancel = NSLocalizedString("cancel", comment: "")
+        static let dependingOnQuantity = NSLocalizedString("dependingOnQuantity", comment: "")
+        static let dependingOnPrice = NSLocalizedString("dependingOnPrice", comment: "")
+        static let dependingOnRate = NSLocalizedString("dependingOnRate", comment: "")
+        static let dependingOnName = NSLocalizedString("dependingOnName", comment: "")
     }
     
     struct Links {
@@ -70,15 +90,15 @@ struct K {
     }
     
     struct LogInErrors {
-        static let invalidData = NSLocalizedString("Введен неверный логин или пароль", comment: "")
-        static let userExists = NSLocalizedString("Пользователь с таким адресом уже зарегистрирован", comment: "")
-        static let textFieldEmpty = NSLocalizedString("Одно из полей не заполнено", comment: "")
-        static let internalError = NSLocalizedString("Внутренняя ошибка, попробуйте позже", comment: "")
+        static let invalidData = NSLocalizedString("invalidData", comment: "")
+        static let userExists = NSLocalizedString("userExists", comment: "")
+        static let textFieldEmpty = NSLocalizedString("textFieldEmpty", comment: "")
+        static let internalError = NSLocalizedString("internalError", comment: "")
     }
     
     struct PasswordResetMessages {
-        static let passwordResetSuccess = NSLocalizedString("Инструкции по восстановлению пароля высланы на указанный email", comment: "")
-        static let passwordResetFailure = NSLocalizedString("Пользователь не найден", comment: "")
+        static let passwordResetSuccess = NSLocalizedString("passwordResetSuccess", comment: "")
+        static let passwordResetFailure = NSLocalizedString("passwordResetFailure", comment: "")
     }
     
     struct Spacing {
@@ -87,15 +107,15 @@ struct K {
     
     struct Onboarding {
         struct Titles {
-            static let discoverOnboardingPageTitle = NSLocalizedString("Исследуйте", comment: "")
-            static let collectOnboardingPageTitle = NSLocalizedString("Коллекционируйте", comment: "")
-            static let competeOnboardingPageTitle = NSLocalizedString("Состязайтесь", comment: "")
+            static let discoverOnboardingPageTitle = NSLocalizedString("discoverOnboardingPageTitle", comment: "")
+            static let collectOnboardingPageTitle = NSLocalizedString("collectOnboardingPageTitle", comment: "")
+            static let competeOnboardingPageTitle = NSLocalizedString("competeOnboardingPageTitle", comment: "")
         }
         
         struct Descriptions {
-            static let discoverOnboardingPageDescription = NSLocalizedString("Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров", comment: "")
-            static let collectOnboardingPageDescription = NSLocalizedString("Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!", comment: "")
-            static let competeOnboardingPageDescription = NSLocalizedString("Смотрите статистику других и покажите всем, что у вас самая ценная коллекция", comment: "")
+            static let discoverOnboardingPageDescription = NSLocalizedString("discoverOnboardingPageDescription", comment: "")
+            static let collectOnboardingPageDescription = NSLocalizedString("collectOnboardingPageDescription", comment: "")
+            static let competeOnboardingPageDescription = NSLocalizedString("competeOnboardingPageDescription", comment: "")
         }
         
         struct Background {

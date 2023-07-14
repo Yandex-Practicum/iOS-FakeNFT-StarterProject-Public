@@ -13,11 +13,11 @@ enum CatalogSortValue: CaseIterable, Sortable {
     var description: String {
         switch self {
         case .name:
-            return NSLocalizedString("По названию", comment: "")
+            return K.AlertTitles.nameSort
         case .cancel:
-            return NSLocalizedString("Закрыть", comment: "")
+            return K.AlertTitles.cancel
         case .quantity:
-            return NSLocalizedString("По количеству NFT", comment: "")
+            return K.AlertTitles.dependingOnQuantity
         }
     }
     

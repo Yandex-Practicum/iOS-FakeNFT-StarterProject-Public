@@ -13,20 +13,20 @@ enum RequestResult {
     var description: String {
         switch self {
         case .success:
-            return NSLocalizedString("Успех! Оплата прошла,\n поздравляем с покупкой!", comment: "")
+            return K.Titles.successfulPurchase
         case .failure:
-            return NSLocalizedString("Упс! Что-то пошло не так :(\n Попробуйте ещё раз!", comment: "")
+            return K.Titles.unSuccessfulPurchase
         case .loading:
-            return NSLocalizedString("Загружаем данные, пожалуйста, ожидайте", comment: "")
+            return K.Titles.loadingData
         }
     }
     
     var buttonTitle: String? {
         switch self {
         case .success:
-            return NSLocalizedString("Вернуться в каталог", comment: "")
+            return K.Titles.backToCatalog
         case .failure:
-            return NSLocalizedString("Попробовать еще раз", comment: "")
+            return K.Titles.tryAgain
         case .loading:
             return nil
         }

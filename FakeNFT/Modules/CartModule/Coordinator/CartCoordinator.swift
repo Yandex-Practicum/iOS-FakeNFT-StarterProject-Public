@@ -104,7 +104,7 @@ private extension CartCoordinator {
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
-        var paymentResultScreen = factory.makePaymentResultScreenView(request: request)
+        var paymentResultScreen = factory.makePaymentResultScreenView(request: request, dataStore: dataStore)
         
         paymentResultScreen.onMain = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)

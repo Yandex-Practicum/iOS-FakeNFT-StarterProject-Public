@@ -52,7 +52,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftPriceLabelName: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-        label.text = NSLocalizedString("Цена", comment: "")
+        label.text = K.Titles.price
         return label
     }()
     

@@ -13,9 +13,9 @@ enum AlertErrorActions: CaseIterable {
     var title: String {
         switch self {
         case .reload:
-            return NSLocalizedString("Попробовать снова!", comment: "")
+            return K.Titles.tryAgain
         case .leave:
-            return NSLocalizedString("Оставить, как есть", comment: "")
+            return K.Titles.leaveAsItIs
         }
     }
     

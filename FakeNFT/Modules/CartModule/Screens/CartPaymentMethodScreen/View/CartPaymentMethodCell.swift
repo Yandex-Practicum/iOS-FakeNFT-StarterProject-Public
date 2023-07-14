@@ -82,7 +82,6 @@ final class CartPaymentMethodCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func updateCell(with data: PaymentMethodRow) {
-//        coinImageView.setImage(from: URL(string: data.image))
         loadCover(from: data.image)
         coinNameLabel.text = data.title
         coinCodeLabel.text = data.name

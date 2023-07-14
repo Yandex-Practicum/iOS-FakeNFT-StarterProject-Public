@@ -22,7 +22,7 @@ protocol CartModuleFactoryProtocol {
     func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
                                          dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
-    func makePaymentResultScreenView(request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable
+    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: CartDataStorageProtocol) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
 
@@ -113,9 +113,9 @@ extension ModulesFactory: CartModuleFactoryProtocol {
         return viewController
     }
     
-    func makePaymentResultScreenView(request: NetworkRequest?) -> Presentable & PaymentResultCoordinatable {
+    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: CartDataStorageProtocol) -> Presentable & PaymentResultCoordinatable {
         let networkClient = DefaultNetworkClient()
-        let viewModel = CartPaymentResultViewModel(networkClient: networkClient)
+        let viewModel = CartPaymentResultViewModel(networkClient: networkClient, dataStore: dataStore)
         viewModel.request = request
         let viewController = CartPaymentResultViewController(viewModel: viewModel)
         return viewController

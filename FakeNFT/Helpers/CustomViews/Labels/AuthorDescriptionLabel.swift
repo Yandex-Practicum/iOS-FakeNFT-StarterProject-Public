@@ -22,12 +22,11 @@ class AuthorDescriptionLabel: UILabel {
     
     func setupAttributedText(authorName: String, authorId: String? = nil) {
         let attrString = NSMutableAttributedString()
-        let firstLineAttrText = NSMutableAttributedString(string: NSLocalizedString("Автор коллекции: ", comment: ""))
+        let firstLineAttrText = NSMutableAttributedString(string: NSLocalizedString("collectionAuthor", comment: ""))
         let secondLineAttrText = NSMutableAttributedString(string: NSLocalizedString(authorName, comment: ""))
         let range = NSRange(location: 0, length: secondLineAttrText.length)
         
         if let authorId {
-//            secondLineAttrText.addAttribute(.link, value: K.Links.apiLink + K.EndPoints.author + authorId, range: range)
             addLink(from: authorId, to: secondLineAttrText, at: range)
         }
         

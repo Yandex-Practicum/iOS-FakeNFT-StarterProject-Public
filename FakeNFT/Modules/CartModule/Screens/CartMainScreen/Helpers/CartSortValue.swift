@@ -13,13 +13,13 @@ enum CartSortValue: CaseIterable, Sortable {
     var description: String {
         switch self {
         case .price:
-            return NSLocalizedString("По цене", comment: "")
+            return K.AlertTitles.dependingOnPrice
         case .rating:
-            return NSLocalizedString("По рейтингу", comment: "")
+            return K.AlertTitles.dependingOnRate
         case .name:
-            return NSLocalizedString("По названию", comment: "")
+            return K.AlertTitles.dependingOnName
         case .cancel:
-            return NSLocalizedString("Закрыть", comment: "")
+            return K.AlertTitles.cancel
         }
     }
     

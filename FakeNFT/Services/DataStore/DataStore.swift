@@ -14,6 +14,7 @@ protocol CartDataStorageProtocol: AnyObject {
     func addCartRowItem(_ item: SingleNft)
     func getCartRowItems() -> [SingleNft]
     func deleteItem(with id: String?)
+    func deleteItemsFromCart()
 }
 
 protocol CatalogDataStorageProtocol: AnyObject {
@@ -86,6 +87,10 @@ extension DataStore: CartDataStorageProtocol {
     func deleteItem(with id: String?) {
         guard let id else { return }
         cartStoredItems.removeAll(where: { $0.id == id })
+    }
+    
+    func deleteItemsFromCart() {
+        cartStoredItems.removeAll()
     }
 }
 

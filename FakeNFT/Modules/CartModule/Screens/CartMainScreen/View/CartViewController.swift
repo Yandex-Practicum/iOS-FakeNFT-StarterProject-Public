@@ -53,7 +53,7 @@ final class CartViewController: UIViewController {
     }()
     
     private lazy var proceedButton: CustomActionButton = {
-        let button = CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .confirm)
+        let button = CustomActionButton(title: K.Titles.toPayment, appearance: .confirm)
         button.addTarget(self, action: #selector(proceedTapped), for: .touchUpInside)
         return button
     }()
@@ -97,7 +97,7 @@ final class CartViewController: UIViewController {
     
     private lazy var emptyStateLabel: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
-        label.text = NSLocalizedString("Корзина пуста", comment: "")
+        label.text = K.Titles.emptyCart
         label.textAlignment = .center
         return label
     }()
@@ -172,7 +172,7 @@ final class CartViewController: UIViewController {
     
     private func updateTotalLabels(from rows: [SingleNft]) {
         totalNFTCount.text = "\(rows.count) NFT"
-        totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETH"
+        totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETF"
     }
     
     private func updateTableView(with rows: [SingleNft]) {
@@ -224,7 +224,7 @@ extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(
             style: .destructive,
-            title: NSLocalizedString("Удалить", comment: "")) { [weak self] action, view, handler in
+            title: K.Titles.delete) { [weak self] action, view, handler in
                 guard let cell = tableView.cellForRow(at: indexPath) as? CartTableViewCell else { return }
                 let id = cell.viewModel?.cartRow.id
                 self?.viewModel.deleteItem(with: id)

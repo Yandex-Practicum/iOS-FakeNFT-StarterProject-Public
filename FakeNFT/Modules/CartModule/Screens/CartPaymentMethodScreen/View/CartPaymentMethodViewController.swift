@@ -38,8 +38,8 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
         let label = CustomLabel(size: 13, weight: .regular, color: .ypBlack)
         
         let attrString = NSMutableAttributedString()
-        let firstLineAttrText = NSMutableAttributedString(string: NSLocalizedString("Совершая покупку, вы соглашаетесь с условиями\n", comment: ""))
-        let secondLineAttrText = NSMutableAttributedString(string: NSLocalizedString("Пользовательского соглашения", comment: ""))
+        let firstLineAttrText = NSMutableAttributedString(string: K.Titles.userLicenceLineOne)
+        let secondLineAttrText = NSMutableAttributedString(string: K.Titles.userLicenceLineTwo)
         let range = NSRange(location: 0, length: secondLineAttrText.length)
         let paragraphStyle = NSMutableParagraphStyle()
         
@@ -60,7 +60,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }()
     
     private lazy var proceedButton: CustomActionButton = {
-        let button = CustomActionButton(title: NSLocalizedString("К оплате", comment: ""), appearance: .disabled)
+        let button = CustomActionButton(title: K.Titles.toPayment, appearance: .disabled)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.addTarget(self, action: #selector(payTapped), for: .touchUpInside)
         return button

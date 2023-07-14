@@ -26,7 +26,7 @@ final class TabBarCoordinator: MainCoordinator, CoordinatorProtocol {
 private extension TabBarCoordinator {
     func setupTabBarController() {
         let tabBarController = MainTabBarController()
-        router.setupRootViewController(viewController: tabBarController) // Устанавливаем таббар контроллер в качестве корневого
+        router.setupRootViewController(viewController: tabBarController)
         finishFlow?()
     }
 }
