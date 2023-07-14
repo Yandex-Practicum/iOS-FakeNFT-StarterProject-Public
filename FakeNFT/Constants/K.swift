@@ -22,8 +22,11 @@ struct K {
         static let checkmark = "checkmark"
         static let xmark = "xmark"
         static let circleDotted = "circle.dotted"
-        static let heart = "heart"
         static let placeholder = "placeholder"
+        static let activeLike = "activeLike"
+        static let notActiveLike = "notActiveLike"
+        static let addToCart = "addToCart"
+        static let deleteFromCart = "deleteFromCart"
     }
     
     struct Titles {
@@ -40,6 +43,7 @@ struct K {
         static let forgotPasswordButtonTitle = NSLocalizedString("Забыли пароль?", comment: "")
         static let loginLabelEnterTitle = NSLocalizedString("Вход", comment: "")
         static let loginLabelChangePasswordTitle = NSLocalizedString("Сброс пароля", comment: "")
+        static let onboardingProceedButtonTitle = NSLocalizedString("Что внутри?", comment: "")
     }
     
     struct AlertTitles {
@@ -79,5 +83,27 @@ struct K {
     
     struct Spacing {
         static let loginBaseSpacingCoefficient = 0.075
+    }
+    
+    struct Onboarding {
+        struct Titles {
+            static let discoverOnboardingPageTitle = NSLocalizedString("Исследуйте", comment: "")
+            static let collectOnboardingPageTitle = NSLocalizedString("Коллекционируйте", comment: "")
+            static let competeOnboardingPageTitle = NSLocalizedString("Состязайтесь", comment: "")
+        }
+        
+        struct Descriptions {
+            static let discoverOnboardingPageDescription = NSLocalizedString("Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров", comment: "")
+            static let collectOnboardingPageDescription = NSLocalizedString("Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!", comment: "")
+            static let competeOnboardingPageDescription = NSLocalizedString("Смотрите статистику других и покажите всем, что у вас самая ценная коллекция", comment: "")
+        }
+        
+        struct Background {
+            static let onboarding1 = "onboarding1"
+            static let onboarding2 = "onboarding2"
+            static let onboarding3 = "onboarding3"
+        }
+        
+        
     }
 }

@@ -12,19 +12,33 @@ final class FlowCoordinator: MainCoordinator, CoordinatorProtocol {
     
     private var factory: CoordinatorFactoryProtocol
     private var router: Routable
+    private var firstEnterChecker: FirstEnterCheckableProtocol
     
-    init(factory: CoordinatorFactoryProtocol, router: Routable) {
+    init(factory: CoordinatorFactoryProtocol, router: Routable, firstEnterChecker: FirstEnterCheckableProtocol) {
         self.factory = factory
         self.router = router
+        self.firstEnterChecker = firstEnterChecker
     }
     
     func start() {
-        createLoginFlow()
+        firstEnterChecker.shouldShowOnboarding() ? createOnboardingFlow() : createLoginFlow()
     }
 }
 
 // MARK: - Ext Private
 private extension FlowCoordinator {
+    func createOnboardingFlow() {
+        let coordinator = factory.makeOnboardingCoordinator(with: router)
+        addViewController(coordinator)
+        
+        coordinator.finishFlow = { [weak self] in
+            self?.firstEnterChecker.didCompleteOnboarding()
+            self?.createLoginFlow()
+        }
+        
+        coordinator.start()
+    }
+    
     func createLoginFlow() {
         let coordinator = factory.makeLoginCoordinator(with: router)
         addViewController(coordinator)
