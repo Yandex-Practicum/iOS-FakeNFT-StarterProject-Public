@@ -53,6 +53,24 @@ private extension FlowCoordinator {
     func createMainFlow() {
         let coordinator = factory.makeTabBarCoordinator(with: router)
         addViewController(coordinator)
+        
+        coordinator.finishFlow = { [weak self] in
+            self?.createCatalogFlow()
+            self?.createCartFlow()
+        }
+        
+        coordinator.start()
+    }
+    
+    func createCatalogFlow() {
+        let coordinator = factory.makeCatalogCoordinator(with: router)
+        addViewController(coordinator)
+        coordinator.start()
+    }
+    
+    func createCartFlow() {
+        let coordinator = factory.makeCartCoordinator(with: router)
+        addViewController(coordinator)
         coordinator.start()
     }
 }

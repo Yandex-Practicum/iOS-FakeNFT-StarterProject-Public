@@ -20,8 +20,6 @@ final class TabBarCoordinator: MainCoordinator, CoordinatorProtocol {
     
     func start() {
         setupTabBarController()
-        createCatalogScreenView()
-        createCartScreenView()
     }
 }
 
@@ -29,17 +27,6 @@ private extension TabBarCoordinator {
     func setupTabBarController() {
         let tabBarController = MainTabBarController()
         router.setupRootViewController(viewController: tabBarController) // Устанавливаем таббар контроллер в качестве корневого
-    }
-    
-    func createCatalogScreenView() {
-        let coordinator = factory.makeCatalogCoordinator(with: router)
-        addViewController(coordinator) // добавляем дочерний координатор модуля в стек координаторов
-        coordinator.start() // создаем экран, добавляем его в навигационный стек, добавляем иконку таббара
-    }
-    
-    func createCartScreenView() {
-        let coordinator = factory.makeCartCoordinator(with: router)
-        addViewController(coordinator) // добавляем дочерний координатор модуля в стек координаторов
-        coordinator.start() // создаем экран, добавляем его в навигационный стек, добавляем иконку таббара
+        finishFlow?()
     }
 }
