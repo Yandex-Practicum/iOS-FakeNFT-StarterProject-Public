@@ -18,17 +18,24 @@ final class OnboardingPageViewController: UIPageViewController, OnboardingCoordi
     var cancellables = Set<AnyCancellable>()
     var viewModel: OnboardingViewModel?
     
-    private var pages: [UIViewController] = [
-
-    ]
+    private lazy var lineStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+                
+        return stackView
+    }()
+    
+    private var pages: [UIViewController] = []
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViewControllers()
-        setPageViewControllers()
+        setupUI()
         dataSource = self
         bind()
+        
     }
     
     private func bind() {
@@ -47,6 +54,13 @@ final class OnboardingPageViewController: UIPageViewController, OnboardingCoordi
 
 // MARK: - Ext PageController
 private extension OnboardingPageViewController {
+    func setupUI() {
+        setupViewControllers()
+        setPageViewControllers()
+        setupButtons()
+        setupButton()
+    }
+    
     func setupViewControllers() {
         guard let viewModel else { return }
         OnboardingPage.allCases.forEach({ pages.append(OnboardingViewController(viewModel: viewModel, page: $0)) })
@@ -57,18 +71,27 @@ private extension OnboardingPageViewController {
             setViewControllers([firstPage], direction: .forward, animated: true)
         }
     }
+    
+    func setupButtons() {
+        pages.forEach { controller in
+            guard let index = pages.firstIndex(of: controller) else { return }
+            let button = CustomLineButton(number: index)
+            button.addTarget(self, action: #selector(changeViewControllerOnTap), for: .touchUpInside)
+            lineStackView.addArrangedSubview(button)
+        }
+    }
 }
 
 // MARK: - Ext @objc
 @objc private extension OnboardingPageViewController {
-    func finishButtonTapped() {
-        onFinish?()
-    }
+//    func changeViewControllerOnTap(_ sender: UIPageControl) {
+//        let selectedPage = sender.currentPage < pages.count - 1 ? sender.currentPage + 1 : sender.currentPage - 1
+//        self.setViewControllers([pages[selectedPage]], direction: .forward, animated: true, completion: nil)
+//    }
     
-    func changeViewControllerOnTap(_ sender: UIPageControl) {
-        let selectedPage = sender.currentPage < pages.count - 1 ? sender.currentPage + 1 : sender.currentPage - 1
-        self.setViewControllers([pages[selectedPage]], direction: .forward, animated: true, completion: nil)
-        
+    func changeViewControllerOnTap(_ sender: UIButton) {
+        let selectedPage = sender.tag
+        self.setViewControllers([pages[selectedPage]], direction: .forward, animated: true)
     }
 }
 
@@ -86,5 +109,20 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
         let nextIndex = viewControllerIndex + 1
         guard nextIndex < pages.count else { return pages.first }
         return pages[nextIndex]
+    }
+}
+
+// MARK: - Ext Constraints
+private extension OnboardingPageViewController {
+    func setupButton() {
+        view.addSubview(lineStackView)
+        lineStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lineStackView.heightAnchor.constraint(equalToConstant: 4),
+            lineStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            lineStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            lineStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
     }
 }

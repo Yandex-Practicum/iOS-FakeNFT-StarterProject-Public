@@ -87,7 +87,6 @@ final class OnboardingViewController: UIViewController {
 @objc private extension OnboardingViewController {
     func closeTapped() {
         viewModel.exitOnboarding()
-        print("close")
     }
 }
 
