@@ -65,6 +65,8 @@ final class ResetPasswordViewController: UIViewController, ResetPasswordCoordina
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.tintColor = .universalWhite
+        setupLeftNavBarItem(with: nil, action: #selector(cancelTapped))
         setupConstraints()
         
     }
@@ -138,6 +140,10 @@ private extension ResetPasswordViewController {
 @objc private extension ResetPasswordViewController {
     func resetTapped() {
         viewModel.resetPassword(for: emailTextField.text)
+    }
+    
+    func cancelTapped() {
+        onCancel?()
     }
 }
 

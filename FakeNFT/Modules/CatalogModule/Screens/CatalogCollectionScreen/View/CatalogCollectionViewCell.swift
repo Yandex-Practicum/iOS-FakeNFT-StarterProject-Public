@@ -201,8 +201,8 @@ private extension CatalogCollectionViewCell {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            likeButton.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            likeButton.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             likeButton.heightAnchor.constraint(equalToConstant: 40),
             likeButton.widthAnchor.constraint(equalToConstant: 40)
         ])
