@@ -13,7 +13,7 @@ class AuthorDescriptionLabel: UILabel {
         super.init(frame: .zero)
         textColor = color
         font = UIFont.systemFont(ofSize: size, weight: weight)
-        textAlignment = .left
+        textAlignment = .natural
     }
     
     required init?(coder: NSCoder) {

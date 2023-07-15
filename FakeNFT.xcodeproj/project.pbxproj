@@ -612,6 +612,22 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
+		3764AB172A62805F00A64E53 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				375378612A5ECD09009A5598 /* ResetPasswordViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3764AB182A62806400A64E53 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				375378632A5ECDDD009A5598 /* ResetPasswordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		377468682A472A9900E7EEEE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -766,8 +782,8 @@
 		3792C1C82A5DDFBC004E443B /* PasswordResetScreen */ = {
 			isa = PBXGroup;
 			children = (
-				375378612A5ECD09009A5598 /* ResetPasswordViewController.swift */,
-				375378632A5ECDDD009A5598 /* ResetPasswordViewModel.swift */,
+				3764AB172A62805F00A64E53 /* View */,
+				3764AB182A62806400A64E53 /* ViewModel */,
 			);
 			path = PasswordResetScreen;
 			sourceTree = "<group>";

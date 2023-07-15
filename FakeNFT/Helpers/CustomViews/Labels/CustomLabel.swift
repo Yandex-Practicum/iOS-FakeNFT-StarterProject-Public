@@ -13,8 +13,7 @@ class CustomLabel: UILabel {
         super.init(frame: .zero)
         textColor = color
         font = UIFont.systemFont(ofSize: size, weight: weight)
-        textAlignment = alignment ?? .left
-//        adjustsFontSizeToFitWidth = true
+        textAlignment = alignment ?? .natural
     }
     
     required init?(coder: NSCoder) {

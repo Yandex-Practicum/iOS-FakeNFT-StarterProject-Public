@@ -19,7 +19,7 @@ final class ResetPasswordViewController: UIViewController, ResetPasswordCoordina
     let viewModel: ResetPasswordViewModel
     
     private lazy var titleLabel: CustomLabel = {
-        let label = CustomLabel(size: 34, weight: .bold, color: .ypBlack, alignment: .left)
+        let label = CustomLabel(size: 34, weight: .bold, color: .ypBlack, alignment: .natural)
         label.text = K.Titles.loginLabelChangePasswordTitle
         return label
     }()
@@ -36,7 +36,7 @@ final class ResetPasswordViewController: UIViewController, ResetPasswordCoordina
     }()
     
     private lazy var messageLabel: CustomLabel = {
-        let label = CustomLabel(size: 13, weight: .regular, color: .universalGreen, alignment: .left)
+        let label = CustomLabel(size: 13, weight: .regular, color: .universalGreen, alignment: .natural)
         label.alpha = 0
         label.numberOfLines = 2
         return label

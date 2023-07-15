@@ -17,7 +17,6 @@
 "userLicenceLineTwo" = "User agreement";
 "price" = "Price";
 "collectionAuthor" = "Author of the collection: ";
-"paymentMethodScreenTitle" = "Choose payment method";
 "emptyCart" = "Empty cart";
 // DeleteScreenTitles
 "questionBeforeDelete" = "Are you sure you want to delete the object from cart?";
@@ -62,7 +61,7 @@
 // Purchase results
 "tryAgain" = "Try again";
 "leaveAsItIs" = "Leave it";
-"successfulPurchase" = "Success! Payment received, congratiolations on your purchase!";
+"successfulPurchase" = "Success! Payment received, congratulations on your purchase!";
 "unSuccessfulPurchase" = "Oops! Something went wrong :(\nTry again!";
 "loadingData" = "Loading data...";
 "backToCatalog" = "Back to catalog";

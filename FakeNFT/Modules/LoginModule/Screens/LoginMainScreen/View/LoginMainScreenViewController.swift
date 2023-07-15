@@ -25,7 +25,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     private let viewModel: LoginMainScreenViewModel
     
     private lazy var loginLabel: CustomLabel = {
-        let label = CustomLabel(size: 34, weight: .bold, color: .ypBlack, alignment: .left)
+        let label = CustomLabel(size: 34, weight: .bold, color: .ypBlack, alignment: .natural)
         label.text = K.Titles.loginLabelEnterTitle
         return label
     }()
@@ -48,7 +48,7 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
     }()
     
     private lazy var errorLabel: CustomLabel = {
-        let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .left)
+        let label = CustomLabel(size: 13, weight: .regular, color: .universalRed, alignment: .natural)
         label.alpha = 0
         label.numberOfLines = 0
         return label

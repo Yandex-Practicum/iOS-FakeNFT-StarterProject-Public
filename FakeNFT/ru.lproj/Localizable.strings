@@ -17,7 +17,6 @@
 "userLicenceLineTwo" = "Пользовательского соглашения";
 "price" = "Цена";
 "collectionAuthor" = "Автор коллекции: ";
-"paymentMethodScreenTitle" = "Выберите способ оплаты";
 "emptyCart" = "Корзина пуста";
 // DeleteScreenTitles
 "questionBeforeDelete" = "Вы уверены, что хотите удалить объект из корзины?";
