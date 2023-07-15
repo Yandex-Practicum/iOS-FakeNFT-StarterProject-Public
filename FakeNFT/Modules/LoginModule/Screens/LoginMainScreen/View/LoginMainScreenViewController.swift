@@ -66,7 +66,8 @@ final class LoginMainScreenViewController: UIViewController & LoginMainCoordinat
         view.addSubview(errorLabel)
         view.addSubview(loadingView)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.frame = view.bounds
+        errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         loadingView.heightAnchor.constraint(equalToConstant: 25).isActive = true
