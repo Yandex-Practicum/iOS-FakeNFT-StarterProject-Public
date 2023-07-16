@@ -34,6 +34,7 @@ private extension FlowCoordinator {
         coordinator.finishFlow = { [weak self] in
             self?.firstEnterChecker.didCompleteOnboarding()
             self?.createLoginFlow()
+            self?.removeViewController(coordinator)
         }
         
         coordinator.start()
@@ -45,6 +46,7 @@ private extension FlowCoordinator {
         
         coordinator.finishFlow = { [weak self] in
             self?.createMainFlow()
+            self?.removeViewController(coordinator)
         }
         
         coordinator.start()
