@@ -59,6 +59,7 @@ private extension FlowCoordinator {
         coordinator.finishFlow = { [weak self] in
             self?.createCatalogFlow()
             self?.createCartFlow()
+            self?.removeViewController(coordinator)
         }
         
         coordinator.start()
