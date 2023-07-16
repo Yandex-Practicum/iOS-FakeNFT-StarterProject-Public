@@ -16,15 +16,20 @@ protocol NetworkClient {
     func send<T: Decodable>(request: NetworkRequest,
                             type: T.Type,
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    
 }
 
 struct DefaultNetworkClient: NetworkClient {
     private let session: URLSession
     private let decoder: JSONDecoder
+    private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared, decoder: JSONDecoder = JSONDecoder()) {
+    init(session: URLSession = URLSession.shared,
+         decoder: JSONDecoder = JSONDecoder(),
+         encoder: JSONEncoder = JSONEncoder()) {
         self.session = session
         self.decoder = decoder
+        self.encoder = encoder
     }
 
     @discardableResult
@@ -70,21 +75,23 @@ struct DefaultNetworkClient: NetworkClient {
             }
         }
     }
-
+    
     // MARK: - Private
 
     private func create(request: NetworkRequest) -> URLRequest? {
-        guard let endpoint = request.endpoint else { return nil }
-        guard var components = URLComponents(url: endpoint, resolvingAgainstBaseURL: true) else { return nil }
-
-        components.queryItems = request.queryParameters?.map { key, value in
-            URLQueryItem(name: key, value: value)
+        guard let endpoint = request.endpoint else {
+            assertionFailure("Empty endpoint")
+            return nil
         }
 
-        guard let url = components.url else { return nil }
-
-        var urlRequest = URLRequest(url: url)
+        var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
+
+        if let dto = request.dto,
+           let dtoEncoded = try? encoder.encode(dto) {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = dtoEncoded
+        }
 
         return urlRequest
     }

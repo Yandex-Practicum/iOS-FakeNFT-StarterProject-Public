@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Aleksandr Eliseev on 14.07.2023.
+  
+*/
+
+// Titles
+"profileTitle" = "Profile";
+"catalogTitle" = "Catalog";
+"cartTitle" = "Cart";
+"statisticsTitle" = "Statistics";
+"paymentMethodScreenTitle" = "Choose payment type";
+"toPayment" = "To payment";
+"userLicenceLineOne" = "Making a purchase you agree with the terms of the\n";
+"userLicenceLineTwo" = "User agreement";
+"price" = "Price";
+"collectionAuthor" = "Author of the collection: ";
+"emptyCart" = "Empty cart";
+// DeleteScreenTitles
+"questionBeforeDelete" = "Are you sure you want to delete the object from cart?";
+"delete" = "Delete";
+"goBack" = "Back";
+// Login
+"emailTextFieldTitle" = "Email";
+"passwordTextFieldTitle" = "Password";
+"loginButtonTitle" = "Login";
+"demoButtonTitle" = "Demo";
+"registerButtonTitle" = "Sign in";
+"forgotPasswordButtonTitle" = "Forgot password?";
+"loginLabelEnterTitle" = "Enter";
+"loginLabelChangePasswordTitle" = "Reset password";
+// OnboardingButton
+"onboardingProceedButtonTitle" = "What's inside?";
+// Alerts
+"sortAlertTitle" = "Sorting";
+"loadingAlertTitle" = "Loading failed";
+"nameSort" = "By name";
+"cancel" = "Cancel";
+"dependingOnQuantity" = "By quantity of NFTs";
+"dependingOnPrice" = "By priсe";
+"dependingOnRate" = "By rate";
+"dependingOnName" = "By name";
+// LogInErrors
+"invalidData" = "Wrong login or password";
+"userExists" = "User already exists";
+"textFieldEmpty" = "One of the fields is empty";
+"internalError" = "Internal error, try again later";
+// PasswordResetMessages
+"passwordResetSuccess" = "Password recovery instructions have been sent to the email";
+"passwordResetFailure" = "User doesn't exist";
+// Onboarding Titles
+"discoverOnboardingPageTitle" = "Discover";
+"collectOnboardingPageTitle" = "Collect";
+"competeOnboardingPageTitle" = "Compete";
+// Onboarding Descriptions
+"discoverOnboardingPageDescription" = "Get in and discover a new world of unique nfts for collectors";
+"collectOnboardingPageDescription" = "Expand your collection with exclusive pictures created by a neural network!";
+"competeOnboardingPageDescription" = "See the statistics of others and show everyone that you have the most valuable collection";
+// Purchase results
+"tryAgain" = "Try again";
+"leaveAsItIs" = "Leave it";
+"successfulPurchase" = "Success! Payment received, congratulations on your purchase!";
+"unSuccessfulPurchase" = "Oops! Something went wrong :(\nTry again!";
+"loadingData" = "Loading data...";
+"backToCatalog" = "Back to catalog";

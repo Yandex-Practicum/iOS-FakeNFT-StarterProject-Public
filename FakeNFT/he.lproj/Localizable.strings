@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Aleksandr Eliseev on 14.07.2023.
+  
+*/
+
+// Titles
+"profileTitle" = "פּרוֹפִיל";
+"catalogTitle" = "קָטָלוֹג";
+"cartTitle" = "עֲגָלָה";
+"statisticsTitle" = "סטָטִיסטִיקָה";
+"paymentMethodScreenTitle" = "בחר את סוג התשלום";
+"toPayment" = "לתשלום";
+"userLicenceLineOne" = "ביצוע רכישה אתה מסכים לתנאי \n";
+"userLicenceLineTwo" = "הסכמת המשתמש";
+"price" = "מחיר";
+"collectionAuthor" = "מחבר האוסף: ";
+"emptyCart" = "עגלה ריקה";
+// DeleteScreenTitles
+"questionBeforeDelete" = "?האם אתה בטוח שברצונך למחוק את האובייקט מהסל";
+"delete" = "למחוק";
+"goBack" = "חזור";
+// Login
+"emailTextFieldTitle" = "אימייל";
+"passwordTextFieldTitle" = "סיסמה";
+"loginButtonTitle" = "התחברות";
+"demoButtonTitle" = "הדגמה";
+"registerButtonTitle" = "להתחבר";
+"forgotPasswordButtonTitle" = "?שכחת את הסיסמא";
+"loginLabelEnterTitle" = "להיכנס";
+"loginLabelChangePasswordTitle" = "לאפס את הסיסמה";
+// OnboardingButton
+"onboardingProceedButtonTitle" = "?מה יש בפנים";
+// Alerts
+"sortAlertTitle" = "מיון";
+"loadingAlertTitle" = "הטעינה נכשלה";
+"nameSort" = "לפי שם";
+"cancel" = "לְבַטֵל";
+"dependingOnQuantity" = "לפי כמות NFTs";
+"dependingOnPrice" = "לפי מחיר";
+"dependingOnRate" = "לפי שיעור";
+"dependingOnName" = "לפי שם";
+// LogInErrors
+"invalidData" = "שם משתמש או סיסמא שגויים";
+"userExists" = "משתמש כבר קיים";
+"textFieldEmpty" = "אחד השדות ריק";
+"internalError" = "שגיאה פנימית, נסה שוב מאוחר יותר";
+// PasswordResetMessages
+"passwordResetSuccess" = "הוראות לשחזור סיסמה נשלחו למייל";
+"passwordResetFailure" = "המשתמש לא קיים";
+// Onboarding Titles
+"discoverOnboardingPageTitle" = "לְגַלוֹת";
+"collectOnboardingPageTitle" = "לאסוף";
+"competeOnboardingPageTitle" = "להתחרות";
+// Onboarding Descriptions
+"discoverOnboardingPageDescription" = "היכנסו וגלו עולם חדש של nfts ייחודיים לאספנים";
+"collectOnboardingPageDescription" = "הרחב את האוסף שלך עם תמונות בלעדיות שנוצרו על ידי רשת נוירונים!";
+"competeOnboardingPageDescription" = "ראה את הסטטיסטיקה של אחרים והראה לכולם שיש לך את האוסף היקר ביותר";
+// Purchase results
+"tryAgain" = "נסה שוב";
+"leaveAsItIs" = "עזוב את זה";
+"successfulPurchase" = "הַצלָחָה! התשלום התקבל, ברכות על הרכישה!";
+"unSuccessfulPurchase" = "אופס! קרתה תקלה :( נסה שוב";
+"loadingData" = "...טוען נתונים";
+"backToCatalog" = "חזרה לקטלוג";

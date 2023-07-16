@@ -722,8 +722,8 @@
       "example" : 8.81
     },
     "author" : {
-      "type" : "integer",
-      "example" : 49
+      "type" : "string",
+      "example" : "49"
     },
     "id" : {
       "type" : "string",
@@ -748,9 +748,9 @@
     },
     "nfts" : {
       "type" : "array",
-      "example" : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ],
+      "example" : [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21" ],
       "items" : {
-        "type" : "integer"
+        "type" : "string"
       }
     },
     "description" : {
@@ -758,8 +758,8 @@
       "example" : "A series of one-of-a-kind NFTs featuring historic moments in sports history."
     },
     "author" : {
-      "type" : "integer",
-      "example" : 49
+      "type" : "string",
+      "example" : "49"
     },
     "id" : {
       "type" : "string",
@@ -785,7 +785,7 @@
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string"
       }
     },
     "rating" : {
@@ -800,7 +800,7 @@
     "avatar" : "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/753.jpg",
     "description" : "Supporting artists through NFTs is my passion ❤",
     "website" : "https://practicum.yandex.ru/promo/courses/email-marketing",
-    "nfts" : [ 1, 4, 5 ],
+    "nfts" : [ "1", "4", "5" ],
     "rating" : 10,
     "id" : "3"
   }
@@ -827,13 +827,15 @@
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string",
+        "example" : "[\"68\",\"69\",\"71\",\"72\",\"73\",\"74\",\"75\",\"76\",\"77\",\"78\",\"79\",\"80\",\"81\"]"
       }
     },
     "likes" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string",
+        "example" : "[\"5\",\"13\",\"19\",\"26\",\"27\",\"33\",\"35\",\"39\",\"41\",\"47\",\"56\",\"66\"]"
       }
     },
     "id" : {
@@ -848,7 +850,8 @@
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string",
+        "example" : "[\"93\",\"94\",\"95\"]"
       }
     },
     "id" : {
@@ -926,7 +929,8 @@
     "nfts" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string",
+        "example" : "[\"93\",\"94\",\"95\"]"
       }
     }
   }
@@ -947,7 +951,8 @@
     "likes" : {
       "type" : "array",
       "items" : {
-        "type" : "integer"
+        "type" : "string",
+        "example" : "[\"5\",\"13\",\"19\",\"26\",\"27\",\"33\",\"35\",\"39\",\"41\",\"47\",\"56\",\"66\"]"
       }
     }
   }
@@ -1067,7 +1072,7 @@
                           <div class="tab-pane active" id="examples-Collections-apiV1CollectionsCollectionIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/collections/{collection_id}"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/collections/{collection_id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Collections-apiV1CollectionsCollectionIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1083,7 +1088,7 @@ public class CollectionsApiExample {
     public static void main(String[] args) {
         
         CollectionsApi apiInstance = new CollectionsApi();
-        Integer collectionId = 56; // Integer | Id of collection to get
+        String collectionId = collectionId_example; // String | Id of collection to get
         try {
             inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
@@ -1102,7 +1107,7 @@ public class CollectionsApiExample {
 
     public static void main(String[] args) {
         CollectionsApi apiInstance = new CollectionsApi();
-        Integer collectionId = 56; // Integer | Id of collection to get
+        String collectionId = collectionId_example; // String | Id of collection to get
         try {
             inline_response_200_1 result = apiInstance.apiV1CollectionsCollectionIdGet(collectionId);
             System.out.println(result);
@@ -1118,7 +1123,7 @@ public class CollectionsApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Collections-apiV1CollectionsCollectionIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *collectionId = 56; // Id of collection to get
+                              <pre class="prettyprint"><code class="language-cpp">String *collectionId = collectionId_example; // Id of collection to get
 
 CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
 
@@ -1139,7 +1144,7 @@ CollectionsApi *apiInstance = [[CollectionsApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
 var api = new FakeNftApi.CollectionsApi()
-var collectionId = 56; // {{Integer}} Id of collection to get
+var collectionId = collectionId_example; // {{String}} Id of collection to get
 
 var callback = function(error, data, response) {
   if (error) {
@@ -1170,7 +1175,7 @@ namespace Example
         {
 
             var apiInstance = new CollectionsApi();
-            var collectionId = 56;  // Integer | Id of collection to get
+            var collectionId = collectionId_example;  // String | Id of collection to get
 
             try
             {
@@ -1193,7 +1198,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiCollectionsApi();
-$collectionId = 56; // Integer | Id of collection to get
+$collectionId = collectionId_example; // String | Id of collection to get
 
 try {
     $result = $api_instance->apiV1CollectionsCollectionIdGet($collectionId);
@@ -1210,7 +1215,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::CollectionsApi;
 
 my $api_instance = WWW::SwaggerClient::CollectionsApi->new();
-my $collectionId = 56; # Integer | Id of collection to get
+my $collectionId = collectionId_example; # String | Id of collection to get
 
 eval { 
     my $result = $api_instance->apiV1CollectionsCollectionIdGet(collectionId => $collectionId);
@@ -1230,7 +1235,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.CollectionsApi()
-collectionId = 56 # Integer | Id of collection to get
+collectionId = collectionId_example # String | Id of collection to get
 
 try: 
     # Получение коллекции с заданным id
@@ -1257,7 +1262,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      Integer
+                                                      String
                                                   </span>
                                   
                                                       <div class="inner description">
@@ -1363,7 +1368,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Collections-apiV1CollectionsGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/collections"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/collections"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Collections-apiV1CollectionsGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1628,7 +1633,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-NFT-apiV1NftGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/nft"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/nft"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-NFT-apiV1NftGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1890,7 +1895,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-NFT-apiV1NftNftIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/nft/{nft_id}"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/nft/{nft_id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-NFT-apiV1NftNftIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1906,7 +1911,7 @@ public class NFTApiExample {
     public static void main(String[] args) {
         
         NFTApi apiInstance = new NFTApi();
-        Integer nftId = 56; // Integer | Id of NFT to get
+        String nftId = nftId_example; // String | Id of NFT to get
         try {
             inline_response_200 result = apiInstance.apiV1NftNftIdGet(nftId);
             System.out.println(result);
@@ -1925,7 +1930,7 @@ public class NFTApiExample {
 
     public static void main(String[] args) {
         NFTApi apiInstance = new NFTApi();
-        Integer nftId = 56; // Integer | Id of NFT to get
+        String nftId = nftId_example; // String | Id of NFT to get
         try {
             inline_response_200 result = apiInstance.apiV1NftNftIdGet(nftId);
             System.out.println(result);
@@ -1941,7 +1946,7 @@ public class NFTApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-NFT-apiV1NftNftIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *nftId = 56; // Id of NFT to get
+                              <pre class="prettyprint"><code class="language-cpp">String *nftId = nftId_example; // Id of NFT to get
 
 NFTApi *apiInstance = [[NFTApi alloc] init];
 
@@ -1962,7 +1967,7 @@ NFTApi *apiInstance = [[NFTApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
 var api = new FakeNftApi.NFTApi()
-var nftId = 56; // {{Integer}} Id of NFT to get
+var nftId = nftId_example; // {{String}} Id of NFT to get
 
 var callback = function(error, data, response) {
   if (error) {
@@ -1993,7 +1998,7 @@ namespace Example
         {
 
             var apiInstance = new NFTApi();
-            var nftId = 56;  // Integer | Id of NFT to get
+            var nftId = nftId_example;  // String | Id of NFT to get
 
             try
             {
@@ -2016,7 +2021,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiNFTApi();
-$nftId = 56; // Integer | Id of NFT to get
+$nftId = nftId_example; // String | Id of NFT to get
 
 try {
     $result = $api_instance->apiV1NftNftIdGet($nftId);
@@ -2033,7 +2038,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::NFTApi;
 
 my $api_instance = WWW::SwaggerClient::NFTApi->new();
-my $nftId = 56; # Integer | Id of NFT to get
+my $nftId = nftId_example; # String | Id of NFT to get
 
 eval { 
     my $result = $api_instance->apiV1NftNftIdGet(nftId => $nftId);
@@ -2053,7 +2058,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.NFTApi()
-nftId = 56 # Integer | Id of NFT to get
+nftId = nftId_example # String | Id of NFT to get
 
 try: 
     # Получение NFT с заданным Id
@@ -2080,7 +2085,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      Integer
+                                                      String
                                                   </span>
                                   
                                                       <div class="inner description">
@@ -2189,7 +2194,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies/{currency_id}"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/currencies/{currency_id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesCurrencyIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2485,7 +2490,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/currencies"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/currencies"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-OrderAndPayment-apiV1CurrenciesGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2747,7 +2752,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-OrderAndPayment-apiV1Orders1Get-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/orders/1"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Get-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3005,7 +3010,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1/payment/{currency_id}"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/orders/1/payment/{currency_id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1PaymentCurrencyIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3302,7 +3307,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Accept: application/json"\
 -H "Content-Type: application/x-www-form-urlencoded"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/orders/1"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/orders/1"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3318,7 +3323,7 @@ public class OrderAndPaymentApiExample {
     public static void main(String[] args) {
         
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
-        array[Integer] nfts = ; // array[Integer] | 
+        array[String] nfts = ; // array[String] | 
         try {
             inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
             System.out.println(result);
@@ -3337,7 +3342,7 @@ public class OrderAndPaymentApiExample {
 
     public static void main(String[] args) {
         OrderAndPaymentApi apiInstance = new OrderAndPaymentApi();
-        array[Integer] nfts = ; // array[Integer] | 
+        array[String] nfts = ; // array[String] | 
         try {
             inline_response_200_4 result = apiInstance.apiV1Orders1Put(nfts);
             System.out.println(result);
@@ -3353,7 +3358,7 @@ public class OrderAndPaymentApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-OrderAndPayment-apiV1Orders1Put-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">array[Integer] *nfts = ; //  (optional)
+                              <pre class="prettyprint"><code class="language-cpp">array[String] *nfts = ; //  (optional)
 
 OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
@@ -3375,7 +3380,7 @@ OrderAndPaymentApi *apiInstance = [[OrderAndPaymentApi alloc] init];
 
 var api = new FakeNftApi.OrderAndPaymentApi()
 var opts = { 
-  'nfts':  // {{array[Integer]}} 
+  'nfts':  // {{array[String]}} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -3406,7 +3411,7 @@ namespace Example
         {
 
             var apiInstance = new OrderAndPaymentApi();
-            var nfts = new array[Integer](); // array[Integer] |  (optional) 
+            var nfts = new array[String](); // array[String] |  (optional) 
 
             try
             {
@@ -3429,7 +3434,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOrderAndPaymentApi();
-$nfts = ; // array[Integer] | 
+$nfts = ; // array[String] | 
 
 try {
     $result = $api_instance->apiV1Orders1Put($nfts);
@@ -3446,7 +3451,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OrderAndPaymentApi;
 
 my $api_instance = WWW::SwaggerClient::OrderAndPaymentApi->new();
-my $nfts = []; # array[Integer] | 
+my $nfts = []; # array[String] | 
 
 eval { 
     my $result = $api_instance->apiV1Orders1Put(nfts => $nfts);
@@ -3466,7 +3471,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OrderAndPaymentApi()
-nfts =  # array[Integer] |  (optional)
+nfts =  # array[String] |  (optional)
 
 try: 
     # Изменение заказа
@@ -3496,7 +3501,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      array[Integer]
+                                                      array[String]
                                                   </span>
                                   
                                               </div>
@@ -3596,7 +3601,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Profile-apiV1Profile1Get-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/profile/1"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/profile/1"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Profile-apiV1Profile1Get-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3855,7 +3860,7 @@ except ApiException as e:
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Accept: application/json"\
 -H "Content-Type: application/x-www-form-urlencoded"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/profile/1"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/profile/1"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Profile-apiV1Profile1Put-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3874,7 +3879,7 @@ public class ProfileApiExample {
         String name = name_example; // String | 
         String description = description_example; // String | 
         String website = website_example; // String | 
-        array[Integer] likes = ; // array[Integer] | 
+        array[String] likes = ; // array[String] | 
         try {
             inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
             System.out.println(result);
@@ -3896,7 +3901,7 @@ public class ProfileApiExample {
         String name = name_example; // String | 
         String description = description_example; // String | 
         String website = website_example; // String | 
-        array[Integer] likes = ; // array[Integer] | 
+        array[String] likes = ; // array[String] | 
         try {
             inline_response_200_3 result = apiInstance.apiV1Profile1Put(name, description, website, likes);
             System.out.println(result);
@@ -3915,7 +3920,7 @@ public class ProfileApiExample {
                               <pre class="prettyprint"><code class="language-cpp">String *name = name_example; //  (optional)
 String *description = description_example; //  (optional)
 String *website = website_example; //  (optional)
-array[Integer] *likes = ; //  (optional)
+array[String] *likes = ; //  (optional)
 
 ProfileApi *apiInstance = [[ProfileApi alloc] init];
 
@@ -3943,7 +3948,7 @@ var opts = {
   'name': name_example // {{String}} 
   'description': description_example // {{String}} 
   'website': website_example // {{String}} 
-  'likes':  // {{array[Integer]}} 
+  'likes':  // {{array[String]}} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -3977,7 +3982,7 @@ namespace Example
             var name = name_example;  // String |  (optional) 
             var description = description_example;  // String |  (optional) 
             var website = website_example;  // String |  (optional) 
-            var likes = new array[Integer](); // array[Integer] |  (optional) 
+            var likes = new array[String](); // array[String] |  (optional) 
 
             try
             {
@@ -4003,7 +4008,7 @@ $api_instance = new Swagger\Client\ApiProfileApi();
 $name = name_example; // String | 
 $description = description_example; // String | 
 $website = website_example; // String | 
-$likes = ; // array[Integer] | 
+$likes = ; // array[String] | 
 
 try {
     $result = $api_instance->apiV1Profile1Put($name, $description, $website, $likes);
@@ -4023,7 +4028,7 @@ my $api_instance = WWW::SwaggerClient::ProfileApi->new();
 my $name = name_example; # String | 
 my $description = description_example; # String | 
 my $website = website_example; # String | 
-my $likes = []; # array[Integer] | 
+my $likes = []; # array[String] | 
 
 eval { 
     my $result = $api_instance->apiV1Profile1Put(name => $name, description => $description, website => $website, likes => $likes);
@@ -4046,7 +4051,7 @@ api_instance = swagger_client.ProfileApi()
 name = name_example # String |  (optional)
 description = description_example # String |  (optional)
 website = website_example # String |  (optional)
-likes =  # array[Integer] |  (optional)
+likes =  # array[String] |  (optional)
 
 try: 
     # Обновление профиля
@@ -4124,7 +4129,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      array[Integer]
+                                                      array[String]
                                                   </span>
                                   
                                               </div>
@@ -4224,7 +4229,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-apiV1UsersGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/users"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/users"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-apiV1UsersGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4486,7 +4491,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Users-apiV1UsersUserIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/json"\
-"https://64411f3a792fe886a89efa72.mockapi.io/api/v1/users/{user_id}"</code></pre>
+"https://64858e8ba795d24810b71189.mockapi.io/api/v1/users/{user_id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Users-apiV1UsersUserIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4502,7 +4507,7 @@ public class UsersApiExample {
     public static void main(String[] args) {
         
         UsersApi apiInstance = new UsersApi();
-        Integer userId = 56; // Integer | Id пользователя
+        String userId = userId_example; // String | Id пользователя
         try {
             inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
@@ -4521,7 +4526,7 @@ public class UsersApiExample {
 
     public static void main(String[] args) {
         UsersApi apiInstance = new UsersApi();
-        Integer userId = 56; // Integer | Id пользователя
+        String userId = userId_example; // String | Id пользователя
         try {
             inline_response_200_2 result = apiInstance.apiV1UsersUserIdGet(userId);
             System.out.println(result);
@@ -4537,7 +4542,7 @@ public class UsersApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Users-apiV1UsersUserIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Integer *userId = 56; // Id пользователя
+                              <pre class="prettyprint"><code class="language-cpp">String *userId = userId_example; // Id пользователя
 
 UsersApi *apiInstance = [[UsersApi alloc] init];
 
@@ -4558,7 +4563,7 @@ UsersApi *apiInstance = [[UsersApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var FakeNftApi = require('fake_nft_api');
 
 var api = new FakeNftApi.UsersApi()
-var userId = 56; // {{Integer}} Id пользователя
+var userId = userId_example; // {{String}} Id пользователя
 
 var callback = function(error, data, response) {
   if (error) {
@@ -4589,7 +4594,7 @@ namespace Example
         {
 
             var apiInstance = new UsersApi();
-            var userId = 56;  // Integer | Id пользователя
+            var userId = userId_example;  // String | Id пользователя
 
             try
             {
@@ -4612,7 +4617,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiUsersApi();
-$userId = 56; // Integer | Id пользователя
+$userId = userId_example; // String | Id пользователя
 
 try {
     $result = $api_instance->apiV1UsersUserIdGet($userId);
@@ -4629,7 +4634,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UsersApi;
 
 my $api_instance = WWW::SwaggerClient::UsersApi->new();
-my $userId = 56; # Integer | Id пользователя
+my $userId = userId_example; # String | Id пользователя
 
 eval { 
     my $result = $api_instance->apiV1UsersUserIdGet(userId => $userId);
@@ -4649,7 +4654,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.UsersApi()
-userId = 56 # Integer | Id пользователя
+userId = userId_example # String | Id пользователя
 
 try: 
     # Получение пользователя с заданным id
@@ -4676,7 +4681,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      Integer
+                                                      String
                                                   </span>
                                   
                                                       <div class="inner description">

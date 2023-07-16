@@ -21,15 +21,28 @@ extension UIColor {
     }
 
     // Ниже приведены примеры цветов, настоящие цвета надо взять из фигмы
+    
+    // Adapting Colors
+    static var ypBlack: UIColor? { UIColor(named: "ypBlack") }
+    static var ypWhite: UIColor? { UIColor(named: "ypWhite") }
+    static var ypLightGrey: UIColor? { UIColor(named: "ypLightGrey") }
 
     // Primary Colors
     static let primary = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1.0)
-
+    static let universalBlue = UIColor(red: 10 / 255, green: 132 / 255, blue: 255 / 255, alpha: 1)
+    static let universalYellow = UIColor(red: 254 / 255, green: 239 / 255, blue: 13 / 255, alpha: 1)
+    static let universalGreen = UIColor(red: 28 / 255, green: 159 / 255, blue: 0 / 255, alpha: 1)
+    static let universalGray = UIColor(red: 98 / 255, green: 92 / 255, blue: 92 / 255, alpha: 1)
+    static let universalRed = UIColor(red: 245 / 255, green: 107 / 255, blue: 108 / 255, alpha: 1)
+    static let universalBlack = UIColor(red: 26 / 255, green: 27 / 255, blue: 34 / 255, alpha: 1)
+    static let universalWhite = UIColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
+    
     // Secondary Colors
     static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
 
     // Background Colors
     static let background = UIColor.white
+    static let universalBackground = UIColor(red: 26 / 255, green: 27 / 255, blue: 34 / 255, alpha: 0.5)
 
     // Text Colors
     static let textPrimary = UIColor.black
