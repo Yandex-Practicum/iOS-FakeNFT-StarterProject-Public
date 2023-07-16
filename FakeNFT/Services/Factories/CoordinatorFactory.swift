@@ -12,19 +12,20 @@ protocol CoordinatorFactoryProtocol {
     func makeOnboardingCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeLoginCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeTabBarCoordinator(with router: Routable) -> CoordinatorProtocol
+    func makeProfileCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeCatalogCoordinator(with router: Routable) -> CoordinatorProtocol
     func makeCartCoordinator(with router: Routable) -> CoordinatorProtocol
 }
 
 final class CoordinatorFactory  {
-    private let modulesFactory: CartModuleFactoryProtocol & CatalogModuleFactoryProtocol & LoginModuleFactoryProtocol & OnboardingModuleFactoryProtocol = ModulesFactory()
-    private let navigationControllerFactory: NavigationControllerFactoryProtocol = NavigationControllerFactory()
-    private let alertConstructor: AlertConstructable = AlertConstructor()
-    private let dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol = DataStore()
-    private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable = TableViewDataSource()
-    private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable = CollectionViewDataSourceManager()
-    private let keyChainManager: SecureDataProtocol = KeyChainManager(service: K.KeyChainServices.profileLogin)
-    private let firstEnterChecker: FirstEnterCheckableProtocol = OnboardingFirstEnterChecker(onboardingFirstEnterStorage: OnboardingFirstEnterStorage())
+    private let modulesFactory = ModulesFactory()
+    private let navigationControllerFactory = NavigationControllerFactory()
+    private let alertConstructor = AlertConstructor()
+    private let dataStore = DataStore()
+    private let tableViewDataSource = TableViewDataSource()
+    private let collectionViewDataSource = CollectionViewDataSourceManager()
+    private let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
+    private let firstEnterChecker = OnboardingFirstEnterChecker(onboardingFirstEnterStorage: OnboardingFirstEnterStorage())
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -36,6 +37,17 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
         OnboardingCoordinator(
             modulesFactory: modulesFactory,
             router: router)
+    }
+    
+    func makeProfileCoordinator(with router: Routable) -> CoordinatorProtocol {
+        ProfileCoordinator(
+            factory: modulesFactory,
+            router: router,
+            navigationControllerFactory: navigationControllerFactory,
+            alertConstructor: alertConstructor,
+            dataStore: dataStore,
+            tableViewDataSource: tableViewDataSource,
+            collectionViewDataSource: collectionViewDataSource)
     }
     
     func makeLoginCoordinator(with router: Routable) -> CoordinatorProtocol {

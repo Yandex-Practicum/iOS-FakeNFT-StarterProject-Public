@@ -35,6 +35,10 @@ protocol OnboardingModuleFactoryProtocol {
     func makeOnboardingScreenView() -> Presentable & OnboardingCoordinatable
 }
 
+protocol ProfileModuleFactoryProtocol {
+    func makeProfileMainScreenView() -> Presentable & ProfileMainCoordinatableProtocol
+}
+
 final class ModulesFactory {}
 
 // MARK: - Ext OnboardingModuleFactoryProtocol
@@ -59,6 +63,15 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
     func makeResetPasswordScreenView(keyChainManager: SecureDataProtocol) -> Presentable & ResetPasswordCoordinatable {
         let viewModel = ResetPasswordViewModel(keyChainManager: keyChainManager)
         let viewController = ResetPasswordViewController(viewModel: viewModel)
+        return viewController
+    }
+}
+
+// MARK: - Ext ProfileModuleFactoryProtocol
+extension ModulesFactory: ProfileModuleFactoryProtocol {
+    func makeProfileMainScreenView() -> Presentable & ProfileMainCoordinatableProtocol {
+        let viewModel = ProfileMainViewModel()
+        let viewController = ProfileMainViewController(viewModel: viewModel)
         return viewController
     }
 }

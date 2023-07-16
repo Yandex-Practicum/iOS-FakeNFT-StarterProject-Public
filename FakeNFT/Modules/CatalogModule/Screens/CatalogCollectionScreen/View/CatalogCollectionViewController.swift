@@ -67,13 +67,8 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         return label
     }()
     
-    private lazy var collectionDescriptionTextView: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = false
+    private lazy var collectionDescriptionTextView: DescriptionTextView = {
+        let textView = DescriptionTextView()
         return textView
     }()
     
