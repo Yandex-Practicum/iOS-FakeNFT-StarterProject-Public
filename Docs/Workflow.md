@@ -6,25 +6,29 @@ FakeNFT Yandex Project Workflow
 "Create a .md file with a project Workflow" (Estimated time: 15, Time spent: 25 min)\
 "Create a project's main NavigationController" (Estimated time: 15, Time spent: 10 min)\
 "Add an Observable property wrapper file for MVVM realisation" (Estimated time: 5 min, Time spent: 5 min)\
-"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent:)\
-"Create a ProfileScreen UI" (Estimated time: 25, Time spent:)\
-"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent:)\
-"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent:)\
-"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent:)\
-"Implement the ProfileScreen logic" (Estimated time: 45, Time spent:)\
-"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent:)\
-"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent:)\
-"Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:)\
-"Change the logic of the default NavigationController when a ProfileNFTScreen is visible" (Estimated time: 10, Time spent:)\
-"Implement the ProfileNFTScreen sorting button logic" (Estimated time: 30, Time spent:)\
-"Create a ProfileNFTCells UI" (Estimated time: 40, Time spent:)\
-"Implement the ProfileNFTScreen tableview and cells logic" (Estimated time: 40, Time spent:)\
-"Implement a ProfileNFTScreen logic" (Estimated time: 30, Time spent:)\
-"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent:)\
-"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent:)\
-"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent:)\
-"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent:)\
-"Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent:)
+"Create an UICreator struct to simplify an UI building in project" (Estimated time: 15, Time spent: 15 min)\
+"Create a ProfileScreen UI" (Estimated time: 25, Time spent: 30 min)\
+"Create an ProfileScreen menu cells","DmnUAll" (Estimated time: 15, Time spent: 10 min)\
+"Implement the ProfileScreen MenuTableView cells logic" (Estimated time: 15, Time spent: 25)\
+"Change the logic of the default NavigationController when a ProfileScreen tab is selected" (Estimated time: 15, Time spent: 15 min)\
+"Implement the ProfileScreen logic" (Estimated time: 45, Time spent: 1hr)\
+"Create a ProfileEditingScreen UI" (Estimated time: 25, Time spent: 2hrs)\
+"Implement a ProfileEditingScreen logic" (Estimated time: 45, Time spent: 2hrs)\
+"Create a ProfileNFTScreen UI" (Estimated time: 10, Time spent:20 min)\
+"Change the logic of the default NavigationController when a ProfileNFTScreen is visible" (Estimated time: 10, Time spent: 25 min)\
+"Implement the ProfileNFTScreen sorting button logic" (Estimated time: 30, Time spent: 30 min)\
+"Create a ProfileNFTCells UI" (Estimated time: 40, Time spent: 1.5 hr)\
+"Implement the ProfileNFTScreen tableview and cells logic" (Estimated time: 40, Time spent: 1hr)\
+"Implement a ProfileNFTScreen logic" (Estimated time: 30, Time spent: 2 hr)\
+"Create a ProfileFavoritedNFTScreen UI" (Estimated time: 10, Time spent: 20 min)\
+"Create a FavoritedNFTItem for collectionView" (Estimated time: 30, Time spent: 30 min)\
+"Implement a FavoritedNFT collectionView and items logic" (Estimated time: 40, Time spent: 30 min)\
+"Implement the ProfileFavoritedNFTScreen logic" (Estimated time: 30, Time spent: 40 min)\
+"Implement the UI and logic for ProfileScreen ""about developer"" menu" (Estimated time: 1 hr, Time spent: 30 min)
+"Implement an App localization file and localise a ProfileScene" (Estimated time: 40 min, Time spent: 30 min)
+"Implement an App dark\light mode for ProfileScene" (Estimated time: 40 min, Time spent: 30 min)
+"Implement a pull to refresh logic for NFTTable and FavoritedNFTCollection" (Estimated time: 40 min, Time spent: 40 min)
+"Implement a swipe to delete logic for NFTTable" (Estimated time 30 min, Time spent: 30 min)
 
 "Create a Cart Screen UI" (Estimated time: 20 min, Time spent:)\
 "Create a custom cell for CartCollectionView (Cart Screen)" (Estimated time: 30 min, Time spent:)\

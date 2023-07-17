@@ -8,6 +8,10 @@
 import Foundation
 
 struct NFTIndividualRequest: NetworkRequest {
+    var httpMethod: HttpMethod = .get
+    
+    var dto: Encodable? = nil
+    
     var endpoint: URL? {
         .init(string: "https://648cbc0b8620b8bae7ed515f.mockapi.io/api/v1/nft")
     }

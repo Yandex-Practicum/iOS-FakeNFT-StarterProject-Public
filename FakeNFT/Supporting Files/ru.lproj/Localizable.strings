@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Илья Валито on 24.06.2023.
+  
+*/
+PROFILE = "Профиль";
+CATALOG = "Каталог";
+BASKET = "Корозина";
+STATISTICS = "Статистика";
+ABOUT_NFT_DEVELOPER = "О разработчике NFT";
+NO_INTERNET_ERROR = "Нет интернета";
+RETRY = "Попробовать снова";
+MY_NFT = "Мои NFT";
+FAVORITED_NFT = "Избранные NFT";
+ABOUT_DEVELOPER = "О разработчике";
+CHANGE_PHOTO = "Сменить фото";
+DOWNLOAD_AN_IMAGE = "Загрузить изображение";
+NAME = "Имя";
+DESCRIPTION = "Описание";
+WEBSITE = "Сайт";
+PHOTO_CHANGING = "Изменение фото";
+ENTER_A_LINK_TO_A_NEW_PHOTO = "Введите ссылку на новое фото";
+OK = "ОК";
+CANCEL = "Отменить";
+PRICE = "Цена";
+YOU_HAVE_NO_NFT_YET = "У Вас еще нет NFT";
+SORTING = "Сортировка";
+BY_PRICE = "По цене";
+BY_RATING = "По рейтингу";
+BY_NAME = "По названию";
+CLOSE = "Закрыть";
+YOU_HAVE_NO_FAVORITED_NFT_YET = "У Вас еще нет избранных NFT";
+PULL_TO_REFRESH = "Потяните чтобы обновить список";
+DELETE = "Удалить";
+SURE_TO_DELETE = "Вы уверены что хотите удалить этот NFT?";
+SOMETHING_WENT_WRONG = "Что-то пошло не так";

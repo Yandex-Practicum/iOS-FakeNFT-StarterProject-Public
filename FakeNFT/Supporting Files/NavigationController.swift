@@ -7,6 +7,16 @@
 
 import UIKit
 
+// MARK: - ProfileEditingButtonDelegate protocol
+protocol ProfileEditingButtonDelegate: AnyObject {
+    func proceedToEditing()
+}
+
+// MARK: - NavigationControllerSortingButtonDelegate protocol {
+protocol NavigationControllerSortingButtonDelgate: AnyObject {
+    func sortTapped()
+}
+
 // MARK: - NavigationController
 final class NavigationController: UINavigationController {
 
@@ -14,6 +24,9 @@ final class NavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return topViewController?.preferredStatusBarStyle ?? .default
     }
+
+    var profileEditingButtonDelegate: ProfileEditingButtonDelegate?
+    var sortingButtonDelegate: NavigationControllerSortingButtonDelgate?
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -33,20 +46,28 @@ final class NavigationController: UINavigationController {
 // MARK: - Helpers
 extension NavigationController {
 
+    @objc private func editTapped() {
+        profileEditingButtonDelegate?.proceedToEditing()
+    }
+
     @objc private func sortTapped() {
-        print("Sorting Button Have Been Tapped On VC: \(viewControllers.first?.title ?? "None")")
+        sortingButtonDelegate?.sortTapped()
     }
 
     private func configureNavigationController(forVC viewController: UIViewController) {
         navigationBar.tintColor = .appBlack
-        navigationBar.backgroundColor = .appWhite
         navigationBar.titleTextAttributes = [
             .font: UIFont.appFont(.bold, withSize: 17),
             .foregroundColor: UIColor.appBlack
         ]
 
         // configure a navigation controller for a currently selected TabBar tab (your epic's main VC)
-        if viewController is UIViewController {
+        if viewController is ProfileScreenController {
+            navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.edit),
+                                                                        style: .done,
+                                                                        target: nil,
+                                                                        action: #selector(editTapped))
+        } else {
             navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: Constants.IconNames.sort),
                                                                         style: .done,
                                                                         target: nil,
