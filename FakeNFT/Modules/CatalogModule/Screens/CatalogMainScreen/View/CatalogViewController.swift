@@ -136,7 +136,6 @@ extension CatalogViewController: UITableViewDelegate {
               let collection = cell.viewModel?.catalogRows
         else { return }
         onProceed?(collection)
-        cell.selectionStyle = .none
     }
 }
 

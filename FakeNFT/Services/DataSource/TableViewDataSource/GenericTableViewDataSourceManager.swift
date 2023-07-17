@@ -83,6 +83,7 @@ private extension TableViewDataSource {
         ) as? CatalogTableViewCell
         else { return UITableViewCell(frame: .zero) }
         cell.viewModel = CatalogCellViewModel(catalogRows: item)
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -94,6 +95,7 @@ private extension TableViewDataSource {
         else { return UITableViewCell(frame: .zero) }
         cell.viewModel = ProfileTableCellViewModel(descriptionRow: item)
         cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
         return cell
     }
     

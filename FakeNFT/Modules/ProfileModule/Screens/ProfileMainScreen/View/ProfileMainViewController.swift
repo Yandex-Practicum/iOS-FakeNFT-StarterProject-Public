@@ -90,11 +90,11 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         view.backgroundColor = .systemBackground
         setupConstraints()
         load()
-        createDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        createDataSource()
         bind()
     }
     
@@ -163,6 +163,10 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
 extension ProfileMainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         dataSource.getCartRowHeight(for: tableView, in: .profile)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
 }
 
