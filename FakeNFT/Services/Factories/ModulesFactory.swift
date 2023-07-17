@@ -36,7 +36,7 @@ protocol OnboardingModuleFactoryProtocol {
 }
 
 protocol ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView() -> Presentable & ProfileMainCoordinatableProtocol
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol
 }
 
 final class ModulesFactory {}
@@ -69,9 +69,10 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
 
 // MARK: - Ext ProfileModuleFactoryProtocol
 extension ModulesFactory: ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView() -> Presentable & ProfileMainCoordinatableProtocol {
-        let viewModel = ProfileMainViewModel()
-        let viewController = ProfileMainViewController(viewModel: viewModel)
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStore: dataStore)
+        let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
 }

@@ -65,3 +65,6 @@
 "unSuccessfulPurchase" = "Упс! Что-то пошло не так :(\nПопробуйте ещё раз!";
 "loadingData" = "Загружаем данные...";
 "backToCatalog" = "Назад в каталог";
+// Profile mainScreen
+"profileMyNfts" = "Мои NFT";
+"profileMyLikedNfts" = "Избранные NFT";

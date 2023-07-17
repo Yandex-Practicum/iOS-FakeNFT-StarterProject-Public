@@ -14,7 +14,8 @@ struct RequestConstructor {
     static func constructCurrencyRequest(method: HttpMethod) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.currencies),
-            httpMethod: method)
+            httpMethod: method
+        )
         
     }
     
@@ -22,31 +23,43 @@ struct RequestConstructor {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.orders),
             httpMethod: method,
-            dto: dto)
+            dto: dto
+        )
     }
     
     static func constructNftCollectionRequest(method: HttpMethod, collectionId: String) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleCollection + collectionId),
-            httpMethod: method)
+            httpMethod: method
+        )
     }
     
     static func constructPaymentRequest(method: HttpMethod, currencyId: String) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.pay + currencyId),
-            httpMethod: method)
+            httpMethod: method
+        )
     }
     
     static func constructCatalogRequest(method: HttpMethod) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.collection),
-            httpMethod: method)
+            httpMethod: method
+        )
     }
     
     static func constructCollectionAuthorRequest(for author: String) -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.author + author),
-            httpMethod: .get)
+            httpMethod: .get
+        )
+    }
+    
+    static func constructProfileRequest() -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.profile),
+            httpMethod: .get
+        )
     }
     
     static func constructWebViewAuthorRequest(for website: String?) -> URLRequest? {

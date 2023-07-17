@@ -37,6 +37,11 @@ protocol CatalogDataStorageProtocol: AnyObject {
     func checkIfItemIsStored(_ item: SingleNft) -> Bool
 }
 
+protocol ProfileDataStorage: AnyObject {
+    func getProfileNfts() -> [SingleNft]
+    func getProfileLikedNfts() -> [SingleNft]
+}
+
 // MARK: Final class DataStore
 final class DataStore {
     var cartSortDescriptor: CartSortValue? {
@@ -66,6 +71,16 @@ final class DataStore {
     
     private var cartLikedItems: [SingleNft] = [] {
         didSet { sendCatalogLikedItemsUpdates(newData: cartLikedItems) }
+    }
+}
+
+extension DataStore: ProfileDataStorage {
+    func getProfileNfts() -> [SingleNft] {
+        return []
+    }
+    
+    func getProfileLikedNfts() -> [SingleNft] {
+      return []
     }
 }
 

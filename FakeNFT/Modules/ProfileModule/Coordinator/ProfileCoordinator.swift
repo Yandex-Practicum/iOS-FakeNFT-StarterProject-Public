@@ -14,7 +14,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol
+    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
     
@@ -22,7 +22,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol,
+         dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
          collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
     ) {
@@ -43,7 +43,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView()
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource, dataStore: dataStore)
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in

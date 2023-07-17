@@ -54,6 +54,8 @@ private extension TableViewDataSource {
             return cartCell(tableView: tableView, indexPath: indexPath, item: singleNft)
         case let nftCollection as NftCollection:
             return catalogCell(tableView: tableView, indexPath: indexPath, item: nftCollection)
+        case let userNftDescription as ProfileModel:
+            return profileCell(tableView: tableView, indexPath: indexPath, item: userNftDescription)
         default:
             return UITableViewCell(frame: .zero)
         }
@@ -81,6 +83,17 @@ private extension TableViewDataSource {
         ) as? CatalogTableViewCell
         else { return UITableViewCell(frame: .zero) }
         cell.viewModel = CatalogCellViewModel(catalogRows: item)
+        return cell
+    }
+    
+    func profileCell(tableView: UITableView, indexPath: IndexPath, item: ProfileModel) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ProfileMainTableViewCell.defaultReuseIdentifier,
+            for: indexPath
+        ) as? ProfileMainTableViewCell
+        else { return UITableViewCell(frame: .zero) }
+        cell.viewModel = ProfileTableCellViewModel(descriptionRow: item)
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     

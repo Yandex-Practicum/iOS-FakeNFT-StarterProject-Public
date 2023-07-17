@@ -6,7 +6,50 @@
 //
 
 import Foundation
+import Combine
 
 final class ProfileMainViewModel {
     
+    @Published private (set) var profile: Profile?
+    @Published private (set) var profileData: [ProfileModel] = []
+    
+    let networkClient: NetworkClient
+    let dataStore: ProfileDataStorage
+    
+    // MARK: Init
+    init(networkClient: NetworkClient, dataStore: ProfileDataStorage) {
+        self.networkClient = networkClient
+        self.dataStore = dataStore
+    }
+    
+    func loadUser() {
+        let request = RequestConstructor.constructProfileRequest()
+        networkClient.send(request: request, type: Profile.self) { [weak self] result in
+            switch result {
+            case .success(let profile):
+                self?.profile = profile
+                self?.createUserData(profile)
+            case .failure(let error):
+                // TODO: Make alert
+                print(error)
+            }
+        }
+    }
+}
+
+// MARK: - Ext Private
+private extension ProfileMainViewModel {
+    func createUserData(_ profile: Profile?) {
+        guard let profile else { return }
+        addCreatedNfts(from: profile)
+        addFavouriteNfts(from: profile)
+    }
+    
+    func addCreatedNfts(from profile: Profile) {
+        profileData.append(ProfileItems.created(profile.nfts.count).title)
+    }
+    
+    func addFavouriteNfts(from profile: Profile) {
+        profileData.append(ProfileItems.favorite(profile.likes.count).title)
+    }
 }

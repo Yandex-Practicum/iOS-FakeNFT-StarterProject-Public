@@ -8,7 +8,7 @@
 import Foundation
 
 enum TableViewHeight {
-    case catalog, cart
+    case catalog, cart, profile
     
     var height: CGFloat {
         switch self {
@@ -16,6 +16,8 @@ enum TableViewHeight {
             return 3.0
         case .cart:
             return 4.0
+        case .profile:
+            return 7.0
         }
     }
 }
