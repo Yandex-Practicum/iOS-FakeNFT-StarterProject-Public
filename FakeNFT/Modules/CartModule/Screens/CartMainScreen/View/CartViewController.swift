@@ -213,7 +213,7 @@ extension CartViewController: CartMainCoordinatableProtocol {
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return diffableDataSource.getCartRowHeight(for: tableView, in: .cart)
+        return diffableDataSource.getRowHeight(for: tableView, in: .cart)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

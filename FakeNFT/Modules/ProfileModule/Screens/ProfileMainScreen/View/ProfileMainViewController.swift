@@ -10,12 +10,21 @@ import Combine
 
 protocol ProfileMainCoordinatableProtocol {
     var onEdit: (() -> Void)? { get set }
+    var onMyNfts: (([String]) -> Void)? { get set }
+    var onError: ((Error) -> Void)? { get set }
+    func load()
 }
 
 final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol {
 
     var onEdit: (() -> Void)?
+    var onMyNfts: (([String]) -> Void)?
+    var onError: ((Error) -> Void)?
+    
     var cancellables = Set<AnyCancellable>()
+    
+    private let viewModel: ProfileMainViewModel
+    private let dataSource: GenericTableViewDataSourceProtocol
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -70,9 +79,6 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         return stackView
     }()
     
-    private let viewModel: ProfileMainViewModel
-    private let dataSource: GenericTableViewDataSourceProtocol
-    
     // MARK: Init
     init(viewModel: ProfileMainViewModel, dataSource: GenericTableViewDataSourceProtocol) {
         self.viewModel = viewModel
@@ -105,7 +111,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
     }
     
     // MARK: Load
-    private func load() {
+    func load() {
         viewModel.loadUser()
     }
     
@@ -124,15 +130,13 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
                 self?.updateDataSource(with: profileModel)
             }
             .store(in: &cancellables)
-    }
-    
-    // MARK: DataSource
-    private func createDataSource() {
-        dataSource.createDataSource(for: tableView, with: viewModel.profileData)
-    }
-    
-    private func updateDataSource(with rows: [ProfileModel]) {
-        dataSource.updateTableView(with: rows)
+        
+        viewModel.$catalogError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.catchError(error)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: UpdateUI
@@ -159,14 +163,46 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
 
 }
 
+// MARK: - Ext DataSource
+private extension ProfileMainViewController {
+    func createDataSource() {
+        dataSource.createDataSource(for: tableView, with: viewModel.profileData)
+    }
+    
+    func updateDataSource(with rows: [ProfileModel]) {
+        dataSource.updateTableView(with: rows)
+    }
+}
+
 // MARK: - Ext TableViewDelegate
 extension ProfileMainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        dataSource.getCartRowHeight(for: tableView, in: .profile)
+        dataSource.getRowHeight(for: tableView, in: .profile)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+        switch indexPath.row {
+        case 0:
+            goToMyNfts()
+        default:
+            print(indexPath)
+        }
+    }
+}
+
+// MARK: - Ext Navigation
+private extension ProfileMainViewController {
+    func goToMyNfts() {
+        guard let nfts = viewModel.profile?.nfts else { return }
+        onMyNfts?(nfts)
+    }
+}
+
+// MARK: Catch error
+private extension ProfileMainViewController {
+    func catchError(_ error: Error?) {
+        guard let error else { return }
+        onError?(error)
     }
 }
 

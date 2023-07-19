@@ -38,8 +38,13 @@ protocol CatalogDataStorageProtocol: AnyObject {
 }
 
 protocol ProfileDataStorage: AnyObject {
+    var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
     func getProfileNfts() -> [SingleNft]
     func getProfileLikedNfts() -> [SingleNft]
+    func addNfts(_ nft: SingleNft)
+    // check
+    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
+    func checkIfItemIsStored(_ item: SingleNft) -> Bool
 }
 
 // MARK: Final class DataStore
@@ -69,18 +74,30 @@ final class DataStore {
         didSet { sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems) }
     }
     
-    private var cartLikedItems: [SingleNft] = [] {
-        didSet { sendCatalogLikedItemsUpdates(newData: cartLikedItems) }
+    private var likedNfts: [SingleNft] = [] {
+        didSet { sendCatalogLikedItemsUpdates(newData: likedNfts) }
     }
 }
 
 extension DataStore: ProfileDataStorage {
+    var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> {
+        return storedCatalogNftsPublishedItems.eraseToAnyPublisher()
+    }
+    
     func getProfileNfts() -> [SingleNft] {
         return []
     }
     
     func getProfileLikedNfts() -> [SingleNft] {
-      return []
+      return likedNfts
+    }
+    
+    func addNfts(_ nft: SingleNft) {
+        guard nftCollectionStoredItems.contains(nft) else {
+            nftCollectionStoredItems.insert(nft)
+            return
+        }
+        
     }
 }
 
@@ -139,7 +156,7 @@ extension DataStore: CatalogDataStorageProtocol {
     
     func addOrDeleteLike(_ id: String) {
         guard let element = nftCollectionStoredItems.first(where: { $0.id == id }) else { fatalError("addOrDeleteNftToCart error") }
-        cartLikedItems.contains(where: { $0 == element }) ? deleteLike(element) : addLike(element)
+        likedNfts.contains(where: { $0 == element }) ? deleteLike(element) : addLike(element)
     }
     
     // MARK: CatalogDataStorageProtocol get
@@ -159,7 +176,7 @@ extension DataStore: CatalogDataStorageProtocol {
     }
     
     func checkIfItemIsLiked(_ item: SingleNft) -> Bool {
-        return cartLikedItems.contains(where: { $0 == item })
+        return likedNfts.contains(where: { $0 == item })
     }
 }
 
@@ -248,10 +265,10 @@ private extension DataStore {
 // MARK: - Ext Add / Delete like
 private extension DataStore {
     func addLike(_ item: SingleNft) {
-        cartLikedItems.append(item)
+        likedNfts.append(item)
     }
     
     func deleteLike(_ item: SingleNft) {
-        cartLikedItems.removeAll(where: { $0 == item })
+        likedNfts.removeAll(where: { $0 == item })
     }
 }

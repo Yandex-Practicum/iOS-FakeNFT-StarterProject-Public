@@ -37,6 +37,8 @@ protocol OnboardingModuleFactoryProtocol {
 
 protocol ProfileModuleFactoryProtocol {
     func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol
+    
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable & ProfileMyNftsCoordinatable
 }
 
 final class ModulesFactory {}
@@ -73,6 +75,13 @@ extension ModulesFactory: ProfileModuleFactoryProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
+        return viewController
+    }
+    
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable & ProfileMyNftsCoordinatable {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = ProfileMyNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
+        let viewController = ProfileMyNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
 }

@@ -128,7 +128,7 @@ final class CatalogViewController: UIViewController {
 // MARK: - Ext TableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getCartRowHeight(for: tableView, in: .catalog)
+        return dataSource.getRowHeight(for: tableView, in: .catalog)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

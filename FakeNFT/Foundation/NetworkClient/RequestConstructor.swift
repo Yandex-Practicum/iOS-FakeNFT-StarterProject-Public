@@ -62,6 +62,12 @@ struct RequestConstructor {
         )
     }
     
+    static func constructSingleNftRequest(nftId: String) -> NetworkRequest {
+        return Request(
+            endpoint: URL(string: K.Links.apiLink + K.EndPoints.singleNft + nftId),
+            httpMethod: .get)
+    }
+    
     static func constructWebViewAuthorRequest(for website: String?) -> URLRequest? {
         guard let website, let url = URL(string: website) else { return nil }
         return URLRequest(url: url)

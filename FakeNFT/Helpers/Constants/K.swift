@@ -86,6 +86,7 @@ struct K {
         static let pay = "api/v1/orders/1/payment/"
         static let author = "/api/v1/users/"
         static let profile = "api/v1/profile/1"
+        static let singleNft = "api/v1/nft/"
     }
     
     struct KeyChainServices {

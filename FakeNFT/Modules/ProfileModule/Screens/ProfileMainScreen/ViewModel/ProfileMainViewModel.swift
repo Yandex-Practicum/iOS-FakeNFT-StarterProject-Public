@@ -12,6 +12,7 @@ final class ProfileMainViewModel {
     
     @Published private (set) var profile: Profile?
     @Published private (set) var profileData: [ProfileModel] = []
+    @Published private (set) var catalogError: Error?
     
     let networkClient: NetworkClient
     let dataStore: ProfileDataStorage
@@ -30,8 +31,7 @@ final class ProfileMainViewModel {
                 self?.profile = profile
                 self?.createUserData(profile)
             case .failure(let error):
-                // TODO: Make alert
-                print(error)
+                self?.catalogError = error
             }
         }
     }

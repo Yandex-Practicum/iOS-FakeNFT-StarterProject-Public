@@ -25,10 +25,8 @@ extension CustomLikeButton {
         switch appearance {
         case .favourite:
             setImage(UIImage(named: K.Icons.activeLike), for: .normal)
-//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalRed, renderingMode: .alwaysOriginal), for: .normal)
         case .normal:
             setImage(UIImage(named: K.Icons.notActiveLike), for: .normal)
-//            setImage(UIImage(systemName: K.Icons.heart)?.withTintColor(.universalWhite, renderingMode: .alwaysOriginal), for: .normal)
         }
     }
     
