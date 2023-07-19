@@ -95,7 +95,7 @@ private extension ProfileMyNftsViewController {
 // MARK: - Ext TableView delegate
 extension ProfileMyNftsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        dataSource.getRowHeight(for: tableView, in: .profileMyNft)
+        dataSource.getRowHeight(.profileMyNft)
     }
 }
 

@@ -17,7 +17,6 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftImageView: NftIMageView = {
         let imageView = NftIMageView(frame: .zero)
-//        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
         return imageView
     }()
     

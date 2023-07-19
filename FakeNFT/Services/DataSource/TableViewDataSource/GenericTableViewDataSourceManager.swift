@@ -10,7 +10,7 @@ import UIKit
 protocol GenericTableViewDataSourceProtocol {
     func createDataSource(for tableView: UITableView, with data: [AnyHashable])
     func updateTableView(with data: [AnyHashable])
-    func getRowHeight(for tableView: UITableView, in module: TableViewHeight) -> CGFloat
+    func getRowHeight(_ module: TableViewHeight) -> CGFloat
 }
 
 protocol TableViewDataSourceCoordinatable {
@@ -41,8 +41,8 @@ extension TableViewDataSource: GenericTableViewDataSourceProtocol {
         genericDataSource?.apply(createSnapshot(from: data), animatingDifferences: true, completion: nil)
     }
     
-    func getRowHeight(for tableView: UITableView, in module: TableViewHeight) -> CGFloat {
-        return tableView.frame.height / module.height
+    func getRowHeight(_ module: TableViewHeight) -> CGFloat {
+        return module.height
     }
 }
 

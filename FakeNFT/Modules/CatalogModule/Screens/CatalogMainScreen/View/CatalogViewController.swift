@@ -133,7 +133,7 @@ private extension CatalogViewController {
 // MARK: - Ext TableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getRowHeight(for: tableView, in: .catalog)
+        return dataSource.getRowHeight(.catalog)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

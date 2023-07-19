@@ -178,7 +178,7 @@ private extension ProfileMainViewController {
 // MARK: - Ext TableViewDelegate
 extension ProfileMainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        dataSource.getRowHeight(for: tableView, in: .profile)
+        dataSource.getRowHeight(.profile)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
