@@ -73,10 +73,7 @@ final class CatalogViewController: UIViewController {
         cancellables.removeAll()
     }
     
-    private func createDataSource() {
-        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
-    }
-
+    // MARK: Bind
     private func bind() {
         viewModel.$visibleRows
             .receive(on: DispatchQueue.main)
@@ -100,12 +97,9 @@ final class CatalogViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    // MARK: Load
     private func load() {
         viewModel.load()
-    }
-    
-    private func updateTableView(with rows: [NftCollection]) {
-        dataSource.updateTableView(with: rows)
     }
     
     private func catchError(_ error: Error?) {
@@ -122,6 +116,17 @@ final class CatalogViewController: UIViewController {
         
         loadingView.result = requestResult
         loadingView.startAnimation()
+    }
+}
+
+// MARK: - Ext DataSource
+private extension CatalogViewController {
+    private func createDataSource() {
+        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
+    }
+    
+    private func updateTableView(with rows: [NftCollection]) {
+        dataSource.updateTableView(with: rows)
     }
 }
 

@@ -64,11 +64,12 @@ private extension ProfileCoordinator {
     func showMyNftsScreen(_ nfts: [String]) {
         let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource, nftsToLoad: nfts, dataStore: dataStore)
         
-        router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
-    }
-    
-    func showFavouritesScreen() {
+        myNftsScreen.onSort = { [weak self, weak myNftsScreen] in
+            guard let self, let myNftsScreen else { return }
+            self.showSortAlert(from: myNftsScreen)
+        }
         
+        router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
     }
 }
 
@@ -89,6 +90,17 @@ private extension ProfileCoordinator {
             @unknown default:
                 break
             }
+        }
+        
+        router.presentViewController(alert, animated: true, presentationStyle: .popover)
+    }
+    
+    func showSortAlert(from screen: ProfileMyNftsCoordinatable) {
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
+        
+        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] sortValue in
+            sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
+            router?.dismissToRootViewController(animated: true, completion: nil)
         }
         
         router.presentViewController(alert, animated: true, presentationStyle: .popover)

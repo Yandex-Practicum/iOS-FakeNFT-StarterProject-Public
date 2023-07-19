@@ -17,7 +17,7 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftImageView: NftIMageView = {
         let imageView = NftIMageView(frame: .zero)
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+//        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
         return imageView
     }()
     
@@ -33,20 +33,19 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var rateStackView: RateStackView = {
         let stackView = RateStackView()
-        stackView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return stackView
     }()
     
     private lazy var authorNameLabel: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .ypBlack)
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        // TODO: add attributes
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.75
         return label
     }()
     
     private lazy var priceLabel: CustomLabel = {
         let label = CustomLabel(size: 13, weight: .regular, color: .ypBlack)
-        // TODO: add attributes
+        label.numberOfLines = 0
         return label
     }()
     
@@ -55,12 +54,13 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.axis = .vertical
         stackView.spacing = 5
                 
-        stackView.layoutMargins = UIEdgeInsets(top: contentView.frame.height / 2, left: 0, bottom: contentView.frame.height / 2, right: 0)
+        stackView.layoutMargins = UIEdgeInsets(top: contentView.frame.height / 2, left: 0, bottom: contentView.frame.height / 2, right: 19)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(rateStackView)
         stackView.addArrangedSubview(authorNameLabel)
+                
         return stackView
     }()
     
@@ -68,6 +68,7 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 20
+        stackView.distribution = .fillEqually
         
         stackView.addArrangedSubview(nftImageView)
         stackView.addArrangedSubview(nameRateAuthorStackView)
@@ -85,6 +86,7 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Init
     private func bind() {
         viewModel?.$cellModel
             .sink(receiveValue: { [weak self] visibleSingleNft in
@@ -116,7 +118,20 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
     private func updateLabels(with nft: VisibleSingleNfts) {
         nameLabel.text = nft.name
         authorNameLabel.text = nft.author
-        priceLabel.text = "\(nft.price) ETH"
+        updatePriceLabel(with: nft)
+        
+    }
+    
+    private func updatePriceLabel(with nft: VisibleSingleNfts) {
+        let attrString = NSMutableAttributedString()
+        let firstLineAttrText = NSMutableAttributedString(string: "\(K.Titles.price)\n")
+        let secondLineAttrText = NSMutableAttributedString(string: "\(nft.price) ETH")
+        let range = NSRange(location: 0, length: secondLineAttrText.length)
+        
+        secondLineAttrText.addAttribute(.font, value: UIFont.systemFont(ofSize: 17, weight: .bold), range: range)
+        attrString.append(firstLineAttrText)
+        attrString.append(secondLineAttrText)
+        priceLabel.attributedText = attrString
     }
     
 }

@@ -38,8 +38,8 @@ protocol CatalogDataStorageProtocol: AnyObject {
 }
 
 protocol ProfileDataStorage: AnyObject {
+    var profileCollectionSortDescriptor: CartSortValue? { get set }
     var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
-    func getProfileNfts() -> [SingleNft]
     func getProfileLikedNfts() -> [SingleNft]
     func addNfts(_ nft: SingleNft)
     // check
@@ -57,10 +57,15 @@ final class DataStore {
         didSet { sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor)) }
     }
     
+    var profileCollectionSortDescriptor: CartSortValue? {
+        didSet { sendAuthorNftsUpdates(newNfts: getAuthorNftsSortedItems(by: profileCollectionSortDescriptor)) }
+    }
+    
     private var storedCartPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // items in the cart
     private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([]) // items on the main catalog screen
     private var storedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // stored collectionNfts
     private var likedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // likedItems
+    private var authorNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // author nfts
     
     private var cartStoredItems: [SingleNft] = [] {
         didSet { sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor)) }
@@ -77,15 +82,16 @@ final class DataStore {
     private var likedNfts: [SingleNft] = [] {
         didSet { sendCatalogLikedItemsUpdates(newData: likedNfts) }
     }
+    
+    private var authorNftsStoredItems: [SingleNft] = [] {
+        didSet { sendAuthorNftsUpdates(newNfts: authorNftsStoredItems) }
+    }
 }
 
+// MARK: - Ext ProfileDataStorage
 extension DataStore: ProfileDataStorage {
     var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> {
-        return storedCatalogNftsPublishedItems.eraseToAnyPublisher()
-    }
-    
-    func getProfileNfts() -> [SingleNft] {
-        return []
+        return authorNftsPublishedItems.eraseToAnyPublisher()
     }
     
     func getProfileLikedNfts() -> [SingleNft] {
@@ -93,8 +99,8 @@ extension DataStore: ProfileDataStorage {
     }
     
     func addNfts(_ nft: SingleNft) {
-        guard nftCollectionStoredItems.contains(nft) else {
-            nftCollectionStoredItems.insert(nft)
+        guard authorNftsStoredItems.contains(nft) else {
+            authorNftsStoredItems.append(nft)
             return
         }
         
@@ -142,7 +148,10 @@ extension DataStore: CatalogDataStorageProtocol {
     
     // MARK: CatalogDataStorageProtocol add
     func addCatalogRowItem(_ item: NftCollection) {
-        catalogStoredItems.append(item)
+        guard catalogStoredItems.contains(item) else {
+            catalogStoredItems.append(item)
+            return
+        }
     }
     
     func addNftRowItem(_ item: SingleNft) {
@@ -196,6 +205,39 @@ private extension DataStore {
     
     func sendCatalogLikedItemsUpdates(newData: [SingleNft]) {
         likedCatalogNftsPublishedItems.send(newData)
+    }
+    
+    func sendAuthorNftsUpdates(newNfts: [SingleNft]) {
+        authorNftsPublishedItems.send(newNfts)
+    }
+}
+
+// MARK: - Ext Profile collection sorting
+private extension DataStore {
+    func getAuthorNftsSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNft] {
+        guard let sortDescriptor else { return [] }
+        switch sortDescriptor {
+        case .price:
+            return sortAuthorNftsByPrice()
+        case .rating:
+            return sortAuthorNftsByRate()
+        case .name:
+            return sortAuthorNftsByName()
+        case .cancel:
+            return authorNftsStoredItems
+        }
+    }
+    
+    func sortAuthorNftsByPrice() -> [SingleNft] {
+        return authorNftsStoredItems.sorted(by: { $0.price < $1.price })
+    }
+    
+    func sortAuthorNftsByRate() -> [SingleNft] {
+        return authorNftsStoredItems.sorted(by: { $0.rating > $1.rating })
+    }
+    
+    func sortAuthorNftsByName() -> [SingleNft] {
+        return authorNftsStoredItems.sorted(by: { $0.name > $1.name })
     }
 }
 

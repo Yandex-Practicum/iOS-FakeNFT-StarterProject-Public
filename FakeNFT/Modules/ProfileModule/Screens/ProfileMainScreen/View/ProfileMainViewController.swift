@@ -41,6 +41,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
     
     private lazy var authorNameLabel: CustomLabel = {
         let label = CustomLabel(size: 22, weight: .bold, color: .ypBlack)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -145,7 +146,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         authorNameLabel.text = profile.name
         updateCoverImage(for: profile)
         descriptionTextView.text = profile.description
-        authorWebsiteLabel.text = profile.website
+        authorWebsiteLabel.addLink(text: K.Titles.authorWebsite, link: profile.website)
     }
     
     func updateCoverImage(for profile: Profile) {

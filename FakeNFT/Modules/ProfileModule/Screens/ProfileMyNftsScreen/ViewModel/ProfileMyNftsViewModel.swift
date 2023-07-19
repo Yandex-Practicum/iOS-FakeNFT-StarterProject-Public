@@ -11,7 +11,6 @@ import Combine
 final class ProfileMyNftsViewModel {
     @Published private (set) var visibleRows: [VisibleSingleNfts] = []
     @Published private (set) var catalogError: Error?
-    @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -28,6 +27,10 @@ final class ProfileMyNftsViewModel {
     
     func load() {
         nftsToLoad.forEach({ sendNftsRequest(nftId: $0) })
+    }
+    
+    func setupSortDescriptor(_ descriptor: CartSortValue) {
+        dataStore.profileCollectionSortDescriptor = descriptor
     }
 }
 
@@ -87,12 +90,38 @@ private extension ProfileMyNftsViewModel {
         networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
             switch result {
             case .success(let nft):
-                self?.addNftToStorage(nft)
+                self?.loadNftAuthor(of: nft)
             case .failure(let error):
                 // TODO: show alert
                 print(error)
             }
         }
+    }
+    
+    func loadNftAuthor(of nft: SingleNft) {
+        let request = RequestConstructor.constructCollectionAuthorRequest(for: nft.author)
+        networkClient.send(request: request, type: Author.self) { [weak self] result in
+            switch result {
+            case .success(let author):
+                self?.addNftToStorageWithAuthorName(from: nft, author: author)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func addNftToStorageWithAuthorName(from nft: SingleNft, author: Author) {
+        let nftToStore = SingleNft(
+            createdAt: nft.createdAt,
+            name: nft.name,
+            images: nft.images,
+            rating: nft.rating,
+            description: nft.description,
+            price: nft.price,
+            author: author.name,
+            id: nft.id)
+        
+        addNftToStorage(nftToStore)
     }
     
     private func addNftToStorage(_ nft: SingleNft) {

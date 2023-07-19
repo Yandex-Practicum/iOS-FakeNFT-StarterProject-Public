@@ -140,7 +140,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }
 }
 
-// MARK: - Ext Private
+// MARK: - Bind
 private extension CatalogCollectionViewController {
     func bind() {
         viewModel.$nftCollection
@@ -172,27 +172,12 @@ private extension CatalogCollectionViewController {
             }
             .store(in: &cancellables)
     }
-    
+}
+
+// MARK: - Ext UpdateUI
+private extension CatalogCollectionViewController {
     func loadAuthorData(for collection: NftCollection) {
         viewModel.loadAuthorData(of: collection)
-    }
-    
-    func createCollectionView() {
-        diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
-        setOnCartClosure()
-        setOnLikeClosure()
-    }
-    
-    func setOnCartClosure() {
-        diffableDataSource.onCartHandler = { [weak viewModel] id in
-            viewModel?.addOrDeleteNftFromCart(with: id)
-        }
-    }
-    
-    func setOnLikeClosure() {
-        diffableDataSource.onLikeHandler = { [weak viewModel] id in
-            viewModel?.addOrDeleteLike(to: id)
-        }
     }
     
     func updateUI(with collection: NftCollection) {
@@ -225,29 +210,56 @@ private extension CatalogCollectionViewController {
         authorDescriptionLabel.setupAttributedText(authorName: collection.author)
     }
     
-    func updateAuthorTextLabelLink(for author: Author?) {
-        guard let author else { return }
-        authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
-    }
-    
     func updateDescriptionTextView(for collection: NftCollection) {
         collectionDescriptionTextView.text = collection.description
         updateTextViewHeight()
-    }
-    
-    func updateTextViewHeight() {
-        let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
     }
     
     func updateSingleNfts(for collection: NftCollection) {
         viewModel.updateNfts(from: collection)
     }
     
+    func updateTextViewHeight() {
+        let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
+}
+
+// MARK: - Data Source
+private extension CatalogCollectionViewController {
+    func createCollectionView() {
+        diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
+        setOnCartClosure()
+        setOnLikeClosure()
+    }
+    
     func updateCollectionView(with data: [VisibleSingleNfts]) {
         diffableDataSource.updateCollection(with: data)
     }
     
+    func setOnCartClosure() {
+        diffableDataSource.onCartHandler = { [weak viewModel] id in
+            viewModel?.addOrDeleteNftFromCart(with: id)
+        }
+    }
+    
+    func setOnLikeClosure() {
+        diffableDataSource.onLikeHandler = { [weak viewModel] id in
+            viewModel?.addOrDeleteLike(to: id)
+        }
+    }
+}
+
+// MARK: - Ext AuthorLink
+private extension CatalogCollectionViewController {
+    func updateAuthorTextLabelLink(for author: Author?) {
+        guard let author else { return }
+        authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
+    }
+}
+
+// MARK: - Ext Animation
+private extension CatalogCollectionViewController {
     func showOrHideAnimation(for requestResult: RequestResult?) {
         guard let requestResult
         else {

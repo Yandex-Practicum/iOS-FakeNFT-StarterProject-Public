@@ -73,6 +73,7 @@ extension Router: Routable {
     }
     
     func popToRootViewController(animated: Bool, completion: (() -> Void)?) {
+        print("currentViewController is: \(currentViewController)")
         guard let pushedVC = currentViewController as? UINavigationController else { return }
         pushedVC.popToRootViewController(animated: animated)
         self.currentViewController = delegate?.returnRootViewController()

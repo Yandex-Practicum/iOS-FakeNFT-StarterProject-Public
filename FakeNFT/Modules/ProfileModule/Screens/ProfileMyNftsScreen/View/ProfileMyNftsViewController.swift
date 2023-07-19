@@ -8,15 +8,14 @@
 import UIKit
 import Combine
 
-protocol ProfileMyNftsCoordinatable {
-    var onCancel: (() -> Void)? { get set }
-    var onFilter: (() -> Void)? { get set }
+protocol ProfileMyNftsCoordinatable: AnyObject {
+    var onSort: (() -> Void)? { get set }
+    func setupSortDescriptor(_ sortDescriptor: CartSortValue)
 }
 
 final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
     
-    var onCancel: (() -> Void)?
-    var onFilter: (() -> Void)?
+    var onSort: (() -> Void)?
 
     private let viewModel: ProfileMyNftsViewModel
     private let dataSource: GenericTableViewDataSourceProtocol
@@ -63,6 +62,10 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         cancellables.removeAll()
     }
     
+    func setupSortDescriptor(_ sortDescriptor: CartSortValue) {
+        viewModel.setupSortDescriptor(sortDescriptor)
+    }
+    
     // MARK: Bind
     private func bind() {
         viewModel.$visibleRows
@@ -80,11 +83,11 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
 
 // MARK: - Ext DataSource
 private extension ProfileMyNftsViewController {
-    private func updateUI(with rows: [VisibleSingleNfts]) {
+    func updateUI(with rows: [VisibleSingleNfts]) {
         dataSource.updateTableView(with: rows)
     }
     
-    private func createDataSource() {
+    func createDataSource() {
         dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
     }
 }
@@ -104,13 +107,14 @@ private extension ProfileMyNftsViewController {
     }
 }
 
+// MARK: - Ext objc
 @objc private extension ProfileMyNftsViewController {
     func cancelTapped() {
-        onCancel?()
+        navigationController?.popViewController(animated: true)
     }
     
     func filterTapped() {
-        onFilter?()
+        onSort?()
     }
 }
 
