@@ -9,7 +9,7 @@ import UIKit
 
 
 extension UIViewController {
-    func setupLeftNavBarItem(with title: String?, action: Selector?) {
+    func setupLeftNavBarItem(title: String?, action: Selector?) {
         guard
             let image = UIImage(systemName: K.Icons.chevronBackward)?
                 .withTintColor(
@@ -23,7 +23,7 @@ extension UIViewController {
         navigationItem.leftBarButtonItem = customLeftItem
     }
     
-    func setupRightFilterNavBarItem(with title: String?, action: Selector?) {
+    func setupRightFilterNavBarItem(title: String?, action: Selector?) {
         let rightItem = UIBarButtonItem(
             image: UIImage(systemName: K.Icons.filterRightBarButtonIcon),
             style: .plain,

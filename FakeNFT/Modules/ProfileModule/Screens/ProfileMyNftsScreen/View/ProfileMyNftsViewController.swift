@@ -9,10 +9,14 @@ import UIKit
 import Combine
 
 protocol ProfileMyNftsCoordinatable {
-    
+    var onCancel: (() -> Void)? { get set }
+    var onFilter: (() -> Void)? { get set }
 }
 
 final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
+    
+    var onCancel: (() -> Void)?
+    var onFilter: (() -> Void)?
 
     private let viewModel: ProfileMyNftsViewModel
     private let dataSource: GenericTableViewDataSourceProtocol
@@ -43,6 +47,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
+        setupNavigationBar()
         load()
     }
     
@@ -88,6 +93,24 @@ private extension ProfileMyNftsViewController {
 extension ProfileMyNftsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         dataSource.getRowHeight(for: tableView, in: .profileMyNft)
+    }
+}
+
+// MARK: - Ext NavigationBar
+private extension ProfileMyNftsViewController {
+    func setupNavigationBar() {
+        setupLeftNavBarItem(title: K.Titles.profileMyNfts, action: #selector(cancelTapped))
+        setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
+    }
+}
+
+@objc private extension ProfileMyNftsViewController {
+    func cancelTapped() {
+        onCancel?()
+    }
+    
+    func filterTapped() {
+        onFilter?()
     }
 }
 

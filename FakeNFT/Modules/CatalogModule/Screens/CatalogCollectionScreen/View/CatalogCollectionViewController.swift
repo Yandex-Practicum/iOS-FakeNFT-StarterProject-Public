@@ -109,7 +109,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        setupLeftNavBarItem(with: nil, action: #selector(cancelTapped))
+        setupLeftNavBarItem(title: nil, action: #selector(cancelTapped))
         setupConstraints()
         createCollectionView()
     }

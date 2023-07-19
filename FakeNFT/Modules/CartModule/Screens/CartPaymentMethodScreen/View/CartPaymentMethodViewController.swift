@@ -101,7 +101,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupLeftNavBarItem(with: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
+        setupLeftNavBarItem(title: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
         setupConstraints()
         createDataSource()
         viewModel.getPaymentMethods()

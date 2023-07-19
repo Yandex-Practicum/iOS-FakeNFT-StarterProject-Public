@@ -57,7 +57,7 @@ final class CatalogViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
         setupConstraints()
-        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
+        setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
         load()
     }
     
