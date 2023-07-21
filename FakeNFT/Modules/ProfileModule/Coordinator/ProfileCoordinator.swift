@@ -16,7 +16,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private var alertConstructor: AlertConstructable
     private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
-    private let collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
+    private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     
     init(factory: ProfileModuleFactoryProtocol,
          router: Routable,
@@ -24,7 +24,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
          alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
-         collectionViewDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
+         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     ) {
         
         self.factory = factory
@@ -54,6 +54,10 @@ private extension ProfileCoordinator {
             self?.showMyNftsScreen(nfts)
         }
         
+        profileScreen.onLiked = { [weak self] nfts in
+            self?.showLikedNftsScreen(nfts)
+        }
+        
         profileScreen.onError = { [weak self] error in
             self?.showLoadAlert(from: profileScreen, with: error)
         }
@@ -70,6 +74,12 @@ private extension ProfileCoordinator {
         }
         
         router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
+    }
+    
+    func showLikedNftsScreen(_ nfts: [String]) {
+        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, nftsToLoad: nfts, dataStore: dataStore)
+        
+        router.pushViewControllerFromTabbar(likedNftsScreen, animated: true)
     }
 }
 

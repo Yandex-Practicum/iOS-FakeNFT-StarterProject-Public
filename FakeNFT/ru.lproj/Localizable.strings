@@ -18,6 +18,7 @@
 "price" = "Цена";
 "collectionAuthor" = "Автор коллекции: ";
 "emptyCart" = "Корзина пуста";
+"favouriteNfts" = "Избранные NFT";
 // DeleteScreenTitles
 "questionBeforeDelete" = "Вы уверены, что хотите удалить объект из корзины?";
 "delete" = "Удалить";

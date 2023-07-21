@@ -125,6 +125,6 @@ private extension ProfileMyNftsViewModel {
     }
     
     private func addNftToStorage(_ nft: SingleNft) {
-        dataStore.addNfts(nft)
+        dataStore.addStoredNfts(nft)
     }
 }

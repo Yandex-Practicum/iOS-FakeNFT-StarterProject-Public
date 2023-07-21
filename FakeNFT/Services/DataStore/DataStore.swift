@@ -40,8 +40,10 @@ protocol CatalogDataStorageProtocol: AnyObject {
 protocol ProfileDataStorage: AnyObject {
     var profileCollectionSortDescriptor: CartSortValue? { get set }
     var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
+    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
     func getProfileLikedNfts() -> [SingleNft]
-    func addNfts(_ nft: SingleNft)
+    func addStoredNfts(_ nft: SingleNft)
+    func addOrDeleteLikeFromProfile(_ nft: SingleNft)
     // check
     func checkIfItemIsLiked(_ item: SingleNft) -> Bool
     func checkIfItemIsStored(_ item: SingleNft) -> Bool
@@ -94,16 +96,23 @@ extension DataStore: ProfileDataStorage {
         return authorNftsPublishedItems.eraseToAnyPublisher()
     }
     
+    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNft], Never> {
+        return likedCatalogNftsPublishedItems.eraseToAnyPublisher()
+    }
+    
     func getProfileLikedNfts() -> [SingleNft] {
       return likedNfts
     }
     
-    func addNfts(_ nft: SingleNft) {
+    func addStoredNfts(_ nft: SingleNft) {
         guard authorNftsStoredItems.contains(nft) else {
             authorNftsStoredItems.append(nft)
             return
         }
-        
+    }
+    
+    func addOrDeleteLikeFromProfile(_ nft: SingleNft) {
+        likedNfts.contains(where: { $0 == nft }) ? deleteLike(nft) : addLike(nft)
     }
 }
 

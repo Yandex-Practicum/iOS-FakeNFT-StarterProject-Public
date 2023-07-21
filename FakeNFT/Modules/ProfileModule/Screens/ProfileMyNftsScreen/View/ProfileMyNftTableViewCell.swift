@@ -85,7 +85,7 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Init
+    // MARK: Bind
     private func bind() {
         viewModel?.$cellModel
             .sink(receiveValue: { [weak self] visibleSingleNft in
@@ -94,6 +94,7 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
             .cancel()
     }
     
+    // MARK: UpdateUI
     private func updateUI(with nft: VisibleSingleNfts) {
         loadCover(with: nft)
         updateLikeButton(with: nft)

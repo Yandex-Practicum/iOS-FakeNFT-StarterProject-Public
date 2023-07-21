@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol GenericDataSourceManagerProtocol {
-    func createDataSource(with collectionView: UICollectionView, with data: [AnyHashable])
+protocol GenericCollectionViewDataSourceProtocol {
+    func createDataSource(with collectionView: UICollectionView, from data: [AnyHashable])
     func updateCollection(with data: [AnyHashable])
 }
 
@@ -30,8 +30,8 @@ final class CollectionViewDataSourceManager: CollectionViewDataSourceCoordinatab
 }
 
 // MARK: - Ext GenericDataSourceManagerProtocol
-extension CollectionViewDataSourceManager: GenericDataSourceManagerProtocol {
-    func createDataSource(with collectionView: UICollectionView, with data: [AnyHashable]) {
+extension CollectionViewDataSourceManager: GenericCollectionViewDataSourceProtocol {
+    func createDataSource(with collectionView: UICollectionView, from data: [AnyHashable]) {
         genericDataSource = UICollectionViewDiffableDataSource<CollectionDiffableDataSourceSection, AnyHashable>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
             return self?.collectionViewCell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
@@ -50,6 +50,8 @@ private extension CollectionViewDataSourceManager {
             return setupCartPaymentMethodCell(collectionView, at: indexPath, with: paymentMethodRow)
         case let visibleSingleNfts as VisibleSingleNfts:
             return setupCatalogCollectionViewCell(collectionView, at: indexPath, with: visibleSingleNfts)
+        case let likedSingleNfts as LikedSingleNfts:
+            return setupLikedCollectionViewCell(collectionView, at: indexPath, with: likedSingleNfts)
         default:
             return UICollectionViewCell(frame: .zero)
         }
@@ -88,6 +90,17 @@ private extension CollectionViewDataSourceManager {
             self?.onLikeHandler?(id)
         }
         
+        return cell
+    }
+    
+    func setupLikedCollectionViewCell(_ collectionView: UICollectionView, at indexPath: IndexPath, with row: LikedSingleNfts) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ProfileLikedNftsCollectionCell.defaultReuseIdentifier,
+            for: indexPath) as? ProfileLikedNftsCollectionCell
+        else {
+            return UICollectionViewCell(frame: .zero)
+        }
+        cell.viewModel = ProfileLikedNftsCellViewModel(cellModel: row)
         return cell
     }
     

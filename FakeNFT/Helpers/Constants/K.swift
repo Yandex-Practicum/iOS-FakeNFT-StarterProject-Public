@@ -61,6 +61,7 @@ struct K {
         static let profileMyNfts = NSLocalizedString("profileMyNfts", comment: "")
         static let profileMyLikedNfts = NSLocalizedString("profileMyLikedNfts", comment: "")
         static let authorWebsite = NSLocalizedString("authorWebsite", comment: "")
+        static let favouriteNfts = NSLocalizedString("favouriteNfts", comment: "")
     }
     
     struct AlertTitles {
