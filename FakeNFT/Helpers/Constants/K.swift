@@ -58,6 +58,10 @@ struct K {
         static let unSuccessfulPurchase = NSLocalizedString("unSuccessfulPurchase", comment: "")
         static let loadingData = NSLocalizedString("loadingData", comment: "")
         static let backToCatalog = NSLocalizedString("backToCatalog", comment: "")
+        static let profileMyNfts = NSLocalizedString("profileMyNfts", comment: "")
+        static let profileMyLikedNfts = NSLocalizedString("profileMyLikedNfts", comment: "")
+        static let authorWebsite = NSLocalizedString("authorWebsite", comment: "")
+        static let favouriteNfts = NSLocalizedString("favouriteNfts", comment: "")
     }
     
     struct AlertTitles {
@@ -83,6 +87,8 @@ struct K {
         static let singleCollection = "api/v1/nft/"
         static let pay = "api/v1/orders/1/payment/"
         static let author = "/api/v1/users/"
+        static let profile = "api/v1/profile/1"
+        static let singleNft = "api/v1/nft/"
     }
     
     struct KeyChainServices {

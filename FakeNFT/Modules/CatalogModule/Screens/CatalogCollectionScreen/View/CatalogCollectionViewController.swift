@@ -21,7 +21,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     var cancellables = Set<AnyCancellable>()
     
     private let viewModel: CatalogCollectionViewModel
-    private var diffableDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable
+    private var diffableDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -67,13 +67,8 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         return label
     }()
     
-    private lazy var collectionDescriptionTextView: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = false
+    private lazy var collectionDescriptionTextView: DescriptionTextView = {
+        let textView = DescriptionTextView()
         return textView
     }()
     
@@ -100,7 +95,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }()
     
     // MARK: Init
-    init(viewModel: CatalogCollectionViewModel, diffableDataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable) {
+    init(viewModel: CatalogCollectionViewModel, diffableDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable) {
         self.viewModel = viewModel
         self.diffableDataSource = diffableDataSource
         super.init(nibName: nil, bundle: nil)
@@ -114,7 +109,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        setupLeftNavBarItem(with: nil, action: #selector(cancelTapped))
+        setupLeftNavBarItem(title: nil, action: #selector(cancelTapped))
         setupConstraints()
         createCollectionView()
     }
@@ -145,7 +140,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
     }
 }
 
-// MARK: - Ext Private
+// MARK: - Bind
 private extension CatalogCollectionViewController {
     func bind() {
         viewModel.$nftCollection
@@ -177,27 +172,12 @@ private extension CatalogCollectionViewController {
             }
             .store(in: &cancellables)
     }
-    
+}
+
+// MARK: - Ext UpdateUI
+private extension CatalogCollectionViewController {
     func loadAuthorData(for collection: NftCollection) {
         viewModel.loadAuthorData(of: collection)
-    }
-    
-    func createCollectionView() {
-        diffableDataSource.createDataSource(with: collectionView, with: viewModel.visibleNfts)
-        setOnCartClosure()
-        setOnLikeClosure()
-    }
-    
-    func setOnCartClosure() {
-        diffableDataSource.onCartHandler = { [weak viewModel] id in
-            viewModel?.addOrDeleteNftFromCart(with: id)
-        }
-    }
-    
-    func setOnLikeClosure() {
-        diffableDataSource.onLikeHandler = { [weak viewModel] id in
-            viewModel?.addOrDeleteLike(to: id)
-        }
     }
     
     func updateUI(with collection: NftCollection) {
@@ -230,29 +210,56 @@ private extension CatalogCollectionViewController {
         authorDescriptionLabel.setupAttributedText(authorName: collection.author)
     }
     
-    func updateAuthorTextLabelLink(for author: Author?) {
-        guard let author else { return }
-        authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
-    }
-    
     func updateDescriptionTextView(for collection: NftCollection) {
         collectionDescriptionTextView.text = collection.description
         updateTextViewHeight()
-    }
-    
-    func updateTextViewHeight() {
-        let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
-        collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
     }
     
     func updateSingleNfts(for collection: NftCollection) {
         viewModel.updateNfts(from: collection)
     }
     
+    func updateTextViewHeight() {
+        let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
+}
+
+// MARK: - Data Source
+private extension CatalogCollectionViewController {
+    func createCollectionView() {
+        diffableDataSource.createDataSource(with: collectionView, from: viewModel.visibleNfts)
+        setOnCartClosure()
+        setOnLikeClosure()
+    }
+    
     func updateCollectionView(with data: [VisibleSingleNfts]) {
         diffableDataSource.updateCollection(with: data)
     }
     
+    func setOnCartClosure() {
+        diffableDataSource.onCartHandler = { [weak viewModel] id in
+            viewModel?.addOrDeleteNftFromCart(with: id)
+        }
+    }
+    
+    func setOnLikeClosure() {
+        diffableDataSource.onLikeHandler = { [weak viewModel] id in
+            viewModel?.addOrDeleteLike(to: id)
+        }
+    }
+}
+
+// MARK: - Ext AuthorLink
+private extension CatalogCollectionViewController {
+    func updateAuthorTextLabelLink(for author: Author?) {
+        guard let author else { return }
+        authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
+    }
+}
+
+// MARK: - Ext Animation
+private extension CatalogCollectionViewController {
     func showOrHideAnimation(for requestResult: RequestResult?) {
         guard let requestResult
         else {

@@ -18,6 +18,7 @@
 "price" = "מחיר";
 "collectionAuthor" = "מחבר האוסף: ";
 "emptyCart" = "עגלה ריקה";
+"favouriteNfts" = "NFTs אהובים";
 // DeleteScreenTitles
 "questionBeforeDelete" = "?האם אתה בטוח שברצונך למחוק את האובייקט מהסל";
 "delete" = "למחוק";
@@ -65,3 +66,7 @@
 "unSuccessfulPurchase" = "אופס! קרתה תקלה :( נסה שוב";
 "loadingData" = "...טוען נתונים";
 "backToCatalog" = "חזרה לקטלוג";
+// Profile mainScreen
+"profileMyNfts" = "ה-NFTs שלי";
+"profileMyLikedNfts" = "אהובים NFTs";
+"authorWebsite" = "אתר האינטרנט של המחבר";

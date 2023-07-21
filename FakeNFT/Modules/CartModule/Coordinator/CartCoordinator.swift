@@ -16,7 +16,7 @@ final class CartCoordinator: CoordinatorProtocol {
     private var alertConstructor: AlertConstructable
     private var dataStore: CartDataStorageProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
-    private let collectionViewDataSource: GenericDataSourceManagerProtocol
+    private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol
     
     init(factory: CartModuleFactoryProtocol,
          router: Routable,
@@ -24,7 +24,7 @@ final class CartCoordinator: CoordinatorProtocol {
          alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
-         collectionViewDataSource: GenericDataSourceManagerProtocol
+         collectionViewDataSource: GenericCollectionViewDataSourceProtocol
     ) {
         
         self.factory = factory

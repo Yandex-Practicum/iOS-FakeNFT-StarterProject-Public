@@ -20,7 +20,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     var onCancel: (() -> Void)?
     
     private let viewModel: CartPaymentMethodViewModel
-    private let dataSource: GenericDataSourceManagerProtocol
+    private let dataSource: GenericCollectionViewDataSourceProtocol
     
     private var cancellables = Set<AnyCancellable>()
    
@@ -87,7 +87,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }()
     
     // MARK: Init
-    init(viewModel: CartPaymentMethodViewModel, dataSource: GenericDataSourceManagerProtocol) {
+    init(viewModel: CartPaymentMethodViewModel, dataSource: GenericCollectionViewDataSourceProtocol) {
         self.viewModel = viewModel
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
@@ -101,7 +101,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupLeftNavBarItem(with: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
+        setupLeftNavBarItem(title: K.Titles.paymentMethodScreenTitle, action: #selector(cancelTapped))
         setupConstraints()
         createDataSource()
         viewModel.getPaymentMethods()
@@ -135,7 +135,7 @@ final class CartPaymentMethodViewController: UIViewController, CartPaymentMethod
     }
     
     private func createDataSource() {
-        dataSource.createDataSource(with: collectionView, with: viewModel.visibleRows)
+        dataSource.createDataSource(with: collectionView, from: viewModel.visibleRows)
     }
     
     private func handleRequestUpdate(_ request: NetworkRequest?) {

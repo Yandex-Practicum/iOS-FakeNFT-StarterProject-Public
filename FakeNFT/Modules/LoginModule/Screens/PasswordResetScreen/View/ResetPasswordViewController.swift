@@ -66,7 +66,7 @@ final class ResetPasswordViewController: UIViewController, ResetPasswordCoordina
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.tintColor = .universalWhite
-        setupLeftNavBarItem(with: nil, action: #selector(cancelTapped))
+        setupLeftNavBarItem(title: nil, action: #selector(cancelTapped))
         setupConstraints()
         
     }

@@ -57,7 +57,7 @@ final class CatalogViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
         setupConstraints()
-        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
+        setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
         load()
     }
     
@@ -73,10 +73,7 @@ final class CatalogViewController: UIViewController {
         cancellables.removeAll()
     }
     
-    private func createDataSource() {
-        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
-    }
-
+    // MARK: Bind
     private func bind() {
         viewModel.$visibleRows
             .receive(on: DispatchQueue.main)
@@ -100,12 +97,9 @@ final class CatalogViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    // MARK: Load
     private func load() {
         viewModel.load()
-    }
-    
-    private func updateTableView(with rows: [NftCollection]) {
-        dataSource.updateTableView(with: rows)
     }
     
     private func catchError(_ error: Error?) {
@@ -125,10 +119,21 @@ final class CatalogViewController: UIViewController {
     }
 }
 
+// MARK: - Ext DataSource
+private extension CatalogViewController {
+    private func createDataSource() {
+        dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
+    }
+    
+    private func updateTableView(with rows: [NftCollection]) {
+        dataSource.updateTableView(with: rows)
+    }
+}
+
 // MARK: - Ext TableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return dataSource.getCartRowHeight(for: tableView, in: .catalog)
+        return dataSource.getRowHeight(.catalog)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -136,7 +141,6 @@ extension CatalogViewController: UITableViewDelegate {
               let collection = cell.viewModel?.catalogRows
         else { return }
         onProceed?(collection)
-        cell.selectionStyle = .none
     }
 }
 

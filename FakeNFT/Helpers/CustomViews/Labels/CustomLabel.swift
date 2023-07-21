@@ -26,4 +26,16 @@ class CustomLabel: UILabel {
             self?.alpha = 1.0
         }
     }
+    
+    func addLink(text: String, link: String) {
+        let attrString = NSMutableAttributedString()
+        let linkText = NSMutableAttributedString(string: text)
+        let range = NSRange(location: 0, length: linkText.length)
+        
+        linkText.addAttribute(.link, value: link, range: range)
+        attrString.append(linkText)
+        
+        attributedText = attrString
+        isUserInteractionEnabled = true
+    }
 }

@@ -104,6 +104,7 @@ private extension CatalogCollectionViewModel{
     }
     
     // MARK: Convert
+    // TODO: Move to dataStore manager
     func convertToSingleNftViewModel(_ nfts: [SingleNft]) -> [VisibleSingleNfts] {
         var result: [VisibleSingleNfts] = []
         

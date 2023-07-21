@@ -11,7 +11,7 @@ protocol CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
                                dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable
     func makeCatalogCollectionScreenView(with collection: NftCollection,
-                                         dataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable,
+                                         dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
                                          dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable
     func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol
 }
@@ -21,7 +21,7 @@ protocol CartModuleFactoryProtocol {
                             dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
     func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
+                                         dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
     func makePaymentResultScreenView(request: NetworkRequest?, dataStore: CartDataStorageProtocol) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
@@ -33,6 +33,14 @@ protocol LoginModuleFactoryProtocol {
 
 protocol OnboardingModuleFactoryProtocol {
     func makeOnboardingScreenView() -> Presentable & OnboardingCoordinatable
+}
+
+protocol ProfileModuleFactoryProtocol {
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol
+    
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable & ProfileMyNftsCoordinatable
+    
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable
 }
 
 final class ModulesFactory {}
@@ -63,6 +71,30 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
     }
 }
 
+// MARK: - Ext ProfileModuleFactoryProtocol
+extension ModulesFactory: ProfileModuleFactoryProtocol {
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStore: dataStore)
+        let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
+        return viewController
+    }
+    
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable & ProfileMyNftsCoordinatable {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = ProfileMyNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
+        let viewController = ProfileMyNftsViewController(viewModel: viewModel, dataSource: dataSource)
+        return viewController
+    }
+    
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable {
+        let networkClient = DefaultNetworkClient()
+        let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
+        let viewController = ProfileLikedNftsViewController(viewModel: viewModel, dataSource: dataSource)
+        return viewController
+    }
+}
+
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
@@ -73,7 +105,7 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
     }
     
     func makeCatalogCollectionScreenView(with collection: NftCollection,
-                                         dataSource: GenericDataSourceManagerProtocol & CollectionViewDataSourceCoordinatable,
+                                         dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
                                          dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
@@ -106,7 +138,7 @@ extension ModulesFactory: CartModuleFactoryProtocol {
     }
     
     func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: GenericDataSourceManagerProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
+                                         dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = CartPaymentMethodViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)

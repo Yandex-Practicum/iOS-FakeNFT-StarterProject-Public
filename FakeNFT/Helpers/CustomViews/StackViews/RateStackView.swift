@@ -13,6 +13,7 @@ class RateStackView: UIStackView {
         super.init(frame: .zero)
         axis = .horizontal
         alignment = .leading
+        distribution = .fillEqually
         spacing = 2
     }
     

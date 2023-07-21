@@ -18,6 +18,7 @@
 "price" = "Цена";
 "collectionAuthor" = "Автор коллекции: ";
 "emptyCart" = "Корзина пуста";
+"favouriteNfts" = "Избранные NFT";
 // DeleteScreenTitles
 "questionBeforeDelete" = "Вы уверены, что хотите удалить объект из корзины?";
 "delete" = "Удалить";
@@ -65,3 +66,7 @@
 "unSuccessfulPurchase" = "Упс! Что-то пошло не так :(\nПопробуйте ещё раз!";
 "loadingData" = "Загружаем данные...";
 "backToCatalog" = "Назад в каталог";
+// Profile mainScreen
+"profileMyNfts" = "Мои NFT";
+"profileMyLikedNfts" = "Избранные NFT";
+"authorWebsite" = "Страница автора";

@@ -120,7 +120,7 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupRightFilterNavBarItem(with: nil, action: #selector(filterTapped))
+        setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
         setupConstraints()
         
     }
@@ -213,7 +213,7 @@ extension CartViewController: CartMainCoordinatableProtocol {
 // MARK: - Ext TableView delegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return diffableDataSource.getCartRowHeight(for: tableView, in: .cart)
+        return diffableDataSource.getRowHeight(.cart)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

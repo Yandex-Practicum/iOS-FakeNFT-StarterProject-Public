@@ -57,11 +57,18 @@ private extension FlowCoordinator {
         addViewController(coordinator)
         
         coordinator.finishFlow = { [weak self] in
+            self?.createProfileFlow()
             self?.createCatalogFlow()
             self?.createCartFlow()
             self?.removeViewController(coordinator)
         }
         
+        coordinator.start()
+    }
+    
+    func createProfileFlow() {
+        let coordinator = factory.makeProfileCoordinator(with: router)
+        addViewController(coordinator)
         coordinator.start()
     }
     
