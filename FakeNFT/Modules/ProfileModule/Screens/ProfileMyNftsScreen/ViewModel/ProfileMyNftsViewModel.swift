@@ -25,6 +25,7 @@ final class ProfileMyNftsViewModel {
         bind()
     }
     
+    // MARK: грузится каждый раз, поправить
     func load() {
         nftsToLoad.forEach({ sendNftsRequest(nftId: $0) })
     }

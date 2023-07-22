@@ -30,9 +30,9 @@ final class CatalogViewModel {
     }
     
     func load() {
-        // MARK: Replace for loading from userProfile
         let request = RequestConstructor.constructCatalogRequest(method: .get)
         requestResult = .loading
+        catalogError = nil
         networkClient.send(request: request, type: [NftCollection].self) { [weak self] result in
             guard let self else { return }
             switch result {

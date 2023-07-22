@@ -24,7 +24,7 @@ final class ProfileLikedNftsViewModel {
         self.dataStore = dataStore
         bind()
     }
-    
+    // MARK: странная логика, поправить
     func load() {
         if dataStore.getProfileLikedNfts().isEmpty || dataStore.getProfileLikedNfts().count != nftsToLoad.count {
             nftsToLoad.forEach({ sendLikedNftsRequest($0) })
