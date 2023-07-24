@@ -1,5 +1,5 @@
 //
-//  TestStoreClass.swift
+//  GenericStorage.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 24.07.2023.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class TestStoreClass<T: Hashable> {
+final class GenericStorage<T: Hashable> {
     var dataPublisher: AnyPublisher<[T], Never> {
         return storedValueSubject.eraseToAnyPublisher()
     }

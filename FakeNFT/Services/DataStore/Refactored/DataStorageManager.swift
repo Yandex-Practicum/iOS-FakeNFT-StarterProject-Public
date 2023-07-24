@@ -24,8 +24,6 @@ protocol DataStorageManagerProtocol {
     var currentSortDescriptor: SortDescriptorType? { get set } // done
     // publisher
     func getAnyPublisher(_ type: DataType) -> AnyPublisher<[AnyHashable], Never>
-    // get
-    // set
     // add
     func addItem(_ item: AnyHashable)
     // delete
@@ -36,8 +34,8 @@ protocol DataStorageManagerProtocol {
 
 final class DataStorageManager: DataStorageManagerProtocol {
     // TODO: Remove later when new logic is ready
-    private let testSingleNftStore = TestStoreClass<SingleNft>()
-    private let testCollectionNftStore = TestStoreClass<NftCollection>()
+    private let testSingleNftStore = GenericStorage<SingleNft>()
+    private let testCollectionNftStore = GenericStorage<NftCollection>()
     
     var currentSortDescriptor: SortDescriptorType? // done
     
