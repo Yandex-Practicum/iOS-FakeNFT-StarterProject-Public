@@ -18,11 +18,10 @@ protocol CatalogModuleFactoryProtocol {
 
 protocol CartModuleFactoryProtocol {
     func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
-                            dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol
-    func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol
-    func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
-    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: CartDataStorageProtocol) -> Presentable & PaymentResultCoordinatable
+                            dataStore: DataStorageManagerProtocol) -> Presentable & CartMainCoordinatableProtocol
+    func makeCartDeleteScreenView(dataStore: DataStorageManagerProtocol) -> Presentable & CartDeleteCoordinatableProtocol
+    func makeCartPaymentMethodScreenView(dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol
+    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: DataStorageManagerProtocol) -> Presentable & PaymentResultCoordinatable
     func makeCartWebViewScreenView() -> Presentable & WebViewProtocol
 }
 
@@ -36,7 +35,7 @@ protocol OnboardingModuleFactoryProtocol {
 }
 
 protocol ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol
     
     func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: ProfileDataStorage) -> Presentable & ProfileMyNftsCoordinatable
     
@@ -73,9 +72,9 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
 
 // MARK: - Ext ProfileModuleFactoryProtocol
 extension ModulesFactory: ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStore: ProfileDataStorage) -> Presentable & ProfileMainCoordinatableProtocol {
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
-        let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStore: dataStore)
+        let viewModel = ProfileMainViewModel(networkClient: networkClient)
         let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
@@ -123,7 +122,7 @@ extension ModulesFactory: CatalogModuleFactoryProtocol {
 // MARK: - Ext CartModuleFactoryProtocol
 extension ModulesFactory: CartModuleFactoryProtocol {
     func makeCartScreenView(dataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
-                            dataStore: CartDataStorageProtocol) -> Presentable & CartMainCoordinatableProtocol {
+                            dataStore: DataStorageManagerProtocol) -> Presentable & CartMainCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
         let viewModel = CartViewModel(dataStore: dataStore, networkClient: networkClient)
         let viewController = CartViewController(dataSource: dataSource, viewModel: viewModel)
@@ -131,21 +130,20 @@ extension ModulesFactory: CartModuleFactoryProtocol {
         return viewController
     }
     
-    func makeCartDeleteScreenView(dataStore: CartDataStorageProtocol) -> Presentable & CartDeleteCoordinatableProtocol {
+    func makeCartDeleteScreenView(dataStore: DataStorageManagerProtocol) -> Presentable & CartDeleteCoordinatableProtocol {
         let viewModel = CartDeleteViewModel(dataStore: dataStore)
         let viewController = CartDeleteItemViewController(viewModel: viewModel)
         return viewController
     }
     
-    func makeCartPaymentMethodScreenView(dataStore: CartDataStorageProtocol,
-                                         dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
+    func makeCartPaymentMethodScreenView(dataSource: GenericCollectionViewDataSourceProtocol) -> Presentable & CartPaymentMethodCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
-        let viewModel = CartPaymentMethodViewModel(networkClient: networkClient, dataStore: dataStore)
+        let viewModel = CartPaymentMethodViewModel(networkClient: networkClient)
         let viewController = CartPaymentMethodViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
     
-    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: CartDataStorageProtocol) -> Presentable & PaymentResultCoordinatable {
+    func makePaymentResultScreenView(request: NetworkRequest?, dataStore: DataStorageManagerProtocol) -> Presentable & PaymentResultCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CartPaymentResultViewModel(networkClient: networkClient, dataStore: dataStore)
         viewModel.request = request

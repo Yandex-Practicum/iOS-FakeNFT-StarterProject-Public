@@ -22,6 +22,7 @@ final class CoordinatorFactory  {
     private let navigationControllerFactory = NavigationControllerFactory()
     private let alertConstructor = AlertConstructor()
     private let dataStore = DataStore()
+    private let dataStorageManager = DataStorageManager()
     private let tableViewDataSource = TableViewDataSource()
     private let collectionViewDataSource = CollectionViewDataSourceManager()
     private let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
@@ -83,6 +84,7 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
             dataStore: dataStore,
+            dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
             collectionViewDataSource: collectionViewDataSource
         )

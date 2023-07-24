@@ -10,17 +10,21 @@ import Combine
 
 protocol CartMainCoordinatableProtocol: AnyObject {
     var onFilter: (() -> Void)? { get set }
-    var onDelete: ((String?) -> Void)? { get set }
+//    var onDelete: ((String?) -> Void)? { get set }
+    var onDelete: ((SingleNft?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CartSortValue)
     func reloadCart()
+//    func setupSortDescriptor(value: SortDescriptorType)
+
 }
 
 final class CartViewController: UIViewController {
     // CartMainCoordinatableProtocol properties
     var onFilter: (() -> Void)?
-    var onDelete: ((String?) -> Void)?
+//    var onDelete: ((String?) -> Void)?
+    var onDelete: ((SingleNft?) -> Void)?
     var onProceed: (() -> Void)?
     var onError: ((Error?) -> Void)?
 
@@ -149,6 +153,7 @@ final class CartViewController: UIViewController {
         viewModel.$visibleRows
             .receive(on: DispatchQueue.main)
             .sink { [weak self] rows in
+                print("VC rows are: \(rows)")
                 self?.updateTableView(with: rows)
                 self?.updateTotalLabels(from: rows)
                 self?.showTheNeededView(for: rows)
@@ -208,6 +213,11 @@ extension CartViewController: CartMainCoordinatableProtocol {
     func reloadCart() {
         viewModel.reload()
     }
+    
+//    func setupSortDescriptor(value: SortDescriptorType) {
+//        viewModel.setupSortValue2(value)
+//    }
+
 }
 
 // MARK: - Ext TableView delegate
@@ -226,8 +236,8 @@ extension CartViewController: UITableViewDelegate {
             style: .destructive,
             title: K.Titles.delete) { [weak self] action, view, handler in
                 guard let cell = tableView.cellForRow(at: indexPath) as? CartTableViewCell else { return }
-                let id = cell.viewModel?.cartRow.id
-                self?.viewModel.deleteItem(with: id)
+                let nft = cell.viewModel?.cartRow
+                self?.viewModel.deleteItem(nft)
             }
         
         return UISwipeActionsConfiguration(actions: [action])
@@ -238,7 +248,8 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
-        onFilter?()
+//        onFilter?()
+        viewModel.add()
     }
     
     func proceedTapped() {

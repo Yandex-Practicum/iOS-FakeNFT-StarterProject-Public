@@ -11,9 +11,9 @@ import Combine
 final class CartDeleteViewModel {
     @Published private (set) var itemToDelete: SingleNft?
     
-    private let dataStore: CartDataStorageProtocol
+    private let dataStore: DataStorageManagerProtocol
     
-    init(dataStore: CartDataStorageProtocol) {
+    init(dataStore: DataStorageManagerProtocol) {
         self.dataStore = dataStore
     }
     
@@ -26,12 +26,20 @@ final class CartDeleteViewModel {
         return URL(string: encodedStringUrl)
     }
     
-    func updateItemToDelete(with id: String?) {
-        guard let id else { return }
-        itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })
+//    func updateItemToDelete(with id: String?) {
+//        guard let id else { return }
+//        itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })
+//    }
+    
+    func updateItemToDelete(_ item: SingleNft?) {
+        itemToDelete = item
     }
     
-    func deleteItem(with id: String?) {
-        dataStore.deleteItem(with: id)
+//    func deleteItem(with id: String?) {
+//        dataStore.deleteItem(with: id)
+//    }
+    
+    func deleteItem(_ item: SingleNft?) {
+        dataStore.deleteItem(item)
     }
 }

@@ -14,7 +14,8 @@ protocol GenericTableViewDataSourceProtocol {
 }
 
 protocol TableViewDataSourceCoordinatable {
-    var onDeleteHandler: ((String?) -> Void)? { get set }
+//    var onDeleteHandler: ((String?) -> Void)? { get set }
+    var onDeleteHandler: ((SingleNft?) -> Void)? { get set }
 }
 
 // MARK: Final class
@@ -22,7 +23,8 @@ final class TableViewDataSource: TableViewDataSourceCoordinatable {
     typealias DataSource = UITableViewDiffableDataSource<TableViewDiffableDataSourceSection, AnyHashable>
     typealias Snapshot = NSDiffableDataSourceSnapshot<TableViewDiffableDataSourceSection, AnyHashable>
     
-    var onDeleteHandler: ((String?) -> Void)?
+//    var onDeleteHandler: ((String?) -> Void)?
+    var onDeleteHandler: ((SingleNft?) -> Void)?
     
     private var genericDataSource: DataSource?
 }
@@ -71,8 +73,8 @@ private extension TableViewDataSource {
         ) as? CartTableViewCell
         else { return UITableViewCell(frame: .zero) }
         cell.viewModel = CartCellViewModel(cartRow: item)
-        cell.onDelete = { [weak self] id in
-            self?.onDeleteHandler?(id)
+        cell.onDelete = { [weak self] nft in
+            self?.onDeleteHandler?(nft)
         }
         
         return cell

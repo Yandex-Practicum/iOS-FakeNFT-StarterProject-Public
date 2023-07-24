@@ -15,12 +15,10 @@ final class ProfileMainViewModel {
     @Published private (set) var catalogError: Error?
     
     let networkClient: NetworkClient
-    let dataStore: ProfileDataStorage
     
     // MARK: Init
-    init(networkClient: NetworkClient, dataStore: ProfileDataStorage) {
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
-        self.dataStore = dataStore
     }
     
     func loadUser() {

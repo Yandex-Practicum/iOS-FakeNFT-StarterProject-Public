@@ -14,7 +14,8 @@ final class CartCoordinator: CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: CartDataStorageProtocol
+    private var dataStore: CartDataStorageProtocol // TODO: delete later
+    private var dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol
     
@@ -22,7 +23,8 @@ final class CartCoordinator: CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: CartDataStorageProtocol,
+         dataStore: CartDataStorageProtocol, // delete after dataStorage finished
+         dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
          collectionViewDataSource: GenericCollectionViewDataSourceProtocol
     ) {
@@ -32,6 +34,7 @@ final class CartCoordinator: CoordinatorProtocol {
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
+        self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
     }
@@ -44,15 +47,15 @@ final class CartCoordinator: CoordinatorProtocol {
 private extension CartCoordinator {
     // MARK: - Create CartScreen
     func createScreen() {
-        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
+        let cartScreen = factory.makeCartScreenView(dataSource: tableViewDataSource, dataStore: dataStorageManager)
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .cart, rootViewController: cartScreen)
         
         cartScreen.onFilter = { [weak self] in
             self?.showSortAlert(from: cartScreen)
         }
         
-        cartScreen.onDelete = { [weak self] id in
-            self?.showDeleteScreen(idToDelete: id)
+        cartScreen.onDelete = { [weak self] nft in
+            self?.showDeleteScreen(itemToDelete: nft)
         }
         
         cartScreen.onProceed = { [weak self] in
@@ -68,16 +71,16 @@ private extension CartCoordinator {
     }
     
     // MARK: - DeleteItemScreen
-    func showDeleteScreen(idToDelete: String?) {
-        var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStore)
-        deleteScreen.idToDelete = idToDelete
+    func showDeleteScreen(itemToDelete: SingleNft?) {
+        var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStorageManager)
+        deleteScreen.itemToDelete = itemToDelete
         
         deleteScreen.onCancel = { [weak router, weak deleteScreen] in
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         
         deleteScreen.onDelete = { [weak router, weak deleteScreen] in
-            deleteScreen?.deleteItem(with: idToDelete)
+            deleteScreen?.deleteItem(itemToDelete)
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         
@@ -86,7 +89,7 @@ private extension CartCoordinator {
     
     // MARK: - PaymentMethodScreen
     func showPaymentMethodScreen() {
-        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataStore: dataStore, dataSource: collectionViewDataSource)
+        var paymentMethodScreen = factory.makeCartPaymentMethodScreenView(dataSource: collectionViewDataSource)
         
         paymentMethodScreen.onProceed = { [weak self] request in
             self?.showPaymentResultScreen(with: request)
@@ -104,7 +107,7 @@ private extension CartCoordinator {
     }
     
     func showPaymentResultScreen(with request: NetworkRequest?) {
-        var paymentResultScreen = factory.makePaymentResultScreenView(request: request, dataStore: dataStore)
+        var paymentResultScreen = factory.makePaymentResultScreenView(request: request, dataStore: dataStorageManager)
         
         paymentResultScreen.onMain = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)
@@ -127,6 +130,8 @@ private extension CartCoordinator {
         
         alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] filter in
             filter == .cancel ? () : screen?.setupSortDescriptor(filter)
+//            filter == .cancel ? () : screen?.setupSortDescriptor(value: .priceRatingName(filter))
+            
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         

@@ -9,15 +9,18 @@ import UIKit
 import Combine
 
 protocol CartDeleteCoordinatableProtocol {
-    var idToDelete: String? { get set }
+//    var idToDelete: String? { get set }
+    var itemToDelete: SingleNft? { get set }
     var onCancel: (() -> Void)? { get set }
     var onDelete: (() -> Void)? { get set }
-    func deleteItem(with id: String?)
+//    func deleteItem(with id: String?)
+    func deleteItem(_ item: SingleNft?)
 }
 
 final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinatableProtocol {
     // CartDeleteCoordinatableProtocol
-    var idToDelete: String?
+//    var idToDelete: String?
+    var itemToDelete: SingleNft?
     var onCancel: (() -> Void)?
     var onDelete: (() -> Void)?
     
@@ -115,7 +118,8 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
         super.viewDidLoad()
         setupBlur()
         setupConstraints()
-        updateItemToDelete(with: idToDelete)
+//        updateItemToDelete(with: idToDelete)
+        updateItemToDelete(itemToDelete)
         
     }
     
@@ -139,12 +143,20 @@ final class CartDeleteItemViewController: UIViewController, CartDeleteCoordinata
             .store(in: &cancellables)
     }
     
-    func updateItemToDelete(with id: String?) {
-        viewModel.updateItemToDelete(with: id)
+//    func updateItemToDelete(with id: String?) {
+//        viewModel.updateItemToDelete(with: id)
+//    }
+    
+    func updateItemToDelete(_ item: SingleNft?) {
+        viewModel.updateItemToDelete(item)
     }
     
-    func deleteItem(with id: String?) {
-        viewModel.deleteItem(with: id)
+//    func deleteItem(with id: String?) {
+//        viewModel.deleteItem(with: id)
+//    }
+    
+    func deleteItem(_ item: SingleNft?) {
+        viewModel.deleteItem(item)
     }
     
     private func setupBlur() {

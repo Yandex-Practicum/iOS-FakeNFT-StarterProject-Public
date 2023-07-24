@@ -16,11 +16,9 @@ final class CartPaymentMethodViewModel {
     private var selectedId: String? 
     
     private let networkClient: NetworkClient
-    private let dataStore: CartDataStorageProtocol
         
-    init(networkClient: NetworkClient, dataStore: CartDataStorageProtocol) {
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
-        self.dataStore = dataStore
     }
     
     func getPaymentMethods() {

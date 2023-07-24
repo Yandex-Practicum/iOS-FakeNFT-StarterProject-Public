@@ -43,7 +43,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource, dataStore: dataStore)
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource)
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in
