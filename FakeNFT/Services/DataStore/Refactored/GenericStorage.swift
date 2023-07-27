@@ -21,12 +21,21 @@ final class GenericStorage<T: Hashable> {
     
     private var storedValueSubject = CurrentValueSubject<[T], Never>([])
     
-    func add(_ item: T) {
-        storedValue.append(item)
+    func getItems() -> [T] {
+        return storedValue
     }
     
-    func delete(_ item: T?) {
+    func addItem(_ item: T) {
+        if !storedValue.contains(item) {
+            storedValue.append(item)
+        }
+    }
+    
+    func deleteItem(_ item: T?) {
         item != nil ? storedValue.removeAll(where: { $0 == item }) : storedValue.removeAll()
-        
+    }
+    
+    func toggleItemStatus(_ item: T) {
+        storedValue.contains(item) ? deleteItem(item) : addItem(item)
     }
 }

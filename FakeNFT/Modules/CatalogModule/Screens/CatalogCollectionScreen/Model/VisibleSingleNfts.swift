@@ -15,6 +15,6 @@ struct VisibleSingleNfts: Hashable {
     let price: Float
     let author: String
     let id: String
-    let isStored: Bool
-    let isLiked: Bool
+    var isStored: Bool
+    var isLiked: Bool
 }

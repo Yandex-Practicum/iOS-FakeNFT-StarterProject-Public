@@ -1,5 +1,5 @@
 //
-//  SingleNft.swift
+//  SingleNftModel.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 26.06.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SingleNft: Codable, Hashable {
+struct SingleNftModel: Codable, Hashable {
     let createdAt: String
     let name: String
     let images: [String]

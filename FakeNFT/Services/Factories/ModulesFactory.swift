@@ -9,10 +9,10 @@ import Foundation
 
 protocol CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
-                               dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable
-    func makeCatalogCollectionScreenView(with collection: NftCollection,
+                               dataStore: DataStorageManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable
+    func makeCatalogCollectionScreenView(with collection: CatalogMainScreenCollection,
                                          dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
-                                         dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable
+                                         dataStore: DataStorageManagerProtocol) -> Presentable & CatalogCollectionCoordinatable
     func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol
 }
 
@@ -97,15 +97,15 @@ extension ModulesFactory: ProfileModuleFactoryProtocol {
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
-                               dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogMainScreenCoordinatable {
+                               dataStore: DataStorageManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogViewModel(dataStore: dataStore, networkClient: networkClient)
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
     }
     
-    func makeCatalogCollectionScreenView(with collection: NftCollection,
+    func makeCatalogCollectionScreenView(with collection: CatalogMainScreenCollection,
                                          dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
-                                         dataStore: CatalogDataStorageProtocol) -> Presentable & CatalogCollectionCoordinatable {
+                                         dataStore: DataStorageManagerProtocol) -> Presentable & CatalogCollectionCoordinatable {
         let networkClient = DefaultNetworkClient()
         let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
         let viewController = CatalogCollectionViewController(viewModel: viewModel, diffableDataSource: dataSource)

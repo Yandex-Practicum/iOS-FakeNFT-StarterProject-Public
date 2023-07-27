@@ -10,9 +10,9 @@ import Combine
 
 protocol CartDataStorageProtocol: AnyObject {
     var cartSortDescriptor: CartSortValue? { get set }
-    var cartDataPublisher: AnyPublisher<[SingleNft], Never> { get }
-    func addCartRowItem(_ item: SingleNft)
-    func getCartRowItems() -> [SingleNft]
+    var cartDataPublisher: AnyPublisher<[SingleNftModel], Never> { get }
+    func addCartRowItem(_ item: SingleNftModel)
+    func getCartRowItems() -> [SingleNftModel]
     func deleteItem(with id: String?)
     func deleteItemsFromCart()
 }
@@ -21,32 +21,32 @@ protocol CatalogDataStorageProtocol: AnyObject {
     // sort
     var catalogSortDescriptor: CatalogSortValue? { get set }
     // publishers
-    var catalogDataPublisher: AnyPublisher<[NftCollection], Never> { get }
-    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> { get }
-    var likedNftDataPublisher: AnyPublisher<[SingleNft], Never> { get }
+    var catalogDataPublisher: AnyPublisher<[CatalogMainScreenCollection], Never> { get }
+    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNftModel], Never> { get }
+    var likedNftDataPublisher: AnyPublisher<[SingleNftModel], Never> { get }
     // add
-    func addCatalogRowItem(_ item: NftCollection)
-    func addNftRowItem(_ item: SingleNft)
+    func addCatalogRowItem(_ item: CatalogMainScreenCollection)
+    func addNftRowItem(_ item: SingleNftModel)
     func addOrDeleteNftToCart(_ id: String)
     func addOrDeleteLike(_ id: String)
     // get
-    func getCatalogRowItems() -> [NftCollection]
-    func getCatalogNfts(from collection: NftCollection) -> [SingleNft]
+    func getCatalogRowItems() -> [CatalogMainScreenCollection]
+    func getCatalogNfts(from collection: CatalogMainScreenCollection) -> [SingleNftModel]
     // check
-    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
-    func checkIfItemIsStored(_ item: SingleNft) -> Bool
+    func checkIfItemIsLiked(_ item: SingleNftModel) -> Bool
+    func checkIfItemIsStored(_ item: SingleNftModel) -> Bool
 }
 
 protocol ProfileDataStorage: AnyObject {
     var profileCollectionSortDescriptor: CartSortValue? { get set }
-    var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
-    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNft], Never> { get }
-    func getProfileLikedNfts() -> [SingleNft]
-    func addStoredNfts(_ nft: SingleNft)
-    func addOrDeleteLikeFromProfile(_ nft: SingleNft)
+    var profileNftsDataPublisher: AnyPublisher<[SingleNftModel], Never> { get }
+    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNftModel], Never> { get }
+    func getProfileLikedNfts() -> [SingleNftModel]
+    func addStoredNfts(_ nft: SingleNftModel)
+    func addOrDeleteLikeFromProfile(_ nft: SingleNftModel)
     // check
-    func checkIfItemIsLiked(_ item: SingleNft) -> Bool
-    func checkIfItemIsStored(_ item: SingleNft) -> Bool
+    func checkIfItemIsLiked(_ item: SingleNftModel) -> Bool
+    func checkIfItemIsStored(_ item: SingleNftModel) -> Bool
 }
 
 // MARK: Final class DataStore
@@ -63,55 +63,55 @@ final class DataStore {
         didSet { sendAuthorNftsUpdates(newNfts: getAuthorNftsSortedItems(by: profileCollectionSortDescriptor)) }
     }
     
-    private var storedCartPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // items in the cart
-    private var storedCatalogPublishedItems = CurrentValueSubject<[NftCollection], Never>([]) // items on the main catalog screen
-    private var storedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // stored collectionNfts
-    private var likedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // likedItems
-    private var authorNftsPublishedItems = CurrentValueSubject<[SingleNft], Never>([]) // author nfts
+    private var storedCartPublishedItems = CurrentValueSubject<[SingleNftModel], Never>([]) // items in the cart
+    private var storedCatalogPublishedItems = CurrentValueSubject<[CatalogMainScreenCollection], Never>([]) // items on the main catalog screen
+    private var storedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNftModel], Never>([]) // stored collectionNfts
+    private var likedCatalogNftsPublishedItems = CurrentValueSubject<[SingleNftModel], Never>([]) // likedItems
+    private var authorNftsPublishedItems = CurrentValueSubject<[SingleNftModel], Never>([]) // author nfts
     
-    private var cartStoredItems: [SingleNft] = [] {
+    private var cartStoredItems: [SingleNftModel] = [] {
         didSet { sendCartStoredItemsUpdates(newData: getCartSortedItems(by: cartSortDescriptor)) }
     }
     
-    private var catalogStoredItems: [NftCollection] = [] {
+    private var catalogStoredItems: [CatalogMainScreenCollection] = [] {
         didSet { sendCatalogStoredItemsUpdates(newData: getCatalogSortedItems(by: catalogSortDescriptor)) }
     }
     
-    private var nftCollectionStoredItems: Set<SingleNft> = [] {
+    private var nftCollectionStoredItems: Set<SingleNftModel> = [] {
         didSet { sendCatalogStoredNftsUpdates(newNfts: nftCollectionStoredItems) }
     }
     
-    private var likedNfts: [SingleNft] = [] {
+    private var likedNfts: [SingleNftModel] = [] {
         didSet { sendCatalogLikedItemsUpdates(newData: likedNfts) }
     }
     
-    private var authorNftsStoredItems: [SingleNft] = [] {
+    private var authorNftsStoredItems: [SingleNftModel] = [] {
         didSet { sendAuthorNftsUpdates(newNfts: authorNftsStoredItems) }
     }
 }
 
 // MARK: - Ext ProfileDataStorage
 extension DataStore: ProfileDataStorage {
-    var profileNftsDataPublisher: AnyPublisher<[SingleNft], Never> {
+    var profileNftsDataPublisher: AnyPublisher<[SingleNftModel], Never> {
         return authorNftsPublishedItems.eraseToAnyPublisher()
     }
     
-    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNft], Never> {
+    var profileLikedNftsDataPublisher: AnyPublisher<[SingleNftModel], Never> {
         return likedCatalogNftsPublishedItems.eraseToAnyPublisher()
     }
     
-    func getProfileLikedNfts() -> [SingleNft] {
+    func getProfileLikedNfts() -> [SingleNftModel] {
       return likedNfts
     }
     
-    func addStoredNfts(_ nft: SingleNft) {
+    func addStoredNfts(_ nft: SingleNftModel) {
         guard authorNftsStoredItems.contains(nft) else {
             authorNftsStoredItems.append(nft)
             return
         }
     }
     
-    func addOrDeleteLikeFromProfile(_ nft: SingleNft) {
+    func addOrDeleteLikeFromProfile(_ nft: SingleNftModel) {
         likedNfts.contains(where: { $0 == nft }) ? deleteLike(nft) : addLike(nft)
     }
 }
@@ -119,15 +119,15 @@ extension DataStore: ProfileDataStorage {
 // MARK: - Ext CartDataStorageProtocol
 extension DataStore: CartDataStorageProtocol {
     
-    var cartDataPublisher: AnyPublisher<[SingleNft], Never> {
+    var cartDataPublisher: AnyPublisher<[SingleNftModel], Never> {
         return storedCartPublishedItems.eraseToAnyPublisher()
     }
     
-    func addCartRowItem(_ item: SingleNft) {
+    func addCartRowItem(_ item: SingleNftModel) {
         cartStoredItems.append(item)
     }
     
-    func getCartRowItems() -> [SingleNft] {
+    func getCartRowItems() -> [SingleNftModel] {
         return cartStoredItems
     }
     
@@ -143,27 +143,27 @@ extension DataStore: CartDataStorageProtocol {
 
 // MARK: - Ext CatalogDataStorageProtocol
 extension DataStore: CatalogDataStorageProtocol {
-    var catalogDataPublisher: AnyPublisher<[NftCollection], Never> {
+    var catalogDataPublisher: AnyPublisher<[CatalogMainScreenCollection], Never> {
         return storedCatalogPublishedItems.eraseToAnyPublisher()
     }
     
-    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNft], Never> {
+    var catalogNftCollectionDataPublisher: AnyPublisher<[SingleNftModel], Never> {
         return storedCatalogNftsPublishedItems.eraseToAnyPublisher()
     }
     
-    var likedNftDataPublisher: AnyPublisher<[SingleNft], Never> {
+    var likedNftDataPublisher: AnyPublisher<[SingleNftModel], Never> {
         return likedCatalogNftsPublishedItems.eraseToAnyPublisher()
     }
     
     // MARK: CatalogDataStorageProtocol add
-    func addCatalogRowItem(_ item: NftCollection) {
+    func addCatalogRowItem(_ item: CatalogMainScreenCollection) {
         guard catalogStoredItems.contains(item) else {
             catalogStoredItems.append(item)
             return
         }
     }
     
-    func addNftRowItem(_ item: SingleNft) {
+    func addNftRowItem(_ item: SingleNftModel) {
         nftCollectionStoredItems.insert(item)
     }
     
@@ -178,52 +178,52 @@ extension DataStore: CatalogDataStorageProtocol {
     }
     
     // MARK: CatalogDataStorageProtocol get
-    func getCatalogRowItems() -> [NftCollection] {
+    func getCatalogRowItems() -> [CatalogMainScreenCollection] {
         return catalogStoredItems
     }
     
-    func getCatalogNfts(from collection: NftCollection) -> [SingleNft] {
+    func getCatalogNfts(from collection: CatalogMainScreenCollection) -> [SingleNftModel] {
         return Array(nftCollectionStoredItems).filter { singeNft in
             collection.nfts.contains(where: { $0 == singeNft.id })
         }
     }
     
     // MARK: CatalogDataStorageProtocol check
-    func checkIfItemIsStored(_ item: SingleNft) -> Bool {
+    func checkIfItemIsStored(_ item: SingleNftModel) -> Bool {
         return cartStoredItems.contains(where: { $0 == item })
     }
     
-    func checkIfItemIsLiked(_ item: SingleNft) -> Bool {
+    func checkIfItemIsLiked(_ item: SingleNftModel) -> Bool {
         return likedNfts.contains(where: { $0 == item })
     }
 }
 
 // MARK: - Ext Private Sending
 private extension DataStore {
-    func sendCartStoredItemsUpdates(newData: [SingleNft]) {
+    func sendCartStoredItemsUpdates(newData: [SingleNftModel]) {
         storedCartPublishedItems.send(newData)
     }
     
-    func sendCatalogStoredItemsUpdates(newData: [NftCollection]) {
+    func sendCatalogStoredItemsUpdates(newData: [CatalogMainScreenCollection]) {
         storedCatalogPublishedItems.send(newData)
     }
     
-    func sendCatalogStoredNftsUpdates(newNfts: Set<SingleNft>) {
+    func sendCatalogStoredNftsUpdates(newNfts: Set<SingleNftModel>) {
         storedCatalogNftsPublishedItems.send(Array(newNfts))
     }
     
-    func sendCatalogLikedItemsUpdates(newData: [SingleNft]) {
+    func sendCatalogLikedItemsUpdates(newData: [SingleNftModel]) {
         likedCatalogNftsPublishedItems.send(newData)
     }
     
-    func sendAuthorNftsUpdates(newNfts: [SingleNft]) {
+    func sendAuthorNftsUpdates(newNfts: [SingleNftModel]) {
         authorNftsPublishedItems.send(newNfts)
     }
 }
 
 // MARK: - Ext Profile collection sorting
 private extension DataStore {
-    func getAuthorNftsSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNft] {
+    func getAuthorNftsSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNftModel] {
         guard let sortDescriptor else { return [] }
         switch sortDescriptor {
         case .price:
@@ -237,22 +237,22 @@ private extension DataStore {
         }
     }
     
-    func sortAuthorNftsByPrice() -> [SingleNft] {
+    func sortAuthorNftsByPrice() -> [SingleNftModel] {
         return authorNftsStoredItems.sorted(by: { $0.price < $1.price })
     }
     
-    func sortAuthorNftsByRate() -> [SingleNft] {
+    func sortAuthorNftsByRate() -> [SingleNftModel] {
         return authorNftsStoredItems.sorted(by: { $0.rating > $1.rating })
     }
     
-    func sortAuthorNftsByName() -> [SingleNft] {
+    func sortAuthorNftsByName() -> [SingleNftModel] {
         return authorNftsStoredItems.sorted(by: { $0.name > $1.name })
     }
 }
 
 // MARK: - Ext Private Catalog Sorting
 private extension DataStore {
-    func getCatalogSortedItems(by sortDescriptor: CatalogSortValue?) -> [NftCollection] {
+    func getCatalogSortedItems(by sortDescriptor: CatalogSortValue?) -> [CatalogMainScreenCollection] {
         guard let sortDescriptor else { return catalogStoredItems }
         switch sortDescriptor {
         case .name:
@@ -264,18 +264,18 @@ private extension DataStore {
         }
     }
     
-    func sortByName() -> [NftCollection] {
+    func sortByName() -> [CatalogMainScreenCollection] {
         return catalogStoredItems.sorted(by: { $0.name > $1.name })
     }
     
-    func sortByQuantity() -> [NftCollection] {
+    func sortByQuantity() -> [CatalogMainScreenCollection] {
         return catalogStoredItems.sorted(by: { $0.nfts.count > $1.nfts.count })
     }
 }
 
 // MARK: - Ext Private Cart Sorting
 private extension DataStore {
-    func getCartSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNft] {
+    func getCartSortedItems(by sortDescriptor: CartSortValue?) -> [SingleNftModel] {
         guard let sortDescriptor else { return cartStoredItems }
         switch sortDescriptor {
         case .price:
@@ -289,37 +289,37 @@ private extension DataStore {
         }
     }
     
-    func sortByPrice() -> [SingleNft] {
+    func sortByPrice() -> [SingleNftModel] {
         return cartStoredItems.sorted(by: { $0.price < $1.price })
     }
     
-    func sortByRate() -> [SingleNft] {
+    func sortByRate() -> [SingleNftModel] {
         return cartStoredItems.sorted(by: { $0.rating > $1.rating })
     }
     
-    func sortByName() -> [SingleNft] {
+    func sortByName() -> [SingleNftModel] {
         return cartStoredItems.sorted(by: { $0.name > $1.name })
     }
 }
 
 // MARK: - Ext Add / Delete to cart
 private extension DataStore {
-    func addItemToCart(_ item: SingleNft) {
+    func addItemToCart(_ item: SingleNftModel) {
         cartStoredItems.append(item)
     }
     
-    func deleteItemFromCart(_ item: SingleNft) {
+    func deleteItemFromCart(_ item: SingleNftModel) {
         cartStoredItems.removeAll(where: { $0 == item })
     }
 }
 
 // MARK: - Ext Add / Delete like
 private extension DataStore {
-    func addLike(_ item: SingleNft) {
+    func addLike(_ item: SingleNftModel) {
         likedNfts.append(item)
     }
     
-    func deleteLike(_ item: SingleNft) {
+    func deleteLike(_ item: SingleNftModel) {
         likedNfts.removeAll(where: { $0 == item })
     }
 }

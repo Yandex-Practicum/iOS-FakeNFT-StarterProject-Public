@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class CartDeleteViewModel {
-    @Published private (set) var itemToDelete: SingleNft?
+    @Published private (set) var itemToDelete: SingleNftModel?
     
     private let dataStore: DataStorageManagerProtocol
     
@@ -26,20 +26,15 @@ final class CartDeleteViewModel {
         return URL(string: encodedStringUrl)
     }
     
-//    func updateItemToDelete(with id: String?) {
-//        guard let id else { return }
-//        itemToDelete = dataStore.getCartRowItems().first(where: { $0.id == id })
-//    }
-    
-    func updateItemToDelete(_ item: SingleNft?) {
-        itemToDelete = item
+    func updateItemToDelete(with id: String?) {
+        guard let id else { return }
+        itemToDelete = dataStore.getItems(.singleNftItems)
+            .compactMap({ $0 as? SingleNftModel })
+            .first(where: { $0.id == id })
     }
     
-//    func deleteItem(with id: String?) {
-//        dataStore.deleteItem(with: id)
-//    }
-    
-    func deleteItem(_ item: SingleNft?) {
-        dataStore.deleteItem(item)
+    func deleteItem(with id: String?) {
+        guard let id else { return }
+        dataStore.toggleIsStored(id)
     }
 }

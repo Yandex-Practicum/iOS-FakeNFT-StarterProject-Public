@@ -11,12 +11,10 @@ import Combine
 final class CartViewModel {
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private (set) var visibleRows: [SingleNft] = []
+    @Published private (set) var visibleRows: [SingleNftModel] = []
     @Published private (set) var cartError: Error?
     @Published private (set) var requestResult: RequestResult?
-    
-    private var idToDelete: String?
-    
+            
     private var dataStore: DataStorageManagerProtocol
     private var networkClient: NetworkClient
     
@@ -37,65 +35,36 @@ final class CartViewModel {
 //        manager.currentSortDescriptor = sortBy
 //    }
     
-    func deleteItem(_ item: SingleNft?) {
-        dataStore.deleteItem(item)
+    func deleteItem(_ id: String?) {
+        guard let id else { return }
+        dataStore.toggleIsStored(id)
     }
     
     func reload() {
-//        let storedNftItems = dataStore.getCartRowItems()
-//        storedNftItems.forEach { singleNft in
-//            let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: singleNft.id)
-//            requestResult = .loading
-//            networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
-//                guard let self else { return }
-//                switch result {
-//                case .success(let data):
-//                    self.dataStore.addCartRowItem(data)
-//                    requestResult = nil
-//                case .failure(let error):
-//                    self.cartError = error
-//                    requestResult = nil
-//                }
-//            }
-//        }
-    }
-    
-    func add() {
-        dataStore.addItem(
-            SingleNft(createdAt: "test1",
-                      name: "test1",
-                      images: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png"],
-                      rating: Int.random(in: 0...5),
-                      description: "test1",
-                      price: Float.random(in: 0...100),
-                      author: "test",
-                      id: "\(Int.random(in: 0...100000))"))
+        let storedNftItems = dataStore.getItems(.storedItems).compactMap({ $0 as? String })
+        updateUI(storedNftItems)
     }
 }
 
-// MARK: - Ext Private methods
+// MARK: - Ext bind
 private extension CartViewModel {
     func bind() {
-        
-        // TODO: works with test add
-        dataStore.getAnyPublisher(.cartItems)
-            .compactMap({ items -> [SingleNft] in
-                return items.compactMap({ $0 as? SingleNft })
+        dataStore.getAnyPublisher(.storedItems)
+            .compactMap({ items -> [String] in
+                return items.compactMap({ $0 as? String })
             })
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] singleNfts in
-                self?.visibleRows = singleNfts
+            .sink { [weak self] storedIds in
+                self?.updateUI(storedIds)
             }
             .store(in: &cancellables)
-        
-        
-        // TODO: Do not remove, initial logic
-//        dataStore.cartDataPublisher
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] in
-//                guard let self else { return }
-//                self.visibleRows = $0
-//            }
-//            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Ext network publisher
+private extension CartViewModel {
+    func updateUI(_ ids: [String]) {
+        visibleRows = dataStore.getItems(.singleNftItems)
+            .compactMap({ $0 as? SingleNftModel })
+            .filter({ ids.contains($0.id) })
     }
 }

@@ -71,16 +71,16 @@ private extension CartCoordinator {
     }
     
     // MARK: - DeleteItemScreen
-    func showDeleteScreen(itemToDelete: SingleNft?) {
+    func showDeleteScreen(itemToDelete: String?) {
         var deleteScreen = factory.makeCartDeleteScreenView(dataStore: dataStorageManager)
-        deleteScreen.itemToDelete = itemToDelete
+        deleteScreen.idToDelete = itemToDelete
         
         deleteScreen.onCancel = { [weak router, weak deleteScreen] in
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         
         deleteScreen.onDelete = { [weak router, weak deleteScreen] in
-            deleteScreen?.deleteItem(itemToDelete)
+            deleteScreen?.deleteItem(with: itemToDelete)
             router?.dismissViewController(deleteScreen, animated: true, completion: nil)
         }
         

@@ -43,7 +43,7 @@ private extension ProfileLikedNftsViewModel {
             .store(in: &cancellables)
     }
     
-    func updateVisibleNfts(_ nfts: [SingleNft]) {
+    func updateVisibleNfts(_ nfts: [SingleNftModel]) {
         self.visibleNfts = convert(nfts)
     }
 }
@@ -52,7 +52,7 @@ private extension ProfileLikedNftsViewModel {
 private extension ProfileLikedNftsViewModel {
     func sendLikedNftsRequest(_ id: String) {
         let request = RequestConstructor.constructSingleNftRequest(nftId: id)
-        networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
+        networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
             switch result {
             case .success(let nft):
                 self?.addOrDeleteLikedNftToStorage(from: nft)
@@ -62,14 +62,14 @@ private extension ProfileLikedNftsViewModel {
         }
     }
     
-    func addOrDeleteLikedNftToStorage(from nft: SingleNft) {
+    func addOrDeleteLikedNftToStorage(from nft: SingleNftModel) {
         dataStore.addOrDeleteLikeFromProfile(nft)
     }
 }
 
 // MARK: - Ext Convert
 private extension ProfileLikedNftsViewModel {
-    func convert(_ nfts: [SingleNft]) -> [LikedSingleNfts] {
+    func convert(_ nfts: [SingleNftModel]) -> [LikedSingleNfts] {
         var likedNfts: [LikedSingleNfts] = []
         nfts.forEach { singleNft in
             let likedNft = LikedSingleNfts(

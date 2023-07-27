@@ -10,7 +10,7 @@ import Combine
 
 protocol CatalogMainScreenCoordinatable: AnyObject {
     var onFilter: (() -> Void)? { get set }
-    var onProceed: ((NftCollection) -> Void)? { get set }
+    var onProceed: ((CatalogMainScreenCollection) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CatalogSortValue)
     func reload()
@@ -19,7 +19,7 @@ protocol CatalogMainScreenCoordinatable: AnyObject {
 final class CatalogViewController: UIViewController {
 
     var onFilter: (() -> Void)?
-    var onProceed: ((NftCollection) -> Void)?
+    var onProceed: ((CatalogMainScreenCollection) -> Void)?
     var onError: ((Error) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
@@ -125,7 +125,7 @@ private extension CatalogViewController {
         dataSource.createDataSource(for: tableView, with: viewModel.visibleRows)
     }
     
-    private func updateTableView(with rows: [NftCollection]) {
+    private func updateTableView(with rows: [CatalogMainScreenCollection]) {
         dataSource.updateTableView(with: rows)
     }
 }

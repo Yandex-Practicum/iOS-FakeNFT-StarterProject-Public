@@ -72,6 +72,7 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
             dataStore: dataStore,
+            dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
             collectionViewDataSource: collectionViewDataSource
         )

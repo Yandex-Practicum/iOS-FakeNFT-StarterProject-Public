@@ -46,11 +46,11 @@ private extension ProfileMyNftsViewModel {
             .store(in: &cancellables)
     }
     
-    func updateVisibleNfts(with nfts: [SingleNft]) {
+    func updateVisibleNfts(with nfts: [SingleNftModel]) {
         self.visibleRows = convertToSingleNftViewModel(nfts)
     }
     // MARK: move to additional layer of DataStore manager
-    func convertToSingleNftViewModel(_ nfts: [SingleNft]) -> [VisibleSingleNfts] {
+    func convertToSingleNftViewModel(_ nfts: [SingleNftModel]) -> [VisibleSingleNfts] {
         var result: [VisibleSingleNfts] = []
         
         nfts.forEach { singleNft in
@@ -75,11 +75,11 @@ private extension ProfileMyNftsViewModel {
         return result
     }
     
-    func itemIsStored(_ item: SingleNft) -> Bool {
+    func itemIsStored(_ item: SingleNftModel) -> Bool {
         return dataStore.checkIfItemIsStored(item)
     }
     
-    func itemIsLiked(_ item: SingleNft) -> Bool {
+    func itemIsLiked(_ item: SingleNftModel) -> Bool {
         return dataStore.checkIfItemIsLiked(item)
     }
 }
@@ -88,7 +88,7 @@ private extension ProfileMyNftsViewModel {
 private extension ProfileMyNftsViewModel {
     func sendNftsRequest(nftId: String) {
         let request = RequestConstructor.constructSingleNftRequest(nftId: nftId)
-        networkClient.send(request: request, type: SingleNft.self) { [weak self] result in
+        networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
             switch result {
             case .success(let nft):
                 self?.loadNftAuthor(of: nft)
@@ -99,7 +99,7 @@ private extension ProfileMyNftsViewModel {
         }
     }
     
-    func loadNftAuthor(of nft: SingleNft) {
+    func loadNftAuthor(of nft: SingleNftModel) {
         let request = RequestConstructor.constructCollectionAuthorRequest(for: nft.author)
         networkClient.send(request: request, type: Author.self) { [weak self] result in
             switch result {
@@ -111,8 +111,8 @@ private extension ProfileMyNftsViewModel {
         }
     }
     
-    func addNftToStorageWithAuthorName(from nft: SingleNft, author: Author) {
-        let nftToStore = SingleNft(
+    func addNftToStorageWithAuthorName(from nft: SingleNftModel, author: Author) {
+        let nftToStore = SingleNftModel(
             createdAt: nft.createdAt,
             name: nft.name,
             images: nft.images,
@@ -125,7 +125,7 @@ private extension ProfileMyNftsViewModel {
         addNftToStorage(nftToStore)
     }
     
-    private func addNftToStorage(_ nft: SingleNft) {
+    private func addNftToStorage(_ nft: SingleNftModel) {
         dataStore.addStoredNfts(nft)
     }
 }

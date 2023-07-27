@@ -12,7 +12,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private var cancellables = Set<AnyCancellable>()
         
-    var onDelete: ((SingleNft?) -> Void)?
+    var onDelete: ((String?) -> Void)?
     
     var viewModel: CartCellViewModel? {
         didSet {
@@ -25,7 +25,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         }
     }
     
-    private var cellNft: SingleNft?
+    private var nftID: String?
     
     private lazy var nftImageView: NftIMageView = {
         let imageView = NftIMageView(frame: .zero)
@@ -114,12 +114,12 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         cancellables.removeAll()
     }
     
-    private func updateCell(with newRow: SingleNft ) {
+    private func updateCell(with newRow: SingleNftModel ) {
         loadCover(from: newRow.images.first)
         nftName.text = newRow.name
         rateStackView.updateRating(newRow.rating)
         nftPriceLabel.text = "\(newRow.price) ETF"
-        cellNft = newRow
+        nftID = newRow.id
     }
     
     private func loadCover(from stringUrl: String?) {
@@ -131,7 +131,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
 // MARK: - @objc
 @objc private extension CartTableViewCell {
     func deleteTapped() {
-        onDelete?(cellNft)
+        onDelete?(nftID)
     }
 }
 

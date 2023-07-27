@@ -14,7 +14,8 @@ final class CatalogCoordinator: CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol
+    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol // TODO: delete after dataStorageManager implemented
+    private let dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     
@@ -23,6 +24,7 @@ final class CatalogCoordinator: CoordinatorProtocol {
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
          dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol,
+         dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
          collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     ) {
@@ -32,6 +34,7 @@ final class CatalogCoordinator: CoordinatorProtocol {
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
         self.dataStore = dataStore
+        self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
     }
@@ -44,7 +47,7 @@ final class CatalogCoordinator: CoordinatorProtocol {
 // MARK: - Ext Screens
 private extension CatalogCoordinator {
     func createScreen() {
-        let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStore)
+        let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStorageManager)
         
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .catalog, rootViewController: catalogScreen) 
         
@@ -65,8 +68,8 @@ private extension CatalogCoordinator {
         router.addTabBarItem(navController)
     }
     
-    func showCatalogCollectionScreen(with collection: NftCollection) {
-        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource, dataStore: dataStore)
+    func showCatalogCollectionScreen(with collection: CatalogMainScreenCollection) {
+        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource, dataStore: dataStorageManager)
         
         collectionScreen.onCancel = { [weak router] in
             router?.popToRootViewController(animated: true, completion: nil)

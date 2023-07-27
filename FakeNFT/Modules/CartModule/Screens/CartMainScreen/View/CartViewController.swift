@@ -10,8 +10,7 @@ import Combine
 
 protocol CartMainCoordinatableProtocol: AnyObject {
     var onFilter: (() -> Void)? { get set }
-//    var onDelete: ((String?) -> Void)? { get set }
-    var onDelete: ((SingleNft?) -> Void)? { get set }
+    var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CartSortValue)
@@ -23,8 +22,7 @@ protocol CartMainCoordinatableProtocol: AnyObject {
 final class CartViewController: UIViewController {
     // CartMainCoordinatableProtocol properties
     var onFilter: (() -> Void)?
-//    var onDelete: ((String?) -> Void)?
-    var onDelete: ((SingleNft?) -> Void)?
+    var onDelete: ((String?) -> Void)?
     var onProceed: (() -> Void)?
     var onError: ((Error?) -> Void)?
 
@@ -126,7 +124,6 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
         setupConstraints()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,7 +150,6 @@ final class CartViewController: UIViewController {
         viewModel.$visibleRows
             .receive(on: DispatchQueue.main)
             .sink { [weak self] rows in
-                print("VC rows are: \(rows)")
                 self?.updateTableView(with: rows)
                 self?.updateTotalLabels(from: rows)
                 self?.showTheNeededView(for: rows)
@@ -175,16 +171,16 @@ final class CartViewController: UIViewController {
             .store(in: &cancellables)
     }
     
-    private func updateTotalLabels(from rows: [SingleNft]) {
+    private func updateTotalLabels(from rows: [SingleNftModel]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETF"
     }
     
-    private func updateTableView(with rows: [SingleNft]) {
+    private func updateTableView(with rows: [SingleNftModel]) {
         diffableDataSource.updateTableView(with: rows)
     }
     
-    private func showTheNeededView(for rows: [SingleNft]) {
+    private func showTheNeededView(for rows: [SingleNftModel]) {
         let isLoading = viewModel.requestResult != nil
         cartStackView.isHidden = rows.isEmpty
         emptyStateLabel.isHidden = !rows.isEmpty || isLoading
@@ -236,7 +232,7 @@ extension CartViewController: UITableViewDelegate {
             style: .destructive,
             title: K.Titles.delete) { [weak self] action, view, handler in
                 guard let cell = tableView.cellForRow(at: indexPath) as? CartTableViewCell else { return }
-                let nft = cell.viewModel?.cartRow
+                let nft = cell.viewModel?.cartRow.id
                 self?.viewModel.deleteItem(nft)
             }
         
@@ -248,8 +244,7 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - Ext OBJC
 @objc private extension CartViewController {
     func filterTapped() {
-//        onFilter?()
-        viewModel.add()
+        onFilter?()
     }
     
     func proceedTapped() {

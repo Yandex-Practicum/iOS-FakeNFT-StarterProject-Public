@@ -176,11 +176,11 @@ private extension CatalogCollectionViewController {
 
 // MARK: - Ext UpdateUI
 private extension CatalogCollectionViewController {
-    func loadAuthorData(for collection: NftCollection) {
+    func loadAuthorData(for collection: CatalogMainScreenCollection) {
         viewModel.loadAuthorData(of: collection)
     }
     
-    func updateUI(with collection: NftCollection) {
+    func updateUI(with collection: CatalogMainScreenCollection) {
         updateCoverImage(for: collection)
         updateTitleLabelText(for: collection)
         updateAuthorTextLabel(for: collection)
@@ -189,7 +189,7 @@ private extension CatalogCollectionViewController {
         
     }
     
-    func updateCoverImage(for collection: NftCollection) {
+    func updateCoverImage(for collection: CatalogMainScreenCollection) {
         guard
             let encodedStringUrl = collection.cover.addingPercentEncoding(
                 withAllowedCharacters: .urlQueryAllowed
@@ -202,20 +202,20 @@ private extension CatalogCollectionViewController {
         coverImageView.setImage(from: url)
     }
     
-    func updateTitleLabelText(for collection: NftCollection) {
+    func updateTitleLabelText(for collection: CatalogMainScreenCollection) {
         titleLabel.text = collection.name
     }
     
-    func updateAuthorTextLabel(for collection: NftCollection) {
+    func updateAuthorTextLabel(for collection: CatalogMainScreenCollection) {
         authorDescriptionLabel.setupAttributedText(authorName: collection.author)
     }
     
-    func updateDescriptionTextView(for collection: NftCollection) {
+    func updateDescriptionTextView(for collection: CatalogMainScreenCollection) {
         collectionDescriptionTextView.text = collection.description
         updateTextViewHeight()
     }
     
-    func updateSingleNfts(for collection: NftCollection) {
+    func updateSingleNfts(for collection: CatalogMainScreenCollection) {
         viewModel.updateNfts(from: collection)
     }
     
