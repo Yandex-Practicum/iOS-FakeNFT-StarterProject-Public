@@ -1,4 +1,4 @@
-Никишов Дмитрий, группа 4
+Никишов Дмитрий, группа 5, когорта 4
 Эпик: Каталог
 Доска:  https://github.com/SASHKEVICH/iOS-FakeNFT-StarterProject-Public/issues/created_by/Dmitry-Nikishov
 
