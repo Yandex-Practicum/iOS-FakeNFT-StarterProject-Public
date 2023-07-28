@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Дмитрий Никишов on 28.07.2023.
+  
+*/
+PROFILE = "Профиль";
+CATALOGUE = "Каталог";
+CART = "Корзина";
+STATISTICS = "Статистика";
