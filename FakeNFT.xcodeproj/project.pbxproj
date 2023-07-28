@@ -38,7 +38,7 @@
 		F61908D72A73D23000DEF2F5 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908D62A73D23000DEF2F5 /* AppConstants.swift */; };
 		F61908DB2A73D4D100DEF2F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F61908DD2A73D4D100DEF2F5 /* Localizable.strings */; };
 		F61908E12A73D58000DEF2F5 /* Strings+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908E02A73D58000DEF2F5 /* Strings+Extensions.swift */; };
-		F62CAD292A747BE8005F975D /* ProfileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = F62CAD282A747BE7005F975D /* ProfileDecomposition.md */; };
+		F62CAD2F2A747EB8005F975D /* ProfileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = F62CAD2E2A747EB8005F975D /* ProfileDecomposition.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +94,7 @@
 		F61908DC2A73D4D100DEF2F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F61908DE2A73D4D600DEF2F5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F61908E02A73D58000DEF2F5 /* Strings+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+Extensions.swift"; sourceTree = "<group>"; };
-		F62CAD282A747BE7005F975D /* ProfileDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ProfileDecomposition.md; sourceTree = SOURCE_ROOT; };
+		F62CAD2E2A747EB8005F975D /* ProfileDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ProfileDecomposition.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +259,7 @@
 		F61908BF2A73BDC300DEF2F5 /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
-				F62CAD282A747BE7005F975D /* ProfileDecomposition.md */,
+				F62CAD2E2A747EB8005F975D /* ProfileDecomposition.md */,
 				F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */,
 			);
 			path = Decomposition;
@@ -430,9 +430,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F62CAD292A747BE8005F975D /* ProfileDecomposition.md in Resources */,
 				F61908DB2A73D4D100DEF2F5 /* Localizable.strings in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
+				F62CAD2F2A747EB8005F975D /* ProfileDecomposition.md in Resources */,
 				F61908CB2A73CB2900DEF2F5 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */,
