@@ -10,6 +10,9 @@ final class NftDetailViewController: UIViewController {
   private let presenter: NftDetailPresenter
   private lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     return collectionView
   }()
@@ -36,7 +39,10 @@ final class NftDetailViewController: UIViewController {
   private func setup() {
     collectionView.register(NftImageCollectionViewCell.self)
     collectionView.dataSource = self
-//    collectionView.delegate = self
+    collectionView.delegate = self
+
+    collectionView.showsHorizontalScrollIndicator = true
+    collectionView.isPagingEnabled = true
 
     view.addSubview(collectionView)
     collectionView.constraintEdges(to: view)
@@ -65,13 +71,40 @@ extension NftDetailViewController: UICollectionViewDataSource {
   }
 }
 
+extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    collectionView.bounds.size
+  }
+}
+
 final class NftImageCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
-  private lazy var imageView: UIImageView = UIImageView()
+
+  private lazy var scrollView: UIScrollView = {
+    let scrollView = UIScrollView()
+    scrollView.delegate = self
+    scrollView.minimumZoomScale = 1.0
+    scrollView.maximumZoomScale = 3.0
+    return scrollView
+  }()
+
+  private lazy var imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    return imageView
+  }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    addSubview(imageView)
-    imageView.constraintEdges(to: self)
+
+    contentView.addSubview(scrollView)
+    scrollView.constraintEdges(to: contentView)
+
+    scrollView.addSubview(imageView)
+    imageView.constraintCenters(to: scrollView)
+    imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+    imageView.heightAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
   }
 
   required init?(coder: NSCoder) {
@@ -80,5 +113,16 @@ final class NftImageCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 
   func configure(with cellModel: NftDetailCellModel) {
     imageView.kf.setImage(with: cellModel.url)
+  }
+}
+
+extension NftImageCollectionViewCell: UIScrollViewDelegate {
+
+  func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+    scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+  }
+
+  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    imageView
   }
 }
