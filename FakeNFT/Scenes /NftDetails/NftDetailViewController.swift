@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-protocol NftDetailView: AnyObject {
+protocol NftDetailView: AnyObject, ErrorView, LoadingView {
   func displayCells(_ cellModels: [NftDetailCellModel])
 }
 
@@ -16,6 +16,7 @@ final class NftDetailViewController: UIViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     return collectionView
   }()
+  internal lazy var activityIndicator = UIActivityIndicatorView()
 
   private var cellModels: [NftDetailCellModel] = []
 
@@ -31,12 +32,15 @@ final class NftDetailViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = .white
     setup()
     presenter.loadImages()
   }
 
   private func setup() {
+    view.backgroundColor = .white
+    collectionView.addSubview(activityIndicator)
+    activityIndicator.constraintCenters(to: collectionView)
+
     collectionView.register(NftImageCollectionViewCell.self)
     collectionView.dataSource = self
     collectionView.delegate = self
