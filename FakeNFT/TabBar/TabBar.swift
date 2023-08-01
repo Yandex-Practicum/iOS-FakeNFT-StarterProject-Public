@@ -67,7 +67,7 @@ private extension MainTabBarController {
         viewController.tabBarItem.title = title
         return viewController
     }
-
+    
     func setAppearance() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.backgroundColor = .ypWhite

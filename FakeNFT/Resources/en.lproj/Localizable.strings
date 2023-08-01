@@ -99,9 +99,9 @@ tabBar.basket = "Basket";
 
 // Профиль
 tabBar.profile = "Profile";
-
-
-
+profile.myNFTs = "My NFTs";
+profile.featured = "Featured NFTs";
+profile.about = "About the developer";
 
 
 

@@ -99,7 +99,9 @@ tabBar.basket = "Корзина";
 
 // Профиль
 tabBar.profile = "Профиль";
-
+profile.myNFTs = "Мои NFT";
+profile.featured = "Избранные NFT";
+profile.about = "О разработчике";
 
 
 

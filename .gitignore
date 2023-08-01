@@ -117,3 +117,6 @@ xcuserdata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swift,cocoapods,swiftpackagemanager
+FakeNFT/Epics/Basket
+FakeNFT/Epics/Catalog
+FakeNFT/Epics/Statistic
