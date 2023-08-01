@@ -33,7 +33,7 @@
 "loginLabelEnterTitle" = "להיכנס";
 "loginLabelChangePasswordTitle" = "לאפס את הסיסמה";
 // OnboardingButton
-"onboardingProceedButtonTitle" = "?מה יש בפנים";
+"onboardingProceedButtonTitle" = "מה יש בפנים?";
 // Alerts
 "sortAlertTitle" = "מיון";
 "loadingAlertTitle" = "הטעינה נכשלה";

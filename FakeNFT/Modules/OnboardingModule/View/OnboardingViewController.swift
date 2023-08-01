@@ -19,7 +19,7 @@ final class OnboardingViewController: UIViewController {
     }()
     
     private lazy var titleLabel: CustomLabel = {
-        let label = CustomLabel(size: 32, weight: .bold, color: .universalWhite, alignment: .left)
+        let label = CustomLabel(size: 32, weight: .bold, color: .universalWhite, alignment: .natural)
         return label
     }()
     
@@ -31,7 +31,7 @@ final class OnboardingViewController: UIViewController {
     }()
     
     private lazy var pageDescription: CustomLabel = {
-        let label = CustomLabel(size: 15, weight: .regular, color: .universalWhite, alignment: .left)
+        let label = CustomLabel(size: 15, weight: .regular, color: .universalWhite, alignment: .natural)
         label.numberOfLines = 0
         return label
     }()
