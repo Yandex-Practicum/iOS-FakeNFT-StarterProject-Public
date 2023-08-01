@@ -207,7 +207,6 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
-				96286E5C2A777B69004ADF21 /* Cart */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 			);
 			path = "Scenes ";
@@ -324,6 +323,7 @@
 		F61908CE2A73CD0600DEF2F5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				96286E5C2A777B69004ADF21 /* Cart */,
 				F61908CF2A73CD0F00DEF2F5 /* NFTs */,
 			);
 			path = Modules;
