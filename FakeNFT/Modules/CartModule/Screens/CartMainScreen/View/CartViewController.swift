@@ -13,8 +13,9 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
-    func setupSortDescriptor(_ filter: CartSortValue)
     func reloadCart()
+    func setupSortDescriptor(value: NftSortValue)
+
 }
 
 final class CartViewController: UIViewController {
@@ -122,7 +123,6 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
         setupConstraints()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -170,16 +170,16 @@ final class CartViewController: UIViewController {
             .store(in: &cancellables)
     }
     
-    private func updateTotalLabels(from rows: [SingleNft]) {
+    private func updateTotalLabels(from rows: [SingleNftModel]) {
         totalNFTCount.text = "\(rows.count) NFT"
         totalToPay.text = "\(rows.compactMap({ $0.price }).reduce(0, +)) ETF"
     }
     
-    private func updateTableView(with rows: [SingleNft]) {
+    private func updateTableView(with rows: [SingleNftModel]) {
         diffableDataSource.updateTableView(with: rows)
     }
     
-    private func showTheNeededView(for rows: [SingleNft]) {
+    private func showTheNeededView(for rows: [SingleNftModel]) {
         let isLoading = viewModel.requestResult != nil
         cartStackView.isHidden = rows.isEmpty
         emptyStateLabel.isHidden = !rows.isEmpty || isLoading
@@ -201,13 +201,18 @@ final class CartViewController: UIViewController {
 
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
-    func setupSortDescriptor(_ filter: CartSortValue) {
-        viewModel.setupSortValue(filter)
-    }
+//    func setupSortDescriptor(_ filter: CartSortValue) {
+//        viewModel.setupSortValue(filter)
+//    }
     
     func reloadCart() {
         viewModel.reload()
     }
+    
+    func setupSortDescriptor(value: NftSortValue) {
+        viewModel.setupSortValue(value)
+    }
+
 }
 
 // MARK: - Ext TableView delegate
@@ -226,8 +231,8 @@ extension CartViewController: UITableViewDelegate {
             style: .destructive,
             title: K.Titles.delete) { [weak self] action, view, handler in
                 guard let cell = tableView.cellForRow(at: indexPath) as? CartTableViewCell else { return }
-                let id = cell.viewModel?.cartRow.id
-                self?.viewModel.deleteItem(with: id)
+                let nft = cell.viewModel?.cartRow.id
+                self?.viewModel.deleteItem(nft)
             }
         
         return UISwipeActionsConfiguration(actions: [action])

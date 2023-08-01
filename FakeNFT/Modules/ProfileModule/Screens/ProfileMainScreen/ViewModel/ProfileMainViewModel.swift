@@ -15,12 +15,10 @@ final class ProfileMainViewModel {
     @Published private (set) var catalogError: Error?
     
     let networkClient: NetworkClient
-    let dataStore: ProfileDataStorage
     
     // MARK: Init
-    init(networkClient: NetworkClient, dataStore: ProfileDataStorage) {
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
-        self.dataStore = dataStore
     }
     
     func loadUser() {
@@ -46,10 +44,12 @@ private extension ProfileMainViewModel {
     }
     
     func addCreatedNfts(from profile: Profile) {
-        profileData.append(ProfileItems.created(profile.nfts.count).title)
+        let item = ProfileItems.created(profile.nfts.count).title
+        profileData.contains(item) ? () : profileData.append(item)
     }
     
     func addFavouriteNfts(from profile: Profile) {
-        profileData.append(ProfileItems.favorite(profile.likes.count).title)
+        let item = ProfileItems.favorite(profile.likes.count).title
+        profileData.contains(item) ? () : profileData.append(item)
     }
 }

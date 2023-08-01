@@ -146,12 +146,10 @@ final class CatalogCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 @objc private extension CatalogCollectionViewCell {
     func likeTapped() {
         onLike?(id)
-        viewModel?.updateIsLiked()
     }
     
     func cartTapped() {
         onCart?(id)
-        viewModel?.updateIsStored()
     }
 }
 

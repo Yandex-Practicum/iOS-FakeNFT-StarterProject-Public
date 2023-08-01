@@ -50,13 +50,13 @@ extension TableViewDataSource: GenericTableViewDataSourceProtocol {
 private extension TableViewDataSource {
     func tableViewCell(_ tableView: UITableView, at indexPath: IndexPath, with item: AnyHashable) -> UITableViewCell {
         switch item.base {
-        case let singleNft as SingleNft:
+        case let singleNft as SingleNftModel:
             return cartCell(tableView: tableView, indexPath: indexPath, item: singleNft)
-        case let nftCollection as NftCollection:
+        case let nftCollection as CatalogMainScreenCollection:
             return catalogCell(tableView: tableView, indexPath: indexPath, item: nftCollection)
         case let userNftDescription as ProfileModel:
             return profileCell(tableView: tableView, indexPath: indexPath, item: userNftDescription)
-        case let myNftCell as VisibleSingleNfts:
+        case let myNftCell as MyNfts:
             return profileMyNftCell(tableView: tableView, indexPath: indexPath, item: myNftCell)
         default:
             return UITableViewCell(frame: .zero)
@@ -64,21 +64,21 @@ private extension TableViewDataSource {
     }
     
     // MARK: Cells
-    func cartCell(tableView: UITableView, indexPath: IndexPath, item: SingleNft) -> UITableViewCell {
+    func cartCell(tableView: UITableView, indexPath: IndexPath, item: SingleNftModel) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CartTableViewCell.defaultReuseIdentifier,
             for: indexPath
         ) as? CartTableViewCell
         else { return UITableViewCell(frame: .zero) }
         cell.viewModel = CartCellViewModel(cartRow: item)
-        cell.onDelete = { [weak self] id in
-            self?.onDeleteHandler?(id)
+        cell.onDelete = { [weak self] nft in
+            self?.onDeleteHandler?(nft)
         }
         
         return cell
     }
     
-    func catalogCell(tableView: UITableView, indexPath: IndexPath, item: NftCollection) -> UITableViewCell {
+    func catalogCell(tableView: UITableView, indexPath: IndexPath, item: CatalogMainScreenCollection) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CatalogTableViewCell.defaultReuseIdentifier,
             for: indexPath
@@ -101,7 +101,7 @@ private extension TableViewDataSource {
         return cell
     }
     
-    func profileMyNftCell(tableView: UITableView, indexPath: IndexPath, item: VisibleSingleNfts) -> UITableViewCell {
+    func profileMyNftCell(tableView: UITableView, indexPath: IndexPath, item: MyNfts) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: ProfileMyNftTableViewCell.defaultReuseIdentifier,
             for: indexPath

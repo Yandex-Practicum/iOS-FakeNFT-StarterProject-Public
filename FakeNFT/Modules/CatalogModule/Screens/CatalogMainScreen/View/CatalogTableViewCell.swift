@@ -73,7 +73,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
         coverImageView.setImage(from: url)
     }
     
-    private func updateCell(with newRow: NftCollection ) {
+    private func updateCell(with newRow: CatalogMainScreenCollection ) {
         loadCover(from: newRow.cover)
         quantityLabel.text = "\(newRow.name) (\(newRow.nfts.count))"
     }

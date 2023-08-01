@@ -61,6 +61,7 @@ final class ProfileLikedNftsViewController: UIViewController {
         cancellables.removeAll()
     }
     
+    // MARK: Bind
     private func bind() {
         viewModel.$visibleNfts
             .receive(on: DispatchQueue.main)

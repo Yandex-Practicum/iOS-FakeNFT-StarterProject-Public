@@ -14,7 +14,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage
+    private let dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     
@@ -22,7 +22,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: CartDataStorageProtocol & CatalogDataStorageProtocol & ProfileDataStorage,
+         dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
          collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
     ) {
@@ -31,7 +31,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
-        self.dataStore = dataStore
+        self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
     }
@@ -43,7 +43,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource, dataStore: dataStore)
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource)
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in
@@ -66,7 +66,7 @@ private extension ProfileCoordinator {
     }
     
     func showMyNftsScreen(_ nfts: [String]) {
-        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource, nftsToLoad: nfts, dataStore: dataStore)
+        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
         
         myNftsScreen.onSort = { [weak self, weak myNftsScreen] in
             guard let self, let myNftsScreen else { return }
@@ -77,7 +77,7 @@ private extension ProfileCoordinator {
     }
     
     func showLikedNftsScreen(_ nfts: [String]) {
-        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, nftsToLoad: nfts, dataStore: dataStore)
+        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
         
         router.pushViewControllerFromTabbar(likedNftsScreen, animated: true)
     }
@@ -108,7 +108,7 @@ private extension ProfileCoordinator {
     func showSortAlert(from screen: ProfileMyNftsCoordinatable) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] sortValue in
+        alertConstructor.addSortAlertActions(for: alert, values: NftSortValue.allCases) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }

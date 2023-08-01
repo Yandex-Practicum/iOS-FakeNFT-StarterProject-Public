@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol Sortable {
+protocol AlertDescriptable {
     var description: String { get }
     var style: UIAlertAction.Style { get }
 }
@@ -15,7 +15,7 @@ protocol Sortable {
 protocol AlertConstructable {
     func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController
     func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
-    func addSortAlertActions<T: CaseIterable & Sortable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void)
+    func addSortAlertActions<T: CaseIterable & AlertDescriptable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void)
 }
 
 struct AlertConstructor: AlertConstructable {
@@ -40,7 +40,7 @@ struct AlertConstructor: AlertConstructable {
         }
     }
     
-    func addSortAlertActions<T: CaseIterable & Sortable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void) {
+    func addSortAlertActions<T: CaseIterable & AlertDescriptable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void) {
         for value in T.allCases {
             alert.addAction(
                 UIAlertAction(

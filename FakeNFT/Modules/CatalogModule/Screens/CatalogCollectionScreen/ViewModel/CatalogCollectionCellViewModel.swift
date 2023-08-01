@@ -23,33 +23,4 @@ final class CatalogCollectionCellViewModel: ObservableObject {
         
         return URL(string: encodedStringUrl)
     }
-    
-    func updateIsLiked() {
-        let newRow = VisibleSingleNfts(
-            name: nftRow.name,
-            images: nftRow.images,
-            rating: nftRow.rating,
-            description: nftRow.description,
-            price: nftRow.price,
-            author: nftRow.author,
-            id: nftRow.id,
-            isStored: nftRow.isStored,
-            isLiked: !nftRow.isLiked)
-        
-        self.nftRow = newRow
-    }
-    
-    func updateIsStored() {
-        let newRow = VisibleSingleNfts(
-            name: nftRow.name,
-            images: nftRow.images,
-            rating: nftRow.rating,
-            description: nftRow.description,
-            price: nftRow.price,
-            author: nftRow.author,
-            id: nftRow.id,
-            isStored: !nftRow.isStored,
-            isLiked: nftRow.isLiked)
-        self.nftRow = newRow
-    }
 }

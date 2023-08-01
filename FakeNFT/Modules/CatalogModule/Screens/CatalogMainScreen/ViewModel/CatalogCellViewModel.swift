@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 final class CatalogCellViewModel: ObservableObject {
-    @Published private (set) var catalogRows: NftCollection
+    @Published private (set) var catalogRows: CatalogMainScreenCollection
     
-    init(catalogRows: NftCollection) {
+    init(catalogRows: CatalogMainScreenCollection) {
         self.catalogRows = catalogRows
     }
 }

@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 final class ProfileMyNftCellViewModel {
-    @Published private (set) var cellModel: VisibleSingleNfts
+    @Published private (set) var cellModel: MyNfts
     
-    init(cellModel: VisibleSingleNfts) {
+    init(cellModel: MyNfts) {
         self.cellModel = cellModel
     }
     

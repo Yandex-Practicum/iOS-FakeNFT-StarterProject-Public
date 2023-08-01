@@ -1,13 +1,14 @@
 //
-//  VisibleSingleNfts.swift
+//  SingleNftModel.swift
 //  FakeNFT
 //
-//  Created by Aleksandr Eliseev on 05.07.2023.
+//  Created by Aleksandr Eliseev on 26.06.2023.
 //
 
 import Foundation
 
-struct VisibleSingleNfts: Hashable {
+struct SingleNftModel: Codable, Hashable {
+    let createdAt: String
     let name: String
     let images: [String]
     let rating: Int
@@ -15,6 +16,4 @@ struct VisibleSingleNfts: Hashable {
     let price: Float
     let author: String
     let id: String
-    var isStored: Bool
-    var isLiked: Bool
 }

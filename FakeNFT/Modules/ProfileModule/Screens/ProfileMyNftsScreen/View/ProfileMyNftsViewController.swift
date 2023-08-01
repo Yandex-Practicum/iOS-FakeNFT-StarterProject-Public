@@ -10,7 +10,7 @@ import Combine
 
 protocol ProfileMyNftsCoordinatable: AnyObject {
     var onSort: (() -> Void)? { get set }
-    func setupSortDescriptor(_ sortDescriptor: CartSortValue)
+    func setupSortDescriptor(_ sortDescriptor: NftSortValue)
 }
 
 final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
@@ -28,6 +28,11 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         tableView.separatorStyle = .none
         tableView.delegate = self
         return tableView
+    }()
+    
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
     }()
     
     // MARK: Init
@@ -62,7 +67,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         cancellables.removeAll()
     }
     
-    func setupSortDescriptor(_ sortDescriptor: CartSortValue) {
+    func setupSortDescriptor(_ sortDescriptor: NftSortValue) {
         viewModel.setupSortDescriptor(sortDescriptor)
     }
     
@@ -74,6 +79,13 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
                 self?.updateUI(with: visibleRows)
             }
             .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                self?.showOrHideAnimation(for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
     private func load() {
@@ -83,7 +95,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
 
 // MARK: - Ext DataSource
 private extension ProfileMyNftsViewController {
-    func updateUI(with rows: [VisibleSingleNfts]) {
+    func updateUI(with rows: [MyNfts]) {
         dataSource.updateTableView(with: rows)
     }
     
@@ -118,10 +130,25 @@ private extension ProfileMyNftsViewController {
     }
 }
 
+// MARK: - Ext Animation
+private extension ProfileMyNftsViewController {
+    func showOrHideAnimation(for requestResult: RequestResult?) {
+        guard let requestResult
+        else {
+            loadingView.stopAnimation()
+            return
+        }
+        
+        loadingView.result = requestResult
+        loadingView.startAnimation()
+    }
+}
+
 // MARK: - Ext Constraints
 private extension ProfileMyNftsViewController {
     func setupConstraints() {
         setupTableView()
+        setupLoadingView()
     }
     
     func setupTableView() {
@@ -133,6 +160,18 @@ private extension ProfileMyNftsViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
