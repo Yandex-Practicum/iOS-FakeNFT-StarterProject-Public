@@ -8,14 +8,30 @@ protocol NftDetailView: AnyObject, ErrorView, LoadingView {
 final class NftDetailViewController: UIViewController {
 
   private let presenter: NftDetailPresenter
+
   private lazy var collectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.register(NftImageCollectionViewCell.self)
+    collectionView.dataSource = self
+    collectionView.delegate = self
+
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.isPagingEnabled = true
     return collectionView
   }()
+
+  private lazy var closeButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(named: "close"), for: .normal)
+    button.addTarget(self, action: #selector(close), for: .touchUpInside)
+    return button
+  }()
+
+  private lazy var pageControl = LinePageControl()
   internal lazy var activityIndicator = UIActivityIndicatorView()
 
   private var cellModels: [NftDetailCellModel] = []
@@ -32,24 +48,37 @@ final class NftDetailViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    setup()
+    view.backgroundColor = .white
+    setupLayout()
     presenter.loadImages()
   }
 
-  private func setup() {
-    view.backgroundColor = .white
+  private func setupLayout() {
     collectionView.addSubview(activityIndicator)
     activityIndicator.constraintCenters(to: collectionView)
 
-    collectionView.register(NftImageCollectionViewCell.self)
-    collectionView.dataSource = self
-    collectionView.delegate = self
-
-    collectionView.showsHorizontalScrollIndicator = true
-    collectionView.isPagingEnabled = true
-
     view.addSubview(collectionView)
     collectionView.constraintEdges(to: view)
+
+    view.addSubview(pageControl)
+    pageControl.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      pageControl.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      pageControl.bottomAnchor.constraint(equalTo: collectionView.safeAreaLayoutGuide.bottomAnchor)
+    ])
+
+    view.addSubview(closeButton)
+    closeButton.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+      closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+    ])
+  }
+
+  @objc
+  private func close() {
+    dismiss(animated: true)
   }
 }
 
@@ -57,6 +86,7 @@ extension NftDetailViewController: NftDetailView {
   func displayCells(_ cellModels: [NftDetailCellModel]) {
     self.cellModels = cellModels
     collectionView.reloadData()
+    pageControl.numberOfItems = cellModels.count
   }
 }
 
@@ -80,6 +110,11 @@ extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     collectionView.bounds.size
+  }
+
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    let selectedItem = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+    pageControl.selectedItem = selectedItem
   }
 }
 

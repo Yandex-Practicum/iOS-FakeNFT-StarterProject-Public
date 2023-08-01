@@ -50,7 +50,11 @@ struct DefaultNetworkClient: NetworkClient {
     }
 
     @discardableResult
-    func send(request: NetworkRequest, completionQueue: DispatchQueue, onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
+    func send(
+      request: NetworkRequest,
+      completionQueue: DispatchQueue,
+      onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask? {
         let onResponse: (Result<Data, Error>) -> Void = { result in
           completionQueue.async {
             onResponse(result)
