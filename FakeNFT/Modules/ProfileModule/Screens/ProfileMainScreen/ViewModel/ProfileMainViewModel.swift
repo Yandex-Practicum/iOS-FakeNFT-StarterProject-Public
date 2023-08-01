@@ -44,10 +44,12 @@ private extension ProfileMainViewModel {
     }
     
     func addCreatedNfts(from profile: Profile) {
-        profileData.append(ProfileItems.created(profile.nfts.count).title)
+        let item = ProfileItems.created(profile.nfts.count).title
+        profileData.contains(item) ? () : profileData.append(item)
     }
     
     func addFavouriteNfts(from profile: Profile) {
-        profileData.append(ProfileItems.favorite(profile.likes.count).title)
+        let item = ProfileItems.favorite(profile.likes.count).title
+        profileData.contains(item) ? () : profileData.append(item)
     }
 }

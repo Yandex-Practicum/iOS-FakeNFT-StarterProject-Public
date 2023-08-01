@@ -16,30 +16,42 @@ final class ProfileMyNftsViewModel {
     
     private let networkClient: NetworkClient
     private let nftsToLoad: [String]
-    private let dataStore: ProfileDataStorage
+    private let dataStore: DataStorageManagerProtocol
     
-    init(networkClient: NetworkClient,  nftsToLoad: [String], dataStore: ProfileDataStorage) {
+    init(networkClient: NetworkClient,  nftsToLoad: [String], dataStore: DataStorageManagerProtocol) {
         self.networkClient = networkClient
         self.nftsToLoad = nftsToLoad
         self.dataStore = dataStore
         bind()
     }
     
-    // MARK: грузится каждый раз, поправить
     func load() {
-        nftsToLoad.forEach({ sendNftsRequest(nftId: $0) })
+//        nftsToLoad.forEach { id in
+//            dataStore.getItems(.likedItems).compactMap({ $0 as? String }).contains(id) ? () : sendNftsRequest(nftId: id)
+//        }
+        
+        nftsToLoad.forEach { id in
+            dataStore.getItems(.singleNftItems)
+                .compactMap({ $0 as? SingleNftModel })
+                .map({ $0.id})
+                .contains(id) ? () : sendNftsRequest(nftId: id)
+        }
+        
+//        nftsToLoad.forEach({ sendNftsRequest(nftId: $0) })
     }
     
     func setupSortDescriptor(_ descriptor: CartSortValue) {
-        dataStore.profileCollectionSortDescriptor = descriptor
+//        dataStore.profileCollectionSortDescriptor = descriptor
     }
 }
 
 // MARK: - Ext Bind
 private extension ProfileMyNftsViewModel {
     func bind() {
-        dataStore.profileNftsDataPublisher
-            .receive(on: DispatchQueue.main)
+        dataStore.getAnyPublisher(.singleNftItems)
+            .compactMap({ items -> [SingleNftModel] in
+                return items.compactMap({ $0 as? SingleNftModel })
+            })
             .sink { [weak self] singleNfts in
                 self?.updateVisibleNfts(with: singleNfts)
             }
@@ -47,40 +59,7 @@ private extension ProfileMyNftsViewModel {
     }
     
     func updateVisibleNfts(with nfts: [SingleNftModel]) {
-        self.visibleRows = convertToSingleNftViewModel(nfts)
-    }
-    // MARK: move to additional layer of DataStore manager
-    func convertToSingleNftViewModel(_ nfts: [SingleNftModel]) -> [VisibleSingleNfts] {
-        var result: [VisibleSingleNfts] = []
-        
-        nfts.forEach { singleNft in
-            let isStored = itemIsStored(singleNft)
-            let isLiked = itemIsLiked(singleNft)
-            
-            let visibleNft = VisibleSingleNfts(
-                name: singleNft.name,
-                images: singleNft.images,
-                rating: singleNft.rating,
-                description: singleNft.description,
-                price: singleNft.price,
-                author: singleNft.author,
-                id: singleNft.id,
-                isStored: isStored,
-                isLiked: isLiked
-            )
-            
-            result.append(visibleNft)
-        }
-        
-        return result
-    }
-    
-    func itemIsStored(_ item: SingleNftModel) -> Bool {
-        return dataStore.checkIfItemIsStored(item)
-    }
-    
-    func itemIsLiked(_ item: SingleNftModel) -> Bool {
-        return dataStore.checkIfItemIsLiked(item)
+        self.visibleRows = dataStore.convertStoredNftsToViewNfts(nfts)
     }
 }
 
@@ -91,6 +70,7 @@ private extension ProfileMyNftsViewModel {
         networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
             switch result {
             case .success(let nft):
+                self?.dataStore.addItem(nft)
                 self?.loadNftAuthor(of: nft)
             case .failure(let error):
                 // TODO: show alert
@@ -104,28 +84,25 @@ private extension ProfileMyNftsViewModel {
         networkClient.send(request: request, type: Author.self) { [weak self] result in
             switch result {
             case .success(let author):
-                self?.addNftToStorageWithAuthorName(from: nft, author: author)
+                self?.showNftWithAuthorName(from: nft, author: author)
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func addNftToStorageWithAuthorName(from nft: SingleNftModel, author: Author) {
-        let nftToStore = SingleNftModel(
-            createdAt: nft.createdAt,
-            name: nft.name,
-            images: nft.images,
-            rating: nft.rating,
-            description: nft.description,
-            price: nft.price,
-            author: author.name,
-            id: nft.id)
-        
-        addNftToStorage(nftToStore)
-    }
-    
-    private func addNftToStorage(_ nft: SingleNftModel) {
-        dataStore.addStoredNfts(nft)
+    func showNftWithAuthorName(from nft: SingleNftModel, author: Author) {
+        visibleRows = visibleRows.map{(
+            VisibleSingleNfts(
+                name: $0.name,
+                images: $0.images,
+                rating: $0.rating,
+                description: $0.description,
+                price: $0.price,
+                author: author.name,
+                id: $0.id,
+                isStored: $0.isStored,
+                isLiked: $0.isLiked)
+        )}
     }
 }

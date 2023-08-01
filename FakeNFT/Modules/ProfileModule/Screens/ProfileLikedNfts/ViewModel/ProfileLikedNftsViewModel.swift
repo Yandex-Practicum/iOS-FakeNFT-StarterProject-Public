@@ -16,18 +16,18 @@ final class ProfileLikedNftsViewModel {
     
     private let networkClient: NetworkClient
     private let nftsToLoad: [String]
-    private let dataStore: ProfileDataStorage
+    private let dataStore: DataStorageManagerProtocol
     
-    init(networkClient: NetworkClient, nftsToLoad: [String], dataStore: ProfileDataStorage) {
+    init(networkClient: NetworkClient, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) {
         self.networkClient = networkClient
         self.nftsToLoad = nftsToLoad
         self.dataStore = dataStore
         bind()
     }
-    // MARK: странная логика, поправить
+
     func load() {
-        if dataStore.getProfileLikedNfts().isEmpty || dataStore.getProfileLikedNfts().count != nftsToLoad.count {
-            nftsToLoad.forEach({ sendLikedNftsRequest($0) })
+        nftsToLoad.forEach { id in
+            dataStore.getItems(.likedItems).compactMap({ $0 as? String }).contains(id) ? () : sendLikedNftRequest(id)
         }
     }
 }
@@ -35,53 +35,56 @@ final class ProfileLikedNftsViewModel {
 // MARK: - Bind
 private extension ProfileLikedNftsViewModel {
     func bind() {
-        dataStore.profileLikedNftsDataPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] singleNfts in
-                self?.updateVisibleNfts(singleNfts)
+        dataStore.getAnyPublisher(.likedItems)
+            .compactMap({ items -> [String] in
+                return items.compactMap({ $0 as? String })
+            })
+            .sink { [weak self] ids in
+                self?.showVisibleNfts(ids)
             }
             .store(in: &cancellables)
     }
     
-    func updateVisibleNfts(_ nfts: [SingleNftModel]) {
-        self.visibleNfts = convert(nfts)
+    func showVisibleNfts(_ ids: [String]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.visibleNfts = filterVisibleNfts(ids)
+        }
+        
+    }
+    
+    func filterVisibleNfts(_ ids: [String]) -> [LikedSingleNfts] {
+        return dataStore.getItems(.singleNftItems)
+            .compactMap({ $0 as? SingleNftModel })
+            .filter({ ids.contains($0.id) })
+            .map({
+                LikedSingleNfts(
+                    name: $0.name,
+                    images: $0.images,
+                    rating: $0.rating,
+                    price: $0.price,
+                    id: $0.id,
+                    isLiked: true)
+            })
     }
 }
 
 // MARK: - Ext sendNftsRequest
 private extension ProfileLikedNftsViewModel {
-    func sendLikedNftsRequest(_ id: String) {
+    func sendLikedNftRequest(_ id: String) {
         let request = RequestConstructor.constructSingleNftRequest(nftId: id)
-        networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
-            switch result {
-            case .success(let nft):
-                self?.addOrDeleteLikedNftToStorage(from: nft)
-            case .failure(let error):
-                print(error)
+        networkClient.networkPublisher(request: request, type: SingleNftModel.self)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print(error)
+                }
+            } receiveValue: { [weak dataStore] singleNft in
+                dataStore?.addItem(singleNft)
+                dataStore?.toggleLike(singleNft.id)
             }
-        }
-    }
-    
-    func addOrDeleteLikedNftToStorage(from nft: SingleNftModel) {
-        dataStore.addOrDeleteLikeFromProfile(nft)
-    }
-}
-
-// MARK: - Ext Convert
-private extension ProfileLikedNftsViewModel {
-    func convert(_ nfts: [SingleNftModel]) -> [LikedSingleNfts] {
-        var likedNfts: [LikedSingleNfts] = []
-        nfts.forEach { singleNft in
-            let likedNft = LikedSingleNfts(
-                name: singleNft.name,
-                images: singleNft.images,
-                rating: singleNft.rating,
-                price: singleNft.price,
-                id: singleNft.id,
-                isLiked: true)
-            likedNfts.append(likedNft)
-        }
-        
-        return likedNfts
+            .store(in: &cancellables)
     }
 }

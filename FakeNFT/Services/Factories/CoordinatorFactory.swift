@@ -21,7 +21,6 @@ final class CoordinatorFactory  {
     private let modulesFactory = ModulesFactory()
     private let navigationControllerFactory = NavigationControllerFactory()
     private let alertConstructor = AlertConstructor()
-    private let dataStore = DataStore()
     private let dataStorageManager = DataStorageManager()
     private let tableViewDataSource = TableViewDataSource()
     private let collectionViewDataSource = CollectionViewDataSourceManager()
@@ -46,7 +45,7 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             router: router,
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
-            dataStore: dataStore,
+            dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
             collectionViewDataSource: collectionViewDataSource)
     }
@@ -71,7 +70,6 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             router: router,
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
-            dataStore: dataStore,
             dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
             collectionViewDataSource: collectionViewDataSource
@@ -84,7 +82,6 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             router: router,
             navigationControllerFactory: navigationControllerFactory,
             alertConstructor: alertConstructor,
-            dataStore: dataStore,
             dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
             collectionViewDataSource: collectionViewDataSource

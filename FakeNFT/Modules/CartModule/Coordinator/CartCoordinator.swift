@@ -14,7 +14,6 @@ final class CartCoordinator: CoordinatorProtocol {
     private var router: Routable
     private var navigationControllerFactory: NavigationControllerFactoryProtocol
     private var alertConstructor: AlertConstructable
-    private var dataStore: CartDataStorageProtocol // TODO: delete later
     private var dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol
@@ -23,7 +22,6 @@ final class CartCoordinator: CoordinatorProtocol {
          router: Routable,
          navigationControllerFactory: NavigationControllerFactoryProtocol,
          alertConstructor: AlertConstructable,
-         dataStore: CartDataStorageProtocol, // delete after dataStorage finished
          dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol & TableViewDataSourceCoordinatable,
          collectionViewDataSource: GenericCollectionViewDataSourceProtocol
@@ -33,7 +31,6 @@ final class CartCoordinator: CoordinatorProtocol {
         self.router = router
         self.navigationControllerFactory = navigationControllerFactory
         self.alertConstructor = alertConstructor
-        self.dataStore = dataStore
         self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
