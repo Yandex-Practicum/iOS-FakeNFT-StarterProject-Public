@@ -26,6 +26,7 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		96D10E9E2A7949D5008F6FA4 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9D2A7949D5008F6FA4 /* AppButton.swift */; };
 		F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */; };
 		F61908C42A73C71A00DEF2F5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C32A73C71A00DEF2F5 /* TabBarController.swift */; };
 		F61908C62A73C81B00DEF2F5 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */; };
@@ -79,6 +80,7 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		96D10E9D2A7949D5008F6FA4 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalogue_roadmap.md; sourceTree = "<group>"; };
 		F61908C32A73C71A00DEF2F5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -254,6 +256,14 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		96D10E9C2A7949C0008F6FA4 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				96D10E9D2A7949D5008F6FA4 /* AppButton.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		F61908BF2A73BDC300DEF2F5 /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +300,7 @@
 		F61908CE2A73CD0600DEF2F5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				96D10E9C2A7949C0008F6FA4 /* CustomViews */,
 				F61908CF2A73CD0F00DEF2F5 /* NFTs */,
 			);
 			path = Modules;
@@ -481,6 +492,7 @@
 				F61908D52A73CF5D00DEF2F5 /* NFTsViewModel.swift in Sources */,
 				F61908C62A73C81B00DEF2F5 /* UIColor+Extensions.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				96D10E9E2A7949D5008F6FA4 /* AppButton.swift in Sources */,
 				F61908D72A73D23000DEF2F5 /* AppConstants.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				F61908E12A73D58000DEF2F5 /* Strings+Extensions.swift in Sources */,
