@@ -91,7 +91,7 @@ private extension CatalogCoordinator {
     func showSortAlert(from screen: CatalogMainScreenCoordinatable) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(for: alert, values: CatalogSortValue.allCases) { [weak router, weak screen] sortValue in
+        alertConstructor.addSortAlertActions(for: alert, values: CollectionSortValue.allCases) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }

@@ -56,7 +56,7 @@ private extension TableViewDataSource {
             return catalogCell(tableView: tableView, indexPath: indexPath, item: nftCollection)
         case let userNftDescription as ProfileModel:
             return profileCell(tableView: tableView, indexPath: indexPath, item: userNftDescription)
-        case let myNftCell as VisibleSingleNfts:
+        case let myNftCell as MyNfts:
             return profileMyNftCell(tableView: tableView, indexPath: indexPath, item: myNftCell)
         default:
             return UITableViewCell(frame: .zero)
@@ -101,7 +101,7 @@ private extension TableViewDataSource {
         return cell
     }
     
-    func profileMyNftCell(tableView: UITableView, indexPath: IndexPath, item: VisibleSingleNfts) -> UITableViewCell {
+    func profileMyNftCell(tableView: UITableView, indexPath: IndexPath, item: MyNfts) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: ProfileMyNftTableViewCell.defaultReuseIdentifier,
             for: indexPath

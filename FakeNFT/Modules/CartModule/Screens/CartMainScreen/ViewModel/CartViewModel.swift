@@ -25,15 +25,10 @@ final class CartViewModel {
         bind()
     }
         
-    func setupSortValue(_ sortBy: CartSortValue) {
-//        dataStore.cartSortDescriptor = sortBy
+    func setupSortValue(_ descriptor: NftSortValue) {
+        dataStore.nftSortDescriptor = descriptor
+        reload()
     }
-    
-    // TODO: Do not remove: new sort logic
-//    func setupSortValue2(_ sortBy: SortDescriptorType) {
-//        let manager = DataStorageManager()
-//        manager.currentSortDescriptor = sortBy
-//    }
     
     func deleteItem(_ id: String?) {
         guard let id else { return }

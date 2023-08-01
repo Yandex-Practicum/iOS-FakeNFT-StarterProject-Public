@@ -108,7 +108,7 @@ private extension ProfileCoordinator {
     func showSortAlert(from screen: ProfileMyNftsCoordinatable) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] sortValue in
+        alertConstructor.addSortAlertActions(for: alert, values: NftSortValue.allCases) { [weak router, weak screen] sortValue in
             sortValue == .cancel ? () : screen?.setupSortDescriptor(sortValue) // set filter on the screen
             router?.dismissToRootViewController(animated: true, completion: nil)
         }

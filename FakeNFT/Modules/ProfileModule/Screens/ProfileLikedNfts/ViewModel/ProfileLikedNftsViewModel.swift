@@ -39,6 +39,7 @@ private extension ProfileLikedNftsViewModel {
             .compactMap({ items -> [String] in
                 return items.compactMap({ $0 as? String })
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] ids in
                 self?.showVisibleNfts(ids)
             }
@@ -46,11 +47,7 @@ private extension ProfileLikedNftsViewModel {
     }
     
     func showVisibleNfts(_ ids: [String]) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.visibleNfts = filterVisibleNfts(ids)
-        }
-        
+            visibleNfts = filterVisibleNfts(ids)
     }
     
     func filterVisibleNfts(_ ids: [String]) -> [LikedSingleNfts] {
@@ -75,10 +72,7 @@ private extension ProfileLikedNftsViewModel {
         let request = RequestConstructor.constructSingleNftRequest(nftId: id)
         networkClient.networkPublisher(request: request, type: SingleNftModel.self)
             .sink { completion in
-                switch completion {
-                case .finished:
-                    print("finished")
-                case .failure(let error):
+                if case .failure(let error) = completion {
                     print(error)
                 }
             } receiveValue: { [weak dataStore] singleNft in

@@ -20,11 +20,6 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
         return imageView
     }()
     
-    private lazy var likeButton: CustomLikeButton = {
-        let button = CustomLikeButton(appearance: .normal)
-        return button
-    }()
-    
     private lazy var nameLabel: CustomLabel = {
         let label = CustomLabel(size: 17, weight: .bold, color: .ypBlack)
         return label
@@ -95,34 +90,29 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: UpdateUI
-    private func updateUI(with nft: VisibleSingleNfts) {
+    private func updateUI(with nft: MyNfts) {
         loadCover(with: nft)
-        updateLikeButton(with: nft)
         updateRate(with: nft)
         updateLabels(with: nft)
     }
     
-    private func loadCover(with nft: VisibleSingleNfts) {
+    private func loadCover(with nft: MyNfts) {
         let url = viewModel?.createUrl(from: nft.images.first)
         nftImageView.setImage(from: url)
     }
     
-    private func updateLikeButton(with nft: VisibleSingleNfts) {
-        likeButton.updateButtonAppearence(isLiked: nft.isLiked)
-    }
-    
-    private func updateRate(with nft: VisibleSingleNfts) {
+    private func updateRate(with nft: MyNfts) {
         rateStackView.updateRating(nft.rating)
     }
     
-    private func updateLabels(with nft: VisibleSingleNfts) {
+    private func updateLabels(with nft: MyNfts) {
         nameLabel.text = nft.name
         authorNameLabel.text = nft.author
         updatePriceLabel(with: nft)
         
     }
     
-    private func updatePriceLabel(with nft: VisibleSingleNfts) {
+    private func updatePriceLabel(with nft: MyNfts) {
         let attrString = NSMutableAttributedString()
         let firstLineAttrText = NSMutableAttributedString(string: "\(K.Titles.price)\n")
         let secondLineAttrText = NSMutableAttributedString(string: "\(nft.price) ETH")
@@ -140,7 +130,6 @@ final class ProfileMyNftTableViewCell: UITableViewCell, ReuseIdentifying {
 private extension ProfileMyNftTableViewCell {
     func setupConstraints() {
         setupMainstackView()
-        setupLikeButton()
     }
     
     func setupMainstackView() {
@@ -154,17 +143,4 @@ private extension ProfileMyNftTableViewCell {
             mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
-    
-    func setupLikeButton() {
-        addSubview(likeButton)
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            likeButton.heightAnchor.constraint(equalToConstant: 45),
-            likeButton.widthAnchor.constraint(equalTo: likeButton.heightAnchor),
-            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
-            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor)
-        ])
-    }
-    
 }

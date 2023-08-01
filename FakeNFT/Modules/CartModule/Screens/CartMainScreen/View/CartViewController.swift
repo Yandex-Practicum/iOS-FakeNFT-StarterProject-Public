@@ -13,9 +13,8 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
     var onError: ((Error?) -> Void)? { get set }
-    func setupSortDescriptor(_ filter: CartSortValue)
     func reloadCart()
-//    func setupSortDescriptor(value: SortDescriptorType)
+    func setupSortDescriptor(value: NftSortValue)
 
 }
 
@@ -202,17 +201,17 @@ final class CartViewController: UIViewController {
 
 // MARK: - Ext CartMainCoordinatableProtocol {
 extension CartViewController: CartMainCoordinatableProtocol {
-    func setupSortDescriptor(_ filter: CartSortValue) {
-        viewModel.setupSortValue(filter)
-    }
+//    func setupSortDescriptor(_ filter: CartSortValue) {
+//        viewModel.setupSortValue(filter)
+//    }
     
     func reloadCart() {
         viewModel.reload()
     }
     
-//    func setupSortDescriptor(value: SortDescriptorType) {
-//        viewModel.setupSortValue2(value)
-//    }
+    func setupSortDescriptor(value: NftSortValue) {
+        viewModel.setupSortValue(value)
+    }
 
 }
 

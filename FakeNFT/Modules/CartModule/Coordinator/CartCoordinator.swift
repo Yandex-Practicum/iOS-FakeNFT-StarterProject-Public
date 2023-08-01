@@ -107,6 +107,7 @@ private extension CartCoordinator {
         var paymentResultScreen = factory.makePaymentResultScreenView(request: request, dataStore: dataStorageManager)
         
         paymentResultScreen.onMain = { [weak router] in
+            
             router?.popToRootViewController(animated: true, completion: nil)
         }
         
@@ -125,10 +126,8 @@ private extension CartCoordinator {
     func showSortAlert(from screen: CartMainCoordinatableProtocol) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.sortAlertTitle, style: .actionSheet, error: nil)
         
-        alertConstructor.addSortAlertActions(for: alert, values: CartSortValue.allCases) { [weak router, weak screen] filter in
-            filter == .cancel ? () : screen?.setupSortDescriptor(filter)
-//            filter == .cancel ? () : screen?.setupSortDescriptor(value: .priceRatingName(filter))
-            
+        alertConstructor.addSortAlertActions(for: alert, values: NftSortValue.allCases) { [weak router, weak screen] filter in
+            filter == .cancel ? () : screen?.setupSortDescriptor(value: filter)            
             router?.dismissToRootViewController(animated: true, completion: nil)
         }
         

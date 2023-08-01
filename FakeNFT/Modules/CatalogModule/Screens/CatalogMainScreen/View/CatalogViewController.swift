@@ -12,7 +12,7 @@ protocol CatalogMainScreenCoordinatable: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onProceed: ((CatalogMainScreenCollection) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
-    func setupSortDescriptor(_ filter: CatalogSortValue)
+    func setupSortDescriptor(_ filter: CollectionSortValue)
     func reload()
 }
 
@@ -146,8 +146,8 @@ extension CatalogViewController: UITableViewDelegate {
 
 // MARK: - Ext CatalogMainScreenCoordinatable
 extension CatalogViewController: CatalogMainScreenCoordinatable {
-    func setupSortDescriptor(_ filter: CatalogSortValue) {
-        viewModel.setupSortValue(filter)
+    func setupSortDescriptor(_ descriptor: CollectionSortValue) {
+        viewModel.setupSortValue(descriptor)
     }
     
     func reload() {

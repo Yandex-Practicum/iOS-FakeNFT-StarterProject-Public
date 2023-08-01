@@ -25,8 +25,9 @@ final class CatalogViewModel {
         bind()
     }
     
-    func setupSortValue(_ sortBy: CatalogSortValue) {
-//        dataStore.catalogSortDescriptor = sortBy
+    func setupSortValue(_ descriptor: CollectionSortValue) {
+        dataStore.collectionSortDescriptor = descriptor
+        self.visibleRows = dataStore.getItems(.catalogCollections).compactMap({ $0 as? CatalogMainScreenCollection })
     }
     
     func load() {
@@ -41,11 +42,12 @@ final class CatalogViewModel {
                 case .failure(let error):
                     self?.catalogError = error
                     self?.requestResult = nil
-                } 
-        } receiveValue: { [weak self] collection in
-            self?.addRowsToStorage(collection)
-            self?.requestResult = nil
-        }.store(in: &cancellables)
+                }
+            } receiveValue: { [weak self] collection in
+                self?.addRowsToStorage(collection)
+                self?.requestResult = nil
+            }
+            .store(in: &cancellables)
     }
 }
 

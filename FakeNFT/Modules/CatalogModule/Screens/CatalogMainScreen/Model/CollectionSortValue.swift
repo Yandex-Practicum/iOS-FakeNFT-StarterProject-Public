@@ -1,5 +1,5 @@
 //
-//  CatalogSortValue.swift
+//  CollectionSortValue.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Eliseev on 02.07.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum CatalogSortValue: CaseIterable, Sortable {
+enum CollectionSortValue: CaseIterable, AlertDescriptable {
     case name, quantity, cancel
     
     var description: String {

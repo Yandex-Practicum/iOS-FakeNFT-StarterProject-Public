@@ -21,7 +21,13 @@ final class CoordinatorFactory  {
     private let modulesFactory = ModulesFactory()
     private let navigationControllerFactory = NavigationControllerFactory()
     private let alertConstructor = AlertConstructor()
-    private let dataStorageManager = DataStorageManager()
+    private let dataStorageManager = DataStorageManager(
+        singleNftStore: GenericStorage<SingleNftModel>(),
+        collectionNftStore: GenericStorage<CatalogMainScreenCollection>(),
+        storedItemsStore: GenericStorage<String>(),
+        likedItemsStore: GenericStorage<String>(),
+        myItemsStore: GenericStorage<MyNfts>()
+    )
     private let tableViewDataSource = TableViewDataSource()
     private let collectionViewDataSource = CollectionViewDataSourceManager()
     private let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
