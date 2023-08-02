@@ -57,6 +57,9 @@
 		F61909072A7958E700DEF2F5 /* NftNetworkServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61909062A7958E700DEF2F5 /* NftNetworkServiceImpl.swift */; };
 		F61909092A79599600DEF2F5 /* NftCollectionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61909082A79599600DEF2F5 /* NftCollectionRequest.swift */; };
 		F619090B2A7959CD00DEF2F5 /* NftItemRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619090A2A7959CD00DEF2F5 /* NftItemRequest.swift */; };
+		F61909182A7A9F8800DEF2F5 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61909172A7A9F8800DEF2F5 /* WebViewModel.swift */; };
+		F619091A2A7A9FB200DEF2F5 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61909192A7A9FB200DEF2F5 /* WebViewController.swift */; };
+		F619091C2A7AA07F00DEF2F5 /* WebViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619091B2A7AA07F00DEF2F5 /* WebViewFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +134,9 @@
 		F61909062A7958E700DEF2F5 /* NftNetworkServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftNetworkServiceImpl.swift; sourceTree = "<group>"; };
 		F61909082A79599600DEF2F5 /* NftCollectionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollectionRequest.swift; sourceTree = "<group>"; };
 		F619090A2A7959CD00DEF2F5 /* NftItemRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftItemRequest.swift; sourceTree = "<group>"; };
+		F61909172A7A9F8800DEF2F5 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
+		F61909192A7A9FB200DEF2F5 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		F619091B2A7AA07F00DEF2F5 /* WebViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +336,7 @@
 		F61908CE2A73CD0600DEF2F5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F61909162A7A9F6A00DEF2F5 /* WebView */,
 				F61908F92A7934B200DEF2F5 /* NTFSorting */,
 				F61908EB2A792EA000DEF2F5 /* Services */,
 				F61908E42A792BFC00DEF2F5 /* NFTInfo */,
@@ -400,6 +407,16 @@
 				F61908FE2A79351300DEF2F5 /* NFTSortingAlertController.swift */,
 			);
 			path = NTFSorting;
+			sourceTree = "<group>";
+		};
+		F61909162A7A9F6A00DEF2F5 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				F61909172A7A9F8800DEF2F5 /* WebViewModel.swift */,
+				F61909192A7A9FB200DEF2F5 /* WebViewController.swift */,
+				F619091B2A7AA07F00DEF2F5 /* WebViewFactory.swift */,
+			);
+			path = WebView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -578,7 +595,9 @@
 				F61909012A7935F400DEF2F5 /* NFTInfoFactory.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F61908D12A73CD2300DEF2F5 /* NFTsFactory.swift in Sources */,
+				F619091C2A7AA07F00DEF2F5 /* WebViewFactory.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				F61909182A7A9F8800DEF2F5 /* WebViewModel.swift in Sources */,
 				F61908F22A79304200DEF2F5 /* NFTListView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
@@ -586,6 +605,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				F61908E32A792B7A00DEF2F5 /* Box.swift in Sources */,
 				F61908E82A792CE900DEF2F5 /* NFTItemModel.swift in Sources */,
+				F619091A2A7A9FB200DEF2F5 /* WebViewController.swift in Sources */,
 				F61908C82A73CA2000DEF2F5 /* NavigationController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				F61908D32A73CD7500DEF2F5 /* NFTsViewController.swift in Sources */,
