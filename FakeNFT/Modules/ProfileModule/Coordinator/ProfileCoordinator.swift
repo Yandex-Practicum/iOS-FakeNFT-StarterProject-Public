@@ -73,6 +73,11 @@ private extension ProfileCoordinator {
             self.showSortAlert(from: myNftsScreen)
         }
         
+        myNftsScreen.onError = { [weak self, weak myNftsScreen] error in
+            guard let self, let myNftsScreen else { return }
+            self.showMyNftError(from: myNftsScreen, with: error)
+        }
+        
         router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
     }
     
@@ -88,6 +93,25 @@ private extension ProfileCoordinator {
     func showLoadAlert(from screen: ProfileMainCoordinatableProtocol, with error: Error?) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         
+        alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
+            switch action.style {
+            case .default:
+                screen.load()
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .cancel:
+                router?.dismissToRootViewController(animated: true, completion: nil)
+            case .destructive:
+                break
+            @unknown default:
+                break
+            }
+        }
+        
+        router.presentViewController(alert, animated: true, presentationStyle: .popover)
+    }
+    
+    func showMyNftError(from screen: ProfileMyNftsCoordinatable, with error: Error) {
+        let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:

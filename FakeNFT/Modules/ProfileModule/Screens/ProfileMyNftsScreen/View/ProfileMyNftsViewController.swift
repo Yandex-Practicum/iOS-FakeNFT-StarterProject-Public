@@ -10,12 +10,15 @@ import Combine
 
 protocol ProfileMyNftsCoordinatable: AnyObject {
     var onSort: (() -> Void)? { get set }
+    var onError: ((Error) -> Void)? { get set }
     func setupSortDescriptor(_ sortDescriptor: NftSortValue)
+    func load()
 }
 
 final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
     
     var onSort: (() -> Void)?
+    var onError: ((Error) -> Void)?
 
     private let viewModel: ProfileMyNftsViewModel
     private let dataSource: GenericTableViewDataSourceProtocol
@@ -86,9 +89,16 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
                 self?.showOrHideAnimation(for: requestResult)
             }
             .store(in: &cancellables)
+        
+        viewModel.$myNftError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
+            }
+            .store(in: &cancellables)
     }
     
-    private func load() {
+    func load() {
         viewModel.load()
     }
 }
@@ -141,6 +151,14 @@ private extension ProfileMyNftsViewController {
         
         loadingView.result = requestResult
         loadingView.startAnimation()
+    }
+}
+
+// MARK: - Ext Error handling
+private extension ProfileMyNftsViewController {
+    func headOnError(_ error: Error?) {
+        guard let error else { return }
+        onError?(error)
     }
 }
 

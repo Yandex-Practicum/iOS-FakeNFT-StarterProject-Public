@@ -29,7 +29,16 @@ final class ProfileMyNftsViewModel {
     func load() {
         requestResult = .loading
         nftsToLoad.forEach { id in
-            dataStore.getItems(.myItems).compactMap({ $0 as? String }).contains(id) ? () : sendMyNftRequest(id)
+            let test = dataStore.getItems(.myItems)
+                .compactMap({ $0 as? MyNfts })
+                .map({ $0.id })
+            
+            guard test.contains(id) else {
+                sendMyNftRequest(id)
+                return
+            }
+            
+            requestResult = nil
         }
     }
     
@@ -80,7 +89,8 @@ private extension ProfileMyNftsViewModel {
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.myNftError = error
-
+                    self?.requestResult = nil
+                    print("author error: \(error)")
                 }
             } receiveValue: { [weak self] author in
                 self?.dataStore.addItem(self?.convert(nft, author: author))
