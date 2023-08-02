@@ -29,6 +29,7 @@
 		96D10E9E2A7949D5008F6FA4 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9D2A7949D5008F6FA4 /* AppButton.swift */; };
 		96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9F2A795F24008F6FA4 /* StarsView.swift */; };
 		96D10EA22A796157008F6FA4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */; };
+		96D10EA42A7A4124008F6FA4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D10EA32A7A4124008F6FA4 /* Colors.xcassets */; };
 		F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */; };
 		F61908C42A73C71A00DEF2F5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C32A73C71A00DEF2F5 /* TabBarController.swift */; };
 		F61908C62A73C81B00DEF2F5 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */; };
@@ -85,6 +86,7 @@
 		96D10E9D2A7949D5008F6FA4 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		96D10E9F2A795F24008F6FA4 /* StarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
 		96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		96D10EA32A7A4124008F6FA4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalogue_roadmap.md; sourceTree = "<group>"; };
 		F61908C32A73C71A00DEF2F5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				F61908C32A73C71A00DEF2F5 /* TabBarController.swift */,
 				F61908C72A73CA2000DEF2F5 /* NavigationController.swift */,
 				F61908DD2A73D4D100DEF2F5 /* Localizable.strings */,
+				96D10EA32A7A4124008F6FA4 /* Colors.xcassets */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				F61908DB2A73D4D100DEF2F5 /* Localizable.strings in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				F61908CB2A73CB2900DEF2F5 /* SF-Pro.ttf in Resources */,
+				96D10EA42A7A4124008F6FA4 /* Colors.xcassets in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */,
 			);
