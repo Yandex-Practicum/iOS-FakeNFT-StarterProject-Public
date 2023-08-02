@@ -20,6 +20,11 @@ extension UIImage {
     }
 
     enum Cart {
+        enum Placholder {
+            static let first = UIImage.named("CartPlaceholder1")
+            static let second = UIImage.named("CartPlaceholder2")
+        }
+
         static let active = UIImage.named("CartActive")
         static let nonActive = UIImage.named("CartNonActive")
     }
