@@ -35,11 +35,11 @@ protocol OnboardingModuleFactoryProtocol {
 }
 
 protocol ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStorage: DataStorageManagerProtocol) -> Presentable & ProfileMainCoordinatableProtocol
     
     func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable & ProfileMyNftsCoordinatable
     
-    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, dataStore: DataStorageManagerProtocol) -> Presentable
 }
 
 final class ModulesFactory {}
@@ -72,9 +72,9 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
 
 // MARK: - Ext ProfileModuleFactoryProtocol
 extension ModulesFactory: ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol {
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStorage: DataStorageManagerProtocol) -> Presentable & ProfileMainCoordinatableProtocol {
         let networkClient = DefaultNetworkClient()
-        let viewModel = ProfileMainViewModel(networkClient: networkClient)
+        let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStorage: dataStorage)
         let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
@@ -86,9 +86,9 @@ extension ModulesFactory: ProfileModuleFactoryProtocol {
         return viewController
     }
     
-    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable {
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, dataStore: DataStorageManagerProtocol) -> Presentable {
         let networkClient = DefaultNetworkClient()
-        let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
+        let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = ProfileLikedNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }

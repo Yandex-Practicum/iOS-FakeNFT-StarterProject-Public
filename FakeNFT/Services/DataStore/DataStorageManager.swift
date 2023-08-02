@@ -47,6 +47,7 @@ final class DataStorageManager: DataStorageManagerProtocol {
     var nftSortDescriptor: NftSortValue?
     var collectionSortDescriptor: CollectionSortValue?
     
+    //MARK: Publishers
     func getAnyPublisher(_ type: DataType) -> AnyPublisher<[AnyHashable], Never> {
         switch type {
         case .singleNftItems:
@@ -72,6 +73,7 @@ final class DataStorageManager: DataStorageManagerProtocol {
         }
     }
     
+    // MARK: Items
     func getItems(_ type: DataType) -> [AnyHashable] {
         switch type {
         case .singleNftItems:
@@ -113,6 +115,7 @@ final class DataStorageManager: DataStorageManagerProtocol {
         return result
     }
     
+    // MARK: Add
     func addItem(_ item: AnyHashable) {
         switch item.base {
         case let singleNft as SingleNftModel:
@@ -126,6 +129,7 @@ final class DataStorageManager: DataStorageManagerProtocol {
         }
     }
     
+    // MARK: Delete
     func deleteItem(_ item: AnyHashable) {
         switch item.base {
         case let singleNft as SingleNftModel:
@@ -137,14 +141,16 @@ final class DataStorageManager: DataStorageManagerProtocol {
         }
     }
     
+    // MARK: IsLiked
     func toggleLike(_ item: String) {
         likedItemsStore.toggleItemStatus(item)
     }
     
+    // MARK: IsStored
     func toggleIsStored(_ item: String) {
         storedItemsStore.toggleItemStatus(item)
     }
-    
+    // MARK: Clear
     func clearAll() {
         storedItemsStore.deleteItem(nil)
     }

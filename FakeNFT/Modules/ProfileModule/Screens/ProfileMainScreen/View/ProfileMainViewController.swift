@@ -11,7 +11,7 @@ import Combine
 protocol ProfileMainCoordinatableProtocol {
     var onEdit: (() -> Void)? { get set }
     var onMyNfts: (([String]) -> Void)? { get set }
-    var onLiked: (([String]) -> Void)? { get set }
+    var onLiked: (() -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     func load()
 }
@@ -20,7 +20,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
 
     var onEdit: (() -> Void)?
     var onMyNfts: (([String]) -> Void)?
-    var onLiked: (([String]) -> Void)?
+    var onLiked: (() -> Void)?
     var onError: ((Error) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
@@ -134,7 +134,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
             }
             .store(in: &cancellables)
         
-        viewModel.$catalogError
+        viewModel.$profileMainError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.catchError(error)
@@ -203,8 +203,7 @@ private extension ProfileMainViewController {
     }
     
     func goToLikedNfts() {
-        guard let nfts = viewModel.profile?.likes else { return }
-        onLiked?(nfts)
+        onLiked?()
     }
 }
 

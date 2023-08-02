@@ -15,20 +15,16 @@ final class ProfileLikedNftsViewModel {
     private var cancellables = Set<AnyCancellable>()
     
     private let networkClient: NetworkClient
-    private let nftsToLoad: [String]
     private let dataStore: DataStorageManagerProtocol
     
-    init(networkClient: NetworkClient, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) {
+    init(networkClient: NetworkClient, dataStore: DataStorageManagerProtocol) {
         self.networkClient = networkClient
-        self.nftsToLoad = nftsToLoad
         self.dataStore = dataStore
         bind()
     }
 
     func load() {
-        nftsToLoad.forEach { id in
-            dataStore.getItems(.likedItems).compactMap({ $0 as? String }).contains(id) ? () : sendLikedNftRequest(id)
-        }
+        showVisibleNfts(dataStore.getItems(.likedItems).compactMap({ $0 as? String }))
     }
 }
 
@@ -63,22 +59,5 @@ private extension ProfileLikedNftsViewModel {
                     id: $0.id,
                     isLiked: true)
             })
-    }
-}
-
-// MARK: - Ext sendNftsRequest
-private extension ProfileLikedNftsViewModel {
-    func sendLikedNftRequest(_ id: String) {
-        let request = RequestConstructor.constructSingleNftRequest(nftId: id)
-        networkClient.networkPublisher(request: request, type: SingleNftModel.self)
-            .sink { completion in
-                if case .failure(let error) = completion {
-                    print(error)
-                }
-            } receiveValue: { [weak dataStore] singleNft in
-                dataStore?.addItem(singleNft)
-                dataStore?.toggleLike(singleNft.id)
-            }
-            .store(in: &cancellables)
     }
 }

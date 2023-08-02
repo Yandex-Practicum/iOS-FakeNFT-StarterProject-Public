@@ -43,7 +43,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource)
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource, dataStorage: dataStorageManager)
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in
@@ -54,8 +54,8 @@ private extension ProfileCoordinator {
             self?.showMyNftsScreen(nfts)
         }
         
-        profileScreen.onLiked = { [weak self] nfts in
-            self?.showLikedNftsScreen(nfts)
+        profileScreen.onLiked = { [weak self] in
+            self?.showLikedNftsScreen()
         }
         
         profileScreen.onError = { [weak self] error in
@@ -81,8 +81,8 @@ private extension ProfileCoordinator {
         router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
     }
     
-    func showLikedNftsScreen(_ nfts: [String]) {
-        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
+    func showLikedNftsScreen() {
+        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, dataStore: dataStorageManager)
         
         router.pushViewControllerFromTabbar(likedNftsScreen, animated: true)
     }
