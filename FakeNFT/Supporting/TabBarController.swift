@@ -57,25 +57,25 @@ final class TabBarController: UITabBarController {
             configureTab(
                 controller: profileNavigationController,
                 title: "PROFILE".localized,
-                image: UIImage(named: AppConstants.Icons.profile) ?? UIImage()
+                image: UIImage.Icons.profile
             ),
             
             configureTab(
                 controller: catalogueNavigationController,
                 title: "CATALOGUE".localized,
-                image: UIImage(named: AppConstants.Icons.catalog) ?? UIImage()
+                image: UIImage.Icons.catalog
             ),
             
             configureTab(
                 controller: cartNavigationController,
                 title: "CART".localized,
-                image: UIImage(named: AppConstants.Icons.cart) ?? UIImage()
+                image: UIImage.Icons.cart
             ),
             
             configureTab(
                 controller: statisticsNavigationController,
                 title: "STATISTICS".localized,
-                image: UIImage(named: AppConstants.Icons.statistics) ?? UIImage()
+                image: UIImage.Icons.statistics
             )
         ]
 
