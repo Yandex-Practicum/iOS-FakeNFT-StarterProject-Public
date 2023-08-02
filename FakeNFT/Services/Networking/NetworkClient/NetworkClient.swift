@@ -109,6 +109,7 @@ struct DefaultNetworkClient: NetworkClient {
         }
     }
     
+    //MARK: Publisher
     func networkPublisher<T: Decodable>(request: NetworkRequest, type: T.Type) -> AnyPublisher<T, Error> {
         guard let urlRequest = create(request: request) else {
             return Fail(error: NetworkError.badRequest).eraseToAnyPublisher()

@@ -13,7 +13,10 @@ final class ProfileMainViewModel {
     @Published private (set) var profile: Profile?
     @Published private (set) var profileData: [ProfileModel] = []
     @Published private (set) var profileMainError: Error?
+    @Published private (set) var requestResult: RequestResult?
     
+    private var errorIsTriggered: Bool = false
+        
     let networkClient: NetworkClient
     let dataStorage: DataStorageManagerProtocol
     
@@ -25,18 +28,56 @@ final class ProfileMainViewModel {
     
     func loadUser() {
         profileMainError = nil
+        requestResult = .loading
+        errorIsTriggered = false
+        
         let request = RequestConstructor.constructProfileRequest()
         networkClient.send(request: request, type: Profile.self) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let profile):
-                self?.profile = profile
-                self?.createUserData(profile)
-                self?.addLikesToStorage(profile.likes)
-                self?.loadUserLikedNfts(profile.likes)
+                self.profile = profile
+                self.createUserData(profile)
+                self.addLikesToStorage(profile.likes)
+                self.loadNfts(profile)
             case .failure(let error):
-                self?.profileMainError = error
+                if !self.errorIsTriggered {
+                    self.profileMainError = error
+                    self.errorIsTriggered = true
+                    self.requestResult = nil
+                }
+                
+                print("loadUser error: \(error)")
             }
         }
+    }
+    
+    func loadNfts(_ profile: Profile) {
+        let idsToLoad = Set(profile.likes + profile.nfts)
+        
+        idsToLoad.forEach { id in
+            guard !dataStorage.getItems(.singleNftItems).compactMap({ $0 as? SingleNftModel }).map({ $0.id }).contains(id) else { return }
+            let request = RequestConstructor.constructSingleNftRequest(nftId: id)
+            networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let nft):
+                    self.addNft(nft)
+                    self.requestResult = nil
+                case .failure(let error):
+                    if !self.errorIsTriggered {
+                        self.profileMainError = error
+                        self.errorIsTriggered = true
+                        self.requestResult = nil
+                    }
+                    print("loadNfts error: \(error)")
+                }
+            }
+        }
+    }
+    
+    func addNft(_ nft: SingleNftModel) {
+        dataStorage.addItem(nft)
     }
 }
 
@@ -68,30 +109,5 @@ private extension ProfileMainViewModel {
                 return
             }
         }
-    }
-}
-
-// MARK: - Ext liked items loading
-private extension ProfileMainViewModel {
-    func loadUserLikedNfts(_ likes: [String]) {
-        DispatchQueue.global().async { [weak self] in
-            likes.forEach { id in
-                let request = RequestConstructor.constructSingleNftRequest(nftId: id)
-                self?.networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
-                    switch result {
-                    case .success(let nft):
-                        self?.addLikedNft(nft)
-                    case .failure(let error):
-                        self?.profileMainError = error
-                        print("loadUserLikedNfts error: \(error)")
-                    }
-                }
-            }
-        }
-    }
-    
-    func addLikedNft(_ nft: SingleNftModel) {
-        dataStorage.addItem(nft)
-        print("likeStorage count is: \(dataStorage.getItems(.singleNftItems).count)")
     }
 }

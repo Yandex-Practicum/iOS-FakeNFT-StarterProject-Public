@@ -14,6 +14,7 @@ final class ProfileMyNftsViewModel {
     @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()
+    private var errorIsTriggered: Bool = false
     
     private let networkClient: NetworkClient
     private let nftsToLoad: [String]
@@ -28,23 +29,43 @@ final class ProfileMyNftsViewModel {
     
     func load() {
         requestResult = .loading
+        errorIsTriggered = false
+        
         nftsToLoad.forEach { id in
-            let test = dataStore.getItems(.myItems)
-                .compactMap({ $0 as? MyNfts })
-                .map({ $0.id })
-            
-            guard test.contains(id) else {
-                sendMyNftRequest(id)
+            guard !isStoredInMyNfts(id),
+                  let nft = getNftForId(id)
+            else {
+                requestResult = nil
                 return
             }
             
-            requestResult = nil
+            let request = RequestConstructor.constructCollectionAuthorRequest(for: nft.author)
+            networkClient.networkPublisher(request: request, type: Author.self)
+                .receive(on: DispatchQueue.main)
+                .delay(for: 1, scheduler: RunLoop.main)
+                .sink { [weak self] completion in
+                    guard let self else { return }
+                    if case .failure(let error) = completion, !self.errorIsTriggered {
+                        self.errorIsTriggered = true
+                        self.myNftError = error
+                    }
+                    self.requestResult = nil
+                } receiveValue: { [weak self] author in
+                    self?.dataStore.addItem(self?.convert(nft, author: author))
+                    self?.requestResult = nil
+                }
+                .store(in: &cancellables)
         }
+        
     }
     
     func setupSortDescriptor(_ descriptor: NftSortValue) {
         dataStore.nftSortDescriptor = descriptor
-        updateVisibleRows(dataStore.getItems(.myItems).compactMap({ $0 as? MyNfts }))
+        updateVisibleRows(getItems())
+    }
+    
+    private func getItems() -> [MyNfts] {
+        return dataStore.getItems(.myItems).compactMap({ $0 as? MyNfts })
     }
 }
 
@@ -67,38 +88,8 @@ private extension ProfileMyNftsViewModel {
     }
 }
 
-// MARK: - Ext sendNftsRequest
+// MARK: - Ext convert
 private extension ProfileMyNftsViewModel {
-    func sendMyNftRequest(_ id: String) {
-        let request = RequestConstructor.constructSingleNftRequest(nftId: id)
-        networkClient.networkPublisher(request: request, type: SingleNftModel.self)
-            .sink { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.myNftError = error
-                    self?.requestResult = nil
-                }
-            } receiveValue: { [weak self] singleNft in
-                self?.loadNftAuthor(singleNft)
-            }
-            .store(in: &cancellables)
-    }
-
-    func loadNftAuthor(_ nft: SingleNftModel) {
-        let request = RequestConstructor.constructCollectionAuthorRequest(for: nft.author)
-        networkClient.networkPublisher(request: request, type: Author.self)
-            .sink { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.myNftError = error
-                    self?.requestResult = nil
-                    print("author error: \(error)")
-                }
-            } receiveValue: { [weak self] author in
-                self?.dataStore.addItem(self?.convert(nft, author: author))
-                self?.requestResult = nil
-            }
-            .store(in: &cancellables)
-    }
-    
     func convert(_ nft: SingleNftModel, author: Author) -> MyNfts {
         return MyNfts(
             name: nft.name,
@@ -107,5 +98,20 @@ private extension ProfileMyNftsViewModel {
             price: nft.price,
             author: author.name,
             id: nft.id)
+    }
+}
+
+// MARK: - Ext checking
+private extension ProfileMyNftsViewModel {
+    func isStoredInMyNfts(_ id: String) -> Bool {
+        return dataStore.getItems(.myItems)
+            .compactMap({ ($0 as? MyNfts)?.id })
+            .contains(id)
+    }
+    
+    func getNftForId(_ id: String) -> SingleNftModel? {
+        return dataStore.getItems(.singleNftItems)
+            .compactMap({ $0 as? SingleNftModel })
+            .first(where: { $0.id == id })
     }
 }

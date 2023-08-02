@@ -61,6 +61,11 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         return textView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     private lazy var authorWebsiteLabel: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .universalBlue)
         let attrString = NSMutableAttributedString()
@@ -140,6 +145,13 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
                 self?.catchError(error)
             }
             .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                self?.showOrHideAnimation(for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: UpdateUI
@@ -164,6 +176,20 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         profileImageView.setImage(from: url)
     }
 
+}
+
+// MARK: - Ext Animation
+private extension ProfileMainViewController {
+    func showOrHideAnimation(for requestResult: RequestResult?) {
+        guard let requestResult
+        else {
+            loadingView.stopAnimation()
+            return
+        }
+        
+        loadingView.result = requestResult
+        loadingView.startAnimation()
+    }
 }
 
 // MARK: - Ext DataSource
@@ -220,6 +246,7 @@ private extension ProfileMainViewController {
     func setupConstraints() {
         setupMainStackView()
         setupTableView()
+        setupLoadingView()
     }
     
     func setupMainStackView() {
@@ -242,6 +269,18 @@ private extension ProfileMainViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
