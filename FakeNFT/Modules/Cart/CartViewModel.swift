@@ -16,6 +16,11 @@ protocol CartViewModelProtocol {
 
     var onFinalOrderCostChanged: (() -> Void)? { get set }
     var finalOrderCost: Double { get }
+
+    var onShouldHidePlaceholderChanged: (() -> Void)? { get set }
+    var shouldHidePlaceholder: Bool { get }
+
+    func fetchOrder()
 }
 
 final class CartViewModel {
@@ -42,26 +47,33 @@ final class CartViewModel {
         }
     }
 
+    var onShouldHidePlaceholderChanged: (() -> Void)?
+    var shouldHidePlaceholder: Bool = true {
+        didSet {
+            self.onShouldHidePlaceholderChanged?()
+        }
+    }
+
     private let defaultOrderId = 1
     private let orderService: OrderServiceProtocol
 
     init(orderService: OrderServiceProtocol) {
         self.orderService = orderService
+    }
+}
 
-        self.orderService.fetchOrder(id: self.defaultOrderId) { result in
+// MARK: - CartViewModelProtocol
+extension CartViewModel: CartViewModelProtocol {
+    func fetchOrder() {
+        self.orderService.fetchOrder(id: self.defaultOrderId) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let order):
+                self.shouldHidePlaceholder = order.nfts.isEmpty == false
                 print(order)
             case .failure(let error):
                 print(error)
             }
         }
     }
-}
-
-// MARK: - CartViewModelProtocol
-extension CartViewModel: CartViewModelProtocol {}
-
-private extension CartViewModel {
-
 }

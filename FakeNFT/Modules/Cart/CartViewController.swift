@@ -59,6 +59,14 @@ final class CartViewController: UIViewController {
         return button
     }()
 
+    private let placeholderView: CartPlaceholderView = {
+        let view = CartPlaceholderView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private let progressHUDWrapper = ProgressHUDWrapper()
+
     private var tableViewHelper: CartTableViewHelperProtocol
     private var viewModel: CartViewModelProtocol
 
@@ -92,19 +100,21 @@ extension CartViewController: CartTableViewHelperDelegate {
 
 private extension CartViewController {
     func configure() {
+        self.progressHUDWrapper.show()
+
         self.view.backgroundColor = .appWhite
+
         self.addSubviews()
         self.addConstraints()
         self.bind()
 
-        self.cartTableView.reloadData()
-        self.nftCountLabel.text = "\(self.viewModel.nftCount) NFT"
-        self.finalCostLabel.text = "\(self.viewModel.finalOrderCost) ETH"
+        self.viewModel.fetchOrder()
     }
 
     func addSubviews() {
         self.view.addSubview(self.cartTableView)
         self.view.addSubview(self.purchaseBackgroundView)
+        self.view.addSubview(self.placeholderView)
 
         self.purchaseBackgroundView.addSubview(self.purchaseButton)
         self.purchaseBackgroundView.addSubview(self.nftCountLabel)
@@ -135,7 +145,12 @@ private extension CartViewController {
 
             self.purchaseButton.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 16),
             self.purchaseButton.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
-            self.purchaseButton.bottomAnchor.constraint(equalTo: self.purchaseBackgroundView.bottomAnchor, constant: -16)
+            self.purchaseButton.bottomAnchor.constraint(equalTo: self.purchaseBackgroundView.bottomAnchor, constant: -16),
+
+            self.placeholderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.placeholderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.placeholderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.placeholderView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
@@ -153,6 +168,15 @@ private extension CartViewController {
             guard let self = self else { return }
             self.finalCostLabel.text = "\(self.viewModel.finalOrderCost) ETH"
         }
+
+        self.viewModel.onShouldHidePlaceholderChanged = { [weak self] in
+            guard let self = self else { return }
+            let shouldHidePlaceholder = self.viewModel.shouldHidePlaceholder
+
+            self.progressHUDWrapper.hide()
+            self.placeholderView.isHidden = shouldHidePlaceholder
+            self.shouldHideSortButton(shouldHidePlaceholder == false)
+        }
     }
 }
 
@@ -166,5 +190,15 @@ private extension CartViewController {
     @objc
     func didTapSortButton() {
         print(#function)
+    }
+}
+
+private extension CartViewController {
+    func shouldHideSortButton(_ shouldHide: Bool) {
+        if shouldHide {
+            self.navigationItem.setRightBarButton(nil, animated: true)
+        } else {
+            self.navigationItem.setRightBarButton(self.sortButton, animated: true)
+        }
     }
 }

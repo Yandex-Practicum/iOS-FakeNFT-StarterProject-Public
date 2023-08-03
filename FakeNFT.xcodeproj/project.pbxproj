@@ -32,6 +32,8 @@
 		9619640D2A7BCB2D0076BD88 /* ImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619640C2A7BCB2D0076BD88 /* ImageLoadingService.swift */; };
 		961964102A7BD9600076BD88 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619640F2A7BD9600076BD88 /* Order.swift */; };
 		961964122A7BDC1F0076BD88 /* NFTCartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */; };
+		961964142A7BEA490076BD88 /* CartPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964132A7BEA490076BD88 /* CartPlaceholderView.swift */; };
+		961964162A7BF16C0076BD88 /* ProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964152A7BF16C0076BD88 /* ProgressHUDWrapper.swift */; };
 		96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5D2A777CA7004ADF21 /* CartViewController.swift */; };
 		96286E602A777D14004ADF21 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5F2A777D14004ADF21 /* CartViewModel.swift */; };
 		96286E622A777D2B004ADF21 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E612A777D2B004ADF21 /* CartTableViewCell.swift */; };
@@ -103,6 +105,8 @@
 		9619640C2A7BCB2D0076BD88 /* ImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadingService.swift; sourceTree = "<group>"; };
 		9619640F2A7BD9600076BD88 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCartCellViewModel.swift; sourceTree = "<group>"; };
+		961964132A7BEA490076BD88 /* CartPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPlaceholderView.swift; sourceTree = "<group>"; };
+		961964152A7BF16C0076BD88 /* ProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		96286E5D2A777CA7004ADF21 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		96286E5F2A777D14004ADF21 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		96286E612A777D2B004ADF21 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -339,6 +343,8 @@
 			isa = PBXGroup;
 			children = (
 				96D10E9A2A79437E008F6FA4 /* PurchaseBackgroundView.swift */,
+				961964132A7BEA490076BD88 /* CartPlaceholderView.swift */,
+				961964152A7BF16C0076BD88 /* ProgressHUDWrapper.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -611,11 +617,13 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				9619640D2A7BCB2D0076BD88 /* ImageLoadingService.swift in Sources */,
 				F61908C82A73CA2000DEF2F5 /* NavigationController.swift in Sources */,
+				961964162A7BF16C0076BD88 /* ProgressHUDWrapper.swift in Sources */,
 				96D10E982A793FC6008F6FA4 /* CartViewRouter.swift in Sources */,
 				96D10E9B2A79437E008F6FA4 /* PurchaseBackgroundView.swift in Sources */,
 				96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				96286E622A777D2B004ADF21 /* CartTableViewCell.swift in Sources */,
+				961964142A7BEA490076BD88 /* CartPlaceholderView.swift in Sources */,
 				961964122A7BDC1F0076BD88 /* NFTCartCellViewModel.swift in Sources */,
 				F61908D32A73CD7500DEF2F5 /* NFTsViewController.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
