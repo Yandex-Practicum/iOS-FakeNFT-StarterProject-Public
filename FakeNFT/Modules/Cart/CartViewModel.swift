@@ -41,9 +41,27 @@ final class CartViewModel {
             self.onFinalOrderCostChanged?()
         }
     }
+
+    private let defaultOrderId = 1
+    private let orderService: OrderServiceProtocol
+
+    init(orderService: OrderServiceProtocol) {
+        self.orderService = orderService
+
+        self.orderService.fetchOrder(id: self.defaultOrderId) { result in
+            switch result {
+            case .success(let order):
+                print(order)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 // MARK: - CartViewModelProtocol
-extension CartViewModel: CartViewModelProtocol {
+extension CartViewModel: CartViewModelProtocol {}
+
+private extension CartViewModel {
 
 }
