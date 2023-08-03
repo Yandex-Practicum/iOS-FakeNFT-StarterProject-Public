@@ -27,6 +27,11 @@ final class ProfileTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+    }
+    
     // MARK: - Public methods
     func configure(title: String) {
         configureTitleLabel(with: title)

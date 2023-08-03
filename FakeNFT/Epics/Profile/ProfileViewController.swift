@@ -4,6 +4,7 @@ protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     func activityIndicatorAnimation(inProcess: Bool)
     func setImageForPhotoView(_ image: UIImage)
+    func setTextForLabels(from profile: ProfileModel)
 }
 
 final class ProfileViewController: UIViewController {
@@ -55,7 +56,6 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.textColor = .ypBlack
         label.font = .headline3
-        label.text = ProfileConstants.mockProfileName
         label.textAlignment = .left
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,6 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.textColor = .ypBlack
         label.font = .caption2
-        label.text = ProfileConstants.mockProfileDescription
         label.textAlignment = .left
         label.numberOfLines = 0
         
@@ -84,7 +83,6 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.textColor = .ypBlueUniversal
         label.font = .caption1
-        label.text = ProfileConstants.mockProfileSite
         label.textAlignment = .left
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -157,9 +155,9 @@ final class ProfileViewController: UIViewController {
             userDescriptionLabel.topAnchor.constraint(equalTo: photoAndNameStack.bottomAnchor, constant: 20),
             userDescriptionLabel.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
             userDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            userDescriptionLabel.heightAnchor.constraint(equalToConstant: 72),
+            userDescriptionLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 72),
             
-            userSiteLabel.topAnchor.constraint(equalTo: userDescriptionLabel.bottomAnchor, constant: 12),
+            userSiteLabel.topAnchor.constraint(equalTo: photoAndNameStack.bottomAnchor, constant: 100),
             userSiteLabel.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
             userSiteLabel.heightAnchor.constraint(equalToConstant: 20),
             
@@ -221,5 +219,38 @@ extension ProfileViewController: ProfileViewControllerProtocol{
     
     func setImageForPhotoView(_ image: UIImage) {
         photoView.image = image
+    }
+    
+    func setTextForLabels(from profile: ProfileModel) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.userDescriptionLabel.text = profile.description
+            self.userNameLabel.text = profile.name
+            self.userSiteLabel.text = profile.website.absoluteString
+            self.updateTableCellsLabels(from: profile)
+        }
+    }
+    
+    private func updateTableCellsLabels(from profile: ProfileModel) {
+        var updatedMockArray = ProfileConstants.mockArray
+        
+        let myNFTsCount = profile.nfts.count
+        let likedNFTsCount = profile.likes.count
+        
+        if myNFTsCount > 0 {
+            updatedMockArray[0] = "Мои NFT (\(myNFTsCount))"
+        }
+        
+        if likedNFTsCount > 0 {
+            updatedMockArray[1] = "Избранные NFT (\(likedNFTsCount))"
+        }
+        
+        for (index, title) in updatedMockArray.enumerated() {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? ProfileTableViewCell {
+                cell.configure(title: title)
+            }
+        }
     }
 }

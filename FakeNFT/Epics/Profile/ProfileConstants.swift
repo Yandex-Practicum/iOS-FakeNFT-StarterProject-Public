@@ -10,8 +10,8 @@ enum ProfileConstants {
     static let apiV1Profile1Get = "/api/v1/profile/1"
     
     static let mockArray = [
-        "Мои NFT (112)",
-        "Избранные NFT (11)",
+        "Мои NFT",
+        "Избранные NFT",
         "О разработчике"
     ]
     static let mockProfileName = "Joaquin Phoenix"

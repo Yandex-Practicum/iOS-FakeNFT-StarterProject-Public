@@ -17,7 +17,6 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     weak var networkClient: ProfileNetworkClientProtocol?
     
     // MARK: - Private properties
-    
     func viewDidLoad() {
         view?.activityIndicatorAnimation(inProcess: true)
         networkClient?.getDecodedProfile()
@@ -29,6 +28,8 @@ extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
     func getData(for profile: ProfileModel) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
+            view?.setTextForLabels(from: profile)
             self.view?.activityIndicatorAnimation(inProcess: true)
             
             let urlString = profile.avatar
