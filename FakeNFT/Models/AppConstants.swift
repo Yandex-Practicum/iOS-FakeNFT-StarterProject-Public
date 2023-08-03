@@ -14,4 +14,13 @@ struct AppConstants {
         static let profile = "ProfileIcon"
         static let statistics = "StatisticsIcon"
     }
+
+    enum Api {
+        static let version = "/api/v1"
+        static let defaultEndpoint = "https://64c51750c853c26efada7c53.mockapi.io"
+
+        enum Cart {
+            static let ordersController = "orders"
+        }
+    }
 }

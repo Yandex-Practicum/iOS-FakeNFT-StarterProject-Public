@@ -28,6 +28,8 @@
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		961964062A7BBDCC0076BD88 /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964052A7BBDCC0076BD88 /* OrderService.swift */; };
 		961964082A7BC0720076BD88 /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964072A7BC0720076BD88 /* OrderRequest.swift */; };
+		9619640B2A7BC9720076BD88 /* CartCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619640A2A7BC9720076BD88 /* CartCellViewModelFactory.swift */; };
+		9619640D2A7BCB2D0076BD88 /* ImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619640C2A7BCB2D0076BD88 /* ImageLoadingService.swift */; };
 		961964102A7BD9600076BD88 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619640F2A7BD9600076BD88 /* Order.swift */; };
 		961964122A7BDC1F0076BD88 /* NFTCartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */; };
 		96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5D2A777CA7004ADF21 /* CartViewController.swift */; };
@@ -97,6 +99,8 @@
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		961964052A7BBDCC0076BD88 /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 		961964072A7BC0720076BD88 /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
+		9619640A2A7BC9720076BD88 /* CartCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModelFactory.swift; sourceTree = "<group>"; };
+		9619640C2A7BCB2D0076BD88 /* ImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadingService.swift; sourceTree = "<group>"; };
 		9619640F2A7BD9600076BD88 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCartCellViewModel.swift; sourceTree = "<group>"; };
 		96286E5D2A777CA7004ADF21 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -294,9 +298,19 @@
 		961964042A7BBDBE0076BD88 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				961964092A7BC9650076BD88 /* Factories */,
 				961964052A7BBDCC0076BD88 /* OrderService.swift */,
+				9619640C2A7BCB2D0076BD88 /* ImageLoadingService.swift */,
 			);
 			path = Cart;
+			sourceTree = "<group>";
+		};
+		961964092A7BC9650076BD88 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				9619640A2A7BC9720076BD88 /* CartCellViewModelFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		9619640E2A7BD94C0076BD88 /* Cart */ = {
@@ -585,6 +599,7 @@
 				F61908D72A73D23000DEF2F5 /* AppConstants.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				F61908E12A73D58000DEF2F5 /* Strings+Extensions.swift in Sources */,
+				9619640B2A7BC9720076BD88 /* CartCellViewModelFactory.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F61908D12A73CD2300DEF2F5 /* NFTsFactory.swift in Sources */,
 				96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */,
@@ -594,6 +609,7 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				96286E602A777D14004ADF21 /* CartViewModel.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				9619640D2A7BCB2D0076BD88 /* ImageLoadingService.swift in Sources */,
 				F61908C82A73CA2000DEF2F5 /* NavigationController.swift in Sources */,
 				96D10E982A793FC6008F6FA4 /* CartViewRouter.swift in Sources */,
 				96D10E9B2A79437E008F6FA4 /* PurchaseBackgroundView.swift in Sources */,
