@@ -8,6 +8,7 @@
 import UIKit
 
 final class CatalogTableCell: UITableViewCell {
+    static let cellReuseIdentifier = "catalogCell"
     private let label: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold

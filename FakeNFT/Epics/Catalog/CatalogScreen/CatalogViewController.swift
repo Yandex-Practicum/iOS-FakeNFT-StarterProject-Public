@@ -3,7 +3,9 @@ import UIKit
 final class CatalogViewController: UIViewController {
     let sortButton = UIButton() // возможно в презентер
     let table = UITableView() // возможно в презентер
-    let cellReuseIdentifier = "catalogCell"
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ final class CatalogViewController: UIViewController {
         table.backgroundColor = .clear
         table.separatorStyle = .none
         
-        table.register(CatalogTableCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        table.register(CatalogTableCell.self, forCellReuseIdentifier: CatalogTableCell.cellReuseIdentifier)
         table.dataSource = self
         table.delegate = self
         
@@ -52,11 +54,14 @@ extension CatalogViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: cellReuseIdentifier)
+        let cell = table.dequeueReusableCell(withIdentifier: CatalogTableCell.cellReuseIdentifier)
         guard let catalogCell = cell as? CatalogTableCell else { return UITableViewCell() }
         catalogCell.selectionStyle = .none
+        
+        //временно
         catalogCell.setImage(image: UIImage.mockCollection!)
         catalogCell.setLabel(collectionName: "Peach", collectionCount: 11)
+        
         return catalogCell
     }
 }
