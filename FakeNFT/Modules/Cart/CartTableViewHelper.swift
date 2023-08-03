@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol CartTableViewHelperDelegate: AnyObject {}
+protocol CartTableViewHelperDelegate: AnyObject {
+    var order: [NFTCartCellViewModel]? { get }
+}
 
 protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
     var delegate: CartTableViewHelperDelegate? { get set }
@@ -30,15 +32,16 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        1
+        self.delegate?.order?.count ?? 0
     }
 
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
+        guard let nft = self.delegate?.order?[indexPath.row] else { return UITableViewCell() }
         let cell: CartTableViewCell = tableView.dequeueReusableCell()
-        cell.nft = NFTCartCellViewModel(id: 1, name: "Хыхыхы", image: nil, rating: 2, price: 2)
+        cell.nft = nft
         return cell
     }
 }

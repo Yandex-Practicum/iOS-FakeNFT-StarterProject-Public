@@ -95,8 +95,9 @@ final class TabBarController: UITabBarController {
 
 private extension TabBarController {
     func createCartViewController() -> UIViewController {
+        let viewModel = CartViewModel()
         let tableViewHelper = CartTableViewHelper()
-        let viewController = CartViewController(tableViewHelper: tableViewHelper)
+        let viewController = CartViewController(viewModel: viewModel, tableViewHelper: tableViewHelper)
         return viewController
     }
 }

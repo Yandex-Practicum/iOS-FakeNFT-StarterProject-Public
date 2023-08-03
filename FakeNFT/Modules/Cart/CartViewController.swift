@@ -29,7 +29,6 @@ final class CartViewController: UIViewController {
     private let nftCountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "0 NFT"
         label.font = .getFont(style: .regular, size: 15)
         label.adjustsFontSizeToFitWidth = true
         return label
@@ -38,7 +37,6 @@ final class CartViewController: UIViewController {
     private let finalCostLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "2.4 ETH"
         label.textColor = .greenUniversal
         label.font = .getFont(style: .bold, size: 17)
         label.adjustsFontSizeToFitWidth = true
@@ -61,15 +59,18 @@ final class CartViewController: UIViewController {
         return button
     }()
 
-    private var tableViewHelper: CartTableViewHelperProtocol {
-        didSet {
-            self.tableViewHelper.delegate = self
-        }
-    }
+    private var tableViewHelper: CartTableViewHelperProtocol
+    private var viewModel: CartViewModelProtocol
 
-    init(tableViewHelper: CartTableViewHelperProtocol) {
+    init(
+        viewModel: CartViewModelProtocol,
+        tableViewHelper: CartTableViewHelperProtocol
+    ) {
+        self.viewModel = viewModel
         self.tableViewHelper = tableViewHelper
         super.init(nibName: nil, bundle: nil)
+
+        self.tableViewHelper.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -84,7 +85,9 @@ final class CartViewController: UIViewController {
 
 // MARK: - CartTableViewHelperDelegate
 extension CartViewController: CartTableViewHelperDelegate {
-
+    var order: [NFTCartCellViewModel]? {
+        self.viewModel.order
+    }
 }
 
 private extension CartViewController {
@@ -92,6 +95,11 @@ private extension CartViewController {
         self.view.backgroundColor = .appWhite
         self.addSubviews()
         self.addConstraints()
+        self.bind()
+
+        self.cartTableView.reloadData()
+        self.nftCountLabel.text = "\(self.viewModel.nftCount) NFT"
+        self.finalCostLabel.text = "\(self.viewModel.finalOrderCost) ETH"
     }
 
     func addSubviews() {
@@ -129,6 +137,22 @@ private extension CartViewController {
             self.purchaseButton.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
             self.purchaseButton.bottomAnchor.constraint(equalTo: self.purchaseBackgroundView.bottomAnchor, constant: -16)
         ])
+    }
+
+    func bind() {
+        self.viewModel.onOrderChanged = { [weak self] in
+            self?.cartTableView.reloadData()
+        }
+
+        self.viewModel.onNftCountChanged = { [weak self] in
+            guard let self = self else { return }
+            self.nftCountLabel.text = "\(self.viewModel.nftCount) NFT"
+        }
+
+        self.viewModel.onFinalOrderCostChanged = { [weak self] in
+            guard let self = self else { return }
+            self.finalCostLabel.text = "\(self.viewModel.finalOrderCost) ETH"
+        }
     }
 }
 
