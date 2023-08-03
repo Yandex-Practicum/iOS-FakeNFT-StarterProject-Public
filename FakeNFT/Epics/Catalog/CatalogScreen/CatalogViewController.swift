@@ -1,12 +1,18 @@
+//
+//  CatalogViewController.swift
+//  FakeNFT
+//
+//  Created by Богдан Полыгалов on 01.08.2023.
+//
+
 import UIKit
 
 final class CatalogViewController: UIViewController {
     let sortButton = UIButton() // возможно в презентер
     let table = UITableView() // возможно в презентер
     
+    var catalogData: [CatalogDataModel] = []
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite // возможно в презентер
@@ -50,7 +56,7 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10 // Временно
+        catalogData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,9 +64,11 @@ extension CatalogViewController: UITableViewDataSource {
         guard let catalogCell = cell as? CatalogTableCell else { return UITableViewCell() }
         catalogCell.selectionStyle = .none
         
+        let data = catalogData[indexPath.row]
+        
         //временно
-        catalogCell.setImage(image: UIImage.mockCollection!)
-        catalogCell.setLabel(collectionName: "Peach", collectionCount: 11)
+        catalogCell.setImage(link: data.imageLink)
+        catalogCell.setLabel(collectionName: data.name, collectionCount: data.nfts.count)
         
         return catalogCell
     }

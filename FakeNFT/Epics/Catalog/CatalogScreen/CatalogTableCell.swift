@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CatalogTableCell: UITableViewCell {
     static let cellReuseIdentifier = "catalogCell"
@@ -42,8 +43,8 @@ final class CatalogTableCell: UITableViewCell {
         label.text = "\(collectionName) (\(collectionCount))"
     }
     
-    func setImage(image: UIImage) {
-        self.image.image = image
+    func setImage(link: String) {
+        image.kf.setImage(with: URL(string: link))
     }
     
     private func setView() {
