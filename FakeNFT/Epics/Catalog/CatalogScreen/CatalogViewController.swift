@@ -31,7 +31,7 @@ final class CatalogViewController: UIViewController {
         table.backgroundColor = .clear
         table.separatorStyle = .none
         
-        table.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        table.register(CatalogTableCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         table.dataSource = self
         table.delegate = self
         
