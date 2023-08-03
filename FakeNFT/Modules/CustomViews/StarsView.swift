@@ -36,9 +36,9 @@ final class StarsView: UIView {
     private let stars: [UIImageView] = {
         var stars: [UIImageView] = []
 
-        for i in 0..<5 {
-            let star = UIImage.Icons.star
-            let starImageView = UIImageView(image: star)
+        for _ in 0..<5 {
+            let starImage = UIImage.Icons.star
+            let starImageView = UIImageView(image: starImage)
             starImageView.translatesAutoresizingMaskIntoConstraints = false
             starImageView.tintColor = .appLightGray
             starImageView.contentMode = .scaleAspectFit
@@ -84,8 +84,8 @@ private extension StarsView {
     func setRating(_ rating: Rating) {
         let rating = rating.rawValue
 
-        for i in 0..<rating {
-            let star = self.stars[i]
+        for index in 0..<rating {
+            let star = self.stars[index]
             star.tintColor = .yellowUniversal
         }
     }
