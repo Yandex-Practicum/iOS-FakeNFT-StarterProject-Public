@@ -13,7 +13,7 @@ final class CatalogViewController: UIViewController {
     }
     
     private func configureButton() { // возможно в презентер
-        sortButton.setImage(UIImage(), for: .normal)
+        sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sortButton)
