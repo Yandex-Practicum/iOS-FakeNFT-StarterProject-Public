@@ -56,7 +56,14 @@ final class CartViewController: UIViewController {
         return button
     }()
 
-    init() {
+    private var tableViewHelper: CartTableViewHelperProtocol {
+        didSet {
+            self.tableViewHelper.delegate = self
+        }
+    }
+
+    init(tableViewHelper: CartTableViewHelperProtocol) {
+        self.tableViewHelper = tableViewHelper
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -68,6 +75,11 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         self.configure()
     }
+}
+
+// MARK: - CartTableViewHelperDelegate
+extension CartViewController: CartTableViewHelperDelegate {
+
 }
 
 private extension CartViewController {
