@@ -8,10 +8,10 @@
 import UIKit
 
 final class CatalogViewController: UIViewController {
-    let sortButton = UIButton() // возможно в презентер
-    let table = UITableView() // возможно в презентер
+    private let sortButton = UIButton() // возможно в презентер
+    private let table = UITableView() // возможно в презентер
     
-    var catalogData: [CatalogDataModel] = []
+    private var catalogData: [CatalogDataModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
