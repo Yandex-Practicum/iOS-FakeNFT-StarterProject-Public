@@ -19,10 +19,18 @@ final class MainTabBarController: UITabBarController {
 
         let statisticImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let statisticSelectedImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
+        
+        let profilePresenter = ProfileViewPresenter()
+        let profileViewController = ProfileViewController()
+        let profileNetworkClient = ProfileNetworkClient()
+        profileViewController.presenter = profilePresenter
+        profilePresenter.view = profileViewController
+        profilePresenter.networkClient = profileNetworkClient
+        profileNetworkClient.presenter = profilePresenter
 
         viewControllers = [
             generateViewController(
-                ProfileViewController(),
+                profileViewController,
                 image: profileImage,
                 selectedImage: profileSelectedImage,
                 title: NSLocalizedString("tabBar.profile", comment: "")

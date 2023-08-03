@@ -1,6 +1,15 @@
 import UIKit
 
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func activityIndicatorAnimation(inProcess: Bool)
+    func setImageForPhotoView(_ image: UIImage)
+}
+
 final class ProfileViewController: UIViewController {
+    // MARK: - Public properties
+    var presenter: ProfileViewPresenterProtocol?
+    
     // MARK: - Private properties
     private let mainStack: UIStackView = {
         let stack = UIStackView(frame: .zero)
@@ -21,7 +30,7 @@ final class ProfileViewController: UIViewController {
         return stack
     }()
     private let photoView: UIImageView = {
-        let view = UIImageView(image: .mockUserImage)
+        let view = UIImageView()
         view.layer.frame = CGRect(
             origin: .zero,
             size: CGSize(
@@ -29,10 +38,18 @@ final class ProfileViewController: UIViewController {
                 height: ProfileConstants.profilePhotoSideSize
             )
         )
+        view.backgroundColor = .ypBlack
         view.layer.cornerRadius = ProfileConstants.profilePhotoSideSize/2
+        view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.color = .ypWhite
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
     }()
     private let userNameLabel: UILabel = {
         let label = UILabel()
@@ -94,6 +111,7 @@ final class ProfileViewController: UIViewController {
         addingUIElements()
         tableViewConfigure()
         layoutConfigure()
+        presenter?.viewDidLoad()
     }
     
     // MARK: - Private methods
@@ -108,6 +126,7 @@ final class ProfileViewController: UIViewController {
         
         photoAndNameStack.addSubview(photoView)
         photoAndNameStack.addSubview(userNameLabel)
+        photoAndNameStack.addSubview(activityIndicator)
     }
     
     private func layoutConfigure() {
@@ -127,6 +146,9 @@ final class ProfileViewController: UIViewController {
             photoView.widthAnchor.constraint(equalToConstant: ProfileConstants.profilePhotoSideSize),
             photoView.heightAnchor.constraint(equalToConstant: ProfileConstants.profilePhotoSideSize),
             photoView.leadingAnchor.constraint(equalTo: photoAndNameStack.leadingAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: photoView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: photoView.centerYAnchor),
             
             userNameLabel.leadingAnchor.constraint(equalTo: photoView.trailingAnchor, constant: 16),
             userNameLabel.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
@@ -182,5 +204,22 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ProfileConstants.tableCellHeight
+    }
+}
+
+extension ProfileViewController: ProfileViewControllerProtocol{
+    func activityIndicatorAnimation(inProcess: Bool){
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if inProcess {
+                self.activityIndicator.startAnimating()
+            } else {
+                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
+    func setImageForPhotoView(_ image: UIImage) {
+        photoView.image = image
     }
 }

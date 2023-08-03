@@ -6,7 +6,9 @@ enum ProfileConstants {
     static let tableCellHeight: CGFloat = 54.0
     static let tableHeight: CGFloat = tableCellHeight * CGFloat(mockArray.count)
     
-    static let endpoint = "64c516f8c853c26efada7af9.mockapi.io"
+    static let endpoint = "https://64c516f8c853c26efada7af9.mockapi.io"
+    static let apiV1Profile1Get = "/api/v1/profile/1"
+    
     static let mockArray = [
         "Мои NFT (112)",
         "Избранные NFT (11)",
