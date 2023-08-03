@@ -18,6 +18,13 @@ final class CartTableViewHelper: NSObject {
 }
 
 extension CartTableViewHelper: CartTableViewHelperProtocol {
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
+        140
+    }
+
     // MARK: - UITableViewDataSource
     func tableView(
         _ tableView: UITableView,
@@ -30,6 +37,8 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        UITableViewCell()
+        let cell: CartTableViewCell = tableView.dequeueReusableCell()
+        cell.nft = NFTCartCellViewModel(id: 1, name: "Хыхыхы", image: nil, rating: 2, price: 2)
+        return cell
     }
 }

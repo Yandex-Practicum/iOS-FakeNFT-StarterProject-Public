@@ -12,6 +12,11 @@ final class CartViewController: UIViewController {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .appWhite
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.delegate = self.tableViewHelper
+        tableView.dataSource = self.tableViewHelper
+        tableView.register<CartTableViewCell>(CartTableViewCell.self)
         return tableView
     }()
 
