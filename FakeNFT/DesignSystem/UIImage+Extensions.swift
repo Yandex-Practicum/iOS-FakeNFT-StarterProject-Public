@@ -15,7 +15,7 @@ extension UIImage {
         static let statistics = UIImage.named(AppConstants.Icons.statistics)
         static let close = UIImage.named("Close")
         static let sort = UIImage.named("Sort")
-        
+
         static let star = UIImage(systemName: "star.fill")
     }
 
