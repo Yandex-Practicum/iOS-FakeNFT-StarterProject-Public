@@ -9,6 +9,7 @@ import Foundation
 
 struct OrderRequest: NetworkRequest {
     let orderId: Int
+    var httpMethod: HttpMethod = .get
 
     var endpoint: URL? {
         let api = AppConstants.Api.self
@@ -18,6 +19,4 @@ struct OrderRequest: NetworkRequest {
         components?.path = "\(apiVersion)/\(ordersController)/\(orderId)"
         return components?.url
     }
-
-    var httpMethod: HttpMethod { .get }
 }

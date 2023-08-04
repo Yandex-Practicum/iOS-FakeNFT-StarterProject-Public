@@ -22,5 +22,9 @@ struct AppConstants {
         enum Cart {
             static let ordersController = "orders"
         }
+
+        enum Nft {
+            static let nftController = "nft"
+        }
     }
 }

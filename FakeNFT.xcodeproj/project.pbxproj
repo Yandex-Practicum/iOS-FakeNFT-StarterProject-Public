@@ -43,6 +43,7 @@
 		961964262A7CBD760076BD88 /* NftCollectionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964252A7CBD760076BD88 /* NftCollectionNetworkService.swift */; };
 		961964282A7CBE610076BD88 /* NFTCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964272A7CBE610076BD88 /* NFTCollectionModel.swift */; };
 		9619642A2A7CBECA0076BD88 /* NftCollectionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964292A7CBECA0076BD88 /* NftCollectionRequest.swift */; };
+		9619642C2A7CBFCA0076BD88 /* NftItemRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619642B2A7CBFCA0076BD88 /* NftItemRequest.swift */; };
 		96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5D2A777CA7004ADF21 /* CartViewController.swift */; };
 		96286E602A777D14004ADF21 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5F2A777D14004ADF21 /* CartViewModel.swift */; };
 		96286E622A777D2B004ADF21 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E612A777D2B004ADF21 /* CartTableViewCell.swift */; };
@@ -125,6 +126,7 @@
 		961964252A7CBD760076BD88 /* NftCollectionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollectionNetworkService.swift; sourceTree = "<group>"; };
 		961964272A7CBE610076BD88 /* NFTCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionModel.swift; sourceTree = "<group>"; };
 		961964292A7CBECA0076BD88 /* NftCollectionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollectionRequest.swift; sourceTree = "<group>"; };
+		9619642B2A7CBFCA0076BD88 /* NftItemRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftItemRequest.swift; sourceTree = "<group>"; };
 		96286E5D2A777CA7004ADF21 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		96286E5F2A777D14004ADF21 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		96286E612A777D2B004ADF21 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -312,8 +314,9 @@
 		3FC8C38F29D245250081F015 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				9619642E2A7CBFEE0076BD88 /* Nft */,
+				9619642D2A7CBFE70076BD88 /* Cart */,
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
-				961964072A7BC0720076BD88 /* OrderRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -349,12 +352,28 @@
 		9619641F2A7CBCFD0076BD88 /* NFT */ = {
 			isa = PBXGroup;
 			children = (
-				961964212A7CBD300076BD88 /* NftItemsRequest.swift */,
 				961964232A7CBD4E0076BD88 /* NftNetworkServiceImpl.swift */,
 				961964252A7CBD760076BD88 /* NftCollectionNetworkService.swift */,
-				961964292A7CBECA0076BD88 /* NftCollectionRequest.swift */,
 			);
 			path = NFT;
+			sourceTree = "<group>";
+		};
+		9619642D2A7CBFE70076BD88 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				961964072A7BC0720076BD88 /* OrderRequest.swift */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		9619642E2A7CBFEE0076BD88 /* Nft */ = {
+			isa = PBXGroup;
+			children = (
+				961964292A7CBECA0076BD88 /* NftCollectionRequest.swift */,
+				961964212A7CBD300076BD88 /* NftItemsRequest.swift */,
+				9619642B2A7CBFCA0076BD88 /* NftItemRequest.swift */,
+			);
+			path = Nft;
 			sourceTree = "<group>";
 		};
 		96286E5C2A777B69004ADF21 /* Cart */ = {
@@ -639,6 +658,7 @@
 				96D10EA22A796157008F6FA4 /* UIImage+Extensions.swift in Sources */,
 				F61908C62A73C81B00DEF2F5 /* UIColor+Extensions.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				9619642C2A7CBFCA0076BD88 /* NftItemRequest.swift in Sources */,
 				96D10E9E2A7949D5008F6FA4 /* AppButton.swift in Sources */,
 				F61908D72A73D23000DEF2F5 /* AppConstants.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,

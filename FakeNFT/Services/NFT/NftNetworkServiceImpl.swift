@@ -30,11 +30,20 @@ final class NFTNetworkServiceImpl: NFTNetworkService {
             onResponse: result
         )
     }
+}
 
+// MARK: - NFTNetworkCartService
+extension NFTNetworkServiceImpl: NFTNetworkCartService {
     func getNFTItemBy(
         id: String,
         result: @escaping ResultHandler<NFTItemModel>
     ) {
-
+        assert(Thread.isMainThread)
+        let request = NFTItemRequest(nftId: id)
+        self.networkClient.send(request: request, type: NFTItemModel.self) { response in
+            DispatchQueue.main.async {
+                result(response)
+            }
+        }
     }
 }
