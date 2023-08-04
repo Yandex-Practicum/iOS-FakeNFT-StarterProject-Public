@@ -45,7 +45,7 @@ final class TabBarController: UITabBarController {
             rootViewController: firstMockVc
         )
         let cartNavigationController = NavigationController(
-            rootViewController: self.createCartViewController()
+            rootViewController: CartViewFactory.create()
         )
         let statisticsNavigationController = NavigationController(
             rootViewController: forthMockVc
@@ -90,20 +90,5 @@ final class TabBarController: UITabBarController {
         let tabBarItem = UITabBarItem(title: title, image: image, selectedImage: nil)
         tab.tabBarItem = tabBarItem
         return tab
-    }
-}
-
-private extension TabBarController {
-    func createCartViewController() -> UIViewController {
-        let cartCellViewModelFactory = NFTCartCellViewModelFactory()
-        let imageLoadingService = ImageLoadingService()
-        let networkClient = DefaultNetworkClient()
-
-        let orderService = OrderService(networkClient: networkClient)
-
-        let viewModel = CartViewModel(orderService: orderService)
-        let tableViewHelper = CartTableViewHelper()
-        let viewController = CartViewController(viewModel: viewModel, tableViewHelper: tableViewHelper)
-        return viewController
     }
 }
