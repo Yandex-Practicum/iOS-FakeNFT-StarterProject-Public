@@ -79,6 +79,7 @@ final class TabBarController: UITabBarController {
             )
         ]
 
+        self.tabBar.unselectedItemTintColor = .appBlack
     }
 
     private func configureTab(
