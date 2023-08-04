@@ -9,7 +9,12 @@ import UIKit
 
 final class CartView: UIView {
     var onTapPurchaseButton: (() -> Void)?
-    var tableViewHelper: CartTableViewHelperProtocol?
+    var tableViewHelper: CartTableViewHelperProtocol? {
+        didSet {
+            self.cartTableView.delegate = self.tableViewHelper
+            self.cartTableView.dataSource = self.tableViewHelper
+        }
+    }
 
     private lazy var cartTableView: UITableView = {
         let tableView = UITableView()
@@ -17,8 +22,6 @@ final class CartView: UIView {
         tableView.backgroundColor = .appWhite
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.delegate = self.tableViewHelper
-        tableView.dataSource = self.tableViewHelper
         tableView.register<CartTableViewCell>(CartTableViewCell.self)
         return tableView
     }()
@@ -56,6 +59,7 @@ final class CartView: UIView {
     private let placeholderView: CartPlaceholderView = {
         let view = CartPlaceholderView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
         return view
     }()
 
