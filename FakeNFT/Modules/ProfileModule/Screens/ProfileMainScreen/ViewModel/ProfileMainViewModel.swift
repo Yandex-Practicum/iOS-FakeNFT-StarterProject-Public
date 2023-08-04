@@ -88,7 +88,6 @@ private extension ProfileMainViewModel {
         likes.forEach { id in
             guard dataStorage.getItems(.likedItems).compactMap({ $0 as? String }).contains(id) else {
                 dataStorage.toggleLike(id)
-                print(dataStorage.getItems(.likedItems).count)
                 return
             }
         }
