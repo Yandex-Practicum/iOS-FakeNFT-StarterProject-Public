@@ -8,29 +8,23 @@
 import Foundation
 
 protocol CartViewModelProtocol {
-    var order: Box<[NFTCartCellViewModel]> { get }
+    var order: Box<OrderViewModel> { get }
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
     var cartViewState: Box<CartViewModel.CartViewState> { get }
 
     func fetchOrder()
-    func sortOrder(trait: CartViewModel.SortingTraits)
+    func sortOrder(trait: CartOrderSorter.SortingTrait)
 }
 
 final class CartViewModel {
     enum CartViewState {
         case loading
-        case loaded([NFTCartCellViewModel], Double)
+        case loaded(OrderViewModel, Double)
         case empty
     }
 
-    enum SortingTraits {
-        case price
-        case rating
-        case name
-    }
-
-    var order = Box<[NFTCartCellViewModel]>([])
+    var order = Box<OrderViewModel>([])
     var nftCount = Box<String>("0 NFT")
     var finalOrderCost = Box<String>("0 ETH")
     var cartViewState = Box<CartViewState>(.loading)
@@ -56,9 +50,14 @@ final class CartViewModel {
     }
 
     private let cartViewInteractor: CartViewInteractorProtocol
+    private let cartOrderSorter: CartOrderSorterProtocol
 
-    init(intercator: CartViewInteractorProtocol) {
+    init(
+        intercator: CartViewInteractorProtocol,
+        orderSorter: CartOrderSorterProtocol
+    ) {
         self.cartViewInteractor = intercator
+        self.cartOrderSorter = orderSorter
     }
 }
 
@@ -79,7 +78,9 @@ extension CartViewModel: CartViewModelProtocol {
         )
     }
 
-    func sortOrder(trait: SortingTraits) {
-
+    func sortOrder(trait: CartOrderSorter.SortingTrait) {
+        self.cartOrderSorter.sort(order: self.order.value, trait: trait) { [weak self] sortedOrder in
+            self?.order.value = sortedOrder
+        }
     }
 }

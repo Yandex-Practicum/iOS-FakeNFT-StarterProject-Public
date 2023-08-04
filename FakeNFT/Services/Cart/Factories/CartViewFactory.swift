@@ -20,8 +20,9 @@ struct CartViewFactory {
             orderService: orderService,
             imageLoadingService: imageLoadingService
         )
+        let orderSorter = CartOrderSorter()
 
-        let viewModel = CartViewModel(intercator: cartViewInteractor)
+        let viewModel = CartViewModel(intercator: cartViewInteractor, orderSorter: orderSorter)
         let tableViewHelper = CartTableViewHelper()
         let router = CartViewRouter()
 

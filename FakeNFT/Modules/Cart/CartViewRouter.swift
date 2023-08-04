@@ -10,14 +10,14 @@ import UIKit
 protocol CartViewRouterProtocol {
     func showSortAlert(
         viewController: UIViewController,
-        onChoosingSortingTrait: @escaping (CartViewModel.SortingTraits) -> Void
+        onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
     )
 }
 
 final class CartViewRouter: CartViewRouterProtocol {
     func showSortAlert(
         viewController: UIViewController,
-        onChoosingSortingTrait: @escaping (CartViewModel.SortingTraits) -> Void
+        onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
     ) {
         let alertController = UIAlertController(
             title: "CART_SORT_ALERT_TITLE".localized,
@@ -28,23 +28,17 @@ final class CartViewRouter: CartViewRouterProtocol {
         let sortByPriceAction = UIAlertAction(
             title: "CART_SORT_ALERT_PRICE_ACTION_TITLE".localized,
             style: .default
-        ) { _ in
-            onChoosingSortingTrait(.price)
-        }
+        ) { _ in onChoosingSortingTrait(.price) }
 
         let sortByRatingAction = UIAlertAction(
             title: "CART_SORT_ALERT_RATING_ACTION_TITLE".localized,
             style: .default
-        ) { _ in
-            onChoosingSortingTrait(.rating)
-        }
+        ) { _ in onChoosingSortingTrait(.rating) }
 
         let sortByNameAction = UIAlertAction(
             title: "CART_SORT_ALERT_NAME_ACTION_TITLE".localized,
             style: .default
-        ) { _ in
-            onChoosingSortingTrait(.name)
-        }
+        ) { _ in onChoosingSortingTrait(.name) }
 
         let closeAction = UIAlertAction(
             title: "CART_SORT_ALERT_CLOSE_ACTION_TITLE".localized,

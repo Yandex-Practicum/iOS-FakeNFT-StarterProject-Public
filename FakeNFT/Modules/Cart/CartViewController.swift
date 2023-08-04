@@ -51,7 +51,7 @@ final class CartViewController: UIViewController {
 
 // MARK: - CartTableViewHelperDelegate
 extension CartViewController: CartTableViewHelperDelegate {
-    var order: [NFTCartCellViewModel]? {
+    var order: OrderViewModel? {
         self.viewModel.order.value
     }
 }

@@ -14,3 +14,5 @@ struct NFTCartCellViewModel {
     let rating: Int
     let price: Double
 }
+
+typealias OrderViewModel = [NFTCartCellViewModel]

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CartTableViewHelperDelegate: AnyObject {
-    var order: [NFTCartCellViewModel]? { get }
+    var order: OrderViewModel? { get }
 }
 
 protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {

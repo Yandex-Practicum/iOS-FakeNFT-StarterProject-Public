@@ -21,7 +21,7 @@ final class CartViewInteractor {
     private var orderCapacity = 0
     private var accumulatedCost: Double = 0
 
-    private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.cart-view-model.fetch-nft",
+    private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.fetch-nft",
                                               attributes: .concurrent)
 
     private let nftService: NFTNetworkCartService
