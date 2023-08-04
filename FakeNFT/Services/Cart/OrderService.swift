@@ -5,7 +5,7 @@
 //  Created by Aleksandr Bekrenev on 03.08.2023.
 //
 
-import UIKit
+import Foundation
 
 protocol OrderServiceProtocol {
     func fetchOrder(id: Int, completion: @escaping ((Result<Order, Error>) -> Void))

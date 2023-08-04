@@ -5,7 +5,7 @@
 //  Created by Aleksandr Bekrenev on 03.08.2023.
 //
 
-import UIKit
+import UIKit.UIImage
 
 final class NFTCartCellViewModelFactory {
     func makeNFTCartCellViewModel(

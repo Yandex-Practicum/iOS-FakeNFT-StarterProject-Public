@@ -171,9 +171,9 @@ private extension CartViewController {
 
         self.viewModel.onShouldHidePlaceholderChanged = { [weak self] in
             guard let self = self else { return }
-            let shouldHidePlaceholder = self.viewModel.shouldHidePlaceholder
-
             self.progressHUDWrapper.hide()
+
+            let shouldHidePlaceholder = self.viewModel.shouldHidePlaceholder
             self.placeholderView.isHidden = shouldHidePlaceholder
             self.shouldHideSortButton(shouldHidePlaceholder == false)
         }
