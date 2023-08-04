@@ -25,7 +25,7 @@ final class NFTNetworkServiceImpl: NFTNetworkService {
 
     func getNFTItem(result: @escaping ResultHandler<NFTItemResponse>) {
         networkClient.send(
-            request: NFTItemRequest(),
+            request: NFTItemsRequest(),
             type: NFTItemResponse.self,
             onResponse: result
         )

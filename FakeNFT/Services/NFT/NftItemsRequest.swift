@@ -1,12 +1,12 @@
 //
-//  NftItemRequest.swift
+//  NftItemsRequest.swift
 //  FakeNFT
 //
 //  Created by Дмитрий Никишов on 01.08.2023.
 //
 import Foundation
 
-struct NFTItemRequest: NetworkRequest {
+struct NFTItemsRequest: NetworkRequest {
     var httpMethod: HttpMethod = .get
 
     var dto: Encodable?
