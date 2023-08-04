@@ -101,7 +101,7 @@ private extension ResetPasswordViewController {
         setMessageColor(with: result)
         changeMessageLabelState(for: result)
         manageEnterButtonAppearence(result)
-        
+        shakeTextFieldIfError(result)
     }
     
     func setMessageText(with result: RequestResult) {
@@ -133,6 +133,10 @@ private extension ResetPasswordViewController {
     
     func hideMessageLabel() {
         messageLabel.alpha = 0
+    }
+    
+    func shakeTextFieldIfError(_ result: RequestResult) {
+        if result == .failure { emailTextField.shake() }
     }
 }
 

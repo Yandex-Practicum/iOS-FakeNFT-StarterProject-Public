@@ -81,6 +81,7 @@
 		377781722A5B5630007F4C28 /* TableViewHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377781712A5B5630007F4C28 /* TableViewHeight.swift */; };
 		37799FDE2A7CF718007A1C30 /* PublishersFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37799FDD2A7CF718007A1C30 /* PublishersFactory.swift */; };
 		37799FE02A7D4CB9007A1C30 /* UIViewController + Ext loadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37799FDF2A7D4CB9007A1C30 /* UIViewController + Ext loadingAnimation.swift */; };
+		37799FE22A7D50A7007A1C30 /* UIView + Ext ShakeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37799FE12A7D50A7007A1C30 /* UIView + Ext ShakeAnimation.swift */; };
 		377DF5E02A3F8CDF00090DCD /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */; };
 		377DF5E52A3F961D00090DCD /* TableViewDiffableDataSourceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5E42A3F961D00090DCD /* TableViewDiffableDataSourceSection.swift */; };
 		377DF5E82A3F96B100090DCD /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377DF5E72A3F96B100090DCD /* CartTableViewCell.swift */; };
@@ -230,6 +231,7 @@
 		377781712A5B5630007F4C28 /* TableViewHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeight.swift; sourceTree = "<group>"; };
 		37799FDD2A7CF718007A1C30 /* PublishersFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishersFactory.swift; sourceTree = "<group>"; };
 		37799FDF2A7D4CB9007A1C30 /* UIViewController + Ext loadingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Ext loadingAnimation.swift"; sourceTree = "<group>"; };
+		37799FE12A7D50A7007A1C30 /* UIView + Ext ShakeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Ext ShakeAnimation.swift"; sourceTree = "<group>"; };
 		377DF5DF2A3F8CDF00090DCD /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		377DF5E42A3F961D00090DCD /* TableViewDiffableDataSourceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDiffableDataSourceSection.swift; sourceTree = "<group>"; };
 		377DF5E72A3F96B100090DCD /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				3733F20F2A53123B00ED681C /* UIViewController + Ext navBar.swift */,
 				37AA5CB92A604D34005B6EE0 /* UIView + Ext.swift */,
 				37799FDF2A7D4CB9007A1C30 /* UIViewController + Ext loadingAnimation.swift */,
+				37799FE12A7D50A7007A1C30 /* UIView + Ext ShakeAnimation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1426,6 +1429,7 @@
 				375D09092A617D6300194C5A /* CustomLineButton.swift in Sources */,
 				372AE2572A79429600654137 /* SortDescriptorTypeEnum.swift in Sources */,
 				377DF5F62A3FAC0700090DCD /* CentralStackView.swift in Sources */,
+				37799FE22A7D50A7007A1C30 /* UIView + Ext ShakeAnimation.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				377781722A5B5630007F4C28 /* TableViewHeight.swift in Sources */,
 				379D97D82A6ED82C009E7291 /* GenericStorage.swift in Sources */,

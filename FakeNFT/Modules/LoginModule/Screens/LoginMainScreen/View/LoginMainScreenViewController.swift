@@ -259,6 +259,8 @@ private extension LoginMainScreenViewController {
 private extension LoginMainScreenViewController {
     func showCredentialsErrorState() {
         setErrorState(with: 1)
+        emailTextField.shake()
+        passwordTextField.shake()
         errorLabel.animateLabelAppearance()
         
     }
