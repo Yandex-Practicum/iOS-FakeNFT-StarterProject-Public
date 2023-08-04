@@ -5,11 +5,11 @@
 //  Created by Aleksandr Bekrenev on 03.08.2023.
 //
 
-import UIKit
+import UIKit.UIImage
 import Kingfisher
 
 protocol ImageLoadingServiceProtocol {
-    func fetchImage(url: URL?, completion: @escaping ((Result<UIImage, Error>) -> Void))
+    func fetchImage(url: URL?, completion: @escaping ResultHandler<UIImage>)
 }
 
 final class ImageLoadingService: ImageLoadingServiceProtocol {
@@ -17,7 +17,7 @@ final class ImageLoadingService: ImageLoadingServiceProtocol {
         case invalidURL
     }
 
-    func fetchImage(url: URL?, completion: @escaping ((Result<UIImage, Error>) -> Void)) {
+    func fetchImage(url: URL?, completion: @escaping ResultHandler<UIImage>) {
         guard let url = url else {
             completion(.failure(ImageLoadingError.invalidURL))
             return
