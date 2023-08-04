@@ -8,7 +8,7 @@
 import Foundation
 
 struct OrderRequest: NetworkRequest {
-    let orderId: Int
+    let orderId: String
     var httpMethod: HttpMethod = .get
 
     var endpoint: URL? {

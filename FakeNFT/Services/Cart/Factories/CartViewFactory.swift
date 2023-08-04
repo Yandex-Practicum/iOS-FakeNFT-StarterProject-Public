@@ -15,11 +15,13 @@ struct CartViewFactory {
         let nftService = NFTNetworkServiceImpl(networkClient: networkClient)
         let imageLoadingService = ImageLoadingService()
 
-        let viewModel = CartViewModel(
+        let cartViewInteractor = CartViewInteractor(
             nftService: nftService,
             orderService: orderService,
             imageLoadingService: imageLoadingService
         )
+
+        let viewModel = CartViewModel(intercator: cartViewInteractor)
 
         let tableViewHelper = CartTableViewHelper()
         let viewController = CartViewController(viewModel: viewModel, tableViewHelper: tableViewHelper)

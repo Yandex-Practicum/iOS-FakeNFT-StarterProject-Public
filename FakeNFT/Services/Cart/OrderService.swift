@@ -8,7 +8,7 @@
 import Foundation
 
 protocol OrderServiceProtocol {
-    func fetchOrder(id: Int, completion: @escaping ResultHandler<Order>)
+    func fetchOrder(id: String, completion: @escaping ResultHandler<Order>)
 }
 
 final class OrderService {
@@ -26,7 +26,7 @@ final class OrderService {
 
 // MARK: - CartServiceProtocol
 extension OrderService: OrderServiceProtocol {
-    func fetchOrder(id: Int, completion: @escaping ResultHandler<Order>) {
+    func fetchOrder(id: String, completion: @escaping ResultHandler<Order>) {
         assert(Thread.isMainThread)
         guard self.isTaskStillRunning == false else { return }
 
