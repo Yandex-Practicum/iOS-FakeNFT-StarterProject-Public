@@ -12,10 +12,9 @@ protocol ProfileMyNftsCoordinatable: AnyObject {
     var onSort: (() -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     func setupSortDescriptor(_ sortDescriptor: NftSortValue)
-    func load()
 }
 
-final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
+final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable, Reloadable {
     
     var onSort: (() -> Void)?
     var onError: ((Error) -> Void)?
@@ -55,7 +54,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         view.backgroundColor = .systemBackground
         setupConstraints()
         setupNavigationBar()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,7 +97,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
             .store(in: &cancellables)
     }
     
-    func load() {
+    func reload() {
         viewModel.load()
     }
 }

@@ -74,7 +74,6 @@ private extension ProfileMyNftsViewModel {
         let startIndex = currentPage * pageSize
         let nextPage = currentPage + 1
         let endIndex = min(nextPage * pageSize, nftsToLoad.count)
-        print("startIndex: \(startIndex), endIndex: \(endIndex)")
         return nftsToLoad[startIndex..<endIndex].compactMap({ $0 })
     }
 }

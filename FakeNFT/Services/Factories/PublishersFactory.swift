@@ -11,6 +11,7 @@ import Combine
 protocol PublishersFactoryProtocol {
     func getNftsPublisher(_ ids: [String]) -> AnyPublisher<[SingleNftModel], NetworkError>
     func getMyNftsPublisher(_ ids: [String]) -> AnyPublisher<[MyNfts], NetworkError>
+    func getProfilePublisher() -> AnyPublisher<Profile, NetworkError>
 }
 
 final class PublishersFactory {
@@ -42,6 +43,11 @@ extension PublishersFactory: PublishersFactoryProtocol {
             .flatMap({ self.getNftPublisher($0) })
             .collect()
             .eraseToAnyPublisher()
+    }
+    
+    func getProfilePublisher() -> AnyPublisher<Profile, NetworkError> {
+        let request = RequestConstructor.constructProfileRequest()
+        return networkClient.networkPublisher(request: request, type: Profile.self)
     }
 }
 

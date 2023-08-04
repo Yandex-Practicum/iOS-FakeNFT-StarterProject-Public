@@ -11,20 +11,37 @@ import Combine
 final class ProfileLikedNftsViewModel {
     
     @Published private (set) var visibleNfts: [LikedSingleNfts] = []
+    @Published private (set) var requestResult: RequestResult?
+    @Published private (set) var likedNftError: Error?
     
     private var cancellables = Set<AnyCancellable>()
     
-    private let networkClient: NetworkClient
+    private let networkClient: PublishersFactoryProtocol
     private let dataStore: DataStorageManagerProtocol
     
-    init(networkClient: NetworkClient, dataStore: DataStorageManagerProtocol) {
+    init(networkClient: PublishersFactoryProtocol, dataStore: DataStorageManagerProtocol) {
         self.networkClient = networkClient
         self.dataStore = dataStore
         bind()
     }
 
     func load() {
-        showVisibleNfts(dataStore.getItems(.likedItems).compactMap({ $0 as? String }))
+        requestResult = .loading
+        
+        let itemsToLoad = dataStore.getItems(.likedItems).compactMap({ $0 as? String })
+        networkClient.getNftsPublisher(itemsToLoad)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.likedNftError = error
+                    self?.requestResult = nil
+                }
+            } receiveValue: { [weak self] models in
+                models.forEach({ self?.dataStore.addItem($0) })
+                self?.showVisibleNfts(itemsToLoad)
+                self?.requestResult = nil
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -43,7 +60,7 @@ private extension ProfileLikedNftsViewModel {
     }
     
     func showVisibleNfts(_ ids: [String]) {
-            visibleNfts = filterVisibleNfts(ids)
+        visibleNfts = filterVisibleNfts(ids)
     }
     
     func filterVisibleNfts(_ ids: [String]) -> [LikedSingleNfts] {

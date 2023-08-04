@@ -8,7 +8,13 @@
 import UIKit
 import Combine
 
-final class ProfileLikedNftsViewController: UIViewController {
+protocol ProfileLikedCoordinatable {
+    var onError: ((Error) -> Void)? { get set }
+}
+
+final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordinatable, Reloadable {
+    
+    var onError: ((Error) -> Void)?
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -47,7 +53,7 @@ final class ProfileLikedNftsViewController: UIViewController {
         setupConstraints()
         setupLeftNavBarItem(title: K.Titles.favouriteNfts, action: #selector(cancelTapped))
         createDataSource()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,10 +75,22 @@ final class ProfileLikedNftsViewController: UIViewController {
                 self?.updateDataSource(with: likedNfts)
             }
             .store(in: &cancellables)
+        
+        viewModel.$likedNftError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
+            }
+            .store(in: &cancellables)
     }
     
-    private func load() {
+    func reload() {
         viewModel.load()
+    }
+    
+    private func headOnError(_ error: Error?) {
+        guard let error else { return }
+        onError?(error)
     }
 
 }

@@ -46,8 +46,12 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource, dataStorage: dataStorageManager)
-        let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource,
+                                                              dataStorage: dataStorageManager,
+                                                              networkClient: publishersFactory)
+        
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile,
+                                                                                    rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in
             
@@ -81,14 +85,21 @@ private extension ProfileCoordinator {
         
         myNftsScreen.onError = { [weak self, weak myNftsScreen] error in
             guard let self, let myNftsScreen else { return }
-            self.showMyNftError(from: myNftsScreen, with: error)
+            self.showLoadAlert(from: myNftsScreen, with: error)
         }
         
         router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
     }
     
     func showLikedNftsScreen() {
-        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, dataStore: dataStorageManager)
+        var likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource,
+                                                                     dataStore: dataStorageManager,
+                                                                     networkClient: publishersFactory)
+        
+        likedNftsScreen.onError = { [weak self, weak likedNftsScreen] error in
+            guard let self, let likedNftsScreen else { return }
+            self.showLoadAlert(from: likedNftsScreen, with: error)
+        }
         
         router.pushViewControllerFromTabbar(likedNftsScreen, animated: true)
     }
@@ -96,32 +107,13 @@ private extension ProfileCoordinator {
 
 // MARK: - Ext Alerts
 private extension ProfileCoordinator {
-    func showLoadAlert(from screen: ProfileMainCoordinatableProtocol, with error: Error?) {
+    func showLoadAlert(from screen: Reloadable, with error: Error?) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         
         alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:
-                screen.load()
-                router?.dismissToRootViewController(animated: true, completion: nil)
-            case .cancel:
-                router?.dismissToRootViewController(animated: true, completion: nil)
-            case .destructive:
-                break
-            @unknown default:
-                break
-            }
-        }
-        
-        router.presentViewController(alert, animated: true, presentationStyle: .popover)
-    }
-    
-    func showMyNftError(from screen: ProfileMyNftsCoordinatable, with error: Error) {
-        let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
-        alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
-            switch action.style {
-            case .default:
-                screen.load()
+                screen.reload()
                 router?.dismissToRootViewController(animated: true, completion: nil)
             case .cancel:
                 router?.dismissToRootViewController(animated: true, completion: nil)

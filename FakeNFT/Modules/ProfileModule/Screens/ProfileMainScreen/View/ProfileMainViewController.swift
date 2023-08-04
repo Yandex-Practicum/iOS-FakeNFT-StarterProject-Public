@@ -13,10 +13,13 @@ protocol ProfileMainCoordinatableProtocol {
     var onMyNfts: (([String]) -> Void)? { get set }
     var onLiked: (() -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
-    func load()
 }
 
-final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol {
+protocol Reloadable {
+    func reload()
+}
+
+final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol, Reloadable {
 
     var onEdit: (() -> Void)?
     var onMyNfts: (([String]) -> Void)?
@@ -103,7 +106,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +122,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
     }
     
     // MARK: Load
-    func load() {
+    func reload() {
         viewModel.loadUser()
     }
     

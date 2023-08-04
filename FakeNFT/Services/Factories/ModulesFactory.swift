@@ -36,15 +36,17 @@ protocol OnboardingModuleFactoryProtocol {
 
 protocol ProfileModuleFactoryProtocol {
     func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol,
-                                   dataStorage: DataStorageManagerProtocol) -> Presentable & ProfileMainCoordinatableProtocol
+                                   dataStorage: DataStorageManagerProtocol,
+                                   networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMainCoordinatableProtocol & Reloadable
     
     func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol,
                                      nftsToLoad: [String],
                                      dataStore: DataStorageManagerProtocol,
-                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable
+                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable & Reloadable
     
     func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol,
-                                        dataStore: DataStorageManagerProtocol) -> Presentable
+                                        dataStore: DataStorageManagerProtocol,
+                                        networkClient: PublishersFactoryProtocol) -> Presentable & ProfileLikedCoordinatable & Reloadable
 }
 
 final class ModulesFactory {}
@@ -77,8 +79,9 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
 
 // MARK: - Ext ProfileModuleFactoryProtocol
 extension ModulesFactory: ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol, dataStorage: DataStorageManagerProtocol) -> Presentable & ProfileMainCoordinatableProtocol {
-        let networkClient = DefaultNetworkClient()
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol,
+                                   dataStorage: DataStorageManagerProtocol,
+                                   networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMainCoordinatableProtocol & Reloadable {
         let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStorage: dataStorage)
         let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
@@ -87,14 +90,15 @@ extension ModulesFactory: ProfileModuleFactoryProtocol {
     func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol,
                                      nftsToLoad: [String],
                                      dataStore: DataStorageManagerProtocol,
-                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable {
+                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable & Reloadable {
         let viewModel = ProfileMyNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
         let viewController = ProfileMyNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
     
-    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, dataStore: DataStorageManagerProtocol) -> Presentable {
-        let networkClient = DefaultNetworkClient()
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol,
+                                        dataStore: DataStorageManagerProtocol,
+                                        networkClient: PublishersFactoryProtocol) -> Presentable & ProfileLikedCoordinatable & Reloadable {
         let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = ProfileLikedNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
