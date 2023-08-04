@@ -12,7 +12,7 @@ protocol ProfileMainCoordinatableProtocol {
     var onEdit: (() -> Void)? { get set }
     var onMyNfts: (([String]) -> Void)? { get set }
     var onLiked: (() -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
 }
 
 final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol, Reloadable {
@@ -20,7 +20,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
     var onEdit: (() -> Void)?
     var onMyNfts: (([String]) -> Void)?
     var onLiked: (() -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((NetworkError) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
     
@@ -221,7 +221,7 @@ private extension ProfileMainViewController {
 
 // MARK: Catch error
 private extension ProfileMainViewController {
-    func catchError(_ error: Error?) {
+    func catchError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }

@@ -9,12 +9,12 @@ import UIKit
 import Combine
 
 protocol ProfileLikedCoordinatable {
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
 }
 
 final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordinatable, Reloadable {
     
-    var onError: ((Error) -> Void)?
+    var onError: ((NetworkError) -> Void)?
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -101,7 +101,7 @@ final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordi
         viewModel.load()
     }
     
-    private func headOnError(_ error: Error?) {
+    private func headOnError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }

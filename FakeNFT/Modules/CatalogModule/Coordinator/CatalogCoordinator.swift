@@ -107,7 +107,7 @@ private extension CatalogCoordinator {
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
     
-    func showLoadAlert(from screen: Reloadable, with error: Error?) {
+    func showLoadAlert(from screen: Reloadable, with error: NetworkError?) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         
         alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in

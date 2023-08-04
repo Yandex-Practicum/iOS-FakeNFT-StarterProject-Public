@@ -10,13 +10,13 @@ import Combine
 
 protocol CatalogCollectionCoordinatable {
     var onWebView: ((String) -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
 }
 
 final class CatalogCollectionViewController: UIViewController & CatalogCollectionCoordinatable & Reloadable {
     
     var onWebView: ((String) -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((NetworkError) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
     
@@ -242,7 +242,7 @@ private extension CatalogCollectionViewController {
 
 // MARK: - Ext Error
 private extension CatalogCollectionViewController {
-    func headOnError(_ error: Error?) {
+    func headOnError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }

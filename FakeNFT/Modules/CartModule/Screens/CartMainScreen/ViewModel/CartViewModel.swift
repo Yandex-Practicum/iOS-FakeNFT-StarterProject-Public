@@ -12,7 +12,7 @@ final class CartViewModel {
     private var cancellables = Set<AnyCancellable>()
     
     @Published private (set) var visibleRows: [SingleNftModel] = []
-    @Published private (set) var cartError: Error?
+    @Published private (set) var cartError: NetworkError?
     @Published private (set) var requestResult: RequestResult?
             
     private var dataStore: DataStorageManagerProtocol

@@ -12,7 +12,7 @@ final class ProfileLikedNftsViewModel {
     
     @Published private (set) var visibleNfts: [LikedSingleNfts] = []
     @Published private (set) var requestResult: RequestResult?
-    @Published private (set) var likedNftError: Error?
+    @Published private (set) var likedNftError: NetworkError?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -25,7 +25,7 @@ final class ProfileLikedNftsViewModel {
         bind()
     }
 
-    func load() {        
+    func load() {
         requestResult = .loading
         let itemsToLoad = dataStore.getItems(.likedItems).compactMap({ $0 as? String })
         networkClient.getNftsPublisher(itemsToLoad)

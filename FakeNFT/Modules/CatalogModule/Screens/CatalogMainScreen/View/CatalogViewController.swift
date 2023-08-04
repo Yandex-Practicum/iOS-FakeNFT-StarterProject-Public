@@ -11,7 +11,7 @@ import Combine
 protocol CatalogMainScreenCoordinatable: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onProceed: ((CatalogMainScreenCollection) -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CollectionSortValue)
 }
 
@@ -19,7 +19,7 @@ final class CatalogViewController: UIViewController & Reloadable {
 
     var onFilter: (() -> Void)?
     var onProceed: ((CatalogMainScreenCollection) -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((NetworkError) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -102,7 +102,7 @@ final class CatalogViewController: UIViewController & Reloadable {
         viewModel.load()
     }
     
-    private func catchError(_ error: Error?) {
+    private func catchError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }

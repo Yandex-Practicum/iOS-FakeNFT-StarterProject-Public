@@ -11,13 +11,11 @@ import Combine
 protocol CartPaymentMethodCoordinatableProtocol {
     var onProceed: ((NetworkRequest?) -> Void)? { get set }
     var onTapUserLicense: (() -> Void)? { get set }
-    var onCancel: (() -> Void)? { get set }
 }
 
 final class CartPaymentMethodViewController: UIViewController, CartPaymentMethodCoordinatableProtocol {
     var onProceed: ((NetworkRequest?) -> Void)?
     var onTapUserLicense: (() -> Void)?
-    var onCancel: (() -> Void)?
     
     private let viewModel: CartPaymentMethodViewModel
     private let dataSource: GenericCollectionViewDataSourceProtocol
@@ -166,7 +164,7 @@ private extension CartPaymentMethodViewController {
     }
     
     func cancelTapped() {
-        onCancel?()
+        navigationController?.popViewController(animated: true)
     }
 }
 

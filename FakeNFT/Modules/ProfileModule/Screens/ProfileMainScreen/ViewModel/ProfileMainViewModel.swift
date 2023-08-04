@@ -12,7 +12,7 @@ final class ProfileMainViewModel {
     
     @Published private (set) var profile: Profile?
     @Published private (set) var profileData: [ProfileModel] = []
-    @Published private (set) var profileMainError: Error?
+    @Published private (set) var profileMainError: NetworkError?
     @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()

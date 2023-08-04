@@ -10,7 +10,7 @@ import Combine
 
 final class ProfileMyNftsViewModel {
     @Published private (set) var visibleRows: [MyNfts] = []
-    @Published private (set) var myNftError: Error?
+    @Published private (set) var myNftError: NetworkError?
     @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()

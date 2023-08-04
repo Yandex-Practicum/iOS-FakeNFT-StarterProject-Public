@@ -13,16 +13,16 @@ protocol AlertDescriptable {
 }
 
 protocol AlertConstructable {
-    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController
+    func constructAlert(title: String, style: UIAlertController.Style, error: NetworkError?) -> UIAlertController
     func addLoadErrorAlertActions(from alert: UIAlertController, handler: @escaping (UIAlertAction) -> Void)
     func addSortAlertActions<T: CaseIterable & AlertDescriptable>(for alert: UIAlertController, values: [T], completion: @escaping (T) -> Void)
 }
 
 struct AlertConstructor: AlertConstructable {
-    func constructAlert(title: String, style: UIAlertController.Style, error: Error?) -> UIAlertController {
+    func constructAlert(title: String, style: UIAlertController.Style, error: NetworkError?) -> UIAlertController {
         return UIAlertController(
             title: title,
-            message: error?.localizedDescription,
+            message: error?.errorDescription,
             preferredStyle: style)
     }
     

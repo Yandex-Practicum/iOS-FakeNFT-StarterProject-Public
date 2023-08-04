@@ -75,6 +75,12 @@ struct K {
         static let dependingOnName = NSLocalizedString("dependingOnName", comment: "")
     }
     
+    struct AlertDescriptions {
+        static let profilePublisherErrorDescription = NSLocalizedString("", comment: "")
+        static let profileMyNftsErrorDescription = NSLocalizedString("Проверка ошибки май нфт", comment: "")
+        static let profileLikedNftsErrorDescription = NSLocalizedString("Проверка ошибки лайков", comment: "")
+    }
+    
     struct Links {
         static let userLicenseLink = "https://yandex.ru/legal/practicum_termsofuse/"
         static let apiLink = "https://648cbbbe8620b8bae7ed5043.mockapi.io/"

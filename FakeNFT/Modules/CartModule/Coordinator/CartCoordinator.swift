@@ -96,10 +96,6 @@ private extension CartCoordinator {
             self?.showWebViewScreen()
         }
         
-        paymentMethodScreen.onCancel = { [weak router] in
-            router?.popToRootViewController(animated: true, completion: nil)
-        }
-        
         router.pushViewControllerFromTabbar(paymentMethodScreen, animated: true)
     }
     
@@ -134,7 +130,7 @@ private extension CartCoordinator {
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
     
-    func showCartLoadAlert(with error: Error?, from screen: CartMainCoordinatableProtocol) {
+    func showCartLoadAlert(with error: NetworkError?, from screen: CartMainCoordinatableProtocol) {
         guard let error else { return }
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
 

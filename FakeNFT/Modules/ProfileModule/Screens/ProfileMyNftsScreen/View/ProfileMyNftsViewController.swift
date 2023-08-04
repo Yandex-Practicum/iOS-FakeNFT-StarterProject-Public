@@ -10,14 +10,14 @@ import Combine
 
 protocol ProfileMyNftsCoordinatable: AnyObject {
     var onSort: (() -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
     func setupSortDescriptor(_ sortDescriptor: NftSortValue)
 }
 
 final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable, Reloadable {
     
     var onSort: (() -> Void)?
-    var onError: ((Error) -> Void)?
+    var onError: ((NetworkError) -> Void)?
 
     private let viewModel: ProfileMyNftsViewModel
     private let dataSource: GenericTableViewDataSourceProtocol
@@ -150,7 +150,7 @@ private extension ProfileMyNftsViewController {
 
 // MARK: - Ext Error handling
 private extension ProfileMyNftsViewController {
-    func headOnError(_ error: Error?) {
+    func headOnError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }

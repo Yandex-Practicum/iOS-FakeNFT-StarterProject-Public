@@ -15,7 +15,6 @@ protocol PaymentResultCoordinatable {
 final class CartPaymentResultViewController: UIViewController, PaymentResultCoordinatable {
 
     var onMain: (() -> Void)?
-    var onRetry: (() -> Void)?
     
     let viewModel: CartPaymentResultViewModel
     private var cancellables = Set<AnyCancellable>()

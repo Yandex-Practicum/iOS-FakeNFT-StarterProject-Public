@@ -11,7 +11,7 @@ import Combine
 final class CatalogViewModel {
     
     @Published private (set) var visibleRows: [CatalogMainScreenCollection] = []
-    @Published private (set) var catalogError: Error?
+    @Published private (set) var catalogError: NetworkError?
     @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()

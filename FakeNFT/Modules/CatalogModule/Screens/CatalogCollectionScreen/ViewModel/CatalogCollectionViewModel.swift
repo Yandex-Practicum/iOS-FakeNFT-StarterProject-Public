@@ -13,8 +13,8 @@ final class CatalogCollectionViewModel {
     @Published private (set) var visibleNfts: [VisibleSingleNfts] = []
     @Published private (set) var author: Author?
     @Published private (set) var requestResult: RequestResult?
-    @Published private (set) var requestError: Error?
-    @Published private (set) var authorError: Error?
+    @Published private (set) var requestError: NetworkError?
+    @Published private (set) var authorError: NetworkError?
         
     private var cancellables = Set<AnyCancellable>()
     
@@ -60,11 +60,9 @@ final class CatalogCollectionViewModel {
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.authorError = error
-                    self?.requestResult = nil
                 }
             } receiveValue: { [weak self] author in
                 self?.author = author
-                self?.requestResult = nil
             }
             .store(in: &cancellables)
     }

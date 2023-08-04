@@ -12,7 +12,7 @@ protocol CartMainCoordinatableProtocol: AnyObject {
     var onFilter: (() -> Void)? { get set }
     var onDelete: ((String?) -> Void)? { get set }
     var onProceed: (() -> Void)? { get set }
-    var onError: ((Error?) -> Void)? { get set }
+    var onError: ((NetworkError?) -> Void)? { get set }
     func reloadCart()
     func setupSortDescriptor(value: NftSortValue)
 
@@ -23,7 +23,7 @@ final class CartViewController: UIViewController {
     var onFilter: (() -> Void)?
     var onDelete: ((String?) -> Void)?
     var onProceed: (() -> Void)?
-    var onError: ((Error?) -> Void)?
+    var onError: ((NetworkError?) -> Void)?
 
     // Combine
     private var cancellables = Set<AnyCancellable>()
