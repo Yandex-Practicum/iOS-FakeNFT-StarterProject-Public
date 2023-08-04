@@ -9,10 +9,12 @@ import Foundation
 
 protocol CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
-                               dataStore: DataStorageManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable
+                               dataStore: DataStorageManagerProtocol,
+                               networkClient: PublishersFactoryProtocol) -> Presentable & CatalogMainScreenCoordinatable & Reloadable
     func makeCatalogCollectionScreenView(with collection: CatalogMainScreenCollection,
                                          dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
-                                         dataStore: DataStorageManagerProtocol) -> Presentable & CatalogCollectionCoordinatable
+                                         dataStore: DataStorageManagerProtocol,
+                                         networkClient: PublishersFactoryProtocol) -> Presentable & CatalogCollectionCoordinatable & Reloadable
     func makeCatalogWebViewScreenView(with address: String) -> Presentable & WebViewProtocol
 }
 
@@ -35,11 +37,18 @@ protocol OnboardingModuleFactoryProtocol {
 }
 
 protocol ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol,
+                                   dataStorage: DataStorageManagerProtocol,
+                                   networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMainCoordinatableProtocol & Reloadable
     
-    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable & ProfileMyNftsCoordinatable
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol,
+                                     nftsToLoad: [String],
+                                     dataStore: DataStorageManagerProtocol,
+                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable & Reloadable
     
-    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol,
+                                        dataStore: DataStorageManagerProtocol,
+                                        networkClient: PublishersFactoryProtocol) -> Presentable & ProfileLikedCoordinatable & Reloadable
 }
 
 final class ModulesFactory {}
@@ -72,23 +81,27 @@ extension ModulesFactory: LoginModuleFactoryProtocol {
 
 // MARK: - Ext ProfileModuleFactoryProtocol
 extension ModulesFactory: ProfileModuleFactoryProtocol {
-    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol) -> Presentable & ProfileMainCoordinatableProtocol {
-        let networkClient = DefaultNetworkClient()
-        let viewModel = ProfileMainViewModel(networkClient: networkClient)
+    func makeProfileMainScreenView(with dataSource: GenericTableViewDataSourceProtocol,
+                                   dataStorage: DataStorageManagerProtocol,
+                                   networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMainCoordinatableProtocol & Reloadable {
+        let viewModel = ProfileMainViewModel(networkClient: networkClient, dataStorage: dataStorage)
         let viewController = ProfileMainViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
     
-    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable & ProfileMyNftsCoordinatable {
-        let networkClient = DefaultNetworkClient()
+    func makeProfileMyNftsScreenView(with dataSource: GenericTableViewDataSourceProtocol,
+                                     nftsToLoad: [String],
+                                     dataStore: DataStorageManagerProtocol,
+                                     networkClient: PublishersFactoryProtocol) -> Presentable & ProfileMyNftsCoordinatable & Reloadable {
         let viewModel = ProfileMyNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
         let viewController = ProfileMyNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
     
-    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol, nftsToLoad: [String], dataStore: DataStorageManagerProtocol) -> Presentable {
-        let networkClient = DefaultNetworkClient()
-        let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, nftsToLoad: nftsToLoad, dataStore: dataStore)
+    func makeProfileLikedNftsScreenView(with dataSource: GenericCollectionViewDataSourceProtocol,
+                                        dataStore: DataStorageManagerProtocol,
+                                        networkClient: PublishersFactoryProtocol) -> Presentable & ProfileLikedCoordinatable & Reloadable {
+        let viewModel = ProfileLikedNftsViewModel(networkClient: networkClient, dataStore: dataStore)
         let viewController = ProfileLikedNftsViewController(viewModel: viewModel, dataSource: dataSource)
         return viewController
     }
@@ -97,16 +110,14 @@ extension ModulesFactory: ProfileModuleFactoryProtocol {
 // MARK: - Ext CatalogModuleFactoryProtocol
 extension ModulesFactory: CatalogModuleFactoryProtocol {
     func makeCatalogScreenView(dataSource: GenericTableViewDataSourceProtocol,
-                               dataStore: DataStorageManagerProtocol) -> Presentable & CatalogMainScreenCoordinatable {
-        let networkClient = DefaultNetworkClient()
+                               dataStore: DataStorageManagerProtocol, networkClient: PublishersFactoryProtocol) -> Presentable & CatalogMainScreenCoordinatable & Reloadable {
         let viewModel = CatalogViewModel(dataStore: dataStore, networkClient: networkClient)
         return CatalogViewController(dataSource: dataSource, viewModel: viewModel)
     }
     
     func makeCatalogCollectionScreenView(with collection: CatalogMainScreenCollection,
                                          dataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
-                                         dataStore: DataStorageManagerProtocol) -> Presentable & CatalogCollectionCoordinatable {
-        let networkClient = DefaultNetworkClient()
+                                         dataStore: DataStorageManagerProtocol, networkClient: PublishersFactoryProtocol) -> Presentable & CatalogCollectionCoordinatable & Reloadable {
         let viewModel = CatalogCollectionViewModel(nftCollection: collection, networkClient: networkClient, dataStore: dataStore)
         let viewController = CatalogCollectionViewController(viewModel: viewModel, diffableDataSource: dataSource)
         return viewController

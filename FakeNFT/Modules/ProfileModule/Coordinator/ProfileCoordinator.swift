@@ -17,6 +17,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private let dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+    private let publishersFactory: PublishersFactoryProtocol
     
     init(factory: ProfileModuleFactoryProtocol,
          router: Routable,
@@ -24,7 +25,8 @@ final class ProfileCoordinator: CoordinatorProtocol {
          alertConstructor: AlertConstructable,
          dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
-         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
+         publishersFactory: PublishersFactoryProtocol
     ) {
         
         self.factory = factory
@@ -34,6 +36,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
         self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
+        self.publishersFactory = publishersFactory
     }
     
     func start() {
@@ -43,8 +46,12 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 private extension ProfileCoordinator {
     func createScreen() {
-        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource)
-        let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile, rootViewController: profileScreen)
+        var profileScreen = factory.makeProfileMainScreenView(with: tableViewDataSource,
+                                                              dataStorage: dataStorageManager,
+                                                              networkClient: publishersFactory)
+        
+        let navController = navigationControllerFactory.makeTabNavigationController(tab: .profile,
+                                                                                    rootViewController: profileScreen)
         
         profileScreen.onEdit = { [weak self] in
             
@@ -54,8 +61,8 @@ private extension ProfileCoordinator {
             self?.showMyNftsScreen(nfts)
         }
         
-        profileScreen.onLiked = { [weak self] nfts in
-            self?.showLikedNftsScreen(nfts)
+        profileScreen.onLiked = { [weak self] in
+            self?.showLikedNftsScreen()
         }
         
         profileScreen.onError = { [weak self] error in
@@ -66,18 +73,33 @@ private extension ProfileCoordinator {
     }
     
     func showMyNftsScreen(_ nfts: [String]) {
-        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
+        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource,
+                                                               nftsToLoad: nfts,
+                                                               dataStore: dataStorageManager,
+                                                               networkClient: publishersFactory)
         
         myNftsScreen.onSort = { [weak self, weak myNftsScreen] in
             guard let self, let myNftsScreen else { return }
             self.showSortAlert(from: myNftsScreen)
         }
         
+        myNftsScreen.onError = { [weak self, weak myNftsScreen] error in
+            guard let self, let myNftsScreen else { return }
+            self.showLoadAlert(from: myNftsScreen, with: error)
+        }
+        
         router.pushViewControllerFromTabbar(myNftsScreen, animated: true)
     }
     
-    func showLikedNftsScreen(_ nfts: [String]) {
-        let likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
+    func showLikedNftsScreen() {
+        var likedNftsScreen = factory.makeProfileLikedNftsScreenView(with: collectionViewDataSource,
+                                                                     dataStore: dataStorageManager,
+                                                                     networkClient: publishersFactory)
+        
+        likedNftsScreen.onError = { [weak self, weak likedNftsScreen] error in
+            guard let self, let likedNftsScreen else { return }
+            self.showLoadAlert(from: likedNftsScreen, with: error)
+        }
         
         router.pushViewControllerFromTabbar(likedNftsScreen, animated: true)
     }
@@ -85,13 +107,13 @@ private extension ProfileCoordinator {
 
 // MARK: - Ext Alerts
 private extension ProfileCoordinator {
-    func showLoadAlert(from screen: ProfileMainCoordinatableProtocol, with error: Error?) {
+    func showLoadAlert(from screen: Reloadable, with error: NetworkError?) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         
         alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in
             switch action.style {
             case .default:
-                screen.load()
+                screen.reload()
                 router?.dismissToRootViewController(animated: true, completion: nil)
             case .cancel:
                 router?.dismissToRootViewController(animated: true, completion: nil)

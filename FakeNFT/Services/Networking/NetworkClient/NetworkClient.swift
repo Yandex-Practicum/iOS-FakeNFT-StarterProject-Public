@@ -19,7 +19,7 @@ protocol NetworkClient {
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
     
     func networkPublisher<T: Decodable>(request: NetworkRequest,
-                                        type: T.Type) -> AnyPublisher<T, Error>
+                                        type: T.Type) -> AnyPublisher<T, NetworkError>
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -109,7 +109,8 @@ struct DefaultNetworkClient: NetworkClient {
         }
     }
     
-    func networkPublisher<T: Decodable>(request: NetworkRequest, type: T.Type) -> AnyPublisher<T, Error> {
+    //MARK: Publisher
+    func networkPublisher<T: Decodable>(request: NetworkRequest, type: T.Type) -> AnyPublisher<T, NetworkError> {
         guard let urlRequest = create(request: request) else {
             return Fail(error: NetworkError.badRequest).eraseToAnyPublisher()
         }
@@ -117,7 +118,7 @@ struct DefaultNetworkClient: NetworkClient {
         return session.dataTaskPublisher(for: urlRequest)
             .map(\.data)
             .decode(type: type.self, decoder: decoder)
-            .mapError { (error) -> Error in
+            .mapError { (error) -> NetworkError in
                 switch error {
                 case is URLError:
                     return NetworkError.addressUnreachable(request.endpoint)

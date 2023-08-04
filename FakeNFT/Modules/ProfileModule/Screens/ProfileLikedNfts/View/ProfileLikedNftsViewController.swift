@@ -8,7 +8,13 @@
 import UIKit
 import Combine
 
-final class ProfileLikedNftsViewController: UIViewController {
+protocol ProfileLikedCoordinatable {
+    var onError: ((NetworkError) -> Void)? { get set }
+}
+
+final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordinatable, Reloadable {
+    
+    var onError: ((NetworkError) -> Void)?
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -29,6 +35,11 @@ final class ProfileLikedNftsViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     // MARK: Init
     init(viewModel: ProfileLikedNftsViewModel, dataSource: GenericCollectionViewDataSourceProtocol) {
         self.viewModel = viewModel
@@ -47,7 +58,7 @@ final class ProfileLikedNftsViewController: UIViewController {
         setupConstraints()
         setupLeftNavBarItem(title: K.Titles.favouriteNfts, action: #selector(cancelTapped))
         createDataSource()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,10 +80,30 @@ final class ProfileLikedNftsViewController: UIViewController {
                 self?.updateDataSource(with: likedNfts)
             }
             .store(in: &cancellables)
+        
+        viewModel.$likedNftError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
-    private func load() {
+    func reload() {
         viewModel.load()
+    }
+    
+    private func headOnError(_ error: NetworkError?) {
+        guard let error else { return }
+        onError?(error)
     }
 
 }
@@ -109,6 +140,7 @@ private extension ProfileLikedNftsViewController {
 private extension ProfileLikedNftsViewController {
     func setupConstraints() {
         setupCollectionView()
+        setupLoadingView()
     }
     
     func setupCollectionView() {
@@ -120,6 +152,18 @@ private extension ProfileLikedNftsViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

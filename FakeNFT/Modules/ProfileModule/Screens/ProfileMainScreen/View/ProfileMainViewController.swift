@@ -11,17 +11,16 @@ import Combine
 protocol ProfileMainCoordinatableProtocol {
     var onEdit: (() -> Void)? { get set }
     var onMyNfts: (([String]) -> Void)? { get set }
-    var onLiked: (([String]) -> Void)? { get set }
-    var onError: ((Error) -> Void)? { get set }
-    func load()
+    var onLiked: (() -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
 }
 
-final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol {
+final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol, Reloadable {
 
     var onEdit: (() -> Void)?
     var onMyNfts: (([String]) -> Void)?
-    var onLiked: (([String]) -> Void)?
-    var onError: ((Error) -> Void)?
+    var onLiked: (() -> Void)?
+    var onError: ((NetworkError) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
     
@@ -61,6 +60,11 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         return textView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     private lazy var authorWebsiteLabel: CustomLabel = {
         let label = CustomLabel(size: 15, weight: .regular, color: .universalBlue)
         let attrString = NSMutableAttributedString()
@@ -98,7 +102,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupConstraints()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +118,7 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
     }
     
     // MARK: Load
-    func load() {
+    func reload() {
         viewModel.loadUser()
     }
     
@@ -134,10 +138,18 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
             }
             .store(in: &cancellables)
         
-        viewModel.$catalogError
+        viewModel.$profileMainError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.catchError(error)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
             }
             .store(in: &cancellables)
     }
@@ -203,14 +215,13 @@ private extension ProfileMainViewController {
     }
     
     func goToLikedNfts() {
-        guard let nfts = viewModel.profile?.likes else { return }
-        onLiked?(nfts)
+        onLiked?()
     }
 }
 
 // MARK: Catch error
 private extension ProfileMainViewController {
-    func catchError(_ error: Error?) {
+    func catchError(_ error: NetworkError?) {
         guard let error else { return }
         onError?(error)
     }
@@ -221,6 +232,7 @@ private extension ProfileMainViewController {
     func setupConstraints() {
         setupMainStackView()
         setupTableView()
+        setupLoadingView()
     }
     
     func setupMainStackView() {
@@ -243,6 +255,18 @@ private extension ProfileMainViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

@@ -15,7 +15,7 @@ enum NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidResponse:
-            return "Invalid response from the server"
+            return "Due to the restrictions of the mock server the data cannot be obtained now, you can try again or give it a pause"
         case .addressUnreachable(let url):
             return "Unreachable URL: \(url?.absoluteString ?? "")"
         case .badRequest:

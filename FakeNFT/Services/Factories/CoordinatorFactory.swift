@@ -32,6 +32,7 @@ final class CoordinatorFactory  {
     private let collectionViewDataSource = CollectionViewDataSourceManager()
     private let keyChainManager = KeyChainManager(service: K.KeyChainServices.profileLogin)
     private let firstEnterChecker = OnboardingFirstEnterChecker(onboardingFirstEnterStorage: OnboardingFirstEnterStorage())
+    private let publishersFactory = PublishersFactory(networkClient: DefaultNetworkClient())
 }
 
 extension CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -53,7 +54,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             alertConstructor: alertConstructor,
             dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
-            collectionViewDataSource: collectionViewDataSource)
+            collectionViewDataSource: collectionViewDataSource,
+            publishersFactory: publishersFactory)
     }
     
     func makeLoginCoordinator(with router: Routable) -> CoordinatorProtocol {
@@ -78,7 +80,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             alertConstructor: alertConstructor,
             dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
-            collectionViewDataSource: collectionViewDataSource
+            collectionViewDataSource: collectionViewDataSource,
+            publisherFactory: publishersFactory
         )
     }
     

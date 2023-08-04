@@ -11,15 +11,15 @@ import Combine
 final class CatalogViewModel {
     
     @Published private (set) var visibleRows: [CatalogMainScreenCollection] = []
-    @Published private (set) var catalogError: Error?
+    @Published private (set) var catalogError: NetworkError?
     @Published private (set) var requestResult: RequestResult?
     
     private var cancellables = Set<AnyCancellable>()
     
     private var dataStore: DataStorageManagerProtocol
-    private var networkClient: NetworkClient
+    private var networkClient: PublishersFactoryProtocol
     
-    init(dataStore: DataStorageManagerProtocol, networkClient: NetworkClient) {
+    init(dataStore: DataStorageManagerProtocol, networkClient: PublishersFactoryProtocol) {
         self.dataStore = dataStore
         self.networkClient = networkClient
         bind()
@@ -31,20 +31,15 @@ final class CatalogViewModel {
     }
     
     func load() {
-        let request = RequestConstructor.constructCatalogRequest(method: .get)
         requestResult = .loading
-        catalogError = nil
-        networkClient.networkPublisher(request: request, type: [CatalogMainScreenCollection].self)
+        networkClient.getCatalogCollections()
             .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.requestResult = nil
-                case .failure(let error):
+                if case .failure(let error) = completion {
                     self?.catalogError = error
                     self?.requestResult = nil
                 }
-            } receiveValue: { [weak self] collection in
-                self?.addRowsToStorage(collection)
+            } receiveValue: { [weak self] collections in
+                self?.addRowsToStorage(collections)
                 self?.requestResult = nil
             }
             .store(in: &cancellables)

@@ -41,10 +41,10 @@ struct RequestConstructor {
         )
     }
     
-    static func constructCatalogRequest(method: HttpMethod) -> NetworkRequest {
+    static func constructCatalogRequest() -> NetworkRequest {
         return Request(
             endpoint: URL(string: K.Links.apiLink + K.EndPoints.collection),
-            httpMethod: method
+            httpMethod: .get
         )
     }
     

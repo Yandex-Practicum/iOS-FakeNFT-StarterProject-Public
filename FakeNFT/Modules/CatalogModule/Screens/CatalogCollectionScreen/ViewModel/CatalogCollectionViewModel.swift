@@ -13,14 +13,16 @@ final class CatalogCollectionViewModel {
     @Published private (set) var visibleNfts: [VisibleSingleNfts] = []
     @Published private (set) var author: Author?
     @Published private (set) var requestResult: RequestResult?
+    @Published private (set) var requestError: NetworkError?
+    @Published private (set) var authorError: NetworkError?
         
     private var cancellables = Set<AnyCancellable>()
     
-    private let networkClient: NetworkClient
+    private let networkClient: PublishersFactoryProtocol
     private let dataStore: DataStorageManagerProtocol
     
     // MARK: Init
-    init(nftCollection: CatalogMainScreenCollection, networkClient: NetworkClient, dataStore: DataStorageManagerProtocol) {
+    init(nftCollection: CatalogMainScreenCollection, networkClient: PublishersFactoryProtocol, dataStore: DataStorageManagerProtocol) {
         self.nftCollection = nftCollection
         self.networkClient = networkClient
         self.dataStore = dataStore
@@ -28,29 +30,24 @@ final class CatalogCollectionViewModel {
         bind()
     }
     
-    func updateNfts(from collection: CatalogMainScreenCollection) {
-        loadNfts(collection: collection)
-        
+    func load() {
+        loadNfts(collection: nftCollection)
     }
     
     func loadNfts(collection: CatalogMainScreenCollection) {
         requestResult = .loading
-        collection.nfts.forEach { id in
-            let request = RequestConstructor.constructNftCollectionRequest(method: .get, collectionId: id)
-            networkClient.networkPublisher(request: request, type: SingleNftModel.self)
-                .sink { [weak self] completion in
-                    switch completion {
-                    case .finished:
-                        self?.requestResult = nil
-                    case .failure(let error):
-                        self?.requestResult = nil
-                        print(error.localizedDescription)
-                    }
-                } receiveValue: { [weak self] singleNftModel in
-                    self?.sendNftToStorage(nft: singleNftModel)
+        networkClient.getNftsPublisher(collection.nfts)
+            .delay(for: 5, scheduler: RunLoop.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.requestError = error
+                    self?.requestResult = nil
                 }
-                .store(in: &cancellables)
-        }
+            } receiveValue: { [weak self] viewModel in
+                viewModel.forEach({ self?.sendNftToStorage(nft: $0) })
+                self?.requestResult = nil
+            }
+            .store(in: &cancellables)
     }
     
     private func sendNftToStorage(nft: SingleNftModel) {
@@ -58,15 +55,11 @@ final class CatalogCollectionViewModel {
     }
     
     func loadAuthorData(of collection: CatalogMainScreenCollection) {
-        let request = RequestConstructor.constructCollectionAuthorRequest(for: collection.author)
-        
-        networkClient.networkPublisher(request: request, type: Author.self)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
+        networkClient.getAuthorPublisher(collection.author)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.authorError = error
                 }
             } receiveValue: { [weak self] author in
                 self?.author = author
@@ -88,7 +81,6 @@ final class CatalogCollectionViewModel {
 // MARK: - Ext bind
 private extension CatalogCollectionViewModel{
     func bind() {
-        
         dataStore.getAnyPublisher(.singleNftItems)
              .compactMap({ items -> [SingleNftModel] in
                  return items.compactMap({ $0 as? SingleNftModel })

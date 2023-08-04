@@ -10,12 +10,14 @@ import Combine
 
 protocol ProfileMyNftsCoordinatable: AnyObject {
     var onSort: (() -> Void)? { get set }
+    var onError: ((NetworkError) -> Void)? { get set }
     func setupSortDescriptor(_ sortDescriptor: NftSortValue)
 }
 
-final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable {
+final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordinatable, Reloadable {
     
     var onSort: (() -> Void)?
+    var onError: ((NetworkError) -> Void)?
 
     private let viewModel: ProfileMyNftsViewModel
     private let dataSource: GenericTableViewDataSourceProtocol
@@ -52,7 +54,7 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         view.backgroundColor = .systemBackground
         setupConstraints()
         setupNavigationBar()
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,12 +85,20 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] requestResult in
-                self?.showOrHideAnimation(for: requestResult)
+                guard let self else { return }
+                self.showOrHideAnimation(self.loadingView, for: requestResult)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$myNftError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
             }
             .store(in: &cancellables)
     }
     
-    private func load() {
+    func reload() {
         viewModel.load()
     }
 }
@@ -108,6 +118,14 @@ private extension ProfileMyNftsViewController {
 extension ProfileMyNftsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         dataSource.getRowHeight(.profileMyNft)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let tableView = scrollView as? UITableView else { return }
+
+        let lastVisibleRow = tableView.indexPathsForVisibleRows?.last?.row
+        if viewModel.isLastLoadedIndexPath(lastVisibleRow) { viewModel.load() }
+        
     }
 }
 
@@ -130,17 +148,11 @@ private extension ProfileMyNftsViewController {
     }
 }
 
-// MARK: - Ext Animation
+// MARK: - Ext Error handling
 private extension ProfileMyNftsViewController {
-    func showOrHideAnimation(for requestResult: RequestResult?) {
-        guard let requestResult
-        else {
-            loadingView.stopAnimation()
-            return
-        }
-        
-        loadingView.result = requestResult
-        loadingView.startAnimation()
+    func headOnError(_ error: NetworkError?) {
+        guard let error else { return }
+        onError?(error)
     }
 }
 
