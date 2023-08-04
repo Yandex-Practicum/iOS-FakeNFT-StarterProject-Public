@@ -55,7 +55,6 @@
 		96D10EA22A796157008F6FA4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */; };
 		96D10EA42A7A4124008F6FA4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D10EA32A7A4124008F6FA4 /* Colors.xcassets */; };
 		96D7DD112A7B69D000250612 /* NFTItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7DD102A7B69D000250612 /* NFTItemModel.swift */; };
-		96D7DD162A7B6A6D00250612 /* NFTImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7DD152A7B6A6D00250612 /* NFTImage.swift */; };
 		F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */; };
 		F61908C42A73C71A00DEF2F5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C32A73C71A00DEF2F5 /* TabBarController.swift */; };
 		F61908C62A73C81B00DEF2F5 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */; };
@@ -138,7 +137,6 @@
 		96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		96D10EA32A7A4124008F6FA4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		96D7DD102A7B69D000250612 /* NFTItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTItemModel.swift; sourceTree = "<group>"; };
-		96D7DD152A7B6A6D00250612 /* NFTImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTImage.swift; sourceTree = "<group>"; };
 		F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalogue_roadmap.md; sourceTree = "<group>"; };
 		F61908C32A73C71A00DEF2F5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 			children = (
 				96D7DD102A7B69D000250612 /* NFTItemModel.swift */,
 				961964272A7CBE610076BD88 /* NFTCollectionModel.swift */,
-				96D7DD152A7B6A6D00250612 /* NFTImage.swift */,
 			);
 			path = NFT;
 			sourceTree = "<group>";
@@ -697,7 +694,6 @@
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				9619641A2A7CB2E20076BD88 /* Types.swift in Sources */,
 				961964102A7BD9600076BD88 /* Order.swift in Sources */,
-				96D7DD162A7B6A6D00250612 /* NFTImage.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

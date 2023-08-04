@@ -14,8 +14,13 @@ struct CartViewFactory {
         let networkClient = DefaultNetworkClient()
 
         let orderService = OrderService(networkClient: networkClient)
+        let nftService = NFTNetworkServiceImpl(networkClient: networkClient)
 
-        let viewModel = CartViewModel(orderService: orderService)
+        let viewModel = CartViewModel(
+            nftService: nftService,
+            orderService: orderService
+        )
+
         let tableViewHelper = CartTableViewHelper()
         let viewController = CartViewController(viewModel: viewModel, tableViewHelper: tableViewHelper)
         return viewController

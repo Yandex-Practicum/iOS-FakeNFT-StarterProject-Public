@@ -23,9 +23,16 @@ final class CartViewModel {
     var shouldHidePlaceholder = Box<Bool>(true)
 
     private let defaultOrderId = 1
+    private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.cart-view-model.fetch-nft", attributes: .concurrent)
+
+    private let nftService: NFTNetworkCartService
     private let orderService: OrderServiceProtocol
 
-    init(orderService: OrderServiceProtocol) {
+    init(
+        nftService: NFTNetworkCartService,
+        orderService: OrderServiceProtocol
+    ) {
+        self.nftService = nftService
         self.orderService = orderService
     }
 }
@@ -37,8 +44,34 @@ extension CartViewModel: CartViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let order):
-                self.shouldHidePlaceholder.value = order.nfts.isEmpty == false
+                guard order.nfts.isEmpty == false else {
+                    self.shouldHidePlaceholder.value = false
+                    break
+                }
                 print(order)
+                self.fetchNfts(ids: order.nfts)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+}
+
+private extension CartViewModel {
+    func fetchNfts(ids: [String]) {
+        ids.forEach { [weak self] id in
+            self?.fetchingQueue.async { [weak self] in
+                self?.fetchNft(with: id)
+            }
+        }
+    }
+
+    func fetchNft(with id: String) {
+        self.nftService.getNFTItemBy(id: id) { [weak self] result in
+            switch result {
+            case .success(let model):
+                print(model)
             case .failure(let error):
                 print(error)
             }

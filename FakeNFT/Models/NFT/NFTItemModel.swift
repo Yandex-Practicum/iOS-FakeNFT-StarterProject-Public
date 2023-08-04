@@ -19,3 +19,4 @@ struct NFTItemModel: Decodable {
 }
 
 typealias NFTItemResponse = [NFTItemModel]
+typealias NFTImage = String

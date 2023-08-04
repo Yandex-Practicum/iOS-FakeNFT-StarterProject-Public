@@ -38,7 +38,6 @@ extension NFTNetworkServiceImpl: NFTNetworkCartService {
         id: String,
         result: @escaping ResultHandler<NFTItemModel>
     ) {
-        assert(Thread.isMainThread)
         let request = NFTItemRequest(nftId: id)
         self.networkClient.send(request: request, type: NFTItemModel.self) { response in
             DispatchQueue.main.async {
