@@ -22,9 +22,14 @@ struct CartViewFactory {
         )
 
         let viewModel = CartViewModel(intercator: cartViewInteractor)
-
         let tableViewHelper = CartTableViewHelper()
-        let viewController = CartViewController(viewModel: viewModel, tableViewHelper: tableViewHelper)
+        let router = CartViewRouter()
+
+        let viewController = CartViewController(
+            viewModel: viewModel,
+            tableViewHelper: tableViewHelper,
+            router: router
+        )
         return viewController
     }
 }

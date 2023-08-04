@@ -22,12 +22,16 @@ final class CartViewController: UIViewController {
     private var tableViewHelper: CartTableViewHelperProtocol
     private var viewModel: CartViewModelProtocol
 
+    private let router: CartViewRouterProtocol
+
     init(
         viewModel: CartViewModelProtocol,
-        tableViewHelper: CartTableViewHelperProtocol
+        tableViewHelper: CartTableViewHelperProtocol,
+        router: CartViewRouterProtocol
     ) {
         self.viewModel = viewModel
         self.tableViewHelper = tableViewHelper
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -115,6 +119,8 @@ private extension CartViewController {
 private extension CartViewController {
     @objc
     func didTapSortButton() {
-        print(#function)
+        self.router.showSortAlert(viewController: self) { [weak self] trait in
+            self?.viewModel.sortOrder(trait: trait)
+        }
     }
 }

@@ -14,6 +14,7 @@ protocol CartViewModelProtocol {
     var cartViewState: Box<CartViewModel.CartViewState> { get }
 
     func fetchOrder()
+    func sortOrder(trait: CartViewModel.SortingTraits)
 }
 
 final class CartViewModel {
@@ -21,6 +22,12 @@ final class CartViewModel {
         case loading
         case loaded([NFTCartCellViewModel], Double)
         case empty
+    }
+
+    enum SortingTraits {
+        case price
+        case rating
+        case name
     }
 
     var order = Box<[NFTCartCellViewModel]>([])
@@ -70,5 +77,9 @@ extension CartViewModel: CartViewModelProtocol {
             onSuccess: self.successCompletion,
             onFailure: failureCompletion
         )
+    }
+
+    func sortOrder(trait: SortingTraits) {
+
     }
 }
