@@ -14,7 +14,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
             self.nftImageView.image = nft.image
             self.titleLabel.text = nft.name
             self.starsView.rating = StarsView.Rating(rawValue: nft.rating) ?? .zero
-            self.priceLabel.text = "\(nft.price) ETH"
+            self.priceLabel.text = "\(nft.price.nftCurrencyFormatted) ETH"
         }
     }
 
@@ -23,6 +23,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .appLightGray
         imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
         return imageView
     }()
 
