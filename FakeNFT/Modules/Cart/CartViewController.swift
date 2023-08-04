@@ -44,7 +44,7 @@ final class CartViewController: UIViewController {
     }()
 
     private lazy var purchaseButton: AppButton = {
-        let button = AppButton(type: .filled, title: "К оплате")
+        let button = AppButton(type: .filled, title: "CART_PURCHASE_BUTTON_TITLE".localized)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapPurchaseButton), for: .touchUpInside)
         return button

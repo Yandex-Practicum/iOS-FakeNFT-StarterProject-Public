@@ -42,7 +42,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     private let priceTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Цена"
+        label.text = "CART_CELL_PRICE_TITLE_LABEL".localized
         label.font = .getFont(style: .regular, size: 13)
         return label
     }()

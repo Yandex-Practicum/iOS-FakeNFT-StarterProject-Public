@@ -10,3 +10,5 @@ CATALOGUE = "Catalogue";
 CART = "Cart";
 STATISTICS = "Statistics";
 
+CART_CELL_PRICE_TITLE_LABEL = "Price";
+CART_PURCHASE_BUTTON_TITLE = "Purchase";

@@ -9,3 +9,6 @@ PROFILE = "Профиль";
 CATALOGUE = "Каталог";
 CART = "Корзина";
 STATISTICS = "Статистика";
+
+CART_CELL_PRICE_TITLE_LABEL = "Цена";
+CART_PURCHASE_BUTTON_TITLE = "К оплате";
