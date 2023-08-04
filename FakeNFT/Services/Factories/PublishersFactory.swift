@@ -69,6 +69,7 @@ private extension PublishersFactory {
     func getMyNftPublisher(_ nft: SingleNftModel) -> AnyPublisher<MyNfts, NetworkError> {
         let request = RequestConstructor.constructCollectionAuthorRequest(for: nft.author)
         return networkClient.networkPublisher(request: request, type: Author.self)
+            .delay(for: 5, scheduler: RunLoop.main)
             .mapError({ networkError in
                 return NetworkError.invalidResponse
             })

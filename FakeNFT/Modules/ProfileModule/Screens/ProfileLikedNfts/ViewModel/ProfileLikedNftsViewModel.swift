@@ -25,9 +25,8 @@ final class ProfileLikedNftsViewModel {
         bind()
     }
 
-    func load() {
+    func load() {        
         requestResult = .loading
-        
         let itemsToLoad = dataStore.getItems(.likedItems).compactMap({ $0 as? String })
         networkClient.getNftsPublisher(itemsToLoad)
             .receive(on: DispatchQueue.main)
