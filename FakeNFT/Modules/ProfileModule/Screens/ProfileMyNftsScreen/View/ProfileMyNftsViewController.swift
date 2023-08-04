@@ -119,6 +119,14 @@ extension ProfileMyNftsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         dataSource.getRowHeight(.profileMyNft)
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let tableView = scrollView as? UITableView else { return }
+
+        let lastVisibleRow = tableView.indexPathsForVisibleRows?.last?.row
+        if viewModel.isLastLoadedIndexPath(lastVisibleRow) { viewModel.load() }
+        
+    }
 }
 
 // MARK: - Ext NavigationBar

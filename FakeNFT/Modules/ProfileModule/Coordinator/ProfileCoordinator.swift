@@ -17,6 +17,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private let dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+    private let publishersFactory: PublishersFactoryProtocol
     
     init(factory: ProfileModuleFactoryProtocol,
          router: Routable,
@@ -24,7 +25,8 @@ final class ProfileCoordinator: CoordinatorProtocol {
          alertConstructor: AlertConstructable,
          dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
-         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
+         publishersFactory: PublishersFactoryProtocol
     ) {
         
         self.factory = factory
@@ -34,6 +36,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
         self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
+        self.publishersFactory = publishersFactory
     }
     
     func start() {
@@ -66,7 +69,10 @@ private extension ProfileCoordinator {
     }
     
     func showMyNftsScreen(_ nfts: [String]) {
-        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource, nftsToLoad: nfts, dataStore: dataStorageManager)
+        let myNftsScreen = factory.makeProfileMyNftsScreenView(with: tableViewDataSource,
+                                                               nftsToLoad: nfts,
+                                                               dataStore: dataStorageManager,
+                                                               networkClient: publishersFactory)
         
         myNftsScreen.onSort = { [weak self, weak myNftsScreen] in
             guard let self, let myNftsScreen else { return }

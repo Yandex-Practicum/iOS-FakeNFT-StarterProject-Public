@@ -26,6 +26,7 @@ final class ProfileMainViewModel {
         self.dataStorage = dataStorage
     }
     
+    // MARK: load user
     func loadUser() {
         profileMainError = nil
         requestResult = .loading
@@ -39,7 +40,8 @@ final class ProfileMainViewModel {
                 self.profile = profile
                 self.createUserData(profile)
                 self.addLikesToStorage(profile.likes)
-                self.loadNfts(profile)
+//                self.loadNfts(profile)
+                self.requestResult = nil
             case .failure(let error):
                 if !self.errorIsTriggered {
                     self.profileMainError = error
@@ -52,10 +54,9 @@ final class ProfileMainViewModel {
         }
     }
     
+    // MARK loadNfts
     func loadNfts(_ profile: Profile) {
-        let idsToLoad = Set(profile.likes + profile.nfts)
-        
-        idsToLoad.forEach { id in
+        profile.likes.forEach { id in
             guard !dataStorage.getItems(.singleNftItems).compactMap({ $0 as? SingleNftModel }).map({ $0.id }).contains(id) else { return }
             let request = RequestConstructor.constructSingleNftRequest(nftId: id)
             networkClient.send(request: request, type: SingleNftModel.self) { [weak self] result in
