@@ -35,6 +35,11 @@ final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordi
         return collectionView
     }()
     
+    private lazy var loadingView: CustomAnimatedView = {
+        let view = CustomAnimatedView(frame: .zero)
+        return view
+    }()
+    
     // MARK: Init
     init(viewModel: ProfileLikedNftsViewModel, dataSource: GenericCollectionViewDataSourceProtocol) {
         self.viewModel = viewModel
@@ -82,6 +87,14 @@ final class ProfileLikedNftsViewController: UIViewController, ProfileLikedCoordi
                 self?.headOnError(error)
             }
             .store(in: &cancellables)
+        
+        viewModel.$requestResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] requestResult in
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
+            }
+            .store(in: &cancellables)
     }
     
     func reload() {
@@ -127,6 +140,7 @@ private extension ProfileLikedNftsViewController {
 private extension ProfileLikedNftsViewController {
     func setupConstraints() {
         setupCollectionView()
+        setupLoadingView()
     }
     
     func setupCollectionView() {
@@ -138,6 +152,18 @@ private extension ProfileLikedNftsViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

@@ -85,7 +85,8 @@ final class ProfileMyNftsViewController: UIViewController, ProfileMyNftsCoordina
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] requestResult in
-                self?.showOrHideAnimation(for: requestResult)
+                guard let self else { return }
+                self.showOrHideAnimation(self.loadingView, for: requestResult)
             }
             .store(in: &cancellables)
         
@@ -144,20 +145,6 @@ private extension ProfileMyNftsViewController {
     
     func filterTapped() {
         onSort?()
-    }
-}
-
-// MARK: - Ext Animation
-private extension ProfileMyNftsViewController {
-    func showOrHideAnimation(for requestResult: RequestResult?) {
-        guard let requestResult
-        else {
-            loadingView.stopAnimation()
-            return
-        }
-        
-        loadingView.result = requestResult
-        loadingView.startAnimation()
     }
 }
 

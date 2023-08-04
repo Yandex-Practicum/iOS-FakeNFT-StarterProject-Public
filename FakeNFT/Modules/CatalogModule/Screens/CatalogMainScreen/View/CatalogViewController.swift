@@ -13,10 +13,9 @@ protocol CatalogMainScreenCoordinatable: AnyObject {
     var onProceed: ((CatalogMainScreenCollection) -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
     func setupSortDescriptor(_ filter: CollectionSortValue)
-    func reload()
 }
 
-final class CatalogViewController: UIViewController {
+final class CatalogViewController: UIViewController & Reloadable {
 
     var onFilter: (() -> Void)?
     var onProceed: ((CatalogMainScreenCollection) -> Void)?
@@ -58,7 +57,7 @@ final class CatalogViewController: UIViewController {
         view.backgroundColor = .ypWhite
         setupConstraints()
         setupRightFilterNavBarItem(title: nil, action: #selector(filterTapped))
-        load()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,30 +91,20 @@ final class CatalogViewController: UIViewController {
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] requestResult in
-                self?.showOrHideAnimation(for: requestResult)
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
             }
             .store(in: &cancellables)
     }
     
     // MARK: Load
-    private func load() {
+    func reload() {
         viewModel.load()
     }
     
     private func catchError(_ error: Error?) {
         guard let error else { return }
         onError?(error)
-    }
-    
-    private func showOrHideAnimation(for requestResult: RequestResult?) {
-        guard let requestResult
-        else {
-            loadingView.stopAnimation()
-            return
-        }
-        
-        loadingView.result = requestResult
-        loadingView.startAnimation()
     }
 }
 
@@ -148,10 +137,6 @@ extension CatalogViewController: UITableViewDelegate {
 extension CatalogViewController: CatalogMainScreenCoordinatable {
     func setupSortDescriptor(_ descriptor: CollectionSortValue) {
         viewModel.setupSortValue(descriptor)
-    }
-    
-    func reload() {
-        viewModel.load()
     }
 }
 

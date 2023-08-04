@@ -17,6 +17,7 @@ final class CatalogCoordinator: CoordinatorProtocol {
     private let dataStorageManager: DataStorageManagerProtocol
     private let tableViewDataSource: GenericTableViewDataSourceProtocol
     private let collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+    private let publisherFactory: PublishersFactoryProtocol
     
     init(factory: CatalogModuleFactoryProtocol,
          router: Routable,
@@ -24,7 +25,8 @@ final class CatalogCoordinator: CoordinatorProtocol {
          alertConstructor: AlertConstructable,
          dataStorageManager: DataStorageManagerProtocol,
          tableViewDataSource: GenericTableViewDataSourceProtocol,
-         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable
+         collectionViewDataSource: GenericCollectionViewDataSourceProtocol & CollectionViewDataSourceCoordinatable,
+         publisherFactory: PublishersFactoryProtocol
     ) {
         
         self.factory = factory
@@ -34,6 +36,7 @@ final class CatalogCoordinator: CoordinatorProtocol {
         self.dataStorageManager = dataStorageManager
         self.tableViewDataSource = tableViewDataSource
         self.collectionViewDataSource = collectionViewDataSource
+        self.publisherFactory = publisherFactory
     }
     
     func start() {
@@ -44,7 +47,9 @@ final class CatalogCoordinator: CoordinatorProtocol {
 // MARK: - Ext Screens
 private extension CatalogCoordinator {
     func createScreen() {
-        let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource, dataStore: dataStorageManager)
+        let catalogScreen = factory.makeCatalogScreenView(dataSource: tableViewDataSource,
+                                                          dataStore: dataStorageManager,
+                                                          networkClient: publisherFactory)
         
         let navController = navigationControllerFactory.makeTabNavigationController(tab: .catalog, rootViewController: catalogScreen) 
         
@@ -66,14 +71,17 @@ private extension CatalogCoordinator {
     }
     
     func showCatalogCollectionScreen(with collection: CatalogMainScreenCollection) {
-        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection, dataSource: collectionViewDataSource, dataStore: dataStorageManager)
-        
-        collectionScreen.onCancel = { [weak router] in
-            router?.popToRootViewController(animated: true, completion: nil)
-        }
+        var collectionScreen = factory.makeCatalogCollectionScreenView(with: collection,
+                                                                       dataSource: collectionViewDataSource,
+                                                                       dataStore: dataStorageManager,
+                                                                       networkClient: publisherFactory)
         
         collectionScreen.onWebView = { [weak self] website in
             self?.showWebViewScreen(with: website)
+        }
+        
+        collectionScreen.onError = { [weak self] error in
+            self?.showLoadAlert(from: collectionScreen, with: error)
         }
         
         router.pushViewControllerFromTabbar(collectionScreen, animated: true)
@@ -99,7 +107,7 @@ private extension CatalogCoordinator {
         router.presentViewController(alert, animated: true, presentationStyle: .popover)
     }
     
-    func showLoadAlert(from screen: CatalogMainScreenCoordinatable, with error: Error?) {
+    func showLoadAlert(from screen: Reloadable, with error: Error?) {
         let alert = alertConstructor.constructAlert(title: K.AlertTitles.loadingAlertTitle, style: .alert, error: error)
         
         alertConstructor.addLoadErrorAlertActions(from: alert) { [weak router] action in

@@ -152,7 +152,8 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] requestResult in
-                self?.showOrHideAnimation(for: requestResult)
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
             }
             .store(in: &cancellables)
     }
@@ -179,20 +180,6 @@ final class ProfileMainViewController: UIViewController, ProfileMainCoordinatabl
         profileImageView.setImage(from: url)
     }
 
-}
-
-// MARK: - Ext Animation
-private extension ProfileMainViewController {
-    func showOrHideAnimation(for requestResult: RequestResult?) {
-        guard let requestResult
-        else {
-            loadingView.stopAnimation()
-            return
-        }
-        
-        loadingView.result = requestResult
-        loadingView.startAnimation()
-    }
 }
 
 // MARK: - Ext DataSource

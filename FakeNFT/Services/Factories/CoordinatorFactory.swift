@@ -80,7 +80,8 @@ extension CoordinatorFactory: CoordinatorFactoryProtocol {
             alertConstructor: alertConstructor,
             dataStorageManager: dataStorageManager,
             tableViewDataSource: tableViewDataSource,
-            collectionViewDataSource: collectionViewDataSource
+            collectionViewDataSource: collectionViewDataSource,
+            publisherFactory: publishersFactory
         )
     }
     

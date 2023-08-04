@@ -9,14 +9,14 @@ import UIKit
 import Combine
 
 protocol CatalogCollectionCoordinatable {
-    var onCancel: (() -> Void)? { get set }
     var onWebView: ((String) -> Void)? { get set }
+    var onError: ((Error) -> Void)? { get set }
 }
 
-final class CatalogCollectionViewController: UIViewController & CatalogCollectionCoordinatable {
-
-    var onCancel: (() -> Void)?
+final class CatalogCollectionViewController: UIViewController & CatalogCollectionCoordinatable & Reloadable {
+    
     var onWebView: ((String) -> Void)?
+    var onError: ((Error) -> Void)?
     
     var cancellables = Set<AnyCancellable>()
     
@@ -112,6 +112,7 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         setupLeftNavBarItem(title: nil, action: #selector(cancelTapped))
         setupConstraints()
         createCollectionView()
+        reload()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,12 +127,16 @@ final class CatalogCollectionViewController: UIViewController & CatalogCollectio
         cancellables.forEach({ $0.cancel() })
         cancellables.removeAll()
     }
+    
+    func reload() {
+        viewModel.load()
+    }
 }
 
 // MARK: - Ext @Objc
 @objc private extension CatalogCollectionViewController {
     func cancelTapped() {
-        onCancel?()
+        navigationController?.popViewController(animated: true)
     }
     
     func labelTapped(_ gesture: UITapGestureRecognizer) {
@@ -168,7 +173,15 @@ private extension CatalogCollectionViewController {
         viewModel.$requestResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] requestResult in
-                self?.showOrHideAnimation(for: requestResult)
+                guard let self else { return }
+                self.showOrHideAnimation(loadingView, for: requestResult)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$requestError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
             }
             .store(in: &cancellables)
     }
@@ -185,7 +198,6 @@ private extension CatalogCollectionViewController {
         updateTitleLabelText(for: collection)
         updateAuthorTextLabel(for: collection)
         updateDescriptionTextView(for: collection)
-        updateSingleNfts(for: collection)
         
     }
     
@@ -215,13 +227,17 @@ private extension CatalogCollectionViewController {
         updateTextViewHeight()
     }
     
-    func updateSingleNfts(for collection: CatalogMainScreenCollection) {
-        viewModel.updateNfts(from: collection)
-    }
-    
     func updateTextViewHeight() {
         let size = collectionDescriptionTextView.sizeThatFits(CGSize(width: collectionDescriptionTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude))
         collectionDescriptionTextView.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
+}
+
+// MARK: - Ext Error
+private extension CatalogCollectionViewController {
+    func headOnError(_ error: Error?) {
+        guard let error else { return }
+        onError?(error)
     }
 }
 
@@ -255,20 +271,6 @@ private extension CatalogCollectionViewController {
     func updateAuthorTextLabelLink(for author: Author?) {
         guard let author else { return }
         authorDescriptionLabel.setupAttributedText(authorName: author.name, authorId: author.id)
-    }
-}
-
-// MARK: - Ext Animation
-private extension CatalogCollectionViewController {
-    func showOrHideAnimation(for requestResult: RequestResult?) {
-        guard let requestResult
-        else {
-            loadingView.stopAnimation()
-            return
-        }
-        
-        loadingView.result = requestResult
-        loadingView.startAnimation()
     }
 }
 
