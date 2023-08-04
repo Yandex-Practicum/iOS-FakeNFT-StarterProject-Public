@@ -99,7 +99,6 @@ private extension CartViewInteractor {
     ) {
         let imageUrl = URL(string: model.images.first ?? "")
         self.imageLoadingService.fetchImage(url: imageUrl) { [weak self] result in
-            guard let self = self else { return }
             switch result {
             case .success(let image):
                 let nft = NFTCartCellViewModelFactory.makeNFTCartCellViewModel(
@@ -109,7 +108,7 @@ private extension CartViewInteractor {
                     rating: model.rating,
                     price: model.price
                 )
-                self.saveNft(nft, completion: onSuccess)
+                self?.saveNft(nft, completion: onSuccess)
             case .failure(let error):
                 onFailure(error)
             }
