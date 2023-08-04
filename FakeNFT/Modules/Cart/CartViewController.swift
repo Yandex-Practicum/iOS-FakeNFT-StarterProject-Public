@@ -76,12 +76,20 @@ private extension CartViewController {
             self?.cartView.setFinalOrderCost(cost)
         }
 
-        self.viewModel.shouldHidePlaceholder.bind { [weak self] shouldHide in
+        self.viewModel.cartViewState.bind { [weak self] state in
             guard let self = self else { return }
-            ProgressHUDWrapper.hide()
-
-            self.cartView.shouldHidePlaceholder(shouldHide)
-            self.shouldHideSortButton(shouldHide == false)
+            switch state {
+            case .empty:
+                ProgressHUDWrapper.hide()
+                self.cartView.shouldHidePlaceholder(false)
+                self.shouldHideSortButton(true)
+            case .loaded:
+                ProgressHUDWrapper.hide()
+                self.cartView.shouldHidePlaceholder(true)
+                self.shouldHideSortButton(false)
+            case .loading:
+                ProgressHUDWrapper.show()
+            }
         }
     }
 

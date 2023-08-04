@@ -8,7 +8,7 @@
 import UIKit
 
 struct NFTCartCellViewModel {
-    let id: Int
+    let id: String
     let name: String
     let image: UIImage?
     let rating: Int

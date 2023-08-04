@@ -9,7 +9,7 @@ import UIKit.UIImage
 
 final class NFTCartCellViewModelFactory {
     static func makeNFTCartCellViewModel(
-        id: Int,
+        id: String,
         name: String,
         image: UIImage?,
         rating: Int,

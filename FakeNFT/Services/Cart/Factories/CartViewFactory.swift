@@ -9,16 +9,16 @@ import Foundation
 
 struct CartViewFactory {
     static func create() -> CartViewController {
-        let cartCellViewModelFactory = NFTCartCellViewModelFactory()
-        let imageLoadingService = ImageLoadingService()
         let networkClient = DefaultNetworkClient()
 
         let orderService = OrderService(networkClient: networkClient)
         let nftService = NFTNetworkServiceImpl(networkClient: networkClient)
+        let imageLoadingService = ImageLoadingService()
 
         let viewModel = CartViewModel(
             nftService: nftService,
-            orderService: orderService
+            orderService: orderService,
+            imageLoadingService: imageLoadingService
         )
 
         let tableViewHelper = CartTableViewHelper()
