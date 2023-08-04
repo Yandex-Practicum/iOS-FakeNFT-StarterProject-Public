@@ -15,10 +15,6 @@ protocol ProfileMainCoordinatableProtocol {
     var onError: ((Error) -> Void)? { get set }
 }
 
-protocol Reloadable {
-    func reload()
-}
-
 final class ProfileMainViewController: UIViewController, ProfileMainCoordinatableProtocol, Reloadable {
 
     var onEdit: (() -> Void)?

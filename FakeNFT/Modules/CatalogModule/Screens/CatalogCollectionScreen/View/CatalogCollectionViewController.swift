@@ -184,6 +184,13 @@ private extension CatalogCollectionViewController {
                 self?.headOnError(error)
             }
             .store(in: &cancellables)
+        
+        viewModel.$authorError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.headOnError(error)
+            }
+            .store(in: &cancellables)
     }
 }
 
