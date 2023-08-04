@@ -9,6 +9,8 @@ import UIKit
 
 final class CartView: UIView {
     var onTapPurchaseButton: (() -> Void)?
+    var onRefreshTable: (() -> Void)?
+
     var tableViewHelper: CartTableViewHelperProtocol? {
         didSet {
             self.cartTableView.delegate = self.tableViewHelper
@@ -22,8 +24,15 @@ final class CartView: UIView {
         tableView.backgroundColor = .appWhite
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.refreshControl = self.refreshControll
         tableView.register<CartTableViewCell>(CartTableViewCell.self)
         return tableView
+    }()
+
+    private lazy var refreshControll: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refreshTable(_:)), for: .valueChanged)
+        return refreshControl
     }()
 
     private let purchaseBackgroundView: PurchaseBackgroundView = {
@@ -144,5 +153,11 @@ private extension CartView {
     @objc
     func didTapPurchaseButton() {
         self.onTapPurchaseButton?()
+    }
+
+    @objc
+    func refreshTable(_ sender: UIRefreshControl) {
+        self.onRefreshTable?()
+        sender.endRefreshing()
     }
 }

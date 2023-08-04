@@ -58,6 +58,13 @@ final class CartViewModel {
 // MARK: - CartViewModelProtocol
 extension CartViewModel: CartViewModelProtocol {
     func fetchOrder() {
+        switch self.cartViewState.value {
+        case .loading:
+            break
+        default:
+            self.cartViewState.value = .loading
+        }
+
         self.cartViewInteractor.fetchOrder(
             with: "\(self.defaultOrderId)",
             onSuccess: self.successCompletion,

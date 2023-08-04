@@ -123,6 +123,8 @@ private extension CartViewInteractor {
         self.accumulatedCost += nft.price
         if self.order.count == self.orderCapacity {
             completion(.loaded(self.order, self.accumulatedCost))
+            self.order.removeAll()
+            self.accumulatedCost = 0
         }
     }
 }

@@ -103,7 +103,11 @@ private extension CartViewController {
 
         self.cartView.tableViewHelper = self.tableViewHelper
         self.cartView.backgroundColor = .appWhite
+
         self.cartView.onTapPurchaseButton = { print("purchase button tapped") }
+        self.cartView.onRefreshTable = { [weak self] in
+            self?.viewModel.fetchOrder()
+        }
     }
 }
 
