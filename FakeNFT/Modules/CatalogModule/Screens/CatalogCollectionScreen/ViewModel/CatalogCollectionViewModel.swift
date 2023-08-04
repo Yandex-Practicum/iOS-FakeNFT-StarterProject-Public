@@ -14,6 +14,7 @@ final class CatalogCollectionViewModel {
     @Published private (set) var author: Author?
     @Published private (set) var requestResult: RequestResult?
     @Published private (set) var requestError: Error?
+    @Published private (set) var authorError: Error?
         
     private var cancellables = Set<AnyCancellable>()
     
@@ -36,7 +37,7 @@ final class CatalogCollectionViewModel {
     func loadNfts(collection: CatalogMainScreenCollection) {
         requestResult = .loading
         networkClient.getNftsPublisher(collection.nfts)
-            .receive(on: DispatchQueue.main)
+            .delay(for: 5, scheduler: RunLoop.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
                     self?.requestError = error
@@ -58,10 +59,12 @@ final class CatalogCollectionViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {
-                    self?.requestError = error
+                    self?.authorError = error
+                    self?.requestResult = nil
                 }
             } receiveValue: { [weak self] author in
                 self?.author = author
+                self?.requestResult = nil
             }
             .store(in: &cancellables)
     }
