@@ -34,6 +34,7 @@
 		961964122A7BDC1F0076BD88 /* NFTCartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */; };
 		961964142A7BEA490076BD88 /* CartPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964132A7BEA490076BD88 /* CartPlaceholderView.swift */; };
 		961964162A7BF16C0076BD88 /* ProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964152A7BF16C0076BD88 /* ProgressHUDWrapper.swift */; };
+		961964182A7CA6110076BD88 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964172A7CA6110076BD88 /* Box.swift */; };
 		96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5D2A777CA7004ADF21 /* CartViewController.swift */; };
 		96286E602A777D14004ADF21 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5F2A777D14004ADF21 /* CartViewModel.swift */; };
 		96286E622A777D2B004ADF21 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E612A777D2B004ADF21 /* CartTableViewCell.swift */; };
@@ -107,6 +108,7 @@
 		961964112A7BDC1F0076BD88 /* NFTCartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCartCellViewModel.swift; sourceTree = "<group>"; };
 		961964132A7BEA490076BD88 /* CartPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPlaceholderView.swift; sourceTree = "<group>"; };
 		961964152A7BF16C0076BD88 /* ProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		961964172A7CA6110076BD88 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		96286E5D2A777CA7004ADF21 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		96286E5F2A777D14004ADF21 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		96286E612A777D2B004ADF21 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				F61908E02A73D58000DEF2F5 /* Strings+Extensions.swift */,
+				961964172A7CA6110076BD88 /* Box.swift */,
 			);
 			path = Aux;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F61908D12A73CD2300DEF2F5 /* NFTsFactory.swift in Sources */,
 				96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */,
+				961964182A7CA6110076BD88 /* Box.swift in Sources */,
 				96286E642A777D39004ADF21 /* CartTableViewHelper.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,

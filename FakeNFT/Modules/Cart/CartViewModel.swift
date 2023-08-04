@@ -8,51 +8,19 @@
 import Foundation
 
 protocol CartViewModelProtocol {
-    var onOrderChanged: (() -> Void)? { get set }
-    var order: [NFTCartCellViewModel] { get }
-
-    var onNftCountChanged: (() -> Void)? { get set }
-    var nftCount: Int { get }
-
-    var onFinalOrderCostChanged: (() -> Void)? { get set }
-    var finalOrderCost: Double { get }
-
-    var onShouldHidePlaceholderChanged: (() -> Void)? { get set }
-    var shouldHidePlaceholder: Bool { get }
+    var order: Box<[NFTCartCellViewModel]> { get }
+    var nftCount: Box<String> { get }
+    var finalOrderCost: Box<String> { get }
+    var shouldHidePlaceholder: Box<Bool> { get }
 
     func fetchOrder()
 }
 
 final class CartViewModel {
-    var onOrderChanged: (() -> Void)?
-    var order: [NFTCartCellViewModel] = [
-        NFTCartCellViewModel(id: 1, name: "Хыхыхы", image: nil, rating: 2, price: 2)
-    ] {
-        didSet {
-            self.onOrderChanged?()
-        }
-    }
-
-    var onNftCountChanged: (() -> Void)?
-    var nftCount: Int = 0 {
-        didSet {
-            self.onNftCountChanged?()
-        }
-    }
-
-    var onFinalOrderCostChanged: (() -> Void)?
-    var finalOrderCost: Double = 0 {
-        didSet {
-            self.onFinalOrderCostChanged?()
-        }
-    }
-
-    var onShouldHidePlaceholderChanged: (() -> Void)?
-    var shouldHidePlaceholder: Bool = true {
-        didSet {
-            self.onShouldHidePlaceholderChanged?()
-        }
-    }
+    var order = Box<[NFTCartCellViewModel]>([])
+    var nftCount = Box<String>("0 NFT")
+    var finalOrderCost = Box<String>("0,0 ETH")
+    var shouldHidePlaceholder = Box<Bool>(true)
 
     private let defaultOrderId = 1
     private let orderService: OrderServiceProtocol
@@ -69,7 +37,7 @@ extension CartViewModel: CartViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let order):
-                self.shouldHidePlaceholder = order.nfts.isEmpty == false
+                self.shouldHidePlaceholder.value = order.nfts.isEmpty == false
                 print(order)
             case .failure(let error):
                 print(error)

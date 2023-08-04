@@ -94,7 +94,7 @@ final class CartViewController: UIViewController {
 // MARK: - CartTableViewHelperDelegate
 extension CartViewController: CartTableViewHelperDelegate {
     var order: [NFTCartCellViewModel]? {
-        self.viewModel.order
+        self.viewModel.order.value
     }
 }
 
@@ -155,27 +155,24 @@ private extension CartViewController {
     }
 
     func bind() {
-        self.viewModel.onOrderChanged = { [weak self] in
+        self.viewModel.order.bind { [weak self] _ in
             self?.cartTableView.reloadData()
         }
 
-        self.viewModel.onNftCountChanged = { [weak self] in
-            guard let self = self else { return }
-            self.nftCountLabel.text = "\(self.viewModel.nftCount) NFT"
+        self.viewModel.nftCount.bind { [weak self] nftCount in
+            self?.nftCountLabel.text = nftCount
         }
 
-        self.viewModel.onFinalOrderCostChanged = { [weak self] in
-            guard let self = self else { return }
-            self.finalCostLabel.text = "\(self.viewModel.finalOrderCost) ETH"
+        self.viewModel.finalOrderCost.bind { [weak self] cost in
+            self?.finalCostLabel.text = cost
         }
 
-        self.viewModel.onShouldHidePlaceholderChanged = { [weak self] in
+        self.viewModel.shouldHidePlaceholder.bind { [weak self] shouldHide in
             guard let self = self else { return }
             self.progressHUDWrapper.hide()
 
-            let shouldHidePlaceholder = self.viewModel.shouldHidePlaceholder
-            self.placeholderView.isHidden = shouldHidePlaceholder
-            self.shouldHideSortButton(shouldHidePlaceholder == false)
+            self.placeholderView.isHidden = shouldHide
+            self.shouldHideSortButton(shouldHide == false)
         }
     }
 }
