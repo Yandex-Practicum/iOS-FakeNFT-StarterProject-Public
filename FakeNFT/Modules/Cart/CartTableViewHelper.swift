@@ -19,6 +19,7 @@ final class CartTableViewHelper: NSObject {
     weak var delegate: CartTableViewHelperDelegate?
 }
 
+// MARK: - CartTableViewHelperProtocol
 extension CartTableViewHelper: CartTableViewHelperProtocol {
     func tableView(
         _ tableView: UITableView,
