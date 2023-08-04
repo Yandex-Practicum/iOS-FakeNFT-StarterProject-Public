@@ -65,8 +65,6 @@ final class CartViewController: UIViewController {
         return view
     }()
 
-    private let progressHUDWrapper = ProgressHUDWrapper()
-
     private var tableViewHelper: CartTableViewHelperProtocol
     private var viewModel: CartViewModelProtocol
 
@@ -100,7 +98,7 @@ extension CartViewController: CartTableViewHelperDelegate {
 
 private extension CartViewController {
     func configure() {
-        self.progressHUDWrapper.show()
+        ProgressHUDWrapper.show()
 
         self.view.backgroundColor = .appWhite
 
@@ -169,7 +167,7 @@ private extension CartViewController {
 
         self.viewModel.shouldHidePlaceholder.bind { [weak self] shouldHide in
             guard let self = self else { return }
-            self.progressHUDWrapper.hide()
+            ProgressHUDWrapper.hide()
 
             self.placeholderView.isHidden = shouldHide
             self.shouldHideSortButton(shouldHide == false)

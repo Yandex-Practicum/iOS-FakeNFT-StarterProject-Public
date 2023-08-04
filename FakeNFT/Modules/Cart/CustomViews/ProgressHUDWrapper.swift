@@ -9,17 +9,11 @@ import Foundation
 import ProgressHUD
 
 struct ProgressHUDWrapper {
-    init() {
-        ProgressHUD.animationType = .systemActivityIndicator
-        ProgressHUD.colorAnimation = .black
-        ProgressHUD.colorBackground = .lightGray
-    }
-
-    func show() {
+    static func show() {
         ProgressHUD.show()
     }
 
-    func hide() {
+    static func hide() {
         ProgressHUD.dismiss()
     }
 }
