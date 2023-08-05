@@ -6,6 +6,7 @@ enum UsetListViewControllerInput {
     case viewDidLoad
     case pullToRefresh
     case cellIsTap(for: IndexPath)
+    case filterButtonTapped
 }
 
 final class UserListViewController: NiblessViewController {
@@ -66,7 +67,7 @@ final class UserListViewController: NiblessViewController {
 
     // MARK: - @objc methods
     @objc private func filterTap() {
-        // TODO: -
+        input.send(.filterButtonTapped)
     }
 
     @objc private func pullToRefresh() {
@@ -98,12 +99,12 @@ private extension UserListViewController {
         case .loading:
             spinner.startAnimating()
 
-        case .success(let userStatistics):
+        case .success(let users):
             errorView.isHidden = true
             collectionView.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.spinner.stopAnimating()
-                self.updateSnapshot(with: userStatistics)
+                self.updateSnapshot(with: users)
                 self.collectionView.refreshControl?.endRefreshing()
             }
 
@@ -111,9 +112,11 @@ private extension UserListViewController {
             spinner.stopAnimating()
             errorView.isHidden = false
 
-        case .tryToLoadDataAfterFail:
-            spinner.startAnimating()
-            errorView.isHidden = true
+        case .filterViewModel(let filterViewModel):
+            showAlert(filterViewModel, style: .actionSheet)
+
+        case .filteredData(let users):
+            self.updateSnapshot(with: users)
         }
     }
 

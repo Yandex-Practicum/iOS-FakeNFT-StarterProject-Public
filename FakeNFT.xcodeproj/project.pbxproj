@@ -36,6 +36,8 @@
 		F96F2D072A7E4F02004CC5D2 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D062A7E4F02004CC5D2 /* UserRequest.swift */; };
 		F96F2D092A7E4F21004CC5D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D082A7E4F21004CC5D2 /* UserService.swift */; };
 		F96F2D0C2A7E503F004CC5D2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F96F2D0B2A7E503F004CC5D2 /* SnapKit */; };
+		F96F2D0E2A7E5F98004CC5D2 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D0D2A7E5F98004CC5D2 /* UIViewController+Alert.swift */; };
+		F96F2D102A7E6B7F004CC5D2 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D0F2A7E6B7F004CC5D2 /* Alert.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -93,6 +95,8 @@
 		F96F2D042A7E4EE4004CC5D2 /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
 		F96F2D062A7E4F02004CC5D2 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		F96F2D082A7E4F21004CC5D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		F96F2D0D2A7E5F98004CC5D2 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		F96F2D0F2A7E6B7F004CC5D2 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -312,10 +316,12 @@
 				F9F5573F2A741B5F004F6856 /* UserListViewController.swift */,
 				F96F2CFC2A7E4DCE004CC5D2 /* UserListViewModel.swift */,
 				F96F2CF82A7E4D57004CC5D2 /* UserCell.swift */,
-				F96F2CFA2A7E4DA3004CC5D2 /* User.swift */,
 				F96F2CFE2A7E4E7B004CC5D2 /* ErrorView.swift */,
 				F96F2D002A7E4EAF004CC5D2 /* NiblessView.swift */,
 				F96F2D022A7E4EC0004CC5D2 /* NiblessViewController.swift */,
+				F96F2D0D2A7E5F98004CC5D2 /* UIViewController+Alert.swift */,
+				F96F2CFA2A7E4DA3004CC5D2 /* User.swift */,
+				F96F2D0F2A7E6B7F004CC5D2 /* Alert.swift */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				F96F2D052A7E4EE4004CC5D2 /* UserResult.swift in Sources */,
 				F96F2D072A7E4F02004CC5D2 /* UserRequest.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				F96F2D0E2A7E5F98004CC5D2 /* UIViewController+Alert.swift in Sources */,
 				F96F2CFD2A7E4DCE004CC5D2 /* UserListViewModel.swift in Sources */,
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
@@ -516,6 +523,7 @@
 				F96F2CF92A7E4D57004CC5D2 /* UserCell.swift in Sources */,
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
+				F96F2D102A7E6B7F004CC5D2 /* Alert.swift in Sources */,
 				F96F2D012A7E4EAF004CC5D2 /* NiblessView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,

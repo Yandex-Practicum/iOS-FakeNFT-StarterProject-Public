@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 import Kingfisher
 
 final class UserCell: UICollectionViewCell, ReuseIdentifying {
@@ -19,8 +18,6 @@ final class UserCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     // MARK: - Private properties
-    private var cancellable: AnyCancellable?
-
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -74,11 +71,6 @@ final class UserCell: UICollectionViewCell, ReuseIdentifying {
 
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        cancellable = nil
     }
 
     private func addSubviews() {

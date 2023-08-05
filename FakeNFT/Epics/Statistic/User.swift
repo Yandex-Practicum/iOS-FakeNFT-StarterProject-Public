@@ -7,14 +7,17 @@
 
 import Foundation
 
-struct User: Hashable {
+struct User {
+    let uuid = UUID()
+
     let ranking: String
     let avatarURL: URL?
     let username: String
     let nftCount: String
+}
 
-    let uuid = UUID()
 
+extension User: Hashable {
     static func == (lhs: User, rhs: User) -> Bool {
         lhs.uuid == rhs.uuid
     }
@@ -28,5 +31,9 @@ extension Array where Element == User {
             }
             return false
         }
+    }
+
+    func sortedByName() -> [User] {
+        return self.sorted { $0.username < $1.username }
     }
 }

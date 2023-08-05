@@ -150,6 +150,10 @@ tabBar.profile = "Profile";
 tabBar.statistic = "Statistics";
 failedToLoadData = "Failed to load data.";
 
+sorting = "Sorting";
+sorting.byName = "By name";
+sorting.byRating = "By rating";
+sorting.close = "Close";
 
 
 

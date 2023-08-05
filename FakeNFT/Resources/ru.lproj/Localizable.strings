@@ -150,9 +150,10 @@ tabBar.profile = "Профиль";
 tabBar.statistic = "Статистика";
 failedToLoadData = "Не удалось загрузить данные.";
 
-
-
-
+sorting = "Сортировка";
+sorting.byName = "По имени";
+sorting.byRating = "По рейтингу";
+sorting.close = "Закрыть";
 
 
 
