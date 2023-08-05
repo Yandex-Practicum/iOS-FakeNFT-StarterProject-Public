@@ -148,7 +148,7 @@ tabBar.profile = "Profile";
 
 // Статистика
 tabBar.statistic = "Statistics";
-
+failedToLoadData = "Failed to load data.";
 
 
 

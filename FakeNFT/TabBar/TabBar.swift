@@ -40,7 +40,7 @@ final class MainTabBarController: UITabBarController {
                 title: NSLocalizedString("tabBar.basket", comment: "")
             ),
             generateViewController(
-                StatisticsViewController(),
+                UINavigationController(rootViewController: createUserViewController()),
                 image: statisticImage,
                 selectedImage: statisticSelectedImage,
                 title: NSLocalizedString("tabBar.statistic", comment: "")
@@ -77,5 +77,21 @@ private extension MainTabBarController {
             tabBar.scrollEdgeAppearance = tabBarAppearance
         }
         tabBar.standardAppearance = tabBarAppearance
+    }
+}
+
+private extension MainTabBarController {
+    func createUserViewController() -> UserListViewController {
+        let networkClient = DefaultNetworkClient()
+        let userRequest = UserRequest()
+
+        let userService = UserServiceImpl(
+            defaultNetworkClient: networkClient,
+            userResult: userRequest
+        )
+
+        let viewModel = UserListViewModelImpl(userStatisticService: userService)
+
+        return UserListViewController(viewModel: viewModel)
     }
 }
