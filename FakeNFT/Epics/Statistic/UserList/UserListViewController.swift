@@ -43,7 +43,7 @@ final class UserListViewController: NiblessViewController {
         return spinner
     }()
 
-    private var errorView = ErrorView()
+    private let errorView = ErrorView()
 
     // MARK: - Dependencies
     private let viewModel: UserListViewModel
@@ -77,13 +77,22 @@ final class UserListViewController: NiblessViewController {
 
 extension UserListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        input.send(.cellIsTap(for: indexPath))
+        let user = viewModel.users[indexPath.item]
+        let viewModel = UserCardViewModelImpl(user: user)
+        let viewController = UserCardViewController(viewModel: viewModel)
+
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        feedbackGenerator.impactOccurred()
     }
 }
 
 // MARK: - Data
 private extension UserListViewController {
-    private func bind(to viewModel: UserListViewModel) {
+    func bind(to viewModel: UserListViewModel) {
         let output = viewModel.transform(input: input.eraseToAnyPublisher())
 
         output
@@ -94,7 +103,7 @@ private extension UserListViewController {
             .store(in: &cancellables)
     }
 
-    private func handle(_ event: UserListViewModelOutput) {
+    func handle(_ event: UserListViewModelOutput) {
         switch event {
         case .loading:
             spinner.startAnimating()
@@ -120,7 +129,7 @@ private extension UserListViewController {
         }
     }
 
-    private func updateSnapshot(with data: [User]) {
+    func updateSnapshot(with data: [User]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, User>()
         snapshot.appendSections([.zero])
         snapshot.appendItems(data)
@@ -131,24 +140,40 @@ private extension UserListViewController {
 // MARK: - UI
 private extension UserListViewController {
     func createLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { _, _ -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(88))
-            let itemInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0)
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = itemInsets
-
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(88))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
-
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = itemInsets
-
-            return section
+        let layout = UICollectionViewCompositionalLayout { _, _ in
+            self.createLayoutSection()
         }
+
+        return layout
+    }
+
+    func createLayoutSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0)
+        let item = NSCollectionLayoutItem.create(
+            withWidth: .fractionalWidth(1.0),
+            height: .absolute(88),
+            insets: itemInsets
+        )
+
+        // Group       
+        let group = NSCollectionLayoutGroup.create(
+            verticalGroupWithWidth: .fractionalWidth(1.0),
+            height: .estimated(88),
+            items: [item]
+        )
+
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = itemInsets
+
+        return section
     }
 
     func createTabTabItem() {
-        let image = UIImage.sortButton?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
+        let image = UIImage.sortButton?
+            .withRenderingMode(.alwaysOriginal)
+            .withTintColor(.ypBlack)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: image,

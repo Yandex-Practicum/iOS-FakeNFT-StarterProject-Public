@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-final class UserCell: UICollectionViewCell, ReuseIdentifying {
+final class UserCell: UICollectionViewCell {
     // MARK: - Public
     func configure(with user: User) {
         rankingLabel.text = user.ranking
@@ -17,7 +17,7 @@ final class UserCell: UICollectionViewCell, ReuseIdentifying {
         imageView.kf.setImage(with: user.avatarURL)
     }
 
-    // MARK: - Private properties
+    // MARK: - Private UI Elements
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -72,7 +72,9 @@ final class UserCell: UICollectionViewCell, ReuseIdentifying {
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
+}
 
+private extension UserCell {
     private func addSubviews() {
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(usernameLabel)
@@ -103,6 +105,16 @@ final class UserCell: UICollectionViewCell, ReuseIdentifying {
         container.snp.makeConstraints { make in
             make.leading.equalTo(rankingLabel.snp.trailing).offset(8)
             make.top.bottom.trailing.equalToSuperview()
+        }
+    }
+}
+
+extension UserCell: ReuseIdentifying { }
+
+extension UserCell: AnimatableCollectionViewCell {
+    override var isHighlighted: Bool {
+        didSet {
+            highlightAnimation()
         }
     }
 }

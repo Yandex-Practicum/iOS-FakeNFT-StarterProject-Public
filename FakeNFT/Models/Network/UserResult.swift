@@ -19,7 +19,8 @@ extension UserResult {
             ranking: rating,
             avatarURL: avatarURL,
             username: name,
-            nftCount: nftCount
+            nftCount: nftCount,
+            description: description
         )
     }
 }

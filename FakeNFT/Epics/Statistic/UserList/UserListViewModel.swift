@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 protocol UserListViewModel {
+    var users: [User] { get }
     func transform(input: AnyPublisher<UsetListViewControllerInput, Never>) -> AnyPublisher<UserListViewModelOutput, Never>
 }
 
@@ -27,8 +28,9 @@ final class UserListViewModelImpl: UserListViewModel {
     // Private Properties
     private let output: PassthroughSubject<UserListViewModelOutput, Never> = .init()
     private var cancellables = Set<AnyCancellable>()
-    private var users: [User] = []
     private var currentFilter: Filters = .name
+
+    private(set) var users: [User] = []
 
     init(userStatisticService: UserService) {
         self.userStatisticService = userStatisticService
@@ -74,6 +76,7 @@ final class UserListViewModelImpl: UserListViewModel {
 
     private func cellTap(for indexPath: IndexPath) {
         // TODO: -
+
     }
 
     private func filterButtonTapped () {

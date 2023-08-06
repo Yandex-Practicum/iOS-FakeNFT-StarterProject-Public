@@ -14,8 +14,8 @@ struct User {
     let avatarURL: URL?
     let username: String
     let nftCount: String
+    let description: String
 }
-
 
 extension User: Hashable {
     static func == (lhs: User, rhs: User) -> Bool {
