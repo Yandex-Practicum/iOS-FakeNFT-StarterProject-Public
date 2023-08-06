@@ -13,7 +13,7 @@ final class CartRemoveNftViewController: UIViewController {
         case cancel
     }
 
-    var onChoosingRemovalNft: ((RemoveNftFlow) -> Void)?
+    var onChoosingRemoveNft: ((RemoveNftFlow) -> Void)?
 
     private let blurredEffectView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
@@ -119,11 +119,11 @@ private extension CartRemoveNftViewController {
 private extension CartRemoveNftViewController {
     @objc
     func didTapRemoveNftButton() {
-        self.onChoosingRemovalNft?(.remove)
+        self.onChoosingRemoveNft?(.remove)
     }
 
     @objc
     func didTapCancelButton() {
-        self.onChoosingRemovalNft?(.cancel)
+        self.onChoosingRemoveNft?(.cancel)
     }
 }

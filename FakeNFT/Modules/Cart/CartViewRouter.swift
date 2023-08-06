@@ -16,7 +16,7 @@ protocol CartViewRouterProtocol {
     func showRemoveNftView(
         on viewController: UIViewController,
         nftImage: UIImage?,
-        onChoosingRemovalNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
+        onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     )
 }
 
@@ -61,10 +61,10 @@ final class CartViewRouter: CartViewRouterProtocol {
     func showRemoveNftView(
         on viewController: UIViewController,
         nftImage: UIImage?,
-        onChoosingRemovalNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
+        onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     ) {
         let removeNftViewController = CartRemoveNftViewController(nftImage: nftImage)
-        removeNftViewController.onChoosingRemovalNft = onChoosingRemovalNft
+        removeNftViewController.onChoosingRemoveNft = onChoosingRemoveNft
 
         removeNftViewController.modalPresentationStyle = .overFullScreen
         removeNftViewController.modalTransitionStyle = .crossDissolve
