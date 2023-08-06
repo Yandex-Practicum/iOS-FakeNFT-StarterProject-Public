@@ -91,7 +91,15 @@ extension CartViewModel: CartViewModelProtocol {
     func removeNft(row: Int) {
         var newOrder = self.order.value
         newOrder.remove(at: row)
-        self.setOrderAnimated(newOrder: newOrder)
+        let nftIds = newOrder.map { $0.id }
+        
+        self.cartViewState.value = .loading
+        self.cartViewInteractor.changeOrder(
+            with: "\(self.defaultOrderId)",
+            nftIds: nftIds,
+            onSuccess: self.successCompletion,
+            onFailure: self.failureCompletion
+        )
     }
 }
 

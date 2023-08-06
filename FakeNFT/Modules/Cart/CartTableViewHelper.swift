@@ -34,9 +34,8 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-        if editingStyle == .delete {
-            self.delegate?.removeNft(row: indexPath.row) 
-        }
+        guard editingStyle == .delete else { return }
+        self.delegate?.removeNft(row: indexPath.row)
     }
 
     // MARK: - UITableViewDataSource

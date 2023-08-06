@@ -11,6 +11,10 @@ protocol CartViewInteractorProtocol {
     func fetchOrder(with id: String,
                     onSuccess: @escaping LoadingCompletionBlock,
                     onFailure: @escaping LoadingFailureCompletionBlock)
+    func changeOrder(with id: String,
+                     nftIds: [String],
+                     onSuccess: @escaping LoadingCompletionBlock,
+                     onFailure: @escaping LoadingFailureCompletionBlock)
 }
 
 typealias LoadingCompletionBlock = (CartViewModel.CartViewState) -> Void
@@ -56,6 +60,23 @@ extension CartViewInteractor: CartViewInteractorProtocol {
                 }
                 self.orderCapacity = order.nfts.count
                 self.fetchNfts(ids: order.nfts, onSuccess: onSuccess, onFailure: onFailure)
+            case .failure(let error):
+                onFailure(error)
+            }
+        }
+    }
+
+    func changeOrder(
+        with id: String,
+        nftIds: [String],
+        onSuccess: @escaping LoadingCompletionBlock,
+        onFailure: @escaping LoadingFailureCompletionBlock
+    ) {
+        self.orderService.changeOrder(id: id, nftIds: nftIds) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.fetchOrder(with: id, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
                 onFailure(error)
             }
