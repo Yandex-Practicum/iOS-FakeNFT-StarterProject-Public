@@ -11,6 +11,8 @@ final class AppButton: UIButton {
     enum ButtonType {
         case filled
         case bordered
+        case nftCartRemove
+        case nftCartCancel
     }
 
     private let cornerRadius: CGFloat = 16
@@ -39,6 +41,8 @@ private extension AppButton {
             self.setFilledType()
         case .bordered:
             self.setBorderedType()
+        case .nftCartRemove, .nftCartCancel:
+            self.setNftCartButton(type: self.type)
         }
     }
 
@@ -46,9 +50,9 @@ private extension AppButton {
         self.backgroundColor = .appBlack
 
         let font = UIFont.getFont(style: .bold, size: 17)
-        let color = UIColor.appWhite
+        let textColor = UIColor.appWhite
         let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
-                                                                        NSAttributedString.Key.foregroundColor: color])
+                                                                        NSAttributedString.Key.foregroundColor: textColor])
         self.setAttributedTitle(title, for: .normal)
     }
 
@@ -60,6 +64,26 @@ private extension AppButton {
         self.layer.borderColor = color.cgColor
 
         let font = UIFont.getFont(style: .regular, size: 15)
+        let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
+                                                                        NSAttributedString.Key.foregroundColor: color])
+        self.setAttributedTitle(title, for: .normal)
+    }
+
+    func setNftCartButton(type: ButtonType) {
+        self.backgroundColor = .appBlack
+
+        let font = UIFont.getFont(style: .regular, size: 17)
+        let color: UIColor
+
+        switch type {
+        case .nftCartCancel:
+            color = .appWhite
+        case .nftCartRemove:
+            color = .appRed
+        default:
+            color = .appWhite
+        }
+
         let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
                                                                         NSAttributedString.Key.foregroundColor: color])
         self.setAttributedTitle(title, for: .normal)

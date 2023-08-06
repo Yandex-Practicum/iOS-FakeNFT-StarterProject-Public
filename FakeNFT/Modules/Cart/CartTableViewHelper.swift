@@ -9,7 +9,7 @@ import UIKit
 
 protocol CartTableViewHelperDelegate: AnyObject {
     var order: OrderViewModel? { get }
-    func removeNft(row: Int)
+    func removeNft(row: Int, nftImage: UIImage?)
 }
 
 protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
@@ -35,7 +35,8 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
         forRowAt indexPath: IndexPath
     ) {
         guard editingStyle == .delete else { return }
-        self.delegate?.removeNft(row: indexPath.row)
+        let cell: CartTableViewCell = tableView.cellForRow(indexPath: indexPath)
+        self.delegate?.removeNft(row: indexPath.row, nftImage: cell.nft?.image)
     }
 
     // MARK: - UITableViewDataSource

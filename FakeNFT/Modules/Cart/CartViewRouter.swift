@@ -12,6 +12,12 @@ protocol CartViewRouterProtocol {
         viewController: UIViewController,
         onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
     )
+
+    func showRemoveNftView(
+        on viewController: UIViewController,
+        nftImage: UIImage?,
+        onChoosingRemovalNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
+    )
 }
 
 final class CartViewRouter: CartViewRouterProtocol {
@@ -50,5 +56,19 @@ final class CartViewRouter: CartViewRouterProtocol {
         }
 
         viewController.present(alertController, animated: true)
+    }
+
+    func showRemoveNftView(
+        on viewController: UIViewController,
+        nftImage: UIImage?,
+        onChoosingRemovalNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
+    ) {
+        let removeNftViewController = CartRemoveNftViewController(nftImage: nftImage)
+        removeNftViewController.onChoosingRemovalNft = onChoosingRemovalNft
+
+        removeNftViewController.modalPresentationStyle = .overFullScreen
+        removeNftViewController.modalTransitionStyle = .crossDissolve
+
+        viewController.present(removeNftViewController, animated: true)
     }
 }

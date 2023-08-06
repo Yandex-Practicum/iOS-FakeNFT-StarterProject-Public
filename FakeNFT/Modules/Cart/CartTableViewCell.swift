@@ -24,6 +24,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         imageView.backgroundColor = .appLightGray
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 

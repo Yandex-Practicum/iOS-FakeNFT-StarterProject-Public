@@ -92,7 +92,7 @@ extension CartViewModel: CartViewModelProtocol {
         var newOrder = self.order.value
         newOrder.remove(at: row)
         let nftIds = newOrder.map { $0.id }
-        
+
         self.cartViewState.value = .loading
         self.cartViewInteractor.changeOrder(
             with: "\(self.defaultOrderId)",

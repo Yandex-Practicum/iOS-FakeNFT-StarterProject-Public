@@ -28,6 +28,14 @@ extension UITableView {
         }
         return cell
     }
+
+    func cellForRow<T: UITableViewCell>(indexPath: IndexPath) -> T where T: ReuseIdentifying {
+        guard let cell = cellForRow(at: indexPath) as? T else {
+            assertionFailure("Could not get cell with type: \(T.self)")
+            return T()
+        }
+        return cell
+    }
 }
 
 extension UICollectionView {
