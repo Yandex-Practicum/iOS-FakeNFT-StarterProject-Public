@@ -18,6 +18,8 @@ protocol CartViewRouterProtocol {
         nftImage: UIImage?,
         onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     )
+
+    func showCartPayment(on viewController: UIViewController)
 }
 
 final class CartViewRouter: CartViewRouterProtocol {
@@ -70,5 +72,13 @@ final class CartViewRouter: CartViewRouterProtocol {
         removeNftViewController.modalTransitionStyle = .crossDissolve
 
         viewController.present(removeNftViewController, animated: true)
+    }
+
+    func showCartPayment(on viewController: UIViewController) {
+        let collectionViewHelper = CartPaymentCollectionViewHelper()
+        let cartPaymentViewController = CartPaymentViewController(collectionViewHelper: collectionViewHelper)
+        cartPaymentViewController.hidesBottomBarWhenPushed = true
+
+        viewController.navigationController?.pushViewController(cartPaymentViewController, animated: true)
     }
 }

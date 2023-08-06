@@ -7,6 +7,15 @@
 
 import Foundation
 
+protocol CartPaymentViewModelProtocol {
+
+}
+
 final class CartPaymentViewModel {
-    
+
+}
+
+// MARK: - CartPaymentViewModelProtocol
+extension CartPaymentViewModel: CartPaymentViewModelProtocol {
+
 }

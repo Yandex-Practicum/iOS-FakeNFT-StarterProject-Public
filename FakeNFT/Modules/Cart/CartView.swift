@@ -35,11 +35,7 @@ final class CartView: UIView {
         return refreshControl
     }()
 
-    private let purchaseBackgroundView: PurchaseBackgroundView = {
-        let view = PurchaseBackgroundView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private let purchaseBackgroundView = PurchaseBackgroundView()
 
     private let nftCountLabel: UILabel = {
         let label = UILabel()
@@ -60,14 +56,12 @@ final class CartView: UIView {
 
     private lazy var purchaseButton: AppButton = {
         let button = AppButton(type: .filled, title: "CART_PURCHASE_BUTTON_TITLE".localized)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapPurchaseButton), for: .touchUpInside)
         return button
     }()
 
     private let placeholderView: CartPlaceholderView = {
         let view = CartPlaceholderView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view
     }()

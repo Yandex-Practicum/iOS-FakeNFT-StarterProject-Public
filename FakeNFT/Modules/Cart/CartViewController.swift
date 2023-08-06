@@ -74,6 +74,7 @@ private extension CartViewController {
         self.viewModel.fetchOrder()
 
         self.navigationItem.rightBarButtonItem = self.sortButton
+        self.navigationItem.backButtonTitle = ""
     }
 
     func bind() {
@@ -118,7 +119,11 @@ private extension CartViewController {
         self.cartView.tableViewHelper = self.tableViewHelper
         self.cartView.backgroundColor = .appWhite
 
-        self.cartView.onTapPurchaseButton = { print("purchase button tapped") }
+        self.cartView.onTapPurchaseButton = { [weak self] in
+            guard let self = self else { return }
+            self.router.showCartPayment(on: self)
+        }
+
         self.cartView.onRefreshTable = { [weak self] in
             self?.viewModel.fetchOrder()
         }

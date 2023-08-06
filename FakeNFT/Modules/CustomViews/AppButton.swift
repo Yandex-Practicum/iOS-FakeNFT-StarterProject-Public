@@ -24,6 +24,7 @@ final class AppButton: UIButton {
         self.title = title
         super.init(frame: .zero)
         self.configure()
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {

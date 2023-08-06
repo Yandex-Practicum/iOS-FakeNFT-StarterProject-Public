@@ -35,11 +35,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         return label
     }()
 
-    private let starsView: StarsView = {
-        let starsView = StarsView()
-        starsView.translatesAutoresizingMaskIntoConstraints = false
-        return starsView
-    }()
+    private let starsView = StarsView()
 
     private let priceTitleLabel: UILabel = {
         let label = UILabel()

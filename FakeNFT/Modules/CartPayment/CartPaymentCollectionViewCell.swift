@@ -8,5 +8,5 @@
 import UIKit
 
 final class CartPaymentCollectionViewCell: UICollectionViewCell {
-    
+
 }

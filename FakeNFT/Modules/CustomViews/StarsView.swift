@@ -52,6 +52,7 @@ final class StarsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configure()
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
