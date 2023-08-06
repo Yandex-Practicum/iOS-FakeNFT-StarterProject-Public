@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NFTCartCellViewModel {
+struct NFTCartCellViewModel: Equatable {
     let id: String
     let name: String
     let image: UIImage?

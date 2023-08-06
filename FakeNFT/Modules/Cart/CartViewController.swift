@@ -54,6 +54,10 @@ extension CartViewController: CartTableViewHelperDelegate {
     var order: OrderViewModel? {
         self.viewModel.order.value
     }
+
+    func removeNft(row: Int) {
+        self.viewModel.removeNft(row: row)
+    }
 }
 
 private extension CartViewController {
@@ -69,7 +73,8 @@ private extension CartViewController {
 
     func bind() {
         self.viewModel.order.bind { [weak self] _ in
-            self?.cartView.reloadTableView()
+            guard let changeset = self?.viewModel.changeset else { return }
+            self?.cartView.updateTableAnimated(changeset: changeset)
         }
 
         self.viewModel.nftCount.bind { [weak self] nftCount in

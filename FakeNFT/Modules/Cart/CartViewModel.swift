@@ -12,9 +12,11 @@ protocol CartViewModelProtocol {
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
     var cartViewState: Box<CartViewModel.CartViewState> { get }
+    var changeset: Changeset<NFTCartCellViewModel>? { get }
 
     func fetchOrder()
     func sortOrder(trait: CartOrderSorter.SortingTrait)
+    func removeNft(row: Int)
 }
 
 final class CartViewModel {
@@ -29,6 +31,8 @@ final class CartViewModel {
     var finalOrderCost = Box<String>("0 ETH")
     var cartViewState = Box<CartViewState>(.loading)
 
+    var changeset: Changeset<NFTCartCellViewModel>?
+
     private let defaultOrderId = 1
 
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: CartViewState) in
@@ -37,7 +41,7 @@ final class CartViewModel {
         switch viewState {
         case .loaded(let order, let cost):
             self.cartViewState.value = viewState
-            self.order.value = order
+            self.setOrderAnimated(newOrder: order)
             self.nftCount.value = "\(order.count) NFT"
             self.finalOrderCost.value = "\(cost.nftCurrencyFormatted) ETH"
         default:
@@ -80,7 +84,20 @@ extension CartViewModel: CartViewModelProtocol {
 
     func sortOrder(trait: CartOrderSorter.SortingTrait) {
         self.cartOrderSorter.sort(order: self.order.value, trait: trait) { [weak self] sortedOrder in
-            self?.order.value = sortedOrder
+            self?.setOrderAnimated(newOrder: sortedOrder)
         }
+    }
+
+    func removeNft(row: Int) {
+        var newOrder = self.order.value
+        newOrder.remove(at: row)
+        self.setOrderAnimated(newOrder: newOrder)
+    }
+}
+
+private extension CartViewModel {
+    func setOrderAnimated(newOrder: OrderViewModel) {
+        self.changeset = Changeset(oldItems: self.order.value, newItems: newOrder)
+        self.order.value = newOrder
     }
 }

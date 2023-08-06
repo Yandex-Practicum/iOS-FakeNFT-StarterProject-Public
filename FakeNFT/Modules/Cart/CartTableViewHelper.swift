@@ -9,6 +9,7 @@ import UIKit
 
 protocol CartTableViewHelperDelegate: AnyObject {
     var order: OrderViewModel? { get }
+    func removeNft(row: Int)
 }
 
 protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
@@ -26,6 +27,16 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
         heightForRowAt indexPath: IndexPath
     ) -> CGFloat {
         140
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            self.delegate?.removeNft(row: indexPath.row) 
+        }
     }
 
     // MARK: - UITableViewDataSource
