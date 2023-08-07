@@ -20,9 +20,9 @@ extension UIImage {
     }
 
     enum Cart {
-        enum Placholder {
-            static let first = UIImage.named("CartPlaceholder1")
-            static let second = UIImage.named("CartPlaceholder2")
+        enum PaymentResult {
+            static let success = UIImage.named("CartPaymentSuccess")
+            static let failure = UIImage.named("CartPaymentFailure")
         }
 
         static let active = UIImage.named("CartActive")

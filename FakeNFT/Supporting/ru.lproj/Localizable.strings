@@ -26,3 +26,8 @@ CART_PAYMENT_VIEW_TITLE = "Выберите способ оплаты";
 CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "Совершая покупку, вы соглашаетесь с условиями \n";
 CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT = "Пользовательского соглашения";
 CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Оплатить";
+
+CART_PAYMENT_RESULT_SUCCESS_LABEL_TEXT = "Успех! Оплата прошла, поздравляем с покупкой!";
+CART_PAYMENT_RESULT_SUCCESS_BUTTON_TITLE = "Вернуться в каталог";
+CART_PAYMENT_RESULT_FAILURE_LABEL_TEXT = "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!";
+CART_PAYMENT_RESULT_FAILURE_BUTTON_TITLE = "Попробовать еще раз";

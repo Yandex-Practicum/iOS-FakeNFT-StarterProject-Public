@@ -169,6 +169,15 @@ private extension CartPaymentViewController {
                 ProgressHUDWrapper.show()
             }
         }
+
+        self.viewModel.isPurchaseSuccessful.bind { [weak self] purchaseState in
+            guard let self = self, purchaseState != .didNotHappen else { return }
+
+            let resultType: CartPaymentResultViewController.ResultType = purchaseState == .success ? .success : .failure
+            self.router.showPaymentResult(on: self, resultType: resultType) { [weak self] in
+                self?.dismiss(animated: true)
+            }
+        }
     }
 }
 

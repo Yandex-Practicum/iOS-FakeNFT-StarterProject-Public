@@ -9,6 +9,9 @@ import UIKit
 
 protocol CartPaymentRouterProtocol {
     func showUserAgreementWebView(on viewController: UIViewController, urlString: String)
+    func showPaymentResult(on viewController: UIViewController,
+                           resultType: CartPaymentResultViewController.ResultType,
+                           resultButtonAction: @escaping () -> Void)
 }
 
 final class CartPaymentRouter: CartPaymentRouterProtocol {
@@ -18,5 +21,18 @@ final class CartPaymentRouter: CartPaymentRouterProtocol {
 
         let webViewController = CartPaymentWebViewController(request: request)
         viewController.navigationController?.pushViewController(webViewController, animated: true)
+    }
+
+    func showPaymentResult(
+        on viewController: UIViewController,
+        resultType: CartPaymentResultViewController.ResultType,
+        resultButtonAction: @escaping () -> Void
+    ) {
+        let paymentResultViewController = CartPaymentResultViewController(resultType: resultType)
+        paymentResultViewController.onResultButtonAction = resultButtonAction
+
+        paymentResultViewController.modalPresentationStyle = .overFullScreen
+
+        viewController.present(paymentResultViewController, animated: true)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 protocol CartPaymentViewModelProtocol {
     var currencies: Box<CurreciesViewModel> { get }
     var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
-    var isPurchaseSuccessful: Box<Bool> { get }
+    var isPurchaseSuccessful: Box<CartPaymentViewModel.PurchaseState> { get }
 
     func fetchCurrencies()
     func purсhase(currencyId: String)
@@ -23,9 +23,15 @@ final class CartPaymentViewModel {
         case empty
     }
 
+    enum PurchaseState {
+        case success
+        case failure
+        case didNotHappen
+    }
+
     private(set) var currencies = Box<CurreciesViewModel>([])
     private(set) var cartPaymentViewState = Box<ViewState>(.loading)
-    private(set) var isPurchaseSuccessful = Box<Bool>(true)
+    private(set) var isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
 
     private let orderId: String
 
@@ -42,10 +48,10 @@ final class CartPaymentViewModel {
         }
     }
 
-    private lazy var purchaseCompletion: LoadingCompletionBlock<Bool> = { [weak self] isPurchaseSuccessful in
+    private lazy var purchaseCompletion: LoadingCompletionBlock<PurchaseState> = { [weak self] purchaseState in
         guard let self = self else { return }
         self.cartPaymentViewState.value = .loaded(nil)
-        self.isPurchaseSuccessful.value = isPurchaseSuccessful
+        self.isPurchaseSuccessful.value = purchaseState
     }
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in

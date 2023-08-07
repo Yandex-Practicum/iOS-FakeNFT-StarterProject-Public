@@ -26,3 +26,8 @@ CART_PAYMENT_VIEW_TITLE = "Select a Payment Method";
 CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "By making a purchase, you agree to \n";
 CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT = "the terms of the User Agreement";
 CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Pay";
+
+CART_PAYMENT_RESULT_SUCCESS_LABEL_TEXT = "Success! Payment completed, congratulations on your purchase!";
+CART_PAYMENT_RESULT_SUCCESS_BUTTON_TITLE = "Back to catalog";
+CART_PAYMENT_RESULT_FAILURE_LABEL_TEXT = "Oops! Something went wrong :( Try again!";
+CART_PAYMENT_RESULT_FAILURE_BUTTON_TITLE = "Try again";
