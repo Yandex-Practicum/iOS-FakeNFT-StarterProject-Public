@@ -12,7 +12,7 @@ protocol CartPaymentViewInteractorProtocol {
                          onFailure: @escaping LoadingFailureCompletionBlock)
     func purchase(orderId: String,
                   currencyId: String,
-                  onSuccess: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>,
+                  onSuccess: @escaping LoadingCompletionBlock<Bool>,
                   onFailure: @escaping LoadingFailureCompletionBlock)
 }
 
@@ -25,13 +25,16 @@ final class CartPaymentViewInteractor {
 
     private let currenciesService: CurrenciesServiceProtocol
     private let imageLoadingService: ImageLoadingServiceProtocol
+    private let orderPaymentService: OrderPaymentServiceProtocol
 
     init(
         currenciesService: CurrenciesServiceProtocol,
-        imageLoadingService: ImageLoadingServiceProtocol
+        imageLoadingService: ImageLoadingServiceProtocol,
+        orderPaymentService: OrderPaymentServiceProtocol
     ) {
         self.currenciesService = currenciesService
         self.imageLoadingService = imageLoadingService
+        self.orderPaymentService = orderPaymentService
     }
 }
 
@@ -60,10 +63,17 @@ extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
     func purchase(
         orderId: String,
         currencyId: String,
-        onSuccess: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>,
+        onSuccess: @escaping LoadingCompletionBlock<Bool>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
-
+        self.orderPaymentService.purchase(orderId: orderId, currencyId: currencyId) { result in
+            switch result {
+            case .success(let purchase):
+                onSuccess(purchase.success)
+            case .failure(let error):
+                onFailure(error)
+            }
+        }
     }
 }
 

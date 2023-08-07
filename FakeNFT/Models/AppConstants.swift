@@ -21,6 +21,7 @@ struct AppConstants {
 
         enum Cart {
             static let controller = "orders"
+            static let paymentController = "payment"
         }
 
         enum Currencies {

@@ -28,7 +28,8 @@ struct CartViewFactory {
         let currenciesService = CurrenciesService(networkClient: networkClient)
         let router = CartViewRouter(
             currenciesService: currenciesService,
-            imageLoadingService: imageLoadingService
+            imageLoadingService: imageLoadingService,
+            orderPaymentService: orderService
         )
 
         let viewController = CartViewController(
