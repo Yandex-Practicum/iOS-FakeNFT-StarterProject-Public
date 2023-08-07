@@ -76,7 +76,13 @@ final class CartViewRouter: CartViewRouterProtocol {
 
     func showCartPayment(on viewController: UIViewController) {
         let collectionViewHelper = CartPaymentCollectionViewHelper()
-        let cartPaymentViewController = CartPaymentViewController(collectionViewHelper: collectionViewHelper)
+        let router = CartPaymentRouter()
+        let cartPaymentViewController = CartPaymentViewController(
+            collectionViewHelper: collectionViewHelper,
+            router: router
+        )
+
+        cartPaymentViewController.navigationItem.backButtonTitle = ""
         cartPaymentViewController.hidesBottomBarWhenPushed = true
 
         viewController.navigationController?.pushViewController(cartPaymentViewController, animated: true)

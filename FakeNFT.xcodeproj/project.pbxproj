@@ -55,6 +55,9 @@
 		961964422A7FBBA60076BD88 /* CartPaymentViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964412A7FBBA60076BD88 /* CartPaymentViewInteractor.swift */; };
 		961964442A7FBC0C0076BD88 /* CartPaymentCollectionViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964432A7FBC0C0076BD88 /* CartPaymentCollectionViewHelper.swift */; };
 		961964462A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964452A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift */; };
+		961964482A8099240076BD88 /* UITextView+Hyperlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964472A8099240076BD88 /* UITextView+Hyperlink.swift */; };
+		9619644A2A809E180076BD88 /* CartPaymentWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961964492A809E180076BD88 /* CartPaymentWebViewController.swift */; };
+		9619644C2A809E440076BD88 /* CartPaymentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619644B2A809E440076BD88 /* CartPaymentRouter.swift */; };
 		96286E5E2A777CA7004ADF21 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5D2A777CA7004ADF21 /* CartViewController.swift */; };
 		96286E602A777D14004ADF21 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E5F2A777D14004ADF21 /* CartViewModel.swift */; };
 		96286E622A777D2B004ADF21 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96286E612A777D2B004ADF21 /* CartTableViewCell.swift */; };
@@ -148,6 +151,9 @@
 		961964412A7FBBA60076BD88 /* CartPaymentViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentViewInteractor.swift; sourceTree = "<group>"; };
 		961964432A7FBC0C0076BD88 /* CartPaymentCollectionViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentCollectionViewHelper.swift; sourceTree = "<group>"; };
 		961964452A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentCollectionViewCell.swift; sourceTree = "<group>"; };
+		961964472A8099240076BD88 /* UITextView+Hyperlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Hyperlink.swift"; sourceTree = "<group>"; };
+		961964492A809E180076BD88 /* CartPaymentWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentWebViewController.swift; sourceTree = "<group>"; };
+		9619644B2A809E440076BD88 /* CartPaymentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentRouter.swift; sourceTree = "<group>"; };
 		96286E5D2A777CA7004ADF21 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		96286E5F2A777D14004ADF21 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		96286E612A777D2B004ADF21 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
@@ -413,6 +419,8 @@
 				961964412A7FBBA60076BD88 /* CartPaymentViewInteractor.swift */,
 				961964432A7FBC0C0076BD88 /* CartPaymentCollectionViewHelper.swift */,
 				961964452A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift */,
+				961964492A809E180076BD88 /* CartPaymentWebViewController.swift */,
+				9619644B2A809E440076BD88 /* CartPaymentRouter.swift */,
 			);
 			path = CartPayment;
 			sourceTree = "<group>";
@@ -525,6 +533,7 @@
 				961964192A7CB2E20076BD88 /* Types.swift */,
 				9619642F2A7CFB180076BD88 /* Double+Formatting.swift */,
 				961964372A7F444D0076BD88 /* Changeset.swift */,
+				961964472A8099240076BD88 /* UITextView+Hyperlink.swift */,
 			);
 			path = Aux;
 			sourceTree = "<group>";
@@ -721,6 +730,7 @@
 				96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */,
 				961964182A7CA6110076BD88 /* Box.swift in Sources */,
 				96286E642A777D39004ADF21 /* CartTableViewHelper.swift in Sources */,
+				9619644C2A809E440076BD88 /* CartPaymentRouter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				9619643B2A7F7D1C0076BD88 /* CartRemoveNftViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
@@ -732,6 +742,7 @@
 				961964342A7CFFE70076BD88 /* CartViewInteractor.swift in Sources */,
 				961964382A7F444D0076BD88 /* Changeset.swift in Sources */,
 				9619640D2A7BCB2D0076BD88 /* ImageLoadingService.swift in Sources */,
+				9619644A2A809E180076BD88 /* CartPaymentWebViewController.swift in Sources */,
 				F61908C82A73CA2000DEF2F5 /* NavigationController.swift in Sources */,
 				961964462A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift in Sources */,
 				961964162A7BF16C0076BD88 /* ProgressHUDWrapper.swift in Sources */,
@@ -752,6 +763,7 @@
 				961964322A7CFB880076BD88 /* NumberFormatter+Presets.swift in Sources */,
 				F61908CD2A73CB4900DEF2F5 /* UIFont+Extensions.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				961964482A8099240076BD88 /* UITextView+Hyperlink.swift in Sources */,
 				9619641A2A7CB2E20076BD88 /* Types.swift in Sources */,
 				961964102A7BD9600076BD88 /* Order.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,

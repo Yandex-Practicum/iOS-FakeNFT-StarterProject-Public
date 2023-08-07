@@ -19,13 +19,19 @@ final class CartPaymentViewController: UIViewController {
 
     private let purchaseBackgroundView = PurchaseBackgroundView()
 
-    private let userAgreementTextView: UITextView = {
+    private lazy var userAgreementTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT".localized
+
+        let normalText = "CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT".localized
+        let linkText = "CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT".localized
+        let link = AppConstants.Links.purchaseUserAgreement
+
+        textView.addHyperLinksToText(originalText: normalText + linkText, hyperLinks: [linkText: link])
         textView.isEditable = false
         textView.backgroundColor = .appLightGray
         textView.font = .getFont(style: .regular, size: 13)
+        textView.delegate = self
         return textView
     }()
 
@@ -36,9 +42,11 @@ final class CartPaymentViewController: UIViewController {
     }()
 
     private var collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
+    private let router: CartPaymentRouterProtocol
 
-    init(collectionViewHelper: CartPaymentCollectionViewHelperProtocol) {
+    init(collectionViewHelper: CartPaymentCollectionViewHelperProtocol, router: CartPaymentRouterProtocol) {
         self.collectionViewHelper = collectionViewHelper
+        self.router = router
         super.init(nibName: nil, bundle: nil)
 
         self.collectionViewHelper?.delegate = self
@@ -57,6 +65,18 @@ final class CartPaymentViewController: UIViewController {
 // MARK: - CartPaymentCollectionViewHelperDelegate
 extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
 
+}
+
+// MARK: - UITextViewDelegate
+extension CartPaymentViewController: UITextViewDelegate {
+    func textView(
+        _ textView: UITextView,
+        shouldInteractWith URL: URL,
+        in characterRange: NSRange
+    ) -> Bool {
+        self.router.showUserAgreementWebView(on: self, urlString: URL.absoluteString)
+        return false
+    }
 }
 
 private extension CartPaymentViewController {

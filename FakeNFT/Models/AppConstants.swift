@@ -27,4 +27,8 @@ struct AppConstants {
             static let nftController = "nft"
         }
     }
+
+    enum Links {
+        static let purchaseUserAgreement = "https://yandex.ru/legal/practicum_termsofuse/"
+    }
 }

@@ -23,5 +23,6 @@ CART_REMOVE_NFT_REMOVE_BUTTON_TITLE = "Remove";
 CART_REMOVE_NFT_CANCEL_BUTTON_TITLE = "Cancel";
 
 CART_PAYMENT_VIEW_TITLE = "Select a Payment Method";
-CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "By making a purchase, you agree to \nthe terms of the User Agreement";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "By making a purchase, you agree to \n";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT = "the terms of the User Agreement";
 CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Pay";
