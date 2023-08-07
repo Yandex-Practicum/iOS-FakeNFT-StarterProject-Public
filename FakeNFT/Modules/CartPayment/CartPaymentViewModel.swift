@@ -33,7 +33,7 @@ final class CartPaymentViewModel {
     private(set) var currencies = Box<CurreciesViewModel>([])
     private(set) var cartPaymentViewState = Box<ViewState>(.loading)
     private(set) var isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
-    private(set) var error = Box<Error>(nil)
+    private(set) var error = Box<Error?>(nil)
 
     private let orderId: String
 
@@ -58,7 +58,7 @@ final class CartPaymentViewModel {
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
         self?.error.value = error
-        self?.cartViewState.value = .empty
+        self?.cartPaymentViewState.value = .empty
     }
 
     private let cartPaymentInteractor: CartPaymentViewInteractorProtocol

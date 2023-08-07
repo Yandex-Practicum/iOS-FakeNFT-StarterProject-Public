@@ -1,12 +1,11 @@
 //
-//  UIAlertController+SortingAlertController.swift
+//  UIAlertController+Extensions.swift
 //  FakeNFT
 //
 //  Created by Aleksandr Bekrenev on 07.08.2023.
 //
 
 import UIKit
-
 
 extension UIAlertController {
     static func sortingAlertController(
@@ -42,6 +41,18 @@ extension UIAlertController {
             alertController.addAction($0)
         }
 
+        return alertController
+    }
+
+    static func alert(for error: Error) -> UIAlertController {
+        let alertController = UIAlertController(
+            title: "DEFAULT_ERROR_TITLE".localized,
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+
+        let action = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(action)
         return alertController
     }
 }

@@ -41,8 +41,8 @@ extension CartViewRouter: CartViewRouterProtocol {
         viewController: UIViewController,
         onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
     ) {
-        let alertController = UIAlertController.sortingAlertController(onChoosingSortingTrait: onChoosingSortingTrait)
-        viewController.present(alertController, animated: true)
+        let alert = UIAlertController.sortingAlertController(onChoosingSortingTrait: onChoosingSortingTrait)
+        viewController.present(alert, animated: true)
     }
 
     func showRemoveNftView(
@@ -60,15 +60,8 @@ extension CartViewRouter: CartViewRouterProtocol {
     }
 
     func showAlert(on viewController: UIViewController, error: Error) {
-        let alertController = UIAlertController(
-            title: "DEFAULT_ERROR_TITLE".localized,
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-
-        let action = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(action)
-        viewController.present(alertController, animated: true)
+        let alert = UIAlertController.alert(for: error)
+        viewController.present(alert, animated: true)
     }
 
     func showCartPayment(on viewController: UIViewController, orderId: String) {

@@ -38,14 +38,7 @@ final class CartPaymentRouter: CartPaymentRouterProtocol {
     }
 
     func showAlert(on viewController: UIViewController, error: Error) {
-        let alertController = UIAlertController(
-            title: "DEFAULT_ERROR_TITLE".localized,
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-
-        let action = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(action)
-        viewController.present(alertController, animated: true)
+        let alert = UIAlertController.alert(for: error)
+        viewController.present(alert, animated: true)
     }
 }
