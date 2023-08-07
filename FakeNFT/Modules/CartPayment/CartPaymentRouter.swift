@@ -12,6 +12,7 @@ protocol CartPaymentRouterProtocol {
     func showPaymentResult(on viewController: UIViewController,
                            resultType: CartPaymentResultViewController.ResultType,
                            resultButtonAction: @escaping () -> Void)
+    func showAlert(on viewController: UIViewController, error: Error)
 }
 
 final class CartPaymentRouter: CartPaymentRouterProtocol {
@@ -34,5 +35,17 @@ final class CartPaymentRouter: CartPaymentRouterProtocol {
         paymentResultViewController.modalPresentationStyle = .overFullScreen
 
         viewController.present(paymentResultViewController, animated: true)
+    }
+
+    func showAlert(on viewController: UIViewController, error: Error) {
+        let alertController = UIAlertController(
+            title: "DEFAULT_ERROR_TITLE".localized,
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+
+        let action = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(action)
+        viewController.present(alertController, animated: true)
     }
 }

@@ -178,6 +178,11 @@ private extension CartPaymentViewController {
                 self?.dismiss(animated: true)
             }
         }
+
+        self.viewModel.error.bind { [weak self] error in
+            guard let self = self, let error = error else { return }
+            self.router.showAlert(on: self, error: error)
+        }
     }
 }
 
