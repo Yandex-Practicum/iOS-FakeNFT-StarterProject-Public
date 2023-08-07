@@ -3,9 +3,10 @@ import UIKit
 extension UIImage {
     static let addToBasket = UIImage(named: "addToBasket")
     static let basket = UIImage(named: "basket")
+    static let delete = UIImage(named: "delete")
     
-    static let sort = UIImage(named: "Sort")
-    static let back = UIImage(named: "Back")
+    static let sort = UIImage(named: "sort")
+    static let back = UIImage(named: "back")
     
     static let grayStar = UIImage(named: "grayStar")
     static let liked = UIImage(named: "liked")
