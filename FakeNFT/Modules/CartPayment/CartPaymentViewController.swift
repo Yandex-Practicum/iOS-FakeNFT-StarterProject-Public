@@ -42,11 +42,19 @@ final class CartPaymentViewController: UIViewController {
         return button
     }()
 
+    private var selectedCurrencyId: String = ""
+
     private var collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
+    private let viewModel: CartPaymentViewModelProtocol
     private let router: CartPaymentRouterProtocol
 
-    init(collectionViewHelper: CartPaymentCollectionViewHelperProtocol, router: CartPaymentRouterProtocol) {
+    init(
+        collectionViewHelper: CartPaymentCollectionViewHelperProtocol,
+        viewModel: CartPaymentViewModelProtocol,
+        router: CartPaymentRouterProtocol
+    ) {
         self.collectionViewHelper = collectionViewHelper
+        self.viewModel = viewModel
         self.router = router
         super.init(nibName: nil, bundle: nil)
 
@@ -65,7 +73,13 @@ final class CartPaymentViewController: UIViewController {
 
 // MARK: - CartPaymentCollectionViewHelperDelegate
 extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
+    var currencies: [CurrencyCellViewModel] {
+        self.viewModel.currencies.value
+    }
 
+    func didSelectCurrency(with id: String) {
+        self.selectedCurrencyId = id
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -85,7 +99,11 @@ private extension CartPaymentViewController {
         self.view.backgroundColor = .appWhite
         self.addSubviews()
         self.addConstraints()
+        self.bind()
         self.setupNavigationBar()
+
+        ProgressHUDWrapper.show()
+        self.viewModel.fetchCurrencies()
     }
 
     func addSubviews() {
@@ -127,12 +145,30 @@ private extension CartPaymentViewController {
                                                                         NSAttributedString.Key.foregroundColor: textColor]
         self.navigationItem.title = "CART_PAYMENT_VIEW_TITLE".localized
     }
+
+    func bind() {
+        self.viewModel.currencies.bind { [weak self] _ in
+            self?.currenciesCollectionView.reloadData()
+        }
+
+        self.viewModel.cartPaymentViewState.bind { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+            case .empty:
+                ProgressHUDWrapper.hide()
+            case .loaded:
+                ProgressHUDWrapper.hide()
+            case .loading:
+                ProgressHUDWrapper.show()
+            }
+        }
+    }
 }
 
 // MARK: - Actions
 private extension CartPaymentViewController {
     @objc
     func didTapPurchaseButton() {
-        print(#function)
+        self.viewModel.purhase(currencyId: self.selectedCurrencyId)
     }
 }

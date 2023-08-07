@@ -13,3 +13,5 @@ struct CurrencyCellViewModel {
     let name: String
     let image: UIImage?
 }
+
+typealias CurreciesViewModel = [CurrencyCellViewModel]

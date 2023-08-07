@@ -8,7 +8,8 @@
 import UIKit
 
 protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
-
+    var currencies: [CurrencyCellViewModel] { get }
+    func didSelectCurrency(with id: String)
 }
 
 protocol CartPaymentCollectionViewHelperProtocol: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -72,7 +73,10 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         didSelectItemAt indexPath: IndexPath
     ) {
         let cell: CartPaymentCollectionViewCell = collectionView.cellForItem(indexPath: indexPath)
+        guard let currency = cell.currency else { return }
+
         cell.shouldSelectCell(true)
+        self.delegate?.didSelectCurrency(with: currency.id)
     }
 
     func collectionView(
@@ -88,7 +92,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        0
+        self.delegate?.currencies.count ?? 0
     }
 
     func collectionView(
@@ -96,7 +100,8 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell: CartPaymentCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.currency = CurrencyCellViewModel(id: "1", title: "Bitcoin", name: "BTC", image: nil)
+        let currency = self.delegate?.currencies[indexPath.row]
+        cell.currency = currency
         return cell
     }
 }

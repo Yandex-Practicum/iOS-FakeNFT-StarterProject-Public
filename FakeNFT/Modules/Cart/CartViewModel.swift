@@ -11,7 +11,7 @@ protocol CartViewModelProtocol {
     var order: Box<OrderViewModel> { get }
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
-    var cartViewState: Box<CartViewModel.CartViewState> { get }
+    var cartViewState: Box<CartViewModel.ViewState> { get }
     var changeset: Changeset<NFTCartCellViewModel>? { get }
 
     func fetchOrder()
@@ -20,7 +20,7 @@ protocol CartViewModelProtocol {
 }
 
 final class CartViewModel {
-    enum CartViewState {
+    enum ViewState {
         case loading
         case loaded(OrderViewModel, Double)
         case empty
@@ -29,13 +29,13 @@ final class CartViewModel {
     var order = Box<OrderViewModel>([])
     var nftCount = Box<String>("0 NFT")
     var finalOrderCost = Box<String>("0 ETH")
-    var cartViewState = Box<CartViewState>(.loading)
+    var cartViewState = Box<ViewState>(.loading)
 
     var changeset: Changeset<NFTCartCellViewModel>?
 
     private let defaultOrderId = 1
 
-    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: CartViewState) in
+    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
 
         switch viewState {

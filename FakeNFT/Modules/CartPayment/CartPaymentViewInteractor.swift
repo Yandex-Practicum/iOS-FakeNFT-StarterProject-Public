@@ -7,6 +7,15 @@
 
 import Foundation
 
+protocol CartPaymentViewInteractorProtocol {
+
+}
+
 final class CartPaymentViewInteractor {
+
+}
+
+// MARK: - CartPaymentViewInteractorProtocol
+extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
 
 }

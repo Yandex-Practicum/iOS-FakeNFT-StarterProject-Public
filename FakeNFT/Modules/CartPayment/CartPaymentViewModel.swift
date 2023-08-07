@@ -8,14 +8,55 @@
 import Foundation
 
 protocol CartPaymentViewModelProtocol {
+    var currencies: Box<CurreciesViewModel> { get }
+    var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
 
+    func fetchCurrencies()
+    func purhase(currencyId: String)
 }
 
 final class CartPaymentViewModel {
+    enum ViewState {
+        case loading
+        case loaded(CurreciesViewModel)
+        case empty
+    }
 
+    var currencies = Box<CurreciesViewModel>([])
+    var cartPaymentViewState = Box<ViewState>(.loading)
+
+    private lazy var successCompletion: LoadingCompletionBlock<ViewState> = { [weak self] (viewState: ViewState) in
+        guard let self = self else { return }
+
+        switch viewState {
+        case .loaded(let currencies):
+            self.cartPaymentViewState.value = viewState
+            self.currencies.value = currencies
+        default:
+            break
+        }
+    }
+
+    private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
+        print(error)
+    }
+
+    private let cartPaymentInteractor: CartPaymentViewInteractorProtocol
+
+    init(interactor: CartPaymentViewInteractorProtocol) {
+        self.cartPaymentInteractor = interactor
+    }
 }
 
 // MARK: - CartPaymentViewModelProtocol
 extension CartPaymentViewModel: CartPaymentViewModelProtocol {
+    func fetchCurrencies() {
+        let currencies = [CurrencyCellViewModel(id: "1", title: "Bitcoin", name: "BTC", image: nil)]
+        self.currencies.value = currencies
+        self.cartPaymentViewState.value = .loaded(currencies)
+    }
 
+    func purhase(currencyId: String) {
+
+    }
 }

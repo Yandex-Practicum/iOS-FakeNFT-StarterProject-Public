@@ -22,7 +22,14 @@ protocol CartViewRouterProtocol {
     func showCartPayment(on viewController: UIViewController)
 }
 
-final class CartViewRouter: CartViewRouterProtocol {
+final class CartViewRouter {
+    init() {
+
+    }
+}
+
+// MARK: - CartViewRouterProtocol
+extension CartViewRouter: CartViewRouterProtocol {
     func showSortAlert(
         viewController: UIViewController,
         onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
@@ -77,8 +84,13 @@ final class CartViewRouter: CartViewRouterProtocol {
     func showCartPayment(on viewController: UIViewController) {
         let collectionViewHelper = CartPaymentCollectionViewHelper()
         let router = CartPaymentRouter()
+        let interactor = CartPaymentViewInteractor()
+
+        let viewModel = CartPaymentViewModel(interactor: interactor)
+
         let cartPaymentViewController = CartPaymentViewController(
             collectionViewHelper: collectionViewHelper,
+            viewModel: viewModel,
             router: router
         )
 

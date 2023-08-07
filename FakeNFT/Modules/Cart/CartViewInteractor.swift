@@ -9,16 +9,13 @@ import Foundation
 
 protocol CartViewInteractorProtocol {
     func fetchOrder(with id: String,
-                    onSuccess: @escaping LoadingCompletionBlock,
+                    onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
                     onFailure: @escaping LoadingFailureCompletionBlock)
     func changeOrder(with id: String,
                      nftIds: [String],
-                     onSuccess: @escaping LoadingCompletionBlock,
+                     onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
                      onFailure: @escaping LoadingFailureCompletionBlock)
 }
-
-typealias LoadingCompletionBlock = (CartViewModel.CartViewState) -> Void
-typealias LoadingFailureCompletionBlock = (Error) -> Void
 
 final class CartViewInteractor {
     private var order: [NFTCartCellViewModel] = []
@@ -47,7 +44,7 @@ final class CartViewInteractor {
 extension CartViewInteractor: CartViewInteractorProtocol {
     func fetchOrder(
         with id: String,
-        onSuccess: @escaping LoadingCompletionBlock,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
         self.orderService.fetchOrder(id: id) { [weak self] result in
@@ -69,7 +66,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
     func changeOrder(
         with id: String,
         nftIds: [String],
-        onSuccess: @escaping LoadingCompletionBlock,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
         self.orderService.changeOrder(id: id, nftIds: nftIds) { [weak self] result in
@@ -87,7 +84,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
 private extension CartViewInteractor {
     func fetchNfts(
         ids: [String],
-        onSuccess: @escaping LoadingCompletionBlock,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
         ids.forEach { [weak self] id in
@@ -100,7 +97,7 @@ private extension CartViewInteractor {
 
     func fetchNft(
         with id: String,
-        onSuccess: @escaping LoadingCompletionBlock,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
         self.nftService.getNFTItemBy(id: id) { [weak self] result in
@@ -115,7 +112,7 @@ private extension CartViewInteractor {
 
     func prepareNftWithImage(
         model: NFTItemModel,
-        onSuccess: @escaping LoadingCompletionBlock,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
         let imageUrl = URL(string: model.images.first ?? "")
@@ -138,7 +135,7 @@ private extension CartViewInteractor {
 
     func saveNft(
         _ nft: NFTCartCellViewModel,
-        completion: @escaping LoadingCompletionBlock
+        completion: @escaping LoadingCompletionBlock<CartViewModel.ViewState>
     ) {
         self.order.append(nft)
         self.accumulatedCost += nft.price
