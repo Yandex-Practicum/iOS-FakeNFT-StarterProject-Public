@@ -69,6 +69,13 @@ final class CartPaymentViewModel {
 // MARK: - CartPaymentViewModelProtocol
 extension CartPaymentViewModel: CartPaymentViewModelProtocol {
     func fetchCurrencies() {
+        switch self.cartPaymentViewState.value {
+        case .loading:
+            break
+        default:
+            self.cartPaymentViewState.value = .loading
+        }
+
         self.cartPaymentInteractor.fetchCurrencies(
             onSuccess: self.successFetchCompletion,
             onFailure: self.failureCompletion

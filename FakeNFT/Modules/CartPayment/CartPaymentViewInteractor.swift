@@ -120,8 +120,11 @@ private extension CartPaymentViewInteractor {
     ) {
         self.currencies.append(currency)
         if self.currencies.count == self.currenciesCapacity {
-            completion(.loaded(self.currencies))
-            self.currencies.removeAll()
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                completion(.loaded(self.currencies))
+                self.currencies.removeAll()
+            }
         }
     }
 }

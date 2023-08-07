@@ -6,7 +6,6 @@
 //
 
 import UIKit.UIImage
-import Kingfisher
 
 protocol ImageLoadingServiceProtocol {
     func fetchImage(url: URL?, completion: @escaping ResultHandler<UIImage>)
@@ -15,6 +14,7 @@ protocol ImageLoadingServiceProtocol {
 final class ImageLoadingService: ImageLoadingServiceProtocol {
     enum ImageLoadingError: Error {
         case invalidURL
+        case loadingError
     }
 
     func fetchImage(url: URL?, completion: @escaping ResultHandler<UIImage>) {
@@ -23,11 +23,15 @@ final class ImageLoadingService: ImageLoadingServiceProtocol {
             return
         }
 
-        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            switch result {
-            case .success(let imageResult):
-                completion(.success(imageResult.image))
-            case .failure(let error):
+        DispatchQueue.global().async {
+            do {
+                let data = try Data(contentsOf: url)
+                guard let image = UIImage(data: data) else {
+                    completion(.failure(ImageLoadingError.loadingError))
+                    return
+                }
+                completion(.success(image))
+            } catch {
                 completion(.failure(error))
             }
         }

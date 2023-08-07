@@ -140,9 +140,12 @@ private extension CartViewInteractor {
         self.order.append(nft)
         self.accumulatedCost += nft.price
         if self.order.count == self.orderCapacity {
-            completion(.loaded(self.order, self.accumulatedCost))
-            self.order.removeAll()
-            self.accumulatedCost = 0
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                completion(.loaded(self.order, self.accumulatedCost))
+                self.order.removeAll()
+                self.accumulatedCost = 0
+            }
         }
     }
 }
