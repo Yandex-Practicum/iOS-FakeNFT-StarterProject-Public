@@ -16,22 +16,10 @@ final class ProfileNetworkClient: ProfileNetworkClientProtocol {
     weak var presenter: ProfilePresenterNetworkProtocol?
     
     func getDecodedProfile(){
-        networkClient.send(request: ProfileRequest(), type: ProfileModel.self){ result in
+        networkClient.send(request: ProfileRequest(), type: ProfileResponseModel.self){ result in
             switch result {
             case .success(let model):
-                print("\n\(model)")
                 self.presenter?.getData(for: model)
-            case .failure(let error):
-                print("\n\(error)")
-            }
-        }
-    }
-    
-    func getProfile() {
-        networkClient.send(request: ProfileRequest()){ result in
-            switch result {
-            case .success(let data):
-                print("\n\(data)")
             case .failure(let error):
                 print("\n\(error)")
             }

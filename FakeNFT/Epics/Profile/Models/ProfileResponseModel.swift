@@ -1,6 +1,6 @@
 import Foundation
 
-struct ProfileModel: Codable {
+struct ProfileResponseModel: Codable {
     let name: String
     let avatar: String
     let description: String
