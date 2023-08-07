@@ -8,17 +8,14 @@
 import UIKit
 
 protocol CartViewRouterProtocol {
-    func showSortAlert(
-        viewController: UIViewController,
-        onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
-    )
+    func showSortAlert(viewController: UIViewController,
+                       onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void)
 
-    func showRemoveNftView(
-        on viewController: UIViewController,
-        nftImage: UIImage?,
-        onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
-    )
+    func showRemoveNftView(on viewController: UIViewController,
+                           nftImage: UIImage?,
+                           onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void)
 
+    func showAlert(on viewController: UIViewController, error: Error)
     func showCartPayment(on viewController: UIViewController, orderId: String)
 }
 
@@ -89,6 +86,18 @@ extension CartViewRouter: CartViewRouterProtocol {
         removeNftViewController.modalTransitionStyle = .crossDissolve
 
         viewController.present(removeNftViewController, animated: true)
+    }
+
+    func showAlert(on viewController: UIViewController, error: Error) {
+        let alertController = UIAlertController(
+            title: "DEFAULT_ERROR_TITLE".localized,
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+
+        let action = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(action)
+        viewController.present(alertController, animated: true)
     }
 
     func showCartPayment(on viewController: UIViewController, orderId: String) {

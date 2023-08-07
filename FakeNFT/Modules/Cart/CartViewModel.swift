@@ -12,6 +12,7 @@ protocol CartViewModelProtocol {
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
     var cartViewState: Box<CartViewModel.ViewState> { get }
+    var error: Box<Error?> { get }
 
     var tableViewChangeset: Changeset<NFTCartCellViewModel>? { get }
     var orderId: String { get }
@@ -32,6 +33,7 @@ final class CartViewModel {
     private(set) var nftCount = Box<String>("0 NFT")
     private(set) var finalOrderCost = Box<String>("0 ETH")
     private(set) var cartViewState = Box<ViewState>(.loading)
+    private(set) var error = Box<Error?>(nil)
 
     private(set) var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
@@ -52,7 +54,8 @@ final class CartViewModel {
     }
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
-        print(error)
+        self?.error.value = error
+        self?.cartViewState.value = .empty
     }
 
     private let cartViewInteractor: CartViewInteractorProtocol

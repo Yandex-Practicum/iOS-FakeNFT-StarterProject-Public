@@ -10,6 +10,8 @@ CATALOGUE = "Каталог";
 CART = "Корзина";
 STATISTICS = "Статистика";
 
+DEFAULT_ERROR_TITLE = "Ошибка";
+
 CART_CELL_PRICE_TITLE_LABEL = "Цена";
 CART_PURCHASE_BUTTON_TITLE = "К оплате";
 CART_SORT_ALERT_TITLE = "Cортировка";

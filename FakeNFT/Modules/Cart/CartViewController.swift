@@ -44,6 +44,11 @@ final class CartViewController: UIViewController {
         self.configure()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel.fetchOrder()
+    }
+
     override func loadView() {
         self.view = self.cartView
     }
@@ -71,7 +76,7 @@ private extension CartViewController {
 
         self.configureView()
         self.bind()
-        self.viewModel.fetchOrder()
+//        self.viewModel.fetchOrder()
 
         self.navigationItem.rightBarButtonItem = self.sortButton
         self.navigationItem.backButtonTitle = ""
@@ -105,6 +110,11 @@ private extension CartViewController {
             case .loading:
                 ProgressHUDWrapper.show()
             }
+        }
+
+        self.viewModel.error.bind { [weak self] error in
+            guard let self = self, let error = error else { return }
+            self.router.showAlert(on: self, error: error)
         }
     }
 
