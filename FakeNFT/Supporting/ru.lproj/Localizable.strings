@@ -15,3 +15,5 @@ SORT_BY_NAME = "По названию";
 SORT_BY_AMOUNT = "По количеству NFT";
 TITLE_SORT = "Сортировка";
 CLOSE_ALERT_TITLE = "Закрыть";
+INVALID_PRICE_FORMAT = "Неверный формат цены";
+COLLECTION_AUTHOR = "Автор коллекции:";

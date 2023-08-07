@@ -9,7 +9,15 @@ import UIKit
 
 struct NFTInfoFactory {
     static func create(info: NFTInfo) -> UIViewController {
-        return UIViewController()
+        return NFTInfoViewController(
+            viewModel: NFTInfoViewModelImpl(
+                storage: NFtStorageServiceImpl(
+                    storageService: UserDefaultsStorageService()
+                ),
+                details: info
+            )
+        )
     }
 }
+
 

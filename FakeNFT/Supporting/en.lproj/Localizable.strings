@@ -15,3 +15,5 @@ SORT_BY_NAME = "By name";
 SORT_BY_AMOUNT = "By NFT amount";
 TITLE_SORT = "Sorting";
 CLOSE_ALERT_TITLE = "Close";
+INVALID_PRICE_FORMAT = "Invalid price format";
+COLLECTION_AUTHOR = "Collection author:";
