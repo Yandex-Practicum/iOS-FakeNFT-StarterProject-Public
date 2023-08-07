@@ -216,6 +216,7 @@
 				F61908C52A73C81B00DEF2F5 /* UIColor+Extensions.swift */,
 				F61908CC2A73CB4900DEF2F5 /* UIFont+Extensions.swift */,
 				96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */,
+				961964472A8099240076BD88 /* UITextView+Hyperlink.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -533,7 +534,6 @@
 				961964192A7CB2E20076BD88 /* Types.swift */,
 				9619642F2A7CFB180076BD88 /* Double+Formatting.swift */,
 				961964372A7F444D0076BD88 /* Changeset.swift */,
-				961964472A8099240076BD88 /* UITextView+Hyperlink.swift */,
 			);
 			path = Aux;
 			sourceTree = "<group>";

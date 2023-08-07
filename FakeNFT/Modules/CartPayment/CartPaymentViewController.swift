@@ -27,7 +27,7 @@ final class CartPaymentViewController: UIViewController {
         let linkText = "CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT".localized
         let link = AppConstants.Links.purchaseUserAgreement
 
-        textView.addHyperLinksToText(originalText: normalText + linkText, hyperLinks: [linkText: link])
+        textView.addHyperLinksToText(originalText: normalText + linkText, hyperLinks: [linkText: link], lineHeight: 6)
         textView.isEditable = false
         textView.backgroundColor = .appLightGray
         textView.font = .getFont(style: .regular, size: 13)
@@ -107,7 +107,7 @@ private extension CartPaymentViewController {
             self.purchaseBackgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.purchaseBackgroundView.heightAnchor.constraint(equalToConstant: 186),
 
-            self.userAgreementTextView.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 16),
+            self.userAgreementTextView.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 12),
             self.userAgreementTextView.leadingAnchor.constraint(equalTo: self.purchaseBackgroundView.leadingAnchor, constant: 16),
             self.userAgreementTextView.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
 

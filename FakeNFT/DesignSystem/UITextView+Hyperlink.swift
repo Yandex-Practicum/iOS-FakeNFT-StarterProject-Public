@@ -8,9 +8,10 @@
 import UIKit
 
 extension UITextView {
-    func addHyperLinksToText(originalText: String, hyperLinks: [String: String]) {
+    func addHyperLinksToText(originalText: String, hyperLinks: [String: String], lineHeight: CGFloat) {
         let style = NSMutableParagraphStyle()
         style.alignment = .left
+        style.lineSpacing = lineHeight
         let attributedOriginalText = NSMutableAttributedString(string: originalText)
 
         let font = UIFont.getFont(style: .regular, size: 13)
@@ -26,10 +27,7 @@ extension UITextView {
         }
 
         let linkTextColor = UIColor.appBlue
-        self.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: linkTextColor,
-            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
+        self.linkTextAttributes = [NSAttributedString.Key.foregroundColor: linkTextColor]
         self.attributedText = attributedOriginalText
     }
 }
