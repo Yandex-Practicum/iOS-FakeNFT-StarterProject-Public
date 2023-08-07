@@ -27,7 +27,7 @@ final class CartPaymentCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = self.cornerRadius / 2
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .appBlackOnly
         return imageView
     }()
 
@@ -63,6 +63,11 @@ final class CartPaymentCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.contentView.layer.borderColor = UIColor.appBlack.cgColor
     }
 }
 
