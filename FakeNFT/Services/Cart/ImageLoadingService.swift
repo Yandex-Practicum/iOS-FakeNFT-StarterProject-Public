@@ -24,7 +24,6 @@ final class ImageLoadingService: ImageLoadingServiceProtocol {
         }
 
         KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            guard let self = self else { return }
             switch result {
             case .success(let imageResult):
                 completion(.success(imageResult.image))

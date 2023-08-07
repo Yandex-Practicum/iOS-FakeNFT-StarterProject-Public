@@ -12,9 +12,10 @@ final class CartPaymentViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .appWhite
-        collectionView.register<CartPaymentCollectionViewCell>(CartPaymentCollectionViewCell.self)
+        collectionView.refreshControl = self.refreshControl
         collectionView.dataSource = self.collectionViewHelper
         collectionView.delegate = self.collectionViewHelper
+        collectionView.register<CartPaymentCollectionViewCell>(CartPaymentCollectionViewCell.self)
         return collectionView
     }()
 
@@ -42,7 +43,13 @@ final class CartPaymentViewController: UIViewController {
         return button
     }()
 
-    private var selectedCurrencyId: String = ""
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refreshCollection(_:)), for: .valueChanged)
+        return refreshControl
+    }()
+
+    private var selectedCurrencyId: String?
 
     private var collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
     private let viewModel: CartPaymentViewModelProtocol
@@ -169,6 +176,13 @@ private extension CartPaymentViewController {
 private extension CartPaymentViewController {
     @objc
     func didTapPurchaseButton() {
-        self.viewModel.purhase(currencyId: self.selectedCurrencyId)
+        guard let selectedCurrencyId = self.selectedCurrencyId else { return }
+        self.viewModel.purhase(currencyId: selectedCurrencyId)
+    }
+
+    @objc
+    func refreshCollection(_ sender: UIRefreshControl) {
+        self.viewModel.fetchCurrencies()
+        sender.endRefreshing()
     }
 }

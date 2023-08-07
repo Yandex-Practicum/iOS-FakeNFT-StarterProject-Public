@@ -24,12 +24,12 @@ final class CartView: UIView {
         tableView.backgroundColor = .appWhite
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.refreshControl = self.refreshControll
+        tableView.refreshControl = self.refreshControl
         tableView.register<CartTableViewCell>(CartTableViewCell.self)
         return tableView
     }()
 
-    private lazy var refreshControll: UIRefreshControl = {
+    private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(self.refreshTable(_:)), for: .valueChanged)
         return refreshControl
