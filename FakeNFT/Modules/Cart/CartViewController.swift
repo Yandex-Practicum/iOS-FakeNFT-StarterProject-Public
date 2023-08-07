@@ -79,7 +79,7 @@ private extension CartViewController {
 
     func bind() {
         self.viewModel.order.bind { [weak self] _ in
-            guard let changeset = self?.viewModel.changeset else { return }
+            guard let changeset = self?.viewModel.tableViewChangeset else { return }
             self?.cartView.updateTableAnimated(changeset: changeset)
         }
 
@@ -121,7 +121,7 @@ private extension CartViewController {
 
         self.cartView.onTapPurchaseButton = { [weak self] in
             guard let self = self else { return }
-            self.router.showCartPayment(on: self)
+            self.router.showCartPayment(on: self, orderId: self.viewModel.orderId)
         }
 
         self.cartView.onRefreshTable = { [weak self] in

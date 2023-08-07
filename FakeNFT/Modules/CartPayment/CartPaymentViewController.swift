@@ -177,7 +177,7 @@ private extension CartPaymentViewController {
     @objc
     func didTapPurchaseButton() {
         guard let selectedCurrencyId = self.selectedCurrencyId else { return }
-        self.viewModel.purhase(currencyId: selectedCurrencyId)
+        self.viewModel.purсhase(currencyId: selectedCurrencyId)
     }
 
     @objc

@@ -12,7 +12,9 @@ protocol CartViewModelProtocol {
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
     var cartViewState: Box<CartViewModel.ViewState> { get }
-    var changeset: Changeset<NFTCartCellViewModel>? { get }
+
+    var tableViewChangeset: Changeset<NFTCartCellViewModel>? { get }
+    var orderId: String { get }
 
     func fetchOrder()
     func sortOrder(trait: CartOrderSorter.SortingTrait)
@@ -26,14 +28,14 @@ final class CartViewModel {
         case empty
     }
 
-    var order = Box<OrderViewModel>([])
-    var nftCount = Box<String>("0 NFT")
-    var finalOrderCost = Box<String>("0 ETH")
-    var cartViewState = Box<ViewState>(.loading)
+    private(set) var order = Box<OrderViewModel>([])
+    private(set) var nftCount = Box<String>("0 NFT")
+    private(set) var finalOrderCost = Box<String>("0 ETH")
+    private(set) var cartViewState = Box<ViewState>(.loading)
 
-    var changeset: Changeset<NFTCartCellViewModel>?
+    private(set) var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
-    private let defaultOrderId = 1
+    private(set) var orderId = "1"
 
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
@@ -76,7 +78,7 @@ extension CartViewModel: CartViewModelProtocol {
         }
 
         self.cartViewInteractor.fetchOrder(
-            with: "\(self.defaultOrderId)",
+            with: self.orderId,
             onSuccess: self.successCompletion,
             onFailure: failureCompletion
         )
@@ -95,7 +97,7 @@ extension CartViewModel: CartViewModelProtocol {
 
         self.cartViewState.value = .loading
         self.cartViewInteractor.changeOrder(
-            with: "\(self.defaultOrderId)",
+            with: self.orderId,
             nftIds: nftIds,
             onSuccess: self.successCompletion,
             onFailure: self.failureCompletion
@@ -105,7 +107,7 @@ extension CartViewModel: CartViewModelProtocol {
 
 private extension CartViewModel {
     func setOrderAnimated(newOrder: OrderViewModel) {
-        self.changeset = Changeset(oldItems: self.order.value, newItems: newOrder)
+        self.tableViewChangeset = Changeset(oldItems: self.order.value, newItems: newOrder)
         self.order.value = newOrder
     }
 }

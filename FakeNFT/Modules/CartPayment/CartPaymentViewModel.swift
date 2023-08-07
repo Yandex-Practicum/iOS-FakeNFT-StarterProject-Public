@@ -12,7 +12,7 @@ protocol CartPaymentViewModelProtocol {
     var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
 
     func fetchCurrencies()
-    func purhase(currencyId: String)
+    func purсhase(currencyId: String)
 }
 
 final class CartPaymentViewModel {
@@ -22,8 +22,10 @@ final class CartPaymentViewModel {
         case empty
     }
 
-    var currencies = Box<CurreciesViewModel>([])
-    var cartPaymentViewState = Box<ViewState>(.loading)
+    private(set) var currencies = Box<CurreciesViewModel>([])
+    private(set) var cartPaymentViewState = Box<ViewState>(.loading)
+
+    private let orderId: String
 
     private lazy var successCompletion: LoadingCompletionBlock<ViewState> = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
@@ -43,7 +45,8 @@ final class CartPaymentViewModel {
 
     private let cartPaymentInteractor: CartPaymentViewInteractorProtocol
 
-    init(interactor: CartPaymentViewInteractorProtocol) {
+    init(orderId: String, interactor: CartPaymentViewInteractorProtocol) {
+        self.orderId = orderId
         self.cartPaymentInteractor = interactor
     }
 }
@@ -54,7 +57,7 @@ extension CartPaymentViewModel: CartPaymentViewModelProtocol {
         self.cartPaymentInteractor.fetchCurrencies(onSuccess: self.successCompletion, onFailure: self.failureCompletion)
     }
 
-    func purhase(currencyId: String) {
+    func purсhase(currencyId: String) {
 
     }
 }

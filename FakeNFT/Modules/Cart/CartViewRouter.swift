@@ -19,7 +19,7 @@ protocol CartViewRouterProtocol {
         onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     )
 
-    func showCartPayment(on viewController: UIViewController)
+    func showCartPayment(on viewController: UIViewController, orderId: String)
 }
 
 final class CartViewRouter {
@@ -85,7 +85,7 @@ extension CartViewRouter: CartViewRouterProtocol {
         viewController.present(removeNftViewController, animated: true)
     }
 
-    func showCartPayment(on viewController: UIViewController) {
+    func showCartPayment(on viewController: UIViewController, orderId: String) {
         let collectionViewHelper = CartPaymentCollectionViewHelper()
         let router = CartPaymentRouter()
         let interactor = CartPaymentViewInteractor(
@@ -93,7 +93,7 @@ extension CartViewRouter: CartViewRouterProtocol {
             imageLoadingService: self.imageLoadingService
         )
 
-        let viewModel = CartPaymentViewModel(interactor: interactor)
+        let viewModel = CartPaymentViewModel(orderId: orderId, interactor: interactor)
 
         let cartPaymentViewController = CartPaymentViewController(
             collectionViewHelper: collectionViewHelper,
