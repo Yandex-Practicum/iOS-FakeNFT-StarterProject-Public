@@ -12,6 +12,7 @@ final class CartPaymentViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .appWhite
+        collectionView.register<CartPaymentCollectionViewCell>(CartPaymentCollectionViewCell.self)
         collectionView.dataSource = self.collectionViewHelper
         collectionView.delegate = self.collectionViewHelper
         return collectionView
