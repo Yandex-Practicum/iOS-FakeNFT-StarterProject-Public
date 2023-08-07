@@ -21,3 +21,7 @@ CART_SORT_ALERT_CLOSE_ACTION_TITLE = "Закрыть";
 CART_REMOVE_NFT_REMOVE_LABEL_TEXT = "Вы уверены, что хотите \n удалить объект из корзины?";
 CART_REMOVE_NFT_REMOVE_BUTTON_TITLE = "Удалить";
 CART_REMOVE_NFT_CANCEL_BUTTON_TITLE = "Вернуться";
+
+CART_PAYMENT_VIEW_TITLE = "Выберите способ оплаты";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "Совершая покупку, вы соглашаетесь с условиями \nПользовательского соглашения";
+CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Оплатить";

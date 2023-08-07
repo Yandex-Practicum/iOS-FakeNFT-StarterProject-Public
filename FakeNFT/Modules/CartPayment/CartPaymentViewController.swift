@@ -22,7 +22,7 @@ final class CartPaymentViewController: UIViewController {
     private let userAgreementTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "Совершая покупку, вы соглашаетесь с условиями \nПользовательского соглашения"
+        textView.text = "CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT".localized
         textView.isEditable = false
         textView.backgroundColor = .appLightGray
         textView.font = .getFont(style: .regular, size: 13)
@@ -30,7 +30,7 @@ final class CartPaymentViewController: UIViewController {
     }()
 
     private lazy var purchaseButton: AppButton = {
-        let button = AppButton(type: .filled, title: "Оплатить")
+        let button = AppButton(type: .filled, title: "CART_PAYMENT_PURCHASE_BUTTON_TITLE".localized)
         button.addTarget(self, action: #selector(self.didTapPurchaseButton), for: .touchUpInside)
         return button
     }()
@@ -104,7 +104,7 @@ private extension CartPaymentViewController {
         let textColor = UIColor.appBlack
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font,
                                                                         NSAttributedString.Key.foregroundColor: textColor]
-        self.navigationItem.title = "Выберите способ оплаты"
+        self.navigationItem.title = "CART_PAYMENT_VIEW_TITLE".localized
     }
 }
 
