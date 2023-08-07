@@ -23,8 +23,12 @@ protocol CartViewRouterProtocol {
 }
 
 final class CartViewRouter {
-    init() {
+    private let currenciesService: CurrenciesServiceProtocol
+    private let imageLoadingService: ImageLoadingServiceProtocol
 
+    init(currenciesService: CurrenciesServiceProtocol, imageLoadingService: ImageLoadingServiceProtocol) {
+        self.currenciesService = currenciesService
+        self.imageLoadingService = imageLoadingService
     }
 }
 
@@ -84,7 +88,10 @@ extension CartViewRouter: CartViewRouterProtocol {
     func showCartPayment(on viewController: UIViewController) {
         let collectionViewHelper = CartPaymentCollectionViewHelper()
         let router = CartPaymentRouter()
-        let interactor = CartPaymentViewInteractor()
+        let interactor = CartPaymentViewInteractor(
+            currenciesService: self.currenciesService,
+            imageLoadingService: self.imageLoadingService
+        )
 
         let viewModel = CartPaymentViewModel(interactor: interactor)
 

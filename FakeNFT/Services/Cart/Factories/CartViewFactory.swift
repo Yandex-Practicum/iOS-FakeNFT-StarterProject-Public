@@ -24,7 +24,12 @@ struct CartViewFactory {
 
         let viewModel = CartViewModel(intercator: cartViewInteractor, orderSorter: orderSorter)
         let tableViewHelper = CartTableViewHelper()
-        let router = CartViewRouter()
+
+        let currenciesService = CurrenciesService(networkClient: networkClient)
+        let router = CartViewRouter(
+            currenciesService: currenciesService,
+            imageLoadingService: imageLoadingService
+        )
 
         let viewController = CartViewController(
             viewModel: viewModel,

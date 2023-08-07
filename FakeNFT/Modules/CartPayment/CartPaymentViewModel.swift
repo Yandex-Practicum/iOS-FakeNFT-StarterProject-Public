@@ -51,9 +51,7 @@ final class CartPaymentViewModel {
 // MARK: - CartPaymentViewModelProtocol
 extension CartPaymentViewModel: CartPaymentViewModelProtocol {
     func fetchCurrencies() {
-        let currencies = [CurrencyCellViewModel(id: "1", title: "Bitcoin", name: "BTC", image: nil)]
-        self.currencies.value = currencies
-        self.cartPaymentViewState.value = .loaded(currencies)
+        self.cartPaymentInteractor.fetchCurrencies(onSuccess: self.successCompletion, onFailure: self.failureCompletion)
     }
 
     func purhase(currencyId: String) {

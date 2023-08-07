@@ -20,11 +20,15 @@ struct AppConstants {
         static let defaultEndpoint = "https://64c51750c853c26efada7c53.mockapi.io"
 
         enum Cart {
-            static let ordersController = "orders"
+            static let controller = "orders"
+        }
+
+        enum Currencies {
+            static let controller = "currencies"
         }
 
         enum Nft {
-            static let nftController = "nft"
+            static let controller = "nft"
         }
     }
 

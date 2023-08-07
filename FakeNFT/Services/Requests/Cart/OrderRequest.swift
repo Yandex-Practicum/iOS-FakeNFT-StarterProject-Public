@@ -17,7 +17,7 @@ struct OrderRequest: NetworkRequest {
         let api = AppConstants.Api.self
         var components = URLComponents(string: api.defaultEndpoint)
         let apiVersion = api.version
-        let ordersController = api.Cart.ordersController
+        let ordersController = api.Cart.controller
         components?.path = "\(apiVersion)/\(ordersController)/\(orderId)"
         return components?.url
     }

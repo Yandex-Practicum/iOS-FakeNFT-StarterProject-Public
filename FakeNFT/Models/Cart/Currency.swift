@@ -13,3 +13,5 @@ struct Currency: Decodable {
     let name: String
     let image: String
 }
+
+typealias CurrenciesResult = [Currency]
