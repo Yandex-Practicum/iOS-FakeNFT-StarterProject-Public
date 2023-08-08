@@ -11,3 +11,9 @@ struct DefaultNetworkTask: NetworkTask {
         dataTask.cancel()
     }
 }
+
+extension NetworkTask? {
+    var isTaskRunning: Bool {
+        self != nil
+    }
+}

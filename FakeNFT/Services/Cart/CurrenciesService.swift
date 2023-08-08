@@ -12,10 +12,6 @@ protocol CurrenciesServiceProtocol {
 }
 
 final class CurrenciesService {
-    private var isFetcingTaskStillRunning: Bool {
-        self.fetchingTask != nil
-    }
-
     private let networkClient: NetworkClient
     private var fetchingTask: NetworkTask?
 
@@ -28,7 +24,7 @@ final class CurrenciesService {
 extension CurrenciesService: CurrenciesServiceProtocol {
     func fetchCurrencies(completion: @escaping ResultHandler<CurrenciesResult>) {
         assert(Thread.isMainThread)
-        guard self.isFetcingTaskStillRunning == false else { return }
+        guard self.fetchingTask.isTaskRunning == false else { return }
 
         let request = CurrenciesRequest()
         let task = self.networkClient.send(request: request, type: CurrenciesResult.self) { result in

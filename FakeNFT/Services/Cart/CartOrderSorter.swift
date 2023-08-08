@@ -20,29 +20,32 @@ final class CartOrderSorter: CartOrderSorterProtocol {
         case name
     }
 
-    private let sortingQueue = DispatchQueue(label: "com.practicum.yandex.sort-nft")
+    private let sortingQueue = DispatchQueue(label: "com.practicum.yandex.sorting-nft")
 
     func sort(
         order: OrderViewModel,
         trait: SortingTrait,
-        completion: @escaping ((OrderViewModel) -> Void)
+        completion: @escaping (OrderViewModel) -> Void
     ) {
-        let sortClosure: (NFTCartCellViewModel, NFTCartCellViewModel) -> Bool
-
-        switch trait {
-        case .name:
-            sortClosure = { $0.name < $1.name }
-        case .price:
-            sortClosure = { $0.price < $1.price }
-        case .rating:
-            sortClosure = { $0.rating < $1.rating }
-        }
-
+        let sortingClosure = self.getSortingClosure(trait: trait)
         self.sortingQueue.sync {
-            let sortedOrder = order.sorted(by: sortClosure)
+            let sortedOrder = order.sorted(by: sortingClosure)
             DispatchQueue.main.async {
                 completion(sortedOrder)
             }
+        }
+    }
+}
+
+private extension CartOrderSorter {
+    func getSortingClosure(trait: SortingTrait) -> (NFTCartCellViewModel, NFTCartCellViewModel) -> Bool {
+        switch trait {
+        case .name:
+            return { $0.name < $1.name }
+        case .price:
+            return { $0.price < $1.price }
+        case .rating:
+            return { $0.rating < $1.rating }
         }
     }
 }

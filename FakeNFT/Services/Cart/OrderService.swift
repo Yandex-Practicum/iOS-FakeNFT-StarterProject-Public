@@ -17,18 +17,6 @@ protocol OrderPaymentServiceProtocol {
 }
 
 final class OrderService {
-    private var isFetcingTaskStillRunning: Bool {
-        self.fetchingTask != nil
-    }
-
-    private var isChangingTaskStillRunning: Bool {
-        self.changingTask != nil
-    }
-
-    private var isPurchasingTaskStillRunning: Bool {
-        self.purchasingTask != nil
-    }
-
     private let networkClient: NetworkClient
     private var fetchingTask: NetworkTask?
     private var changingTask: NetworkTask?
@@ -43,7 +31,7 @@ final class OrderService {
 extension OrderService: OrderServiceProtocol {
     func fetchOrder(id: String, completion: @escaping ResultHandler<Order>) {
         assert(Thread.isMainThread)
-        guard self.isFetcingTaskStillRunning == false else { return }
+        guard self.fetchingTask.isTaskRunning == false else { return }
 
         let request = OrderRequest(orderId: id)
         let task = self.networkClient.send(request: request, type: Order.self) { result in
@@ -59,7 +47,7 @@ extension OrderService: OrderServiceProtocol {
 
     func changeOrder(id: String, nftIds: [String], completion: @escaping ResultHandler<Order>) {
         assert(Thread.isMainThread)
-        guard self.isChangingTaskStillRunning == false else { return }
+        guard self.changingTask.isTaskRunning == false else { return }
 
         var request = OrderRequest(orderId: id)
         request.httpMethod = .put
@@ -81,7 +69,7 @@ extension OrderService: OrderServiceProtocol {
 extension OrderService: OrderPaymentServiceProtocol {
     func purchase(orderId: String, currencyId: String, completion: @escaping ResultHandler<PurchaseResult>) {
         assert(Thread.isMainThread)
-        guard self.isPurchasingTaskStillRunning == false else { return }
+        guard self.purchasingTask.isTaskRunning == false else { return }
 
         let request = PurchaseRequest(orderId: orderId, currencyId: currencyId)
         let task = self.networkClient.send(request: request, type: PurchaseResult.self) { result in
