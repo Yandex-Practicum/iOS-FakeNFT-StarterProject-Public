@@ -133,14 +133,31 @@ private extension CartPaymentViewController {
             self.purchaseBackgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.purchaseBackgroundView.heightAnchor.constraint(equalToConstant: 186),
 
-            self.userAgreementTextView.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 12),
-            self.userAgreementTextView.leadingAnchor.constraint(equalTo: self.purchaseBackgroundView.leadingAnchor, constant: 16),
-            self.userAgreementTextView.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
-
+            self.userAgreementTextView.topAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.topAnchor,
+                constant: 12
+            ),
+            self.userAgreementTextView.leadingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.leadingAnchor,
+                constant: 16
+            ),
+            self.userAgreementTextView.trailingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.trailingAnchor,
+                constant: -16
+            ),
             self.purchaseButton.topAnchor.constraint(equalTo: self.userAgreementTextView.bottomAnchor, constant: 16),
-            self.purchaseButton.leadingAnchor.constraint(equalTo: self.purchaseBackgroundView.leadingAnchor, constant: 16),
-            self.purchaseButton.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
-            self.purchaseButton.bottomAnchor.constraint(equalTo: self.purchaseBackgroundView.bottomAnchor, constant: -50),
+            self.purchaseButton.leadingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.leadingAnchor,
+                constant: 16
+            ),
+            self.purchaseButton.trailingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.trailingAnchor,
+                constant: -16
+            ),
+            self.purchaseButton.bottomAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.bottomAnchor,
+                constant: -50
+            ),
             self.purchaseButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
@@ -148,8 +165,9 @@ private extension CartPaymentViewController {
     func setupNavigationBar() {
         let font = UIFont.getFont(style: .bold, size: 17)
         let textColor = UIColor.appBlack
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font,
-                                                                        NSAttributedString.Key.foregroundColor: textColor]
+        let titleAttributes = [NSAttributedString.Key.font: font,
+                               NSAttributedString.Key.foregroundColor: textColor]
+        self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
         self.navigationItem.title = "CART_PAYMENT_VIEW_TITLE".localized
     }
 
@@ -158,8 +176,7 @@ private extension CartPaymentViewController {
             self?.currenciesCollectionView.reloadData()
         }
 
-        self.viewModel.cartPaymentViewState.bind { [weak self] state in
-            guard let self = self else { return }
+        self.viewModel.cartPaymentViewState.bind { state in
             switch state {
             case .empty:
                 ProgressHUDWrapper.hide()

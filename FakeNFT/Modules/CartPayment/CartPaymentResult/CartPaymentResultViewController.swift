@@ -82,7 +82,10 @@ private extension CartPaymentResultViewController {
             self.resultImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 152),
             self.resultImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 48),
             self.resultImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -48),
-            self.resultImageView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -304),
+            self.resultImageView.bottomAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -304
+            ),
 
             self.resultLabel.topAnchor.constraint(equalTo: self.resultImageView.bottomAnchor, constant: 20),
             self.resultLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 36),
@@ -90,7 +93,10 @@ private extension CartPaymentResultViewController {
 
             self.resultButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.resultButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            self.resultButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            self.resultButton.bottomAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16
+            ),
             self.resultButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }

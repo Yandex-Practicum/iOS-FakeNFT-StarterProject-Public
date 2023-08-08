@@ -23,7 +23,11 @@ extension UITextView {
             attributedOriginalText.addAttribute(NSAttributedString.Key.link, value: urlString, range: linkRange)
             attributedOriginalText.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: fullRange)
             attributedOriginalText.addAttribute(NSAttributedString.Key.font, value: font, range: fullRange)
-            attributedOriginalText.addAttribute(NSAttributedString.Key.foregroundColor, value: fullTextColor, range: fullRange)
+            attributedOriginalText.addAttribute(
+                NSAttributedString.Key.foregroundColor,
+                value: fullTextColor,
+                range: fullRange
+            )
         }
 
         let linkTextColor = UIColor.appBlue

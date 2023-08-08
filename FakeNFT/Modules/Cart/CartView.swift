@@ -125,17 +125,32 @@ private extension CartView {
             self.purchaseBackgroundView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             self.purchaseBackgroundView.heightAnchor.constraint(equalToConstant: 76),
 
-            self.nftCountLabel.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 16),
-            self.nftCountLabel.leadingAnchor.constraint(equalTo: self.purchaseBackgroundView.leadingAnchor, constant: 16),
+            self.nftCountLabel.topAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.topAnchor,
+                constant: 16
+            ),
+            self.nftCountLabel.leadingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.leadingAnchor,
+                constant: 16
+            ),
             self.nftCountLabel.trailingAnchor.constraint(equalTo: self.purchaseButton.leadingAnchor, constant: -24),
 
             self.finalCostLabel.topAnchor.constraint(equalTo: self.nftCountLabel.bottomAnchor, constant: 2),
-            self.finalCostLabel.leadingAnchor.constraint(equalTo: self.purchaseBackgroundView.leadingAnchor, constant: 16),
+            self.finalCostLabel.leadingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.leadingAnchor,
+                constant: 16
+            ),
             self.finalCostLabel.trailingAnchor.constraint(equalTo: self.purchaseButton.leadingAnchor, constant: -24),
 
             self.purchaseButton.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 16),
-            self.purchaseButton.trailingAnchor.constraint(equalTo: self.purchaseBackgroundView.trailingAnchor, constant: -16),
-            self.purchaseButton.bottomAnchor.constraint(equalTo: self.purchaseBackgroundView.bottomAnchor, constant: -16),
+            self.purchaseButton.trailingAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.trailingAnchor,
+                constant: -16
+            ),
+            self.purchaseButton.bottomAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.bottomAnchor,
+                constant: -16
+            ),
 
             self.placeholderView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.placeholderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),

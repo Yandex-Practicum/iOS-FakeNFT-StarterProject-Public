@@ -52,8 +52,9 @@ private extension AppButton {
 
         let font = UIFont.getFont(style: .bold, size: 17)
         let textColor = UIColor.appWhite
-        let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
-                                                                        NSAttributedString.Key.foregroundColor: textColor])
+        let titleAttributes = [NSAttributedString.Key.font: font,
+                               NSAttributedString.Key.foregroundColor: textColor]
+        let title = NSAttributedString(string: self.title, attributes: titleAttributes)
         self.setAttributedTitle(title, for: .normal)
     }
 
