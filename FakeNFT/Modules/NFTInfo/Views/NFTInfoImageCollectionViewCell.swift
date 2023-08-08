@@ -13,7 +13,7 @@ final class NFTInfoImageCollectionViewCell: UICollectionViewCell {
         let imageUrl: String
     }
 
-    private let image: UIImageView = {
+    private lazy var image: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true

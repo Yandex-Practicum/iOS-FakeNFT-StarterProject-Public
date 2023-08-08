@@ -60,9 +60,9 @@ final class NFTInfoContainerView: UIView {
         self.sectionAuthor = sectionAuthor
         self.sectionDescription = sectionDescription
         super.init(frame: .null)
+        
         configureCollectionView()
         setupSubViews()
-        backgroundColor = .appWhite
     }
 
     required init?(coder: NSCoder) {
@@ -72,6 +72,8 @@ final class NFTInfoContainerView: UIView {
     }
 
     private func setupSubViews() {
+        backgroundColor = .appWhite
+        
         addSubview(collectionView)
 
         let constraints = [

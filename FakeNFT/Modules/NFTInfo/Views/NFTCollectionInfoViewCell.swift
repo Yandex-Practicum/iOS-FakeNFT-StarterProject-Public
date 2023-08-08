@@ -22,7 +22,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         let addedToBasket: Bool
     }
 
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
@@ -31,7 +31,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let ratingStackView: UIStackView = {
+    private lazy var ratingStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -40,7 +40,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let horizontalDetailsStackView: UIStackView = {
+    private lazy var horizontalDetailsStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -49,7 +49,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let verticalDetailsStackView: UIStackView = {
+    private lazy var verticalDetailsStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
@@ -58,20 +58,22 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let favouriteImageView: UIImageView = {
+    private lazy var favouriteImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
+        view.isUserInteractionEnabled = true
         return view
     }()
 
-    private let binImageView: UIImageView = {
+    private lazy var binImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.isUserInteractionEnabled = true
         return view
     }()
 
-    private let image: UIImageView = {
+    private lazy var image: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
@@ -80,7 +82,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .black
@@ -89,7 +91,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
         return view
     }()
 
-    private let priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textColor = .black
@@ -117,13 +119,11 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
             target: self,
             action: #selector(binClicked)
         )
-        binImageView.isUserInteractionEnabled = true
         binImageView.addGestureRecognizer(binGesture)
 
         let favouriteGesture = UITapGestureRecognizer(
             target: self,
             action: #selector(favouriteClicked))
-        favouriteImageView.isUserInteractionEnabled = true
         favouriteImageView.addGestureRecognizer(favouriteGesture)
     }
 

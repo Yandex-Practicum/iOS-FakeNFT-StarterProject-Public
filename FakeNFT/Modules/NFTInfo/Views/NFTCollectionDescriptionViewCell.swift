@@ -14,21 +14,21 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         let description: String
     }
 
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         return view
     }()
 
-    private let horizontalStackView: UIStackView = {
+    private lazy var horizontalStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
         return view
     }()
 
-    private let sectionNameLabel: UILabel = {
+    private lazy var sectionNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -37,7 +37,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let authorLabel: UILabel = {
+    private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -46,7 +46,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let authorLabelName: UILabel = {
+    private lazy var authorLabelName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -56,7 +56,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private let descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black

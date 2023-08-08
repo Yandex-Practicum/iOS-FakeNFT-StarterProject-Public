@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SafariServices
 
 final class NFTInfoViewController: UIViewController {
     private let viewModel: NFTInfoViewModel
@@ -62,7 +61,7 @@ final class NFTInfoViewController: UIViewController {
     
     func pushWebView() {
         self.navigationController?.pushViewController(
-            WebViewFactory.create(url: "https://www.yandex.com"),
+            WebViewFactory.create(url: "https://practicum.yandex.ru"),
             animated: true
         )
     }
