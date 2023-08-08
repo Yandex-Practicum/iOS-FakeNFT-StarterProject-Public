@@ -1,13 +1,5 @@
 import UIKit
 
-protocol ProfileViewControllerProtocol: AnyObject {
-    var presenter: ProfileViewPresenterProtocol? { get set }
-    func activityIndicatorAnimation(inProcess: Bool)
-    func userInteraction(isActive: Bool)
-    func setImageForPhotoView(_ image: UIImage)
-    func setTextForLabels(from profile: ProfileResponseModel)
-}
-
 final class ProfileViewController: UIViewController {
     // MARK: - Public properties
     var presenter: ProfileViewPresenterProtocol?
@@ -40,6 +32,7 @@ final class ProfileViewController: UIViewController {
                 height: ProfileConstants.profilePhotoSideSize
             )
         )
+        view.image = .userpick
         view.backgroundColor = .ypBlack
         view.layer.cornerRadius = ProfileConstants.profilePhotoSideSize/2
         view.contentMode = .scaleAspectFill
@@ -179,14 +172,42 @@ final class ProfileViewController: UIViewController {
         tableView.isScrollEnabled = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    private func updateTableCellsLabels(from profile: ProfileResponseModel) {
+        var updatedMockArray = ProfileConstants.tableLabelArray
+        
+        let myNFTsCount = profile.nfts.count
+        let likedNFTsCount = profile.likes.count
+        
+        if myNFTsCount > 0 {
+            updatedMockArray[0] = "\(ProfileConstants.tableLabelArray[0]) (\(myNFTsCount))"
+        }
+        
+        if likedNFTsCount > 0 {
+            updatedMockArray[1] = "\(ProfileConstants.tableLabelArray[1]) (\(likedNFTsCount))"
+        }
+        
+        for (index, title) in updatedMockArray.enumerated() {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? ProfileTableViewCell {
+                cell.configure(title: title)
+            }
+        }
+    }
+    
     // MARK: - Actions
     @objc private func didTapEditProfileButton(){
         guard let profile = presenter?.getEditableProfile() else { return }
+        let profileEditPresenter = ProfileEditPresenter(editableProfile: profile)
         let profileEditViewController = ProfileEditViewController(editableProfile: profile)
+        profileEditViewController.presenter = profileEditPresenter
+        profileEditViewController.delegate = self
         present(profileEditViewController, animated: true)
     }
 }
 
+
+// MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
@@ -202,6 +223,8 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+
+// MARK: - Extension UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         ProfileConstants.tableLabelArray.count
@@ -221,6 +244,8 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+
+// MARK: - Extension ProfileViewControllerProtocol
 extension ProfileViewController: ProfileViewControllerProtocol{
     func activityIndicatorAnimation(inProcess: Bool){
         DispatchQueue.main.async { [weak self] in
@@ -253,26 +278,11 @@ extension ProfileViewController: ProfileViewControllerProtocol{
         userSiteLabel.isEnabled = isActive
         tableView.isUserInteractionEnabled = isActive
     }
-    
-    private func updateTableCellsLabels(from profile: ProfileResponseModel) {
-        var updatedMockArray = ProfileConstants.tableLabelArray
-        
-        let myNFTsCount = profile.nfts.count
-        let likedNFTsCount = profile.likes.count
-        
-        if myNFTsCount > 0 {
-            updatedMockArray[0] = "\(ProfileConstants.tableLabelArray[0]) (\(myNFTsCount))"
-        }
-        
-        if likedNFTsCount > 0 {
-            updatedMockArray[1] = "\(ProfileConstants.tableLabelArray[1]) (\(likedNFTsCount))"
-        }
-        
-        for (index, title) in updatedMockArray.enumerated() {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) as? ProfileTableViewCell {
-                cell.configure(title: title)
-            }
-        }
+}
+
+// MARK: - Extension ProfileViewDelegate
+extension ProfileViewController: ProfileViewDelegate {
+    func sendNewProfile(_ profile: ProfileResponseModel) {
+        print("✅\n\(profile)")
     }
 }

@@ -1,20 +1,36 @@
 import UIKit
 
-
 final class ProfileEditViewController: UIViewController {
+    // MARK: - Public properties
+    var presenter: ProfileEditPresenterProtocol?
+    var delegate: ProfileViewDelegate?
+    
     // MARK: - Private properties
     private let nameLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.name", comment: ""))
     private let descriptionLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.description", comment: ""))
     private let siteLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.site", comment: ""))
     
-    private let nameTextField = CustomTextField(
-        with: NSLocalizedString("profile.name.placeholder", comment: "")
+    // swiftlint:disable:next trailing_closure
+    private lazy var nameTextField = CustomTextField(
+        with: NSLocalizedString("profile.name.placeholder", comment: ""),
+        textChangeHandler: { [weak self] newText in
+            self?.presenter?.change(parameter: .name, with: newText)
+        }
     )
-    private let descriptionTextView = CustomTextView(
-        withPlaceholder: NSLocalizedString("profile.description.placeholder", comment: "")
+    // swiftlint:disable:next trailing_closure
+    private lazy var descriptionTextView = CustomTextView(
+        with: NSLocalizedString("profile.description.placeholder", comment: ""),
+        text: profile.description,
+        textChangeHandler: { [weak self] newText in
+            self?.presenter?.change(parameter: .name, with: newText)
+        }
     )
-    private let siteTextField = CustomTextField(
-        with: NSLocalizedString("profile.site.placeholder", comment: "")
+    // swiftlint:disable:next trailing_closure
+    private lazy var siteTextField = CustomTextField(
+        with: NSLocalizedString("profile.site.placeholder", comment: ""),
+        textChangeHandler: { [weak self] newText in
+            self?.presenter?.change(parameter: .site, with: newText)
+        }
     )
     
     private let photoView: UIImageView = {
@@ -36,7 +52,7 @@ final class ProfileEditViewController: UIViewController {
     private lazy var newPhotoUrlLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("profile.photo.download", comment: "")
-        label.backgroundColor = .ypWhiteUniversal
+        label.backgroundColor = .clear
         label.font = .bodyRegular
         label.layer.cornerRadius = 16
         label.textAlignment = .center
@@ -82,10 +98,18 @@ final class ProfileEditViewController: UIViewController {
         return button
     }()
     
+    private var profile: EditableProfileModel
+    
     // MARK: - Life cycle
     init(editableProfile: EditableProfileModel) {
-        photoView.image = editableProfile.avatarImage
+        profile = editableProfile
+        photoView.image = profile.avatarImage
+        
         super.init(nibName: nil, bundle: nil)
+        
+        nameTextField.text = profile.name
+        siteTextField.text = profile.website.absoluteString
+        descriptionTextView.text = profile.description
     }
     
     required init?(coder: NSCoder) {
@@ -100,6 +124,17 @@ final class ProfileEditViewController: UIViewController {
         nameTextField.delegate = self
         siteTextField.delegate = self
         descriptionTextView.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let isProfileChanged = presenter?.isProfileChanged() else { return }
+        if isProfileChanged {
+            guard let profile = presenter?.getNewProfile() else { return }
+            delegate?.sendNewProfile(profile)
+        } else {
+            dismiss(animated: true)
+        }
     }
     
     
@@ -236,7 +271,7 @@ final class ProfileEditViewController: UIViewController {
 }
 
 
-// MARK: - UITextFieldDelegate Extension
+// MARK: - Extension UITextFieldDelegate
 extension ProfileEditViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

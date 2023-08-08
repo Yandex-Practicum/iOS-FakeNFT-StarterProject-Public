@@ -2,17 +2,6 @@ import Foundation
 import Kingfisher
 import UIKit
 
-protocol ProfileViewPresenterProtocol: AnyObject {
-    var view: ProfileViewControllerProtocol? { get set }
-    func viewDidLoad()
-    func getEditableProfile() -> EditableProfileModel?
-}
-
-protocol ProfilePresenterNetworkProtocol: AnyObject {
-    func getData(for profile: ProfileResponseModel)
-}
-
-
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     // MARK: - Public properties
     weak var view: ProfileViewControllerProtocol?
@@ -46,6 +35,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
 }
 
 
+// MARK: - Extension ProfilePresenterNetworkProtocol
 extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
     func getData(for profile: ProfileResponseModel) {
         DispatchQueue.main.async { [weak self] in
@@ -62,6 +52,8 @@ extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
                 self.view?.userInteraction(isActive: true)
                 return
             }
+            
+            self.view?.setImageForPhotoView(.userpick ?? UIImage())
             KingfisherManager.shared.retrieveImage(with: url){ result in
                 switch result {
                 case .success(let result):
@@ -73,6 +65,7 @@ extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
                     self.view?.activityIndicatorAnimation(inProcess: false)
                     self.view?.userInteraction(isActive: true)
                 case .failure:
+                    self.view?.setImageForPhotoView(.userpick ?? UIImage())
                     self.view?.activityIndicatorAnimation(inProcess: false)
                     self.view?.userInteraction(isActive: true)
                 }

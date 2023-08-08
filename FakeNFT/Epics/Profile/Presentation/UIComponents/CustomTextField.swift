@@ -7,12 +7,16 @@ class CustomTextField: UITextField {
         left: 16,
         bottom: 11,
         right: 32
-        )
+    )
+    private let textChangeHandler: (String) -> Void
     
     // MARK: - Lifecycle
-    init(with text: String) {
+    init(with text: String, textChangeHandler: @escaping (String) -> Void) {
+        self.textChangeHandler = textChangeHandler
         super.init(frame: .zero)
         uiConfiguration(with: text)
+        
+        addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -28,7 +32,7 @@ class CustomTextField: UITextField {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: insets)
     }
-
+    
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: insets)
     }
@@ -49,5 +53,11 @@ class CustomTextField: UITextField {
             attributes: attributes
         )
         self.attributedPlaceholder = attributedPlaceholder
+    }
+    
+    @objc private func handleTextChange() {
+        if let text = self.text {
+            textChangeHandler(text)
+        }
     }
 }

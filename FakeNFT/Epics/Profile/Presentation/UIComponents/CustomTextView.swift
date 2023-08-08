@@ -4,12 +4,17 @@ final class CustomTextView: UITextView {
     // MARK: - Private properties
     private let placeholderLabel = UILabel()
     private let insets = UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 32)
+    private var textChangeHandler: (String) -> Void
     
     // MARK: - Lifecycle
-    init(withPlaceholder text: String) {
+    init(with placeholder: String, text: String, textChangeHandler: @escaping (String) -> Void) {
+        self.textChangeHandler = textChangeHandler
+        
         super.init(frame: .zero, textContainer: nil)
-        uiConfiguration(with: text)
-        configurePlaceholder(with: text)
+        
+        isNeedToHidePlaceholderAndSet(text: text)
+        uiConfiguration(with: placeholder)
+        configurePlaceholder(with: placeholder)
         addTextChangeObserver()
     }
     
@@ -52,7 +57,17 @@ final class CustomTextView: UITextView {
         )
     }
     
+    private func isNeedToHidePlaceholderAndSet(text: String) {
+        if !text.isEmpty {
+            self.text = text
+            placeholderLabel.isHidden = true
+        } else {
+            placeholderLabel.isHidden = false
+        }
+    }
+    
     @objc private func customTextViewTextDidChange() {
+        textChangeHandler(self.text)
         placeholderLabel.isHidden = !text.isEmpty
     }
 }
