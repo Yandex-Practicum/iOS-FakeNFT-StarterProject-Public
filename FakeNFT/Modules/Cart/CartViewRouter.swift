@@ -50,11 +50,8 @@ extension CartViewRouter: CartViewRouterProtocol {
         nftImage: UIImage?,
         onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     ) {
-        let removeNftViewController = CartRemoveNftViewController(nftImage: nftImage)
-        removeNftViewController.onChoosingRemoveNft = onChoosingRemoveNft
-
-        removeNftViewController.modalPresentationStyle = .overFullScreen
-        removeNftViewController.modalTransitionStyle = .crossDissolve
+        let factory = CartRemoveNftViewFactory(nftImage: nftImage)
+        let removeNftViewController = factory.create(onChoosingRemoveNft: onChoosingRemoveNft)
 
         viewController.present(removeNftViewController, animated: true)
     }
@@ -65,24 +62,14 @@ extension CartViewRouter: CartViewRouterProtocol {
     }
 
     func showCartPayment(on viewController: UIViewController, orderId: String) {
-        let collectionViewHelper = CartPaymentCollectionViewHelper()
-        let router = CartPaymentRouter()
-        let interactor = CartPaymentViewInteractor(
+        let factory = CartPaymentViewFactory(
+            orderId: orderId,
             currenciesService: self.currenciesService,
             imageLoadingService: self.imageLoadingService,
             orderPaymentService: self.orderPaymentService
         )
 
-        let viewModel = CartPaymentViewModel(orderId: orderId, interactor: interactor)
-
-        let cartPaymentViewController = CartPaymentViewController(
-            collectionViewHelper: collectionViewHelper,
-            viewModel: viewModel,
-            router: router
-        )
-
-        cartPaymentViewController.navigationItem.backButtonTitle = ""
-        cartPaymentViewController.hidesBottomBarWhenPushed = true
+        let cartPaymentViewController = factory.create()
 
         viewController.navigationController?.pushViewController(cartPaymentViewController, animated: true)
     }

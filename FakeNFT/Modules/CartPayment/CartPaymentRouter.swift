@@ -18,9 +18,7 @@ protocol CartPaymentRouterProtocol {
 final class CartPaymentRouter: CartPaymentRouterProtocol {
     func showUserAgreementWebView(on viewController: UIViewController, urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        let request = URLRequest(url: url)
-
-        let webViewController = CartPaymentWebViewController(request: request)
+        let webViewController = CartPaymentWebViewFactory().create(url: url)
         viewController.navigationController?.pushViewController(webViewController, animated: true)
     }
 
@@ -29,10 +27,10 @@ final class CartPaymentRouter: CartPaymentRouterProtocol {
         resultType: CartPaymentResultViewController.ResultType,
         resultButtonAction: @escaping () -> Void
     ) {
-        let paymentResultViewController = CartPaymentResultViewController(resultType: resultType)
-        paymentResultViewController.onResultButtonAction = resultButtonAction
-
-        paymentResultViewController.modalPresentationStyle = .overFullScreen
+        let paymentResultViewController = CartPaymentResultViewFactory().create(
+            resultType: resultType,
+            onResultButtonAction: resultButtonAction
+        )
 
         viewController.present(paymentResultViewController, animated: true)
     }
