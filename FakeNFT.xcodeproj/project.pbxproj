@@ -29,6 +29,7 @@
 		8B6E2E762A7BF36300BEA35F /* CatalogTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E2E752A7BF36300BEA35F /* CatalogTableCell.swift */; };
 		8B6E2E782A7C0B5B00BEA35F /* CatalogDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E2E772A7C0B5B00BEA35F /* CatalogDataModel.swift */; };
 		8B6E2E7B2A7C2AE800BEA35F /* CollectionScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E2E7A2A7C2AE800BEA35F /* CollectionScreenViewController.swift */; };
+		8B6E2E7D2A7C329D00BEA35F /* CollectionScreenCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E2E7C2A7C329D00BEA35F /* CollectionScreenCollectionCell.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -80,6 +81,7 @@
 		8B6E2E752A7BF36300BEA35F /* CatalogTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableCell.swift; sourceTree = "<group>"; };
 		8B6E2E772A7C0B5B00BEA35F /* CatalogDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogDataModel.swift; sourceTree = "<group>"; };
 		8B6E2E7A2A7C2AE800BEA35F /* CollectionScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionScreenViewController.swift; sourceTree = "<group>"; };
+		8B6E2E7C2A7C329D00BEA35F /* CollectionScreenCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionScreenCollectionCell.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				8B6E2E7A2A7C2AE800BEA35F /* CollectionScreenViewController.swift */,
+				8B6E2E7C2A7C329D00BEA35F /* CollectionScreenCollectionCell.swift */,
 			);
 			path = CollectionScreen;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				F9F557402A741B5F004F6856 /* StatisticsViewController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				8B6E2E7D2A7C329D00BEA35F /* CollectionScreenCollectionCell.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
