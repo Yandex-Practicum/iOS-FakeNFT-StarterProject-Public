@@ -20,6 +20,9 @@ final class CatalogTableCell: UITableViewCell {
     private let image: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+         image.layer.cornerRadius = 16
+         image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -44,11 +47,11 @@ final class CatalogTableCell: UITableViewCell {
     }
     
     func setImage(link: String) {
-        image.kf.setImage(with: URL(string: link))
+        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters:CharacterSet.urlQueryAllowed) ?? ""), placeholder: UIImage.mockCollection)
     }
     
     private func setView() {
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = .ypWhite
         contentView.addSubview(image)
         contentView.addSubview(label)
         NSLayoutConstraint.activate([

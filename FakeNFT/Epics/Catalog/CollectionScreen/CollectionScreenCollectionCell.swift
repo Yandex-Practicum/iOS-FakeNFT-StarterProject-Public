@@ -87,7 +87,7 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     }
     
     func setNftImage(link: String) {
-        nftImage.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!))
+        nftImage.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""))
     }
     
     func addToBasket() {
