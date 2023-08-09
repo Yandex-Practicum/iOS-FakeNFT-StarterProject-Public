@@ -1,4 +1,3 @@
-import Foundation
 import Kingfisher
 import UIKit
 
@@ -12,8 +11,8 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - Private properties
     func viewDidLoad() {
+        UIBlockingProgressHUD.show()
         view?.activityIndicatorAnimation(inProcess: true)
-        view?.userInteraction(isActive: false)
         networkClient?.getDecodedProfile()
     }
     func getEditableProfile() -> EditableProfileModel? {
@@ -37,19 +36,17 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
 
 // MARK: - Extension ProfilePresenterNetworkProtocol
 extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
-    func getData(for profile: ProfileResponseModel) {
+    func getProfile(with data: ProfileResponseModel) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.currentProfileResponseModel = profile
+            self.currentProfileResponseModel = data
             
-            self.view?.setTextForLabels(from: profile)
+            self.view?.setTextForLabels(from: data)
             self.view?.activityIndicatorAnimation(inProcess: true)
-            self.view?.userInteraction(isActive: false)
             
-            let urlString = profile.avatar
+            let urlString = data.avatar
             guard let url = URL(string: urlString) else {
                 self.view?.activityIndicatorAnimation(inProcess: false)
-                self.view?.userInteraction(isActive: true)
                 return
             }
             
@@ -58,17 +55,33 @@ extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
                 switch result {
                 case .success(let result):
                     self.currentProfileEditModel = self.convertResponse(
-                        model: profile,
+                        model: data,
                         image: result.image
                     )
                     self.view?.setImageForPhotoView(result.image)
                     self.view?.activityIndicatorAnimation(inProcess: false)
-                    self.view?.userInteraction(isActive: true)
+                    UIBlockingProgressHUD.dismiss()
                 case .failure:
                     self.view?.setImageForPhotoView(.userpick ?? UIImage())
                     self.view?.activityIndicatorAnimation(inProcess: false)
-                    self.view?.userInteraction(isActive: true)
+                    UIBlockingProgressHUD.dismiss()
                 }
+            }
+        }
+    }
+    
+    func updateProfile(with data: ProfileResponseModel) {
+        UIBlockingProgressHUD.show()
+        networkClient?.updateProfile(with: data) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.networkClient?.getDecodedProfile()
+                }
+            case .failure(let error):
+                print("Ошибка при обновлении профиля: \(error)")
+                UIBlockingProgressHUD.dismiss()
             }
         }
     }

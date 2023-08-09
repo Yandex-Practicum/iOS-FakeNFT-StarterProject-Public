@@ -4,7 +4,6 @@ import UIKit
 protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     func activityIndicatorAnimation(inProcess: Bool)
-    func userInteraction(isActive: Bool)
     func setImageForPhotoView(_ image: UIImage)
     func setTextForLabels(from profile: ProfileResponseModel)
 }
@@ -15,18 +14,21 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func getEditableProfile() -> EditableProfileModel?
+    func updateProfile(with data: ProfileResponseModel)
 }
 
 
 // MARK: - ProfilePresenterNetworkProtocol
 protocol ProfilePresenterNetworkProtocol: AnyObject {
-    func getData(for profile: ProfileResponseModel)
+    func getProfile(with data: ProfileResponseModel)
+    func updateProfile(with data: ProfileResponseModel)
 }
 
 
 // MARK: - ProfileNetworkClientProtocol
 protocol ProfileNetworkClientProtocol: AnyObject {
     func getDecodedProfile()
+    func updateProfile(with data: ProfileResponseModel, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 

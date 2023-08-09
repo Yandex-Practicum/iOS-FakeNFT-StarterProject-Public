@@ -22,7 +22,7 @@ final class ProfileEditViewController: UIViewController {
         with: NSLocalizedString("profile.description.placeholder", comment: ""),
         text: profile.description,
         textChangeHandler: { [weak self] newText in
-            self?.presenter?.change(parameter: .name, with: newText)
+            self?.presenter?.change(parameter: .description, with: newText)
         }
     )
     // swiftlint:disable:next trailing_closure
@@ -126,8 +126,8 @@ final class ProfileEditViewController: UIViewController {
         descriptionTextView.delegate = self
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         guard let isProfileChanged = presenter?.isProfileChanged() else { return }
         if isProfileChanged {
             guard let profile = presenter?.getNewProfile() else { return }

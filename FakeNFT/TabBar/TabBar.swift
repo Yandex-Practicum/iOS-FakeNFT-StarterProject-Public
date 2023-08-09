@@ -2,6 +2,8 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     // MARK: - Init
+    var profileNetworkClient: ProfileNetworkClientProtocol?
+    
     init() {
         super.init(nibName: nil, bundle: nil)
 
@@ -19,10 +21,12 @@ final class MainTabBarController: UITabBarController {
 
         let statisticImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let statisticSelectedImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
-        
         let profilePresenter = ProfileViewPresenter()
         let profileViewController = ProfileViewController()
+            
         let profileNetworkClient = ProfileNetworkClient()
+        self.profileNetworkClient = profileNetworkClient
+        
         profileViewController.presenter = profilePresenter
         profilePresenter.view = profileViewController
         profilePresenter.networkClient = profileNetworkClient

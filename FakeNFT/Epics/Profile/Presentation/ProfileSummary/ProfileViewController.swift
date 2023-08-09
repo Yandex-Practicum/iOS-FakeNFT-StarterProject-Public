@@ -272,17 +272,13 @@ extension ProfileViewController: ProfileViewControllerProtocol{
             self.updateTableCellsLabels(from: profile)
         }
     }
-    
-    func userInteraction(isActive: Bool) {
-        editProfileButton.isEnabled = isActive
-        userSiteLabel.isEnabled = isActive
-        tableView.isUserInteractionEnabled = isActive
-    }
 }
 
 // MARK: - Extension ProfileViewDelegate
 extension ProfileViewController: ProfileViewDelegate {
     func sendNewProfile(_ profile: ProfileResponseModel) {
-        print("✅\n\(profile)")
+        DispatchQueue.main.async {
+            self.presenter?.updateProfile(with: profile)
+        }
     }
 }
