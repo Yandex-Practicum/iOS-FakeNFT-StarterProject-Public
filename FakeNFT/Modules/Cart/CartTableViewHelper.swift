@@ -22,6 +22,7 @@ final class CartTableViewHelper: NSObject {
 
 // MARK: - CartTableViewHelperProtocol
 extension CartTableViewHelper: CartTableViewHelperProtocol {
+    // MARK: - UITableViewDelegate
     func tableView(
         _ tableView: UITableView,
         heightForRowAt indexPath: IndexPath

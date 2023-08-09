@@ -8,8 +8,8 @@
 import UIKit
 
 final class CartView: UIView {
-    var onTapPurchaseButton: (() -> Void)?
-    var onRefreshTable: (() -> Void)?
+    var onTapPurchaseButton: ActionCallback<Void>?
+    var onRefreshTable: ActionCallback<Void>?
 
     var tableViewHelper: CartTableViewHelperProtocol? {
         didSet {
@@ -164,12 +164,12 @@ private extension CartView {
 private extension CartView {
     @objc
     func didTapPurchaseButton() {
-        self.onTapPurchaseButton?()
+        self.onTapPurchaseButton?(())
     }
 
     @objc
     func refreshTable(_ sender: UIRefreshControl) {
-        self.onRefreshTable?()
+        self.onRefreshTable?(())
         sender.endRefreshing()
     }
 }

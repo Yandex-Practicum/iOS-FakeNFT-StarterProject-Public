@@ -8,35 +8,22 @@
 import Foundation
 
 struct CartPaymentViewFactory {
-    private let orderId: String
-
-    private let currenciesService: CurrenciesServiceProtocol
-    private let imageLoadingService: ImageLoadingServiceProtocol
-    private let orderPaymentService: OrderPaymentServiceProtocol
-
-    init(
+    static func create(
         orderId: String,
         currenciesService: CurrenciesServiceProtocol,
         imageLoadingService: ImageLoadingServiceProtocol,
         orderPaymentService: OrderPaymentServiceProtocol
-    ) {
-        self.orderId = orderId
-        self.currenciesService = currenciesService
-        self.imageLoadingService = imageLoadingService
-        self.orderPaymentService = orderPaymentService
-    }
-
-    func create() -> CartPaymentViewController {
+    ) -> CartPaymentViewController {
         let collectionViewHelper = CartPaymentCollectionViewHelper()
         let router = CartPaymentRouter()
 
         let interactor = CartPaymentViewInteractor(
-            currenciesService: self.currenciesService,
-            imageLoadingService: self.imageLoadingService,
-            orderPaymentService: self.orderPaymentService
+            currenciesService: currenciesService,
+            imageLoadingService: imageLoadingService,
+            orderPaymentService: orderPaymentService
         )
 
-        let viewModel = CartPaymentViewModel(orderId: self.orderId, interactor: interactor)
+        let viewModel = CartPaymentViewModel(orderId: orderId, interactor: interactor)
 
         let cartPaymentViewController = CartPaymentViewController(
             collectionViewHelper: collectionViewHelper,

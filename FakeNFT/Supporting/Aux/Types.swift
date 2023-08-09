@@ -11,3 +11,5 @@ typealias ResultHandler<T> = (Result<T, Error>) -> Void
 
 typealias LoadingCompletionBlock<ViewState> = (ViewState) -> Void
 typealias LoadingFailureCompletionBlock = (Error) -> Void
+
+typealias ActionCallback<T> = (T) -> Void

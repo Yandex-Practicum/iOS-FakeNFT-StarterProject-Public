@@ -9,7 +9,7 @@ import UIKit
 
 extension UIAlertController {
     static func sortingAlertController(
-        onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
+        onChoosingSortingTrait: @escaping ActionCallback<CartOrderSorter.SortingTrait>
     ) -> UIAlertController {
         let alertController = UIAlertController(
             title: "CART_SORT_ALERT_TITLE".localized,

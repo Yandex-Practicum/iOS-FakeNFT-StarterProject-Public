@@ -11,23 +11,23 @@ protocol CartPaymentRouterProtocol {
     func showUserAgreementWebView(on viewController: UIViewController, urlString: String)
     func showPaymentResult(on viewController: UIViewController,
                            resultType: CartPaymentResultViewController.ResultType,
-                           resultButtonAction: @escaping () -> Void)
+                           resultButtonAction: @escaping ActionCallback<Void>)
     func showAlert(on viewController: UIViewController, error: Error)
 }
 
 final class CartPaymentRouter: CartPaymentRouterProtocol {
     func showUserAgreementWebView(on viewController: UIViewController, urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        let webViewController = CartPaymentWebViewFactory().create(url: url)
+        let webViewController = CartPaymentWebViewFactory.create(url: url)
         viewController.navigationController?.pushViewController(webViewController, animated: true)
     }
 
     func showPaymentResult(
         on viewController: UIViewController,
         resultType: CartPaymentResultViewController.ResultType,
-        resultButtonAction: @escaping () -> Void
+        resultButtonAction: @escaping ActionCallback<Void>
     ) {
-        let paymentResultViewController = CartPaymentResultViewFactory().create(
+        let paymentResultViewController = CartPaymentResultViewFactory.create(
             resultType: resultType,
             onResultButtonAction: resultButtonAction
         )

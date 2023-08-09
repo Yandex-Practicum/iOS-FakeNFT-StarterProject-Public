@@ -13,7 +13,7 @@ final class CartPaymentResultViewController: UIViewController {
         case failure
     }
 
-    var onResultButtonAction: (() -> Void)?
+    var onResultButtonAction: ActionCallback<Void>?
 
     private lazy var resultImageView: UIImageView = {
         let image: UIImage = self.resultType == .success ? .Cart.PaymentResult.success : .Cart.PaymentResult.failure
@@ -106,6 +106,6 @@ private extension CartPaymentResultViewController {
 private extension CartPaymentResultViewController {
     @objc
     func didTapResultButton() {
-        self.onResultButtonAction?()
+        self.onResultButtonAction?(())
     }
 }

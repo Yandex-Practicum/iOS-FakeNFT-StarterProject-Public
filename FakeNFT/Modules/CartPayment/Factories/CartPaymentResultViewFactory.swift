@@ -8,9 +8,9 @@
 import UIKit.UIImage
 
 struct CartPaymentResultViewFactory {
-    func create(
+    static func create(
         resultType: CartPaymentResultViewController.ResultType,
-        onResultButtonAction: @escaping () -> Void
+        onResultButtonAction: @escaping ActionCallback<Void>
     ) -> CartPaymentResultViewController {
         let paymentResultViewController = CartPaymentResultViewController(resultType: resultType)
 

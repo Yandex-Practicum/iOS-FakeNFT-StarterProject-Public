@@ -8,16 +8,11 @@
 import UIKit.UIImage
 
 struct CartRemoveNftViewFactory {
-    private let nftImage: UIImage?
-
-    init(nftImage: UIImage?) {
-        self.nftImage = nftImage
-    }
-
-    func create(
+    static func create(
+        nftImage: UIImage?,
         onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
     ) -> CartRemoveNftViewController {
-        let removeNftViewController = CartRemoveNftViewController(nftImage: self.nftImage)
+        let removeNftViewController = CartRemoveNftViewController(nftImage: nftImage)
         removeNftViewController.onChoosingRemoveNft = onChoosingRemoveNft
 
         removeNftViewController.modalPresentationStyle = .overFullScreen

@@ -76,7 +76,6 @@ private extension CartViewController {
 
         self.configureView()
         self.bind()
-//        self.viewModel.fetchOrder()
 
         self.navigationItem.rightBarButtonItem = self.sortButton
         self.navigationItem.backButtonTitle = ""
@@ -114,7 +113,7 @@ private extension CartViewController {
 
         self.viewModel.error.bind { [weak self] error in
             guard let self = self, let error = error else { return }
-            self.router.showAlert(on: self, error: error)
+            self.router.showErrorAlert(on: self, error: error)
         }
     }
 
@@ -129,12 +128,12 @@ private extension CartViewController {
         self.cartView.tableViewHelper = self.tableViewHelper
         self.cartView.backgroundColor = .appWhite
 
-        self.cartView.onTapPurchaseButton = { [weak self] in
+        self.cartView.onTapPurchaseButton = { [weak self] _ in
             guard let self = self else { return }
             self.router.showCartPayment(on: self, orderId: self.viewModel.orderId)
         }
 
-        self.cartView.onRefreshTable = { [weak self] in
+        self.cartView.onRefreshTable = { [weak self] _ in
             self?.viewModel.fetchOrder()
         }
     }

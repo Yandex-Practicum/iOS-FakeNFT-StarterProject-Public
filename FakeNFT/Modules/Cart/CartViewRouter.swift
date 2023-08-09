@@ -9,13 +9,13 @@ import UIKit
 
 protocol CartViewRouterProtocol {
     func showSortAlert(viewController: UIViewController,
-                       onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void)
+                       onChoosingSortingTrait: @escaping ActionCallback<CartOrderSorter.SortingTrait>)
 
     func showRemoveNftView(on viewController: UIViewController,
                            nftImage: UIImage?,
-                           onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void)
+                           onChoosingRemoveNft: @escaping ActionCallback<CartRemoveNftViewController.RemoveNftFlow>)
 
-    func showAlert(on viewController: UIViewController, error: Error)
+    func showErrorAlert(on viewController: UIViewController, error: Error)
     func showCartPayment(on viewController: UIViewController, orderId: String)
 }
 
@@ -39,7 +39,7 @@ final class CartViewRouter {
 extension CartViewRouter: CartViewRouterProtocol {
     func showSortAlert(
         viewController: UIViewController,
-        onChoosingSortingTrait: @escaping (CartOrderSorter.SortingTrait) -> Void
+        onChoosingSortingTrait: @escaping ActionCallback<CartOrderSorter.SortingTrait>
     ) {
         let alert = UIAlertController.sortingAlertController(onChoosingSortingTrait: onChoosingSortingTrait)
         viewController.present(alert, animated: true)
@@ -48,28 +48,28 @@ extension CartViewRouter: CartViewRouterProtocol {
     func showRemoveNftView(
         on viewController: UIViewController,
         nftImage: UIImage?,
-        onChoosingRemoveNft: @escaping (CartRemoveNftViewController.RemoveNftFlow) -> Void
+        onChoosingRemoveNft: @escaping ActionCallback<CartRemoveNftViewController.RemoveNftFlow>
     ) {
-        let factory = CartRemoveNftViewFactory(nftImage: nftImage)
-        let removeNftViewController = factory.create(onChoosingRemoveNft: onChoosingRemoveNft)
+        let removeNftViewController = CartRemoveNftViewFactory.create(
+            nftImage: nftImage,
+            onChoosingRemoveNft: onChoosingRemoveNft
+        )
 
         viewController.present(removeNftViewController, animated: true)
     }
 
-    func showAlert(on viewController: UIViewController, error: Error) {
+    func showErrorAlert(on viewController: UIViewController, error: Error) {
         let alert = UIAlertController.alert(for: error)
         viewController.present(alert, animated: true)
     }
 
     func showCartPayment(on viewController: UIViewController, orderId: String) {
-        let factory = CartPaymentViewFactory(
+        let cartPaymentViewController = CartPaymentViewFactory.create(
             orderId: orderId,
             currenciesService: self.currenciesService,
             imageLoadingService: self.imageLoadingService,
             orderPaymentService: self.orderPaymentService
         )
-
-        let cartPaymentViewController = factory.create()
 
         viewController.navigationController?.pushViewController(cartPaymentViewController, animated: true)
     }

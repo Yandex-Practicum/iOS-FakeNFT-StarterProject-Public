@@ -13,7 +13,7 @@ final class CartRemoveNftViewController: UIViewController {
         case cancel
     }
 
-    var onChoosingRemoveNft: ((RemoveNftFlow) -> Void)?
+    var onChoosingRemoveNft: ActionCallback<RemoveNftFlow>?
 
     private let blurredEffectView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
