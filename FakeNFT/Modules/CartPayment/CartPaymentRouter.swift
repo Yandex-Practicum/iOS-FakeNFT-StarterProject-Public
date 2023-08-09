@@ -12,7 +12,7 @@ protocol CartPaymentRouterProtocol {
     func showPaymentResult(on viewController: UIViewController,
                            resultType: CartPaymentResultViewController.ResultType,
                            resultButtonAction: @escaping ActionCallback<Void>)
-    func showAlert(on viewController: UIViewController, error: Error)
+    func showErrorAlert(on viewController: UIViewController, error: Error)
 }
 
 final class CartPaymentRouter: CartPaymentRouterProtocol {
@@ -35,7 +35,7 @@ final class CartPaymentRouter: CartPaymentRouterProtocol {
         viewController.present(paymentResultViewController, animated: true)
     }
 
-    func showAlert(on viewController: UIViewController, error: Error) {
+    func showErrorAlert(on viewController: UIViewController, error: Error) {
         let alert = UIAlertController.alert(for: error)
         viewController.present(alert, animated: true)
     }
