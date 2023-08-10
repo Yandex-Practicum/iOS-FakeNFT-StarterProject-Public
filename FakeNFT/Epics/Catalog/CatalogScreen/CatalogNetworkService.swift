@@ -61,7 +61,7 @@ final class CatalogRequest: NetworkRequest {
         var urlComponents = URLComponents(string: "https://\(host)/api/v1/collections")
         urlComponents?.queryItems = [
             URLQueryItem(name: "page", value: nextPage),
-            URLQueryItem(name: "limit", value: "3")
+            URLQueryItem(name: "limit", value: "10")
         ]
         return urlComponents?.url
     }
