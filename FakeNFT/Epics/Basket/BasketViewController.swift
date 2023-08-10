@@ -10,15 +10,33 @@ final class BasketViewController: UIViewController {
     
     private let sumView = SumView()
     
-    //    private lazy var nftsTableView: UITableView = {
-    //        let tableView = UITableView()
-    //        tableView.backgroundColor = .clear
-    //        tableView.separatorStyle = .none
-    //        tableView.allowsSelection = false
-    //        tableView.dataSource = self
-    //        tableView.register(BusketNFTCell.self)
-    //        return tableView
-    //    }()
+    private lazy var nftsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(BasketNFTCell.self)
+        return tableView
+    }()
+    
+    var nftsMocked: [NFTModel] = [NFTModel(id: "123",
+                                           createdAt: "123",
+                                           name: "Spring",
+                                           images: ["test"],
+                                           rating: 1,
+                                           description: "test",
+                                           price: 1.78,
+                                           author: "test"),
+                                  NFTModel(id: "123",
+                                           createdAt: "123",
+                                           name: "Greena",
+                                           images: ["test"],
+                                           rating: 3,
+                                           description: "test",
+                                           price: 3.91,
+                                           author: "test")]
     
     
     override func viewDidLoad() {
@@ -27,14 +45,16 @@ final class BasketViewController: UIViewController {
         setupView()
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(animated)
-    ////        ProgressHUD.show()
-    //    }
-    //
-    //    override func viewWillDisappear(_ animated: Bool) {
-    //        super.viewWillDisappear(animated)
-    //    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //        ProgressHUD.show()
+        // загрузить корзину
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // очистить корзину
+    }
     
     @objc
     private func didTapSortButton() {
@@ -51,48 +71,57 @@ private extension BasketViewController {
     
     func setupView() {
         view.backgroundColor = .white
-        [sumView, sortButton]
-            .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        view.addSubview(sortButton)
-        view.addSubview(sumView)
-        //        view.addSubview(nftsTableView)
+        sortButton.tintColor = .ypBlackUniversal
+
+        sumView.delegate = self
+        
+        [sumView,
+         sortButton,
+         nftsTableView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         //        setupNavBar()
         setupConstraints()
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20),
-            sortButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 15),
+            sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -17),
+            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             
             sumView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             sumView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             sumView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            sumView.heightAnchor.constraint(equalToConstant: 76),
             
-            // nftsTableView
-            //            nftsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            //            nftsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            //            nftsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            //            nftsTableView.bottomAnchor.constraint(equalTo: sum.topAnchor)
+            nftsTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            nftsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 54),
+            nftsTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            nftsTableView.bottomAnchor.constraint(equalTo: sumView.topAnchor)
         ])
     }
     
 }
 
-extension BasketViewController {
-    
+extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        nftsMocked.count
     }
     
-    //        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    //            return
-    //        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: BasketNFTCell = tableView.dequeueReusableCell(indexPath: indexPath)
+        let model = nftsMocked[indexPath.row]
+        cell.delegate = self
+        cell.configure(with: model)
+        
+        return cell
+    }
     
 }
 
 extension BasketViewController: BasketNFTCellDelegate {
-    
     func didTapRemoveButton(on nft: NFTModel) {
         let removeNFTViewController = RemoveNFTViewController()
         removeNFTViewController.delegate = self
@@ -104,11 +133,19 @@ extension BasketViewController: BasketNFTCellDelegate {
 }
 
 extension BasketViewController: RemoveNFTViewControllerDelegate {
-    
     func didTapCancelButton() {
         dismiss(animated: true)
     }
     
     func didTapConfirmButton(_ model: NFTModel) {
+    }
+}
+
+extension BasketViewController: SumViewDelegate {
+    func didTapPayButton() {
+        let checkoutViewController = CheckoutViewController()
+        let navigationController = UINavigationController(rootViewController: checkoutViewController)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true, completion: nil)
     }
 }

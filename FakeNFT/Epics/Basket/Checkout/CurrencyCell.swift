@@ -25,6 +25,7 @@ final class CurrencyCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
+        label.textColor = .ypBlackUniversal
         return label
     }()
     
@@ -73,7 +74,7 @@ private extension CurrencyCell {
     func setupView() {
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 12
-        contentView.backgroundColor = UIColor.ypGrayUniversal
+        contentView.backgroundColor = UIColor.ypLightGrayDay
 
         [imageBackgroundView, imageView, labelsStackView]
             .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }

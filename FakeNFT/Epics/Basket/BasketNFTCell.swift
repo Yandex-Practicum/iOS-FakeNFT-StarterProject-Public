@@ -31,6 +31,7 @@ final class BasketNFTCell: UITableViewCell {
     private let nftLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
+        label.textColor = .ypBlackUniversal
         return label
     }()
     
@@ -38,12 +39,14 @@ final class BasketNFTCell: UITableViewCell {
         let label = UILabel()
         label.font = .caption2
         label.text = "Цена"
+        label.textColor = .ypBlackUniversal
         return label
     }()
     
     private let priceValue: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
+        label.textColor = .ypBlackUniversal
         return label
     }()
     
@@ -69,12 +72,13 @@ final class BasketNFTCell: UITableViewCell {
     
     func configure(with model: NFTModel) {
         self.model = model
-        if
-            let image = model.images.first,
-            let url = URL(string: image)
-        {
-            nftImageView.kf.setImage(with: url)
-        }
+//        if
+//            let image = model.images.first,
+//            let url = URL(string: image)
+//        {
+//            nftImageView.kf.setImage(with: url)
+//        }
+        nftImageView.image = UIImage(named: "mock.nft")
         nftLabel.text = model.name
         priceValue.text = "\(model.price) ETH"
 
@@ -96,8 +100,13 @@ private extension BasketNFTCell {
     func setupView() {
         contentView.backgroundColor = .white
 
-        [nftImageView, nftLabel, ratingStackView, priceLabel, priceValue, removeButton]
-            .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [nftImageView,
+         nftLabel,
+         ratingStackView,
+         priceLabel,
+         priceValue,
+         removeButton
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         contentView.addSubview(nftImageView)
         contentView.addSubview(nftLabel)
@@ -121,25 +130,24 @@ private extension BasketNFTCell {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // nftImageView
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18),
             nftImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
             nftImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
-            // nftLabel
+            
             nftLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nftLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 8),
-            // ratingStackView
+            
             ratingStackView.leadingAnchor.constraint(equalTo: nftLabel.leadingAnchor),
             ratingStackView.topAnchor.constraint(equalTo: nftLabel.bottomAnchor, constant: 4),
-            // priceLabel
+            
             priceLabel.leadingAnchor.constraint(equalTo: nftLabel.leadingAnchor),
             priceLabel.bottomAnchor.constraint(equalTo: priceValue.topAnchor, constant: -2),
-            // priceValue
+            
             priceValue.leadingAnchor.constraint(equalTo: nftLabel.leadingAnchor),
             priceValue.bottomAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: -8),
-            // removeButton
+            
             removeButton.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
             removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         ])

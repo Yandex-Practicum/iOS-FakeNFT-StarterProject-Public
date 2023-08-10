@@ -10,11 +10,10 @@ import WebKit
 
 final class UserAgreementViewController: UIViewController {
 
-    
     private let webView = WKWebView()
     
     private lazy var backButton = UIBarButtonItem(
-        image: UIImage.init(systemName: "chevron.back"),
+        image: UIImage.init(systemName: "chevron.left"),
         style: .plain,
         target: self,
         action: #selector(didTapBackButton)
@@ -28,9 +27,8 @@ final class UserAgreementViewController: UIViewController {
     
     @objc
     private func didTapBackButton() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
-
     
     private func loadPage() {
         let request = URLRequest(url: Constants.userAgreementUrl)
@@ -41,8 +39,8 @@ final class UserAgreementViewController: UIViewController {
 private extension UserAgreementViewController {
 
     func setupView() {
-        view.backgroundColor = .white
-
+        view.backgroundColor = .ypWhiteUniversal
+        webView.backgroundColor = .ypWhiteUniversal
         [webView]
             .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -53,14 +51,13 @@ private extension UserAgreementViewController {
     }
 
     func setupNavBar() {
-        navigationController?.navigationBar.barTintColor = .white
+        backButton.tintColor = .ypBlackUniversal
         navigationItem.leftBarButtonItem = backButton
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // webView
             webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

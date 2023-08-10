@@ -7,23 +7,24 @@
 
 import UIKit
 
-//protocol PayViewDelegate: AnyObject {
-//    func didTapPayButton()
-//    func didTapUserAgreementLink()
-//}
+protocol PayViewDelegate: AnyObject {
+    func didTapPayButton()
+    func didTapUserAgreementLink()
+}
 
 final class PayView: UIView {
     
     private lazy var payButton: Button = {
         let button = Button(title: "Оплатить")
         button.isEnabled = false
-//        button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return button
     }()
     
     private let userAgreementLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
+        label.textColor = .ypBlackUniversal
         label.text = "Совершая покупку, вы соглашаетесь с условиями"
         return label
     }()
@@ -31,11 +32,11 @@ final class PayView: UIView {
     private lazy var userAgreementLink: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.textColor = .blue
+        label.textColor = .ypBlueUniversal
         label.text = "Пользовательского соглашения"
         label.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapUserAgreementLink))
-//        label.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapUserAgreementLink))
+        label.addGestureRecognizer(tapGesture)
         return label
     }()
     
@@ -47,12 +48,12 @@ final class PayView: UIView {
     }()
     
     
-//    weak var delegate: PayViewDelegate?
-//    var isPayButtonEnabled = false {
-//        didSet {
-//            payButton.isEnabled = isPayButtonEnabled
-//        }
-//    }
+    weak var delegate: PayViewDelegate?
+    var isPayButtonEnabled = false {
+        didSet {
+            payButton.isEnabled = isPayButtonEnabled
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,25 +65,26 @@ final class PayView: UIView {
     }
     
     
-//    @objc
-//    private func didTapPayButton() {
-//        delegate?.didTapPayButton()
-//    }
-//
-//    @objc
-//    private func didTapUserAgreementLink() {
-//        delegate?.didTapUserAgreementLink()
-//    }
+    @objc
+    private func didTapPayButton() {
+        delegate?.didTapPayButton()
+    }
+
+    @objc
+    private func didTapUserAgreementLink() {
+        delegate?.didTapUserAgreementLink()
+    }
     
 }
     
     private extension PayView {
         func setupView() {
-            backgroundColor = .lightGray
+            backgroundColor = .ypLightGrayDay
             layer.cornerRadius = 16
 
-            [payButton, labelsStackView]
-                .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+            [payButton,
+             labelsStackView
+            ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
             addSubview(payButton)
             addSubview(labelsStackView)

@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol SumViewDelegate: AnyObject {
+    func didTapPayButton()
+}
+
 final class SumView: UIView {
         
     private let button: Button = {
         let button = Button(title: "К оплате")
+        button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return button
     }()
     
@@ -24,7 +29,7 @@ final class SumView: UIView {
     private let countLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.textColor = UIColor.ypBlackUniversal
+        label.textColor = .ypBlackUniversal
         label.text = "3 NFT"
         return label
     }()
@@ -32,10 +37,12 @@ final class SumView: UIView {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.textColor = UIColor.ypGreenUniversal
+        label.textColor = .ypGreenUniversal
         label.text = "5,34 ETH"
         return label
     }()
+    
+    weak var delegate: SumViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,12 +52,17 @@ final class SumView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc
+    private func didTapPayButton() {
+        delegate?.didTapPayButton()
+    }
 }
 
 private extension SumView {
     
     func setupView() {
-        backgroundColor = UIColor.ypLightGrayDay
+        backgroundColor = .ypLightGrayDay
         layer.cornerRadius = 16
         
         [button, labelsStack]
