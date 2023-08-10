@@ -7,8 +7,12 @@
 
 import UIKit
 
-struct CatalogDataModel {
+struct CatalogDataModel: Decodable {
+    let createdAt: String
     let name: String
-    let nfts: [Int]
-    let imageLink: String
+    let cover: String
+    let nfts: [String]
+    let description: String
+    let author: String
+    let id: String
 }
