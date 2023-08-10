@@ -15,6 +15,8 @@ final class CollectionScreenViewController: UIViewController {
     
     var dataModel: CatalogDataModel?
     
+    var nfts: [NftModel] = []
+    
     private let collectionNameLabel = UILabel()
     private let authorLabelStaticPart = UILabel()
     private let authorLabelDynamicPart = UILabel()
@@ -23,8 +25,36 @@ final class CollectionScreenViewController: UIViewController {
     
     private let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
+    private var collectionAuthorNetworkServiceObserver: NSObjectProtocol?
+    private var collectionNftNetworkServiceObserver: NSObjectProtocol?
+    
+    private func updateAuthor() {
+        authorLabelDynamicPart.text = CollectionScreenNetworkService.shared.author?.name
+        UIBlockingProgressHUD.dismiss()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionAuthorNetworkServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: CollectionScreenNetworkService.authorDidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAuthor()
+            }
+        
+        collectionNftNetworkServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: CollectionScreenNetworkService.nftsDidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateCollection()
+            }
+        
         view.backgroundColor = .ypWhite
         configureScrollView()
         configureImage()
@@ -34,6 +64,26 @@ final class CollectionScreenViewController: UIViewController {
         configureAuthorLabelDynamicPart()
         configureDescriptionLabel()
         configureCollection()
+        
+        UIBlockingProgressHUD.show()
+        CollectionScreenNetworkService.shared.fetchAuthor(id: dataModel!.author)
+        
+        CollectionScreenNetworkService.shared.fetchNft(ids: dataModel?.nfts ?? [], position: 0)
+    }
+    
+    func updateCollection() {
+        let collectionScreenNetworkService = CollectionScreenNetworkService.shared
+        let oldCount = nfts.count
+        let newCount = collectionScreenNetworkService.nfts.count
+        nfts = collectionScreenNetworkService.nfts
+        if oldCount != newCount {
+            collection.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                collection.insertItems(at: indexPaths)
+            } completion: { _ in }
+        }
     }
     
     private func configureScrollView() {
@@ -51,6 +101,7 @@ final class CollectionScreenViewController: UIViewController {
     
     private func configureButton() {
         buttonBack.setImage(UIImage(systemName: "chevron.backward")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack), for: .normal)
+        buttonBack.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(buttonBack)
         NSLayoutConstraint.activate([
@@ -59,6 +110,10 @@ final class CollectionScreenViewController: UIViewController {
             buttonBack.heightAnchor.constraint(equalToConstant: 24),
             buttonBack.widthAnchor.constraint(equalToConstant: 24)
         ])
+    }
+    
+    @objc func buttonTap() {
+        dismiss(animated: true)
     }
     
     private func configureImage() {
@@ -119,7 +174,7 @@ final class CollectionScreenViewController: UIViewController {
     private func configureAuthorLabelDynamicPart() {
         if !view.contains(authorLabelStaticPart) { return }
         
-        authorLabelDynamicPart.text = "John Doe" //убрать
+        authorLabelDynamicPart.text = ""
         authorLabelDynamicPart.font = .caption1
         authorLabelDynamicPart.textColor = .ypBlueUniversal
         authorLabelDynamicPart.isUserInteractionEnabled = true
@@ -140,7 +195,7 @@ final class CollectionScreenViewController: UIViewController {
     private func configureDescriptionLabel() {
         if !view.contains(authorLabelStaticPart) { return }
         
-        descriptionLabel.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
+        descriptionLabel.text = dataModel?.description
         descriptionLabel.font = .caption2
         descriptionLabel.textColor = .ypBlack
         descriptionLabel.backgroundColor = .clear
@@ -155,7 +210,7 @@ final class CollectionScreenViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             descriptionLabel.topAnchor.constraint(equalTo: authorLabelStaticPart.bottomAnchor, constant: 5),
             descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 72)
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -202,15 +257,16 @@ extension CollectionScreenViewController: UICollectionViewDelegateFlowLayout {
 
 extension CollectionScreenViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataModel?.nfts.count ?? 0
+        return nfts.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collection.dequeueReusableCell(withReuseIdentifier: CollectionScreenCollectionCell.cellReuseIdentifier, for: indexPath) as? CollectionScreenCollectionCell else { return UICollectionViewCell() }
-        cell.setNftImage(link: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Biscuit/1.png")
-        cell.setRating(rate: 3)
-        cell.setNameLabel(name: "Archie")
-        cell.setCostLabel(cost: 402)
+        let nft = nfts[indexPath.row]
+        cell.setNftImage(link: nft.images.first ?? "")
+        cell.setRating(rate: nft.rating)
+        cell.setNameLabel(name: nft.name)
+        cell.setCostLabel(cost: nft.price)
         return cell
     }
 }

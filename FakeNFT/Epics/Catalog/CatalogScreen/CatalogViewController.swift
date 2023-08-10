@@ -14,8 +14,9 @@ final class CatalogViewController: UIViewController {
     private var catalogData: [CatalogDataModel] = []
     private var catalogNetworkServiceObserver: NSObjectProtocol?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         catalogNetworkServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: CatalogNetworkService.didChangeNotification,
@@ -25,15 +26,13 @@ final class CatalogViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
-        UIBlockingProgressHUD.show()
-        CatalogNetworkService.shared.fetchCollectionNextPage()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        
         view.backgroundColor = .ypWhite // возможно в презентер
         configureButton() // возможно в презентер
         configureTable() // возможно в презентер
+        
+        UIBlockingProgressHUD.show()
+        CatalogNetworkService.shared.fetchCollectionNextPage()
     }
     
     private func updateTableViewAnimated() {
