@@ -19,10 +19,10 @@ final class CatalogTableCell: UITableViewCell {
     }()
     private let image: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .top
         image.clipsToBounds = true
-         image.layer.cornerRadius = 16
-         image.layer.masksToBounds = true
+        image.layer.cornerRadius = 16
+        image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -47,7 +47,18 @@ final class CatalogTableCell: UITableViewCell {
     }
     
     func setImage(link: String) {
-        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters:CharacterSet.urlQueryAllowed) ?? ""), placeholder: UIImage.mockCollection)
+        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""), placeholder: UIImage.mockCollection) { [weak self] _ in
+            if let originalImage = self?.image.image {
+                let scaledSize = CGSize(width: originalImage.size.width / 4, height: originalImage.size.height / 4)
+                
+                UIGraphicsBeginImageContextWithOptions(scaledSize, false, 0.0)
+                originalImage.draw(in: CGRect(origin: .zero, size: scaledSize))
+                let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                self?.image.image = scaledImage
+            }
+        }
     }
     
     private func setView() {
