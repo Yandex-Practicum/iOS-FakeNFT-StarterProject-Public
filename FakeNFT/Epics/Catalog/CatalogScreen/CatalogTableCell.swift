@@ -47,7 +47,7 @@ final class CatalogTableCell: UITableViewCell {
     }
     
     func setImage(link: String) {
-        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""), placeholder: UIImage.mockCollection) { [weak self] _ in
+        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")) { [weak self] _ in
             if let originalImage = self?.image.image {
                 let scaledSize = CGSize(width: originalImage.size.width / 4, height: originalImage.size.height / 4)
                 
