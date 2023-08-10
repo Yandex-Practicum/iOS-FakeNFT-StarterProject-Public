@@ -25,6 +25,7 @@ final class CatalogViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
+        UIBlockingProgressHUD.show()
         CatalogNetworkService.shared.fetchCollectionNextPage()
     }
     
@@ -43,6 +44,7 @@ final class CatalogViewController: UIViewController {
         if oldCount != newCount {
             table.reloadData()
         }
+        UIBlockingProgressHUD.dismiss()
     }
     
     private func configureButton() { // возможно в презентер
@@ -110,6 +112,7 @@ extension CatalogViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if (indexPath.row + 1 == catalogData.count) {
+            UIBlockingProgressHUD.show()
             CatalogNetworkService.shared.fetchCollectionNextPage()
         }
     }
