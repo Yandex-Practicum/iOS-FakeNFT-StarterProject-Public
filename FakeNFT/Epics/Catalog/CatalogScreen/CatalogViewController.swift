@@ -12,12 +12,37 @@ final class CatalogViewController: UIViewController {
     private let table = UITableView() // возможно в презентер
     
     private var catalogData: [CatalogDataModel] = []
+    private var catalogNetworkServiceObserver: NSObjectProtocol?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        catalogNetworkServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: CatalogNetworkService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateTableViewAnimated()
+            }
+        CatalogNetworkService.shared.fetchCollectionNextPage()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite // возможно в презентер
         configureButton() // возможно в презентер
         configureTable() // возможно в презентер
+    }
+    
+    private func updateTableViewAnimated() {
+        let catalogNetworkService = CatalogNetworkService.shared
+        let oldCount = catalogData.count
+        let newCount = catalogNetworkService.collections.count
+        catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        if oldCount != newCount {
+            table.reloadData()
+        }
     }
     
     private func configureButton() { // возможно в презентер
@@ -67,7 +92,7 @@ extension CatalogViewController: UITableViewDataSource {
         let data = catalogData[indexPath.row]
         
         //временно
-        catalogCell.setImage(link: data.imageLink)
+        catalogCell.setImage(link: data.cover)
         catalogCell.setLabel(collectionName: data.name, collectionCount: data.nfts.count)
         
         return catalogCell
@@ -81,5 +106,11 @@ extension CatalogViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath.row + 1 == catalogData.count) {
+            CatalogNetworkService.shared.fetchCollectionNextPage()
+        }
     }
 }
