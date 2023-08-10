@@ -39,8 +39,8 @@
 		BAA614CE2A82D8C2008311CF /* ProfileEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614CD2A82D8C2008311CF /* ProfileEditPresenter.swift */; };
 		BAA614D52A82F32A008311CF /* ProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D42A82F32A008311CF /* ProfileProtocols.swift */; };
 		BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */; };
-		BAA614DA2A8405E3008311CF /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */; };
 		BAA614DE2A843051008311CF /* ProfileNetworkClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */; };
+		8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -102,8 +102,8 @@
 		BAA614CD2A82D8C2008311CF /* ProfileEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresenter.swift; sourceTree = "<group>"; };
 		BAA614D42A82F32A008311CF /* ProfileProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileProtocols.swift; sourceTree = "<group>"; };
 		BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditProtocols.swift; sourceTree = "<group>"; };
-		BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClientProvider.swift; sourceTree = "<group>"; };
+		8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C38F29D245250081F015 /* Requests */,
+				8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -564,6 +565,7 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */,
 				F9F557402A741B5F004F6856 /* StatisticsViewController.swift in Sources */,
 				BAA614CE2A82D8C2008311CF /* ProfileEditPresenter.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,

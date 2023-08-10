@@ -10,6 +10,7 @@ extension UIImage {
     static let removeFromBasket = UIImage(named: "removeFromBasket")
     static let unliked = UIImage(named: "unliked")
     static let yellowStar = UIImage(named: "yellowStar")
+    static let sortButton = UIImage(named: "sortButton")
 
     static let mockCell = UIImage(named: "mock.cell")
     static let mockCollection = UIImage(named: "mock.collection")
