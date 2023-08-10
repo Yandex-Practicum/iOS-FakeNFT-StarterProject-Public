@@ -26,6 +26,21 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */; };
+		BA2035022A7A704200147B23 /* ProfileNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */; };
+		BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */; };
+		BA25245B2A7FC0CC00BD4F98 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25245A2A7FC0CC00BD4F98 /* ProfileEditViewController.swift */; };
+		BA25245D2A7FF61600BD4F98 /* EditableProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25245C2A7FF61600BD4F98 /* EditableProfileModel.swift */; };
+		BA25245F2A8009B300BD4F98 /* EditedParameterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA25245E2A8009B300BD4F98 /* EditedParameterLabel.swift */; };
+		BA2524612A801EEB00BD4F98 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2524602A801EEB00BD4F98 /* CustomTextField.swift */; };
+		BA2524632A80471B00BD4F98 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2524622A80471B00BD4F98 /* CustomTextView.swift */; };
+		BA98F52B2A783BC3000917BF /* ProfileConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA98F52A2A783BC3000917BF /* ProfileConstants.swift */; };
+		BA98F52D2A786EC9000917BF /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA98F52C2A786EC9000917BF /* ProfileTableViewCell.swift */; };
+		BAA614CE2A82D8C2008311CF /* ProfileEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614CD2A82D8C2008311CF /* ProfileEditPresenter.swift */; };
+		BAA614D52A82F32A008311CF /* ProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D42A82F32A008311CF /* ProfileProtocols.swift */; };
+		BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */; };
+		BAA614DA2A8405E3008311CF /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */; };
+		BAA614DE2A843051008311CF /* ProfileNetworkClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -74,6 +89,21 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
+		BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClient.swift; sourceTree = "<group>"; };
+		BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseModel.swift; sourceTree = "<group>"; };
+		BA25245A2A7FC0CC00BD4F98 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		BA25245C2A7FF61600BD4F98 /* EditableProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableProfileModel.swift; sourceTree = "<group>"; };
+		BA25245E2A8009B300BD4F98 /* EditedParameterLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedParameterLabel.swift; sourceTree = "<group>"; };
+		BA2524602A801EEB00BD4F98 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		BA2524622A80471B00BD4F98 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
+		BA98F52A2A783BC3000917BF /* ProfileConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileConstants.swift; sourceTree = "<group>"; };
+		BA98F52C2A786EC9000917BF /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		BAA614CD2A82D8C2008311CF /* ProfileEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresenter.swift; sourceTree = "<group>"; };
+		BAA614D42A82F32A008311CF /* ProfileProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileProtocols.swift; sourceTree = "<group>"; };
+		BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditProtocols.swift; sourceTree = "<group>"; };
+		BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClientProvider.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +266,64 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		BA2035032A7A9A9B00147B23 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */,
+				BA25245C2A7FF61600BD4F98 /* EditableProfileModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BA2524592A7FC06500BD4F98 /* ProfileEdit */ = {
+			isa = PBXGroup;
+			children = (
+				BA25245A2A7FC0CC00BD4F98 /* ProfileEditViewController.swift */,
+				BA25245E2A8009B300BD4F98 /* EditedParameterLabel.swift */,
+				BAA614CD2A82D8C2008311CF /* ProfileEditPresenter.swift */,
+			);
+			path = ProfileEdit;
+			sourceTree = "<group>";
+		};
+		BA277D752A7FB26D00886504 /* ProfileSummary */ = {
+			isa = PBXGroup;
+			children = (
+				F9F5573B2A741B48004F6856 /* ProfileViewController.swift */,
+				BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */,
+				BA98F52C2A786EC9000917BF /* ProfileTableViewCell.swift */,
+				BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */,
+			);
+			path = ProfileSummary;
+			sourceTree = "<group>";
+		};
+		BAA614D22A82F2C5008311CF /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				BAA614D82A82F4B8008311CF /* UIComponents */,
+				BA277D752A7FB26D00886504 /* ProfileSummary */,
+				BA2524592A7FC06500BD4F98 /* ProfileEdit */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		BAA614D32A82F2F7008311CF /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BAA614D42A82F32A008311CF /* ProfileProtocols.swift */,
+				BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		BAA614D82A82F4B8008311CF /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				BA2524602A801EEB00BD4F98 /* CustomTextField.swift */,
+				BA2524622A80471B00BD4F98 /* CustomTextView.swift */,
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
 		F9F557352A7419CC004F6856 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,7 +382,12 @@
 		F9F5574C2A74330D004F6856 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				F9F5573B2A741B48004F6856 /* ProfileViewController.swift */,
+				BAA614D32A82F2F7008311CF /* Protocols */,
+				BAA614D22A82F2C5008311CF /* Presentation */,
+				BA2035032A7A9A9B00147B23 /* Models */,
+				BA98F52A2A783BC3000917BF /* ProfileConstants.swift */,
+				BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */,
+				BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -472,19 +565,34 @@
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				F9F557402A741B5F004F6856 /* StatisticsViewController.swift in Sources */,
+				BAA614CE2A82D8C2008311CF /* ProfileEditPresenter.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */,
+				BA98F52B2A783BC3000917BF /* ProfileConstants.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
+				BA2035022A7A704200147B23 /* ProfileNetworkClient.swift in Sources */,
+				BA25245F2A8009B300BD4F98 /* EditedParameterLabel.swift in Sources */,
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */,
+				BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */,
+				BAA614DE2A843051008311CF /* ProfileNetworkClientProvider.swift in Sources */,
+				BA2524612A801EEB00BD4F98 /* CustomTextField.swift in Sources */,
+				BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */,
+				BAA614DA2A8405E3008311CF /* UIBlockingProgressHUD.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
+				BA98F52D2A786EC9000917BF /* ProfileTableViewCell.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				BA2524632A80471B00BD4F98 /* CustomTextView.swift in Sources */,
+				BA25245B2A7FC0CC00BD4F98 /* ProfileEditViewController.swift in Sources */,
+				BAA614D52A82F32A008311CF /* ProfileProtocols.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				BA25245D2A7FF61600BD4F98 /* EditableProfileModel.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);

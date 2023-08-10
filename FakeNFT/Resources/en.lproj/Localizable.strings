@@ -97,20 +97,48 @@ tabBar.basket = "Basket";
 
 
 
-// Профиль
-tabBar.profile = "Profile";
+// Profile
+"tabBar.profile" = "Profile";
 
+// Navigation table cell labels
+"profile.myNFTs" = "My NFTs";
+"profile.featured" = "Featured NFTs";
+"profile.about" = "About Developer";
 
+// Editable parameters labels
+"profile.name" = "Name";
+"profile.description" = "Description";
+"profile.site" = "Website";
 
+// Profile editing field placeholders
+"profile.name.placeholder" = "Enter your username";
+"profile.description.placeholder" = "Enter your profile description";
+"profile.site.placeholder" = "Enter your website address";
 
+// Text for "Change Photo" label
+"profile.photo.change" = "Change photo";
 
+// Text for "Download Photo" label
+"profile.photo.download" = "Download photo";
 
+// Dialog title for choosing a URL
+"profile.photo.title" = "Add Image";
+"profile.photo.message" = "Enter the URL for the photo";
+"profile.photo.placeholder" = "Enter URL:";
 
+// Text field placeholder
+"profile.photo.urlPlaceholder" = "Enter the URL here";
+"profile.photo.urlExample" = "For example, https://example.com/image.jpg";
 
+// Error notification for invalid URL input
+"profile.photo.invalidURLTitle" = "Invalid URL";
+"profile.photo.invalidURLMessage" = "Check the URL and try again";
 
-
-
-
+// Confirmation buttons in the dialog
+"profile.photo.saveButton" = "Save";
+"profile.photo.okButton" = "Ok";
+"profile.photo.applyButton" = "Apply";
+"profile.photo.cancelButton" = "Cancel";
 
 
 
