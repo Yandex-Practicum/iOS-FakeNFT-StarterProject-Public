@@ -10,3 +10,4 @@ CATALOGUE = "Catalogue";
 CART = "Cart";
 STATISTICS = "Statistics";
 
+NOINTERNET = "No Internet";

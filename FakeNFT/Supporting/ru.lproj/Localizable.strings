@@ -9,3 +9,5 @@ PROFILE = "Профиль";
 CATALOGUE = "Каталог";
 CART = "Корзина";
 STATISTICS = "Статистика";
+
+NOINTERNET = "Нет интернета";

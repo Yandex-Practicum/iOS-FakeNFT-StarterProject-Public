@@ -11,5 +11,5 @@ protocol NFTsViewModel {
 }
 
 final class NFTsViewModelImpl: NFTsViewModel {
-    
+
 }

@@ -12,7 +12,7 @@ final class TabBarController: UITabBarController {
         super.viewWillAppear(animated)
         configureController()
     }
-    
+
     private func createMockViewController(
         title: String,
         backgroundColor: UIColor
@@ -42,7 +42,7 @@ final class TabBarController: UITabBarController {
         tabBar.backgroundColor = .appWhite
         
         let profileNavigationController = NavigationController(
-            rootViewController: firstMockVc
+            rootViewController: ProfileViewController(viewModel: ProfileViewModel(networkClient: nil))
         )
         let cartNavigationController = NavigationController(
             rootViewController: thirdMockVc
@@ -71,7 +71,7 @@ final class TabBarController: UITabBarController {
                 title: "CART".localized,
                 image: UIImage.Icons.cart
             ),
-            
+
             configureTab(
                 controller: statisticsNavigationController,
                 title: "STATISTICS".localized,
@@ -80,7 +80,7 @@ final class TabBarController: UITabBarController {
         ]
 
     }
-    
+
     private func configureTab(
         controller: UIViewController,
         title: String? = nil,

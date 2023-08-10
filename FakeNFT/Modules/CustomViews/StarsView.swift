@@ -83,7 +83,7 @@ private extension StarsView {
 private extension StarsView {
     func setRating(_ rating: Rating) {
         let rating = rating.rawValue
-
+        // swiftlint:disable:next line_length
         for i in 0..<rating {
             let star = self.stars[i]
             star.tintColor = .yellowUniversal

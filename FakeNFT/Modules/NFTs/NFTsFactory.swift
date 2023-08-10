@@ -14,5 +14,3 @@ struct NFTsFactory {
         return UINavigationController(rootViewController: vc)
     }
 }
-
-
