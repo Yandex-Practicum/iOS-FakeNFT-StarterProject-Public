@@ -107,7 +107,10 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let collectionScreen = CollectionScreenViewController()
+        collectionScreen.modalPresentationStyle = .fullScreen
+        collectionScreen.dataModel = catalogData[indexPath.row]
+        present(collectionScreen, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

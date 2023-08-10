@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CollectionScreenViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let buttonBack = UIButton()
     private let image = UIImageView()
     
-    private let visibleCollection: [Int] = [1,2,3,4,5,6,7,8,9,12,123,123,123,123,12,213,21,3,213,1,2,123,2]
+    var dataModel: CatalogDataModel?
     
     private let collectionNameLabel = UILabel()
     private let authorLabelStaticPart = UILabel()
@@ -62,7 +63,10 @@ final class CollectionScreenViewController: UIViewController {
     
     private func configureImage() {
         image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "Cover Collection") //убрать
+        UIBlockingProgressHUD.show()
+        image.kf.setImage(with: URL(string: dataModel?.cover.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")) { _ in
+            UIBlockingProgressHUD.dismiss()
+        }
         image.layer.cornerRadius = 12
         image.layer.masksToBounds = true
         image.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -74,14 +78,15 @@ final class CollectionScreenViewController: UIViewController {
             image.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             image.topAnchor.constraint(equalTo: scrollView.topAnchor),
             image.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            image.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+            image.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            image.heightAnchor.constraint(equalToConstant: 310)
         ])
     }
     
     private func configureNameLabel() {
         if !view.contains(image) { return }
         
-        collectionNameLabel.text = "Peach" //убрать
+        collectionNameLabel.text = dataModel?.name
         collectionNameLabel.font = .headline3
         collectionNameLabel.textColor = .ypBlack
         
@@ -197,7 +202,7 @@ extension CollectionScreenViewController: UICollectionViewDelegateFlowLayout {
 
 extension CollectionScreenViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleCollection.count
+        return dataModel?.nfts.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
