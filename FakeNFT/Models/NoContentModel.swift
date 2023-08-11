@@ -4,6 +4,6 @@ enum NoContent: String {
     case noInternet = "NOINTERNET"
     
     func localizedString() -> String {
-            return NSLocalizedString(self.rawValue, comment: "")
-        }
+        return NSLocalizedString(self.rawValue, comment: "")
+    }
 }

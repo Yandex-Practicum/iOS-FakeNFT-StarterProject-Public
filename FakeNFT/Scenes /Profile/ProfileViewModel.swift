@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol ProfileViewModelProtocol: AnyObject {
     var onChange: (() -> Void)? { get set }

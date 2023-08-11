@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 protocol MyNFTViewModelProtocol: AnyObject {
     var onChange: (() -> Void)? { get set }

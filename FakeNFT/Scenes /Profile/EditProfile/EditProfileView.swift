@@ -2,9 +2,9 @@ import UIKit
 import Kingfisher
 
 final class EditProfileView: UIView {
-    private var viewModel: ProfileViewModelProtocol
-    private var viewController: EditProfileViewController
-
+    private let viewModel: ProfileViewModelProtocol
+    private let viewController: EditProfileViewController
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.accessibilityIdentifier = "closeButton"
@@ -12,14 +12,14 @@ final class EditProfileView: UIView {
         button.addTarget(self, action: #selector(closeDidTap), for: .touchUpInside)
         return button
     }()
-
+    
     private lazy var avatarImage: UIImageView = {
         let imageView = UIImageView(image: UIImage.Icons.userPlaceholder)
         imageView.layer.cornerRadius = 35
         imageView.layer.masksToBounds = true
         return imageView
     }()
-
+    
     private lazy var changeAvatarLabel: UILabel = {
         let label = UILabel()
         label.accessibilityIdentifier = "changeAvatarLabel"
@@ -39,7 +39,7 @@ final class EditProfileView: UIView {
         label.addGestureRecognizer(tapAction)
         return label
     }()
-
+    
     private lazy var avatarUpdateURLLabel: UILabel = {
         let label = UILabel()
         label.layer.cornerRadius = 16
@@ -51,7 +51,7 @@ final class EditProfileView: UIView {
         label.isHidden = true
         return label
     }()
-
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "Имя", attributes: [.kern: 0.35])
@@ -59,7 +59,7 @@ final class EditProfileView: UIView {
         label.textColor = .appBlack
         return label
     }()
-
+    
     private lazy var nameTextField: TextField = {
         let textField = TextField()
         textField.insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 41)
@@ -71,7 +71,7 @@ final class EditProfileView: UIView {
         textField.delegate = self
         return textField
     }()
-
+    
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "Описание", attributes: [.kern: 0.35])
@@ -79,9 +79,9 @@ final class EditProfileView: UIView {
         label.textColor = .appBlack
         return label
     }()
-
+    
     private lazy var descriptionTextView: UITextView = {
-       let textView = UITextView()
+        let textView = UITextView()
         textView.font = .systemFont(ofSize: 17)
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
         textView.backgroundColor = .appLightGray
@@ -90,17 +90,17 @@ final class EditProfileView: UIView {
         textView.delegate = self
         return textView
     }()
-
+    
     private lazy var websiteLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.attributedText = NSAttributedString(string: "Сайт", attributes: [.kern: 0.35])
         label.font = .boldSystemFont(ofSize: 22)
         label.textColor = .appBlack
         return label
     }()
-
+    
     private lazy var websiteTextField: TextField = {
-       let textField = TextField()
+        let textField = TextField()
         textField.insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 41)
         textField.font = .systemFont(ofSize: 17)
         textField.backgroundColor = .appLightGray
@@ -110,21 +110,21 @@ final class EditProfileView: UIView {
         textField.delegate = self
         return textField
     }()
-
+    
     init(frame: CGRect, viewController: EditProfileViewController, viewModel: ProfileViewModelProtocol) {
         self.viewController = viewController
         self.viewModel = viewModel
-        super.init(frame: .zero)
-
+        super.init(frame: frame)
+        
         backgroundColor = .appWhite
         setupConstraints()
         getData()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
@@ -138,7 +138,7 @@ final class EditProfileView: UIView {
         }
         super.touchesBegan(touches, with: event)
     }
-
+    
     @objc
     private func closeDidTap(_ sender: UITapGestureRecognizer) {
         guard
@@ -151,7 +151,7 @@ final class EditProfileView: UIView {
             !website.isEmpty,
             let likes = viewModel.likes
         else { return }
-
+        
         viewModel.putProfileData(
             name: name,
             avatar: avatar,
@@ -161,7 +161,7 @@ final class EditProfileView: UIView {
         )
         viewController.dismiss(animated: true)
     }
-
+    
     @objc
     private func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
         avatarUpdateURLLabel.isHidden = false
@@ -170,11 +170,11 @@ final class EditProfileView: UIView {
             message: "Укажите ссылку на аватар",
             preferredStyle: .alert
         )
-
+        
         alert.addTextField(configurationHandler: {(textField: UITextField) in
             textField.placeholder = "Введите ссылку:"
         })
-
+        
         alert.addAction(UIAlertAction(
             title: "Ок",
             style: .default,
@@ -184,7 +184,7 @@ final class EditProfileView: UIView {
                     let textField = alert.textFields?[0],
                     let updateURL = textField.text
                 else { return }
-
+                
                 if checkURL(urlString: updateURL) {
                     self.avatarUpdateURLLabel.text = updateURL
                 } else {
@@ -202,7 +202,7 @@ final class EditProfileView: UIView {
         )
         self.viewController.present(alert, animated: true)
     }
-
+    
     private func checkURL(urlString: String?) -> Bool {
         if let urlString = urlString,
            let url = NSURL(string: urlString) {
@@ -210,7 +210,7 @@ final class EditProfileView: UIView {
         }
         return false
     }
-
+    
     private func getData() {
         avatarImage.kf.setImage(
             with: viewModel.avatarURL,
@@ -221,7 +221,7 @@ final class EditProfileView: UIView {
         descriptionTextView.text = viewModel.description
         websiteTextField.text = viewModel.website
     }
-
+    
     // MARK: - Layout
     private func setupConstraints() {
         [closeButton,
@@ -238,47 +238,47 @@ final class EditProfileView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
-
+        
         NSLayoutConstraint.activate([
             closeButton.heightAnchor.constraint(equalToConstant: 42),
             closeButton.widthAnchor.constraint(equalToConstant: 42),
             closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
+            
             avatarImage.heightAnchor.constraint(equalToConstant: 70),
             avatarImage.widthAnchor.constraint(equalToConstant: 70),
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: 94),
             avatarImage.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-
+            
             changeAvatarLabel.heightAnchor.constraint(equalTo: avatarImage.heightAnchor),
             changeAvatarLabel.widthAnchor.constraint(equalTo: avatarImage.widthAnchor),
             changeAvatarLabel.topAnchor.constraint(equalTo: avatarImage.topAnchor),
             changeAvatarLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-
+            
             avatarUpdateURLLabel.topAnchor.constraint(equalTo: changeAvatarLabel.bottomAnchor, constant: 4),
             avatarUpdateURLLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             avatarUpdateURLLabel.heightAnchor.constraint(equalToConstant: 44),
             avatarUpdateURLLabel.widthAnchor.constraint(equalToConstant: 250),
-
+            
             nameLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 24),
             nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-
+            
             nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             nameTextField.heightAnchor.constraint(equalToConstant: 46),
             nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
+            
             descriptionLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 22),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-
+            
             descriptionTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
             descriptionTextView.heightAnchor.constraint(equalToConstant: 132),
             descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
+            
             websiteLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 24),
             websiteLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-
+            
             websiteTextField.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 8),
             websiteTextField.heightAnchor.constraint(equalToConstant: 46),
             websiteTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
