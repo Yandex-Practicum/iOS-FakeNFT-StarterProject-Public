@@ -26,6 +26,9 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */; };
+		BA01A4792A856EE80045B77F /* UserAboutWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA01A4782A856EE80045B77F /* UserAboutWebView.swift */; };
+		BA01A47B2A85724B0045B77F /* UserAboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA01A47A2A85724B0045B77F /* UserAboutPresenter.swift */; };
 		BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */; };
 		BA2035022A7A704200147B23 /* ProfileNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */; };
 		BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */; };
@@ -40,7 +43,6 @@
 		BAA614D52A82F32A008311CF /* ProfileProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D42A82F32A008311CF /* ProfileProtocols.swift */; };
 		BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */; };
 		BAA614DE2A843051008311CF /* ProfileNetworkClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */; };
-		8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -89,6 +91,9 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		BA01A4782A856EE80045B77F /* UserAboutWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAboutWebView.swift; sourceTree = "<group>"; };
+		BA01A47A2A85724B0045B77F /* UserAboutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAboutPresenter.swift; sourceTree = "<group>"; };
 		BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
 		BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClient.swift; sourceTree = "<group>"; };
 		BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseModel.swift; sourceTree = "<group>"; };
@@ -103,7 +108,6 @@
 		BAA614D42A82F32A008311CF /* ProfileProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileProtocols.swift; sourceTree = "<group>"; };
 		BAA614D62A82F46C008311CF /* ProfileEditProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditProtocols.swift; sourceTree = "<group>"; };
 		BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClientProvider.swift; sourceTree = "<group>"; };
-		8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +271,15 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		BA01A4772A856DA90045B77F /* UserAboutWebView */ = {
+			isa = PBXGroup;
+			children = (
+				BA01A4782A856EE80045B77F /* UserAboutWebView.swift */,
+				BA01A47A2A85724B0045B77F /* UserAboutPresenter.swift */,
+			);
+			path = UserAboutWebView;
+			sourceTree = "<group>";
+		};
 		BA2035032A7A9A9B00147B23 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +313,7 @@
 		BAA614D22A82F2C5008311CF /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BA01A4772A856DA90045B77F /* UserAboutWebView */,
 				BAA614D82A82F4B8008311CF /* UIComponents */,
 				BA277D752A7FB26D00886504 /* ProfileSummary */,
 				BA2524592A7FC06500BD4F98 /* ProfileEdit */,
@@ -387,7 +401,6 @@
 				BAA614D22A82F2C5008311CF /* Presentation */,
 				BA2035032A7A9A9B00147B23 /* Models */,
 				BA98F52A2A783BC3000917BF /* ProfileConstants.swift */,
-				BAA614D92A8405E3008311CF /* UIBlockingProgressHUD.swift */,
 				BAA614DD2A843051008311CF /* ProfileNetworkClientProvider.swift */,
 			);
 			path = Profile;
@@ -582,13 +595,14 @@
 				BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */,
 				BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */,
 				BAA614DE2A843051008311CF /* ProfileNetworkClientProvider.swift in Sources */,
+				BA01A47B2A85724B0045B77F /* UserAboutPresenter.swift in Sources */,
 				BA2524612A801EEB00BD4F98 /* CustomTextField.swift in Sources */,
 				BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */,
-				BAA614DA2A8405E3008311CF /* UIBlockingProgressHUD.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
 				BA98F52D2A786EC9000917BF /* ProfileTableViewCell.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				BA01A4792A856EE80045B77F /* UserAboutWebView.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				BA2524632A80471B00BD4F98 /* CustomTextView.swift in Sources */,
 				BA25245B2A7FC0CC00BD4F98 /* ProfileEditViewController.swift in Sources */,

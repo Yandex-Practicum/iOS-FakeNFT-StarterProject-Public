@@ -11,6 +11,7 @@ final class ProfileViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 20
         stack.layer.masksToBounds = true
+        stack.isUserInteractionEnabled = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -66,8 +67,7 @@ final class ProfileViewController: UIViewController {
         let lineHeightPixels = lineHeightPoints / UIScreen.main.scale
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineHeightPixels
-        let attributedText = NSAttributedString(string: label.text ?? "", attributes: [.paragraphStyle: paragraphStyle])
-        label.attributedText = attributedText
+
         
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +79,7 @@ final class ProfileViewController: UIViewController {
         label.font = .caption1
         label.textAlignment = .left
         label.numberOfLines = 1
+        label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -100,6 +101,8 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(openUserAboutWebView))
+        userSiteLabel.addGestureRecognizer(gesture)
         addingUIElements()
         tableViewConfigure()
         layoutConfigure()
@@ -204,6 +207,15 @@ final class ProfileViewController: UIViewController {
         profileEditViewController.delegate = self
         present(profileEditViewController, animated: true)
     }
+    
+    @objc private func openUserAboutWebView() {
+        guard let url = presenter?.getCurrentProfileResponse()?.website else { return }
+        let presenter = WebViewPresenter(url: url)
+        let webView = UserAboutWebView()
+        webView.presenter = presenter
+        presenter.view = webView
+        present(webView, animated: true)
+    }
 }
 
 
@@ -216,9 +228,9 @@ extension ProfileViewController: UITableViewDelegate {
         case 1:
             print("\(ProfileConstants.tableLabelArray[indexPath.row])")
         case 2:
-            print("\(ProfileConstants.tableLabelArray[indexPath.row])")
+            openUserAboutWebView()
         default:
-            print("1111111111111")
+            print("Uncknown row")
         }
     }
 }

@@ -15,9 +15,15 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         view?.activityIndicatorAnimation(inProcess: true)
         networkClient?.getDecodedProfile()
     }
+    
     func getEditableProfile() -> EditableProfileModel? {
         currentProfileEditModel
     }
+    
+    func getCurrentProfileResponse() -> ProfileResponseModel? {
+        currentProfileResponseModel
+    }
+    
     private func convertResponse(model: ProfileResponseModel?, image: UIImage?) -> EditableProfileModel? {
         guard let model = model else {return nil}
         return EditableProfileModel(
@@ -54,6 +60,7 @@ extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
             KingfisherManager.shared.retrieveImage(with: url){ result in
                 switch result {
                 case .success(let result):
+                    self.currentProfileResponseModel = data
                     self.currentProfileEditModel = self.convertResponse(
                         model: data,
                         image: result.image
