@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 final class CollectionScreenCollectionCell: UICollectionViewCell {
-    static let cellReuseIdentifier = "collectionScreenCell"
+    static let cellReuseIdentifier = "CollectionScreenCollectionCell"
     
     private let nftImage: UIImageView = {
         let imageView = UIImageView()
@@ -34,19 +34,13 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    private let rating: UIStackView = {
-        let starImage = UIImageView()
-        starImage.image = .grayStar
-        starImage.contentMode = .scaleAspectFit
-        
+    private let ratingStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 2
         stack.distribution = .fillEqually
         stack.isLayoutMarginsRelativeArrangement = true
-        
         stack.translatesAutoresizingMaskIntoConstraints = false
-        
         return stack
     }()
     private let nameLabel: UILabel = {
@@ -58,12 +52,12 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     }()
     private let costLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10) //вынести
+        label.font = UIFont.caption3
         label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
@@ -74,10 +68,7 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
         nftImage.image = nil
         basketImage.image = .addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         likeImage.image = .unliked
-        rating.arrangedSubviews.forEach { view in
-            view.removeFromSuperview()
-            rating.removeArrangedSubview(view)
-        }
+        removeRating()
         nameLabel.text = ""
         costLabel.text = ""
     }
@@ -87,43 +78,44 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     }
     
     func setNftImage(link: String) {
-        nftImage.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""))
+        let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        nftImage.kf.setImage(with: url)
     }
     
-    func addToBasket() {
+    private func addToBasket() {
         basketImage.image = .removeFromBasket
     }
     
-    func removeFromBasket() {
+    private func removeFromBasket() {
         basketImage.image = .addToBasket
     }
     
-    func setLike() {
+    private func setLike() {
         likeImage.image = .liked
     }
     
-    func setUnlike() {
+    private func setUnlike() {
         likeImage.image = .unliked
     }
     
     func setRating(rate: Int) {
-        rating.arrangedSubviews.forEach { view in
-            view.removeFromSuperview()
-            rating.removeArrangedSubview(view)
-        }
-        
         for index in 1...5 {
-            let filledView = UIImageView(image: .yellowStar)
-            filledView.contentMode = .scaleAspectFit
-            
-            let emptyView = UIImageView(image: .grayStar)
-            emptyView.contentMode = .scaleAspectFit
-            
             if index <= rate {
-                rating.addArrangedSubview(filledView)
+                let yellowStar = UIImageView(image: .yellowStar)
+                yellowStar.contentMode = .scaleAspectFit
+                ratingStack.addArrangedSubview(yellowStar)
             } else {
-                rating.addArrangedSubview(emptyView)
+                let grayStar = UIImageView(image: .grayStar)
+                grayStar.contentMode = .scaleAspectFit
+                ratingStack.addArrangedSubview(grayStar)
             }
+        }
+    }
+    
+    private func removeRating() {
+        ratingStack.arrangedSubviews.forEach { star in
+            star.removeFromSuperview()
+            ratingStack.removeArrangedSubview(star)
         }
     }
     
@@ -140,7 +132,7 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
         contentView.addSubview(nftImage)
         contentView.addSubview(basketImage)
         contentView.addSubview(likeImage)
-        contentView.addSubview(rating)
+        contentView.addSubview(ratingStack)
         contentView.addSubview(nameLabel)
         contentView.addSubview(costLabel)
         NSLayoutConstraint.activate([
@@ -159,12 +151,12 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
             likeImage.widthAnchor.constraint(equalToConstant: 40),
             likeImage.heightAnchor.constraint(equalToConstant: 40),
             
-            rating.topAnchor.constraint(equalTo: nftImage.bottomAnchor, constant: 8),
-            rating.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            rating.heightAnchor.constraint(equalToConstant: 12),
-            rating.widthAnchor.constraint(equalToConstant: 68),
-            
-            nameLabel.topAnchor.constraint(equalTo: rating.bottomAnchor, constant: 5),
+            ratingStack.topAnchor.constraint(equalTo: nftImage.bottomAnchor, constant: 8),
+            ratingStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            ratingStack.widthAnchor.constraint(equalToConstant: 68),
+            ratingStack.heightAnchor.constraint(equalToConstant: 12),
+
+            nameLabel.topAnchor.constraint(equalTo: ratingStack.bottomAnchor, constant: 5),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: basketImage.leadingAnchor),
             
