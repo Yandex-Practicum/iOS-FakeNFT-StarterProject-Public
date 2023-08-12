@@ -8,7 +8,7 @@
 import Foundation
 
 final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
-    var viewController: WebViewScreenViewControllerProtocol?
+    weak var viewController: WebViewScreenViewControllerProtocol?
     var authorWebSiteLink: String
     
     init(authorWebSiteLink: String) {
