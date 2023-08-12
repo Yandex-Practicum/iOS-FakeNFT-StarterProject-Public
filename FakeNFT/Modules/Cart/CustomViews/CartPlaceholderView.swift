@@ -8,10 +8,10 @@
 import UIKit
 
 final class CartPlaceholderView: UIView {
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Корзина пуста"
+        label.text = "CART_PLACEHOLDER_LABEL_TEXT".localized
         label.font = .getFont(style: .bold, size: 17)
         label.textColor = .appBlack
         return label

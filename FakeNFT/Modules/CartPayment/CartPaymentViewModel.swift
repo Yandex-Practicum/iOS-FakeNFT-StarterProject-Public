@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CartPaymentViewModelProtocol {
-    var currencies: Box<CurreciesViewModel> { get }
+    var currencies: Box<CurrenciesViewModel> { get }
     var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
     var isPurchaseSuccessful: Box<CartPaymentViewModel.PurchaseState> { get }
     var error: Box<Error?> { get }
@@ -20,7 +20,7 @@ protocol CartPaymentViewModelProtocol {
 final class CartPaymentViewModel {
     enum ViewState {
         case loading
-        case loaded(CurreciesViewModel?)
+        case loaded(CurrenciesViewModel?)
         case empty
     }
 
@@ -30,7 +30,7 @@ final class CartPaymentViewModel {
         case didNotHappen
     }
 
-    private(set) var currencies = Box<CurreciesViewModel>([])
+    private(set) var currencies = Box<CurrenciesViewModel>([])
     private(set) var cartPaymentViewState = Box<ViewState>(.loading)
     private(set) var isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
     private(set) var error = Box<Error?>(nil)

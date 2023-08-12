@@ -17,7 +17,7 @@ protocol CartPaymentViewInteractorProtocol {
 }
 
 final class CartPaymentViewInteractor {
-    private var currencies: CurreciesViewModel = []
+    private var currencies: CurrenciesViewModel = []
     private var currenciesCapacity = 0
 
     private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.fetch-currency",
