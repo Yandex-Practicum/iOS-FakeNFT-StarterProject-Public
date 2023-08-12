@@ -55,7 +55,7 @@ extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
                 self.currenciesCapacity = currenciesResult.count
                 self.fetchCurrenciesWithImages(models: currenciesResult, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
-                onFailure(error)
+                self.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -72,7 +72,7 @@ extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
                 let state: CartPaymentViewModel.PurchaseState = purchase.success ? .success : .failure
                 onSuccess(state)
             case .failure(let error):
-                onFailure(error)
+                self.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -87,7 +87,11 @@ private extension CartPaymentViewInteractor {
         models.forEach { [weak self] currency in
             self?.fetchingQueue.async { [weak self] in
                 guard let self = self else { return }
-                self.prepareCurrencyWithImage(model: currency, onSuccess: onSuccess, onFailure: onFailure)
+                self.prepareCurrencyWithImage(
+                    model: currency,
+                    onSuccess: onSuccess,
+                    onFailure: onFailure
+                )
             }
         }
     }
@@ -109,7 +113,7 @@ private extension CartPaymentViewInteractor {
                 )
                 self?.saveCurrency(currency, completion: onSuccess)
             case .failure(let error):
-                onFailure(error)
+                self?.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -125,6 +129,14 @@ private extension CartPaymentViewInteractor {
                 completion(.loaded(self.currencies))
                 self.currencies.removeAll()
             }
+        }
+    }
+}
+
+private extension CartPaymentViewInteractor {
+    func handleError(error: Error, onFailure: @escaping LoadingFailureCompletionBlock) {
+        DispatchQueue.main.async {
+            onFailure(error)
         }
     }
 }

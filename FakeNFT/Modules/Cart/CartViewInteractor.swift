@@ -58,7 +58,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
                 self.orderCapacity = order.nfts.count
                 self.fetchNfts(ids: order.nfts, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
-                onFailure(error)
+                self.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -75,7 +75,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
             case .success:
                 self.fetchOrder(with: id, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
-                onFailure(error)
+                self.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -105,7 +105,7 @@ private extension CartViewInteractor {
             case .success(let model):
                 self?.prepareNftWithImage(model: model, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
-                onFailure(error)
+                self?.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -128,7 +128,7 @@ private extension CartViewInteractor {
                 )
                 self?.saveNft(nft, completion: onSuccess)
             case .failure(let error):
-                onFailure(error)
+                self?.handleError(error: error, onFailure: onFailure)
             }
         }
     }
@@ -146,6 +146,14 @@ private extension CartViewInteractor {
                 self.order.removeAll()
                 self.accumulatedCost = 0
             }
+        }
+    }
+}
+
+private extension CartViewInteractor {
+    func handleError(error: Error, onFailure: @escaping LoadingFailureCompletionBlock) {
+        DispatchQueue.main.async {
+            onFailure(error)
         }
     }
 }
