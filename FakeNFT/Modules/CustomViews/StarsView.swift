@@ -8,15 +8,6 @@
 import UIKit
 
 final class StarsView: UIView {
-    enum Rating: Int {
-        case zero = 0
-        case one
-        case two
-        case three
-        case four
-        case five
-    }
-
     var rating: Rating = .zero {
         didSet {
             self.setRating(self.rating)
@@ -27,7 +18,7 @@ final class StarsView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 2
+        stackView.spacing = Constants.stackViewSpacing
         stackView.alignment = .leading
         stackView.distribution = .fillEqually
         return stackView
@@ -52,7 +43,6 @@ final class StarsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configure()
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -62,6 +52,8 @@ final class StarsView: UIView {
 
 private extension StarsView {
     func configure() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+
         self.addSubviews()
         self.addConstraints()
     }
@@ -89,5 +81,23 @@ private extension StarsView {
             let star = self.stars[index]
             star.tintColor = .yellowUniversal
         }
+    }
+}
+
+private extension StarsView {
+    enum Constants {
+        static let stackViewSpacing: CGFloat = 2
+    }
+}
+
+// MARK: - Enums
+extension StarsView {
+    enum Rating: Int {
+        case zero = 0
+        case one
+        case two
+        case three
+        case four
+        case five
     }
 }

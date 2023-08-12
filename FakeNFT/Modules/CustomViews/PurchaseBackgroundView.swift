@@ -8,8 +8,6 @@
 import UIKit
 
 final class PurchaseBackgroundView: UIView {
-    private let cornerRadius: CGFloat = 12
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +23,14 @@ private extension PurchaseBackgroundView {
     func configure() {
         self.backgroundColor = .appLightGray
         self.layer.masksToBounds = true
-        self.layer.cornerRadius = self.cornerRadius
+        self.layer.cornerRadius = Constants.cornerRadius
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+}
+
+// MARK: - Constants
+private extension PurchaseBackgroundView {
+    enum Constants {
+        static let cornerRadius: CGFloat = 12
     }
 }

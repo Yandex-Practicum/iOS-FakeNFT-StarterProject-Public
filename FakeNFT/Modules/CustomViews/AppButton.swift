@@ -8,14 +8,6 @@
 import UIKit
 
 final class AppButton: UIButton {
-    enum ButtonType {
-        case filled
-        case bordered
-        case nftCartRemove
-        case nftCartCancel
-    }
-
-    private let cornerRadius: CGFloat = 16
     private let type: ButtonType
     private let title: String
 
@@ -23,8 +15,8 @@ final class AppButton: UIButton {
         self.type = type
         self.title = title
         super.init(frame: .zero)
+
         self.configure()
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -34,7 +26,8 @@ final class AppButton: UIButton {
 
 private extension AppButton {
     func configure() {
-        self.layer.cornerRadius = self.cornerRadius
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.layer.cornerRadius = Constants.cornerRadius
         self.layer.masksToBounds = true
 
         switch self.type {
@@ -50,7 +43,7 @@ private extension AppButton {
     func setFilledType() {
         self.backgroundColor = .appBlack
 
-        let font = UIFont.getFont(style: .bold, size: 17)
+        let font = Constants.filledTypeFont
         let textColor = UIColor.appWhite
         let titleAttributes = [NSAttributedString.Key.font: font,
                                NSAttributedString.Key.foregroundColor: textColor]
@@ -62,10 +55,10 @@ private extension AppButton {
         let color = UIColor.appBlack
 
         self.backgroundColor = .clear
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = Constants.borderWidth
         self.layer.borderColor = color.cgColor
 
-        let font = UIFont.getFont(style: .regular, size: 15)
+        let font = Constants.borderedTypeFont
         let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
                                                                         NSAttributedString.Key.foregroundColor: color])
         self.setAttributedTitle(title, for: .normal)
@@ -74,20 +67,46 @@ private extension AppButton {
     func setNftCartButton(type: ButtonType) {
         self.backgroundColor = .appBlack
 
-        let font = UIFont.getFont(style: .regular, size: 17)
-        let color: UIColor
-
-        switch type {
-        case .nftCartCancel:
-            color = .appWhite
-        case .nftCartRemove:
-            color = .appRed
-        default:
-            color = .appWhite
-        }
+        let font = Constants.nftCartTypeFont
+        let color = self.getColorForNftCartButton(type: type)
 
         let title = NSAttributedString(string: self.title, attributes: [NSAttributedString.Key.font: font,
                                                                         NSAttributedString.Key.foregroundColor: color])
         self.setAttributedTitle(title, for: .normal)
+    }
+}
+
+private extension AppButton {
+    func getColorForNftCartButton(type: ButtonType) -> UIColor {
+        switch type {
+        case .nftCartCancel:
+            return .appWhite
+        case .nftCartRemove:
+            return .appRed
+        default:
+            return .appWhite
+        }
+    }
+}
+
+// MARK: - Constants
+private extension AppButton {
+    enum Constants {
+        static let cornerRadius: CGFloat = 16
+        static let borderWidth: CGFloat = 1
+
+        static var filledTypeFont: UIFont { UIFont.getFont(style: .bold, size: 17) }
+        static var borderedTypeFont: UIFont { UIFont.getFont(style: .regular, size: 15) }
+        static var nftCartTypeFont: UIFont { UIFont.getFont(style: .regular, size: 17) }
+    }
+}
+
+// MARK: - Enums
+extension AppButton {
+    enum ButtonType {
+        case filled
+        case bordered
+        case nftCartRemove
+        case nftCartCancel
     }
 }
