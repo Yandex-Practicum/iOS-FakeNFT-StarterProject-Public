@@ -8,6 +8,7 @@
 import UIKit
 
 protocol CollectionScreenViewControllerProtocol: AnyObject {
+    var presenter: CollectionScreenViewPresenterProtocol? { get set }
     func updateCollection(oldCount: Int, newCount: Int)
     func updateAuthor()
     func removeHud()
@@ -22,5 +23,6 @@ protocol CollectionScreenViewPresenterProtocol {
     func takeNftCoverLink() -> String?
     func takeNftName() -> String
     func takeNftDescription() -> String
+    func createWebViewScreen() -> WebViewScreenViewController
     func makeFetchRequest()
 }

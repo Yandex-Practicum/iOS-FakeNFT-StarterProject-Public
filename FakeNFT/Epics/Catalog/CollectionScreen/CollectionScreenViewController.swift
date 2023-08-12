@@ -214,7 +214,8 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     @objc func authorLabelTap() {
-        
+        guard let presenter = presenter else { return }
+        present(presenter.createWebViewScreen(), animated: true)
     }
 }
 

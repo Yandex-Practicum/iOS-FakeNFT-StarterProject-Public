@@ -71,6 +71,15 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         catalogDataModel.description
     }
     
+    func createWebViewScreen() -> WebViewScreenViewController {
+        let webViewScreen = WebViewScreenViewController()
+        let presenter = WebViewScreenViewPresenter(authorWebSiteLink: authorNetworkService.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        webViewScreen.presenter = presenter
+        presenter.viewController = webViewScreen
+        webViewScreen.modalPresentationStyle = .fullScreen
+        return webViewScreen
+    }
+    
     private func updateCollection() {
         let oldCount = nfts.count
         let newCount = nftNetworkService.nfts.count

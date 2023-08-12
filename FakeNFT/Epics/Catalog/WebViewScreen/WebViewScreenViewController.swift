@@ -10,9 +10,10 @@ import WebKit
 
 final class WebViewScreenViewController: UIViewController, WebViewScreenViewControllerProtocol {
     var presenter: WebViewScreenViewPresenterProtocol?
-    let webView = WKWebView()
+    private let webView = WKWebView()
     private let backButton = UIButton()
     private let progressView = UIProgressView()
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,11 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
         configureBackButton()
         configureWebView()
         configureProgressView()
+        
+        estimatedProgressObservation = webView.observe(\.estimatedProgress, options: [], changeHandler: { [weak self] _, _ in
+            guard let self = self, let presenter = presenter else { return }
+            presenter.didUpdateProgressValue(estimatedProgress: Float(self.webView.estimatedProgress))
+        })
     }
     
     func updateProgressView(estimatedProgress: Float) {

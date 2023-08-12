@@ -9,14 +9,10 @@ import Foundation
 
 final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
     var viewController: WebViewScreenViewControllerProtocol?
-    var authorWebSiteLink: String?
-    private var estimatedProgressObservation: NSKeyValueObservation?
+    var authorWebSiteLink: String
     
-    init() {
-        estimatedProgressObservation = viewController?.webView.observe(\.estimatedProgress, options: [], changeHandler: { [weak self] _, _ in
-            guard let self = self, let viewController = self.viewController else { return }
-            self.didUpdateProgressValue(estimatedProgress: Float(viewController.webView.estimatedProgress))
-        })
+    init(authorWebSiteLink: String) {
+        self.authorWebSiteLink = authorWebSiteLink
     }
     
     func didUpdateProgressValue(estimatedProgress: Float) {
