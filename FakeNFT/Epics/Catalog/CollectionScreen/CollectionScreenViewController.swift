@@ -82,7 +82,7 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         if !view.contains(scrollView) { return }
         
         backButton.setImage(UIImage(systemName: "chevron.backward")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack), for: .normal)
-        backButton.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(buttonBackTap), for: .touchUpInside)
         
         backButton.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(backButton)
@@ -155,7 +155,7 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         authorDynamicPartLabel.textColor = .ypBlueUniversal
         authorDynamicPartLabel.isUserInteractionEnabled = true
         
-        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked))
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(authorLabelTap))
         authorDynamicPartLabel.addGestureRecognizer(guestureRecognizer)
         
         authorDynamicPartLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -209,11 +209,11 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         ])
     }
     
-    @objc func buttonTap() {
+    @objc func buttonBackTap() {
         dismiss(animated: true)
     }
     
-    @objc func labelClicked() {
+    @objc func authorLabelTap() {
         
     }
 }
