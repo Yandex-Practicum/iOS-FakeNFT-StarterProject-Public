@@ -8,8 +8,8 @@
 import UIKit
 import Kingfisher
 
-final class CatalogViewTableCell: UITableViewCell {
-    static let cellReuseIdentifier = "CatalogViewTableCell"
+final class CatalogViewTableCell: UITableViewCell, ReuseIdentifying {
+    static var defaultReuseIdentifier = "CatalogViewTableCell"
     
     private let nftCollectionLabel: UILabel = {
         let label = UILabel()

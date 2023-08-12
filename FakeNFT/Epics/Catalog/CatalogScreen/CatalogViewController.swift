@@ -55,7 +55,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         table.backgroundColor = .clear
         table.separatorStyle = .none
         
-        table.register(CatalogViewTableCell.self, forCellReuseIdentifier: CatalogViewTableCell.cellReuseIdentifier)
+        table.register(CatalogViewTableCell.self)
         table.dataSource = self
         table.delegate = self
         

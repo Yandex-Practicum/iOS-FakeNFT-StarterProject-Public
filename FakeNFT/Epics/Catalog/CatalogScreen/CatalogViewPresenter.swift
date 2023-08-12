@@ -28,8 +28,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func configureCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CatalogViewTableCell.cellReuseIdentifier)
-        guard let catalogCell = cell as? CatalogViewTableCell else { return UITableViewCell() }
+        let catalogCell: CatalogViewTableCell = tableView.dequeueReusableCell()
         catalogCell.selectionStyle = .none
         
         let data = catalogData[indexPath.row]
