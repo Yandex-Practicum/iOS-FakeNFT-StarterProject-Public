@@ -39,6 +39,7 @@ final class UserAboutWebView: UIViewController & UserAboutWebViewProtocol {
     }
     
     // MARK: - Public methods
+    // swiftlint:disable:next block_based_kvo
     override func observeValue(
         forKeyPath keyPath: String?,
         of object: Any?,

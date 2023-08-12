@@ -208,6 +208,13 @@ final class ProfileViewController: UIViewController {
         present(profileEditViewController, animated: true)
     }
     
+    @objc private func didTapMyNFTsCell() {
+        let myNFTsViewController = MyNFTsViewController()
+        let navigationController = UINavigationController(rootViewController: myNFTsViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
+    
     @objc private func openUserAboutWebView() {
         guard let url = presenter?.getCurrentProfileResponse()?.website else { return }
         let presenter = WebViewPresenter(url: url)
@@ -224,6 +231,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
+            didTapMyNFTsCell()
             print("\(ProfileConstants.tableLabelArray[indexPath.row])")
         case 1:
             print("\(ProfileConstants.tableLabelArray[indexPath.row])")
