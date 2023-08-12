@@ -65,7 +65,7 @@ final class CatalogViewController: UIViewController {
         table.backgroundColor = .clear
         table.separatorStyle = .none
         
-        table.register(CatalogTableCell.self, forCellReuseIdentifier: CatalogTableCell.cellReuseIdentifier)
+        table.register(CatalogViewTableCell.self, forCellReuseIdentifier: CatalogViewTableCell.cellReuseIdentifier)
         table.dataSource = self
         table.delegate = self
         
@@ -86,15 +86,15 @@ extension CatalogViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: CatalogTableCell.cellReuseIdentifier)
-        guard let catalogCell = cell as? CatalogTableCell else { return UITableViewCell() }
+        let cell = table.dequeueReusableCell(withIdentifier: CatalogViewTableCell.cellReuseIdentifier)
+        guard let catalogCell = cell as? CatalogViewTableCell else { return UITableViewCell() }
         catalogCell.selectionStyle = .none
         
         let data = catalogData[indexPath.row]
         
         //временно
         catalogCell.setImage(link: data.cover)
-        catalogCell.setLabel(collectionName: data.name, collectionCount: data.nfts.count)
+        catalogCell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
         
         return catalogCell
     }

@@ -8,16 +8,17 @@
 import UIKit
 import Kingfisher
 
-final class CatalogTableCell: UITableViewCell {
-    static let cellReuseIdentifier = "catalogCell"
-    private let label: UILabel = {
+final class CatalogViewTableCell: UITableViewCell {
+    static let cellReuseIdentifier = "CatalogViewTableCell"
+    
+    private let nftCollectionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private let image: UIImageView = {
+    private let nftCollectionImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .top
         image.clipsToBounds = true
@@ -34,21 +35,23 @@ final class CatalogTableCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        label.text = ""
-        image.image = nil
+        nftCollectionLabel.text = ""
+        nftCollectionImage.image = nil
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLabel(collectionName: String, collectionCount: Int) {
-        label.text = "\(collectionName) (\(collectionCount))"
+    func setNftCollectionLabel(collectionName: String, collectionCount: Int) {
+        nftCollectionLabel.text = "\(collectionName) (\(collectionCount))"
     }
     
     func setImage(link: String) {
-        image.kf.setImage(with: URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")) { [weak self] _ in
-            if let originalImage = self?.image.image {
+        let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        nftCollectionImage.kf.setImage(with: url) { [weak self] _ in
+            // MARK: уменьшаю картинку в 4 раза
+            if let originalImage = self?.nftCollectionImage.image {
                 let scaledSize = CGSize(width: originalImage.size.width / 4, height: originalImage.size.height / 4)
                 
                 UIGraphicsBeginImageContextWithOptions(scaledSize, false, 0.0)
@@ -56,24 +59,24 @@ final class CatalogTableCell: UITableViewCell {
                 let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
-                self?.image.image = scaledImage
+                self?.nftCollectionImage.image = scaledImage
             }
         }
     }
     
     private func setView() {
         contentView.backgroundColor = .ypWhite
-        contentView.addSubview(image)
-        contentView.addSubview(label)
+        contentView.addSubview(nftCollectionImage)
+        contentView.addSubview(nftCollectionLabel)
         NSLayoutConstraint.activate([
-            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            image.heightAnchor.constraint(equalToConstant: 140),
+            nftCollectionImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            nftCollectionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftCollectionImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nftCollectionImage.heightAnchor.constraint(equalToConstant: 140),
             
-            label.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 4),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            nftCollectionLabel.topAnchor.constraint(equalTo: nftCollectionImage.bottomAnchor, constant: 4),
+            nftCollectionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftCollectionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }
