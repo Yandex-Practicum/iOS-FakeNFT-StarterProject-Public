@@ -225,7 +225,7 @@ final class CollectionScreenViewController: UIViewController {
         collection.dataSource = self
         collection.delegate = self
 
-        collection.register(CollectionScreenCollectionCell.self, forCellWithReuseIdentifier: CollectionScreenCollectionCell.cellReuseIdentifier)
+        collection.register(CollectionScreenCollectionCell.self)
 
         collection.translatesAutoresizingMaskIntoConstraints = false
 
@@ -265,7 +265,7 @@ extension CollectionScreenViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collection.dequeueReusableCell(withReuseIdentifier: CollectionScreenCollectionCell.cellReuseIdentifier, for: indexPath) as? CollectionScreenCollectionCell else { return UICollectionViewCell() }
+        let cell: CollectionScreenCollectionCell = collection.dequeueReusableCell(indexPath: indexPath)
         let nft = nfts[indexPath.row]
         cell.setNftImage(link: nft.images.first ?? "")
         cell.setRating(rate: nft.rating)
