@@ -139,7 +139,7 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
             nftImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nftImage.heightAnchor.constraint(equalToConstant: 108),
+            nftImage.heightAnchor.constraint(equalToConstant: contentView.frame.height/1.593),
             
             basketImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             basketImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -153,8 +153,8 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
             
             ratingStack.topAnchor.constraint(equalTo: nftImage.bottomAnchor, constant: 8),
             ratingStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            ratingStack.widthAnchor.constraint(equalToConstant: 68),
-            ratingStack.heightAnchor.constraint(equalToConstant: 12),
+            ratingStack.widthAnchor.constraint(equalToConstant: contentView.frame.width/1.59),
+            ratingStack.heightAnchor.constraint(equalToConstant: contentView.frame.height/14.3),
 
             nameLabel.topAnchor.constraint(equalTo: ratingStack.bottomAnchor, constant: 5),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
