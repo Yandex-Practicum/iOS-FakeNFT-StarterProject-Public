@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Public
@@ -14,6 +15,7 @@ final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
         imageView.image = .mockUserImage
         titleLabel.text = viewModel.name
         descriptionLabel.text = viewModel.description
+        imageView.kf.setImage(with: viewModel.avatarURL)
 
         layoutIfNeeded()
     }

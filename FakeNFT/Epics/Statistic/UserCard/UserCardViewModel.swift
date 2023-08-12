@@ -5,7 +5,6 @@
 //  Created by Александр Зиновьев on 05.08.2023.
 //
 
-import Foundation
 import Combine
 
 protocol UserCardViewModel {
@@ -14,17 +13,6 @@ protocol UserCardViewModel {
 
 final class UserCardViewModelImpl: UserCardViewModel {
     var sections: CurrentValueSubject<[UserCardViewModelImpl.SectionType], Never> = .init([])
-
-    enum SectionType: Hashable {
-        case user(viewModel: UserCardCellViewModel)
-        case site
-        case collection(viewModels: [NFTCollectionCellViewModel])
-    }
-
-    struct ItemIdentifier: Hashable {
-        let section: SectionType
-        let index: Int
-    }
 
     // Private
     private let user: User
@@ -36,9 +24,26 @@ final class UserCardViewModelImpl: UserCardViewModel {
 
     private func setUpSections() {
         sections.value = [
-            .user(viewModel: UserCardCellViewModel(user: user)),
+            .user(viewModel: .init(user: user)),
             .site,
-            .collection(viewModels: [.init(nftsNumber: 10)])
+            .collection(
+                viewModels: [
+                    .init(nftsNumber: user.nftCount)
+                ]
+            )
         ]
+    }
+}
+
+extension UserCardViewModelImpl {
+    enum SectionType: Hashable {
+        case user(viewModel: UserCardCellViewModel)
+        case site
+        case collection(viewModels: [NFTCollectionCellViewModel])
+    }
+
+    struct ItemIdentifier: Hashable {
+        let section: SectionType
+        let index: Int
     }
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 final class NFTCollectionCellViewModel {
-    private let nftsNumber: Int
+    private let nftsNumber: String
 
-    init(nftsNumber: Int) {
+    init(nftsNumber: String) {
         self.nftsNumber = nftsNumber
     }
 

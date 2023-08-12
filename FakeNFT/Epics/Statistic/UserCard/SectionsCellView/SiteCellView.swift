@@ -20,7 +20,6 @@ final class SiteCellView: UICollectionViewCell {
         return view
     }()
 
-
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .ypBlack
@@ -59,13 +58,17 @@ private extension SiteCellView {
 
 extension SiteCellView: ReuseIdentifying { }
 
+// MARK: - Animation
 extension SiteCellView: AnimatableCollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             highlightAnimation()
         }
     }
+}
 
+// MARK: - Dark, White theme
+extension SiteCellView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             containerView.layer.borderColor = UIColor.ypBlack.cgColor

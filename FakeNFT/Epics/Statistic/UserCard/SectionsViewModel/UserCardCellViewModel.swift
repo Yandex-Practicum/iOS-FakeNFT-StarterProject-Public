@@ -21,6 +21,10 @@ final class UserCardCellViewModel {
     var description: String {
         user.description
     }
+
+    var avatarURL: URL? {
+        user.avatarURL
+    }
 }
 
 extension UserCardCellViewModel: Hashable {

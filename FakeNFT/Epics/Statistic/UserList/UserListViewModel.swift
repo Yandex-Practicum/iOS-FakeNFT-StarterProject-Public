@@ -66,7 +66,8 @@ final class UserListViewModelImpl: UserListViewModel {
                 guard let self else { return }
 
                 self.users = newUsers
-                self.output.send(.success(self.filterUsers()))
+                self.users = self.filterUsers()
+                self.output.send(.success(self.users))
 
             case .failure(let failure):
                 self?.output.send(.failure(failure))
@@ -90,7 +91,8 @@ final class UserListViewModelImpl: UserListViewModel {
                         // Handle byName sorting
                         guard let self else { return }
                         currentFilter = .name
-                        output.send(.filteredData(self.filterUsers()))
+                        users = self.filterUsers()
+                        output.send(.filteredData(users))
                 },
                 ActionModel(
                     title: NSLocalizedString("sorting.byRating", comment: ""),
@@ -98,7 +100,8 @@ final class UserListViewModelImpl: UserListViewModel {
                         // Handle byRating sorting
                         guard let self else { return }
                         currentFilter = .rank
-                        output.send(.filteredData(self.filterUsers()))
+                        users = self.filterUsers()
+                        output.send(.filteredData(users))
                 },
                 ActionModel(
                     title: NSLocalizedString("sorting.close", comment: ""),

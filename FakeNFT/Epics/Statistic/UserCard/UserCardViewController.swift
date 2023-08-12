@@ -53,6 +53,10 @@ final class UserCardViewController: NiblessViewController {
         return control
     }()
 
+    private var sectionType: [UserCardViewModelImpl.SectionType] {
+        viewModel.sections.value
+    }
+
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: UserCardViewModel
 
@@ -80,7 +84,18 @@ final class UserCardViewController: NiblessViewController {
 
 extension UserCardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch sectionType[indexPath.section] {
+        case .user:
+            break
 
+        case .site:
+            break
+            // TODO: - Добавить открытие сайта
+
+        case .collection:
+            let viewController = NFTCollectionViewController()
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
@@ -106,13 +121,13 @@ private extension UserCardViewController {
         var snapshot = NSDiffableDataSourceSnapshot<SectionType, ItemIdentifier>()
         snapshot.appendSections(sections)
 
-        for section in sections {
+        for (index, section) in sections.enumerated() {
             switch section {
             case .user:
-                snapshot.appendItems([ItemIdentifier(section: section, index: 0)], toSection: section)
+                snapshot.appendItems([ItemIdentifier(section: section, index: index)], toSection: section)
 
             case .site:
-                snapshot.appendItems([ItemIdentifier(section: section, index: 1)], toSection: section)
+                snapshot.appendItems([ItemIdentifier(section: section, index: index)], toSection: section)
 
             case .collection(let viewModels):
                 let collection = viewModels
@@ -138,8 +153,6 @@ private extension UserCardViewController {
     }
 
     func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection {
-        let sectionType = viewModel.sections.value
-
         switch sectionType[sectionIndex] {
         case .user:
             return createSection(height: 162, bottomPadding: 28)

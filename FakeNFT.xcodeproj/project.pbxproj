@@ -48,6 +48,10 @@
 		F96F2D282A7E8F76004CC5D2 /* UserCardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D272A7E8F76004CC5D2 /* UserCardCellView.swift */; };
 		F96F2D2A2A7E8F98004CC5D2 /* SiteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D292A7E8F98004CC5D2 /* SiteCellView.swift */; };
 		F96F2D2C2A7E8FB1004CC5D2 /* CollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D2B2A7E8FB1004CC5D2 /* CollectionCellView.swift */; };
+		F9997DB02A87B8D20040BE7F /* NFTCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DAF2A87B8D20040BE7F /* NFTCollectionViewController.swift */; };
+		F9997DB22A87BA5F0040BE7F /* NFTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DB12A87BA5F0040BE7F /* NFTCollectionViewModel.swift */; };
+		F9997DB42A87BA7E0040BE7F /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DB32A87BA7E0040BE7F /* NFTCell.swift */; };
+		F9997DB62A87BC980040BE7F /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DB52A87BC980040BE7F /* NFT.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -117,6 +121,10 @@
 		F96F2D272A7E8F76004CC5D2 /* UserCardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardCellView.swift; sourceTree = "<group>"; };
 		F96F2D292A7E8F98004CC5D2 /* SiteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteCellView.swift; sourceTree = "<group>"; };
 		F96F2D2B2A7E8FB1004CC5D2 /* CollectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCellView.swift; sourceTree = "<group>"; };
+		F9997DAF2A87B8D20040BE7F /* NFTCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewController.swift; sourceTree = "<group>"; };
+		F9997DB12A87BA5F0040BE7F /* NFTCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewModel.swift; sourceTree = "<group>"; };
+		F9997DB32A87BA7E0040BE7F /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
+		F9997DB52A87BC980040BE7F /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -361,6 +369,17 @@
 			path = SectionsCellView;
 			sourceTree = "<group>";
 		};
+		F9997DAE2A87B1FB0040BE7F /* NFTCollection */ = {
+			isa = PBXGroup;
+			children = (
+				F9997DAF2A87B8D20040BE7F /* NFTCollectionViewController.swift */,
+				F9997DB12A87BA5F0040BE7F /* NFTCollectionViewModel.swift */,
+				F9997DB32A87BA7E0040BE7F /* NFTCell.swift */,
+				F9997DB52A87BC980040BE7F /* NFT.swift */,
+			);
+			path = NFTCollection;
+			sourceTree = "<group>";
+		};
 		F9F557352A7419CC004F6856 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +435,7 @@
 				F96F2D132A7E7A46004CC5D2 /* Components */,
 				F96F2D112A7E7A04004CC5D2 /* UserList */,
 				F96F2D152A7E7A7C004CC5D2 /* UserCard */,
+				F9997DAE2A87B1FB0040BE7F /* NFTCollection */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
@@ -602,6 +622,7 @@
 				F96F2D092A7E4F21004CC5D2 /* UserService.swift in Sources */,
 				F96F2D032A7E4EC0004CC5D2 /* NiblessViewController.swift in Sources */,
 				F96F2D052A7E4EE4004CC5D2 /* UserResult.swift in Sources */,
+				F9997DB02A87B8D20040BE7F /* NFTCollectionViewController.swift in Sources */,
 				F96F2D252A7E8BB7004CC5D2 /* NFTCollectionCellViewModel.swift in Sources */,
 				F96F2D072A7E4F02004CC5D2 /* UserRequest.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
@@ -613,10 +634,12 @@
 				F9F557402A741B5F004F6856 /* UserListViewController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				F96F2CFF2A7E4E7B004CC5D2 /* ErrorView.swift in Sources */,
+				F9997DB42A87BA7E0040BE7F /* NFTCell.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				F96F2D2A2A7E8F98004CC5D2 /* SiteCellView.swift in Sources */,
+				F9997DB62A87BC980040BE7F /* NFT.swift in Sources */,
 				F96F2CF92A7E4D57004CC5D2 /* UserCell.swift in Sources */,
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
@@ -625,6 +648,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				F96F2D1E2A7E83CE004CC5D2 /* UserCardViewModel.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				F9997DB22A87BA5F0040BE7F /* NFTCollectionViewModel.swift in Sources */,
 				F96F2D1A2A7E8147004CC5D2 /* NSCollectionLayoutItem.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
