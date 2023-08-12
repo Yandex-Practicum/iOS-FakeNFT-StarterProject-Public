@@ -7,46 +7,36 @@
 
 import UIKit
 
-final class CatalogViewController: UIViewController {
-    private let sortButton = UIButton() // возможно в презентер
-    private let table = UITableView() // возможно в презентер
-    
-    private var catalogData: [CatalogDataModel] = []
-    private var catalogNetworkServiceObserver: NSObjectProtocol?
+final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
+    private var presenter: CatalogViewPresenterProtocol?
+    private let sortButton = UIButton()
+    private let table = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = CatalogViewPresenter(catalogViewController: self)
         
-        catalogNetworkServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: CatalogNetworkService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateTableViewAnimated()
-            }
+        view.backgroundColor = .ypWhite
+        configureButton()
+        configureTable()
         
-        view.backgroundColor = .ypWhite // возможно в презентер
-        configureButton() // возможно в презентер
-        configureTable() // возможно в презентер
-        
-        UIBlockingProgressHUD.show()
-        CatalogNetworkService.shared.fetchCollectionNextPage()
+        makeFetchRequest()
     }
     
-    private func updateTableViewAnimated() {
-        let catalogNetworkService = CatalogNetworkService.shared
-        let oldCount = catalogData.count
-        let newCount = catalogNetworkService.collections.count
-        catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
-        if oldCount != newCount {
-            table.reloadData()
-        }
+    func updateTableView() {
+        table.reloadData()
+    }
+    
+    private func makeFetchRequest() {
+        UIBlockingProgressHUD.show()
+        presenter?.makeFetchRequest()
+    }
+    
+    func removeHud() {
         UIBlockingProgressHUD.dismiss()
     }
     
-    private func configureButton() { // возможно в презентер
+    private func configureButton() {
         sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +49,7 @@ final class CatalogViewController: UIViewController {
         ])
     }
     
-    private func configureTable() { // возможно в презентер
+    private func configureTable() {
         if !view.contains(sortButton) { return }
         
         table.backgroundColor = .clear
@@ -82,21 +72,11 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        catalogData.count
+        presenter?.catalogCount() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: CatalogViewTableCell.cellReuseIdentifier)
-        guard let catalogCell = cell as? CatalogViewTableCell else { return UITableViewCell() }
-        catalogCell.selectionStyle = .none
-        
-        let data = catalogData[indexPath.row]
-        
-        //временно
-        catalogCell.setImage(link: data.cover)
-        catalogCell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
-        
-        return catalogCell
+        presenter?.configureCell(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
     }
 }
 
@@ -106,16 +86,15 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionScreen = CollectionScreenViewController()
-        collectionScreen.modalPresentationStyle = .fullScreen
-        collectionScreen.dataModel = catalogData[indexPath.row]
+        guard let presenter = presenter else { return }
+        let collectionScreen = presenter.createCollectionScreen(collectionIndex: indexPath.row)
         present(collectionScreen, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (indexPath.row + 1 == catalogData.count) {
-            UIBlockingProgressHUD.show()
-            CatalogNetworkService.shared.fetchCollectionNextPage()
+        guard let presenter = presenter else { return }
+        if indexPath.row + 1 == presenter.catalogCount() {
+            makeFetchRequest()
         }
     }
 }
