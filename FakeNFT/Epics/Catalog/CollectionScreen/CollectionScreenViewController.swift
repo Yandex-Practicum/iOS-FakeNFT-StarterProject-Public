@@ -29,15 +29,15 @@ final class CollectionScreenViewController: UIViewController {
     private var collectionNftNetworkServiceObserver: NSObjectProtocol?
     
     private func updateAuthor() {
-        authorLabelDynamicPart.text = CollectionScreenNetworkService.shared.author?.name
-        UIBlockingProgressHUD.dismiss()
+        authorLabelDynamicPart.text = AuthorNetworkService.shared.author?.name
+        viewReadinessCheck()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionAuthorNetworkServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: CollectionScreenNetworkService.authorDidChangeNotification,
+                forName: AuthorNetworkService.authorNetworkServiceDidChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -47,7 +47,7 @@ final class CollectionScreenViewController: UIViewController {
         
         collectionNftNetworkServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: CollectionScreenNetworkService.nftsDidChangeNotification,
+                forName: NftNetworkService.nftNetworkServiceDidChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -66,16 +66,15 @@ final class CollectionScreenViewController: UIViewController {
         configureCollection()
         
         UIBlockingProgressHUD.show()
-        CollectionScreenNetworkService.shared.fetchAuthor(id: dataModel!.author)
-        
-        CollectionScreenNetworkService.shared.fetchNft(ids: dataModel?.nfts ?? [], position: 0)
+        AuthorNetworkService.shared.fetchAuthor(id: dataModel?.author ?? "")
+        NftNetworkService.shared.fetchNft(id: dataModel?.author ?? "")
     }
     
     func updateCollection() {
-        let collectionScreenNetworkService = CollectionScreenNetworkService.shared
+        let collectionScreenNetworkService = NftNetworkService.shared
         let oldCount = nfts.count
         let newCount = collectionScreenNetworkService.nfts.count
-        nfts = collectionScreenNetworkService.nfts
+        nfts = collectionScreenNetworkService.nfts.sorted(by: { $0.rating > $1.rating })
         if oldCount != newCount {
             collection.performBatchUpdates {
                 let indexPaths = (oldCount..<newCount).map { i in
@@ -83,6 +82,13 @@ final class CollectionScreenViewController: UIViewController {
                 }
                 collection.insertItems(at: indexPaths)
             } completion: { _ in }
+        }
+        viewReadinessCheck()
+    }
+    
+    private func viewReadinessCheck() {
+        if authorLabelDynamicPart.text != "" && collection.numberOfItems(inSection: 0) == dataModel?.nfts.count && image.image != nil {
+            UIBlockingProgressHUD.dismiss()
         }
     }
     
@@ -118,9 +124,8 @@ final class CollectionScreenViewController: UIViewController {
     
     private func configureImage() {
         image.contentMode = .scaleAspectFill
-        UIBlockingProgressHUD.show()
-        image.kf.setImage(with: URL(string: dataModel?.cover.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")) { _ in
-            UIBlockingProgressHUD.dismiss()
+        image.kf.setImage(with: URL(string: dataModel?.cover.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")) { [weak self] _ in
+            self?.viewReadinessCheck()
         }
         image.layer.cornerRadius = 12
         image.layer.masksToBounds = true
@@ -158,7 +163,7 @@ final class CollectionScreenViewController: UIViewController {
     private func configureAuthorLabelStaticPart() {
         if !view.contains(collectionNameLabel) { return }
         
-        authorLabelStaticPart.text = "Автор коллекции: "
+        authorLabelStaticPart.text = NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft") + " "
         authorLabelStaticPart.font = .caption2
         authorLabelStaticPart.textColor = .ypBlack
         
@@ -196,6 +201,7 @@ final class CollectionScreenViewController: UIViewController {
         if !view.contains(authorLabelStaticPart) { return }
         
         descriptionLabel.text = dataModel?.description
+        descriptionLabel.isScrollEnabled = false
         descriptionLabel.font = .caption2
         descriptionLabel.textColor = .ypBlack
         descriptionLabel.backgroundColor = .clear
@@ -209,8 +215,7 @@ final class CollectionScreenViewController: UIViewController {
         NSLayoutConstraint.activate([
             descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             descriptionLabel.topAnchor.constraint(equalTo: authorLabelStaticPart.bottomAnchor, constant: 5),
-            descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 30)
+            descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -231,7 +236,6 @@ final class CollectionScreenViewController: UIViewController {
             collection.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
             collection.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             collection.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
-            collection.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             collection.heightAnchor.constraint(equalToConstant: 500)
         ])
     }
