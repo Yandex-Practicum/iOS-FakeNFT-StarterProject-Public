@@ -5,11 +5,20 @@
 //  Created by Богдан Полыгалов on 04.08.2023.
 //
 
+// TODO: Добавить функционал лайков и корзины + при создании учитывать состояние и ставить правильные картинки
+
 import UIKit
 import Kingfisher
 
 final class CollectionScreenCollectionCell: UICollectionViewCell {
     static let cellReuseIdentifier = "CollectionScreenCollectionCell"
+    
+    private let emptyBasketImage: UIImage? = {
+        return UIImage.addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
+    }()
+    private let notEmptyBasketImage: UIImage? = {
+        return UIImage.removeFromBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
+    }()
     
     private let nftImage: UIImageView = {
         let imageView = UIImageView()
@@ -20,19 +29,23 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    private let basketImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = .addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private lazy var basketButton: UIButton = {
+        let button = UIButton()
+        button.contentMode = .scaleAspectFill
+        let image = emptyBasketImage
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(basketButtonTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
-    private let likeImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = .unliked
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.contentMode = .scaleAspectFill
+        let image = UIImage.unliked
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(likeButtonTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     private let ratingStack: UIStackView = {
         let stack = UIStackView()
@@ -66,8 +79,10 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         nftImage.image = nil
-        basketImage.image = .addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
-        likeImage.image = .unliked
+        let basketImage = emptyBasketImage
+        basketButton.setImage(basketImage, for: .normal)
+        let likeImage = UIImage.unliked
+        likeButton.setImage(likeImage, for: .normal)
         removeRating()
         nameLabel.text = ""
         costLabel.text = ""
@@ -83,19 +98,23 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     }
     
     private func addToBasket() {
-        basketImage.image = .removeFromBasket
+        let basketImage = notEmptyBasketImage
+        basketButton.setImage(basketImage, for: .normal)
     }
     
     private func removeFromBasket() {
-        basketImage.image = .addToBasket
+        let basketImage = emptyBasketImage
+        basketButton.setImage(basketImage, for: .normal)
     }
     
     private func setLike() {
-        likeImage.image = .liked
+        let likeImage = UIImage.liked
+        likeButton.setImage(likeImage, for: .normal)
     }
     
     private func setUnlike() {
-        likeImage.image = .unliked
+        let likeImage = UIImage.unliked
+        likeButton.setImage(likeImage, for: .normal)
     }
     
     func setRating(rate: Int) {
@@ -130,8 +149,8 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
     private func setView() {
         contentView.backgroundColor = .clear
         contentView.addSubview(nftImage)
-        contentView.addSubview(basketImage)
-        contentView.addSubview(likeImage)
+        contentView.addSubview(basketButton)
+        contentView.addSubview(likeButton)
         contentView.addSubview(ratingStack)
         contentView.addSubview(nameLabel)
         contentView.addSubview(costLabel)
@@ -141,28 +160,50 @@ final class CollectionScreenCollectionCell: UICollectionViewCell {
             nftImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             nftImage.heightAnchor.constraint(equalToConstant: contentView.frame.height/1.593),
             
-            basketImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            basketImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            basketImage.widthAnchor.constraint(equalToConstant: 40),
-            basketImage.heightAnchor.constraint(equalToConstant: 40),
+            basketButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            basketButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            basketButton.widthAnchor.constraint(equalToConstant: 40),
+            basketButton.heightAnchor.constraint(equalToConstant: 40),
             
-            likeImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            likeImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            likeImage.widthAnchor.constraint(equalToConstant: 40),
-            likeImage.heightAnchor.constraint(equalToConstant: 40),
+            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            likeButton.widthAnchor.constraint(equalToConstant: 40),
+            likeButton.heightAnchor.constraint(equalToConstant: 40),
             
             ratingStack.topAnchor.constraint(equalTo: nftImage.bottomAnchor, constant: 8),
             ratingStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             ratingStack.widthAnchor.constraint(equalToConstant: contentView.frame.width/1.59),
             ratingStack.heightAnchor.constraint(equalToConstant: contentView.frame.height/14.3),
-
+            
             nameLabel.topAnchor.constraint(equalTo: ratingStack.bottomAnchor, constant: 5),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: basketImage.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: basketButton.leadingAnchor),
             
             costLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             costLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            costLabel.trailingAnchor.constraint(equalTo: basketImage.leadingAnchor)
+            costLabel.trailingAnchor.constraint(equalTo: basketButton.leadingAnchor)
         ])
+    }
+    
+    @objc private func basketButtonTap() {
+        switch basketButton.image(for: .normal) {
+        case emptyBasketImage:
+            addToBasket()
+        case notEmptyBasketImage:
+            removeFromBasket()
+        default:
+            break
+        }
+    }
+    
+    @objc private func likeButtonTap() {
+        switch likeButton.image(for: .normal) {
+        case UIImage.liked:
+            setUnlike()
+        case UIImage.unliked:
+            setLike()
+        default:
+            break
+        }
     }
 }
