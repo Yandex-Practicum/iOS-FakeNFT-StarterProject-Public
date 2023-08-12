@@ -10,21 +10,21 @@ import UIKit
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
     private var presenter: CatalogViewPresenterProtocol?
     private let sortButton = UIButton()
-    private let table = UITableView()
+    private let catalogTable = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = CatalogViewPresenter(catalogViewController: self)
         
         view.backgroundColor = .ypWhite
-        configureButton()
-        configureTable()
+        configureSortButton()
+        configureCatalogTable()
         
         makeFetchRequest()
     }
     
     func updateTableView() {
-        table.reloadData()
+        catalogTable.reloadData()
     }
     
     private func makeFetchRequest() {
@@ -36,7 +36,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         UIBlockingProgressHUD.dismiss()
     }
     
-    private func configureButton() {
+    private func configureSortButton() {
         sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
         
         sortButton.translatesAutoresizingMaskIntoConstraints = false
@@ -49,23 +49,23 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         ])
     }
     
-    private func configureTable() {
+    private func configureCatalogTable() {
         if !view.contains(sortButton) { return }
         
-        table.backgroundColor = .clear
-        table.separatorStyle = .none
+        catalogTable.backgroundColor = .clear
+        catalogTable.separatorStyle = .none
         
-        table.register(CatalogViewTableCell.self)
-        table.dataSource = self
-        table.delegate = self
+        catalogTable.register(CatalogViewTableCell.self)
+        catalogTable.dataSource = self
+        catalogTable.delegate = self
         
-        table.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(table)
+        catalogTable.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(catalogTable)
         NSLayoutConstraint.activate([
-            table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            table.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
-            table.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            catalogTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            catalogTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            catalogTable.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+            catalogTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
@@ -78,13 +78,13 @@ extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         presenter?.configureCell(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
     }
-}
-
-extension CatalogViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         187
     }
-    
+}
+
+extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let presenter = presenter else { return }
         let collectionScreen = presenter.createCollectionScreen(collectionIndex: indexPath.row)
