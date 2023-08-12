@@ -11,8 +11,6 @@ import UIKit
 import Kingfisher
 
 final class CollectionScreenCollectionCell: UICollectionViewCell, ReuseIdentifying {
-    static var defaultReuseIdentifier = "CollectionScreenCollectionCell"
-    
     private let emptyBasketImage: UIImage? = {
         return UIImage.addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
     }()
