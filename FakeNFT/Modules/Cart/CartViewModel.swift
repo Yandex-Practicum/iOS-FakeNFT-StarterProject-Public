@@ -42,9 +42,10 @@ final class CartViewModel {
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
 
+        self.cartViewState.value = viewState
+
         switch viewState {
         case .loaded(let order, let cost):
-            self.cartViewState.value = viewState
             self.setOrderAnimated(newOrder: order)
             self.nftCount.value = "\(order.count) NFT"
             self.finalOrderCost.value = "\(cost.nftCurrencyFormatted) ETH"
