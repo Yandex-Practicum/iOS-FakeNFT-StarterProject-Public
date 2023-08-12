@@ -11,7 +11,6 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     private weak var catalogViewController: CatalogViewControllerProtocol?
     private var catalogData: [CatalogDataModel] = []
     private var catalogNetworkService = CatalogNetworkService.shared
-    
     private var catalogNetworkServiceObserver: NSObjectProtocol?
     
     init(catalogViewController: CatalogViewControllerProtocol) {
@@ -22,8 +21,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                guard let self = self else { return }
-                updateTableView()
+                self?.updateTableView()
             }
     }
     
@@ -40,10 +38,12 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
-        let collectionScreen = CollectionScreenViewController()
-        collectionScreen.modalPresentationStyle = .fullScreen
-        collectionScreen.dataModel = catalogData[collectionIndex]
-        return collectionScreen
+        let collectionScreenController = CollectionScreenViewController()
+        collectionScreenController.modalPresentationStyle = .fullScreen
+        let collectionScreenPresenter = CollectionScreenViewPresenter(dataModel: catalogData[collectionIndex])
+        collectionScreenController.presenter = collectionScreenPresenter
+        collectionScreenPresenter.collectionScreenViewController = collectionScreenController
+        return collectionScreenController
     }
     
     func updateCatalogData() {
@@ -54,6 +54,10 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         catalogData.count
     }
     
+    func makeFetchRequest() {
+        catalogNetworkService.fetchCollectionNextPage()
+    }
+    
     private func updateTableView() {
         let oldCount = catalogCount()
         let newCount = catalogNetworkService.collections.count
@@ -62,9 +66,5 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             catalogViewController?.updateTableView()
         }
         catalogViewController?.removeHud()
-    }
-    
-    func makeFetchRequest() {
-        catalogNetworkService.fetchCollectionNextPage()
     }
 }
