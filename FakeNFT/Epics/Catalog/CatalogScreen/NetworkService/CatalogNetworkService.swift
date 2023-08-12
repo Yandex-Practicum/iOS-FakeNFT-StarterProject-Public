@@ -30,7 +30,7 @@ final class CatalogNetworkService {
         let request = CatalogRequest(nextPage: "\(nextPage)", httpMethod: HttpMethod.get)
         
         let task = defaultNetworkClient.send(request: request, type: [CatalogDataModel].self, onResponse: resultHandler)
-                
+        
         self.task = task
     }
     
@@ -52,19 +52,16 @@ final class CatalogNetworkService {
 }
 
 final class CatalogRequest: NetworkRequest {
-    private var nextPage: String
-    
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        let host = "64858e8ba795d24810b71189.mockapi.io"
-        
-        var urlComponents = URLComponents(string: "https://\(host)/api/v1/collections")
+        var urlComponents = URLComponents(string: "https://\(CatalogConstants.host.rawValue)/api/v1/collections")
         urlComponents?.queryItems = [
             URLQueryItem(name: "page", value: nextPage),
             URLQueryItem(name: "limit", value: "10")
         ]
         return urlComponents?.url
     }
+    private var nextPage: String
     
     init(nextPage: String, httpMethod: HttpMethod) {
         self.nextPage = nextPage
