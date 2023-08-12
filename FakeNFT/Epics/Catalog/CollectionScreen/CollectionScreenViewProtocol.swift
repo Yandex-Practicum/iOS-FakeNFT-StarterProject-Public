@@ -18,7 +18,7 @@ protocol CollectionScreenViewPresenterProtocol {
     var collectionScreenViewController: CollectionScreenViewControllerProtocol? { get set }
     func configureCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func takeInitialNftCount() -> Int
-    func takeNftCount() -> Int
+    func takeActualNftCount() -> Int
     func takeNftCoverLink() -> String?
     func takeNftName() -> String
     func takeNftDescription() -> String

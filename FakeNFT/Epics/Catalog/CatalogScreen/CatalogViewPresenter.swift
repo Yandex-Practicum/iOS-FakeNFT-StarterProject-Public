@@ -40,7 +40,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
         let collectionScreenController = CollectionScreenViewController()
         collectionScreenController.modalPresentationStyle = .fullScreen
-        let collectionScreenPresenter = CollectionScreenViewPresenter(dataModel: catalogData[collectionIndex])
+        let collectionScreenPresenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[collectionIndex])
         collectionScreenController.presenter = collectionScreenPresenter
         collectionScreenPresenter.collectionScreenViewController = collectionScreenController
         return collectionScreenController
