@@ -34,6 +34,7 @@ final class ProfileNetworkClient: ProfileNetworkClientProtocol {
 }
 
 
+// MARK: - Requests
 struct  ProfileRequest: NetworkRequest {
     var endpoint: URL? {
         return URL(string: ProfileConstants.endpoint + ProfileConstants.apiV1Profile1Get)

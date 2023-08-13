@@ -12,7 +12,6 @@ final class ProfileViewController: UIViewController {
         stack.spacing = 20
         stack.layer.masksToBounds = true
         stack.isUserInteractionEnabled = true
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     private let photoAndNameStack: UIStackView = {
@@ -21,7 +20,6 @@ final class ProfileViewController: UIViewController {
         stack.axis = .horizontal
         stack.spacing = 16
         stack.layer.masksToBounds = true
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     private let photoView: UIImageView = {
@@ -38,13 +36,11 @@ final class ProfileViewController: UIViewController {
         view.layer.cornerRadius = ProfileConstants.profilePhotoSideSize/2
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.color = .ypWhite
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
     private let userNameLabel: UILabel = {
@@ -53,7 +49,6 @@ final class ProfileViewController: UIViewController {
         label.font = .headline3
         label.textAlignment = .left
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private let userDescriptionLabel: UILabel = {
@@ -67,10 +62,8 @@ final class ProfileViewController: UIViewController {
         let lineHeightPixels = lineHeightPoints / UIScreen.main.scale
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineHeightPixels
-
         
         label.lineBreakMode = .byWordWrapping
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private let userSiteLabel: UILabel = {
@@ -80,7 +73,6 @@ final class ProfileViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 1
         label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private let tableView = UITableView()
@@ -93,7 +85,6 @@ final class ProfileViewController: UIViewController {
             action: #selector(didTapEditProfileButton)
         )
         button.tintColor = .ypBlack
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -111,17 +102,17 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private methods
     private func addingUIElements() {
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mainStack)
         
-        mainStack.addSubview(editProfileButton)
-        mainStack.addSubview(photoAndNameStack)
-        mainStack.addSubview(userDescriptionLabel)
-        mainStack.addSubview(userSiteLabel)
-        mainStack.addSubview(tableView)
-        
-        photoAndNameStack.addSubview(photoView)
-        photoAndNameStack.addSubview(userNameLabel)
-        photoAndNameStack.addSubview(activityIndicator)
+        [editProfileButton, photoAndNameStack, userDescriptionLabel, userSiteLabel, tableView].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            mainStack.addSubview($0)
+        }
+        [photoView, userNameLabel, activityIndicator].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            photoAndNameStack.addSubview($0)
+        }
     }
     
     private func layoutConfigure() {
@@ -169,11 +160,10 @@ final class ProfileViewController: UIViewController {
     private func tableViewConfigure(){
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        tableView.register(ProfileTableViewCell.self)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.isScrollEnabled = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func updateTableCellsLabels(from profile: ProfileResponseModel) {
@@ -251,10 +241,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileTableViewCell.identifier,
-            for: indexPath
-        ) as? ProfileTableViewCell else { return UITableViewCell() }
+        let cell: ProfileTableViewCell = tableView.dequeueReusableCell()
         cell.configure(title: ProfileConstants.tableLabelArray[indexPath.row])
         return cell
     }

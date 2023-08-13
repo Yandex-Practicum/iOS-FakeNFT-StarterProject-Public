@@ -1,8 +1,7 @@
 import UIKit
 
-final class ProfileTableViewCell: UITableViewCell {
+final class ProfileTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Private properties
-    static let identifier = "ProfileTableViewCell"
     private let titleLabel = UILabel()
     private let chevronView = UIImageView()
     private let stackView: UIStackView = {
