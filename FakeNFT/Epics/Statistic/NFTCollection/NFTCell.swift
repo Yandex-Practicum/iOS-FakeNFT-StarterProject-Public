@@ -8,19 +8,32 @@
 import UIKit
 import Kingfisher
 import SnapKit
+import Combine
 
 final class NFTCell: UICollectionViewCell {
+    private var viewModel: NFTCellViewModel?
+    private var cancellables = Set<AnyCancellable>()
+
     // MARK: - Public
-    func configure(with nft: NFT) {
+    func configure(with viewModel: NFTCellViewModel) {
+        self.viewModel = viewModel
+
         let addToCart = UIImage.addToBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
         let removeFromCart = UIImage.removeFromBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
         let grayStar = UIImage.grayStar?.withTintColor(.ypLightGray, renderingMode: .alwaysOriginal)
-        nftImageView.image = .mockCell
-        let rating = Int(nft.rating)
-        ratingStackView.addArrangedSubviews((0..<5).map { UIImageView(image: $0 < rating && rating < 6 ? .yellowStar : grayStar) })
-        cartView.image = nft.isInCart ? removeFromCart : addToCart
-        nftNameLabel.text = nft.title
-        priceLabel.text = "\(nft.price) ETH"
+        let placeholder = UIImage(systemName: "face.smiling.inverse")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        let like = UIImage.liked?.withTintColor(.ypRedUniversal, renderingMode: .alwaysOriginal)
+        let unLike = UIImage.unliked?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        let rating = viewModel.rating
+        ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        ratingStackView.addArrangedSubviews((0..<5).map {
+            UIImageView(image: $0 < rating && rating < 6 ? .yellowStar : grayStar)
+        })
+        nftImageView.kf.setImage(with: viewModel.url, placeholder: placeholder)
+        addToCardButton.setImage(viewModel.isInCart ? removeFromCart : addToCart, for: .normal)
+        likeButton.setImage(viewModel.isLikedReally ? like : unLike, for: .normal)
+        nftNameLabel.text = viewModel.title
+        priceLabel.text = viewModel.price
     }
 
     // MARK: - Private UI Elements
@@ -32,9 +45,14 @@ final class NFTCell: UICollectionViewCell {
         return view
     }()
 
-    private let cartView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+    private lazy var addToCardButton: UIButton = {
+        let view = UIButton(type: .system)
+
+        return view
+    }()
+
+    private lazy var likeButton: UIButton = {
+        let view = UIButton(type: .system)
         return view
     }()
 
@@ -91,6 +109,21 @@ final class NFTCell: UICollectionViewCell {
         setupConstraints()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables.removeAll()
+        viewModel = nil
+        ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    }
+
+    @objc func likeButtonTapped(_ sender: UIButton) {
+        viewModel?.likeButtonAction.send()
+    }
+
+    @objc func addToCartButtonTapped(_ sender: UIButton) {
+        viewModel?.addToCartButtonAction.send()
+    }
+
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
@@ -101,8 +134,9 @@ private extension NFTCell {
         verticalStackView.addArrangedSubview(nftNameLabel)
         verticalStackView.addArrangedSubview(priceLabel)
         horizontalStackView.addArrangedSubview(verticalStackView)
-        horizontalStackView.addArrangedSubview(cartView)
+        horizontalStackView.addArrangedSubview(addToCardButton)
         container.addSubview(nftImageView)
+        container.addSubview(likeButton)
         container.addSubview(ratingStackView)
         container.addSubview(horizontalStackView)
 
@@ -132,18 +166,15 @@ private extension NFTCell {
             make.height.equalTo(40)
         }
 
-        cartView.snp.makeConstraints { make in
+        addToCardButton.snp.makeConstraints { make in
             make.size.equalTo(40)
+        }
+
+        likeButton.snp.makeConstraints { make in
+            make.size.equalTo(42)
+            make.trailing.top.equalToSuperview()
         }
     }
 }
 
 extension NFTCell: ReuseIdentifying { }
-
-extension UIStackView {
-    func addArrangedSubviews(_ views: [UIView]) {
-        for view in views {
-            self.addArrangedSubview(view)
-        }
-    }
-}

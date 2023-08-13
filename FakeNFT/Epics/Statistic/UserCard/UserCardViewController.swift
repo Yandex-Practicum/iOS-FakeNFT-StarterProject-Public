@@ -92,8 +92,12 @@ extension UserCardViewController: UICollectionViewDelegate {
             break
             // TODO: - Добавить открытие сайта
 
-        case .collection:
-            let viewController = NFTCollectionViewController()
+        case .collection(let viewModel):
+            guard let nfts = viewModel.first?.nfts else {
+                return
+            }
+
+            let viewController = createNFTCollectionViewController(with: nfts)
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -212,5 +216,22 @@ private extension UserCardViewController {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
         }
+    }
+}
+
+private extension UserCardViewController {
+    func createNFTCollectionViewController(with nfts: [Int]) -> NFTCollectionViewController {
+        let nftService = NFTSServiceImpl()
+        let likesService = LikesServiceImpl()
+        let orderService = OrderServiceImpl()
+
+        let viewModel = NFTCollectionViewModelImpl(
+            nftsNumbers: nfts,
+            nftService: nftService,
+            likesService: likesService,
+            orderService: orderService
+        )
+        let viewController = NFTCollectionViewController(viewModel: viewModel)
+        return viewController
     }
 }

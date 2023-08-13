@@ -8,23 +8,23 @@
 import Foundation
 
 final class NFTCollectionCellViewModel {
-    private let nftsNumber: String
+    let nfts: [Int]
 
-    init(nftsNumber: String) {
-        self.nftsNumber = nftsNumber
+    init(nfts: [Int]) {
+        self.nfts = nfts
     }
 
     var formattedNftsNumber: String {
-        "(\(nftsNumber))"
+        "(\(nfts.count))"
     }
 }
 
 extension NFTCollectionCellViewModel: Hashable {
     static func == (lhs: NFTCollectionCellViewModel, rhs: NFTCollectionCellViewModel) -> Bool {
-        lhs.nftsNumber == rhs.nftsNumber
+        lhs.nfts == rhs.nfts
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(nftsNumber)
+        hasher.combine(nfts)
     }
 }

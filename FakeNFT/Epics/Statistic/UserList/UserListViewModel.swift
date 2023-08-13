@@ -10,6 +10,8 @@ import Combine
 
 protocol UserListViewModel {
     var users: [User] { get }
+    var isPulledToRefresh: Bool { get }
+
     func transform(input: AnyPublisher<UsetListViewControllerInput, Never>) -> AnyPublisher<UserListViewModelOutput, Never>
 }
 
@@ -30,6 +32,7 @@ final class UserListViewModelImpl: UserListViewModel {
     private var cancellables = Set<AnyCancellable>()
     private var currentFilter: Filters = .name
 
+    private(set) var isPulledToRefresh = false
     private(set) var users: [User] = []
 
     init(userStatisticService: UserService) {
@@ -45,10 +48,8 @@ final class UserListViewModelImpl: UserListViewModel {
                 self.loadData()
 
             case .pullToRefresh:
+                isPulledToRefresh = true
                 self.loadData()
-
-            case .cellIsTap(let indexPath):
-                self.cellTap(for: indexPath)
 
             case .filterButtonTapped:
                 self.filterButtonTapped()
@@ -73,11 +74,6 @@ final class UserListViewModelImpl: UserListViewModel {
                 self?.output.send(.failure(failure))
             }
         }
-    }
-
-    private func cellTap(for indexPath: IndexPath) {
-        // TODO: -
-
     }
 
     private func filterButtonTapped () {

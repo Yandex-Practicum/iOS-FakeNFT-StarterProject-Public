@@ -14,7 +14,8 @@ final class UserCell: UICollectionViewCell {
         rankingLabel.text = user.ranking
         usernameLabel.text = user.username
         nftCountLabel.text = user.nftCount
-        imageView.kf.setImage(with: user.avatarURL)
+        let placeholder = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        imageView.kf.setImage(with: user.avatarURL, placeholder: placeholder)
     }
 
     // MARK: - Private UI Elements

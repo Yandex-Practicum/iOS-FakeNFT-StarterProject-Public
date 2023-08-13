@@ -15,7 +15,8 @@ final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
         imageView.image = .mockUserImage
         titleLabel.text = viewModel.name
         descriptionLabel.text = viewModel.description
-        imageView.kf.setImage(with: viewModel.avatarURL)
+        let placeholder = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        imageView.kf.setImage(with: viewModel.avatarURL, placeholder: placeholder)
 
         layoutIfNeeded()
     }

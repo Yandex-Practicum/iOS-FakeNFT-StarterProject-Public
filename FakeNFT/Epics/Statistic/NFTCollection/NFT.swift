@@ -16,6 +16,7 @@ struct NFT {
     let price: Double
     let isLiked: Bool
     let isInCart: Bool
+    let nftNumber: Int
 }
 
 extension NFT: Hashable {

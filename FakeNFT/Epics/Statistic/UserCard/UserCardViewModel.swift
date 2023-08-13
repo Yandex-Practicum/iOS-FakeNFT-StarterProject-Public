@@ -28,7 +28,7 @@ final class UserCardViewModelImpl: UserCardViewModel {
             .site,
             .collection(
                 viewModels: [
-                    .init(nftsNumber: user.nftCount)
+                    .init(nfts: user.nfts)
                 ]
             )
         ]

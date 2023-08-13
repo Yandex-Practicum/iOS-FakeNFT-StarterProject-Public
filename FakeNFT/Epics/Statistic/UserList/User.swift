@@ -15,6 +15,7 @@ struct User {
     let username: String
     let nftCount: String
     let description: String
+    let nfts: [Int]
 }
 
 extension User: Hashable {

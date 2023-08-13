@@ -5,7 +5,6 @@ import SnapKit
 enum UsetListViewControllerInput {
     case viewDidLoad
     case pullToRefresh
-    case cellIsTap(for: IndexPath)
     case filterButtonTapped
 }
 
@@ -16,6 +15,7 @@ final class UserListViewController: NiblessViewController {
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .ypWhite
         view.isHidden = true
+        view.alpha = 0
         view.delegate = self
         view.refreshControl = refreshControl
         view.register(UserCell.self)
@@ -77,10 +77,7 @@ final class UserListViewController: NiblessViewController {
 
 extension UserListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let user = viewModel.users[indexPath.item]
-        let viewModel = UserCardViewModelImpl(user: user)
-        let viewController = UserCardViewController(viewModel: viewModel)
-
+        let viewController = createUserCardViewController(for: indexPath)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -109,17 +106,25 @@ private extension UserListViewController {
             spinner.startAnimating()
 
         case .success(let users):
-            errorView.isHidden = true
-            collectionView.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            errorView.hideErrorView()
+            showCollectionView()
+
+            if viewModel.isPulledToRefresh {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.spinner.stopAnimating()
+                    self.updateSnapshot(with: users)
+                    self.collectionView.refreshControl?.endRefreshing()
+                }
+            } else {
                 self.spinner.stopAnimating()
                 self.updateSnapshot(with: users)
-                self.collectionView.refreshControl?.endRefreshing()
             }
 
         case .failure:
+            collectionView.refreshControl?.endRefreshing()
             spinner.stopAnimating()
-            errorView.isHidden = false
+            hideCollectionView()
+            errorView.showErrorView()
 
         case .filterViewModel(let filterViewModel):
             showAlert(filterViewModel, style: .actionSheet)
@@ -205,5 +210,28 @@ private extension UserListViewController {
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.top.equalToSuperview().inset(20)
         }
+    }
+
+    func hideCollectionView() {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.isHidden = true
+            self.collectionView.alpha = 0
+        }
+    }
+
+    func showCollectionView() {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.isHidden = false
+            self.collectionView.alpha = 1
+        }
+    }
+}
+
+private extension UserListViewController {
+    func createUserCardViewController(for indexPath: IndexPath) -> UserCardViewController {
+        let user = viewModel.users[indexPath.item]
+        let viewModel = UserCardViewModelImpl(user: user)
+        let viewController = UserCardViewController(viewModel: viewModel)
+        return viewController
     }
 }

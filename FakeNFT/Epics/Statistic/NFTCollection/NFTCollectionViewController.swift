@@ -7,23 +7,26 @@
 
 import UIKit
 import SnapKit
+import Combine
 
-final class NFTCollectionViewController: UIViewController {
+final class NFTCollectionViewController: NiblessViewController {
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.contentInset.top = 20
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .ypWhite
         view.delegate = self
+        view.isHidden = true
+        view.alpha = 0
         view.refreshControl = refreshControl
         view.register(NFTCell.self)
         return view
     }()
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, NFT> = {
-        return .init(collectionView: collectionView) { collectionView, indexPath, item in
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, NFTCellViewModel> = {
+        return .init(collectionView: collectionView) { collectionView, indexPath, viewModel in
             let cell: NFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-            cell.configure(with: item)
+            cell.configure(with: viewModel)
             return cell
         }
     }()
@@ -43,25 +46,27 @@ final class NFTCollectionViewController: UIViewController {
 
     private let errorView = ErrorView()
 
+    private let viewModel: NFTCollectionViewModel
+    private var cancellables = Set<AnyCancellable>()
+
+    init(viewModel: NFTCollectionViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         addConstraints()
         createTabTabItem()
-        updateSnapshot(with: [
-            .init(imageURL: nil, title: "Apple", rating: 1, price: 1, isLiked: true, isInCart: false),
-            .init(imageURL: nil, title: "Banana", rating: 2, price: 2, isLiked: false, isInCart: true),
-            .init(imageURL: nil, title: "Orange", rating: 3, price: 3, isLiked: true, isInCart: false),
-            .init(imageURL: nil, title: "Qiwi", rating: 4, price: 4, isLiked: true, isInCart: false),
-            .init(imageURL: nil, title: "Cucamber", rating: 5, price: 5, isLiked: true, isInCart: false),
-            .init(imageURL: nil, title: "Potato", rating: 6, price: 6, isLiked: true, isInCart: false)
-        ])
+        bind(to: viewModel)
+        viewModel.viewDidLoad()
     }
 
     // MARK: - @objc methods
-    @objc private func filterTap() { }
-
-    @objc private func pullToRefresh() { }
+    @objc private func pullToRefresh() {        
+        viewModel.pullToRefresh()
+    }
 
     @objc private func backButtonTap() {
         navigationController?.popViewController(animated: true)
@@ -72,8 +77,52 @@ extension NFTCollectionViewController: UICollectionViewDelegate { }
 
 // MARK: - Data
 private extension NFTCollectionViewController {
-    func updateSnapshot(with data: [NFT]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, NFT>()
+    func bind(to viewModel: NFTCollectionViewModel) {
+        viewModel.nftViewModels
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] nfts in
+                guard let self else { return }
+                if !nfts.isEmpty {
+                    self.showCollectionView()
+                    self.errorView.hideErrorView()
+
+                    if viewModel.isPulledToRefresh {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            self.updateSnapshot(with: nfts)
+                            self.collectionView.refreshControl?.endRefreshing()
+                        }
+                    }
+                    else {
+                        self.updateSnapshot(with: nfts)
+                        self.collectionView.refreshControl?.endRefreshing()
+                    }
+
+                } else {
+                    // TODO: - Добавить заглушку если массив пустой
+                }
+            }
+            .store(in: &cancellables)
+
+        viewModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.errorView.hideErrorView()
+                isLoading ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
+            }
+            .store(in: &cancellables)
+
+        viewModel.error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.hideCollectionView()
+                self?.collectionView.refreshControl?.endRefreshing()
+                self?.errorView.showErrorView()
+            }
+            .store(in: &cancellables)
+    }
+
+    func updateSnapshot(with data: [NFTCellViewModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, NFTCellViewModel>()
         snapshot.appendSections([.zero])
         snapshot.appendItems(data)
         dataSource.apply(snapshot, animatingDifferences: true)
@@ -146,6 +195,20 @@ private extension NFTCollectionViewController {
         errorView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.top.equalToSuperview().inset(20)
+        }
+    }
+
+    func hideCollectionView() {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.isHidden = true
+            self.collectionView.alpha = 0
+        }
+    }
+
+    func showCollectionView() {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.isHidden = false
+            self.collectionView.alpha = 1
         }
     }
 }

@@ -50,8 +50,9 @@ final class ErrorView: UIView {
         fatalError("Unsupported")
     }
 
-    func setupUI() {
+    private func setupUI() {
         isHidden = true
+        alpha = 0
 
         addSubview(containerView)
         containerView.addSubview(stackView)
@@ -64,6 +65,20 @@ final class ErrorView: UIView {
 
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+
+    func hideErrorView() {
+        UIView.animate(withDuration: 0.3) {
+            self.isHidden = true
+            self.alpha = 0
+        }
+    }
+
+    func showErrorView() {
+        UIView.animate(withDuration: 0.3) {
+            self.isHidden = false
+            self.alpha = 1
         }
     }
 }

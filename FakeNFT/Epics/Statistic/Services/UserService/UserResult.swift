@@ -20,7 +20,8 @@ extension UserResult {
             avatarURL: avatarURL,
             username: name,
             nftCount: nftCount,
-            description: description
+            description: description,
+            nfts: nfts.convertToInts()
         )
     }
 }
