@@ -275,7 +275,6 @@
 		3F6806D829CC979D00B4F915 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				F96F2D042A7E4EE4004CC5D2 /* UserResult.swift */,
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
 			);
 			path = Network;
@@ -296,6 +295,7 @@
 				F96F2CFC2A7E4DCE004CC5D2 /* UserListViewModel.swift */,
 				F96F2CF82A7E4D57004CC5D2 /* UserCell.swift */,
 				F96F2D062A7E4F02004CC5D2 /* UserRequest.swift */,
+				F96F2D042A7E4EE4004CC5D2 /* UserResult.swift */,
 				F96F2D082A7E4F21004CC5D2 /* UserService.swift */,
 				F96F2CFA2A7E4DA3004CC5D2 /* User.swift */,
 			);
