@@ -100,6 +100,16 @@ final class UserListViewModelImpl: UserListViewModel {
                         output.send(.filteredData(users))
                 },
                 ActionModel(
+                    title: "Nft count",
+                    style: .default) { [weak self] in
+                        // Handle byRating sorting
+                        guard let self else { return }
+                        currentFilter = .nfts
+                        users = self.filterUsers()
+                        output.send(.filteredData(users))
+                },
+
+                ActionModel(
                     title: NSLocalizedString("sorting.close", comment: ""),
                     style: .cancel,
                     handler: nil
@@ -114,8 +124,12 @@ final class UserListViewModelImpl: UserListViewModel {
         switch currentFilter {
         case .name:
             return users.sortedByName()
+
         case .rank:
             return users.sortByRank()
+
+        case .nfts:
+            return users.sortByNft()
         }
     }
 }
@@ -124,5 +138,6 @@ private extension UserListViewModelImpl {
     enum Filters {
         case name
         case rank
+        case nfts
     }
 }

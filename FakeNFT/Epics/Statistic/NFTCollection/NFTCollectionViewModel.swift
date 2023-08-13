@@ -88,58 +88,24 @@ final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
         myOrder: [Int]
     ) -> [NFTCellViewModel] {
         var nfts = userNfts
-
+        nfts.forEach({ print($0.nftNumber) })
         for (index, nft) in nfts.enumerated() {
             let isLiked = myLikes.contains { $0 == nft.nftNumber }
             let isInCart = myOrder.contains { $0 == nft.nftNumber }
 
-            if isLiked && isInCart {
-                let updatedNFT = NFT(
-                    imageURL: nft.imageURL,
-                    title: nft.title,
-                    rating: nft.rating,
-                    price: nft.price,
-                    isLiked: true,
-                    isInCart: true,
-                    nftNumber: nft.nftNumber
-                )
+            let updatedNFT = NFT(
+                imageURL: nft.imageURL,
+                title: nft.title,
+                rating: nft.rating,
+                price: nft.price,
+                isLiked: isLiked,
+                isInCart: isInCart,
+                nftNumber: nft.nftNumber
+            )
 
-                // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной
-                // делаю это что бы оставить модель не мутабельной ( без var )
-                nfts[index] = updatedNFT
-            }
-
-            if isLiked {
-                let updatedNFT = NFT(
-                    imageURL: nft.imageURL,
-                    title: nft.title,
-                    rating: nft.rating,
-                    price: nft.price,
-                    isLiked: true,
-                    isInCart: false,
-                    nftNumber: nft.nftNumber
-                )
-
-                // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной
-                // делаю это что бы оставить модель не мутабельной ( без var )
-                nfts[index] = updatedNFT
-            }
-
-            if isInCart {
-                let updatedNFT = NFT(
-                    imageURL: nft.imageURL,
-                    title: nft.title,
-                    rating: nft.rating,
-                    price: nft.price,
-                    isLiked: false,
-                    isInCart: true,
-                    nftNumber: nft.nftNumber
-                )
-
-                // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной
-                // делаю это что бы оставить модель не мутабельной ( без var )
-                nfts[index] = updatedNFT
-            }
+            // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной
+            // делаю это что бы оставить модель не мутабельной ( без var )
+            nfts[index] = updatedNFT
         }
 
         return nfts.map { NFTCellViewModel(nft: $0) }

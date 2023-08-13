@@ -49,6 +49,8 @@ final class NFTCellViewModel {
     init(nft: NFT) {
         self.nft = nft
 
+        // TODO: - Добавить возможность ставить лайки и отправлять в корзину
+        
 //        likeButtonAction
 //            .flatMap { _ in
 //                self.likeRequest()

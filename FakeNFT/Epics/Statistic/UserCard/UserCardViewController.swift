@@ -226,7 +226,7 @@ private extension UserCardViewController {
         let orderService = OrderServiceImpl()
 
         let viewModel = NFTCollectionViewModelImpl(
-            nftsNumbers: nfts,
+            nftsNumbers: [nfts],
             nftService: nftService,
             likesService: likesService,
             orderService: orderService

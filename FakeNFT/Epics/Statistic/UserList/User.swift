@@ -37,4 +37,8 @@ extension Array where Element == User {
     func sortedByName() -> [User] {
         return self.sorted { $0.username < $1.username }
     }
+
+    func sortByNft() -> [User] {
+        return self.sorted { $0.nftCount > $1.nftCount }
+    }
 }
