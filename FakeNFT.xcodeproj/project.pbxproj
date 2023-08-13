@@ -223,7 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C38F29D245250081F015 /* Requests */,
-				F96F2D082A7E4F21004CC5D2 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -286,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
-				F96F2D062A7E4F02004CC5D2 /* UserRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -297,6 +295,8 @@
 				F9F5573F2A741B5F004F6856 /* UserListViewController.swift */,
 				F96F2CFC2A7E4DCE004CC5D2 /* UserListViewModel.swift */,
 				F96F2CF82A7E4D57004CC5D2 /* UserCell.swift */,
+				F96F2D062A7E4F02004CC5D2 /* UserRequest.swift */,
+				F96F2D082A7E4F21004CC5D2 /* UserService.swift */,
 				F96F2CFA2A7E4DA3004CC5D2 /* User.swift */,
 			);
 			path = UserList;
