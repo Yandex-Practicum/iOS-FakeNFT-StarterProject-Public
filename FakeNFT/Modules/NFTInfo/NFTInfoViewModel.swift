@@ -19,13 +19,13 @@ protocol NFTInfoViewModel {
 }
 
 final class NFTInfoViewModelImpl: NFTInfoViewModel {
-    private(set) var nfts: Box<[NFT]>
     let imageURL: String
     let sectionName: String
     let sectionAuthor: String
     let sectionDescription: String
 
     private let storage: NFtStorageService
+    private(set) var nfts: Box<[NFT]>
 
     init(storage: NFtStorageService, details: NFTInfo) {
         self.storage = storage
