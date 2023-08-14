@@ -39,6 +39,17 @@ final class NFTsViewController: UIViewController {
         view = container
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        prepareViewToBeAppeared()
+    }
+
+    private func prepareViewToBeAppeared() {
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.backgroundColor = .appWhite
+        tabBarController?.tabBar.isHidden = false
+    }
+
     private func configureNavigationController() {
         navigationController?.navigationBar.topItem?.rightBarButtonItem =
             UIBarButtonItem(
