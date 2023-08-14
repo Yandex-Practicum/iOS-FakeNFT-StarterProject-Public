@@ -16,6 +16,11 @@ final class WebViewController: UIViewController {
         view = webView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    }
+        
     init(viewModel: WebViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
