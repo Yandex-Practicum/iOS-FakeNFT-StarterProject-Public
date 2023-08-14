@@ -1,5 +1,6 @@
 Никишов Дмитрий, группа 5, когорта 4
 Эпик: Каталог
+Информация о задаче : архитектура mvvm, верстка кодом
 Доска:  https://github.com/SASHKEVICH/iOS-FakeNFT-StarterProject-Public/issues/created_by/Dmitry-Nikishov
 
 - Создать модели для NFT коллекций
