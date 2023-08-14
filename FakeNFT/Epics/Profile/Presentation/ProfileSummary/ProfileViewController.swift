@@ -197,7 +197,7 @@ final class ProfileViewController: UIViewController {
         present(profileEditViewController, animated: true)
     }
     
-    @objc private func didTapMyNFTsCell() {
+    private func didTapMyNFTsCell() {
         guard let presenter = presenter else { return }
         
         let myNFTsViewController = MyNFTsViewController()
@@ -212,6 +212,16 @@ final class ProfileViewController: UIViewController {
         myNFTsPresenter.view = myNFTsViewController
         
         let navigationController = UINavigationController(rootViewController: myNFTsViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
+    
+    private func didTapFeaturedNFTsCell() {
+        guard let presenter = presenter else { return }
+        
+        let featuredNFTsViewController = FeaturedNFTsViewController()
+        
+        let navigationController = UINavigationController(rootViewController: featuredNFTsViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
@@ -234,7 +244,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             didTapMyNFTsCell()
         case 1:
-            print("\(ProfileConstants.tableLabelArray[indexPath.row])")
+            didTapFeaturedNFTsCell()
         case 2:
             openUserAboutWebView()
         default:

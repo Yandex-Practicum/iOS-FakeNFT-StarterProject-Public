@@ -41,7 +41,6 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
             print("networkClient is nil")
             return
         }
-        var nftAuthors: [String] = []
         UIBlockingProgressHUD.show()
         for nft in nfts {
             networkClient.getNFTBy(id: nft)
