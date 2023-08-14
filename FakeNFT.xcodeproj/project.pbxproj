@@ -290,6 +290,7 @@
 		3F6806CE29CBBD1B00B4F915 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				F61908EB2A792EA000DEF2F5 /* Services */,
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
@@ -363,7 +364,6 @@
 			children = (
 				F61909162A7A9F6A00DEF2F5 /* WebView */,
 				F61908F92A7934B200DEF2F5 /* NTFSorting */,
-				F61908EB2A792EA000DEF2F5 /* Services */,
 				F61908E42A792BFC00DEF2F5 /* NFTInfo */,
 				F61908CF2A73CD0F00DEF2F5 /* NFTs */,
 			);
