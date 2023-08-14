@@ -8,6 +8,8 @@ enum ProfileConstants {
     
     static let endpoint = "https://64c516f8c853c26efada7af9.mockapi.io"
     static let apiV1Profile1Get = "/api/v1/profile/1"
+    static let apiV1NftNftIdGet = "/api/v1/nft/"
+    static let apiV1UsersUserIdGet = "/api/v1/users/"
     
     static let tableLabelArray = [
         NSLocalizedString("profile.myNFTs", comment: ""),

@@ -1,6 +1,6 @@
 import Foundation
 
-struct NFTResponseModel: Codable {
+struct NFTResponseModel: Decodable {
     let createdAt: String
     let name: String
     let images: [String]

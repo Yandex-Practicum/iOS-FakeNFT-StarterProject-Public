@@ -16,6 +16,7 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     func getEditableProfile() -> EditableProfileModel?
     func updateProfile(with data: ProfileResponseModel)
     func getCurrentProfileResponse() -> ProfileResponseModel?
+    func getMyNFTs() -> [String]
 }
 
 

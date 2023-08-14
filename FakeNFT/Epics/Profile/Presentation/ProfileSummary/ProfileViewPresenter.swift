@@ -9,7 +9,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     private var currentProfileResponseModel: ProfileResponseModel?
     private var currentProfileEditModel: EditableProfileModel?
     
-    // MARK: - Private properties
+    // MARK: - Public properties / ProfileViewPresenterProtocol
     func viewDidLoad() {
         UIBlockingProgressHUD.show()
         view?.activityIndicatorAnimation(inProcess: true)
@@ -24,6 +24,12 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         currentProfileResponseModel
     }
     
+    func getMyNFTs() -> [String] {
+        guard let currentProfileResponseModel = currentProfileResponseModel else { return [] }
+        return currentProfileResponseModel.nfts
+    }
+    
+    // MARK: - Private properties
     private func convertResponse(model: ProfileResponseModel?, image: UIImage?) -> EditableProfileModel? {
         guard let model = model else {return nil}
         return EditableProfileModel(

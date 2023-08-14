@@ -1,6 +1,12 @@
 import UIKit
 
-final class MyNFTsViewController: UIViewController {
+protocol MyNFTsViewControllerProtocol {
+    var presenter: MyNFTsViewDelegate? { get set }
+}
+
+final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtocol {
+    // MARK: - Public properties
+    var presenter: MyNFTsViewDelegate?
     // MARK: - Private properties
     private let tableView = UITableView()
     
@@ -8,12 +14,12 @@ final class MyNFTsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
+        presenter?.viewDidLoad()
         configureNavigationController()
         addingUIElements()
         layoutConfigure()
     }
     
-    // MARK: - Private methods
     // MARK: - Private methods
     private func addingUIElements() {
         view.addSubview(tableView)
@@ -23,11 +29,12 @@ final class MyNFTsViewController: UIViewController {
     private func layoutConfigure() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -39),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
     private func configureNavigationController() {
         title = NSLocalizedString("profile.myNFTs", comment: "")
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -39,14 +46,23 @@ final class MyNFTsViewController: UIViewController {
         ]
         
         let symbolConfiguration = UIImage.SymbolConfiguration(weight: .semibold)
-        // Создание кнопки "Назад"
+        
         let backImage = UIImage(systemName: "chevron.left", withConfiguration: symbolConfiguration) ?? UIImage()
-        let backButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(backButtonTapped))
+        let backButton = UIBarButtonItem(
+            image: backImage,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
         backButton.tintColor = .ypBlack
         navigationItem.leftBarButtonItem = backButton
         
-        // Создание кнопки с изображением справа
-        let imageButton = UIBarButtonItem(image: .sortButton, style: .plain, target: self, action: #selector(imageButtonTapped))
+        let imageButton = UIBarButtonItem(
+            image: .sortButton,
+            style: .plain,
+            target: self,
+            action: #selector(imageButtonTapped)
+        )
         imageButton.tintColor = .ypBlack
         navigationItem.rightBarButtonItem = imageButton
     }

@@ -3,7 +3,6 @@ import UIKit
 final class ProfileViewController: UIViewController {
     // MARK: - Public properties
     var presenter: ProfileViewPresenterProtocol?
-    
     // MARK: - Private properties
     private let mainStack: UIStackView = {
         let stack = UIStackView(frame: .zero)
@@ -199,7 +198,19 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapMyNFTsCell() {
+        guard let presenter = presenter else { return }
+        
         let myNFTsViewController = MyNFTsViewController()
+        let myNFTsNetworkClient = MyNFTsNetworkClient()
+        let myNFTsPresenter = MyNFTsPresrnter(myNFTs: presenter.getMyNFTs())
+        
+        myNFTsViewController.presenter = myNFTsPresenter
+        
+        myNFTsNetworkClient.presenter = myNFTsPresenter
+        
+        myNFTsPresenter.networkClient = myNFTsNetworkClient
+        myNFTsPresenter.view = myNFTsViewController
+        
         let navigationController = UINavigationController(rootViewController: myNFTsViewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
@@ -222,7 +233,6 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.row {
         case 0:
             didTapMyNFTsCell()
-            print("\(ProfileConstants.tableLabelArray[indexPath.row])")
         case 1:
             print("\(ProfileConstants.tableLabelArray[indexPath.row])")
         case 2:
