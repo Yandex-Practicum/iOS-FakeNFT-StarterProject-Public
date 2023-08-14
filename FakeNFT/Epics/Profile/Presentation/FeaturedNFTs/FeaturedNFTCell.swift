@@ -1,7 +1,7 @@
 import UIKit
 
 final class FeaturedNFTCell: UICollectionViewCell {
-    static let identifier: String = "FavoritesNFTCell"
+    static let identifier: String = "FeaturedNFTCell"
     // MARK: - Private properties
     private lazy var aboutNFCStack: UIStackView = {
         let nftStack = UIStackView()

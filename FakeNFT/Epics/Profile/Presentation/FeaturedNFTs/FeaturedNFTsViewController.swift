@@ -124,6 +124,12 @@ extension FeaturedNFTsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedNFTCell.identifier, for: indexPath) as? FeaturedNFTCell else {
+            fatalError("Failed to dequeue FeaturedNFTCell")
+        }
+        
+        cell.configureCell()
+        
+        return cell
     }
 }

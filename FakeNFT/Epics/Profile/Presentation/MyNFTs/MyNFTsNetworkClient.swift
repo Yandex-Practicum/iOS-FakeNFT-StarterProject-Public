@@ -1,44 +1,32 @@
 import Foundation
 
 protocol MyNFTsNetworkClientProtocol {
-    var presenter: MyNFTsPresenterProtocol? { get set }
-    func getNFTBy(id: String)
-    func getAuthorOfNFC(by id: String)
+    func getNFTBy(id: String, completion: @escaping (Result<NFTResponseModel, Error>) -> Void)
+    func getAuthorOfNFC(by id: String, completion: @escaping (Result<AuthorResponseModel, Error>) -> Void)
 }
 
 final class MyNFTsNetworkClient: MyNFTsNetworkClientProtocol {
-    // MARK: - Public properties
-    var presenter: MyNFTsPresenterProtocol?
-    private let dataLoadingQueue = DispatchQueue(label: "dataLoadingQueue", qos: .userInteractive)
-    
     // MARK: - Private properties
     private let networkClient = DefaultNetworkClient()
-    func getNFTBy(id: String) {
+    
+    func getNFTBy(id: String, completion: @escaping (Result<NFTResponseModel, Error>) -> Void) {
         networkClient.send( request: NftByIdRequest(id: id), type: NFTResponseModel.self) { result in
             switch result {
             case .success(let model):
-                DispatchQueue.main.async{
-                    self.presenter?.addNFTAuthor(with: model.id)
-                }
+                completion(.success(model))
             case .failure(let error):
-                DispatchQueue.main.async{
-                    print("\n❌ \(error)")
-                }
+                completion(.failure(error))
             }
         }
     }
     
-    func getAuthorOfNFC(by id: String) {
+    func getAuthorOfNFC(by id: String, completion: @escaping (Result<AuthorResponseModel, Error>) -> Void) {
         networkClient.send(request: AuthorByIdRequest(id: id), type: AuthorResponseModel.self) { result in
             switch result {
             case .success(let model):
-                DispatchQueue.main.async{
-                    print("\n✅🟢\n\(model)")
-                }
+                completion(.success(model))
             case .failure(let error):
-                DispatchQueue.main.async{
-                    print("\n❌❌ \(error)")
-                }
+                completion(.failure(error))
             }
         }
     }

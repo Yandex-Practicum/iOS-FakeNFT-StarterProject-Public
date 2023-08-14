@@ -206,8 +206,6 @@ final class ProfileViewController: UIViewController {
         
         myNFTsViewController.presenter = myNFTsPresenter
         
-        myNFTsNetworkClient.presenter = myNFTsPresenter
-        
         myNFTsPresenter.networkClient = myNFTsNetworkClient
         myNFTsPresenter.view = myNFTsViewController
         
