@@ -53,7 +53,11 @@ extension CartViewController: CartTableViewHelperDelegate {
         self.viewModel.order.value
     }
 
-    func removeNft(row: Int, nftImage: UIImage?) {
+    func cartTableViewHelper(
+        _ cartTableViewHelper: CartTableViewHelper,
+        removeRow row: Int,
+        with nftImage: UIImage?
+    ) {
         self.router.showRemoveNftView(on: self, nftImage: nftImage) { [weak self] flow in
             if flow == .remove {
                 self?.viewModel.removeNft(row: row)

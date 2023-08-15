@@ -1,15 +1,8 @@
-//
-//  CartTableViewHelper.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 31.07.2023.
-//
-
 import UIKit
 
 protocol CartTableViewHelperDelegate: AnyObject {
     var order: OrderViewModel? { get }
-    func removeNft(row: Int, nftImage: UIImage?)
+    func cartTableViewHelper(_ cartTableViewHelper: CartTableViewHelper, removeRow: Int, with nftImage: UIImage?)
 }
 
 protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
@@ -37,7 +30,7 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
     ) {
         guard editingStyle == .delete else { return }
         let cell: CartTableViewCell = tableView.cellForRow(indexPath: indexPath)
-        self.delegate?.removeNft(row: indexPath.row, nftImage: cell.nft?.image)
+        self.delegate?.cartTableViewHelper(self, removeRow: indexPath.row, with: cell.nft?.image)
     }
 
     // MARK: - UITableViewDataSource

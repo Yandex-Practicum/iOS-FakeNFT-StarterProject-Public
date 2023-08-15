@@ -29,15 +29,15 @@ final class CartViewModel {
         case empty
     }
 
-    private(set) var order = Box<OrderViewModel>([])
-    private(set) var nftCount = Box<String>("0 NFT")
-    private(set) var finalOrderCost = Box<String>("0 ETH")
-    private(set) var cartViewState = Box<ViewState>(.loading)
-    private(set) var error = Box<Error?>(nil)
+    let order = Box<OrderViewModel>([])
+    let nftCount = Box<String>("0 NFT")
+    let finalOrderCost = Box<String>("0 ETH")
+    let cartViewState = Box<ViewState>(.loading)
+    let error = Box<Error?>(nil)
+
+    let orderId = "1"
 
     private(set) var tableViewChangeset: Changeset<NFTCartCellViewModel>?
-
-    private(set) var orderId = "1"
 
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
