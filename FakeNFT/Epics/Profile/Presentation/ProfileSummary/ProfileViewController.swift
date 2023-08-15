@@ -198,11 +198,14 @@ final class ProfileViewController: UIViewController {
     }
     
     private func didTapMyNFTsCell() {
-        guard let presenter = presenter else { return }
+        guard
+            let presenter = presenter,
+            let profile = presenter.getCurrentProfileResponse()
+        else { return }
         
         let myNFTsViewController = MyNFTsViewController()
         let myNFTsNetworkClient = MyNFTsNetworkClient()
-        let myNFTsPresenter = MyNFTsPresrnter(myNFTs: presenter.getMyNFTs())
+        let myNFTsPresenter = MyNFTsPresrnter(profile: profile)
         
         myNFTsViewController.presenter = myNFTsPresenter
         
@@ -215,8 +218,6 @@ final class ProfileViewController: UIViewController {
     }
     
     private func didTapFeaturedNFTsCell() {
-        guard let presenter = presenter else { return }
-        
         let featuredNFTsViewController = FeaturedNFTsViewController()
         
         let navigationController = UINavigationController(rootViewController: featuredNFTsViewController)

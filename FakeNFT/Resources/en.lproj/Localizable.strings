@@ -133,14 +133,14 @@ tabBar.basket = "Basket";
 // My NFT cell labels
 "nft.price" = "Price";
 "nft.by" = "by";
-
-
-
-
-
-
-
-
+// Screen labels "My NFTs"
+"nft.missing" = "You don't have an NFT yet";
+// Error alerts
+"nft.error.title" = "Error";
+"nft.error.message" = "An error occurred while fetching data:";
+// Buttons
+"profile.photo.retryButton" = "Retry";
+"profile.photo.cancelButton" = "Cancel";
 
 
 

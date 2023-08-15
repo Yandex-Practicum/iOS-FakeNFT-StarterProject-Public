@@ -331,6 +331,7 @@
 			children = (
 				F9F5573B2A741B48004F6856 /* ProfileViewController.swift */,
 				BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */,
+				BA98F52C2A786EC9000917BF /* ProfileTableViewCell.swift */,
 				BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */,
 			);
 			path = ProfileSummary;
@@ -373,7 +374,6 @@
 			isa = PBXGroup;
 			children = (
 				BA25245E2A8009B300BD4F98 /* EditedParameterLabel.swift */,
-				BA98F52C2A786EC9000917BF /* ProfileTableViewCell.swift */,
 				BA2524602A801EEB00BD4F98 /* CustomTextField.swift */,
 				BA2524622A80471B00BD4F98 /* CustomTextView.swift */,
 			);

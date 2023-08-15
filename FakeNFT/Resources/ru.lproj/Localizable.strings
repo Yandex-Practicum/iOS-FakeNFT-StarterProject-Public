@@ -133,14 +133,14 @@ tabBar.basket = "Корзина";
 // Лэйблы ячейки мой NFT
 "nft.price" = "Цена";
 "nft.by" = "от";
-
-
-
-
-
-
-
-
+// Лэйблы экрана "Мои NFT"
+"nft.missing" = "У Вас ещё нет NFT";
+// Сообщения об ошибке
+"nft.error.title" = "Ошибка";
+"nft.error.message" = "Произошла ошибка при получении данных:";
+// Кнопки
+"profile.photo.retryButton" = "Повторить";
+"profile.photo.cancelButton" = "Отмена";
 
 
 

@@ -3,45 +3,77 @@ import UIKit
 protocol MyNFTsViewControllerProtocol {
     var presenter: MyNFTsViewDelegate? { get set }
     func updateTable()
+    func showNetworkErrorAlert(with error: Error)
 }
 
 final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtocol {
     // MARK: - Public properties
     var presenter: MyNFTsViewDelegate?
+    
     // MARK: - Private properties
     private let tableView = UITableView()
     
-    private let mockCells = [
-        MyNFTPresentationModel(
-            nftName: "test",
-            authorName: "Some guy",
-            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Yellow/Pumpkin/1.png",
-            price: 23,
-            rating: "3"
-        ),
-        MyNFTPresentationModel(
-            nftName: "Asdfghj",
-            authorName: "Some guy2",
-            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Yellow/Pumpkin/1.png",
-            price: 3,
-            rating: "3"
-        )
-    ]
+    private lazy var missingNFCLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bodyBold
+        label.text = NSLocalizedString("nft.missing", comment: "")
+        label.textColor = .ypBlack
+        label.textAlignment = .center
+        return label
+    }()
     
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-//        presenter?.viewDidLoad()
+        presenter?.viewDidLoad()
         configureNavigationController()
+        tableViewConfigure()
         addingUIElements()
         layoutConfigure()
+        checkMissingLabelVisibility()
     }
+    
+    // MARK: - MyNFTsViewControllerProtocol
+    func updateTable() {
+        checkMissingLabelVisibility()
+        tableView.reloadData()
+    }
+    
+    
+    func showNetworkErrorAlert(with error: Error) {
+        if presentedViewController is UIAlertController { return }
+        
+        let alertMessage = ("\(NSLocalizedString("nft.error.message", comment: ""))\n\(error)")
+        
+        let alert = UIAlertController(
+            title: NSLocalizedString("nft.error.title", comment: ""),
+            message: alertMessage,
+            preferredStyle: .alert)
+        
+        let repeatAction = UIAlertAction(
+            title: NSLocalizedString("profile.photo.retryButton", comment: ""),
+            style: .default
+        ) { _ in
+            self.presenter?.viewDidLoad()
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("profile.photo.cancelButton", comment: ""),
+            style: .cancel
+        )
+        alert.addAction(repeatAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     
     // MARK: - Private methods
     private func addingUIElements() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        [missingNFCLabel, tableView].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
     }
     
     private func layoutConfigure() {
@@ -49,7 +81,12 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            missingNFCLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            missingNFCLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            missingNFCLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            missingNFCLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
@@ -85,17 +122,17 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         navigationItem.rightBarButtonItem = imageButton
     }
     
+    private func checkMissingLabelVisibility() {
+        missingNFCLabel.isHidden = presenter?.isNeedToHideMissingNFCLabel() ?? true
+    }
+    
     private func tableViewConfigure(){
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(ProfileTableViewCell.self)
+        tableView.register(MyNFTCell.self)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.isScrollEnabled = true
-    }
-    
-    func updateTable() {
-        tableView.reloadData()
     }
     
     // MARK: - Actions
@@ -108,21 +145,23 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
 }
 
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension MyNFTsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let presenter = presenter else { return 0 }
-//        return presenter.getMyNFTsCounter()
-        mockCells.count
+        guard let presenter = presenter else { return 0 }
+        return presenter.getMyNFTsCounter()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let presenter = presenter else { return UITableViewCell() }
         let cell: MyNFTCell = tableView.dequeueReusableCell()
-//        let model = presenter.getModelFor(indexPath: indexPath)
-        let model = mockCells[indexPath.row]
+        let model = presenter.getModelFor(indexPath: indexPath)
         cell.configure(with: model)
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        140
+    }
 }

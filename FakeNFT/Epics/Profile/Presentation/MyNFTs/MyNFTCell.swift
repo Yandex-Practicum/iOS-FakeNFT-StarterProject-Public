@@ -21,7 +21,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     }()
     
     private lazy var priceStack: UIStackView = {
-        let stack = UIStackView()
+        let stack = UIStackView(arrangedSubviews: [priceLabel, priceValueLabel])
         stack.axis = .vertical
         stack.distribution = .equalSpacing
         stack.alignment = .leading
@@ -33,7 +33,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         let stack = UIStackView(arrangedSubviews: [byAuthorLabel, authorLabel])
         stack.axis = .horizontal
         stack.distribution = .equalSpacing
-        stack.alignment = .leading
+        stack.alignment = .bottom
         stack.spacing = 4
         return stack
     }()
@@ -45,7 +45,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         return nftImage
     }()
     
-    private lazy var favoriteNFTButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
@@ -98,6 +98,8 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        self.backgroundColor = .clear
         addingUIElements()
         layoutConfigure()
     }
@@ -106,28 +108,30 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        for view in ratingStack.subviews {
+            ratingStack.removeArrangedSubview(view)
+        }
+    }
+    
     // MARK: - Public properties
     func configure(with model: MyNFTPresentationModel) {
         nftImage.kf.setImage(with: URL(string: model.image))
         nftNameLabel.text = model.nftName
         authorLabel.text = (model.authorName)
-        priceLabel.text = ("\(model.price) NFT")
+        priceLabel.text = NSLocalizedString("nft.price", comment: "")
+        priceValueLabel.text = ("\(model.price) NFT")
+        setLikeButtonImage(for: model.isLiked)
+        setStarsinStack(with: model.rating)
     }
     
     // MARK: - Private methods
     private func addingUIElements() {
-        [nftImage, aboutNFCStack, priceStack, favoriteNFTButton].forEach{
+        [nftImage, aboutNFCStack, priceStack, likeButton].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
-//        [nftNameLabel, ratingStack, authorLabel].forEach{
-//            $0.translatesAutoresizingMaskIntoConstraints = false
-//            aboutNFCStack.addSubview($0)
-//        }
-//        [priceLabel, priceValueLabel].forEach{
-//            $0.translatesAutoresizingMaskIntoConstraints = false
-//            priceStack.addSubview($0)
-//        }
     }
     
     private func layoutConfigure() {
@@ -137,10 +141,10 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
             nftImage.heightAnchor.constraint(equalToConstant: 108),
             nftImage.widthAnchor.constraint(equalToConstant: 108),
             
-            favoriteNFTButton.topAnchor.constraint(equalTo: nftImage.topAnchor),
-            favoriteNFTButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
-            favoriteNFTButton.heightAnchor.constraint(equalToConstant: 42),
-            favoriteNFTButton.widthAnchor.constraint(equalToConstant: 42),
+            likeButton.topAnchor.constraint(equalTo: nftImage.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
+            likeButton.heightAnchor.constraint(equalToConstant: 42),
+            likeButton.widthAnchor.constraint(equalToConstant: 42),
             
             aboutNFCStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             aboutNFCStack.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 20),
@@ -152,5 +156,19 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
             priceStack.leadingAnchor.constraint(equalTo: aboutNFCStack.trailingAnchor),
             priceStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -39)
         ])
+    }
+    
+    private func setLikeButtonImage(for state: Bool) {
+        let image: UIImage? = state ? .liked : .unliked
+        likeButton.setImage(image, for: .normal)
+    }
+    
+    private func setStarsinStack(with rating: String) {
+        let rating = Int(rating) ?? 1
+        for i in 1...5 {
+            let image: UIImage? = i <= rating ? .yellowStar : .grayStar
+            let imageView = UIImageView(image: image)
+            ratingStack.addArrangedSubview(imageView)
+        }
     }
 }

@@ -6,4 +6,5 @@ struct MyNFTPresentationModel {
     let image: String
     let price: Double
     let rating: String
+    let isLiked: Bool
 }

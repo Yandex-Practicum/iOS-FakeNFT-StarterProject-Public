@@ -9,6 +9,7 @@ protocol MyNFTsViewDelegate: AnyObject {
     var view: MyNFTsViewControllerProtocol? { get set }
     func viewDidLoad()
     func getMyNFTsCounter() -> Int
+    func isNeedToHideMissingNFCLabel() -> Bool
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
 }
 
@@ -18,7 +19,7 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     var networkClient: MyNFTsNetworkClientProtocol?
     
     // MARK: - Private properties
-    private var myNFTs: [String]
+    private var profile: ProfileResponseModel
     private var nftAuthors: Set<String> = []
     
     private var myNFTsResponces: [NFTResponseModel] = []
@@ -27,8 +28,9 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     
     // MARK: - Life cycle
-    init(myNFTs: [String]){
-        self.myNFTs = myNFTs
+    init(profile: ProfileResponseModel){
+        self.profile = profile
+        print("‼️ Profile:\n\(profile)")
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +40,7 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     // MARK: - MyNFTsViewDelegate
     func viewDidLoad() {
-        getNFTResponceModels(for: myNFTs)
+        getNFTResponceModels(for: profile.nfts)
     }
     
     
@@ -46,6 +48,9 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         myNFTsResponces.count
     }
     
+    func isNeedToHideMissingNFCLabel() -> Bool {
+        !profile.nfts.isEmpty
+    }
     
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel {
         presentationModels[indexPath.row]
@@ -78,11 +83,11 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
                     self.addNFT(responce: responce)
                     self.nftAuthors.insert(responce.author)
                 case .failure(let error):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
                         UIBlockingProgressHUD.dismiss()
+                        self.view?.showNetworkErrorAlert(with: error)
                     }
-                    // TODO: Добавить вызов алерт презентера
-                    print("\n❌ \(error)")
                 }
                 dispatchGroup.leave()
             }
@@ -109,11 +114,11 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
                 case .success(let result):
                     self.nftAuthorsResponces.append(result)
                 case .failure(let error):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
                         UIBlockingProgressHUD.dismiss()
+                        self.view?.showNetworkErrorAlert(with: error)
                     }
-                    // TODO: Добавить вызов алерт презентера
-                    print("\n❌❌ \(error)")
                 }
                 dispatchGroup.leave()
             }
@@ -139,7 +144,8 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
                 authorName: authorName,
                 image: image,
                 price: responce.price,
-                rating: String(responce.rating)
+                rating: String(responce.rating),
+                isLiked: isThisNFCLiked(id: responce)
             )
             presentationModels.append(nftPresentationModel)
         }
@@ -148,5 +154,9 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
             self.view?.updateTable()
             UIBlockingProgressHUD.dismiss()
         }
+    }
+    
+    private func isThisNFCLiked(id model: NFTResponseModel) -> Bool {
+        return profile.likes.contains(model.id)
     }
 }
