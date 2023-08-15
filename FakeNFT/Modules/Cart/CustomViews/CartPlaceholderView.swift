@@ -1,10 +1,3 @@
-//
-//  CartPlaceholderView.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 03.08.2023.
-//
-
 import UIKit
 
 final class CartPlaceholderView: UIView {
@@ -20,7 +13,6 @@ final class CartPlaceholderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configure()
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -31,6 +23,7 @@ final class CartPlaceholderView: UIView {
 private extension CartPlaceholderView {
     func configure() {
         self.backgroundColor = .appWhite
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubviews()
         self.addConstraints()
     }

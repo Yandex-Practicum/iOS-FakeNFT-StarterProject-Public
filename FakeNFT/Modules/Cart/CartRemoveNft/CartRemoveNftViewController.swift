@@ -1,16 +1,23 @@
-//
-//  CartRemoveNftViewController.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 06.08.2023.
-//
-
 import UIKit
 
 final class CartRemoveNftViewController: UIViewController {
     enum RemoveNftFlow {
         case remove
         case cancel
+    }
+
+    private enum Constants {
+        static let nftImageViewCornerRadius: CGFloat = 12
+        static let nftImageViewTopInset: CGFloat = 244
+        static let nftImageViewSideInset: CGFloat = 133
+
+        static let removeNftLabelTopInset: CGFloat = 12
+        static let removeNftLabelSideInset: CGFloat = 97
+
+        static let buttonsTopInset: CGFloat = 20
+        static let buttonsSideInset: CGFloat = 56
+        static let buttonsSpacing: CGFloat = 8
+        static let buttonsHeight: CGFloat = 44
     }
 
     var onChoosingRemoveNft: ActionCallback<RemoveNftFlow>?
@@ -25,8 +32,7 @@ final class CartRemoveNftViewController: UIViewController {
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.nftImageViewCornerRadius
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -45,14 +51,12 @@ final class CartRemoveNftViewController: UIViewController {
 
     private lazy var removeNftButton: AppButton = {
         let button = AppButton(type: .nftCartRemove, title: "CART_REMOVE_NFT_REMOVE_BUTTON_TITLE".localized)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapRemoveNftButton), for: .touchUpInside)
         return button
     }()
 
     private lazy var cancelButton: AppButton = {
         let button = AppButton(type: .nftCartCancel, title: "CART_REMOVE_NFT_CANCEL_BUTTON_TITLE".localized)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapCancelButton), for: .touchUpInside)
         return button
     }()
@@ -94,28 +98,39 @@ private extension CartRemoveNftViewController {
             self.blurredEffectView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.blurredEffectView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 
-            self.nftImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 244),
-            self.nftImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 133),
-            self.nftImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -134),
+            self.nftImageView.topAnchor.constraint(equalTo: self.view.topAnchor,
+                                                   constant: Constants.nftImageViewTopInset),
+            self.nftImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
+                                                       constant: Constants.nftImageViewSideInset),
+            self.nftImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
+                                                        constant: -Constants.nftImageViewSideInset),
             self.nftImageView.heightAnchor.constraint(equalTo: self.nftImageView.widthAnchor),
 
-            self.removeNftLabel.topAnchor.constraint(equalTo: self.nftImageView.bottomAnchor, constant: 12),
-            self.removeNftLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 97),
-            self.removeNftLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -98),
+            self.removeNftLabel.topAnchor.constraint(equalTo: self.nftImageView.bottomAnchor,
+                                                     constant: Constants.removeNftLabelTopInset),
+            self.removeNftLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
+                                                         constant: Constants.removeNftLabelSideInset),
+            self.removeNftLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
+                                                          constant: -Constants.removeNftLabelSideInset),
 
-            self.removeNftButton.topAnchor.constraint(equalTo: self.removeNftLabel.bottomAnchor, constant: 20),
-            self.removeNftButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 56),
-            self.removeNftButton.trailingAnchor.constraint(equalTo: self.cancelButton.leadingAnchor, constant: -8),
+            self.removeNftButton.topAnchor.constraint(equalTo: self.removeNftLabel.bottomAnchor,
+                                                      constant: Constants.buttonsTopInset),
+            self.removeNftButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
+                                                          constant: Constants.buttonsSideInset),
+            self.removeNftButton.trailingAnchor.constraint(equalTo: self.cancelButton.leadingAnchor,
+                                                           constant: -Constants.buttonsSpacing),
             self.removeNftButton.widthAnchor.constraint(equalTo: self.cancelButton.widthAnchor),
-            self.removeNftButton.heightAnchor.constraint(equalToConstant: 44),
+            self.removeNftButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight),
 
-            self.cancelButton.topAnchor.constraint(equalTo: self.removeNftLabel.bottomAnchor, constant: 20),
-            self.cancelButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -56),
-            self.cancelButton.heightAnchor.constraint(equalTo: self.removeNftButton.heightAnchor)
+            self.cancelButton.topAnchor.constraint(equalTo: self.removeNftButton.topAnchor),
+            self.cancelButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
+                                                        constant: -Constants.buttonsSideInset),
+            self.cancelButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight)
         ])
     }
 }
 
+// MARK: - Actions
 private extension CartRemoveNftViewController {
     @objc
     func didTapRemoveNftButton() {
