@@ -1,10 +1,3 @@
-//
-//  CartViewController.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 31.07.2023.
-//
-
 import UIKit
 
 final class CartViewController: UIViewController {
@@ -39,6 +32,10 @@ final class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        self.view = self.cartView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
@@ -47,10 +44,6 @@ final class CartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.fetchOrder()
-    }
-
-    override func loadView() {
-        self.view = self.cartView
     }
 }
 
@@ -79,6 +72,9 @@ private extension CartViewController {
 
         self.navigationItem.rightBarButtonItem = self.sortButton
         self.navigationItem.backButtonTitle = ""
+
+        self.tableViewHelper.delegate = self
+        self.cartView.tableViewHelper = self.tableViewHelper
     }
 
     func bind() {
@@ -123,9 +119,6 @@ private extension CartViewController {
     }
 
     func configureView() {
-        self.tableViewHelper.delegate = self
-
-        self.cartView.tableViewHelper = self.tableViewHelper
         self.cartView.backgroundColor = .appWhite
 
         self.cartView.onTapPurchaseButton = { [weak self] _ in

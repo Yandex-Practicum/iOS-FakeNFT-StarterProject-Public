@@ -1,13 +1,23 @@
-//
-//  CartTableViewCell.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 31.07.2023.
-//
-
 import UIKit
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
+    private enum Constants {
+        static let nftImageViewCornerRadius: CGFloat = 12
+        static let nftImageViewEdgeInset: CGFloat = 16
+
+        static let titleLabelTopInset: CGFloat = 8
+        static let titleLabelSideInset: CGFloat = 16
+
+        static let starsViewTopInset: CGFloat = 4
+        static let starsViewWidth: CGFloat = 68
+
+        static let priceTitleLabelTopInset: CGFloat = 13
+        static let priceLabelTopInset: CGFloat = 2
+
+        static var boldFont: UIFont { .getFont(style: .bold, size: 17) }
+        static var regularFont: UIFont { .getFont(style: .regular, size: 13) }
+    }
+
     var nft: NFTCartCellViewModel? {
         didSet {
             guard let nft = self.nft else { return }
@@ -22,7 +32,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .appLightGray
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.nftImageViewCornerRadius
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -31,7 +41,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .getFont(style: .bold, size: 17)
+        label.font = Constants.boldFont
         return label
     }()
 
@@ -41,14 +51,14 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "CART_CELL_PRICE_TITLE_LABEL".localized
-        label.font = .getFont(style: .regular, size: 13)
+        label.font = Constants.regularFont
         return label
     }()
 
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .getFont(style: .bold, size: 17)
+        label.font = Constants.boldFont
         return label
     }()
 
@@ -95,22 +105,30 @@ private extension CartTableViewCell {
 
     func addConstraints() {
         NSLayoutConstraint.activate([
-            self.nftImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            self.nftImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            self.nftImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
+            self.nftImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor,
+                                                   constant: Constants.nftImageViewEdgeInset),
+            self.nftImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+                                                       constant: Constants.nftImageViewEdgeInset),
+            self.nftImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor,
+                                                      constant: -Constants.nftImageViewEdgeInset),
             self.nftImageView.widthAnchor.constraint(equalTo: self.nftImageView.heightAnchor),
 
-            self.titleLabel.topAnchor.constraint(equalTo: self.nftImageView.topAnchor, constant: 8),
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.nftImageView.trailingAnchor, constant: 16),
+            self.titleLabel.topAnchor.constraint(equalTo: self.nftImageView.topAnchor,
+                                                 constant: Constants.titleLabelTopInset),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.nftImageView.trailingAnchor,
+                                                     constant: Constants.titleLabelSideInset),
 
-            self.starsView.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 4),
+            self.starsView.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,
+                                                constant: Constants.starsViewTopInset),
             self.starsView.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
-            self.starsView.widthAnchor.constraint(equalToConstant: 68),
+            self.starsView.widthAnchor.constraint(equalToConstant: Constants.starsViewWidth),
 
-            self.priceTitleLabel.topAnchor.constraint(equalTo: self.starsView.bottomAnchor, constant: 13),
+            self.priceTitleLabel.topAnchor.constraint(equalTo: self.starsView.bottomAnchor,
+                                                      constant: Constants.priceTitleLabelTopInset),
             self.priceTitleLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor),
 
-            self.priceLabel.topAnchor.constraint(equalTo: self.priceTitleLabel.bottomAnchor, constant: 2),
+            self.priceLabel.topAnchor.constraint(equalTo: self.priceTitleLabel.bottomAnchor,
+                                                 constant: Constants.priceLabelTopInset),
             self.priceLabel.leadingAnchor.constraint(equalTo: self.titleLabel.leadingAnchor)
         ])
     }
