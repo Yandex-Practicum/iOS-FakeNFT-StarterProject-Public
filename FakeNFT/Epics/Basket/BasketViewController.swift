@@ -3,6 +3,8 @@ import ProgressHUD
 
 final class BasketViewController: UIViewController {
     
+    private let basketService = BasketService.shared
+
     private lazy var sortButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(named: "sort")!, target: self, action: #selector(didTapSortButton))
         return button
@@ -21,27 +23,27 @@ final class BasketViewController: UIViewController {
         return tableView
     }()
     
-    var nftsMocked: [NFTModel] = [NFTModel(id: "123",
-                                           createdAt: "123",
-                                           name: "Spring",
-                                           images: ["test"],
-                                           rating: 1,
-                                           description: "test",
-                                           price: 1.78,
-                                           author: "test"),
-                                  NFTModel(id: "123",
-                                           createdAt: "123",
-                                           name: "Greena",
-                                           images: ["test"],
-                                           rating: 3,
-                                           description: "test",
-                                           price: 3.91,
-                                           author: "test")]
-    
+    var nftsMocked: [NFTModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        nftsMocked = [NFTModel(id: "123",
+                               createdAt: "123",
+                               name: "Spring",
+                               images: ["test"],
+                               rating: 1,
+                               description: "test",
+                               price: 1.78,
+                               author: "test"),
+                      NFTModel(id: "123",
+                               createdAt: "123",
+                               name: "Tess",
+                               images: ["test"],
+                               rating: 3,
+                               description: "test",
+                               price: 2.01,
+                               author: "test")]
+//        basketService.basket = nftsMocked
         setupView()
     }
     
@@ -64,14 +66,12 @@ final class BasketViewController: UIViewController {
 
 private extension BasketViewController {
     
-    //    func setupNavBar() {
-    //        navigationController?.navigationBar.tintColor = .black
-    //        navigationItem.rightBarButtonItem = sortButton
-    //    }
-    
     func setupView() {
         view.backgroundColor = .white
         sortButton.tintColor = .ypBlackUniversal
+        
+        sumView.changeText(totalAmount: nftsMocked.count,
+                           totalPrice: nftsMocked.reduce(0.0) { $0 + $1.price })
 
         sumView.delegate = self
         
@@ -82,7 +82,6 @@ private extension BasketViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
-        //        setupNavBar()
         setupConstraints()
     }
     
@@ -138,6 +137,10 @@ extension BasketViewController: RemoveNFTViewControllerDelegate {
     }
     
     func didTapConfirmButton(_ model: NFTModel) {
+        basketService.removeNFTFromBasket(model)
+        nftsMocked = basketService.basket 
+        self.nftsTableView.reloadData()
+        dismiss(animated: true)
     }
 }
 

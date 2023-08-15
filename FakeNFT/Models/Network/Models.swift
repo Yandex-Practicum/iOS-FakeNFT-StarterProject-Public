@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct NFTModel: Codable {
+struct NFTModel: Codable, Equatable {
     let id: String
     let createdAt: String
     let name: String
@@ -21,11 +21,4 @@ struct NFTModel: Codable {
 struct OrderModel: Codable {
     let id: String
     let nfts: [String]
-}
-
-struct CurrencyModel: Codable {
-    let id: String
-    let title: String
-    let name: String
-    let image: String
 }

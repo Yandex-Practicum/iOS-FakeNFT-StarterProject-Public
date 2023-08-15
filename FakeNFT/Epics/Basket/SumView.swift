@@ -30,19 +30,19 @@ final class SumView: UIView {
         let label = UILabel()
         label.font = .caption1
         label.textColor = .ypBlackUniversal
-        label.text = "3 NFT"
         return label
     }()
     
-    private let priceLabel: UILabel = {
+    lazy private var priceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .ypGreenUniversal
-        label.text = "5,34 ETH"
         return label
     }()
     
     weak var delegate: SumViewDelegate?
+    var totalAmount: Int = 0
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +57,15 @@ final class SumView: UIView {
     private func didTapPayButton() {
         delegate?.didTapPayButton()
     }
+}
+
+extension SumView {
+    
+    func changeText(totalAmount: Int, totalPrice: Double) {
+        countLabel.text = "\(totalAmount) NFT"
+        priceLabel.text = "\(totalPrice) ETH"
+    }
+    
 }
 
 private extension SumView {
@@ -88,4 +97,5 @@ private extension SumView {
             button.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
 }

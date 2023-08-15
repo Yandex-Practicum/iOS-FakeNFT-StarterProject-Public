@@ -42,21 +42,24 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
         cellSpacing: 8
     )
     
-    private let currencies: [CurrencyModel] = [CurrencyModel(id: "123",
-                                                             title: "123",
-                                                             name: "123",
-                                                             image: "test"),
-                                               CurrencyModel(id: "345",
-                                                             title: "345",
-                                                             name: "345",
-                                                             image: "test"),
-                                               CurrencyModel(id: "678",
-                                                             title: "678",
-                                                             name: "678",
-                                                             image: "test")]
+    private var currencies: [CurrencyModel] = []
+    private let currenciesService = CurrenciesService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currenciesService.load() { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let currencies):
+                self.currencies = currencies
+                DispatchQueue.main.async {
+                    self.currenciesCollection.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
         setupView()
     }
     
@@ -85,8 +88,9 @@ private extension CheckoutViewController {
     func setupView() {
         view.backgroundColor = .ypWhiteUniversal
 
-        [payView, currenciesCollection]
-            .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [payView,
+         currenciesCollection
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         view.addSubview(payView)
         view.addSubview(currenciesCollection)
@@ -120,7 +124,7 @@ private extension CheckoutViewController {
 extension CheckoutViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        currencies.count
+        return currencies.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
