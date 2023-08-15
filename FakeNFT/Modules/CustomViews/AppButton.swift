@@ -1,13 +1,22 @@
-//
-//  AppButton.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 01.08.2023.
-//
-
 import UIKit
 
 final class AppButton: UIButton {
+    enum ButtonType {
+        case filled
+        case bordered
+        case nftCartRemove
+        case nftCartCancel
+    }
+
+    private enum Constants {
+        static let cornerRadius: CGFloat = 16
+        static let borderWidth: CGFloat = 1
+
+        static var filledTypeFont: UIFont { UIFont.getFont(style: .bold, size: 17) }
+        static var borderedTypeFont: UIFont { UIFont.getFont(style: .regular, size: 15) }
+        static var nftCartTypeFont: UIFont { UIFont.getFont(style: .regular, size: 17) }
+    }
+
     private let type: ButtonType
     private let title: String
 
@@ -86,27 +95,5 @@ private extension AppButton {
         default:
             return .appWhite
         }
-    }
-}
-
-// MARK: - Constants
-private extension AppButton {
-    enum Constants {
-        static let cornerRadius: CGFloat = 16
-        static let borderWidth: CGFloat = 1
-
-        static var filledTypeFont: UIFont { UIFont.getFont(style: .bold, size: 17) }
-        static var borderedTypeFont: UIFont { UIFont.getFont(style: .regular, size: 15) }
-        static var nftCartTypeFont: UIFont { UIFont.getFont(style: .regular, size: 17) }
-    }
-}
-
-// MARK: - Enums
-extension AppButton {
-    enum ButtonType {
-        case filled
-        case bordered
-        case nftCartRemove
-        case nftCartCancel
     }
 }

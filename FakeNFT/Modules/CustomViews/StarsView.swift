@@ -1,13 +1,19 @@
-//
-//  StarsView.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 01.08.2023.
-//
-
 import UIKit
 
 final class StarsView: UIView {
+    enum Rating: Int {
+        case zero = 0
+        case one
+        case two
+        case three
+        case four
+        case five
+    }
+
+    private enum Constants {
+        static let stackViewSpacing: CGFloat = 2
+    }
+
     var rating: Rating = .zero {
         didSet {
             self.setRating(self.rating)
@@ -81,23 +87,5 @@ private extension StarsView {
             let star = self.stars[index]
             star.tintColor = .yellowUniversal
         }
-    }
-}
-
-private extension StarsView {
-    enum Constants {
-        static let stackViewSpacing: CGFloat = 2
-    }
-}
-
-// MARK: - Enums
-extension StarsView {
-    enum Rating: Int {
-        case zero = 0
-        case one
-        case two
-        case three
-        case four
-        case five
     }
 }

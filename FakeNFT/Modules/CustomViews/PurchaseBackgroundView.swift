@@ -1,13 +1,10 @@
-//
-//  PurchaseBackgroundView.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 01.08.2023.
-//
-
 import UIKit
 
 final class PurchaseBackgroundView: UIView {
+    private enum Constants {
+        static let cornerRadius: CGFloat = 12
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -25,12 +22,5 @@ private extension PurchaseBackgroundView {
         self.layer.masksToBounds = true
         self.layer.cornerRadius = Constants.cornerRadius
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
-}
-
-// MARK: - Constants
-private extension PurchaseBackgroundView {
-    enum Constants {
-        static let cornerRadius: CGFloat = 12
     }
 }

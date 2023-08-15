@@ -1,10 +1,3 @@
-//
-//  ProgressHUDWrapper.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 03.08.2023.
-//
-
 import UIKit
 import ProgressHUD
 
