@@ -130,9 +130,9 @@ tabBar.basket = "Корзина";
 "profile.photo.okButton" = "Ок";
 "profile.photo.applyButton" = "Применить";
 "profile.photo.cancelButton" = "Отмена";
-// Текст лэйбла ячейки NFT Цена
+// Лэйблы ячейки мой NFT
 "nft.price" = "Цена";
-
+"nft.by" = "от";
 
 
 

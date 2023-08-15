@@ -8,6 +8,8 @@ protocol MyNFTsPresenterProtocol: AnyObject {
 protocol MyNFTsViewDelegate: AnyObject {
     var view: MyNFTsViewControllerProtocol? { get set }
     func viewDidLoad()
+    func getMyNFTsCounter() -> Int
+    func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
 }
 
 final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
@@ -21,7 +23,7 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     private var myNFTsResponces: [NFTResponseModel] = []
     private var nftAuthorsResponces: [AuthorResponseModel] = []
-    private var presentationModels: [MyNFCPresentationModel] = []
+    private var presentationModels: [MyNFTPresentationModel] = []
     
     
     // MARK: - Life cycle
@@ -40,7 +42,15 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     }
     
     
-    // MARK: - Public Methods
+    func getMyNFTsCounter() -> Int {
+        myNFTsResponces.count
+    }
+    
+    
+    func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel {
+        presentationModels[indexPath.row]
+    }
+    // MARK: - Private Methods
     private func addNFT(responce: NFTResponseModel) {
         myNFTsResponces.append(responce)
     }
@@ -49,7 +59,6 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         nftAuthorsResponces.append(responce)
     }
     
-    // MARK: - Private Methods
     private func getNFTResponceModels(for nfts: [String]) {
         guard let networkClient = networkClient else {
             print("networkClient is nil")
@@ -94,7 +103,7 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         
         for author in nftAuthors {
             dispatchGroup.enter()
-            networkClient.getAuthorOfNFC(by: author) {[weak self] result in
+            networkClient.getAuthorOfNFC(by: author){ [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let result):
@@ -125,7 +134,7 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
             else {
                 return
             }
-            let nftPresentationModel = MyNFCPresentationModel(
+            let nftPresentationModel = MyNFTPresentationModel(
                 nftName: responce.name,
                 authorName: authorName,
                 image: image,
@@ -134,7 +143,9 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
             )
             presentationModels.append(nftPresentationModel)
         }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.view?.updateTable()
             UIBlockingProgressHUD.dismiss()
         }
     }

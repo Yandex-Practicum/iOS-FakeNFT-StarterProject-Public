@@ -2,6 +2,7 @@ import UIKit
 
 protocol MyNFTsViewControllerProtocol {
     var presenter: MyNFTsViewDelegate? { get set }
+    func updateTable()
 }
 
 final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtocol {
@@ -10,11 +11,28 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     // MARK: - Private properties
     private let tableView = UITableView()
     
+    private let mockCells = [
+        MyNFTPresentationModel(
+            nftName: "test",
+            authorName: "Some guy",
+            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Yellow/Pumpkin/1.png",
+            price: 23,
+            rating: "3"
+        ),
+        MyNFTPresentationModel(
+            nftName: "Asdfghj",
+            authorName: "Some guy2",
+            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Yellow/Pumpkin/1.png",
+            price: 3,
+            rating: "3"
+        )
+    ]
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        presenter?.viewDidLoad()
+//        presenter?.viewDidLoad()
         configureNavigationController()
         addingUIElements()
         layoutConfigure()
@@ -31,7 +49,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -76,6 +94,9 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         tableView.isScrollEnabled = true
     }
     
+    func updateTable() {
+        tableView.reloadData()
+    }
     
     // MARK: - Actions
     @objc private func backButtonTapped() {
@@ -89,10 +110,19 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
 
 extension MyNFTsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+//        guard let presenter = presenter else { return 0 }
+//        return presenter.getMyNFTsCounter()
+        mockCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let presenter = presenter else { return UITableViewCell() }
+        let cell: MyNFTCell = tableView.dequeueReusableCell()
+//        let model = presenter.getModelFor(indexPath: indexPath)
+        let model = mockCells[indexPath.row]
+        cell.configure(with: model)
+        return cell
     }
+    
+    
 }

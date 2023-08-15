@@ -130,9 +130,9 @@ tabBar.basket = "Basket";
 "profile.photo.okButton" = "Ok";
 "profile.photo.applyButton" = "Apply";
 "profile.photo.cancelButton" = "Cancel";
-// Cell Label Text NFT Price
+// My NFT cell labels
 "nft.price" = "Price";
-
+"nft.by" = "by";
 
 
 

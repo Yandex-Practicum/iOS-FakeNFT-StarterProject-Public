@@ -1,6 +1,6 @@
 import Foundation
 
-struct MyNFCPresentationModel {
+struct MyNFTPresentationModel {
     let nftName: String
     let authorName: String
     let image: String
