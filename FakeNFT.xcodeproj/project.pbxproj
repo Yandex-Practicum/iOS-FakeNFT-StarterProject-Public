@@ -23,6 +23,9 @@
 		3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */; };
+		8B65AD0A2A8D6F79003D201C /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD092A8D6F79003D201C /* AlertPresenter.swift */; };
+		8B65AD0D2A8D6FB8003D201C /* AlertActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */; };
+		8B65AD0F2A8D6FDA003D201C /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */; };
 		8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF732A8CE51F007A077C /* LikeService.swift */; };
 		8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF762A8CE605007A077C /* ProfileModel.swift */; };
 		8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF782A8CE664007A077C /* ProfileRequest.swift */; };
@@ -76,6 +79,9 @@
 		3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsReusingUtils.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		8B65AD092A8D6F79003D201C /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionModel.swift; sourceTree = "<group>"; };
+		8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
 		8B96BF732A8CE51F007A077C /* LikeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeService.swift; sourceTree = "<group>"; };
 		8B96BF762A8CE605007A077C /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		8B96BF782A8CE664007A077C /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8B65AD0B2A8D6FA3003D201C /* AlertPresenter */,
 				8B96BF752A8CE5EC007A077C /* LikeService */,
 				8BC9B61F2A8B716C00870C53 /* BasketService */,
 				8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */,
@@ -204,6 +211,16 @@
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
 			);
 			path = NetworkClient;
+			sourceTree = "<group>";
+		};
+		8B65AD0B2A8D6FA3003D201C /* AlertPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */,
+				8B65AD092A8D6F79003D201C /* AlertPresenter.swift */,
+				8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */,
+			);
+			path = AlertPresenter;
 			sourceTree = "<group>";
 		};
 		8B96BF752A8CE5EC007A077C /* LikeService */ = {
@@ -459,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B65AD0D2A8D6FB8003D201C /* AlertActionModel.swift in Sources */,
 				8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */,
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
 				8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */,
@@ -474,11 +492,13 @@
 				8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */,
 				8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				8B65AD0A2A8D6F79003D201C /* AlertPresenter.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */,
 				8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
+				8B65AD0F2A8D6FDA003D201C /* AlertPresenterProtocol.swift in Sources */,
 				8B96BF7D2A8CE774007A077C /* ProfileNetworkService.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
