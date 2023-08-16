@@ -1,13 +1,16 @@
-//
-//  CartView.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 04.08.2023.
-//
-
 import UIKit
 
 final class CartView: UIView {
+    private enum Constants {
+        static let purchaseButtonInsets = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 16)
+
+        static let purchaseBackgroundViewHeight: CGFloat = 76
+
+        static let labelsLeadingInset: CGFloat = 16
+        static let nftCountLabelTopInset: CGFloat = 16
+        static let finalCostLabelTopInset: CGFloat = 2
+    }
+
     var onTapPurchaseButton: ActionCallback<Void>?
     var onRefreshTable: ActionCallback<Void>?
 
@@ -50,7 +53,6 @@ final class CartView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .greenUniversal
         label.font = .getFont(style: .bold, size: 17)
-        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
@@ -64,6 +66,18 @@ final class CartView: UIView {
         let view = CartPlaceholderView()
         view.isHidden = true
         return view
+    }()
+
+    private lazy var finalCostLabelWidthConstraint: NSLayoutConstraint = {
+        return NSLayoutConstraint(
+            item: self.finalCostLabel,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .width,
+            multiplier: 1,
+            constant: 80
+        )
     }()
 
     init() {
@@ -90,6 +104,7 @@ extension CartView {
 
     func setFinalOrderCost(_ cost: String) {
         self.finalCostLabel.text = cost
+        self.finalCostLabelWidthConstraint.constant = self.finalCostLabel.intrinsicContentSize.width
     }
 
     func shouldHidePlaceholder(_ shouldHide: Bool) {
@@ -123,39 +138,50 @@ private extension CartView {
             self.purchaseBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.purchaseBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.purchaseBackgroundView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-            self.purchaseBackgroundView.heightAnchor.constraint(equalToConstant: 76),
+            self.purchaseBackgroundView.heightAnchor.constraint(
+                equalToConstant: Constants.purchaseBackgroundViewHeight
+            ),
 
             self.nftCountLabel.topAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.topAnchor,
-                constant: 16
+                constant: Constants.nftCountLabelTopInset
             ),
             self.nftCountLabel.leadingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.leadingAnchor,
-                constant: 16
+                constant: Constants.labelsLeadingInset
             ),
-            self.nftCountLabel.trailingAnchor.constraint(equalTo: self.purchaseButton.leadingAnchor, constant: -24),
 
-            self.finalCostLabel.topAnchor.constraint(equalTo: self.nftCountLabel.bottomAnchor, constant: 2),
+            self.finalCostLabel.topAnchor.constraint(
+                equalTo: self.nftCountLabel.bottomAnchor,
+                constant: Constants.finalCostLabelTopInset
+            ),
             self.finalCostLabel.leadingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.leadingAnchor,
-                constant: 16
+                constant: Constants.labelsLeadingInset
             ),
-            self.finalCostLabel.trailingAnchor.constraint(equalTo: self.purchaseButton.leadingAnchor, constant: -24),
+            self.finalCostLabelWidthConstraint,
 
-            self.purchaseButton.topAnchor.constraint(equalTo: self.purchaseBackgroundView.topAnchor, constant: 16),
+            self.purchaseButton.topAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.topAnchor,
+                constant: Constants.purchaseButtonInsets.top
+            ),
+            self.purchaseButton.leadingAnchor.constraint(
+                equalTo: self.finalCostLabel.trailingAnchor,
+                constant: Constants.purchaseButtonInsets.left
+            ),
             self.purchaseButton.trailingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.trailingAnchor,
-                constant: -16
+                constant: -Constants.purchaseButtonInsets.right
             ),
             self.purchaseButton.bottomAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.bottomAnchor,
-                constant: -16
+                constant: -Constants.purchaseButtonInsets.bottom
             ),
 
             self.placeholderView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.placeholderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.placeholderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.placeholderView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+            self.placeholderView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 }

@@ -98,34 +98,54 @@ private extension CartRemoveNftViewController {
             self.blurredEffectView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.blurredEffectView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 
-            self.nftImageView.topAnchor.constraint(equalTo: self.view.topAnchor,
-                                                   constant: Constants.nftImageViewTopInset),
-            self.nftImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
-                                                       constant: Constants.nftImageViewSideInset),
-            self.nftImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
-                                                        constant: -Constants.nftImageViewSideInset),
+            self.nftImageView.topAnchor.constraint(
+                equalTo: self.view.topAnchor,
+                constant: Constants.nftImageViewTopInset
+            ),
+            self.nftImageView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.nftImageViewSideInset
+            ),
+            self.nftImageView.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.nftImageViewSideInset
+            ),
             self.nftImageView.heightAnchor.constraint(equalTo: self.nftImageView.widthAnchor),
 
-            self.removeNftLabel.topAnchor.constraint(equalTo: self.nftImageView.bottomAnchor,
-                                                     constant: Constants.removeNftLabelTopInset),
-            self.removeNftLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
-                                                         constant: Constants.removeNftLabelSideInset),
-            self.removeNftLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
-                                                          constant: -Constants.removeNftLabelSideInset),
+            self.removeNftLabel.topAnchor.constraint(
+                equalTo: self.nftImageView.bottomAnchor,
+                constant: Constants.removeNftLabelTopInset
+            ),
+            self.removeNftLabel.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.removeNftLabelSideInset
+            ),
+            self.removeNftLabel.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.removeNftLabelSideInset
+            ),
 
-            self.removeNftButton.topAnchor.constraint(equalTo: self.removeNftLabel.bottomAnchor,
-                                                      constant: Constants.buttonsTopInset),
-            self.removeNftButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,
-                                                          constant: Constants.buttonsSideInset),
-            self.removeNftButton.trailingAnchor.constraint(equalTo: self.cancelButton.leadingAnchor,
-                                                           constant: -Constants.buttonsSpacing),
+            self.removeNftButton.topAnchor.constraint(
+                equalTo: self.removeNftLabel.bottomAnchor,
+                constant: Constants.buttonsTopInset
+            ),
+            self.removeNftButton.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.buttonsSideInset
+            ),
+            self.removeNftButton.trailingAnchor.constraint(
+                equalTo: self.cancelButton.leadingAnchor,
+                constant: -Constants.buttonsSpacing
+            ),
             self.removeNftButton.widthAnchor.constraint(equalTo: self.cancelButton.widthAnchor),
             self.removeNftButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight),
 
             self.cancelButton.topAnchor.constraint(equalTo: self.removeNftButton.topAnchor),
-            self.cancelButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
-                                                        constant: -Constants.buttonsSideInset),
-            self.cancelButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight)
+            self.cancelButton.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.buttonsSideInset
+            ),
+            self.cancelButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight),
         ])
     }
 }
