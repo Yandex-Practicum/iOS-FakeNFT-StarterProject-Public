@@ -7,7 +7,7 @@
 
 import UIKit.UIImage
 
-struct CurrencyCellViewModel {
+struct CurrencyCellViewModel: Equatable {
     let id: String
     let title: String
     let name: String

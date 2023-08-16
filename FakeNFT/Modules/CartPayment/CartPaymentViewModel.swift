@@ -1,10 +1,3 @@
-//
-//  CartPaymentViewModel.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 06.08.2023.
-//
-
 import Foundation
 
 protocol CartPaymentViewModelProtocol {
@@ -12,41 +5,32 @@ protocol CartPaymentViewModelProtocol {
     var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
     var isPurchaseSuccessful: Box<CartPaymentViewModel.PurchaseState> { get }
     var error: Box<Error?> { get }
+    var selectedCurrencyId: Box<String?> { get }
 
     func fetchCurrencies()
-    func purсhase(currencyId: String)
+    func purсhase()
 }
 
 final class CartPaymentViewModel {
-    enum ViewState {
-        case loading
-        case loaded(CurrenciesViewModel?)
-        case empty
-    }
-
     enum PurchaseState {
         case success
         case failure
         case didNotHappen
     }
 
-    private(set) var currencies = Box<CurrenciesViewModel>([])
-    private(set) var cartPaymentViewState = Box<ViewState>(.loading)
-    private(set) var isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
-    private(set) var error = Box<Error?>(nil)
+    let currencies = Box<CurrenciesViewModel>([])
+    let cartPaymentViewState = Box<ViewState>(.loading)
+    let isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
+    let error = Box<Error?>(nil)
+    let selectedCurrencyId = Box<String?>(nil)
 
     private let orderId: String
 
-    private lazy var successFetchCompletion: LoadingCompletionBlock<ViewState> = { [weak self] (viewState: ViewState) in
-        guard let self = self else { return }
-
-        switch viewState {
-        case .loaded(let currencies):
-            guard let currencies = currencies else { return }
+    private lazy var successFetchCompletion: LoadingCompletionBlock<ViewState> = { [weak self] viewState in
+        if case .loaded(let currencies) = viewState {
+            guard let self = self, let currencies = currencies else { return }
             self.cartPaymentViewState.value = viewState
             self.currencies.value = currencies
-        default:
-            break
         }
     }
 
@@ -57,8 +41,9 @@ final class CartPaymentViewModel {
     }
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
-        self?.error.value = error
-        self?.cartPaymentViewState.value = .empty
+        guard let self = self else { return }
+        self.error.value = error
+        self.cartPaymentViewState.value = .empty
     }
 
     private let cartPaymentInteractor: CartPaymentViewInteractorProtocol
@@ -72,10 +57,7 @@ final class CartPaymentViewModel {
 // MARK: - CartPaymentViewModelProtocol
 extension CartPaymentViewModel: CartPaymentViewModelProtocol {
     func fetchCurrencies() {
-        switch self.cartPaymentViewState.value {
-        case .loading:
-            break
-        default:
+        if self.cartPaymentViewState.value != .loading {
             self.cartPaymentViewState.value = .loading
         }
 
@@ -85,11 +67,12 @@ extension CartPaymentViewModel: CartPaymentViewModelProtocol {
         )
     }
 
-    func purсhase(currencyId: String) {
+    func purсhase() {
+        guard let selectedCurrencyId = self.selectedCurrencyId.value else { return }
         self.cartPaymentViewState.value = .loading
         self.cartPaymentInteractor.purchase(
             orderId: self.orderId,
-            currencyId: currencyId,
+            currencyId: selectedCurrencyId,
             onSuccess: self.purchaseCompletion,
             onFailure: self.failureCompletion
         )

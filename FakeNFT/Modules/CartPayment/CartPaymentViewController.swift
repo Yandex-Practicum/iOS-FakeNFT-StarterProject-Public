@@ -1,13 +1,12 @@
-//
-//  CartPaymentViewController.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 06.08.2023.
-//
-
 import UIKit
 
 final class CartPaymentViewController: UIViewController {
+    private enum Constants {
+        static let purchaseBackgroundViewHeight: CGFloat = 186
+        static let userAgreementTextViewInsets = UIEdgeInsets(top: 12, left: 16, bottom: 126, right: 16)
+        static let purchaseButtonInsets = UIEdgeInsets(top: 16, left: 16, bottom: 50, right: 16)
+    }
+
     private lazy var currenciesCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,8 +48,6 @@ final class CartPaymentViewController: UIViewController {
         return refreshControl
     }()
 
-    private var selectedCurrencyId: String?
-
     private var collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
     private let viewModel: CartPaymentViewModelProtocol
     private let router: CartPaymentRouterProtocol
@@ -85,7 +82,7 @@ extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
     }
 
     func didSelectCurrency(with id: String) {
-        self.selectedCurrencyId = id
+        self.viewModel.selectedCurrencyId.value = id
     }
 }
 
@@ -104,6 +101,7 @@ extension CartPaymentViewController: UITextViewDelegate {
 private extension CartPaymentViewController {
     func configure() {
         self.view.backgroundColor = .appWhite
+
         self.addSubviews()
         self.addConstraints()
         self.bind()
@@ -131,34 +129,43 @@ private extension CartPaymentViewController {
             self.purchaseBackgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.purchaseBackgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.purchaseBackgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.purchaseBackgroundView.heightAnchor.constraint(equalToConstant: 186),
+            self.purchaseBackgroundView.heightAnchor.constraint(
+                equalToConstant: Constants.purchaseBackgroundViewHeight
+            ),
 
             self.userAgreementTextView.topAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.topAnchor,
-                constant: 12
+                constant: Constants.userAgreementTextViewInsets.top
             ),
             self.userAgreementTextView.leadingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.leadingAnchor,
-                constant: 16
+                constant: Constants.userAgreementTextViewInsets.left
             ),
             self.userAgreementTextView.trailingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.trailingAnchor,
-                constant: -16
+                constant: -Constants.userAgreementTextViewInsets.right
             ),
-            self.purchaseButton.topAnchor.constraint(equalTo: self.userAgreementTextView.bottomAnchor, constant: 16),
+            self.userAgreementTextView.bottomAnchor.constraint(
+                equalTo: self.purchaseBackgroundView.bottomAnchor,
+                constant: -Constants.userAgreementTextViewInsets.bottom
+            ),
+
+            self.purchaseButton.topAnchor.constraint(
+                equalTo: self.userAgreementTextView.bottomAnchor,
+                constant: Constants.purchaseButtonInsets.top
+            ),
             self.purchaseButton.leadingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.leadingAnchor,
-                constant: 16
+                constant: Constants.purchaseButtonInsets.left
             ),
             self.purchaseButton.trailingAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.trailingAnchor,
-                constant: -16
+                constant: -Constants.purchaseButtonInsets.right
             ),
             self.purchaseButton.bottomAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.bottomAnchor,
-                constant: -50
+                constant: -Constants.purchaseButtonInsets.bottom
             ),
-            self.purchaseButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 
@@ -207,8 +214,7 @@ private extension CartPaymentViewController {
 private extension CartPaymentViewController {
     @objc
     func didTapPurchaseButton() {
-        guard let selectedCurrencyId = self.selectedCurrencyId else { return }
-        self.viewModel.purсhase(currencyId: selectedCurrencyId)
+        self.viewModel.purсhase()
     }
 
     @objc
