@@ -38,7 +38,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     
     private func configureSortButton() {
         sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
-        
+        sortButton.addTarget(self, action: #selector(sortButtonTap), for: .touchUpInside)
         sortButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sortButton)
         NSLayoutConstraint.activate([
@@ -47,6 +47,10 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             sortButton.heightAnchor.constraint(equalToConstant: 42),
             sortButton.widthAnchor.constraint(equalToConstant: 42)
         ])
+    }
+    
+    @objc private func sortButtonTap() {
+        
     }
     
     private func configureCatalogTable() {
