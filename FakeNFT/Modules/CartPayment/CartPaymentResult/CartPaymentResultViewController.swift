@@ -1,16 +1,17 @@
-//
-//  CartPaymentResultViewController.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 07.08.2023.
-//
-
 import UIKit
 
 final class CartPaymentResultViewController: UIViewController {
     enum ResultType {
         case success
         case failure
+    }
+
+    private enum Constants {
+        static let resultImageViewInsets = UIEdgeInsets(top: 152, left: 48, bottom: 304, right: 48)
+        static let resultLabelInsets = UIEdgeInsets(top: 20, left: 36, bottom: 0, right: 36)
+
+        static let resultButtonInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
+        static let resultButtonHeight: CGFloat = 60
     }
 
     var onResultButtonAction: ActionCallback<Void>?
@@ -79,25 +80,49 @@ private extension CartPaymentResultViewController {
 
     func addConstraints() {
         NSLayoutConstraint.activate([
-            self.resultImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 152),
-            self.resultImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 48),
-            self.resultImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -48),
+            self.resultImageView.topAnchor.constraint(
+                equalTo: self.view.safeAreaLayoutGuide.topAnchor,
+                constant: Constants.resultImageViewInsets.top
+            ),
+            self.resultImageView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.resultImageViewInsets.left
+            ),
+            self.resultImageView.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.resultImageViewInsets.right
+            ),
             self.resultImageView.bottomAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -304
+                constant: -Constants.resultImageViewInsets.bottom
             ),
 
-            self.resultLabel.topAnchor.constraint(equalTo: self.resultImageView.bottomAnchor, constant: 20),
-            self.resultLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 36),
-            self.resultLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -36),
+            self.resultLabel.topAnchor.constraint(
+                equalTo: self.resultImageView.bottomAnchor,
+                constant: Constants.resultLabelInsets.top
+            ),
+            self.resultLabel.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.resultLabelInsets.left
+            ),
+            self.resultLabel.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.resultLabelInsets.right
+            ),
 
-            self.resultButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.resultButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.resultButton.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: Constants.resultButtonInsets.left
+            ),
+            self.resultButton.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -Constants.resultButtonInsets.right
+            ),
             self.resultButton.bottomAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -16
+                constant: -Constants.resultButtonInsets.bottom
             ),
-            self.resultButton.heightAnchor.constraint(equalToConstant: 60)
+            self.resultButton.heightAnchor.constraint(equalToConstant: Constants.resultButtonHeight)
         ])
     }
 }
