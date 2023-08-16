@@ -5,12 +5,15 @@
 //  Created by Богдан Полыгалов on 04.08.2023.
 //
 
-// TODO: Добавить функционал лайков и корзины + при создании учитывать состояние и ставить правильные картинки
+// TODO: Добавить функционал лайков + при создании учитывать состояние и ставить правильные картинки
+// TODO: Cделать презентер
 
 import UIKit
 import Kingfisher
 
 final class CollectionScreenCollectionCell: UICollectionViewCell, ReuseIdentifying {
+    var nft: NftModel? //в презентер
+    
     private let emptyBasketImage: UIImage? = {
         return UIImage.addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
     }()
@@ -96,23 +99,34 @@ final class CollectionScreenCollectionCell: UICollectionViewCell, ReuseIdentifyi
     }
     
     private func addToBasket() {
+        setNotEmptyBasketImage()
+        BasketService.shared.addNFTToBasket(nft!) //в презентер
+    }
+    
+    private func removeFromBasket() {
+        basketButton.setImage(emptyBasketImage, for: .normal)
+        BasketService.shared.removeNFTFromBasket(nft!) //в презентер
+    }
+    
+    func setNotEmptyBasketImage() {
         let basketImage = notEmptyBasketImage
         basketButton.setImage(basketImage, for: .normal)
     }
     
-    private func removeFromBasket() {
-        let basketImage = emptyBasketImage
-        basketButton.setImage(basketImage, for: .normal)
-    }
-    
     private func setLike() {
-        let likeImage = UIImage.liked
-        likeButton.setImage(likeImage, for: .normal)
+        setButtonLikeImage(image: .liked)
+        guard let nft = nft else { return }
+        LikeService.shared.setLike(nftId: nft.id) //в презентер
     }
     
     private func setUnlike() {
-        let likeImage = UIImage.unliked
-        likeButton.setImage(likeImage, for: .normal)
+        setButtonLikeImage(image: .unliked)
+        guard let nft = nft else { return }
+        LikeService.shared.removeLike(nftId: nft.id) //в презентер
+    }
+    
+    func setButtonLikeImage(image: UIImage?) {
+        likeButton.setImage(image, for: .normal)
     }
     
     func setRating(rate: Int) {

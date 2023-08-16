@@ -44,6 +44,13 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     func configureCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: CollectionScreenCollectionCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let nft = nfts[indexPath.row]
+        cell.nft = nft
+        if BasketService.shared.basket.contains(where: {$0.id == nft.id}) {
+            cell.setNotEmptyBasketImage()
+        }
+        if LikeService.shared.likes.contains(nft.id) {
+            cell.setButtonLikeImage(image: .liked)
+        }
         cell.setNftImage(link: nft.images.first ?? "")
         cell.setRating(rate: nft.rating)
         cell.setNameLabel(name: nft.name)
