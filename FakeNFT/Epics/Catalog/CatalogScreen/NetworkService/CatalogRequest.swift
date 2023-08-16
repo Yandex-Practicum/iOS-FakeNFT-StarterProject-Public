@@ -10,7 +10,7 @@ import Foundation
 final class CatalogRequest: NetworkRequest {
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        var urlComponents = URLComponents(string: "https://\(CatalogConstants.host.rawValue)/api/v1/collections")
+        var urlComponents = URLComponents(string: "https://\(Constants.host.rawValue)/api/v1/collections")
         urlComponents?.queryItems = [
             URLQueryItem(name: "page", value: nextPage),
             URLQueryItem(name: "limit", value: "10")

@@ -10,7 +10,7 @@ import Foundation
 final class NftRequest: NetworkRequest {
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        URL(string: "https://\(CatalogConstants.host.rawValue)/api/v1/nft?author=\(id)")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/nft?author=\(id)")
     }
     private var id: String
     

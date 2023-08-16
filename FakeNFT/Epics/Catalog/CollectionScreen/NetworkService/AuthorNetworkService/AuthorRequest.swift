@@ -10,7 +10,7 @@ import Foundation
 final class AuthorRequest: NetworkRequest {
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        URL(string: "https://\(CatalogConstants.host.rawValue)/api/v1/users/\(id)")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/users/\(id)")
     }
     private var id: String
     
