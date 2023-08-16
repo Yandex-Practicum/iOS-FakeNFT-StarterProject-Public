@@ -8,7 +8,7 @@
 import UIKit.UIImage
 
 struct CurrencyViewModelFactory {
-    static func makeCurrencyViewModel(
+    static func makeCurrencyCellViewModel(
         id: String,
         title: String,
         name: String,

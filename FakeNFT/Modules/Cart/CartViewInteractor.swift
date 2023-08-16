@@ -43,9 +43,9 @@ extension CartViewInteractor: CartViewInteractorProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let order):
-                guard order.nfts.isEmpty == false else {
+                guard !order.nfts.isEmpty else {
                     onSuccess(.empty)
-                    break
+                    return
                 }
                 self.fetchNfts(ids: order.nfts, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):

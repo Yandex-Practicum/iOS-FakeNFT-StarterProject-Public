@@ -18,10 +18,9 @@ protocol CartPaymentViewInteractorProtocol {
 
 final class CartPaymentViewInteractor {
     private var currencies: CurrenciesViewModel = []
-    private var currenciesCapacity = 0
 
-    private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.fetch-currency",
-                                              attributes: .concurrent)
+    private let fetchingQueue = DispatchQueue.global(qos: .userInitiated)
+    private let fetchingGroup = DispatchGroup()
 
     private let currenciesService: CurrenciesServiceProtocol
     private let imageLoadingService: ImageLoadingServiceProtocol
@@ -48,11 +47,10 @@ extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let currenciesResult):
-                guard currenciesResult.isEmpty == false else {
+                guard !currenciesResult.isEmpty else {
                     onSuccess(.empty)
-                    break
+                    return
                 }
-                self.currenciesCapacity = currenciesResult.count
                 self.fetchCurrenciesWithImages(models: currenciesResult, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
                 self.handleError(error: error, onFailure: onFailure)
@@ -84,50 +82,48 @@ private extension CartPaymentViewInteractor {
         onSuccess: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
-        models.forEach { [weak self] currency in
+        let currencyLoadingCompletion = { [weak self] currency in
+            self?.currencies.append(currency)
+            self?.fetchingGroup.leave()
+        }
+
+        models.forEach { [weak self] currencyModel in
+            self?.fetchingGroup.enter()
+
             self?.fetchingQueue.async { [weak self] in
-                guard let self = self else { return }
-                self.prepareCurrencyWithImage(
-                    model: currency,
-                    onSuccess: onSuccess,
-                    onFailure: onFailure
+                self?.prepareCurrencyWithImage(
+                    model: currencyModel,
+                    onFailure: onFailure,
+                    completion: currencyLoadingCompletion
                 )
             }
+        }
+
+        self.fetchingGroup.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            onSuccess(.loaded(self.currencies))
+            self.currencies.removeAll()
         }
     }
 
     func prepareCurrencyWithImage(
         model: Currency,
-        onSuccess: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>,
-        onFailure: @escaping LoadingFailureCompletionBlock
+        onFailure: @escaping LoadingFailureCompletionBlock,
+        completion: @escaping LoadingCompletionBlock<CurrencyCellViewModel>
     ) {
         let imageUrl = URL(string: model.image)
         self.imageLoadingService.fetchImage(url: imageUrl) { [weak self] result in
             switch result {
             case .success(let image):
-                let currency = CurrencyViewModelFactory.makeCurrencyViewModel(
+                let currency = CurrencyViewModelFactory.makeCurrencyCellViewModel(
                     id: model.id,
                     title: model.title,
                     name: model.name,
                     image: image
                 )
-                self?.saveCurrency(currency, completion: onSuccess)
+                completion(currency)
             case .failure(let error):
                 self?.handleError(error: error, onFailure: onFailure)
-            }
-        }
-    }
-
-    func saveCurrency(
-        _ currency: CurrencyCellViewModel,
-        completion: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>
-    ) {
-        self.currencies.append(currency)
-        if self.currencies.count == self.currenciesCapacity {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                completion(.loaded(self.currencies))
-                self.currencies.removeAll()
             }
         }
     }
