@@ -1,10 +1,3 @@
-//
-//  CartViewModel.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 31.07.2023.
-//
-
 import Foundation
 
 protocol CartViewModelProtocol {
@@ -23,7 +16,7 @@ protocol CartViewModelProtocol {
 }
 
 final class CartViewModel {
-    enum ViewState {
+    enum ViewState: Equatable {
         case loading
         case loaded(OrderViewModel, Double)
         case empty
@@ -39,18 +32,14 @@ final class CartViewModel {
 
     private(set) var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
-    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
+    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] viewState in
         guard let self = self else { return }
 
         self.cartViewState.value = viewState
-
-        switch viewState {
-        case .loaded(let order, let cost):
+        if case .loaded(let order, let cost) = viewState {
             self.setOrderAnimated(newOrder: order)
             self.nftCount.value = "\(order.count) NFT"
             self.finalOrderCost.value = "\(cost.nftCurrencyFormatted) ETH"
-        default:
-            break
         }
     }
 
@@ -74,10 +63,7 @@ final class CartViewModel {
 // MARK: - CartViewModelProtocol
 extension CartViewModel: CartViewModelProtocol {
     func fetchOrder() {
-        switch self.cartViewState.value {
-        case .loading:
-            break
-        default:
+        if self.cartViewState.value != .loading {
             self.cartViewState.value = .loading
         }
 
