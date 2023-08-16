@@ -47,7 +47,15 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func updateCatalogData() {
-        catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        let state = UserDefaults.standard.integer(forKey: "catalog.sort")
+        switch state {
+        case 1:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        case 2:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.name < $1.name })
+        default:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        }
     }
     
     func catalogCount() -> Int {
