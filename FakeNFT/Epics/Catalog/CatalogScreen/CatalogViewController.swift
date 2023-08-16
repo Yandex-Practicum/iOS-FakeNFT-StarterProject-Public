@@ -50,26 +50,21 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     @objc private func sortButtonTap() {
-        let Alert = UIAlertController(title: NSLocalizedString("sorting.name", comment: "Заголовок аллерта сортировки"), message: nil, preferredStyle: .actionSheet)
-        
-        let sortByNameAction = UIAlertAction(title: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] _ in
+        let presenter = AlertPresenter(delegate: self)
+        let sortByNameAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] in
             //добавить проверку на текущее состояние и не делать ничего если совпадает
             UserDefaults.standard.set(2, forKey: "catalog.sort")
             self?.presenter?.updateCatalogData()
             self?.updateTableView()
         }
-        let sortByNFTAction = UIAlertAction(title: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] _ in
+        let sortByNFTAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] in
             //добавить проверку на текущее состояние и не делать ничего если совпадает
             UserDefaults.standard.set(1, forKey: "catalog.sort")
             self?.presenter?.updateCatalogData()
             self?.updateTableView()
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("sorting.close", comment: "Закрытие алерта сортировки"), style: .cancel)
         
-        Alert.addAction(sortByNameAction)
-        Alert.addAction(sortByNFTAction)
-        Alert.addAction(cancelAction)
-        present(Alert, animated: true, completion: nil)
+        presenter.show(models: [sortByNameAction, sortByNFTAction])
     }
     
     private func configureCatalogTable() {
