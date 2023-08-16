@@ -19,11 +19,10 @@ protocol CartViewInteractorProtocol {
 
 final class CartViewInteractor {
     private var order: [NFTCartCellViewModel] = []
-    private var orderCapacity = 0
     private var accumulatedCost: Double = 0
 
-    private let fetchingQueue = DispatchQueue(label: "com.practicum.yandex.fetch-nft",
-                                              attributes: .concurrent)
+    private let fetchingQueue = DispatchQueue.global(qos: .userInitiated)
+    private let fetchingGroup = DispatchGroup()
 
     private let nftService: NFTNetworkCartService
     private let orderService: OrderServiceProtocol
@@ -55,7 +54,6 @@ extension CartViewInteractor: CartViewInteractorProtocol {
                     onSuccess(.empty)
                     break
                 }
-                self.orderCapacity = order.nfts.count
                 self.fetchNfts(ids: order.nfts, onSuccess: onSuccess, onFailure: onFailure)
             case .failure(let error):
                 self.handleError(error: error, onFailure: onFailure)
@@ -87,33 +85,48 @@ private extension CartViewInteractor {
         onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
     ) {
-        ids.forEach { [weak self] id in
-            self?.fetchingQueue.async { [weak self] in
+        ids.forEach { [weak self] nftId in
+            guard let self = self else { return }
+
+            self.fetchingGroup.enter()
+            self.fetchNft(with: nftId, onFailure: onFailure) { [weak self] nft in
                 guard let self = self else { return }
-                self.fetchNft(with: id, onSuccess: onSuccess, onFailure: onFailure)
+                self.accumulatedCost += nft.price
+                self.order.append(nft)
+
+                self.fetchingGroup.leave()
             }
+        }
+
+        self.fetchingGroup.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            onSuccess(.loaded(self.order, self.accumulatedCost))
+            self.order.removeAll()
+            self.accumulatedCost = 0
         }
     }
 
     func fetchNft(
         with id: String,
-        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
-        onFailure: @escaping LoadingFailureCompletionBlock
+        onFailure: @escaping LoadingFailureCompletionBlock,
+        completion: @escaping LoadingCompletionBlock<NFTCartCellViewModel>
     ) {
-        self.nftService.getNFTItemBy(id: id) { [weak self] result in
-            switch result {
-            case .success(let model):
-                self?.prepareNftWithImage(model: model, onSuccess: onSuccess, onFailure: onFailure)
-            case .failure(let error):
-                self?.handleError(error: error, onFailure: onFailure)
+        self.fetchingQueue.async { [weak self] in
+            self?.nftService.getNFTItemBy(id: id) { [weak self] result in
+                switch result {
+                case .success(let model):
+                    self?.prepareNftWithImage(model: model, onFailure: onFailure, completion: completion)
+                case .failure(let error):
+                    self?.handleError(error: error, onFailure: onFailure)
+                }
             }
         }
     }
 
     func prepareNftWithImage(
         model: NFTItemModel,
-        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
-        onFailure: @escaping LoadingFailureCompletionBlock
+        onFailure: @escaping LoadingFailureCompletionBlock,
+        completion: @escaping LoadingCompletionBlock<NFTCartCellViewModel>
     ) {
         let imageUrl = URL(string: model.images.first ?? "")
         self.imageLoadingService.fetchImage(url: imageUrl) { [weak self] result in
@@ -126,25 +139,9 @@ private extension CartViewInteractor {
                     rating: model.rating,
                     price: model.price
                 )
-                self?.saveNft(nft, completion: onSuccess)
+                completion(nft)
             case .failure(let error):
                 self?.handleError(error: error, onFailure: onFailure)
-            }
-        }
-    }
-
-    func saveNft(
-        _ nft: NFTCartCellViewModel,
-        completion: @escaping LoadingCompletionBlock<CartViewModel.ViewState>
-    ) {
-        self.order.append(nft)
-        self.accumulatedCost += nft.price
-        if self.order.count == self.orderCapacity {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                completion(.loaded(self.order, self.accumulatedCost))
-                self.order.removeAll()
-                self.accumulatedCost = 0
             }
         }
     }
