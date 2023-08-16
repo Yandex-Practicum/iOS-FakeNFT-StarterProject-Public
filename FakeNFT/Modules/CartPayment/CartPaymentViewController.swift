@@ -81,7 +81,10 @@ extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
         self.viewModel.currencies.value
     }
 
-    func didSelectCurrency(with id: String) {
+    func cartPaymentCollectionViewHelper(
+        _ cartPaymentCollectionViewHelper: CartPaymentCollectionViewHelper,
+        didSelectCurrencyId id: String
+    ) {
         self.viewModel.selectedCurrencyId.value = id
     }
 }

@@ -9,7 +9,10 @@ import UIKit
 
 protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
     var currencies: [CurrencyCellViewModel] { get }
-    func didSelectCurrency(with id: String)
+    func cartPaymentCollectionViewHelper(
+        _ cartPaymentCollectionViewHelper: CartPaymentCollectionViewHelper,
+        didSelectCurrencyId id: String
+    )
 }
 
 protocol CartPaymentCollectionViewHelperProtocol: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -76,7 +79,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         guard let currency = cell.currency else { return }
 
         cell.shouldSelectCell(true)
-        self.delegate?.didSelectCurrency(with: currency.id)
+        self.delegate?.cartPaymentCollectionViewHelper(self, didSelectCurrencyId: currency.id)
     }
 
     func collectionView(
