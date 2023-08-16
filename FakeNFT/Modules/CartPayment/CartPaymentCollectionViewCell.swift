@@ -1,31 +1,32 @@
-//
-//  CartPaymentCollectionViewCell.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 06.08.2023.
-//
-
 import UIKit
 
 final class CartPaymentCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+    private enum Constants {
+        static let cornerRadius: CGFloat = 12
+        static let labelsLineHeight: CGFloat = 18
+
+        static let currencyImageViewInsets = UIEdgeInsets(top: 5, left: 12, bottom: 5, right: 0)
+
+        static let titleLabelTopInset: CGFloat = 4
+        static let labelsSideInset: CGFloat = 4
+    }
+
     var currency: CurrencyCellViewModel? {
         didSet {
             self.currencyImageView.image = self.currency?.image
-
             self.titleLabel.text = self.currency?.title
-            self.titleLabel.lineHeight = 18
             self.shortNameLabel.text = self.currency?.name
-            self.shortNameLabel.lineHeight = 18
+
+            self.titleLabel.lineHeight = Constants.labelsLineHeight
+            self.shortNameLabel.lineHeight = Constants.labelsLineHeight
         }
     }
-
-    private let cornerRadius: CGFloat = 12
 
     private lazy var currencyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = self.cornerRadius / 2
+        imageView.layer.cornerRadius = Constants.cornerRadius / 2
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = .appBlackOnly
         return imageView
@@ -50,7 +51,7 @@ final class CartPaymentCollectionViewCell: UICollectionViewCell, ReuseIdentifyin
     private lazy var selectionView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.layer.cornerRadius = self.cornerRadius
+        view.layer.cornerRadius = Constants.cornerRadius
         view.layer.borderColor = UIColor.appBlack.cgColor
         view.layer.borderWidth = 2
         return view
@@ -80,7 +81,7 @@ extension CartPaymentCollectionViewCell {
 private extension CartPaymentCollectionViewCell {
     func configure() {
         self.contentView.backgroundColor = .appLightGray
-        self.contentView.layer.cornerRadius = self.cornerRadius
+        self.contentView.layer.cornerRadius = Constants.cornerRadius
         self.contentView.layer.borderColor = UIColor.appBlack.cgColor
         self.contentView.layer.borderWidth = 0
 
@@ -96,16 +97,34 @@ private extension CartPaymentCollectionViewCell {
 
     func addConstraints() {
         NSLayoutConstraint.activate([
-            self.currencyImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
-            self.currencyImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 12),
-            self.currencyImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5),
+            self.currencyImageView.topAnchor.constraint(
+                equalTo: self.contentView.topAnchor,
+                constant: Constants.currencyImageViewInsets.top
+            ),
+            self.currencyImageView.leadingAnchor.constraint(
+                equalTo: self.contentView.leadingAnchor,
+                constant: Constants.currencyImageViewInsets.left
+            ),
+            self.currencyImageView.bottomAnchor.constraint(
+                equalTo: self.contentView.bottomAnchor,
+                constant: -Constants.currencyImageViewInsets.bottom
+            ),
             self.currencyImageView.widthAnchor.constraint(equalTo: self.currencyImageView.heightAnchor),
 
-            self.titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 4),
-            self.titleLabel.leadingAnchor.constraint(equalTo: self.currencyImageView.trailingAnchor, constant: 4),
+            self.titleLabel.topAnchor.constraint(
+                equalTo: self.contentView.topAnchor,
+                constant: Constants.titleLabelTopInset
+            ),
+            self.titleLabel.leadingAnchor.constraint(
+                equalTo: self.currencyImageView.trailingAnchor,
+                constant: Constants.labelsSideInset
+            ),
 
             self.shortNameLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor),
-            self.shortNameLabel.leadingAnchor.constraint(equalTo: self.currencyImageView.trailingAnchor, constant: 4)
+            self.shortNameLabel.leadingAnchor.constraint(
+                equalTo: self.currencyImageView.trailingAnchor,
+                constant: Constants.labelsSideInset
+            )
         ])
     }
 }
