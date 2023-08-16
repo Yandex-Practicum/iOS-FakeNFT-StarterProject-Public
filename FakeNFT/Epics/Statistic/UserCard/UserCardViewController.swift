@@ -19,7 +19,6 @@ final class UserCardViewController: NiblessViewController {
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .ypWhite
         view.delegate = self
-        view.refreshControl = refreshControl
         view.register(UserCardCellView.self)
         view.register(SiteCellView.self)
         view.register(CollectionCellView.self)
@@ -44,13 +43,6 @@ final class UserCardViewController: NiblessViewController {
                 return cell
             }
         }
-    }()
-
-    private lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.tintColor = .ypBlack
-        control.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        return control
     }()
 
     private var sectionType: [UserCardViewModelImpl.SectionType] {

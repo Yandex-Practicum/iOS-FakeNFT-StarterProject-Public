@@ -17,13 +17,6 @@ final class NFTCell: UICollectionViewCell {
     // MARK: - Public
     func configure(with viewModel: NFTCellViewModel) {
         self.viewModel = viewModel
-
-        let addToCart = UIImage.addToBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
-        let removeFromCart = UIImage.removeFromBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
-        let grayStar = UIImage.grayStar?.withTintColor(.ypLightGray, renderingMode: .alwaysOriginal)
-        let placeholder = UIImage(systemName: "face.smiling.inverse")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
-        let like = UIImage.liked?.withTintColor(.ypRedUniversal, renderingMode: .alwaysOriginal)
-        let unLike = UIImage.unliked?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let rating = viewModel.rating
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         ratingStackView.addArrangedSubviews((0..<5).map {
@@ -178,3 +171,25 @@ private extension NFTCell {
 }
 
 extension NFTCell: ReuseIdentifying { }
+
+private extension NFTCell {
+    var addToCart: UIImage? {
+        UIImage.addToBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+    }
+    var removeFromCart: UIImage? {
+        UIImage.removeFromBasket?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+    }
+    var grayStar: UIImage? {
+        UIImage.grayStar?.withTintColor(.ypLightGray, renderingMode: .alwaysOriginal)
+    }
+    var placeholder: UIImage? {
+        UIImage(systemName: "face.smiling.inverse")?
+            .withTintColor(.lightGray, renderingMode:  .alwaysOriginal)
+    }
+    var like: UIImage? {
+        UIImage.liked?.withTintColor(.ypRedUniversal, renderingMode: .alwaysOriginal)
+    }
+    var unLike: UIImage? {
+        UIImage.unliked?.withTintColor(.white, renderingMode: .alwaysOriginal)
+    }
+}

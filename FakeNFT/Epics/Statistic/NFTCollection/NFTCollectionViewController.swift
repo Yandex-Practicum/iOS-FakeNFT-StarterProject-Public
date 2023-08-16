@@ -59,6 +59,7 @@ final class NFTCollectionViewController: NiblessViewController {
         addSubviews()
         addConstraints()
         createTabTabItem()
+        setTitle()
         bind(to: viewModel)
         viewModel.viewDidLoad()
     }
@@ -81,25 +82,7 @@ private extension NFTCollectionViewController {
         viewModel.nftViewModels
             .receive(on: DispatchQueue.main)
             .sink { [weak self] nfts in
-                guard let self else { return }
-                if !nfts.isEmpty {
-                    self.showCollectionView()
-                    self.errorView.hideErrorView()
-
-                    if viewModel.isPulledToRefresh {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            self.updateSnapshot(with: nfts)
-                            self.collectionView.refreshControl?.endRefreshing()
-                        }
-                    }
-                    else {
-                        self.updateSnapshot(with: nfts)
-                        self.collectionView.refreshControl?.endRefreshing()
-                    }
-
-                } else {
-                    // TODO: - Добавить заглушку если массив пустой
-                }
+                self?.configureUI(with: nfts)
             }
             .store(in: &cancellables)
 
@@ -126,6 +109,27 @@ private extension NFTCollectionViewController {
         snapshot.appendSections([.zero])
         snapshot.appendItems(data)
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    func configureUI(with nfts: [NFTCellViewModel]) {
+        if !nfts.isEmpty {
+            self.showCollectionView()
+            self.errorView.hideErrorView()
+
+            if viewModel.isPulledToRefresh {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.updateSnapshot(with: nfts)
+                    self.collectionView.refreshControl?.endRefreshing()
+                }
+            }
+            else {
+                self.updateSnapshot(with: nfts)
+                self.collectionView.refreshControl?.endRefreshing()
+            }
+
+        } else {
+            // TODO: - Добавить заглушку если массив пустой
+        }
     }
 }
 
@@ -172,6 +176,10 @@ private extension NFTCollectionViewController {
             target: self,
             action: #selector(backButtonTap)
         )
+    }
+
+    func setTitle() {
+        title = "Коллекция NFT"
     }
 
     func addSubviews() {
