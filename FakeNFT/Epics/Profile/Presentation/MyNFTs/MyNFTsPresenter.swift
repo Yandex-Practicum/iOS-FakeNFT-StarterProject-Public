@@ -30,7 +30,6 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     // MARK: - Life cycle
     init(profile: ProfileResponseModel){
         self.profile = profile
-        print("‼️ Profile:\n\(profile)")
     }
     
     required init?(coder: NSCoder) {

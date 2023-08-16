@@ -223,6 +223,7 @@ final class ProfileEditViewController: UIViewController {
             
             if self.isValidURL(urlString: updatedURL) {
                 self.newPhotoUrlLabel.text = updatedURL
+                self.presenter?.change(parameter: .imageUrl, with: updatedURL)
             } else {
                 self.showInvalidURLAlert()
             }

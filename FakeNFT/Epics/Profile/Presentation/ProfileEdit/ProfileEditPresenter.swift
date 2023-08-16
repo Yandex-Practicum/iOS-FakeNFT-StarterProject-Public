@@ -51,7 +51,7 @@ final class ProfileEditPresenter: ProfileEditPresenterProtocol {
     func getNewProfile() -> ProfileResponseModel {
         return ProfileResponseModel(
             name: name,
-            avatar: profile.avatar,
+            avatar: avatar,
             description: description,
             website: URL(string: website) ?? profile.website,
             nfts: profile.nfts,
