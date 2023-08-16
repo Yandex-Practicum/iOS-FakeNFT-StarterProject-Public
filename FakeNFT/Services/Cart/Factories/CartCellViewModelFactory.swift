@@ -1,10 +1,3 @@
-//
-//  CartCellViewModelFactory.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 03.08.2023.
-//
-
 import UIKit.UIImage
 
 final class NFTCartCellViewModelFactory {

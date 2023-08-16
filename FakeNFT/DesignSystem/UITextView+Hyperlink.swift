@@ -1,10 +1,3 @@
-//
-//  UITextView+Hyperlink.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 07.08.2023.
-//
-
 import UIKit
 
 extension UITextView {

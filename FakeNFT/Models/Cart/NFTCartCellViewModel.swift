@@ -1,11 +1,4 @@
-//
-//  NFTCartCellViewModel.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 03.08.2023.
-//
-
-import UIKit
+import UIKit.UIImage
 
 struct NFTCartCellViewModel: Equatable {
     let id: String

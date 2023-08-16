@@ -10,7 +10,7 @@ import Foundation
 protocol CartOrderSorterProtocol {
     func sort(order: OrderViewModel,
               trait: CartOrderSorter.SortingTrait,
-              completion: @escaping ((OrderViewModel) -> Void))
+              completion: @escaping LoadingCompletionBlock<OrderViewModel>)
 }
 
 final class CartOrderSorter: CartOrderSorterProtocol {
@@ -25,7 +25,7 @@ final class CartOrderSorter: CartOrderSorterProtocol {
     func sort(
         order: OrderViewModel,
         trait: SortingTrait,
-        completion: @escaping (OrderViewModel) -> Void
+        completion: @escaping LoadingCompletionBlock<OrderViewModel>
     ) {
         let sortingClosure = self.getSortingClosure(trait: trait)
         self.sortingQueue.sync {
