@@ -23,6 +23,8 @@
 		3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */; };
+		8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B61D2A8B70A100870C53 /* BasketService.swift */; };
+		8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B6202A8B71B600870C53 /* NftModel.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -68,6 +70,8 @@
 		3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsReusingUtils.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		8BC9B61D2A8B70A100870C53 /* BasketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
+		8BC9B6202A8B71B600870C53 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8BC9B61F2A8B716C00870C53 /* BasketService */,
 				8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
@@ -185,6 +190,15 @@
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
 			);
 			path = NetworkClient;
+			sourceTree = "<group>";
+		};
+		8BC9B61F2A8B716C00870C53 /* BasketService */ = {
+			isa = PBXGroup;
+			children = (
+				8BC9B61D2A8B70A100870C53 /* BasketService.swift */,
+				8BC9B6202A8B71B600870C53 /* NftModel.swift */,
+			);
+			path = BasketService;
 			sourceTree = "<group>";
 		};
 		F9F557352A7419CC004F6856 /* Resources */ = {
@@ -419,7 +433,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */,
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
+				8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				8B0BA36A2A853739001C569F /* UIBlockingProgressHUD.swift in Sources */,
 				F9F557402A741B5F004F6856 /* StatisticsViewController.swift in Sources */,
