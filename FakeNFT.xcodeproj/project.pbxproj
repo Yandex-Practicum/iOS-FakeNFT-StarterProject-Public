@@ -44,6 +44,12 @@
 		8BA7A35E2A882572004BA2C3 /* WebViewScreenViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7A35D2A882572004BA2C3 /* WebViewScreenViewProtocol.swift */; };
 		8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B61D2A8B70A100870C53 /* BasketService.swift */; };
 		8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B6202A8B71B600870C53 /* NftModel.swift */; };
+		8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF732A8CE51F007A077C /* LikeService.swift */; };
+		8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF762A8CE605007A077C /* ProfileModel.swift */; };
+		8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF782A8CE664007A077C /* ProfileRequest.swift */; };
+		8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7A2A8CE6BF007A077C /* Constants.swift */; };
+		8B96BF7D2A8CE774007A077C /* ProfileNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */; };
+		8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -110,6 +116,12 @@
 		8BA7A35D2A882572004BA2C3 /* WebViewScreenViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScreenViewProtocol.swift; sourceTree = "<group>"; };
 		8BC9B61D2A8B70A100870C53 /* BasketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
 		8BC9B6202A8B71B600870C53 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
+		8B96BF732A8CE51F007A077C /* LikeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeService.swift; sourceTree = "<group>"; };
+		8B96BF762A8CE605007A077C /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		8B96BF782A8CE664007A077C /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
+		8B96BF7A2A8CE6BF007A077C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkService.swift; sourceTree = "<group>"; };
+		8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLikesRequest.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +186,7 @@
 				F9F5574D2A743375004F6856 /* Decomposition */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+				8B96BF7A2A8CE6BF007A077C /* Constants.swift */,
 				F9F557412A741CC6004F6856 /* TabBar */,
 				F9F557382A741B13004F6856 /* Epics */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
@@ -205,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				8BC9B61F2A8B716C00870C53 /* BasketService */,
+				8B96BF752A8CE5EC007A077C /* LikeService */,
 				8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
@@ -309,6 +323,18 @@
 				8BC9B6202A8B71B600870C53 /* NftModel.swift */,
 			);
 			path = BasketService;
+			sourceTree = "<group>";
+		};
+		8B96BF752A8CE5EC007A077C /* LikeService */ = {
+			isa = PBXGroup;
+			children = (
+				8B96BF762A8CE605007A077C /* ProfileModel.swift */,
+				8B96BF782A8CE664007A077C /* ProfileRequest.swift */,
+				8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */,
+				8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */,
+				8B96BF732A8CE51F007A077C /* LikeService.swift */,
+			);
+			path = LikeService;
 			sourceTree = "<group>";
 		};
 		F9F557352A7419CC004F6856 /* Resources */ = {
@@ -569,6 +595,9 @@
 				8B6E2E762A7BF36300BEA35F /* CatalogViewTableCell.swift in Sources */,
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
+				8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */,
+				8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */,
+				8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				8B6E2E782A7C0B5B00BEA35F /* CatalogDataModel.swift in Sources */,
 				8B0BA3742A858272001C569F /* WebViewScreenViewController.swift in Sources */,
@@ -576,7 +605,10 @@
 				8B036C5A2A87C3DF0025258F /* CatalogRequest.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				8BA7A3572A88054C004BA2C3 /* CollectionScreenViewPresenter.swift in Sources */,
+				8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */,
+				8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
+				8B96BF7D2A8CE774007A077C /* ProfileNetworkService.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				8B0BA3682A84FFD2001C569F /* CatalogNetworkService.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
