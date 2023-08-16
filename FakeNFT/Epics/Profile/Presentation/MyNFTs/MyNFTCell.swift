@@ -123,7 +123,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         priceLabel.text = NSLocalizedString("nft.price", comment: "")
         priceValueLabel.text = ("\(model.price) NFT")
         setLikeButtonImage(for: model.isLiked)
-        setStarsinStack(with: model.rating)
+        ratingStack.setStarsInStack(with: model.rating)
     }
     
     // MARK: - Private methods
@@ -161,14 +161,5 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     private func setLikeButtonImage(for state: Bool) {
         let image: UIImage? = state ? .liked : .unliked
         likeButton.setImage(image, for: .normal)
-    }
-    
-    private func setStarsinStack(with rating: String) {
-        let rating = Int(rating) ?? 1
-        for i in 1...5 {
-            let image: UIImage? = i <= rating ? .yellowStar : .grayStar
-            let imageView = UIImageView(image: image)
-            ratingStack.addArrangedSubview(imageView)
-        }
     }
 }

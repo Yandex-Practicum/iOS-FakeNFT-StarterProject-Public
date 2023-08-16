@@ -4,8 +4,7 @@ final class FeaturedNFTCell: UICollectionViewCell {
     static let identifier: String = "FeaturedNFTCell"
     // MARK: - Private properties
     private lazy var aboutNFCStack: UIStackView = {
-        let nftStack = UIStackView()
-        nftStack.translatesAutoresizingMaskIntoConstraints = false
+        let nftStack = UIStackView(arrangedSubviews: [nftNameLabel, ratingStack, priceLabel])
         nftStack.axis = .vertical
         nftStack.distribution = .equalSpacing
         nftStack.alignment = .leading
@@ -24,13 +23,12 @@ final class FeaturedNFTCell: UICollectionViewCell {
     
     private lazy var nftImage: UIImageView = {
         let nftImage = UIImageView()
-        nftImage.translatesAutoresizingMaskIntoConstraints = false
         nftImage.layer.cornerRadius = 12
         nftImage.layer.masksToBounds = true
         return nftImage
     }()
     
-    private lazy var favoriteNFTButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
@@ -40,7 +38,8 @@ final class FeaturedNFTCell: UICollectionViewCell {
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyRegular
-        label.textColor = .black
+        label.textColor = .ypBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -48,6 +47,8 @@ final class FeaturedNFTCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .caption2
         label.text = NSLocalizedString("nft.price", comment: "")
+        label.textColor = .ypBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -55,6 +56,8 @@ final class FeaturedNFTCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .bodyBold
         label.text = "0 ETH"
+        label.textColor = .ypBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -62,6 +65,7 @@ final class FeaturedNFTCell: UICollectionViewCell {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        self.backgroundColor = .clear
         addingUIElements()
         layoutConfigure()
     }
@@ -76,17 +80,14 @@ final class FeaturedNFTCell: UICollectionViewCell {
         nftNameLabel.text = "Имя NFT"
         priceLabel.text = "10 ETH"
         setImageForButton(isFavorite: true)
+        ratingStack.setStarsInStack(with: "3")
     }
     
     // MARK: - Private methods
     private func addingUIElements() {
-        [nftImage, aboutNFCStack, favoriteNFTButton].forEach{
+        [nftImage, aboutNFCStack, likeButton].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
-        }
-        [nftNameLabel, ratingStack, priceLabel].forEach{
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            aboutNFCStack.addSubview($0)
         }
     }
     
@@ -97,19 +98,19 @@ final class FeaturedNFTCell: UICollectionViewCell {
             nftImage.heightAnchor.constraint(equalToConstant: 80),
             nftImage.widthAnchor.constraint(equalToConstant: 80),
             
-            favoriteNFTButton.topAnchor.constraint(equalTo: nftImage.topAnchor, constant: -6),
-            favoriteNFTButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 6),
-            favoriteNFTButton.heightAnchor.constraint(equalToConstant: 42),
-            favoriteNFTButton.widthAnchor.constraint(equalToConstant: 42),
+            likeButton.topAnchor.constraint(equalTo: nftImage.topAnchor, constant: -6),
+            likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 6),
+            likeButton.heightAnchor.constraint(equalToConstant: 42),
+            likeButton.widthAnchor.constraint(equalToConstant: 42),
             
             aboutNFCStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             aboutNFCStack.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 12),
-            aboutNFCStack.heightAnchor.constraint(equalToConstant: 12)
+            aboutNFCStack.heightAnchor.constraint(equalToConstant: 66)
         ])
     }
     
     private func setImageForButton(isFavorite: Bool) {
         let image = isFavorite ? UIImage.unliked : UIImage.liked
-        favoriteNFTButton.setImage(image, for: .normal)
+        likeButton.setImage(image, for: .normal)
     }
 }
