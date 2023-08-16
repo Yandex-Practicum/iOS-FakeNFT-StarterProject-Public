@@ -53,11 +53,13 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         let Alert = UIAlertController(title: NSLocalizedString("sorting.name", comment: "Заголовок аллерта сортировки"), message: nil, preferredStyle: .actionSheet)
         
         let sortByNameAction = UIAlertAction(title: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] _ in
+            //добавить проверку на текущее состояние и не делать ничего если совпадает
             UserDefaults.standard.set(2, forKey: "catalog.sort")
             self?.presenter?.updateCatalogData()
             self?.updateTableView()
         }
         let sortByNFTAction = UIAlertAction(title: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] _ in
+            //добавить проверку на текущее состояние и не делать ничего если совпадает
             UserDefaults.standard.set(1, forKey: "catalog.sort")
             self?.presenter?.updateCatalogData()
             self?.updateTableView()
