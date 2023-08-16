@@ -12,11 +12,12 @@ protocol CurrenciesServiceProtocol {
 }
 
 final class CurrenciesService {
-    private let networkClient: NetworkClient
+    private let networkRequestSender: NetworkRequestSenderProtocol
+    
     private var fetchingTask: NetworkTask?
 
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
+    init(networkRequestSender: NetworkRequestSenderProtocol) {
+        self.networkRequestSender = networkRequestSender
     }
 }
 
@@ -27,14 +28,12 @@ extension CurrenciesService: CurrenciesServiceProtocol {
         guard self.fetchingTask.isTaskRunning == false else { return }
 
         let request = CurrenciesRequest()
-        let task = self.networkClient.send(request: request, type: CurrenciesResult.self) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.fetchingTask?.cancel()
-                self.fetchingTask = nil
-                completion(result)
-            }
-        }
+        let task = self.networkRequestSender.send(
+            request: request,
+            task: self.fetchingTask,
+            type: CurrenciesResult.self,
+            completion: completion
+        )
         self.fetchingTask = task
     }
 }

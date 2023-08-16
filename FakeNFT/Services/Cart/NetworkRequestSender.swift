@@ -1,15 +1,15 @@
 import Foundation
 
-protocol NetworkWorkerProtocol {
+protocol NetworkRequestSenderProtocol {
     func send<RequestType: Decodable>(
         request: NetworkRequest,
         task: NetworkTask?,
-        type: RequestType,
+        type: RequestType.Type,
         completion: @escaping ResultHandler<RequestType>
     ) -> NetworkTask?
 }
 
-final class NetworkRequestSender: NetworkWorkerProtocol {
+final class NetworkRequestSender: NetworkRequestSenderProtocol {
     private let networkClient: NetworkClient
 
     init(networkClient: NetworkClient) {
@@ -19,7 +19,7 @@ final class NetworkRequestSender: NetworkWorkerProtocol {
     func send<RequestType: Decodable>(
         request: NetworkRequest,
         task: NetworkTask?,
-        type: RequestType,
+        type: RequestType.Type,
         completion: @escaping ResultHandler<RequestType>
     ) -> NetworkTask? {
         var activeTask = task

@@ -1,10 +1,3 @@
-//
-//  OrderService.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 03.08.2023.
-//
-
 import Foundation
 
 protocol OrderServiceProtocol {
@@ -17,13 +10,14 @@ protocol OrderPaymentServiceProtocol {
 }
 
 final class OrderService {
-    private let networkClient: NetworkClient
+    private let networkRequestSender: NetworkRequestSenderProtocol
+
     private var fetchingTask: NetworkTask?
     private var changingTask: NetworkTask?
     private var purchasingTask: NetworkTask?
 
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
+    init(networkRequestSender: NetworkRequestSenderProtocol) {
+        self.networkRequestSender = networkRequestSender
     }
 }
 
@@ -34,14 +28,12 @@ extension OrderService: OrderServiceProtocol {
         guard self.fetchingTask.isTaskRunning == false else { return }
 
         let request = OrderRequest(orderId: id)
-        let task = self.networkClient.send(request: request, type: Order.self) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.fetchingTask?.cancel()
-                self.fetchingTask = nil
-                completion(result)
-            }
-        }
+        let task = self.networkRequestSender.send(
+            request: request,
+            task: self.fetchingTask,
+            type: Order.self,
+            completion: completion
+        )
         self.fetchingTask = task
     }
 
@@ -53,14 +45,12 @@ extension OrderService: OrderServiceProtocol {
         request.httpMethod = .put
         request.nftIds = nftIds
 
-        let task = self.networkClient.send(request: request, type: Order.self) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.changingTask?.cancel()
-                self.changingTask = nil
-                completion(result)
-            }
-        }
+        let task = self.networkRequestSender.send(
+            request: request,
+            task: self.changingTask,
+            type: Order.self,
+            completion: completion
+        )
         self.changingTask = task
     }
 }
@@ -72,14 +62,12 @@ extension OrderService: OrderPaymentServiceProtocol {
         guard self.purchasingTask.isTaskRunning == false else { return }
 
         let request = PurchaseRequest(orderId: orderId, currencyId: currencyId)
-        let task = self.networkClient.send(request: request, type: PurchaseResult.self) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.changingTask?.cancel()
-                self.changingTask = nil
-                completion(result)
-            }
-        }
-        self.changingTask = task
+        let task = self.networkRequestSender.send(
+            request: request,
+            task: self.purchasingTask,
+            type: PurchaseResult.self,
+            completion: completion
+        )
+        self.purchasingTask = task
     }
 }
