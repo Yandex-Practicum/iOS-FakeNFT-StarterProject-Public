@@ -133,7 +133,7 @@ tabBar.basket = "Корзина";
 // Лэйблы ячейки мой NFT
 "nft.price" = "Цена";
 "nft.by" = "от";
-// Лэйблы экрана "Мои NFT"
+// Плэйсхолдер экрана "Мои NFT"
 "nft.missing" = "У Вас ещё нет NFT";
 // Сообщения об ошибке
 "nft.error.title" = "Ошибка";
@@ -141,8 +141,8 @@ tabBar.basket = "Корзина";
 // Кнопки
 "profile.photo.retryButton" = "Повторить";
 "profile.photo.cancelButton" = "Отмена";
-
-
+// Плэйсхолдер экрана "Избранные NFT"
+"nft.no.favorite" = "У Вас ещё нет NFT";
 
 
 

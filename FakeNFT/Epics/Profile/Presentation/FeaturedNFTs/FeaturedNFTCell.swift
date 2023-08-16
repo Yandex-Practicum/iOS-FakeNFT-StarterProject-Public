@@ -1,15 +1,19 @@
 import UIKit
 
-final class FeaturedNFTCell: UICollectionViewCell {
+final class FeaturedNFTCell: UICollectionViewCell & ReuseIdentifying {
+    // MARK: - Public properties
     static let identifier: String = "FeaturedNFTCell"
+    weak var delegate: FeaturedNFTCellDelegate?
+    
     // MARK: - Private properties
+    private var indexPath: IndexPath?
     private lazy var aboutNFCStack: UIStackView = {
-        let nftStack = UIStackView(arrangedSubviews: [nftNameLabel, ratingStack, priceLabel])
-        nftStack.axis = .vertical
-        nftStack.distribution = .equalSpacing
-        nftStack.alignment = .leading
-        nftStack.spacing = 4
-        return nftStack
+        let stack = UIStackView(arrangedSubviews: [nftNameLabel, ratingStack, priceLabel])
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.alignment = .leading
+        stack.spacing = 4
+        return stack
     }()
     
     private lazy var ratingStack: UIStackView = {
@@ -22,15 +26,17 @@ final class FeaturedNFTCell: UICollectionViewCell {
     }()
     
     private lazy var nftImage: UIImageView = {
-        let nftImage = UIImageView()
-        nftImage.layer.cornerRadius = 12
-        nftImage.layer.masksToBounds = true
-        return nftImage
+        let image = UIImageView()
+        image.layer.cornerRadius = 12
+        image.layer.masksToBounds = true
+        return image
     }()
     
     private lazy var likeButton: UIButton = {
         let button = UIButton()
+        button.setImage(UIImage.liked, for: .normal)
         button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         button.layer.masksToBounds = true
         return button
     }()
@@ -60,7 +66,7 @@ final class FeaturedNFTCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -74,13 +80,20 @@ final class FeaturedNFTCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        for view in ratingStack.subviews {
+            ratingStack.removeArrangedSubview(view)
+        }
+    }
+    
     // MARK: - Private methods
-    func configureCell() {
-        nftImage.image = .mockCell
-        nftNameLabel.text = "Имя NFT"
-        priceLabel.text = "10 ETH"
-        setImageForButton(isFavorite: true)
-        ratingStack.setStarsInStack(with: "3")
+    func configureCell(with model: MyNFTPresentationModel, indexPath: IndexPath) {
+        self.indexPath = indexPath
+        nftImage.kf.setImage(with: URL(string: model.image))
+        nftNameLabel.text = model.nftName
+        priceLabel.text = ("\(model.price) NFT")
+        ratingStack.setStarsInStack(with: model.rating)
     }
     
     // MARK: - Private methods
@@ -109,8 +122,10 @@ final class FeaturedNFTCell: UICollectionViewCell {
         ])
     }
     
-    private func setImageForButton(isFavorite: Bool) {
-        let image = isFavorite ? UIImage.unliked : UIImage.liked
-        likeButton.setImage(image, for: .normal)
+    // MARK: - Actions
+    @objc private func likeButtonTapped() {
+        if let indexPath = indexPath {
+            delegate?.didTapLikeButton(at: indexPath)
+        }
     }
 }

@@ -1,20 +1,36 @@
 import UIKit
 
-final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtocol {
+final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerProtocol {
     // MARK: - Public properties
-    var presenter: MyNFTsViewDelegate?
-    
+    var presenter: FavoriteNFTsViewDelegate?
     // MARK: - Private properties
-    private let tableView = UITableView()
-    
+    private lazy var collectionView: UICollectionView = {
+        let collection = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        collection.dataSource = self
+        collection.delegate = self
+        collection.register(FeaturedNFTCell.self, forCellWithReuseIdentifier: FeaturedNFTCell.identifier)
+        collection.backgroundColor = .clear
+        collection.isScrollEnabled = true
+        return collection
+    }()
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
         label.text = NSLocalizedString("nft.missing", comment: "")
         label.textColor = .ypBlack
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
+    private let collectionParameters = FeaturedCollectionParameters(
+        cellCount: 2,
+        leftInset: 16,
+        rightInset: 16,
+        cellSpacing: 9
+    )
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -22,16 +38,15 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         view.backgroundColor = .ypWhite
         presenter?.viewDidLoad()
         configureNavigationController()
-        tableViewConfigure()
         addingUIElements()
         layoutConfigure()
-        checkPlaceholderLabelVisibility()
     }
     
-    // MARK: - MyNFTsViewControllerProtocol
-    func updateTable() {
+    
+    // MARK: - NFTsViewControllerProtocol
+    func updateTableOrCollection() {
         checkPlaceholderLabelVisibility()
-        tableView.reloadData()
+        collectionView.reloadData()
     }
     
     
@@ -64,7 +79,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     
     // MARK: - Private methods
     private func addingUIElements() {
-        [placeholderLabel, tableView].forEach{
+        [placeholderLabel, collectionView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -72,10 +87,10 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     
     private func layoutConfigure() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: collectionParameters.leftInset),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -collectionParameters.rightInset),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             placeholderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -85,7 +100,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
     
     private func configureNavigationController() {
-        title = NSLocalizedString("profile.myNFTs", comment: "")
+        title = NSLocalizedString("profile.featured", comment: "")
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
@@ -105,28 +120,10 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         )
         backButton.tintColor = .ypBlack
         navigationItem.leftBarButtonItem = backButton
-        
-        let imageButton = UIBarButtonItem(
-            image: .sortButton,
-            style: .plain,
-            target: self,
-            action: #selector(imageButtonTapped)
-        )
-        imageButton.tintColor = .ypBlack
-        navigationItem.rightBarButtonItem = imageButton
     }
     
     private func checkPlaceholderLabelVisibility() {
-        placeholderLabel.isHidden = presenter?.isNeedToHideMissingNFCLabel() ?? true
-    }
-    
-    private func tableViewConfigure(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(MyNFTCell.self)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.isScrollEnabled = true
+        placeholderLabel.isHidden = presenter?.isNeedToHidePlaceholderLabel() ?? true
     }
     
     // MARK: - Actions
@@ -139,23 +136,62 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
 }
 
-
-// MARK: - UITableViewDelegate, UITableViewDataSource
-extension MyNFTsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let presenter = presenter else { return 0 }
-        return presenter.getMyNFTsCounter()
+extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let avaliableSize = collectionView.frame.width - collectionParameters.paddingWidth
+        let cellWidth = (avaliableSize + 30) / CGFloat(collectionParameters.cellCount)
+        return CGSize(width: cellWidth, height: 100)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let presenter = presenter else { return UITableViewCell() }
-        let cell: MyNFTCell = tableView.dequeueReusableCell()
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 9
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+}
+
+extension FavoriteNFTsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return presenter?.getNFTsCounter() ?? 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard
+            let presenter = presenter,
+            indexPath.row < presenter.getNFTsCounter()
+        else { return UICollectionViewCell() }
+        
+        let cell: FeaturedNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = presenter.getModelFor(indexPath: indexPath)
-        cell.configure(with: model)
+        cell.delegate = self
+        cell.configureCell(with: model, indexPath: indexPath)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        140
+}
+
+
+// MARK: - FeaturedNFTCellDelegate
+extension FavoriteNFTsViewController: FeaturedNFTCellDelegate {
+    func didTapLikeButton(at indexPath: IndexPath) {
+        presenter?.deleteNFT(at: indexPath)
+        checkPlaceholderLabelVisibility()
     }
 }

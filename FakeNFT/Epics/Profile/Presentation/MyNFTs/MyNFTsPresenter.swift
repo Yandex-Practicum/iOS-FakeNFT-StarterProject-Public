@@ -1,22 +1,10 @@
 import Kingfisher
 import UIKit
 
-protocol MyNFTsPresenterProtocol: AnyObject {
-    var networkClient: MyNFTsNetworkClientProtocol? { get set }
-}
-
-protocol MyNFTsViewDelegate: AnyObject {
-    var view: MyNFTsViewControllerProtocol? { get set }
-    func viewDidLoad()
-    func getMyNFTsCounter() -> Int
-    func isNeedToHideMissingNFCLabel() -> Bool
-    func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
-}
-
 final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     // MARK: - Public properties
     var view: MyNFTsViewControllerProtocol?
-    var networkClient: MyNFTsNetworkClientProtocol?
+    var networkClient: NFTsNetworkClientProtocol?
     
     // MARK: - Private properties
     private var profile: ProfileResponseModel

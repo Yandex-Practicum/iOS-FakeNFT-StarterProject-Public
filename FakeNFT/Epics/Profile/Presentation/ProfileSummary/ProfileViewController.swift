@@ -204,7 +204,7 @@ final class ProfileViewController: UIViewController {
         else { return }
         
         let myNFTsViewController = MyNFTsViewController()
-        let myNFTsNetworkClient = MyNFTsNetworkClient()
+        let myNFTsNetworkClient = NFTsNetworkClient()
         let myNFTsPresenter = MyNFTsPresrnter(profile: profile)
         
         myNFTsViewController.presenter = myNFTsPresenter
@@ -218,7 +218,19 @@ final class ProfileViewController: UIViewController {
     }
     
     private func didTapFeaturedNFTsCell() {
-        let featuredNFTsViewController = FeaturedNFTsViewController()
+        guard
+            let presenter = presenter,
+            let profile = presenter.getCurrentProfileResponse()
+        else { return }
+        
+        let featuredNFTsViewController = FavoriteNFTsViewController()
+        let featuredNFTsNetworkClient = NFTsNetworkClient()
+        let featuredNFTsPresenter = FavoriteNFTsPresrnter(profile: profile)
+        
+        featuredNFTsViewController.presenter = featuredNFTsPresenter
+        
+        featuredNFTsPresenter.networkClient = featuredNFTsNetworkClient
+        featuredNFTsPresenter.view = featuredNFTsViewController
         
         let navigationController = UINavigationController(rootViewController: featuredNFTsViewController)
         navigationController.modalPresentationStyle = .fullScreen

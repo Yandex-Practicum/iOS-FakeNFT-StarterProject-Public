@@ -133,7 +133,7 @@ tabBar.basket = "Basket";
 // My NFT cell labels
 "nft.price" = "Price";
 "nft.by" = "by";
-// Screen labels "My NFTs"
+// My NFTs screen placeholder
 "nft.missing" = "You don't have an NFT yet";
 // Error alerts
 "nft.error.title" = "Error";
@@ -141,8 +141,8 @@ tabBar.basket = "Basket";
 // Buttons
 "profile.photo.retryButton" = "Retry";
 "profile.photo.cancelButton" = "Cancel";
-
-
+// Placeholder for the "Favorite NFTs" screen
+"nft.no.favorite" = "You don't have any NFTs yet";
 
 
 
