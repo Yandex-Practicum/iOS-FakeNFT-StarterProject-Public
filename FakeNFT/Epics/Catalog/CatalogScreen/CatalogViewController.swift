@@ -9,12 +9,14 @@ import UIKit
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
     private var presenter: CatalogViewPresenterProtocol?
+    private var alertPresenter: AlertPresenterProtocol?
     private let sortButton = UIButton()
     private let catalogTable = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = CatalogViewPresenter(catalogViewController: self)
+        alertPresenter = AlertPresenter(delegate: self)
         
         view.backgroundColor = .ypWhite
         configureSortButton()
@@ -50,7 +52,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     @objc private func sortButtonTap() {
-        let presenter = AlertPresenter(delegate: self)
         let sortByNameAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] in
             //добавить проверку на текущее состояние и не делать ничего если совпадает
             UserDefaults.standard.set(2, forKey: "catalog.sort")
@@ -64,7 +65,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             self?.updateTableView()
         }
         
-        presenter.show(models: [sortByNameAction, sortByNFTAction])
+        alertPresenter?.show(models: [sortByNameAction, sortByNFTAction])
     }
     
     private func configureCatalogTable() {
