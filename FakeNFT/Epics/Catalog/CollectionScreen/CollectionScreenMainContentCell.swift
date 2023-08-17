@@ -11,13 +11,12 @@ import Kingfisher
 final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentifying {
     weak var viewController: CollectionScreenViewControllerProtocol?
     var authorDynamicPartLabelIsEmpty: Bool {
-        return authorDynamicPartLabel.text?.isEmpty ?? true
+        authorDynamicPartLabel.text?.isEmpty ?? true
     }
     var collectionImageIsEmpty: Bool {
         if collectionImage.image == nil {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }

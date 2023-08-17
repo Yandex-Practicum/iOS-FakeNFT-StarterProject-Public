@@ -23,10 +23,10 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
         configureWebView()
         configureProgressView()
         
-        estimatedProgressObservation = webView.observe(\.estimatedProgress, options: [], changeHandler: { [weak self] _, _ in
+        estimatedProgressObservation = webView.observe(\.estimatedProgress, options: []) { [weak self] _, _ in
             guard let self = self, let presenter = presenter else { return }
             presenter.didUpdateProgressValue(estimatedProgress: Float(self.webView.estimatedProgress))
-        })
+        }
     }
     
     func updateProgressView(estimatedProgress: Float) {

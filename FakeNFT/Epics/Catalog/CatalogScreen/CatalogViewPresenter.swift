@@ -8,10 +8,32 @@
 import UIKit
 
 final class CatalogViewPresenter: CatalogViewPresenterProtocol {
+    var catalogCount: Int {
+        catalogData.count
+    }
+    var alertActions: [AlertActionModel] {
+        let sortByNameAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] in
+            guard self?.sortState != 2 else { return }
+            UserDefaults.standard.set(2, forKey: "catalog.sort")
+            self?.updateCatalogData()
+            self?.catalogViewController?.updateTableView()
+        }
+        let sortByNFTAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] in
+            guard self?.sortState != 1 else { return }
+            UserDefaults.standard.set(1, forKey: "catalog.sort")
+            self?.updateCatalogData()
+            self?.catalogViewController?.updateTableView()
+        }
+        return [sortByNameAction, sortByNFTAction]
+    }
+    
     private weak var catalogViewController: CatalogViewControllerProtocol?
     private var catalogData: [CatalogDataModel] = []
     private var catalogNetworkService = CatalogNetworkService.shared
     private var catalogNetworkServiceObserver: NSObjectProtocol?
+    private var sortState: Int {
+        UserDefaults.standard.integer(forKey: "catalog.sort")
+    }
     
     init(catalogViewController: CatalogViewControllerProtocol) {
         self.catalogViewController = catalogViewController
@@ -25,18 +47,6 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             }
     }
     
-    func configureCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let catalogCell: CatalogViewTableCell = tableView.dequeueReusableCell()
-        catalogCell.selectionStyle = .none
-        
-        let data = catalogData[indexPath.row]
-        
-        catalogCell.setImage(link: data.cover)
-        catalogCell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
-        
-        return catalogCell
-    }
-    
     func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
         let collectionScreenController = CollectionScreenViewController()
         collectionScreenController.modalPresentationStyle = .fullScreen
@@ -47,8 +57,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func updateCatalogData() {
-        let state = UserDefaults.standard.integer(forKey: "catalog.sort")
-        switch state {
+        switch sortState {
         case 1:
             catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
         case 2:
@@ -58,16 +67,16 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         }
     }
     
-    func catalogCount() -> Int {
-        catalogData.count
-    }
-    
     func makeFetchRequest() {
         catalogNetworkService.fetchCollectionNextPage()
     }
     
+    func takeDataByIndex(index: Int) -> CatalogDataModel {
+        catalogData[index]
+    }
+    
     private func updateTableView() {
-        let oldCount = catalogCount()
+        let oldCount = catalogCount
         let newCount = catalogNetworkService.collections.count
         updateCatalogData()
         if oldCount != newCount {

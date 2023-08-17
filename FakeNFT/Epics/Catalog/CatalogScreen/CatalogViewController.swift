@@ -29,11 +29,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         catalogTable.reloadData()
     }
     
-    private func makeFetchRequest() {
-        UIBlockingProgressHUD.show()
-        presenter?.makeFetchRequest()
-    }
-    
     func removeHud() {
         UIBlockingProgressHUD.dismiss()
     }
@@ -41,6 +36,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     private func configureSortButton() {
         sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
         sortButton.addTarget(self, action: #selector(sortButtonTap), for: .touchUpInside)
+        
         sortButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sortButton)
         NSLayoutConstraint.activate([
@@ -51,25 +47,8 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         ])
     }
     
-    @objc private func sortButtonTap() {
-        let sortByNameAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.name", comment: "Алерт сортировки: сортировка по названию"), style: .default) { [weak self] in
-            //добавить проверку на текущее состояние и не делать ничего если совпадает
-            UserDefaults.standard.set(2, forKey: "catalog.sort")
-            self?.presenter?.updateCatalogData()
-            self?.updateTableView()
-        }
-        let sortByNFTAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] in
-            //добавить проверку на текущее состояние и не делать ничего если совпадает
-            UserDefaults.standard.set(1, forKey: "catalog.sort")
-            self?.presenter?.updateCatalogData()
-            self?.updateTableView()
-        }
-        
-        alertPresenter?.show(models: [sortByNameAction, sortByNFTAction])
-    }
-    
     private func configureCatalogTable() {
-        if !view.contains(sortButton) { return }
+        guard view.contains(sortButton) else { return }
         
         catalogTable.backgroundColor = .clear
         catalogTable.separatorStyle = .none
@@ -87,15 +66,34 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             catalogTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func configureCell(cell: CatalogViewTableCell, index: Int) {
+        guard let data = presenter?.takeDataByIndex(index: index) else { return }
+        cell.selectionStyle = .none
+        cell.setImage(link: data.cover)
+        cell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
+    }
+    
+    private func makeFetchRequest() {
+        UIBlockingProgressHUD.show()
+        presenter?.makeFetchRequest()
+    }
+    
+    @objc private func sortButtonTap() {
+        guard let presenter = presenter else { return }
+        alertPresenter?.show(models: presenter.alertActions)
+    }
 }
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.catalogCount() ?? 0
+        presenter?.catalogCount ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        presenter?.configureCell(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
+        let catalogCell: CatalogViewTableCell = tableView.dequeueReusableCell()
+        configureCell(cell: catalogCell, index: indexPath.row)
+        return catalogCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -112,7 +110,7 @@ extension CatalogViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let presenter = presenter else { return }
-        if indexPath.row + 1 == presenter.catalogCount() {
+        if indexPath.row + 1 == presenter.catalogCount {
             makeFetchRequest()
         }
     }

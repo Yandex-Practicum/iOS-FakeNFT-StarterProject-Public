@@ -12,6 +12,15 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     
     private let backButton = UIButton()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var calculateMainContentHeight: CGFloat {
+        guard let presenter = presenter else { return CGFloat() }
+        let imageSize: CGFloat = 310
+        let nameHeight: CGFloat = calculateLabelHeight(text: presenter.takeCollectionName, width: view.frame.width - 32, font: .headline3)
+        let authorHeight: CGFloat = calculateLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width - 32, font: .caption2)
+        let descriptionHeight: CGFloat = calculateTextViewHeight(text: presenter.takeCollectionDescription, width: view.frame.width-32, font: .caption2)
+        let constraints: CGFloat = 16 + 13 + 5
+        return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,21 +29,8 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         
         configureCollection()
         configureBackButton()
+        
         makeFetchRequest()
-    }
-    
-    private func makeFetchRequest() {
-        UIBlockingProgressHUD.show()
-        presenter?.makeFetchRequest()
-    }
-    
-    func removeHud() {
-        UIBlockingProgressHUD.dismiss()
-    }
-    
-    func updateAuthor() {
-        (collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell)?.setAuthorDynamicPartLabel(author: AuthorNetworkService.shared.author!.name) //переделать
-        viewReadinessCheck()
     }
     
     func updateCollection(oldCount: Int, newCount: Int) {
@@ -47,42 +43,33 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         }
     }
     
-    private func calculateTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-        let textView = UITextView()
-        textView.text = text
-        textView.font = font
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
-        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        return newSize.height
+    func updateAuthor() {
+        guard let name = AuthorNetworkService.shared.author?.name else { return }
+        (collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell)?.setAuthorDynamicPartLabel(author: name)
+        viewReadinessCheck()
     }
     
-    private func calculateLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-        let textView = UILabel()
-        textView.text = text
-        textView.font = font
-        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        return newSize.height
-    }
-    
-    private func calculateMainContentHeight() -> CGFloat {
-        guard let dataModel = presenter?.catalogDataModel else { return CGFloat() }
-        let imageSize: CGFloat = 310
-        let nameHeight: CGFloat = calculateLabelHeight(text: dataModel.name, width: view.frame.width-32, font: .headline3)
-        let authorHeight: CGFloat = calculateLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width-32, font: .caption2)
-        let descriptionHeight: CGFloat = calculateTextViewHeight(text: dataModel.description, width: view.frame.width-32, font: .caption2)
-        let constraints: CGFloat = 16 + 13 + 5
-        return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
+    func removeHud() {
+        UIBlockingProgressHUD.dismiss()
     }
     
     func viewReadinessCheck() {
         guard let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell else { return }
         if !cell.authorDynamicPartLabelIsEmpty
             && !cell.collectionImageIsEmpty
-            && collectionView.numberOfItems(inSection: 1) == presenter?.takeInitialNftCount() {
+            && collectionView.numberOfItems(inSection: 1) == presenter?.takeInitialNftCount {
             removeHud()
         }
+    }
+    
+    func authorLabelTap() {
+        guard let presenter = presenter else { return }
+        present(presenter.createWebViewScreen, animated: true)
+    }
+    
+    private func makeFetchRequest() {
+        UIBlockingProgressHUD.show()
+        presenter?.makeFetchRequest()
     }
     
     private func configureBackButton() {
@@ -119,15 +106,16 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     private func configureMainContentCell(cell: CollectionScreenMainContentCell) {
-        guard let dataModel = presenter?.catalogDataModel else { return }
+        guard let presenter = presenter else { return }
         cell.viewController = self
-        cell.setCollectionImage(link: dataModel.cover)
-        cell.setCollectionNameLabel(name: dataModel.name)
-        cell.setDescriptionTextView(description: dataModel.description)
+        cell.setCollectionImage(link: presenter.takeCollectionCover)
+        cell.setCollectionNameLabel(name: presenter.takeCollectionName)
+        cell.setDescriptionTextView(description: presenter.takeCollectionDescription)
     }
     
     private func configureNftCell(cell: CollectionScreenNftCell, index: Int) {
-        let nft = presenter!.takeNfts()[index]
+        guard let presenter = presenter else { return }
+        let nft = presenter.takeNftFromNfts(index: index)
         cell.nft = nft
         if BasketService.shared.basket.contains(where: )({ $0.id == nft.id }) {
             cell.setNotEmptyBasketImage()
@@ -141,9 +129,23 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         cell.setCostLabel(cost: nft.price)
     }
     
-    @objc func authorLabelTap() {
-        guard let presenter = presenter else { return }
-        present(presenter.createWebViewScreen(), animated: true)
+    private func calculateTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+        let textView = UITextView()
+        textView.text = text
+        textView.font = font
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
+        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        return newSize.height
+    }
+    
+    private func calculateLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+        let textView = UILabel()
+        textView.text = text
+        textView.font = font
+        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        return newSize.height
     }
     
     @objc func buttonBackTap() {
@@ -155,7 +157,7 @@ extension CollectionScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
         case 0:
-            return CGSize(width: view.frame.width, height: calculateMainContentHeight())
+            return CGSize(width: view.frame.width, height: calculateMainContentHeight)
         case 1:
             let width = (collectionView.frame.width - 32 - 18) / 3    // MARK: из длинны экрана вычитаем констрейнты (16+16=32) и получаем длину коллекции, из неё вычитаем отступы между клетками (9x2=18)
             let height = width * 1.593
@@ -205,7 +207,7 @@ extension CollectionScreenViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return presenter?.takeActualNftCount() ?? 0
+            return presenter?.actualNftsCount ?? 0
         default:
             return 0
         }

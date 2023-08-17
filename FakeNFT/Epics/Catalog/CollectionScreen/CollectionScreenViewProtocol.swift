@@ -12,20 +12,18 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
     func updateCollection(oldCount: Int, newCount: Int)
     func updateAuthor()
     func removeHud()
-    
     func viewReadinessCheck()
     func authorLabelTap()
 }
 
 protocol CollectionScreenViewPresenterProtocol {
     var collectionScreenViewController: CollectionScreenViewControllerProtocol? { get set }
-    var catalogDataModel: CatalogDataModel { get set }
-    func takeNfts() -> [NftModel]
-    func takeInitialNftCount() -> Int
-    func takeActualNftCount() -> Int
-    func takeNftCoverLink() -> String?
-    func takeNftName() -> String
-    func takeNftDescription() -> String
-    func createWebViewScreen() -> WebViewScreenViewController
+    var actualNftsCount: Int { get }
+    var takeCollectionName: String { get }
+    var takeCollectionCover: String { get }
+    var takeCollectionDescription: String { get }
+    var takeInitialNftCount: Int { get }
+    var createWebViewScreen: WebViewScreenViewController { get }
     func makeFetchRequest()
+    func takeNftFromNfts(index: Int) -> NftModel
 }

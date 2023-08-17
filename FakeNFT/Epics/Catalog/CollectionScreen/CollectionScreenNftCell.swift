@@ -95,33 +95,9 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
         nftImage.kf.setImage(with: url)
     }
     
-    private func addToBasket() {
-        setNotEmptyBasketImage()
-        guard let nft = nft else { return }
-        BasketService.shared.addNFTToBasket(nft)
-    }
-    
-    private func removeFromBasket() {
-        basketButton.setImage(emptyBasketImage, for: .normal)
-        guard let nft = nft else { return }
-        BasketService.shared.removeNFTFromBasket(nft)
-    }
-    
     func setNotEmptyBasketImage() {
         let basketImage = notEmptyBasketImage
         basketButton.setImage(basketImage, for: .normal)
-    }
-    
-    private func setLike() {
-        setButtonLikeImage(image: .liked)
-        guard let nft = nft else { return }
-        LikeService.shared.setLike(nftId: nft.id)
-    }
-    
-    private func setUnlike() {
-        setButtonLikeImage(image: .unliked)
-        guard let nft = nft else { return }
-        LikeService.shared.removeLike(nftId: nft.id)
     }
     
     func setButtonLikeImage(image: UIImage?) {
@@ -139,13 +115,6 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
                 grayStar.contentMode = .scaleAspectFit
                 ratingStack.addArrangedSubview(grayStar)
             }
-        }
-    }
-    
-    private func removeRating() {
-        ratingStack.arrangedSubviews.forEach { star in
-            star.removeFromSuperview()
-            ratingStack.removeArrangedSubview(star)
         }
     }
     
@@ -194,6 +163,37 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
             costLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             costLabel.trailingAnchor.constraint(equalTo: basketButton.leadingAnchor)
         ])
+    }
+    
+    private func removeRating() {
+        ratingStack.arrangedSubviews.forEach { star in
+            star.removeFromSuperview()
+            ratingStack.removeArrangedSubview(star)
+        }
+    }
+    
+    private func addToBasket() {
+        setNotEmptyBasketImage()
+        guard let nft = nft else { return }
+        BasketService.shared.addNFTToBasket(nft)
+    }
+    
+    private func removeFromBasket() {
+        basketButton.setImage(emptyBasketImage, for: .normal)
+        guard let nft = nft else { return }
+        BasketService.shared.removeNFTFromBasket(nft)
+    }
+    
+    private func setLike() {
+        setButtonLikeImage(image: .liked)
+        guard let nft = nft else { return }
+        LikeService.shared.setLike(nftId: nft.id)
+    }
+    
+    private func setUnlike() {
+        setButtonLikeImage(image: .unliked)
+        guard let nft = nft else { return }
+        LikeService.shared.removeLike(nftId: nft.id)
     }
     
     @objc private func basketButtonTap() {

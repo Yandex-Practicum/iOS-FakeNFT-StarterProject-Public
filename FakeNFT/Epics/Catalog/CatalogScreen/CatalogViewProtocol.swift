@@ -13,9 +13,10 @@ protocol CatalogViewControllerProtocol: AnyObject {
 }
 
 protocol CatalogViewPresenterProtocol {
-    func configureCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    var catalogCount: Int { get }
+    var alertActions: [AlertActionModel] { get }
     func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController
-    func catalogCount() -> Int
     func updateCatalogData()
     func makeFetchRequest()
+    func takeDataByIndex(index: Int) -> CatalogDataModel
 }

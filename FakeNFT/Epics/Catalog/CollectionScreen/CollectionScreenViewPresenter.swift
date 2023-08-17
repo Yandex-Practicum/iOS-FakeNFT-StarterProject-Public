@@ -9,8 +9,32 @@ import UIKit
 
 final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol {
     weak var collectionScreenViewController: CollectionScreenViewControllerProtocol?
-    var catalogDataModel: CatalogDataModel
+    var actualNftsCount: Int {
+        nfts.count
+    }
+    var takeCollectionName: String {
+        catalogDataModel.name
+    }
+    var takeCollectionCover: String {
+        catalogDataModel.cover
+    }
+    var takeCollectionDescription: String {
+        catalogDataModel.description
+    }
+    var takeInitialNftCount: Int {
+        catalogDataModel.nfts.count
+    }
+    lazy var createWebViewScreen: WebViewScreenViewController = {
+        let webViewScreen = WebViewScreenViewController()
+        let presenter = WebViewScreenViewPresenter(authorWebSiteLink: authorNetworkService.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        webViewScreen.presenter = presenter
+        presenter.viewController = webViewScreen
+        webViewScreen.modalPresentationStyle = .fullScreen
+        return webViewScreen
+    }()
+    
     private var nfts: [NftModel] = []
+    private var catalogDataModel: CatalogDataModel
     private let nftNetworkService = NftNetworkService.shared
     private let authorNetworkService = AuthorNetworkService.shared
     private var authorNetworkServiceObserver: NSObjectProtocol?
@@ -36,48 +60,19 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
             }
     }
     
-    func takeNfts() -> [NftModel] {
-        nfts
-    }
-    
     func makeFetchRequest() {
         authorNetworkService.fetchAuthor(id: catalogDataModel.author)
         nftNetworkService.fetchNft(id: catalogDataModel.author)
     }
     
-    func takeInitialNftCount() -> Int {
-        catalogDataModel.nfts.count
-    }
-    
-    func takeActualNftCount() -> Int {
-        nfts.count
-    }
-    
-    func takeNftCoverLink() -> String? {
-        catalogDataModel.cover.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-    }
-    
-    func takeNftName() -> String {
-        catalogDataModel.name
-    }
-    
-    func takeNftDescription() -> String {
-        catalogDataModel.description
-    }
-    
-    func createWebViewScreen() -> WebViewScreenViewController {
-        let webViewScreen = WebViewScreenViewController()
-        let presenter = WebViewScreenViewPresenter(authorWebSiteLink: authorNetworkService.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
-        webViewScreen.presenter = presenter
-        presenter.viewController = webViewScreen
-        webViewScreen.modalPresentationStyle = .fullScreen
-        return webViewScreen
+    func takeNftFromNfts(index: Int) -> NftModel {
+        nfts[index]
     }
     
     private func updateCollection() {
         let oldCount = nfts.count
         let newCount = nftNetworkService.nfts.count
-        nfts = nftNetworkService.nfts.sorted(by: { $0.rating > $1.rating })
+        nfts = nftNetworkService.nfts.sorted(by: ) { $0.rating > $1.rating }
         if oldCount != newCount {
             collectionScreenViewController?.updateCollection(oldCount: 0, newCount: newCount)
         }
