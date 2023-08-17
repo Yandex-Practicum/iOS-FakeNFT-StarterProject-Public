@@ -12,12 +12,15 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
     func updateCollection(oldCount: Int, newCount: Int)
     func updateAuthor()
     func removeHud()
+    
     func viewReadinessCheck()
+    func authorLabelTap()
 }
 
 protocol CollectionScreenViewPresenterProtocol {
     var collectionScreenViewController: CollectionScreenViewControllerProtocol? { get set }
-    func configureCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    var catalogDataModel: CatalogDataModel { get set }
+    func takeNfts() -> [NftModel]
     func takeInitialNftCount() -> Int
     func takeActualNftCount() -> Int
     func takeNftCoverLink() -> String?

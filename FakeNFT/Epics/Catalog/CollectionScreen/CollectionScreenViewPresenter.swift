@@ -9,7 +9,7 @@ import UIKit
 
 final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol {
     weak var collectionScreenViewController: CollectionScreenViewControllerProtocol?
-    private var catalogDataModel: CatalogDataModel
+    var catalogDataModel: CatalogDataModel
     private var nfts: [NftModel] = []
     private let nftNetworkService = NftNetworkService.shared
     private let authorNetworkService = AuthorNetworkService.shared
@@ -36,26 +36,13 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
             }
     }
     
+    func takeNfts() -> [NftModel] {
+        nfts
+    }
+    
     func makeFetchRequest() {
         authorNetworkService.fetchAuthor(id: catalogDataModel.author)
         nftNetworkService.fetchNft(id: catalogDataModel.author)
-    }
-        
-    func configureCell(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: CollectionScreenCollectionCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        let nft = nfts[indexPath.row]
-        cell.nft = nft
-        if BasketService.shared.basket.contains(where: {$0.id == nft.id}) {
-            cell.setNotEmptyBasketImage()
-        }
-        if LikeService.shared.likes.contains(nft.id) {
-            cell.setButtonLikeImage(image: .liked)
-        }
-        cell.setNftImage(link: nft.images.first ?? "")
-        cell.setRating(rate: nft.rating)
-        cell.setNameLabel(name: nft.name)
-        cell.setCostLabel(cost: nft.price)
-        return cell
     }
     
     func takeInitialNftCount() -> Int {
@@ -92,7 +79,7 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         let newCount = nftNetworkService.nfts.count
         nfts = nftNetworkService.nfts.sorted(by: { $0.rating > $1.rating })
         if oldCount != newCount {
-            collectionScreenViewController?.updateCollection(oldCount: oldCount, newCount: newCount)
+            collectionScreenViewController?.updateCollection(oldCount: 0, newCount: newCount)
         }
         collectionScreenViewController?.viewReadinessCheck()
     }
