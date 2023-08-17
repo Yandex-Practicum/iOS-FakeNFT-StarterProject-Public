@@ -7,6 +7,7 @@ protocol NFTsNetworkClientProtocol {
 
 final class NFTsNetworkClient: NFTsNetworkClientProtocol {
     // MARK: - Private properties
+    
     private let networkClient = DefaultNetworkClient()
     
     func getNFTBy(id: String, completion: @escaping (Result<NFTResponseModel, Error>) -> Void) {
@@ -29,27 +30,5 @@ final class NFTsNetworkClient: NFTsNetworkClientProtocol {
                 completion(.failure(error))
             }
         }
-    }
-}
-
-struct AuthorByIdRequest: NetworkRequest {
-    private let id: String
-    init(id: String) {
-        self.id = id
-    }
-    
-    var endpoint: URL? {
-        return URL(string: ProfileConstants.endpoint + ProfileConstants.apiV1UsersUserIdGet + id)
-    }
-}
-
-struct  NftByIdRequest: NetworkRequest {
-    private let id: String
-    init(id: String) {
-        self.id = id
-    }
-    
-    var endpoint: URL? {
-        return URL(string: ProfileConstants.endpoint + ProfileConstants.apiV1NftNftIdGet + id)
     }
 }

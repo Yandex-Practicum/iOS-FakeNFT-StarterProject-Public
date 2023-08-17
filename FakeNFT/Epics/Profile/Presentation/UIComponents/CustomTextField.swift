@@ -2,6 +2,7 @@ import UIKit
 
 class CustomTextField: UITextField {
     // MARK: - Private properties
+    
     private let insets =  UIEdgeInsets(
         top: 11,
         left: 16,
@@ -11,6 +12,7 @@ class CustomTextField: UITextField {
     private let textChangeHandler: (String) -> Void
     
     // MARK: - Lifecycle
+    
     init(with text: String, textChangeHandler: @escaping (String) -> Void) {
         self.textChangeHandler = textChangeHandler
         super.init(frame: .zero)
@@ -25,6 +27,7 @@ class CustomTextField: UITextField {
     
     
     // MARK: - Public methods
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: insets)
     }
@@ -38,6 +41,7 @@ class CustomTextField: UITextField {
     }
     
     // MARK: - Private methods
+    
     private func uiConfiguration(with text: String) {
         font = .bodyRegular
         textColor = .ypBlack
@@ -45,6 +49,7 @@ class CustomTextField: UITextField {
         layer.cornerRadius = 12
         layer.masksToBounds = true
         clearButtonMode = .whileEditing
+        
         let attributes = [
             NSAttributedString.Key.foregroundColor: UIColor.ypGrayUniversal
         ]

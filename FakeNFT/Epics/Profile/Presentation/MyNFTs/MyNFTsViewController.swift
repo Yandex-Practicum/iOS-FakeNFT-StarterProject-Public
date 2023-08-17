@@ -2,9 +2,11 @@ import UIKit
 
 final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtocol {
     // MARK: - Public properties
+    
     var presenter: MyNFTsViewDelegate?
     
     // MARK: - Private properties
+    
     private let tableView = UITableView()
     
     private lazy var placeholderLabel: UILabel = {
@@ -17,6 +19,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }()
     
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
@@ -35,6 +38,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
     
     // MARK: - MyNFTsViewControllerProtocol
+    
     func updateTable() {
         checkPlaceholderLabelVisibility()
         tableView.reloadData()
@@ -69,6 +73,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         [placeholderLabel, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -136,6 +141,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
     
     // MARK: - Actions
+    
     @objc private func backButtonTapped() {
         dismiss(animated: true)
     }
@@ -183,6 +189,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
 
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
+
 extension MyNFTsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let presenter = presenter else { return 0 }

@@ -1,11 +1,13 @@
 import UIKit
 
 // MARK: - FavoriteNFTsPresenterProtocol
+
 protocol FavoriteNFTsPresenterProtocol: AnyObject {
     var networkClient: NFTsNetworkClientProtocol? { get set }
 }
 
 // MARK: - FavoriteNFTsViewDelegate
+
 protocol FavoriteNFTsViewDelegate: AnyObject {
     var view: NFTsViewControllerProtocol? { get set }
     var callback: (() -> Void)? { get set }
@@ -17,6 +19,7 @@ protocol FavoriteNFTsViewDelegate: AnyObject {
 }
 
 // MARK: - NFTsViewControllerProtocol
+
 protocol NFTsViewControllerProtocol {
     var presenter: FavoriteNFTsViewDelegate? { get set }
     func updateTableOrCollection()
@@ -24,6 +27,7 @@ protocol NFTsViewControllerProtocol {
 }
 
 // MARK: - FavoriteNFTCellDelegate
+
 protocol FavoriteNFTCellDelegate: AnyObject {
     func didTapLikeButton(at indexPath: IndexPath)
 }

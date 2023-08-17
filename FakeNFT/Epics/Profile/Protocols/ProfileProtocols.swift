@@ -1,6 +1,7 @@
 import UIKit
 
 // MARK: - ProfileViewControllerProtocol
+
 protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     func activityIndicatorAnimation(inProcess: Bool)
@@ -8,8 +9,8 @@ protocol ProfileViewControllerProtocol: AnyObject {
     func setTextForLabels(from profile: ProfileResponseModel)
 }
 
-
 // MARK: - ProfileViewPresenterProtocol
+
 protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
@@ -19,22 +20,22 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     func getMyNFTs() -> [String]
 }
 
-
 // MARK: - ProfilePresenterNetworkProtocol
+
 protocol ProfilePresenterNetworkProtocol: AnyObject {
     func getProfile(with data: ProfileResponseModel)
     func updateProfile(with data: ProfileResponseModel)
 }
 
-
 // MARK: - ProfileNetworkClientProtocol
+
 protocol ProfileNetworkClientProtocol: AnyObject {
     func getDecodedProfile()
     func updateProfile(with data: ProfileResponseModel, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-
 // MARK: - ProfileViewDelegate
+
 protocol ProfileViewDelegate: AnyObject {
     func sendNewProfile(_ profile: ProfileResponseModel)
 }

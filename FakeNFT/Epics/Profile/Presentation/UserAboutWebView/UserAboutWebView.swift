@@ -10,13 +10,16 @@ protocol UserAboutWebViewProtocol: AnyObject {
 
 final class UserAboutWebView: UIViewController & UserAboutWebViewProtocol {
     // MARK: - Public properties
+    
     var presenter: WebViewPresenterProtocol?
     
     // MARK: - Private properties
+    
     private var webView = WKWebView()
     private var progressView = UIProgressView()
     
 // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
@@ -39,6 +42,7 @@ final class UserAboutWebView: UIViewController & UserAboutWebViewProtocol {
     }
     
     // MARK: - Public methods
+    
     // swiftlint:disable:next block_based_kvo
     override func observeValue(
         forKeyPath keyPath: String?,
@@ -66,6 +70,7 @@ final class UserAboutWebView: UIViewController & UserAboutWebViewProtocol {
     }
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         view.addSubview(webView)
         view.addSubview(progressView)

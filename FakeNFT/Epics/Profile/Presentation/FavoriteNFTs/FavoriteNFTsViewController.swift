@@ -2,8 +2,11 @@ import UIKit
 
 final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerProtocol {
     // MARK: - Public properties
+    
     var presenter: FavoriteNFTsViewDelegate?
+    
     // MARK: - Private properties
+    
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(
             frame: .zero,
@@ -33,6 +36,7 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
     )
     
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
@@ -42,16 +46,16 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
         layoutConfigure()
     }
     
-    
-    // MARK: - NFTsViewControllerProtocol
-    func updateTableOrCollection() {
-        checkPlaceholderLabelVisibility()
-        collectionView.reloadData()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         presenter?.callback?()
+    }
+    
+    // MARK: - NFTsViewControllerProtocol
+    
+    func updateTableOrCollection() {
+        checkPlaceholderLabelVisibility()
+        collectionView.reloadData()
     }
     
     func showNetworkErrorAlert(with error: Error) {
@@ -82,6 +86,7 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
     
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         [placeholderLabel, collectionView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -131,14 +136,14 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
     }
     
     // MARK: - Actions
+    
     @objc private func backButtonTapped() {
         dismiss(animated: true)
     }
-    
-    @objc private func imageButtonTapped() {
-        // TODO: Добавить сортировку после добавления в BASE
-    }
 }
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
@@ -168,6 +173,9 @@ extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+
+// MARK: - UICollectionViewDataSource
+
 extension FavoriteNFTsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter?.getNFTsCounter() ?? 0
@@ -193,6 +201,7 @@ extension FavoriteNFTsViewController: UICollectionViewDataSource {
 
 
 // MARK: - FavoriteNFTCellDelegate
+
 extension FavoriteNFTsViewController: FavoriteNFTCellDelegate {
     func didTapLikeButton(at indexPath: IndexPath) {
         presenter?.deleteNFT(at: indexPath)

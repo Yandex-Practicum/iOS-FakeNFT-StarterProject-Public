@@ -9,6 +9,7 @@ enum EditableParameter {
 
 final class ProfileEditPresenter: ProfileEditPresenterProtocol {
     // MARK: - Private properties
+    
     private let profile: EditableProfileModel
     private var name: String
     private var avatar: String

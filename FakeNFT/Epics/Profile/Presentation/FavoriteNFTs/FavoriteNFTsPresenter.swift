@@ -11,6 +11,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     var callback: (() -> Void)?
     
     // MARK: - Private properties
+    
     private let oldProfile: ProfileResponseModel
     private var profile: ProfileResponseModel
     private var nftAuthors: Set<String> = []
@@ -29,7 +30,6 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Public properties
     

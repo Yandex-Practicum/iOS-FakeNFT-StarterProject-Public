@@ -2,11 +2,18 @@ import UIKit
 
 final class CustomTextView: UITextView {
     // MARK: - Private properties
+    
     private let placeholderLabel = UILabel()
-    private let insets = UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 32)
     private var textChangeHandler: (String) -> Void
+    private let insets = UIEdgeInsets(
+        top: 11,
+        left: 11,
+        bottom: 11,
+        right: 32
+    )
     
     // MARK: - Lifecycle
+    
     init(with placeholder: String, text: String, textChangeHandler: @escaping (String) -> Void) {
         self.textChangeHandler = textChangeHandler
         
@@ -23,6 +30,7 @@ final class CustomTextView: UITextView {
     }
     
     // MARK: - Private methods
+    
     private func uiConfiguration(with text: String) {
         textContainerInset = insets
         font = .bodyRegular
@@ -66,6 +74,7 @@ final class CustomTextView: UITextView {
         }
     }
     
+    // MARK: - Actions
     @objc private func customTextViewTextDidChange() {
         textChangeHandler(self.text)
         placeholderLabel.isHidden = !text.isEmpty

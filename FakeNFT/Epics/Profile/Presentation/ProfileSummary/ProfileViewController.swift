@@ -2,8 +2,11 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     // MARK: - Public properties
+    
     var presenter: ProfileViewPresenterProtocol?
+    
     // MARK: - Private properties
+    
     private let mainStack: UIStackView = {
         let stack = UIStackView(frame: .zero)
         stack.contentMode = .scaleAspectFit
@@ -88,6 +91,7 @@ final class ProfileViewController: UIViewController {
     }()
     
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
@@ -100,6 +104,7 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mainStack)
@@ -187,16 +192,6 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    // MARK: - Actions
-    @objc private func didTapEditProfileButton(){
-        guard let profile = presenter?.getEditableProfile() else { return }
-        let profileEditPresenter = ProfileEditPresenter(editableProfile: profile)
-        let profileEditViewController = ProfileEditViewController(editableProfile: profile)
-        profileEditViewController.presenter = profileEditPresenter
-        profileEditViewController.delegate = self
-        present(profileEditViewController, animated: true)
-    }
-    
     private func didTapMyNFTsCell() {
         guard
             let presenter = presenter,
@@ -241,6 +236,17 @@ final class ProfileViewController: UIViewController {
         present(navigationController, animated: true)
     }
     
+    // MARK: - Actions
+    
+    @objc private func didTapEditProfileButton(){
+        guard let profile = presenter?.getEditableProfile() else { return }
+        let profileEditPresenter = ProfileEditPresenter(editableProfile: profile)
+        let profileEditViewController = ProfileEditViewController(editableProfile: profile)
+        profileEditViewController.presenter = profileEditPresenter
+        profileEditViewController.delegate = self
+        present(profileEditViewController, animated: true)
+    }
+    
     @objc private func openUserAboutWebView() {
         guard let url = presenter?.getCurrentProfileResponse()?.website else { return }
         let presenter = WebViewPresenter(url: url)
@@ -253,6 +259,7 @@ final class ProfileViewController: UIViewController {
 
 
 // MARK: - UITableViewDelegate
+
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
@@ -270,6 +277,7 @@ extension ProfileViewController: UITableViewDelegate {
 
 
 // MARK: - Extension UITableViewDataSource
+
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         ProfileConstants.tableLabelArray.count
@@ -288,6 +296,7 @@ extension ProfileViewController: UITableViewDataSource {
 
 
 // MARK: - Extension ProfileViewControllerProtocol
+
 extension ProfileViewController: ProfileViewControllerProtocol{
     func activityIndicatorAnimation(inProcess: Bool){
         DispatchQueue.main.async { [weak self] in
@@ -317,6 +326,7 @@ extension ProfileViewController: ProfileViewControllerProtocol{
 }
 
 // MARK: - Extension ProfileViewDelegate
+
 extension ProfileViewController: ProfileViewDelegate {
     func sendNewProfile(_ profile: ProfileResponseModel) {
         DispatchQueue.main.async {

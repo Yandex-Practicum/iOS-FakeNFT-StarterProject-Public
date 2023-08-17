@@ -2,10 +2,12 @@ import UIKit
 
 final class ProfileEditViewController: UIViewController {
     // MARK: - Public properties
+    
     var presenter: ProfileEditPresenterProtocol?
     var delegate: ProfileViewDelegate?
     
     // MARK: - Private properties
+    
     private let nameLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.name", comment: ""))
     private let descriptionLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.description", comment: ""))
     private let siteLabel = EditedParameterLabel.init(text: NSLocalizedString("profile.site", comment: ""))
@@ -92,7 +94,7 @@ final class ProfileEditViewController: UIViewController {
         button.setTitleColor(.ypWhiteUniversal, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.layer.masksToBounds = true
-
+        
         button.addTarget(self, action: #selector(changePhotoDidTap), for: .touchUpInside)
         button.layer.zPosition = 2
         return button
@@ -101,6 +103,7 @@ final class ProfileEditViewController: UIViewController {
     private var profile: EditableProfileModel
     
     // MARK: - Life cycle
+    
     init(editableProfile: EditableProfileModel) {
         profile = editableProfile
         photoView.image = profile.avatarImage
@@ -139,6 +142,7 @@ final class ProfileEditViewController: UIViewController {
     
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         view.addSubview(mainStack)
         
@@ -261,6 +265,7 @@ final class ProfileEditViewController: UIViewController {
     }
     
     // MARK: - Actioins
+    
     @objc private func changePhotoDidTap() {
         newPhotoUrlLabel.isHidden = false
         showURLInputAlert()
@@ -273,6 +278,7 @@ final class ProfileEditViewController: UIViewController {
 
 
 // MARK: - Extension UITextFieldDelegate
+
 extension ProfileEditViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

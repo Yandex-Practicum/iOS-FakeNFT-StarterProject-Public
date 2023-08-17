@@ -2,10 +2,12 @@ import UIKit
 
 final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     // MARK: - Public properties
+    
     static let identifier: String = "FavoriteNFTCell"
     weak var delegate: FavoriteNFTCellDelegate?
     
     // MARK: - Private properties
+    
     private var indexPath: IndexPath?
     private lazy var aboutNFCStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [nftNameLabel, ratingStack, priceLabel])
@@ -67,8 +69,8 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
         return label
     }()
     
-    
     // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         self.backgroundColor = .clear
@@ -87,7 +89,8 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
         }
     }
     
-    // MARK: - Private methods
+    // MARK: - Public methods
+    
     func configureCell(with model: MyNFTPresentationModel, indexPath: IndexPath) {
         self.indexPath = indexPath
         nftImage.kf.setImage(with: URL(string: model.image))
@@ -97,6 +100,7 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     }
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         [nftImage, aboutNFCStack, likeButton].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -123,6 +127,7 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     }
     
     // MARK: - Actions
+    
     @objc private func likeButtonTapped() {
         if let indexPath = indexPath {
             delegate?.didTapLikeButton(at: indexPath)

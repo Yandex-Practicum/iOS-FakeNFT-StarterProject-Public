@@ -2,6 +2,7 @@ import UIKit
 
 final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Private properties
+    
     private lazy var aboutNFCStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [nftNameLabel, ratingStack, byAuthorStack])
         stack.axis = .vertical
@@ -95,7 +96,8 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         return label
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Life cycle
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -116,6 +118,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Public properties
+    
     func configure(with model: MyNFTPresentationModel) {
         nftImage.kf.setImage(with: URL(string: model.image))
         nftNameLabel.text = model.nftName
@@ -127,6 +130,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Private methods
+    
     private func addingUIElements() {
         [nftImage, aboutNFCStack, priceStack, likeButton].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false

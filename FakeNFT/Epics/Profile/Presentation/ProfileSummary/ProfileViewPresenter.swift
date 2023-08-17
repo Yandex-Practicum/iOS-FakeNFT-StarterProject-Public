@@ -3,13 +3,15 @@ import UIKit
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     // MARK: - Public properties
+    
     weak var view: ProfileViewControllerProtocol?
     weak var networkClient: ProfileNetworkClientProtocol?
     
     private var currentProfileResponseModel: ProfileResponseModel?
     private var currentProfileEditModel: EditableProfileModel?
     
-    // MARK: - Public properties / ProfileViewPresenterProtocol
+    // MARK: - ProfileViewPresenterProtocol
+    
     func viewDidLoad() {
         UIBlockingProgressHUD.show()
         view?.activityIndicatorAnimation(inProcess: true)
@@ -30,6 +32,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     }
     
     // MARK: - Private properties
+    
     private func convertResponse(model: ProfileResponseModel?, image: UIImage?) -> EditableProfileModel? {
         guard let model = model else {return nil}
         return EditableProfileModel(
@@ -47,6 +50,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
 
 
 // MARK: - Extension ProfilePresenterNetworkProtocol
+
 extension ProfileViewPresenter: ProfilePresenterNetworkProtocol {
     func getProfile(with data: ProfileResponseModel) {
         DispatchQueue.main.async { [weak self] in

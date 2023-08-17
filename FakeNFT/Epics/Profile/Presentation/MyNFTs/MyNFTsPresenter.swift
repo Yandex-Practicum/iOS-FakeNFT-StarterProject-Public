@@ -28,7 +28,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - MyNFTsViewDelegate
     
     func viewDidLoad() {
@@ -38,7 +37,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         
         getNFTResponceModels(for: profile.nfts)
     }
-    
     
     func getMyNFTsCounter() -> Int {
         myNFTsResponces.count
@@ -111,7 +109,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         }
     }
     
-    
     private func getAuthorsResponceModels() {
         guard let networkClient = networkClient else {
             print("networkClient is nil")
@@ -141,7 +138,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
             self.createNFCPresentationModels()
         }
     }
-    
     
     private func createNFCPresentationModels() {
         for responce in myNFTsResponces {

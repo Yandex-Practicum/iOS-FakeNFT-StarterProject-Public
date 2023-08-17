@@ -1,6 +1,7 @@
 import UIKit
 
 // MARK: - MyNFTsViewControllerProtocol
+
 protocol MyNFTsViewControllerProtocol {
     var presenter: MyNFTsViewDelegate? { get set }
     func updateTable()
@@ -8,11 +9,13 @@ protocol MyNFTsViewControllerProtocol {
 }
 
 // MARK: - MyNFTsPresenterProtocol
+
 protocol MyNFTsPresenterProtocol: AnyObject {
     var networkClient: NFTsNetworkClientProtocol? { get set }
 }
 
 // MARK: - MyNFTsViewDelegate
+
 protocol MyNFTsViewDelegate: AnyObject {
     var view: MyNFTsViewControllerProtocol? { get set }
     var callback: (() -> Void)? { get set }
