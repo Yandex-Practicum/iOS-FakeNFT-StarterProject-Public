@@ -1,6 +1,6 @@
 import Foundation
 
-struct NFTItemModel: Decodable {
+public struct NFTItemModel: Decodable {
     let id: String
     let createdAt: Date
     let name: String
@@ -9,7 +9,27 @@ struct NFTItemModel: Decodable {
     let description: String
     let price: Double
     let author: String
+
+    public init(
+        id: String,
+        createdAt: Date,
+        name: String,
+        images: [NFTImage],
+        rating: Int,
+        description: String,
+        price: Double,
+        author: String
+    ) {
+        self.id = id
+        self.createdAt = createdAt
+        self.name = name
+        self.images = images
+        self.rating = rating
+        self.description = description
+        self.price = price
+        self.author = author
+    }
 }
 
-typealias NFTItemResponse = [NFTItemModel]
-typealias NFTImage = String
+public typealias NFTItemResponse = [NFTItemModel]
+public typealias NFTImage = String

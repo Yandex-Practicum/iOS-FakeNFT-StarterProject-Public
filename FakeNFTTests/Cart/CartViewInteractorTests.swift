@@ -1,35 +1,35 @@
-//
-//  CartViewInteractorTests.swift
-//  FakeNFTTests
-//
-//  Created by Aleksandr Bekrenev on 17.08.2023.
-//
-
+@testable import FakeNFT
 import XCTest
 
 final class CartViewInteractorTests: XCTestCase {
+    func testCartViewInteractorFetchOrder() {
+        let nftService = NFTNetworkCartServiceSpy()
+        let orderService = OrderServiceSpy()
+        let imageLoadingService = ImageLoadingServiceSpy()
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+        let interactor = CartViewInteractor(
+            nftService: nftService,
+            orderService: orderService,
+            imageLoadingService: imageLoadingService
+        )
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        let expectation = self.expectation(description: "Loading order")
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let onSuccess: LoadingCompletionBlock<CartViewModel.ViewState> = { state in
+            if case .loaded(_, _) = state {
+                expectation.fulfill()
+            }
         }
-    }
 
+        let onFailure: LoadingFailureCompletionBlock = { _ in }
+
+        interactor.fetchOrder(
+            with: "1",
+            onSuccess: onSuccess,
+            onFailure: onFailure
+        )
+
+        self.waitForExpectations(timeout: 1)
+        XCTAssertTrue(orderService.didFetchOrderCalled)
+    }
 }

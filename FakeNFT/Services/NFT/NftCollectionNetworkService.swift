@@ -16,7 +16,7 @@ protocol NFTNetworkService {
     )
 }
 
-protocol NFTNetworkCartService {
+public protocol NFTNetworkCartService {
     func getNFTItemBy(
         id: String,
         result: @escaping ResultHandler<NFTItemModel>
