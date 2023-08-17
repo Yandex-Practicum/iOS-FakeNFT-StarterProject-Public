@@ -1,6 +1,6 @@
 import UIKit
 
-protocol CartViewRouterProtocol {
+public protocol CartViewRouterProtocol {
     func showSortAlert(viewController: UIViewController,
                        onChoosingSortingTrait: @escaping ActionCallback<CartOrderSorter.SortingTrait>)
 
@@ -12,12 +12,12 @@ protocol CartViewRouterProtocol {
     func showCartPayment(on viewController: UIViewController, orderId: String)
 }
 
-final class CartViewRouter {
+public final class CartViewRouter {
     private let currenciesService: CurrenciesServiceProtocol
     private let imageLoadingService: ImageLoadingServiceProtocol
     private let orderPaymentService: OrderPaymentServiceProtocol
 
-    init(
+    public init(
         currenciesService: CurrenciesServiceProtocol,
         imageLoadingService: ImageLoadingServiceProtocol,
         orderPaymentService: OrderPaymentServiceProtocol
@@ -30,7 +30,7 @@ final class CartViewRouter {
 
 // MARK: - CartViewRouterProtocol
 extension CartViewRouter: CartViewRouterProtocol {
-    func showSortAlert(
+    public func showSortAlert(
         viewController: UIViewController,
         onChoosingSortingTrait: @escaping ActionCallback<CartOrderSorter.SortingTrait>
     ) {
@@ -38,7 +38,7 @@ extension CartViewRouter: CartViewRouterProtocol {
         viewController.present(alert, animated: true)
     }
 
-    func showRemoveNftView(
+    public func showRemoveNftView(
         on viewController: UIViewController,
         nftImage: UIImage?,
         onChoosingRemoveNft: @escaping ActionCallback<CartRemoveNftViewController.RemoveNftFlow>
@@ -51,12 +51,12 @@ extension CartViewRouter: CartViewRouterProtocol {
         viewController.present(removeNftViewController, animated: true)
     }
 
-    func showErrorAlert(on viewController: UIViewController, error: Error) {
+    public func showErrorAlert(on viewController: UIViewController, error: Error) {
         let alert = UIAlertController.alert(for: error)
         viewController.present(alert, animated: true)
     }
 
-    func showCartPayment(on viewController: UIViewController, orderId: String) {
+    public func showCartPayment(on viewController: UIViewController, orderId: String) {
         let cartPaymentViewController = CartPaymentViewFactory.create(
             orderId: orderId,
             currenciesService: self.currenciesService,

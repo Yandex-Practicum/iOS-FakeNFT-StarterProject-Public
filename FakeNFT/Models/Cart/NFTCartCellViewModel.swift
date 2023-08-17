@@ -1,6 +1,6 @@
 import UIKit.UIImage
 
-struct NFTCartCellViewModel: Equatable {
+public struct NFTCartCellViewModel: Equatable {
     let id: String
     let name: String
     let image: UIImage?
@@ -8,4 +8,4 @@ struct NFTCartCellViewModel: Equatable {
     let price: Double
 }
 
-typealias OrderViewModel = [NFTCartCellViewModel]
+public typealias OrderViewModel = [NFTCartCellViewModel]

@@ -1,29 +1,29 @@
 import UIKit
 
-protocol CartTableViewHelperDelegate: AnyObject {
+public protocol CartTableViewHelperDelegate: AnyObject {
     var order: OrderViewModel? { get }
     func cartTableViewHelper(_ cartTableViewHelper: CartTableViewHelper, removeRow: Int, with nftImage: UIImage?)
 }
 
-protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
+public protocol CartTableViewHelperProtocol: UITableViewDataSource, UITableViewDelegate {
     var delegate: CartTableViewHelperDelegate? { get set }
 }
 
-final class CartTableViewHelper: NSObject {
-    weak var delegate: CartTableViewHelperDelegate?
+public final class CartTableViewHelper: NSObject {
+    weak public var delegate: CartTableViewHelperDelegate?
 }
 
 // MARK: - CartTableViewHelperProtocol
 extension CartTableViewHelper: CartTableViewHelperProtocol {
     // MARK: - UITableViewDelegate
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         heightForRowAt indexPath: IndexPath
     ) -> CGFloat {
         140
     }
 
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
@@ -34,14 +34,14 @@ extension CartTableViewHelper: CartTableViewHelperProtocol {
     }
 
     // MARK: - UITableViewDataSource
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
         self.delegate?.order?.count ?? 0
     }
 
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {

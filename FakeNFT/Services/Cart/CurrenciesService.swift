@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CurrenciesServiceProtocol {
+public protocol CurrenciesServiceProtocol {
     func fetchCurrencies(completion: @escaping ResultHandler<CurrenciesResult>)
 }
 

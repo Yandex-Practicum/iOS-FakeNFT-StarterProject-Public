@@ -1,11 +1,11 @@
 import Foundation
 
-protocol OrderServiceProtocol {
+public protocol OrderServiceProtocol {
     func fetchOrder(id: String, completion: @escaping ResultHandler<Order>)
     func changeOrder(id: String, nftIds: [String], completion: @escaping ResultHandler<Order>)
 }
 
-protocol OrderPaymentServiceProtocol {
+public protocol OrderPaymentServiceProtocol {
     func purchase(orderId: String, currencyId: String, completion: @escaping ResultHandler<PurchaseResult>)
 }
 

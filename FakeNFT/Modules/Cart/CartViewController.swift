@@ -1,6 +1,6 @@
 import UIKit
 
-final class CartViewController: UIViewController {
+public final class CartViewController: UIViewController {
     private let cartView = CartView()
 
     private lazy var sortButton: UIBarButtonItem = {
@@ -17,7 +17,7 @@ final class CartViewController: UIViewController {
 
     private let router: CartViewRouterProtocol
 
-    init(
+    public init(
         viewModel: CartViewModelProtocol,
         tableViewHelper: CartTableViewHelperProtocol,
         router: CartViewRouterProtocol
@@ -32,16 +32,16 @@ final class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func loadView() {
+    override public func loadView() {
         self.view = self.cartView
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.fetchOrder()
     }
@@ -49,11 +49,11 @@ final class CartViewController: UIViewController {
 
 // MARK: - CartTableViewHelperDelegate
 extension CartViewController: CartTableViewHelperDelegate {
-    var order: OrderViewModel? {
+    public var order: OrderViewModel? {
         self.viewModel.order.value
     }
 
-    func cartTableViewHelper(
+    public func cartTableViewHelper(
         _ cartTableViewHelper: CartTableViewHelper,
         removeRow row: Int,
         with nftImage: UIImage?

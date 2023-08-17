@@ -7,7 +7,7 @@
 
 import UIKit.UIImage
 
-protocol ImageLoadingServiceProtocol {
+public protocol ImageLoadingServiceProtocol {
     func fetchImage(url: URL?, completion: @escaping ResultHandler<UIImage>)
 }
 

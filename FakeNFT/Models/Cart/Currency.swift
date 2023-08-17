@@ -1,10 +1,10 @@
 import Foundation
 
-struct Currency: Decodable {
+public struct Currency: Decodable {
     let id: String
     let title: String
     let name: String
     let image: String
 }
 
-typealias CurrenciesResult = [Currency]
+public typealias CurrenciesResult = [Currency]

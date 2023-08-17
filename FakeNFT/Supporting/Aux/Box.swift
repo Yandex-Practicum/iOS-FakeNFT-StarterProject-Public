@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Box<T> {
+public final class Box<T> {
     typealias Listener = (T) -> Void
 
     var listener: Listener?
@@ -18,7 +18,7 @@ final class Box<T> {
         }
     }
 
-    init(_ value: T) {
+    public init(_ value: T) {
         self.value = value
     }
 

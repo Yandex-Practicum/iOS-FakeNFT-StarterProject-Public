@@ -1,15 +1,8 @@
-//
-//  Types.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 04.08.2023.
-//
-
 import Foundation
 
-typealias ResultHandler<T> = (Result<T, Error>) -> Void
+public typealias ResultHandler<T> = (Result<T, Error>) -> Void
 
-typealias LoadingCompletionBlock<ViewState> = (ViewState) -> Void
-typealias LoadingFailureCompletionBlock = (Error) -> Void
+public typealias LoadingCompletionBlock<T> = (T) -> Void
+public typealias LoadingFailureCompletionBlock = (Error) -> Void
 
-typealias ActionCallback<T> = (T) -> Void
+public typealias ActionCallback<T> = (T) -> Void

@@ -13,8 +13,8 @@ protocol CartOrderSorterProtocol {
               completion: @escaping LoadingCompletionBlock<OrderViewModel>)
 }
 
-final class CartOrderSorter: CartOrderSorterProtocol {
-    enum SortingTrait {
+public final class CartOrderSorter: CartOrderSorterProtocol {
+    public enum SortingTrait {
         case price
         case rating
         case name

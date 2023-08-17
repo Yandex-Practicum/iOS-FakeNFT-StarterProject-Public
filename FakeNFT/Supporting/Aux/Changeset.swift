@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Changeset<T: Equatable> {
+public struct Changeset<T: Equatable> {
     var deletions: [IndexPath] = []
     var insertions: [IndexPath] = []
 

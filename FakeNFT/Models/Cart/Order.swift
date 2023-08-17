@@ -1,6 +1,6 @@
 import Foundation
 
-struct Order: Codable {
+public struct Order: Codable {
     let id: String
     let nfts: [String]
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CartViewModelProtocol {
+public protocol CartViewModelProtocol {
     var order: Box<OrderViewModel> { get }
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
@@ -15,22 +15,22 @@ protocol CartViewModelProtocol {
     func removeNft(row: Int)
 }
 
-final class CartViewModel {
-    enum ViewState: Equatable {
+public final class CartViewModel {
+    public enum ViewState: Equatable {
         case loading
         case loaded(OrderViewModel, Double)
         case empty
     }
 
-    let order = Box<OrderViewModel>([])
-    let nftCount = Box<String>("0 NFT")
-    let finalOrderCost = Box<String>("0 ETH")
-    let cartViewState = Box<ViewState>(.loading)
-    let error = Box<Error?>(nil)
+    public let order = Box<OrderViewModel>([])
+    public let nftCount = Box<String>("0 NFT")
+    public let finalOrderCost = Box<String>("0 ETH")
+    public let cartViewState = Box<ViewState>(.loading)
+    public let error = Box<Error?>(nil)
 
-    let orderId = "1"
+    public let orderId = "1"
 
-    private(set) var tableViewChangeset: Changeset<NFTCartCellViewModel>?
+    private(set) public var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] viewState in
         guard let self = self else { return }
@@ -62,7 +62,7 @@ final class CartViewModel {
 
 // MARK: - CartViewModelProtocol
 extension CartViewModel: CartViewModelProtocol {
-    func fetchOrder() {
+    public func fetchOrder() {
         if self.cartViewState.value != .loading {
             self.cartViewState.value = .loading
         }
@@ -74,13 +74,13 @@ extension CartViewModel: CartViewModelProtocol {
         )
     }
 
-    func sortOrder(trait: CartOrderSorter.SortingTrait) {
+    public func sortOrder(trait: CartOrderSorter.SortingTrait) {
         self.cartOrderSorter.sort(order: self.order.value, trait: trait) { [weak self] sortedOrder in
             self?.setOrderAnimated(newOrder: sortedOrder)
         }
     }
 
-    func removeNft(row: Int) {
+    public func removeNft(row: Int) {
         var newOrder = self.order.value
         newOrder.remove(at: row)
         let nftIds = newOrder.map { $0.id }

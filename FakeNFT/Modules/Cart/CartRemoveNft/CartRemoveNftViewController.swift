@@ -1,7 +1,7 @@
 import UIKit
 
-final class CartRemoveNftViewController: UIViewController {
-    enum RemoveNftFlow {
+public final class CartRemoveNftViewController: UIViewController {
+    public enum RemoveNftFlow {
         case remove
         case cancel
     }
@@ -70,7 +70,7 @@ final class CartRemoveNftViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
     }
