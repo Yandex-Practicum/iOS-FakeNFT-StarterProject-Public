@@ -15,6 +15,7 @@ protocol MyNFTsPresenterProtocol: AnyObject {
 // MARK: - MyNFTsViewDelegate
 protocol MyNFTsViewDelegate: AnyObject {
     var view: MyNFTsViewControllerProtocol? { get set }
+    var callback: (() -> Void)? { get set }
     func viewDidLoad()
     func getMyNFTsCounter() -> Int
     func isNeedToHideMissingNFCLabel() -> Bool

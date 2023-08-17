@@ -28,6 +28,12 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         checkPlaceholderLabelVisibility()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter?.callback?()
+    }
+    
     // MARK: - MyNFTsViewControllerProtocol
     func updateTable() {
         checkPlaceholderLabelVisibility()

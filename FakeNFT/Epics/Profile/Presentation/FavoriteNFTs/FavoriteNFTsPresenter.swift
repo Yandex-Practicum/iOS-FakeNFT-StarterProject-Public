@@ -1,12 +1,17 @@
 import Kingfisher
 import UIKit
 
-final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsViewDelegate {
+final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsViewDelegate {
     // MARK: - Public properties
+    
     var view: NFTsViewControllerProtocol?
     var networkClient: NFTsNetworkClientProtocol?
+    var profileNetworkClient: ProfileNetworkClientProtocol?
+    
+    var callback: (() -> Void)?
     
     // MARK: - Private properties
+    private let oldProfile: ProfileResponseModel
     private var profile: ProfileResponseModel
     private var nftAuthors: Set<String> = []
     
@@ -15,7 +20,9 @@ final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     private var presentationModels: [MyNFTPresentationModel] = []
     
     // MARK: - Life cycle
+    
     init(profile: ProfileResponseModel) {
+        self.oldProfile = profile
         self.profile = profile
     }
     
@@ -24,7 +31,14 @@ final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     }
     
     
+    // MARK: - Public properties
+    
+    func getCurrentProfileResponse() -> ProfileResponseModel? {
+        profile == oldProfile ? nil : profile
+    }
+    
     // MARK: - MyNFTsViewDelegate
+    
     func viewDidLoad() {
         presentationModels = []
         nftAuthorsResponces = []
@@ -35,7 +49,10 @@ final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     
     func deleteNFT(at indexPath: IndexPath) {
         guard indexPath.row < presentationModels.count else { return }
+        let deletedId = profile.likes[indexPath.row]
+        setNewProfile(without: deletedId)
         presentationModels.remove(at: indexPath.row)
+        updateProfile(with: profile)
         view?.updateTableOrCollection()
     }
     
@@ -52,6 +69,7 @@ final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     }
     
     // MARK: - Private Methods
+    
     private func addNFT(responce: NFTResponseModel) {
         myNFTsResponces.append(responce)
     }
@@ -149,6 +167,44 @@ final class FavoriteNFTsPresrnter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
             guard let self = self else { return }
             self.view?.updateTableOrCollection()
             UIBlockingProgressHUD.dismiss()
+        }
+    }
+    
+    private func setNewProfile(without id: String) {
+        let updatedLikes = profile.likes.filter { $0 != id }
+        
+        let updatedProfile = ProfileResponseModel(
+            name: profile.name,
+            avatar: profile.avatar,
+            description: profile.description,
+            website: profile.website,
+            nfts: profile.nfts,
+            likes: updatedLikes,
+            id: profile.id
+        )
+        profile = updatedProfile
+    }
+}
+
+
+// MARK: - ProfilePresenterNetworkProtocol
+
+extension FavoriteNFTsPresenter: ProfilePresenterNetworkProtocol {
+    func getProfile(with data: ProfileResponseModel) {
+    }
+    
+    func updateProfile(with data: ProfileResponseModel) {
+        UIBlockingProgressHUD.show()
+        profileNetworkClient?.updateProfile(with: data) { result in
+            switch result {
+            case .success:
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
+                    self.view?.showNetworkErrorAlert(with: error)
+                }
+            }
         }
     }
 }

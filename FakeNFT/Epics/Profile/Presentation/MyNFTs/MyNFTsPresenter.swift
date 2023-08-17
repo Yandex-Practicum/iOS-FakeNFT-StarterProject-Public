@@ -1,12 +1,15 @@
 import Kingfisher
 import UIKit
 
-final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
+final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     // MARK: - Public properties
+    
     var view: MyNFTsViewControllerProtocol?
     var networkClient: NFTsNetworkClientProtocol?
+    var callback: (() -> Void)?
     
     // MARK: - Private properties
+    
     private var profile: ProfileResponseModel
     private var nftAuthors: Set<String> = []
     
@@ -27,6 +30,10 @@ final class MyNFTsPresrnter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     // MARK: - MyNFTsViewDelegate
     func viewDidLoad() {
+        presentationModels = []
+        nftAuthorsResponces = []
+        myNFTsResponces = []
+        
         getNFTResponceModels(for: profile.nfts)
     }
     

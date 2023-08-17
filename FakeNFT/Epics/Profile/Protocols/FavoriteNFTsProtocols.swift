@@ -8,6 +8,7 @@ protocol FavoriteNFTsPresenterProtocol: AnyObject {
 // MARK: - FavoriteNFTsViewDelegate
 protocol FavoriteNFTsViewDelegate: AnyObject {
     var view: NFTsViewControllerProtocol? { get set }
+    var callback: (() -> Void)? { get set }
     func viewDidLoad()
     func getNFTsCounter() -> Int
     func isNeedToHidePlaceholderLabel() -> Bool
@@ -22,7 +23,7 @@ protocol NFTsViewControllerProtocol {
     func showNetworkErrorAlert(with error: Error)
 }
 
-// MARK: - FeaturedNFTCellDelegate
-protocol FeaturedNFTCellDelegate: AnyObject {
+// MARK: - FavoriteNFTCellDelegate
+protocol FavoriteNFTCellDelegate: AnyObject {
     func didTapLikeButton(at indexPath: IndexPath)
 }

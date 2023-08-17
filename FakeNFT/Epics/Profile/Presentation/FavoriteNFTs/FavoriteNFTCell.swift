@@ -1,9 +1,9 @@
 import UIKit
 
-final class FeaturedNFTCell: UICollectionViewCell & ReuseIdentifying {
+final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     // MARK: - Public properties
-    static let identifier: String = "FeaturedNFTCell"
-    weak var delegate: FeaturedNFTCellDelegate?
+    static let identifier: String = "FavoriteNFTCell"
+    weak var delegate: FavoriteNFTCellDelegate?
     
     // MARK: - Private properties
     private var indexPath: IndexPath?

@@ -11,7 +11,7 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
         )
         collection.dataSource = self
         collection.delegate = self
-        collection.register(FeaturedNFTCell.self, forCellWithReuseIdentifier: FeaturedNFTCell.identifier)
+        collection.register(FavoriteNFTCell.self, forCellWithReuseIdentifier: FavoriteNFTCell.identifier)
         collection.backgroundColor = .clear
         collection.isScrollEnabled = true
         return collection
@@ -49,6 +49,10 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
         collectionView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter?.callback?()
+    }
     
     func showNetworkErrorAlert(with error: Error) {
         if presentedViewController is UIAlertController { return }
@@ -179,7 +183,7 @@ extension FavoriteNFTsViewController: UICollectionViewDataSource {
             indexPath.row < presenter.getNFTsCounter()
         else { return UICollectionViewCell() }
         
-        let cell: FeaturedNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        let cell: FavoriteNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = presenter.getModelFor(indexPath: indexPath)
         cell.delegate = self
         cell.configureCell(with: model, indexPath: indexPath)
@@ -188,8 +192,8 @@ extension FavoriteNFTsViewController: UICollectionViewDataSource {
 }
 
 
-// MARK: - FeaturedNFTCellDelegate
-extension FavoriteNFTsViewController: FeaturedNFTCellDelegate {
+// MARK: - FavoriteNFTCellDelegate
+extension FavoriteNFTsViewController: FavoriteNFTCellDelegate {
     func didTapLikeButton(at indexPath: IndexPath) {
         presenter?.deleteNFT(at: indexPath)
         checkPlaceholderLabelVisibility()

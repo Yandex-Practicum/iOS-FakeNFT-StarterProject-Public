@@ -205,7 +205,7 @@ final class ProfileViewController: UIViewController {
         
         let myNFTsViewController = MyNFTsViewController()
         let myNFTsNetworkClient = NFTsNetworkClient()
-        let myNFTsPresenter = MyNFTsPresrnter(profile: profile)
+        let myNFTsPresenter = MyNFTsPresenter(profile: profile)
         
         myNFTsViewController.presenter = myNFTsPresenter
         
@@ -225,11 +225,15 @@ final class ProfileViewController: UIViewController {
         
         let featuredNFTsViewController = FavoriteNFTsViewController()
         let featuredNFTsNetworkClient = NFTsNetworkClient()
-        let featuredNFTsPresenter = FavoriteNFTsPresrnter(profile: profile)
-        
+        let featuredNFTsPresenter = FavoriteNFTsPresenter(profile: profile)
+        let profileNetworkClient = ProfileNetworkClient()
+        featuredNFTsPresenter.callback = {
+            presenter.viewDidLoad()
+        }
         featuredNFTsViewController.presenter = featuredNFTsPresenter
         
         featuredNFTsPresenter.networkClient = featuredNFTsNetworkClient
+        featuredNFTsPresenter.profileNetworkClient = profileNetworkClient
         featuredNFTsPresenter.view = featuredNFTsViewController
         
         let navigationController = UINavigationController(rootViewController: featuredNFTsViewController)
