@@ -48,14 +48,14 @@
 		BAC234E02A8CC30900D00A2F /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234DF2A8CC30900D00A2F /* UIStackView+Extension.swift */; };
 		BAC234E22A8D872400D00A2F /* FavoriteNFTsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E12A8D872400D00A2F /* FavoriteNFTsProtocols.swift */; };
 		BAC234E42A8D87A200D00A2F /* MyNFTsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E32A8D87A200D00A2F /* MyNFTsProtocols.swift */; };
-		BAC234E72A8EA5ED00D00A2F /* SortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E62A8EA5ED00D00A2F /* SortOption.swift */; };
-		BAC234E92A8EBDBF00D00A2F /* NetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E82A8EBDBF00D00A2F /* NetworkRequests.swift */; };
+		BAC234E72A8EA5ED00D00A2F /* ProfileSortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E62A8EA5ED00D00A2F /* ProfileSortOption.swift */; };
+		BAC234E92A8EBDBF00D00A2F /* ProfileRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC234E82A8EBDBF00D00A2F /* ProfileRequests.swift */; };
 		BAC32C3B2A8788310019B685 /* MyNFTsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C3A2A8788310019B685 /* MyNFTsViewController.swift */; };
 		BAC32C3E2A880F390019B685 /* MyNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C3D2A880F390019B685 /* MyNFTCell.swift */; };
 		BAC32C412A88B0EA0019B685 /* NFTResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C402A88B0E90019B685 /* NFTResponseModel.swift */; };
 		BAC32C432A88B1C10019B685 /* AuthorResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C422A88B1C10019B685 /* AuthorResponseModel.swift */; };
 		BAC32C452A88B2480019B685 /* MyNFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C442A88B2480019B685 /* MyNFTModel.swift */; };
-		BAC32C472A88CFE80019B685 /* NFTsNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C462A88CFE80019B685 /* NFTsNetworkClient.swift */; };
+		BAC32C472A88CFE80019B685 /* ProfileNFTsNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C462A88CFE80019B685 /* ProfileNFTsNetworkClient.swift */; };
 		BAC32C492A88D37F0019B685 /* MyNFTsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC32C482A88D37F0019B685 /* MyNFTsPresenter.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
@@ -127,14 +127,14 @@
 		BAC234DF2A8CC30900D00A2F /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		BAC234E12A8D872400D00A2F /* FavoriteNFTsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTsProtocols.swift; sourceTree = "<group>"; };
 		BAC234E32A8D87A200D00A2F /* MyNFTsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTsProtocols.swift; sourceTree = "<group>"; };
-		BAC234E62A8EA5ED00D00A2F /* SortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOption.swift; sourceTree = "<group>"; };
-		BAC234E82A8EBDBF00D00A2F /* NetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequests.swift; sourceTree = "<group>"; };
+		BAC234E62A8EA5ED00D00A2F /* ProfileSortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSortOption.swift; sourceTree = "<group>"; };
+		BAC234E82A8EBDBF00D00A2F /* ProfileRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequests.swift; sourceTree = "<group>"; };
 		BAC32C3A2A8788310019B685 /* MyNFTsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTsViewController.swift; sourceTree = "<group>"; };
 		BAC32C3D2A880F390019B685 /* MyNFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTCell.swift; sourceTree = "<group>"; };
 		BAC32C402A88B0E90019B685 /* NFTResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTResponseModel.swift; sourceTree = "<group>"; };
 		BAC32C422A88B1C10019B685 /* AuthorResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorResponseModel.swift; sourceTree = "<group>"; };
 		BAC32C442A88B2480019B685 /* MyNFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTModel.swift; sourceTree = "<group>"; };
-		BAC32C462A88CFE80019B685 /* NFTsNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsNetworkClient.swift; sourceTree = "<group>"; };
+		BAC32C462A88CFE80019B685 /* ProfileNFTsNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNFTsNetworkClient.swift; sourceTree = "<group>"; };
 		BAC32C482A88D37F0019B685 /* MyNFTsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTsPresenter.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -356,10 +356,10 @@
 			isa = PBXGroup;
 			children = (
 				BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */,
-				BAC32C462A88CFE80019B685 /* NFTsNetworkClient.swift */,
+				BAC32C462A88CFE80019B685 /* ProfileNFTsNetworkClient.swift */,
 				BA98F52A2A783BC3000917BF /* ProfileConstants.swift */,
-				BAC234E62A8EA5ED00D00A2F /* SortOption.swift */,
-				BAC234E82A8EBDBF00D00A2F /* NetworkRequests.swift */,
+				BAC234E62A8EA5ED00D00A2F /* ProfileSortOption.swift */,
+				BAC234E82A8EBDBF00D00A2F /* ProfileRequests.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -636,7 +636,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */,
-				BAC32C472A88CFE80019B685 /* NFTsNetworkClient.swift in Sources */,
+				BAC32C472A88CFE80019B685 /* ProfileNFTsNetworkClient.swift in Sources */,
 				BAA614D72A82F46C008311CF /* ProfileEditProtocols.swift in Sources */,
 				BAC32C3E2A880F390019B685 /* MyNFTCell.swift in Sources */,
 				BA01A47B2A85724B0045B77F /* UserAboutPresenter.swift in Sources */,
@@ -645,14 +645,14 @@
 				BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
-				BAC234E92A8EBDBF00D00A2F /* NetworkRequests.swift in Sources */,
+				BAC234E92A8EBDBF00D00A2F /* ProfileRequests.swift in Sources */,
 				BAC32C492A88D37F0019B685 /* MyNFTsPresenter.swift in Sources */,
 				BA98F52D2A786EC9000917BF /* ProfileTableViewCell.swift in Sources */,
 				BAC32C412A88B0EA0019B685 /* NFTResponseModel.swift in Sources */,
 				BA01A4792A856EE80045B77F /* UserAboutWebView.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				BA2524632A80471B00BD4F98 /* CustomTextView.swift in Sources */,
-				BAC234E72A8EA5ED00D00A2F /* SortOption.swift in Sources */,
+				BAC234E72A8EA5ED00D00A2F /* ProfileSortOption.swift in Sources */,
 				BA25245B2A7FC0CC00BD4F98 /* ProfileEditViewController.swift in Sources */,
 				BAA614D52A82F32A008311CF /* ProfileProtocols.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

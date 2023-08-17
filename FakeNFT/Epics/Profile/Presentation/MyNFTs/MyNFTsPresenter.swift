@@ -50,7 +50,7 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         presentationModels[indexPath.row]
     }
     
-    func sortMyNFTs(by option: SortOption) {
+    func sortMyNFTs(by option: ProfileSortOption) {
         var newPresentationModels: [MyNFTPresentationModel] = []
         
         switch option {

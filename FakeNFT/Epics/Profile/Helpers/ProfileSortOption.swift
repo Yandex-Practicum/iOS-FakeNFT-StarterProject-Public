@@ -1,6 +1,6 @@
 import Foundation
 
-enum SortOption: Codable {
+enum ProfileSortOption: Codable {
     case byPrice
     case byRating
     case byName
