@@ -1,9 +1,9 @@
 import Foundation
 
-protocol CartPaymentViewModelProtocol {
+public protocol CartPaymentViewModelProtocol {
     var currencies: Box<CurrenciesViewModel> { get }
     var cartPaymentViewState: Box<CartPaymentViewModel.ViewState> { get }
-    var isPurchaseSuccessful: Box<CartPaymentViewModel.PurchaseState> { get }
+    var purchaseState: Box<CartPaymentViewModel.PurchaseState> { get }
     var error: Box<Error?> { get }
     var selectedCurrencyId: Box<String?> { get }
 
@@ -11,18 +11,18 @@ protocol CartPaymentViewModelProtocol {
     func purсhase()
 }
 
-final class CartPaymentViewModel {
-    enum PurchaseState {
+public final class CartPaymentViewModel {
+    public enum PurchaseState {
         case success
         case failure
         case didNotHappen
     }
 
-    let currencies = Box<CurrenciesViewModel>([])
-    let cartPaymentViewState = Box<ViewState>(.loading)
-    let isPurchaseSuccessful = Box<PurchaseState>(.didNotHappen)
-    let error = Box<Error?>(nil)
-    let selectedCurrencyId = Box<String?>(nil)
+    public let currencies = Box<CurrenciesViewModel>([])
+    public let cartPaymentViewState = Box<ViewState>(.loading)
+    public let purchaseState = Box<PurchaseState>(.didNotHappen)
+    public let error = Box<Error?>(nil)
+    public let selectedCurrencyId = Box<String?>(nil)
 
     private let orderId: String
 
@@ -37,7 +37,7 @@ final class CartPaymentViewModel {
     private lazy var purchaseCompletion: LoadingCompletionBlock<PurchaseState> = { [weak self] purchaseState in
         guard let self = self else { return }
         self.cartPaymentViewState.value = .loaded(nil)
-        self.isPurchaseSuccessful.value = purchaseState
+        self.purchaseState.value = purchaseState
     }
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
@@ -56,7 +56,7 @@ final class CartPaymentViewModel {
 
 // MARK: - CartPaymentViewModelProtocol
 extension CartPaymentViewModel: CartPaymentViewModelProtocol {
-    func fetchCurrencies() {
+    public func fetchCurrencies() {
         if self.cartPaymentViewState.value != .loading {
             self.cartPaymentViewState.value = .loading
         }
@@ -67,7 +67,7 @@ extension CartPaymentViewModel: CartPaymentViewModelProtocol {
         )
     }
 
-    func purсhase() {
+    public func purсhase() {
         guard let selectedCurrencyId = self.selectedCurrencyId.value else { return }
         self.cartPaymentViewState.value = .loading
         self.cartPaymentInteractor.purchase(

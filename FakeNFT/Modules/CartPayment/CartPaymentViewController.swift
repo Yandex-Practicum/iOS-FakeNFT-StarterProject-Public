@@ -1,6 +1,6 @@
 import UIKit
 
-final class CartPaymentViewController: UIViewController {
+public final class CartPaymentViewController: UIViewController {
     private enum Constants {
         static let purchaseBackgroundViewHeight: CGFloat = 186
         static let userAgreementTextViewInsets = UIEdgeInsets(top: 12, left: 16, bottom: 126, right: 16)
@@ -52,7 +52,7 @@ final class CartPaymentViewController: UIViewController {
     private let viewModel: CartPaymentViewModelProtocol
     private let router: CartPaymentRouterProtocol
 
-    init(
+    public init(
         collectionViewHelper: CartPaymentCollectionViewHelperProtocol,
         viewModel: CartPaymentViewModelProtocol,
         router: CartPaymentRouterProtocol
@@ -69,7 +69,7 @@ final class CartPaymentViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
     }
@@ -77,11 +77,11 @@ final class CartPaymentViewController: UIViewController {
 
 // MARK: - CartPaymentCollectionViewHelperDelegate
 extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
-    var currencies: [CurrencyCellViewModel] {
+    public var currencies: [CurrencyCellViewModel] {
         self.viewModel.currencies.value
     }
 
-    func cartPaymentCollectionViewHelper(
+    public func cartPaymentCollectionViewHelper(
         _ cartPaymentCollectionViewHelper: CartPaymentCollectionViewHelper,
         didSelectCurrencyId id: String
     ) {
@@ -91,7 +91,7 @@ extension CartPaymentViewController: CartPaymentCollectionViewHelperDelegate {
 
 // MARK: - UITextViewDelegate
 extension CartPaymentViewController: UITextViewDelegate {
-    func textView(
+    public func textView(
         _ textView: UITextView,
         shouldInteractWith URL: URL,
         in characterRange: NSRange
@@ -197,7 +197,7 @@ private extension CartPaymentViewController {
             }
         }
 
-        self.viewModel.isPurchaseSuccessful.bind { [weak self] purchaseState in
+        self.viewModel.purchaseState.bind { [weak self] purchaseState in
             guard let self = self, purchaseState != .didNotHappen else { return }
 
             let resultType: CartPaymentResultViewController.ResultType = purchaseState == .success ? .success : .failure

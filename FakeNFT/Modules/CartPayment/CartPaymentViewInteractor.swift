@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CartPaymentViewInteractorProtocol {
+public protocol CartPaymentViewInteractorProtocol {
     func fetchCurrencies(onSuccess: @escaping LoadingCompletionBlock<CartPaymentViewModel.ViewState>,
                          onFailure: @escaping LoadingFailureCompletionBlock)
     func purchase(orderId: String,

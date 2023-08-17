@@ -1,7 +1,7 @@
 import UIKit
 
-final class CartPaymentResultViewController: UIViewController {
-    enum ResultType {
+public final class CartPaymentResultViewController: UIViewController {
+    public enum ResultType {
         case success
         case failure
     }
@@ -59,7 +59,7 @@ final class CartPaymentResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
     }

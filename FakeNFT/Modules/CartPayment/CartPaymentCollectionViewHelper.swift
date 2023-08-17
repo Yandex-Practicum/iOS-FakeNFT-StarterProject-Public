@@ -1,6 +1,6 @@
 import UIKit
 
-protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
+public protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
     var currencies: [CurrencyCellViewModel] { get }
     func cartPaymentCollectionViewHelper(
         _ cartPaymentCollectionViewHelper: CartPaymentCollectionViewHelper,
@@ -8,23 +8,23 @@ protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
     )
 }
 
-protocol CartPaymentCollectionViewHelperProtocol: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+public protocol CartPaymentCollectionViewHelperProtocol: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     var delegate: CartPaymentCollectionViewHelperDelegate? { get set }
 }
 
-final class CartPaymentCollectionViewHelper: NSObject {
+public final class CartPaymentCollectionViewHelper: NSObject {
     private enum Insets {
         static let collectionView = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         static let horizontalSpacing: CGFloat = 7
         static let verticalSpacing: CGFloat = 7
     }
 
-    weak var delegate: CartPaymentCollectionViewHelperDelegate?
+    weak public var delegate: CartPaymentCollectionViewHelperDelegate?
 }
 
 // MARK: - CartPaymentCollectionViewHelperProtocol
 extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtocol {
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         layout _: UICollectionViewLayout,
         sizeForItemAt _: IndexPath
@@ -40,7 +40,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         return CGSize(width: width, height: 46)
     }
 
-    func collectionView(
+    public func collectionView(
         _: UICollectionView,
         layout _: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt _: Int
@@ -48,7 +48,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         Insets.horizontalSpacing
     }
 
-    func collectionView(
+    public func collectionView(
         _: UICollectionView,
         layout _: UICollectionViewLayout,
         minimumLineSpacingForSectionAt _: Int
@@ -56,7 +56,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         Insets.verticalSpacing
     }
 
-    func collectionView(
+    public func collectionView(
         _: UICollectionView,
         layout _: UICollectionViewLayout,
         insetForSectionAt _: Int
@@ -64,7 +64,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         Insets.collectionView
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
@@ -75,7 +75,7 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
         self.delegate?.cartPaymentCollectionViewHelper(self, didSelectCurrencyId: currency.id)
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         didDeselectItemAt indexPath: IndexPath
     ) {
@@ -84,14 +84,14 @@ extension CartPaymentCollectionViewHelper: CartPaymentCollectionViewHelperProtoc
     }
 
     // MARK: - UICollectionViewDelegate
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         self.delegate?.currencies.count ?? 0
     }
 
-    func collectionView(
+    public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {

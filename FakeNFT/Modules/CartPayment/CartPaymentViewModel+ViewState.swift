@@ -1,8 +1,8 @@
 import Foundation
 
 extension CartPaymentViewModel {
-    enum ViewState: Equatable {
-        static func == (lhs: CartPaymentViewModel.ViewState, rhs: CartPaymentViewModel.ViewState) -> Bool {
+    public enum ViewState: Equatable {
+        public static func == (lhs: CartPaymentViewModel.ViewState, rhs: CartPaymentViewModel.ViewState) -> Bool {
             guard case .loaded(let lhsModel) = lhs,
                   case .loaded(let rhsModel) = rhs
             else {

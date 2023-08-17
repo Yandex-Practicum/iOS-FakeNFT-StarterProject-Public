@@ -1,7 +1,7 @@
 @testable import FakeNFT
 import XCTest
 
-final class CartViewTests: XCTestCase {
+final class CartViewControllerTests: XCTestCase {
     func testCartViewControllerCallsFetchOrder() {
         let viewModel = CartViewModelSpy()
         let helper = CartTableViewHelperStub()

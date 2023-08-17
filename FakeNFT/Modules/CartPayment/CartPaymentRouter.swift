@@ -1,6 +1,6 @@
 import UIKit.UIViewController
 
-protocol CartPaymentRouterProtocol {
+public protocol CartPaymentRouterProtocol {
     func showUserAgreementWebView(on viewController: UIViewController, urlString: String)
     func showPaymentResult(on viewController: UIViewController,
                            resultType: CartPaymentResultViewController.ResultType,
