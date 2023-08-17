@@ -82,7 +82,10 @@ final class ProfileViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let symbolConfiguration = UIImage.SymbolConfiguration(weight: .semibold)
         let button = UIButton.systemButton(
-            with: UIImage(systemName: "square.and.pencil", withConfiguration: symbolConfiguration) ?? UIImage(),
+            with: UIImage(
+                systemName: "square.and.pencil",
+                withConfiguration: symbolConfiguration
+            ) ?? UIImage(),
             target: self,
             action: #selector(didTapEditProfileButton)
         )
@@ -332,5 +335,31 @@ extension ProfileViewController: ProfileViewDelegate {
         DispatchQueue.main.async {
             self.presenter?.updateProfile(with: profile)
         }
+    }
+    
+    func showNetworkErrorAlert(with error: Error) {
+        if presentedViewController is UIAlertController { return }
+        
+        let alertMessage = ("\(NSLocalizedString("nft.error.message", comment: ""))\n\(error)")
+        
+        let alert = UIAlertController(
+            title: NSLocalizedString("nft.error.title", comment: ""),
+            message: alertMessage,
+            preferredStyle: .alert)
+        
+        let repeatAction = UIAlertAction(
+            title: NSLocalizedString("profile.photo.retryButton", comment: ""),
+            style: .default
+        ) { _ in
+            self.presenter?.viewDidLoad()
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("profile.photo.cancelButton", comment: ""),
+            style: .cancel
+        )
+        alert.addAction(repeatAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
     }
 }

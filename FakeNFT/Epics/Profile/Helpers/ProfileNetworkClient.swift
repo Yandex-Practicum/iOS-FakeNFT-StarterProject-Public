@@ -17,7 +17,7 @@ final class ProfileNetworkClient: ProfileNetworkClientProtocol {
             case .success(let model):
                 self.presenter?.getProfile(with: model)
             case .failure(let error):
-                print("\n\(error)")
+                self.presenter?.showAlert(with: error)
             }
         }
     }

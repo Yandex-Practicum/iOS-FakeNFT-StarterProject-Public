@@ -7,6 +7,7 @@ protocol ProfileViewControllerProtocol: AnyObject {
     func activityIndicatorAnimation(inProcess: Bool)
     func setImageForPhotoView(_ image: UIImage)
     func setTextForLabels(from profile: ProfileResponseModel)
+    func showNetworkErrorAlert(with error: Error)
 }
 
 // MARK: - ProfileViewPresenterProtocol
@@ -25,6 +26,7 @@ protocol ProfileViewPresenterProtocol: AnyObject {
 protocol ProfilePresenterNetworkProtocol: AnyObject {
     func getProfile(with data: ProfileResponseModel)
     func updateProfile(with data: ProfileResponseModel)
+    func showAlert(with error: Error)
 }
 
 // MARK: - ProfileNetworkClientProtocol

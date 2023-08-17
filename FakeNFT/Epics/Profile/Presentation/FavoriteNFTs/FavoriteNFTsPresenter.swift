@@ -190,6 +190,9 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
 // MARK: - ProfilePresenterNetworkProtocol
 
 extension FavoriteNFTsPresenter: ProfilePresenterNetworkProtocol {
+    func showAlert(with error: Error) {
+    }
+    
     func getProfile(with data: ProfileResponseModel) {
     }
     
