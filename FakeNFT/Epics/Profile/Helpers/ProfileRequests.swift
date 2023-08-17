@@ -30,7 +30,7 @@ struct  NftByIdRequest: NetworkRequest {
 
 // MARK: - Structure for querying the user profile
 
-struct  ProfileRequest: NetworkRequest {
+struct  UserProfileRequest: NetworkRequest {
     var endpoint: URL? {
         return URL(string: ProfileConstants.endpoint + ProfileConstants.apiV1Profile1Get)
     }

@@ -12,7 +12,7 @@ final class ProfileNetworkClient: ProfileNetworkClientProtocol {
     // MARK: - Public properties
     
     func getDecodedProfile(){
-        networkClient.send(request: ProfileRequest(), type: ProfileResponseModel.self){ result in
+        networkClient.send(request: UserProfileRequest(), type: ProfileResponseModel.self){ result in
             switch result {
             case .success(let model):
                 self.presenter?.getProfile(with: model)
