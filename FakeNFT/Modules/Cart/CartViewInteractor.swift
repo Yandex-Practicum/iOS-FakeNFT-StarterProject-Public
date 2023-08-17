@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CartViewInteractorProtocol {
+public protocol CartViewInteractorProtocol {
     func fetchOrder(with id: String,
                     onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
                     onFailure: @escaping LoadingFailureCompletionBlock)
@@ -10,7 +10,7 @@ protocol CartViewInteractorProtocol {
                      onFailure: @escaping LoadingFailureCompletionBlock)
 }
 
-final class CartViewInteractor {
+public final class CartViewInteractor {
     private var order: [NFTCartCellViewModel] = []
     private var accumulatedCost: Double = 0
 
@@ -34,7 +34,7 @@ final class CartViewInteractor {
 
 // MARK: - CartViewInteractorProtocol
 extension CartViewInteractor: CartViewInteractorProtocol {
-    func fetchOrder(
+    public func fetchOrder(
         with id: String,
         onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,
         onFailure: @escaping LoadingFailureCompletionBlock
@@ -54,7 +54,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
         }
     }
 
-    func changeOrder(
+    public func changeOrder(
         with id: String,
         nftIds: [String],
         onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>,

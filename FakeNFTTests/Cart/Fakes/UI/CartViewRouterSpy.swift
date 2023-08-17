@@ -11,7 +11,9 @@ final class CartViewRouterSpy: CartViewRouterProtocol {
         on viewController: UIViewController,
         nftImage: UIImage?,
         onChoosingRemoveNft: @escaping FakeNFT.ActionCallback<FakeNFT.CartRemoveNftViewController.RemoveNftFlow>
-    ) {}
+    ) {
+        onChoosingRemoveNft(.remove)
+    }
 
     func showErrorAlert(on viewController: UIViewController, error: Error) {}
     func showCartPayment(on viewController: UIViewController, orderId: String) {}

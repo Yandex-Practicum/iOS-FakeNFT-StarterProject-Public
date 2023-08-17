@@ -1,7 +1,7 @@
 import UIKit.UIImage
 
-final class NFTCartCellViewModelFactory {
-    static func makeNFTCartCellViewModel(
+public final class NFTCartCellViewModelFactory {
+    public static func makeNFTCartCellViewModel(
         id: String,
         name: String,
         image: UIImage?,

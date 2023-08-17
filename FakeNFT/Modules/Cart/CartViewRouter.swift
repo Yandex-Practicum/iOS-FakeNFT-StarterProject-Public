@@ -17,7 +17,7 @@ public final class CartViewRouter {
     private let imageLoadingService: ImageLoadingServiceProtocol
     private let orderPaymentService: OrderPaymentServiceProtocol
 
-    public init(
+    init(
         currenciesService: CurrenciesServiceProtocol,
         imageLoadingService: ImageLoadingServiceProtocol,
         orderPaymentService: OrderPaymentServiceProtocol

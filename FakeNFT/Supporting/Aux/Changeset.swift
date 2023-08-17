@@ -11,7 +11,7 @@ public struct Changeset<T: Equatable> {
     var deletions: [IndexPath] = []
     var insertions: [IndexPath] = []
 
-    init(oldItems: [T], newItems: [T]) {
+    public init(oldItems: [T], newItems: [T]) {
         let difference = newItems.difference(from: oldItems)
 
         for change in difference {

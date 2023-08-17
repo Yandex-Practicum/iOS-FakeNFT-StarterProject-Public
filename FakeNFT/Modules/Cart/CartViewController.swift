@@ -71,14 +71,13 @@ private extension CartViewController {
     func configure() {
         ProgressHUDWrapper.show()
 
+        self.tableViewHelper.delegate = self
+
         self.configureView()
         self.bind()
 
         self.navigationItem.rightBarButtonItem = self.sortButton
         self.navigationItem.backButtonTitle = ""
-
-        self.tableViewHelper.delegate = self
-        self.cartView.tableViewHelper = self.tableViewHelper
     }
 
     func bind() {
@@ -124,6 +123,8 @@ private extension CartViewController {
 
     func configureView() {
         self.cartView.backgroundColor = .appWhite
+
+        self.cartView.tableViewHelper = self.tableViewHelper
 
         self.cartView.onTapPurchaseButton = { [weak self] _ in
             guard let self = self else { return }

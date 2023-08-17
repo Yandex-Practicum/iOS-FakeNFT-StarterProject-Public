@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CartOrderSorterProtocol {
+public protocol CartOrderSorterProtocol {
     func sort(order: OrderViewModel,
               trait: CartOrderSorter.SortingTrait,
               completion: @escaping LoadingCompletionBlock<OrderViewModel>)
@@ -22,7 +22,7 @@ public final class CartOrderSorter: CartOrderSorterProtocol {
 
     private let sortingQueue = DispatchQueue(label: "com.practicum.yandex.sorting-nft")
 
-    func sort(
+    public func sort(
         order: OrderViewModel,
         trait: SortingTrait,
         completion: @escaping LoadingCompletionBlock<OrderViewModel>
