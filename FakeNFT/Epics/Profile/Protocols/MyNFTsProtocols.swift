@@ -20,4 +20,5 @@ protocol MyNFTsViewDelegate: AnyObject {
     func getMyNFTsCounter() -> Int
     func isNeedToHideMissingNFCLabel() -> Bool
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
+    func sortMyNFTs(by option: SortOption)
 }

@@ -198,7 +198,9 @@ extension FavoriteNFTsPresenter: ProfilePresenterNetworkProtocol {
         profileNetworkClient?.updateProfile(with: data) { result in
             switch result {
             case .success:
-                UIBlockingProgressHUD.dismiss()
+                DispatchQueue.main.async {
+                    UIBlockingProgressHUD.dismiss()
+                }
             case .failure(let error):
                 DispatchQueue.main.async {
                     UIBlockingProgressHUD.dismiss()

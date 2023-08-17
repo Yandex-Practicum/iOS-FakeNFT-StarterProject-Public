@@ -103,7 +103,6 @@ tabBar.basket = "Корзина";
 "profile.myNFTs" = "Мои NFT";
 "profile.featured" = "Избранные NFT";
 "profile.about" = "О разработчике";
-// Лэйблы редактируемых параметров
 "profile.name" = "Имя";
 "profile.description" = "Описание";
 "profile.site" = "Сайт";
@@ -111,9 +110,8 @@ tabBar.basket = "Корзина";
 "profile.name.placeholder" = "Введите ваше имя пользователя";
 "profile.description.placeholder" = "Введите описание профиля";
 "profile.site.placeholder" = "Введите адрес вашего сайта";
-// Текст лэйбла Изменить фото
+// Текст лэйблов
 "profile.photo.change" = "Сменить фото";
-// Текст лэйбла Загрузить фото
 "profile.photo.download" = "Загрузить фото";
 // Заголовок для диалогового окна выбора URL
 "profile.photo.title" = "Добавить изображение";
@@ -143,10 +141,12 @@ tabBar.basket = "Корзина";
 "profile.photo.cancelButton" = "Отмена";
 // Плэйсхолдер экрана "Избранные NFT"
 "nft.no.favorite" = "У Вас ещё нет NFT";
-
-
-
-
+// Сортировка
+"sort.title" = "Сортировка";
+"sort.byPrice" = "По цене";
+"sort.byRating" = "По рейтингу";
+"sort.byName" = "По названию";
+"sort.close" = "Закрыть";
 // Статистика
 tabBar.statistic = "Статистика";
 

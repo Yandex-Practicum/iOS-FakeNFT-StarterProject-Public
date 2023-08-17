@@ -112,14 +112,14 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         backButton.tintColor = .ypBlack
         navigationItem.leftBarButtonItem = backButton
         
-        let imageButton = UIBarButtonItem(
+        let sortButton = UIBarButtonItem(
             image: .sortButton,
             style: .plain,
             target: self,
-            action: #selector(imageButtonTapped)
+            action: #selector(sortButtonTapped)
         )
-        imageButton.tintColor = .ypBlack
-        navigationItem.rightBarButtonItem = imageButton
+        sortButton.tintColor = .ypBlack
+        navigationItem.rightBarButtonItem = sortButton
     }
     
     private func checkPlaceholderLabelVisibility() {
@@ -140,8 +140,44 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
         dismiss(animated: true)
     }
     
-    @objc private func imageButtonTapped() {
-        // TODO: Добавить сортировку после добавления в BASE
+    @objc private func sortButtonTapped() {
+        let alert = UIAlertController(
+            title: nil,
+            message: NSLocalizedString("sort.title", comment: ""),
+            preferredStyle: .actionSheet
+        )
+        
+        let priceSortAction = UIAlertAction(
+            title: NSLocalizedString("sort.byPrice", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.presenter?.sortMyNFTs(by: .byPrice)
+        }
+        let ratingSortAction = UIAlertAction(
+            title: NSLocalizedString("sort.byRating", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.presenter?.sortMyNFTs(by: .byRating)
+        }
+        let nameSortAction = UIAlertAction(
+            title: NSLocalizedString("sort.byName", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.presenter?.sortMyNFTs(by: .byName)
+        }
+        let closeAction = UIAlertAction(
+            title: NSLocalizedString("sort.close", comment: ""),
+            style: .cancel
+        )
+        alert.addAction(priceSortAction)
+        alert.addAction(ratingSortAction)
+        alert.addAction(nameSortAction)
+        alert.addAction(closeAction)
+        
+        present(alert, animated: true)
     }
 }
 

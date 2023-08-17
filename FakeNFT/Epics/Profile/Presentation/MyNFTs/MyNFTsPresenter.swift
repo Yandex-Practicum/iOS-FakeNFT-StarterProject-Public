@@ -19,6 +19,7 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     
     // MARK: - Life cycle
+    
     init(profile: ProfileResponseModel){
         self.profile = profile
     }
@@ -29,6 +30,7 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     
     
     // MARK: - MyNFTsViewDelegate
+    
     func viewDidLoad() {
         presentationModels = []
         nftAuthorsResponces = []
@@ -49,7 +51,24 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel {
         presentationModels[indexPath.row]
     }
+    
+    func sortMyNFTs(by option: SortOption) {
+        var newPresentationModels: [MyNFTPresentationModel] = []
+        
+        switch option {
+        case .byPrice:
+            newPresentationModels = presentationModels.sorted(by: { $0.price > $1.price })
+        case .byRating:
+            newPresentationModels = presentationModels.sorted(by: { $0.rating > $1.rating })
+        case .byName:
+            newPresentationModels = presentationModels.sorted(by: { $0.nftName < $1.nftName })
+        }
+        presentationModels = newPresentationModels
+        view?.updateTable()
+    }
+    
     // MARK: - Private Methods
+    
     private func addNFT(responce: NFTResponseModel) {
         myNFTsResponces.append(responce)
     }
