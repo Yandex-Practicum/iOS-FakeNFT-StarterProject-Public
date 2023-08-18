@@ -12,7 +12,7 @@ public final class Box<T> {
 
     var listener: Listener?
 
-    var value: T {
+    public var value: T {
         didSet {
             self.listener?(self.value)
         }

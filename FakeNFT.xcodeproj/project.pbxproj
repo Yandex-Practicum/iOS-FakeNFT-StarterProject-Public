@@ -93,6 +93,8 @@
 		969D99352A8E3D9E00438950 /* CartPaymentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D99342A8E3D9E00438950 /* CartPaymentViewModelTests.swift */; };
 		969D99382A8E3E0E00438950 /* CartPaymentViewInteractorSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D99372A8E3E0E00438950 /* CartPaymentViewInteractorSpy.swift */; };
 		969D993B2A8E72E400438950 /* CartPaymentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D993A2A8E72E400438950 /* CartPaymentViewControllerTests.swift */; };
+		969D993E2A8F273700438950 /* CartPaymentViewModelSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D993D2A8F273700438950 /* CartPaymentViewModelSpy.swift */; };
+		969D99402A8F281D00438950 /* CartPaymentRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D993F2A8F281D00438950 /* CartPaymentRouterSpy.swift */; };
 		96D10E982A793FC6008F6FA4 /* CartViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E972A793FC6008F6FA4 /* CartViewRouter.swift */; };
 		96D10E9B2A79437E008F6FA4 /* PurchaseBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9A2A79437E008F6FA4 /* PurchaseBackgroundView.swift */; };
 		96D10E9E2A7949D5008F6FA4 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9D2A7949D5008F6FA4 /* AppButton.swift */; };
@@ -220,6 +222,8 @@
 		969D99342A8E3D9E00438950 /* CartPaymentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CartPaymentViewModelTests.swift; path = Fakes/CartPaymentViewModelTests.swift; sourceTree = "<group>"; };
 		969D99372A8E3E0E00438950 /* CartPaymentViewInteractorSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentViewInteractorSpy.swift; sourceTree = "<group>"; };
 		969D993A2A8E72E400438950 /* CartPaymentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentViewControllerTests.swift; sourceTree = "<group>"; };
+		969D993D2A8F273700438950 /* CartPaymentViewModelSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentViewModelSpy.swift; sourceTree = "<group>"; };
+		969D993F2A8F281D00438950 /* CartPaymentRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentRouterSpy.swift; sourceTree = "<group>"; };
 		96D10E972A793FC6008F6FA4 /* CartViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewRouter.swift; sourceTree = "<group>"; };
 		96D10E9A2A79437E008F6FA4 /* PurchaseBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBackgroundView.swift; sourceTree = "<group>"; };
 		96D10E9D2A7949D5008F6FA4 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
@@ -620,6 +624,8 @@
 			isa = PBXGroup;
 			children = (
 				969D99372A8E3E0E00438950 /* CartPaymentViewInteractorSpy.swift */,
+				969D993D2A8F273700438950 /* CartPaymentViewModelSpy.swift */,
+				969D993F2A8F281D00438950 /* CartPaymentRouterSpy.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -985,6 +991,8 @@
 				969D99352A8E3D9E00438950 /* CartPaymentViewModelTests.swift in Sources */,
 				96766A452A8DDDE20071BA57 /* CartViewControllerSpy.swift in Sources */,
 				965543832A8E0F580059BD39 /* OrderServiceSpy.swift in Sources */,
+				969D99402A8F281D00438950 /* CartPaymentRouterSpy.swift in Sources */,
+				969D993E2A8F273700438950 /* CartPaymentViewModelSpy.swift in Sources */,
 				965543752A8E027C0059BD39 /* CartViewModelTests.swift in Sources */,
 				96766A492A8DE0500071BA57 /* CartTableViewHelperStub.swift in Sources */,
 			);
