@@ -8,8 +8,8 @@
 import Foundation
 
 final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
-    weak private var viewController: WebViewScreenViewControllerProtocol?
     var authorWebSiteURLRequest: URLRequest?
+    weak private var viewController: WebViewScreenViewControllerProtocol?
     
     init(viewController: WebViewScreenViewControllerProtocol) {
         self.viewController = viewController
