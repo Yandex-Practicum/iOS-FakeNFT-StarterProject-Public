@@ -64,7 +64,9 @@ extension CartViewInteractor: CartViewInteractorProtocol {
             guard let self = self else { return }
             switch result {
             case .success:
-                self.fetchOrder(with: id, onSuccess: onSuccess, onFailure: onFailure)
+                DispatchQueue.main.async { [weak self] in
+                    self?.fetchOrder(with: id, onSuccess: onSuccess, onFailure: onFailure)
+                }
             case .failure(let error):
                 self.handleError(error: error, onFailure: onFailure)
             }
