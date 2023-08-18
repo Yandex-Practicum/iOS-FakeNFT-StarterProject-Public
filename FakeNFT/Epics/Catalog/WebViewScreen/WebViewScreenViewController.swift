@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 final class WebViewScreenViewController: UIViewController, WebViewScreenViewControllerProtocol {
-    var presenter: WebViewScreenViewPresenterProtocol?
+    private var presenter: WebViewScreenViewPresenterProtocol?
     private let webView = WKWebView()
     private let backButton = UIButton()
     private let progressView = UIProgressView()
@@ -17,6 +17,7 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = WebViewScreenViewPresenter(viewController: self)
         
         view.backgroundColor = .ypWhite
         configureBackButton()
@@ -24,8 +25,8 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
         configureProgressView()
         
         estimatedProgressObservation = webView.observe(\.estimatedProgress, options: []) { [weak self] _, _ in
-            guard let self = self, let presenter = presenter else { return }
-            presenter.didUpdateProgressValue(estimatedProgress: Float(self.webView.estimatedProgress))
+            guard let self = self, let presenter = self.presenter else { return }
+            presenter.viewDidUpdateProgressValue(estimatedProgress: Float(self.webView.estimatedProgress))
         }
     }
     
@@ -52,10 +53,10 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
     }
     
     private func configureWebView() {
-        if !view.contains(backButton) { return }
+        guard view.contains(backButton) else { return }
         
-        guard let url = URL(string: presenter?.authorWebSiteLink ?? "") else { return }
-        webView.load(URLRequest(url: url))
+        guard let request = presenter?.authorWebSiteURLRequest else { return }
+        webView.load(request)
         
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
@@ -68,7 +69,7 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
     }
     
     private func configureProgressView() {
-        if !view.contains(webView) { return }
+        guard view.contains(webView) else { return }
         
         progressView.progressTintColor = .ypBlack
         
@@ -81,7 +82,7 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
         ])
     }
     
-    @objc func buttonBackTap() {
+    @objc private func buttonBackTap() {
         dismiss(animated: true)
     }
 }

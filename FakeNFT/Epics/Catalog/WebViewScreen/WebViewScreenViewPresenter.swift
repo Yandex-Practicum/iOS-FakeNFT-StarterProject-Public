@@ -8,14 +8,16 @@
 import Foundation
 
 final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
-    weak var viewController: WebViewScreenViewControllerProtocol?
-    var authorWebSiteLink: String
+    weak private var viewController: WebViewScreenViewControllerProtocol?
+    var authorWebSiteURLRequest: URLRequest?
     
-    init(authorWebSiteLink: String) {
-        self.authorWebSiteLink = authorWebSiteLink
+    init(viewController: WebViewScreenViewControllerProtocol) {
+        self.viewController = viewController
+        guard let link = AuthorNetworkService.shared.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: link) else { return }
+        self.authorWebSiteURLRequest = URLRequest(url: url)
     }
     
-    func didUpdateProgressValue(estimatedProgress: Float) {
+    func viewDidUpdateProgressValue(estimatedProgress: Float) {
         viewController?.updateProgressView(estimatedProgress: estimatedProgress)
         if estimatedProgress == 1 {
             viewController?.removeProgressView()

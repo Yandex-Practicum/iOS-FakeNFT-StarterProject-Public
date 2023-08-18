@@ -26,9 +26,6 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     }
     lazy var createWebViewScreen: WebViewScreenViewController = {
         let webViewScreen = WebViewScreenViewController()
-        let presenter = WebViewScreenViewPresenter(authorWebSiteLink: authorNetworkService.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
-        webViewScreen.presenter = presenter
-        presenter.viewController = webViewScreen
         webViewScreen.modalPresentationStyle = .fullScreen
         return webViewScreen
     }()

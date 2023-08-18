@@ -8,13 +8,11 @@
 import WebKit
 
 protocol WebViewScreenViewControllerProtocol: AnyObject {
-    var presenter: WebViewScreenViewPresenterProtocol? { get set }
     func updateProgressView(estimatedProgress: Float)
     func removeProgressView()
 }
 
 protocol WebViewScreenViewPresenterProtocol {
-    var viewController: WebViewScreenViewControllerProtocol? { get set }
-    var authorWebSiteLink: String { get set }
-    func didUpdateProgressValue(estimatedProgress: Float)
+    var authorWebSiteURLRequest: URLRequest? { get }
+    func viewDidUpdateProgressValue(estimatedProgress: Float)
 }
