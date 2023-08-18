@@ -44,7 +44,7 @@ extension CartViewInteractor: CartViewInteractorProtocol {
             switch result {
             case .success(let order):
                 guard !order.nfts.isEmpty else {
-                    onSuccess(.empty)
+                    self.handleSuccess(state: .empty, onSuccess: onSuccess)
                     return
                 }
                 self.fetchNfts(ids: order.nfts, onSuccess: onSuccess, onFailure: onFailure)
@@ -141,6 +141,15 @@ private extension CartViewInteractor {
 }
 
 private extension CartViewInteractor {
+    func handleSuccess(
+        state: CartViewModel.ViewState,
+        onSuccess: @escaping LoadingCompletionBlock<CartViewModel.ViewState>
+    ) {
+        DispatchQueue.main.async {
+            onSuccess(state)
+        }
+    }
+
     func handleError(error: Error, onFailure: @escaping LoadingFailureCompletionBlock) {
         DispatchQueue.main.async {
             onFailure(error)

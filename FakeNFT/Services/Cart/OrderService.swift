@@ -12,9 +12,9 @@ public protocol OrderPaymentServiceProtocol {
 final class OrderService {
     private let networkRequestSender: NetworkRequestSenderProtocol
 
-    private var fetchingTask: NetworkTask?
-    private var changingTask: NetworkTask?
-    private var purchasingTask: NetworkTask?
+    private var fetchingTask: DefaultNetworkTask?
+    private var changingTask: DefaultNetworkTask?
+    private var purchasingTask: DefaultNetworkTask?
 
     init(networkRequestSender: NetworkRequestSenderProtocol) {
         self.networkRequestSender = networkRequestSender
@@ -25,7 +25,7 @@ final class OrderService {
 extension OrderService: OrderServiceProtocol {
     func fetchOrder(id: String, completion: @escaping ResultHandler<Order>) {
         assert(Thread.isMainThread)
-        guard self.fetchingTask.isTaskRunning == false else { return }
+        guard !self.fetchingTask.isRunning else { return }
 
         let request = OrderRequest(orderId: id)
         let task = self.networkRequestSender.send(
@@ -34,12 +34,13 @@ extension OrderService: OrderServiceProtocol {
             type: Order.self,
             completion: completion
         )
+
         self.fetchingTask = task
     }
 
     func changeOrder(id: String, nftIds: [String], completion: @escaping ResultHandler<Order>) {
         assert(Thread.isMainThread)
-        guard self.changingTask.isTaskRunning == false else { return }
+        guard !self.changingTask.isRunning else { return }
 
         var request = OrderRequest(orderId: id)
         request.httpMethod = .put
@@ -51,6 +52,7 @@ extension OrderService: OrderServiceProtocol {
             type: Order.self,
             completion: completion
         )
+
         self.changingTask = task
     }
 }
@@ -59,7 +61,7 @@ extension OrderService: OrderServiceProtocol {
 extension OrderService: OrderPaymentServiceProtocol {
     func purchase(orderId: String, currencyId: String, completion: @escaping ResultHandler<PurchaseResult>) {
         assert(Thread.isMainThread)
-        guard self.purchasingTask.isTaskRunning == false else { return }
+        guard !self.purchasingTask.isRunning else { return }
 
         let request = PurchaseRequest(orderId: orderId, currencyId: currencyId)
         let task = self.networkRequestSender.send(
@@ -68,6 +70,7 @@ extension OrderService: OrderPaymentServiceProtocol {
             type: PurchaseResult.self,
             completion: completion
         )
+
         self.purchasingTask = task
     }
 }

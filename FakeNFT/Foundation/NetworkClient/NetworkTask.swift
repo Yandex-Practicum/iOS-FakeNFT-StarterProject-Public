@@ -16,8 +16,9 @@ final class DefaultNetworkTask: NetworkTask {
     }
 }
 
-extension NetworkTask? {
-    var isTaskRunning: Bool {
-        self != nil
+extension DefaultNetworkTask? {
+    var isRunning: Bool {
+        guard let self = self else { return false }
+        return self.dataTask.state == .running
     }
 }

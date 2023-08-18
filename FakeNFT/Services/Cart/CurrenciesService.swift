@@ -14,7 +14,7 @@ public protocol CurrenciesServiceProtocol {
 final class CurrenciesService {
     private let networkRequestSender: NetworkRequestSenderProtocol
     
-    private var fetchingTask: NetworkTask?
+    private var fetchingTask: DefaultNetworkTask?
 
     init(networkRequestSender: NetworkRequestSenderProtocol) {
         self.networkRequestSender = networkRequestSender
@@ -25,7 +25,7 @@ final class CurrenciesService {
 extension CurrenciesService: CurrenciesServiceProtocol {
     func fetchCurrencies(completion: @escaping ResultHandler<CurrenciesResult>) {
         assert(Thread.isMainThread)
-        guard self.fetchingTask.isTaskRunning == false else { return }
+        guard !self.fetchingTask.isRunning else { return }
 
         let request = CurrenciesRequest()
         let task = self.networkRequestSender.send(
@@ -34,6 +34,7 @@ extension CurrenciesService: CurrenciesServiceProtocol {
             type: CurrenciesResult.self,
             completion: completion
         )
+
         self.fetchingTask = task
     }
 }

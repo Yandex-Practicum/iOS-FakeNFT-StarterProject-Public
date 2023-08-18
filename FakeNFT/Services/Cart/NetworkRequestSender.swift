@@ -6,7 +6,7 @@ protocol NetworkRequestSenderProtocol {
         task: NetworkTask?,
         type: RequestType.Type,
         completion: @escaping ResultHandler<RequestType>
-    ) -> NetworkTask?
+    ) -> DefaultNetworkTask?
 }
 
 final class NetworkRequestSender: NetworkRequestSenderProtocol {
@@ -21,18 +21,12 @@ final class NetworkRequestSender: NetworkRequestSenderProtocol {
         task: NetworkTask?,
         type: RequestType.Type,
         completion: @escaping ResultHandler<RequestType>
-    ) -> NetworkTask? {
-        var activeTask = task
-
+    ) -> DefaultNetworkTask? {
         let newTask = self.networkClient.send(request: request, type: RequestType.self) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                activeTask?.cancel()
-                activeTask = nil
-                completion(result)
-            }
+            task?.cancel()
+            completion(result)
         }
 
-        return newTask
+        return newTask as? DefaultNetworkTask
     }
 }

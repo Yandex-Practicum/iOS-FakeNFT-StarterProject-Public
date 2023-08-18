@@ -123,7 +123,6 @@ private extension CartViewController {
 
     func configureView() {
         self.cartView.backgroundColor = .appWhite
-
         self.cartView.tableViewHelper = self.tableViewHelper
 
         self.cartView.onTapPurchaseButton = { [weak self] _ in
