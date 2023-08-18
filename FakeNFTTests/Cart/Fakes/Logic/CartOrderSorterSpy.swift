@@ -5,7 +5,7 @@ final class CartOrderSorterSpy: CartOrderSorterProtocol {
     var didSortingCalled = false
     var selectedSortingTrait: CartOrderSorter.SortingTrait = .name
 
-    let sortedOrder: OrderViewModel = []
+    var sortedOrder: OrderViewModel = []
 
     func sort(
         order: FakeNFT.OrderViewModel,
@@ -15,6 +15,7 @@ final class CartOrderSorterSpy: CartOrderSorterProtocol {
         self.didSortingCalled = true
         self.selectedSortingTrait = trait
 
+        self.sortedOrder = order
         completion(self.sortedOrder)
     }
 }

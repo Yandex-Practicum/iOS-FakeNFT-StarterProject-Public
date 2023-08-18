@@ -12,7 +12,7 @@ final class CartViewModelTests: XCTestCase {
 
         viewModel.fetchOrder()
 
-        XCTAssertTrue(viewModel.order.value.first == expectedModel)
+        XCTAssertTrue(viewModel.order.first == expectedModel)
     }
 
     func testCartViewModelSortingOrder() {
@@ -23,7 +23,7 @@ final class CartViewModelTests: XCTestCase {
 
         XCTAssertTrue(orderSorter.didSortingCalled)
         XCTAssertTrue(orderSorter.selectedSortingTrait == expectedTrait)
-        XCTAssertTrue(viewModel.order.value == orderSorter.sortedOrder)
+        XCTAssertTrue(viewModel.order == orderSorter.sortedOrder)
     }
 
     func testCartViewModelRemovingNFTFromOrder() {
@@ -35,7 +35,7 @@ final class CartViewModelTests: XCTestCase {
         viewModel.fetchOrder()
         viewModel.removeNft(row: 1)
 
-        XCTAssertTrue(viewModel.order.value.count == expectedOrderCapacity)
-        XCTAssertTrue(viewModel.order.value.first == expectedModel)
+        XCTAssertTrue(viewModel.order.count == expectedOrderCapacity)
+        XCTAssertTrue(viewModel.order.first == expectedModel)
     }
 }

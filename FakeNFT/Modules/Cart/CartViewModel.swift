@@ -1,13 +1,13 @@
 import Foundation
 
 public protocol CartViewModelProtocol {
-    var order: Box<OrderViewModel> { get }
     var nftCount: Box<String> { get }
     var finalOrderCost: Box<String> { get }
     var cartViewState: Box<CartViewModel.ViewState> { get }
     var error: Box<Error?> { get }
+    var tableViewChangeset: Box<Changeset<NFTCartCellViewModel>?> { get }
 
-    var tableViewChangeset: Changeset<NFTCartCellViewModel>? { get }
+    var order: OrderViewModel { get }
     var orderId: String { get }
 
     func fetchOrder()
@@ -22,15 +22,15 @@ public final class CartViewModel {
         case empty
     }
 
-    public let order = Box<OrderViewModel>([])
     public let nftCount = Box<String>("0 NFT")
     public let finalOrderCost = Box<String>("0 ETH")
     public let cartViewState = Box<ViewState>(.loading)
     public let error = Box<Error?>(nil)
+    public let tableViewChangeset = Box<Changeset<NFTCartCellViewModel>?>(Changeset(oldItems: [], newItems: []))
+
+    private(set) public var order: OrderViewModel = []
 
     public let orderId = "1"
-
-    private(set) public var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
     private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
@@ -76,11 +76,11 @@ extension CartViewModel: CartViewModelProtocol {
     }
 
     public func sortOrder(trait: CartOrderSorter.SortingTrait) {
-        self.sortOrder(self.order.value, trait: trait)
+        self.sortOrder(self.order, trait: trait)
     }
 
     public func removeNft(row: Int) {
-        var newOrder = self.order.value
+        var newOrder = self.order
         newOrder.remove(at: row)
         let nftIds = newOrder.map { $0.id }
 
@@ -96,8 +96,9 @@ extension CartViewModel: CartViewModelProtocol {
 
 private extension CartViewModel {
     func setOrderAnimated(newOrder: OrderViewModel) {
-        self.tableViewChangeset = Changeset(oldItems: self.order.value, newItems: newOrder)
-        self.order.value = newOrder
+        let changeset = Changeset(oldItems: self.order, newItems: newOrder)
+        self.order = newOrder
+        self.tableViewChangeset.value = changeset
     }
 
     func sortOrder(_ order: OrderViewModel, trait: CartOrderSorter.SortingTrait) {

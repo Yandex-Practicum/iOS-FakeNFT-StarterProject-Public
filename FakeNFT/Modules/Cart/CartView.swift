@@ -80,13 +80,9 @@ final class CartView: UIView {
         )
     }()
 
-    init() {
-        super.init(frame: .zero)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         self.configure()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -106,6 +102,7 @@ extension CartView {
     func setFinalOrderCost(_ cost: String) {
         self.finalCostLabel.text = cost
         self.finalCostLabelWidthConstraint.constant = self.finalCostLabel.intrinsicContentSize.width
+//        self.setNeedsUpdateConstraints()
     }
 
     func shouldHidePlaceholder(_ shouldHide: Bool) {

@@ -50,7 +50,7 @@ public final class CartViewController: UIViewController {
 // MARK: - CartTableViewHelperDelegate
 extension CartViewController: CartTableViewHelperDelegate {
     public var order: OrderViewModel? {
-        self.viewModel.order.value
+        self.viewModel.order
     }
 
     public func cartTableViewHelper(
@@ -81,8 +81,8 @@ private extension CartViewController {
     }
 
     func bind() {
-        self.viewModel.order.bind { [weak self] _ in
-            guard let changeset = self?.viewModel.tableViewChangeset else { return }
+        self.viewModel.tableViewChangeset.bind { [weak self] changeset in
+            guard let changeset = changeset else { return }
             self?.cartView.updateTableAnimated(changeset: changeset)
         }
 
