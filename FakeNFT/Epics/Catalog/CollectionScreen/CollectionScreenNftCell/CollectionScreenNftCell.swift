@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
-    var nft: NftModel?
+    var presenter: CollectionScreenNftCellPresenterProtocol?
     
     private let emptyBasketImage: UIImage? = {
         return UIImage.addToBasket?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
@@ -76,7 +76,7 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        nft = nil
+        presenter = nil
         nftImage.image = nil
         basketButton.setImage(emptyBasketImage, for: .normal)
         likeButton.setImage(UIImage.unliked, for: .normal)
@@ -172,26 +172,22 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
     
     private func addToBasket() {
         setNotEmptyBasketImage()
-        guard let nft = nft else { return }
-        BasketService.shared.addNFTToBasket(nft)
+        presenter?.viewAddedNftToBasket()
     }
     
     private func removeFromBasket() {
         basketButton.setImage(emptyBasketImage, for: .normal)
-        guard let nft = nft else { return }
-        BasketService.shared.removeNFTFromBasket(nft)
+        presenter?.viewRemovedNftFromBasket()
     }
     
     private func setLike() {
         setButtonLikeImage(image: .liked)
-        guard let nft = nft else { return }
-        LikeService.shared.setLike(nftId: nft.id)
+        presenter?.viewDidSetLike()
     }
     
     private func setUnlike() {
         setButtonLikeImage(image: .unliked)
-        guard let nft = nft else { return }
-        LikeService.shared.removeLike(nftId: nft.id)
+        presenter?.viewDidSetUnlike()
     }
     
     @objc private func basketButtonTap() {

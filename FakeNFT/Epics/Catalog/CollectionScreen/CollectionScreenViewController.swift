@@ -123,7 +123,8 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     private func configureNftCell(cell: CollectionScreenNftCell, index: Int) {
         guard let presenter = presenter else { return }
         let nft = presenter.viewDidRequestNftFromNfts(index: index)
-        cell.nft = nft
+        let cellPresenter = CollectionScreenNftCellPresenter(nft: nft)
+        cell.presenter = cellPresenter
         if BasketService.shared.basket.contains(where: )({ $0.id == nft.id }) {
             cell.setNotEmptyBasketImage()
         }
