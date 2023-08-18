@@ -8,7 +8,6 @@
 import UIKit
 
 protocol CollectionScreenViewControllerProtocol: AnyObject {
-    var presenter: CollectionScreenViewPresenterProtocol? { get set }
     func updateCollection(oldCount: Int, newCount: Int)
     func updateAuthor()
     func removeHud()
@@ -17,7 +16,6 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
 }
 
 protocol CollectionScreenViewPresenterProtocol {
-    var collectionScreenViewController: CollectionScreenViewControllerProtocol? { get set }
     var actualNftsCount: Int { get }
     var takeCollectionName: String { get }
     var takeCollectionCover: String { get }

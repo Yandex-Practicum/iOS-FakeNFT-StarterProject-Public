@@ -8,7 +8,6 @@
 import UIKit
 
 final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol {
-    weak var collectionScreenViewController: CollectionScreenViewControllerProtocol?
     var actualNftsCount: Int {
         nfts.count
     }
@@ -30,6 +29,7 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         return webViewScreen
     }()
     
+    weak private var collectionScreenViewController: CollectionScreenViewControllerProtocol?
     private var nfts: [NftModel] = []
     private var catalogDataModel: CatalogDataModel
     private let nftNetworkService = NftNetworkService.shared
@@ -37,8 +37,10 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     private var authorNetworkServiceObserver: NSObjectProtocol?
     private var nftNetworkServiceObserver: NSObjectProtocol?
     
-    init(catalogDataModel: CatalogDataModel) {
+    init(viewController: CollectionScreenViewControllerProtocol, catalogDataModel: CatalogDataModel) {
+        collectionScreenViewController = viewController
         self.catalogDataModel = catalogDataModel
+        
         authorNetworkServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: AuthorNetworkService.authorNetworkServiceDidChangeNotification,

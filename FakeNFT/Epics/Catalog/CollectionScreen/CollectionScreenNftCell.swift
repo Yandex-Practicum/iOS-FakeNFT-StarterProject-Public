@@ -76,11 +76,10 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        nft = nil
         nftImage.image = nil
-        let basketImage = emptyBasketImage
-        basketButton.setImage(basketImage, for: .normal)
-        let likeImage = UIImage.unliked
-        likeButton.setImage(likeImage, for: .normal)
+        basketButton.setImage(emptyBasketImage, for: .normal)
+        likeButton.setImage(UIImage.unliked, for: .normal)
         removeRating()
         nameLabel.text = ""
         costLabel.text = ""
@@ -96,8 +95,7 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     func setNotEmptyBasketImage() {
-        let basketImage = notEmptyBasketImage
-        basketButton.setImage(basketImage, for: .normal)
+        basketButton.setImage(notEmptyBasketImage, for: .normal)
     }
     
     func setButtonLikeImage(image: UIImage?) {

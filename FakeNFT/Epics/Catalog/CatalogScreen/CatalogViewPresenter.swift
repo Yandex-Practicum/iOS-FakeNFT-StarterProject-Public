@@ -48,11 +48,8 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
-        let collectionScreenController = CollectionScreenViewController()
+        let collectionScreenController = CollectionScreenViewController(catalogDataModel: catalogData[collectionIndex])
         collectionScreenController.modalPresentationStyle = .fullScreen
-        let collectionScreenPresenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[collectionIndex])
-        collectionScreenController.presenter = collectionScreenPresenter
-        collectionScreenPresenter.collectionScreenViewController = collectionScreenController
         return collectionScreenController
     }
     

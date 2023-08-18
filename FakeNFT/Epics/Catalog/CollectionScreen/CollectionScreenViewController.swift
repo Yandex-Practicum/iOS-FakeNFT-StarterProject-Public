@@ -8,8 +8,7 @@
 import UIKit
 
 final class CollectionScreenViewController: UIViewController, CollectionScreenViewControllerProtocol {
-    var presenter: CollectionScreenViewPresenterProtocol?
-    
+    private var presenter: CollectionScreenViewPresenterProtocol?
     private let backButton = UIButton()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var calculateMainContentHeight: CGFloat {
@@ -22,11 +21,19 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
     }
     
+    init(catalogDataModel: CatalogDataModel) {
+        super.init(nibName: nil, bundle: nil)
+        presenter = CollectionScreenViewPresenter(viewController: self, catalogDataModel: catalogDataModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .ypWhite
-        
         configureCollection()
         configureBackButton()
         
