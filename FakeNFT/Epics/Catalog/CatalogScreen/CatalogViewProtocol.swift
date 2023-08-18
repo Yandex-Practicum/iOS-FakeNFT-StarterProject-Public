@@ -15,8 +15,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
 protocol CatalogViewPresenterProtocol {
     var catalogCount: Int { get }
     var alertActions: [AlertActionModel] { get }
-    func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController
-    func updateCatalogData()
-    func makeFetchRequest()
-    func takeDataByIndex(index: Int) -> CatalogDataModel
+    func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController
+    func viewMadeFetchRequest()
+    func viewDidRequestDataByIndex(index: Int) -> CatalogDataModel
 }

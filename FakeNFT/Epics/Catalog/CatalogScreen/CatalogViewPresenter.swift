@@ -47,7 +47,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             }
     }
     
-    func createCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
+    func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
         let collectionScreenController = CollectionScreenViewController()
         collectionScreenController.modalPresentationStyle = .fullScreen
         let collectionScreenPresenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[collectionIndex])
@@ -56,22 +56,11 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         return collectionScreenController
     }
     
-    func updateCatalogData() {
-        switch sortState {
-        case 1:
-            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
-        case 2:
-            catalogData = catalogNetworkService.collections.sorted(by: { $0.name < $1.name })
-        default:
-            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
-        }
-    }
-    
-    func makeFetchRequest() {
+    func viewMadeFetchRequest() {
         catalogNetworkService.fetchCollectionNextPage()
     }
     
-    func takeDataByIndex(index: Int) -> CatalogDataModel {
+    func viewDidRequestDataByIndex(index: Int) -> CatalogDataModel {
         catalogData[index]
     }
     
@@ -83,5 +72,16 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             catalogViewController?.updateTableView()
         }
         catalogViewController?.removeHud()
+    }
+    
+    private func updateCatalogData() {
+        switch sortState {
+        case 1:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        case 2:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.name < $1.name })
+        default:
+            catalogData = catalogNetworkService.collections.sorted(by: { $0.nfts.count > $1.nfts.count })
+        }
     }
 }

@@ -68,7 +68,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     private func configureCell(cell: CatalogViewTableCell, index: Int) {
-        guard let data = presenter?.takeDataByIndex(index: index) else { return }
+        guard let data = presenter?.viewDidRequestDataByIndex(index: index) else { return }
         cell.selectionStyle = .none
         cell.setImage(link: data.cover)
         cell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
@@ -76,7 +76,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     
     private func makeFetchRequest() {
         UIBlockingProgressHUD.show()
-        presenter?.makeFetchRequest()
+        presenter?.viewMadeFetchRequest()
     }
     
     @objc private func sortButtonTap() {
@@ -104,7 +104,7 @@ extension CatalogViewController: UITableViewDataSource {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let presenter = presenter else { return }
-        let collectionScreen = presenter.createCollectionScreen(collectionIndex: indexPath.row)
+        let collectionScreen = presenter.viewDidRequestCollectionScreen(collectionIndex: indexPath.row)
         present(collectionScreen, animated: true)
     }
     
