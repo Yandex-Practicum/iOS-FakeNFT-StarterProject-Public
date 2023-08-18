@@ -83,9 +83,9 @@ private extension StarsView {
     func setRating(_ rating: Rating) {
         let rating = rating.rawValue
 
-        for index in 0..<rating {
-            let star = self.stars[index]
-            star.tintColor = .yellowUniversal
+        self.stars.forEach { star in
+            guard let indexOfStar = self.stars.firstIndex(of: star) else { return }
+            star.tintColor = indexOfStar < rating ? .yellowUniversal : .appLightGray
         }
     }
 }

@@ -93,8 +93,9 @@ final class CartView: UIView {
 extension CartView {
     func updateTableAnimated(changeset: Changeset<NFTCartCellViewModel>) {
         self.cartTableView.performBatchUpdates { [weak self] in
-            self?.cartTableView.insertRows(at: changeset.insertions, with: .automatic)
             self?.cartTableView.deleteRows(at: changeset.deletions, with: .automatic)
+            self?.cartTableView.reloadRows(at: changeset.modifications, with: .automatic)
+            self?.cartTableView.insertRows(at: changeset.insertions, with: .automatic)
         }
     }
 

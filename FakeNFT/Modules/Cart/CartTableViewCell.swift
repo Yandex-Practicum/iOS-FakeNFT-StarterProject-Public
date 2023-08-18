@@ -45,7 +45,11 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         return label
     }()
 
-    private let starsView = StarsView()
+    private let starsView: StarsView = {
+        let view = StarsView()
+        view.rating = .zero
+        return view
+    }()
 
     private let priceTitleLabel: UILabel = {
         let label = UILabel()
@@ -79,6 +83,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         self.nftImageView.image = nil
         self.titleLabel.text = ""
         self.starsView.rating = .zero

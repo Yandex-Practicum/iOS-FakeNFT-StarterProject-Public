@@ -32,15 +32,16 @@ public final class CartViewModel {
 
     private(set) public var tableViewChangeset: Changeset<NFTCartCellViewModel>?
 
-    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] viewState in
+    private lazy var successCompletion: LoadingCompletionBlock = { [weak self] (viewState: ViewState) in
         guard let self = self else { return }
 
-        self.cartViewState.value = viewState
         if case .loaded(let order, let cost) = viewState {
-            self.setOrderAnimated(newOrder: order)
+            self.sortOrder(order, trait: .name)
             self.nftCount.value = "\(order.count) NFT"
             self.finalOrderCost.value = "\(cost.nftCurrencyFormatted) ETH"
         }
+
+        self.cartViewState.value = viewState
     }
 
     private lazy var failureCompletion: LoadingFailureCompletionBlock = { [weak self] error in
@@ -75,9 +76,7 @@ extension CartViewModel: CartViewModelProtocol {
     }
 
     public func sortOrder(trait: CartOrderSorter.SortingTrait) {
-        self.cartOrderSorter.sort(order: self.order.value, trait: trait) { [weak self] sortedOrder in
-            self?.setOrderAnimated(newOrder: sortedOrder)
-        }
+        self.sortOrder(self.order.value, trait: trait)
     }
 
     public func removeNft(row: Int) {
@@ -99,5 +98,11 @@ private extension CartViewModel {
     func setOrderAnimated(newOrder: OrderViewModel) {
         self.tableViewChangeset = Changeset(oldItems: self.order.value, newItems: newOrder)
         self.order.value = newOrder
+    }
+
+    func sortOrder(_ order: OrderViewModel, trait: CartOrderSorter.SortingTrait) {
+        self.cartOrderSorter.sort(order: order, trait: trait) { [weak self] sortedOrder in
+            self?.setOrderAnimated(newOrder: sortedOrder)
+        }
     }
 }
