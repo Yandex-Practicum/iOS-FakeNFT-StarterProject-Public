@@ -22,7 +22,6 @@ final class CartPaymentViewInteractorTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-
         let onFailure: LoadingFailureCompletionBlock = { _ in }
 
         interactor.fetchCurrencies(
@@ -31,7 +30,6 @@ final class CartPaymentViewInteractorTests: XCTestCase {
         )
 
         self.waitForExpectations(timeout: 1)
-
         XCTAssertTrue(currenciesService.didFetchCurrenciesCalled)
     }
 
@@ -47,7 +45,6 @@ final class CartPaymentViewInteractorTests: XCTestCase {
         let expectation = self.expectation(description: "Loading currencies")
 
         let onSuccess: LoadingCompletionBlock<CartPaymentViewModel.ViewState> = { _ in }
-
         let onFailure: LoadingFailureCompletionBlock = { error in
             if let _ = error as? CurrenciesServiceSpy.TestError {
                 expectation.fulfill()
@@ -60,7 +57,6 @@ final class CartPaymentViewInteractorTests: XCTestCase {
         )
 
         self.waitForExpectations(timeout: 1)
-
         XCTAssertTrue(currenciesService.didFetchCurrenciesCalled)
     }
 }

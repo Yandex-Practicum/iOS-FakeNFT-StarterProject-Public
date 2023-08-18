@@ -2,24 +2,21 @@ import Foundation
 import FakeNFT
 
 final class OrderServiceSpy {
-    enum TestPurchaseResult {
+    enum TestRequestResult {
         case success
         case failure
     }
 
-    let order = """
-        {
-            "nfts":["95"],
-            "id":"1"
-        }
-    """
+    enum TestError: Error {
+        case test
+    }
 
     var didFetchOrderCalled = false
     var didChangeOrderCalled = false
     var didPurchaseCalled = false
 
     var orderModel: Order?
-    var neededPurchaseResult: TestPurchaseResult = .success
+    var neededRequestResult: TestRequestResult = .success
 }
 
 // MARK: - OrderServiceProtocol
@@ -29,15 +26,14 @@ extension OrderServiceSpy: OrderServiceProtocol {
         completion: @escaping FakeNFT.ResultHandler<FakeNFT.Order>
     ) {
         self.didFetchOrderCalled = true
-        guard let data = self.order.data(using: .utf8) else { return }
 
-        do {
-            let orderModel = try JSONDecoder().decode(Order.self, from: data)
+        switch self.neededRequestResult {
+        case .success:
+            let orderModel = Order(id: "123", nfts: ["123", "512"])
             self.orderModel = orderModel
             completion(.success(orderModel))
-        } catch {
-            completion(.failure(error))
-            assertionFailure(error.localizedDescription)
+        case .failure:
+            completion(.failure(TestError.test))
         }
     }
 
@@ -58,7 +54,7 @@ extension OrderServiceSpy: OrderPaymentServiceProtocol {
         completion: @escaping FakeNFT.ResultHandler<FakeNFT.PurchaseResult>
     ) {
         self.didPurchaseCalled = true
-        let purchaseState = self.neededPurchaseResult == .success
+        let purchaseState = self.neededRequestResult == .success
         completion(.success(PurchaseResult(id: "123", orderId: "123", success: purchaseState)))
     }
 }
