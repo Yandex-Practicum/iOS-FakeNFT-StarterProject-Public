@@ -17,11 +17,13 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
 
 protocol CollectionScreenViewPresenterProtocol {
     var actualNftsCount: Int { get }
-    var takeCollectionName: String { get }
-    var takeCollectionCover: String { get }
-    var takeCollectionDescription: String { get }
-    var takeInitialNftCount: Int { get }
-    var createWebViewScreen: WebViewScreenViewController { get }
-    func makeFetchRequest()
-    func takeNftFromNfts(index: Int) -> NftModel
+    var collectionName: String { get }
+    var collectionCover: String { get }
+    var collectionDescription: String { get }
+    var initialNftCount: Int { get }
+    var webViewScreen: WebViewScreenViewController { get }
+    func viewMadeFetchRequest()
+    func viewDidRequestNftFromNfts(index: Int) -> NftModel
+    func viewDidRequestTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat
+    func viewDidRequestLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat
 }
