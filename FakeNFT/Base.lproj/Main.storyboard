@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -118,44 +118,47 @@
                         <segue destination="6i5-Qt-ukh" kind="relationship" relationship="viewControllers" id="T9j-PL-Yhv"/>
                         <segue destination="lvU-bz-Vrw" kind="relationship" relationship="viewControllers" id="UQk-8s-8v2"/>
                         <segue destination="ZuB-kp-v3h" kind="relationship" relationship="viewControllers" id="z6Y-lX-f3f"/>
-                        <segue destination="qg2-Az-O78" kind="relationship" relationship="viewControllers" id="HDa-tO-gwF"/>
+                        <segue destination="fOI-n0-1cl" kind="relationship" relationship="viewControllers" id="HDa-tO-gwF"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RxO-nu-FuZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-350" y="-784"/>
         </scene>
-        <!--Корзина-->
+        <!--Rating View Controller-->
         <scene sceneID="3mo-mi-MIz">
             <objects>
-                <viewController id="qg2-Az-O78" sceneMemberID="viewController">
+                <viewController id="qg2-Az-O78" customClass="RatingViewController" customModule="FakeNFT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="F9g-gd-wrv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Статистика" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLD-QU-GF5">
-                                <rect key="frame" x="16" y="159" width="361" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="I1N-69-hsd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5Kp-Ha-3xc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="YLD-QU-GF5" firstAttribute="leading" secondItem="5Kp-Ha-3xc" secondAttribute="leading" constant="16" id="Mu2-x1-MQI"/>
-                            <constraint firstItem="YLD-QU-GF5" firstAttribute="top" secondItem="5Kp-Ha-3xc" secondAttribute="top" constant="100" id="Zpd-k7-wpa"/>
-                            <constraint firstItem="5Kp-Ha-3xc" firstAttribute="trailing" secondItem="YLD-QU-GF5" secondAttribute="trailing" constant="16" id="nRx-wH-Ra1"/>
-                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Корзина" image="flag.2.crossed.fill" catalog="system" id="xgD-9Y-EGT"/>
+                    <navigationItem key="navigationItem" id="XlJ-qH-FMb"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2lQ-it-xtI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="941" y="50"/>
+            <point key="canvasLocation" x="1866.4122137404579" y="50"/>
+        </scene>
+        <!--Статистика-->
+        <scene sceneID="6NP-tJ-rYd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fOI-n0-1cl" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Статистика" image="flag.2.crossed.fill" catalog="system" id="xgD-9Y-EGT"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="U5O-BS-4zu">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qg2-Az-O78" kind="relationship" relationship="rootViewController" id="dnv-jw-94a"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x0W-Vq-5z6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="939.69465648854953" y="50"/>
         </scene>
     </scenes>
     <resources>
