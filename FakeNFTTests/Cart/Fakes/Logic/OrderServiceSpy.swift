@@ -1,9 +1,11 @@
 import Foundation
 import FakeNFT
 
-final class OrderServiceSpy: OrderServiceProtocol {
-    var didFetchOrderCalled = false
-    var didChangeOrderCalled = false
+final class OrderServiceSpy {
+    enum TestPurchaseResult {
+        case success
+        case failure
+    }
 
     let order = """
         {
@@ -12,8 +14,16 @@ final class OrderServiceSpy: OrderServiceProtocol {
         }
     """
 
-    var orderModel: Order?
+    var didFetchOrderCalled = false
+    var didChangeOrderCalled = false
+    var didPurchaseCalled = false
 
+    var orderModel: Order?
+    var neededPurchaseResult: TestPurchaseResult = .success
+}
+
+// MARK: - OrderServiceProtocol
+extension OrderServiceSpy: OrderServiceProtocol {
     func fetchOrder(
         id: String,
         completion: @escaping FakeNFT.ResultHandler<FakeNFT.Order>
@@ -37,6 +47,18 @@ final class OrderServiceSpy: OrderServiceProtocol {
         completion: @escaping FakeNFT.ResultHandler<FakeNFT.Order>
     ) {
         self.didChangeOrderCalled = true
-        
+    }
+}
+
+// MARK: - OrderPaymentServiceProtocol
+extension OrderServiceSpy: OrderPaymentServiceProtocol {
+    func purchase(
+        orderId: String,
+        currencyId: String,
+        completion: @escaping FakeNFT.ResultHandler<FakeNFT.PurchaseResult>
+    ) {
+        self.didPurchaseCalled = true
+        let purchaseState = self.neededPurchaseResult == .success
+        completion(.success(PurchaseResult(id: "123", orderId: "123", success: purchaseState)))
     }
 }
