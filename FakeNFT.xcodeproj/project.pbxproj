@@ -34,6 +34,13 @@
 		8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */; };
 		8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B61D2A8B70A100870C53 /* BasketService.swift */; };
 		8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B6202A8B71B600870C53 /* NftModel.swift */; };
+		B3F01F5A2A91621300C934D4 /* PutOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F552A91621300C934D4 /* PutOrderRequest.swift */; };
+		B3F01F5B2A91621300C934D4 /* GetCurrenciesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F562A91621300C934D4 /* GetCurrenciesRequest.swift */; };
+		B3F01F5C2A91621300C934D4 /* GetNFTByOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F572A91621300C934D4 /* GetNFTByOrderRequest.swift */; };
+		B3F01F5D2A91621300C934D4 /* GetPaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F582A91621300C934D4 /* GetPaymentRequest.swift */; };
+		B3F01F5E2A91621300C934D4 /* GetOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F592A91621300C934D4 /* GetOrderRequest.swift */; };
+		B3F01F612A91621F00C934D4 /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F5F2A91621F00C934D4 /* BasketService.swift */; };
+		B3F01F622A91621F00C934D4 /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F01F602A91621F00C934D4 /* OrderService.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -90,6 +97,13 @@
 		8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLikesRequest.swift; sourceTree = "<group>"; };
 		8BC9B61D2A8B70A100870C53 /* BasketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
 		8BC9B6202A8B71B600870C53 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
+		B3F01F552A91621300C934D4 /* PutOrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PutOrderRequest.swift; sourceTree = "<group>"; };
+		B3F01F562A91621300C934D4 /* GetCurrenciesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCurrenciesRequest.swift; sourceTree = "<group>"; };
+		B3F01F572A91621300C934D4 /* GetNFTByOrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNFTByOrderRequest.swift; sourceTree = "<group>"; };
+		B3F01F582A91621300C934D4 /* GetPaymentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPaymentRequest.swift; sourceTree = "<group>"; };
+		B3F01F592A91621300C934D4 /* GetOrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOrderRequest.swift; sourceTree = "<group>"; };
+		B3F01F5F2A91621F00C934D4 /* BasketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
+		B3F01F602A91621F00C934D4 /* OrderService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +258,28 @@
 			path = BasketService;
 			sourceTree = "<group>";
 		};
+		B3F01F532A9161DA00C934D4 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B3F01F5F2A91621F00C934D4 /* BasketService.swift */,
+				B3F01F602A91621F00C934D4 /* OrderService.swift */,
+				B3F01F542A9161F300C934D4 /* Requests */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		B3F01F542A9161F300C934D4 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				B3F01F562A91621300C934D4 /* GetCurrenciesRequest.swift */,
+				B3F01F572A91621300C934D4 /* GetNFTByOrderRequest.swift */,
+				B3F01F592A91621300C934D4 /* GetOrderRequest.swift */,
+				B3F01F582A91621300C934D4 /* GetPaymentRequest.swift */,
+				B3F01F552A91621300C934D4 /* PutOrderRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		F9F557352A7419CC004F6856 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +322,7 @@
 		F9F5574A2A743309004F6856 /* Basket */ = {
 			isa = PBXGroup;
 			children = (
+				B3F01F532A9161DA00C934D4 /* NetworkService */,
 				F9F5573D2A741B51004F6856 /* BasketViewController.swift */,
 			);
 			path = Basket;
@@ -476,8 +513,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F01F5B2A91621300C934D4 /* GetCurrenciesRequest.swift in Sources */,
 				8B65AD0D2A8D6FB8003D201C /* AlertActionModel.swift in Sources */,
+				B3F01F5D2A91621300C934D4 /* GetPaymentRequest.swift in Sources */,
 				8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */,
+				B3F01F622A91621F00C934D4 /* OrderService.swift in Sources */,
+				B3F01F5A2A91621300C934D4 /* PutOrderRequest.swift in Sources */,
 				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
 				8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
@@ -489,11 +530,14 @@
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
 				8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */,
+				B3F01F5C2A91621300C934D4 /* GetNFTByOrderRequest.swift in Sources */,
 				8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */,
 				8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				8B65AD0A2A8D6F79003D201C /* AlertPresenter.swift in Sources */,
+				B3F01F5E2A91621300C934D4 /* GetOrderRequest.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				B3F01F612A91621F00C934D4 /* BasketService.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */,
 				8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */,
