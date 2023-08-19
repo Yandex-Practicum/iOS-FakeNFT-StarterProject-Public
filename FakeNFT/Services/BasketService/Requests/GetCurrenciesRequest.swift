@@ -7,10 +7,10 @@
 
 import Foundation
 
-class GetCurrenciesRequest: NetworkRequest {
+final class GetCurrenciesRequest: NetworkRequest {
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        BasketConstants.baseUrl.appendingPathComponent("/currencies")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/currencies")
     }
 
     init(httpMethod: HttpMethod) {

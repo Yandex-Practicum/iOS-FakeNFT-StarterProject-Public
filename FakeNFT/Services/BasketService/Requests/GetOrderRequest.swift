@@ -7,10 +7,10 @@
 
 import Foundation
 
-class GetOrderRequest: NetworkRequest {
+final class GetOrderRequest: NetworkRequest {
     var httpMethod: HttpMethod
     var endpoint: URL? {
-        BasketConstants.baseUrl.appendingPathComponent("/orders/1")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/orders/1")
     }
     
     init(httpMethod: HttpMethod) {
