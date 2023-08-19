@@ -79,11 +79,11 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     }
     
     func viewDidRequestLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-        let textView = UILabel()
-        textView.text = text
-        textView.font = font
-        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        let label = UILabel()
+        label.text = text
+        label.font = font
+        label.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let newSize = label.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         return newSize.height
     }
     
