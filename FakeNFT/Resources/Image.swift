@@ -3,7 +3,7 @@ import UIKit
 extension UIImage {
     static let addToBasket = UIImage(named: "addToBasket")
     static let basket = UIImage(named: "basket")
-    static let grayStar = UIImage(named: "grayStar")
+    static let grayStar = UIImage(named: "grayStar")?.withTintColor(.ypLightGray)
     static let liked = UIImage(named: "liked")
     static let paymentError = UIImage(named: "paymentError")
     static let paymentSuccess = UIImage(named: "paymentSuccess")
