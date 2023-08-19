@@ -50,7 +50,9 @@ final class CatalogViewTableCell: UITableViewCell, ReuseIdentifying {
         nftCollectionImage.kf.setImage(with: url) { [weak self] _ in
             // MARK: уменьшаю картинку в 4 раза
             if let originalImage = self?.nftCollectionImage.image {
-                let scaledSize = CGSize(width: originalImage.size.width / 4, height: originalImage.size.height / 4)
+                let needWidth = self?.superview?.frame.width ?? 1
+                let coef = originalImage.size.width / needWidth
+                let scaledSize = CGSize(width: originalImage.size.width / coef, height: originalImage.size.height / coef)
                 
                 UIGraphicsBeginImageContextWithOptions(scaledSize, false, 0.0)
                 originalImage.draw(in: CGRect(origin: .zero, size: scaledSize))
