@@ -12,6 +12,7 @@ final class BasketService {
     private let userDefaults = UserDefaults.standard
     private let orderService = OrderService()
     private let basketKey = "basket"
+    private let sortKey = "basketSortKey"
     private init() {}
     
     var basket: [NFTModel] {
@@ -29,6 +30,25 @@ final class BasketService {
                 return
             }
             userDefaults.set(encodedData, forKey: basketKey)
+            userDefaults.synchronize()
+        }
+    }
+    
+    var sortingType: Sort {
+        get {
+            guard
+                let data = userDefaults.data(forKey: sortKey),
+                let sortingType = try? JSONDecoder().decode(Sort.self, from: data) else {
+                return Sort.name
+            }
+            return sortingType
+        }
+        set {
+            guard let encodedData = try? JSONEncoder().encode(newValue) else {
+                print("Невозможно сохранить результат")
+                return
+            }
+            userDefaults.set(encodedData, forKey: sortKey)
             userDefaults.synchronize()
         }
     }

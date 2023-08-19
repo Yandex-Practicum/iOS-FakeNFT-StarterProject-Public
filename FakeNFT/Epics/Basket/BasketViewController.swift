@@ -34,6 +34,7 @@ final class BasketViewController: UIViewController {
     private var sort: Sort? {
         didSet {
             guard let sort else { return }
+            basketService.sortingType = sort
             nftsMocked = applySort(nfts: nftsMocked, by: sort)
             nftsTableView.reloadData()
         }
@@ -45,7 +46,7 @@ final class BasketViewController: UIViewController {
         super.viewDidLoad()
         nftsMocked = basketService.basket
         print(nftsMocked)
-//        OrderService.shared.updateOrder(with: ["93", "94", "95"]) {result in
+//        OrderService.shared.updateOrder(with: ["92", "91", "93", "94", "95"]) {result in
 //            switch result {
 //            case .success(_):
 //                print("added successfully")
@@ -54,7 +55,6 @@ final class BasketViewController: UIViewController {
 //            }
 //        }
         setupView()
-        nftsTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,6 +129,9 @@ private extension BasketViewController {
             view.addSubview($0)
         }
         setupConstraints()
+        
+        sort = basketService.sortingType
+        nftsTableView.reloadData()
     }
     
     func setupConstraints() {
@@ -149,12 +152,6 @@ private extension BasketViewController {
             emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
-    }
-    
-    enum Sort {
-        case price
-        case rating
-        case name
     }
 }
 
@@ -209,4 +206,10 @@ extension BasketViewController: SumViewDelegate {
         navigationController.modalPresentationStyle = .overFullScreen
         present(navigationController, animated: true, completion: nil)
     }
+}
+
+enum Sort: Codable, Equatable {
+    case price
+    case rating
+    case name
 }
