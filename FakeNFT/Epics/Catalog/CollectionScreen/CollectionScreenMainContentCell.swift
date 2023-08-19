@@ -43,6 +43,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
         authorStaticPartLabel.text = NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft") + " "
         authorStaticPartLabel.font = .caption2
         authorStaticPartLabel.textColor = .ypBlack
+        authorStaticPartLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         authorStaticPartLabel.translatesAutoresizingMaskIntoConstraints = false
         return authorStaticPartLabel
     }()
@@ -54,6 +55,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
         authorDynamicPartLabel.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(authorLabelTap))
         authorDynamicPartLabel.addGestureRecognizer(guestureRecognizer)
+        authorDynamicPartLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         authorDynamicPartLabel.translatesAutoresizingMaskIntoConstraints = false
         return authorDynamicPartLabel
     }()
@@ -124,6 +126,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
             authorDynamicPartLabel.leadingAnchor.constraint(equalTo: authorStaticPartLabel.trailingAnchor),
             authorDynamicPartLabel.bottomAnchor.constraint(equalTo: authorStaticPartLabel.bottomAnchor),
             authorDynamicPartLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            authorDynamicPartLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 100),
             
             descriptionTextView.topAnchor.constraint(equalTo: authorStaticPartLabel.bottomAnchor, constant: 5),
             descriptionTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
