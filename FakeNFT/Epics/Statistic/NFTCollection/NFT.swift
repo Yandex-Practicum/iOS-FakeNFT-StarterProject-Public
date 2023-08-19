@@ -26,3 +26,18 @@ extension NFT: Hashable {
         lhs.uuid == rhs.uuid
     }
 }
+
+extension NFT {
+    func toNFTModel() -> NftModel {
+        return NftModel(
+            createdAt: createdAt,
+            name: name,
+            images: images,
+            rating: rating,
+            description: description,
+            price: Float(price),
+            author: author,
+            id: id
+        )
+    }
+}

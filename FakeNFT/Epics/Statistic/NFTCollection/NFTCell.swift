@@ -12,7 +12,7 @@ import Combine
 
 final class NFTCell: UICollectionViewCell {
     private var viewModel: NFTCellViewModel?
-    private var cancellables = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
 
     // MARK: - Public
     func configure(with viewModel: NFTCellViewModel) {
@@ -23,10 +23,24 @@ final class NFTCell: UICollectionViewCell {
             UIImageView(image: $0 < rating && rating < 6 ? .yellowStar : grayStar)
         })
         nftImageView.kf.setImage(with: viewModel.url, placeholder: placeholder)
-        addToCardButton.setImage(viewModel.isInCart ? removeFromCart : addToCart, for: .normal)
-        likeButton.setImage(viewModel.isLikedReally ? like : unLike, for: .normal)
+        addToCardButton.setImage(viewModel.isAddedToCart ? removeFromCart : addToCart, for: .normal)
+        likeButton.setImage(viewModel.isLiked ? like : unLike, for: .normal)
         nftNameLabel.text = viewModel.title
         priceLabel.text = viewModel.price
+
+        viewModel.$isLiked
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLiked in
+                self?.likeButton.setImage(isLiked ? self?.like : self?.unLike, for: .normal)
+            }
+            .store(in: &subscriptions)
+
+        viewModel.$isAddedToCart
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isInCart in
+                self?.addToCardButton.setImage(isInCart ? self?.removeFromCart : self?.addToCart, for: .normal)
+            }
+            .store(in: &subscriptions)
     }
 
     // MARK: - Private UI Elements
@@ -40,12 +54,13 @@ final class NFTCell: UICollectionViewCell {
 
     private lazy var addToCardButton: UIButton = {
         let view = UIButton(type: .system)
-
+        view.addTarget(self, action: #selector(addToCartButtonTapped), for: .touchUpInside)
         return view
     }()
 
     private lazy var likeButton: UIButton = {
         let view = UIButton(type: .system)
+        view.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return view
     }()
 
@@ -104,7 +119,7 @@ final class NFTCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        cancellables.removeAll()
+        subscriptions.removeAll()
         viewModel = nil
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
@@ -184,7 +199,7 @@ private extension NFTCell {
     }
     var placeholder: UIImage? {
         UIImage(systemName: "face.smiling.inverse")?
-            .withTintColor(.lightGray, renderingMode:  .alwaysOriginal)
+            .withTintColor(.lightGray, renderingMode: .alwaysOriginal)
     }
     var like: UIImage? {
         UIImage.liked?.withTintColor(.ypRedUniversal, renderingMode: .alwaysOriginal)

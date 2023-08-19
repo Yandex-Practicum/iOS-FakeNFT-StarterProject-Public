@@ -57,6 +57,17 @@
 		F9997DD02A891D230040BE7F /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DCF2A891D230040BE7F /* ProfileResult.swift */; };
 		F9997DD52A89224F0040BE7F /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DD42A89224F0040BE7F /* OrderService.swift */; };
 		F9997DD72A8922DA0040BE7F /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DD62A8922DA0040BE7F /* Order.swift */; };
+		8B65AD0A2A8D6F79003D201C /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD092A8D6F79003D201C /* AlertPresenter.swift */; };
+		8B65AD0D2A8D6FB8003D201C /* AlertActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */; };
+		8B65AD0F2A8D6FDA003D201C /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */; };
+		8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF732A8CE51F007A077C /* LikeService.swift */; };
+		8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF762A8CE605007A077C /* ProfileModel.swift */; };
+		8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF782A8CE664007A077C /* ProfileRequest.swift */; };
+		8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7A2A8CE6BF007A077C /* Constants.swift */; };
+		8B96BF7D2A8CE774007A077C /* ProfileNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */; };
+		8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */; };
+		8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B61D2A8B70A100870C53 /* BasketService.swift */; };
+		8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B6202A8B71B600870C53 /* NftModel.swift */; };
 		F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F557392A741B38004F6856 /* CatalogViewController.swift */; };
 		F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573B2A741B48004F6856 /* ProfileViewController.swift */; };
 		F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F5573D2A741B51004F6856 /* BasketViewController.swift */; };
@@ -135,6 +146,17 @@
 		F9997DCF2A891D230040BE7F /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		F9997DD42A89224F0040BE7F /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 		F9997DD62A8922DA0040BE7F /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		8B65AD092A8D6F79003D201C /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionModel.swift; sourceTree = "<group>"; };
+		8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
+		8B96BF732A8CE51F007A077C /* LikeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeService.swift; sourceTree = "<group>"; };
+		8B96BF762A8CE605007A077C /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		8B96BF782A8CE664007A077C /* ProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRequest.swift; sourceTree = "<group>"; };
+		8B96BF7A2A8CE6BF007A077C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkService.swift; sourceTree = "<group>"; };
+		8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLikesRequest.swift; sourceTree = "<group>"; };
+		8BC9B61D2A8B70A100870C53 /* BasketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
+		8BC9B6202A8B71B600870C53 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
 		F9F557392A741B38004F6856 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F9F5573B2A741B48004F6856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F9F5573D2A741B51004F6856 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +222,7 @@
 				F9F5574D2A743375004F6856 /* Decomposition */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+				8B96BF7A2A8CE6BF007A077C /* Constants.swift */,
 				F9F557412A741CC6004F6856 /* TabBar */,
 				F9F557382A741B13004F6856 /* Epics */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
@@ -230,6 +253,9 @@
 		3F6806C629CBBC4E00B4F915 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8B65AD0B2A8D6FA3003D201C /* AlertPresenter */,
+				8B96BF752A8CE5EC007A077C /* LikeService */,
+				8BC9B61F2A8B716C00870C53 /* BasketService */,
 				8B0BA3692A853739001C569F /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
@@ -253,6 +279,37 @@
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
 			);
 			path = NetworkClient;
+			sourceTree = "<group>";
+		};
+		8B65AD0B2A8D6FA3003D201C /* AlertPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				8B65AD0C2A8D6FB8003D201C /* AlertActionModel.swift */,
+				8B65AD092A8D6F79003D201C /* AlertPresenter.swift */,
+				8B65AD0E2A8D6FDA003D201C /* AlertPresenterProtocol.swift */,
+			);
+			path = AlertPresenter;
+			sourceTree = "<group>";
+		};
+		8B96BF752A8CE5EC007A077C /* LikeService */ = {
+			isa = PBXGroup;
+			children = (
+				8B96BF762A8CE605007A077C /* ProfileModel.swift */,
+				8B96BF782A8CE664007A077C /* ProfileRequest.swift */,
+				8B96BF7E2A8CEAC2007A077C /* SetLikesRequest.swift */,
+				8B96BF7C2A8CE774007A077C /* ProfileNetworkService.swift */,
+				8B96BF732A8CE51F007A077C /* LikeService.swift */,
+			);
+			path = LikeService;
+			sourceTree = "<group>";
+		};
+		8BC9B61F2A8B716C00870C53 /* BasketService */ = {
+			isa = PBXGroup;
+			children = (
+				8BC9B61D2A8B70A100870C53 /* BasketService.swift */,
+				8BC9B6202A8B71B600870C53 /* NftModel.swift */,
+			);
+			path = BasketService;
 			sourceTree = "<group>";
 		};
 		F96F2D112A7E7A04004CC5D2 /* UserList */ = {
@@ -634,6 +691,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B65AD0D2A8D6FB8003D201C /* AlertActionModel.swift in Sources */,
+				8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */,
+				F9F5573E2A741B51004F6856 /* BasketViewController.swift in Sources */,
+				8BC9B61E2A8B70A100870C53 /* BasketService.swift in Sources */,
 				F96F2D092A7E4F21004CC5D2 /* UserService.swift in Sources */,
 				F96F2D032A7E4EC0004CC5D2 /* NiblessViewController.swift in Sources */,
 				F96F2D052A7E4EE4004CC5D2 /* UserResult.swift in Sources */,
@@ -667,6 +728,11 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				F9997DCB2A8905FA0040BE7F /* NFTCellViewModel.swift in Sources */,
 				F96F2D1E2A7E83CE004CC5D2 /* UserCardViewModel.swift in Sources */,
+				8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */,
+				8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */,
+				8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */,
+				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				8B65AD0A2A8D6F79003D201C /* AlertPresenter.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				F9997DB22A87BA5F0040BE7F /* NFTCollectionViewModel.swift in Sources */,
 				F96F2D1A2A7E8147004CC5D2 /* NSCollectionLayoutItem.swift in Sources */,
@@ -678,6 +744,11 @@
 				F96F2D282A7E8F76004CC5D2 /* UserCardCellView.swift in Sources */,
 				F96F2D1C2A7E8171004CC5D2 /* NSCollectionLayoutGroup.swift in Sources */,
 				F96F2D172A7E7ADB004CC5D2 /* UserCardViewController.swift in Sources */,
+				8B96BF7F2A8CEAC2007A077C /* SetLikesRequest.swift in Sources */,
+				8B96BF7B2A8CE6BF007A077C /* Constants.swift in Sources */,
+				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
+				8B65AD0F2A8D6FDA003D201C /* AlertPresenterProtocol.swift in Sources */,
+				8B96BF7D2A8CE774007A077C /* ProfileNetworkService.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				F96F2D2C2A7E8FB1004CC5D2 /* CollectionCellView.swift in Sources */,
 				F96F2D212A7E88C1004CC5D2 /* UserCardCellViewModel.swift in Sources */,

@@ -65,7 +65,7 @@ final class NFTCollectionViewController: NiblessViewController {
     }
 
     // MARK: - @objc methods
-    @objc private func pullToRefresh() {        
+    @objc private func pullToRefresh() {
         viewModel.pullToRefresh()
     }
 
@@ -121,12 +121,10 @@ private extension NFTCollectionViewController {
                     self.updateSnapshot(with: nfts)
                     self.collectionView.refreshControl?.endRefreshing()
                 }
-            }
-            else {
+            } else {
                 self.updateSnapshot(with: nfts)
                 self.collectionView.refreshControl?.endRefreshing()
             }
-
         } else {
             // TODO: - Добавить заглушку если массив пустой
         }

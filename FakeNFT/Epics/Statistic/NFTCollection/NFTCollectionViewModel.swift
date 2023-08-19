@@ -104,8 +104,8 @@ final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
                 price: nft.price,
                 author: nft.author,
                 id: nft.id,
-                isInCart: nft.isInCart,
-                isLiked: nft.isLiked
+                isInCart: isInCart,
+                isLiked: isLiked
             )
 
             // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной

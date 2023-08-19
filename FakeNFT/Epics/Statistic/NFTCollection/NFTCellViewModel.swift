@@ -21,14 +21,6 @@ final class NFTCellViewModel {
         nft.images.first.flatMap { URL(string: $0) }
     }
 
-    var isLikedReally: Bool {
-        nft.isLiked
-    }
-
-    var isInCart: Bool {
-        nft.isInCart
-    }
-
     var rating: Int {
         Int(nft.rating)
     }
@@ -41,40 +33,56 @@ final class NFTCellViewModel {
         "\(nft.price) ETH"
     }
 
-
     private var cancellables = Set<AnyCancellable>()
 
     private let nft: NFT
+    private let likeService: LikeService
+    private let basketService: BasketService
 
-    init(nft: NFT) {
+    init(
+        nft: NFT,
+        likeService: LikeService = LikeService.shared,
+        basketService: BasketService = BasketService.shared
+    ) {
         self.nft = nft
+        self.likeService = likeService
+        self.basketService = basketService
 
-        // TODO: - Добавить возможность ставить лайки и отправлять в корзину
-        
-//        likeButtonAction
-//            .flatMap { _ in
-//                self.likeRequest()
-//            }
-//            .assign(to: \.isLiked, on: self)
-//            .store(in: &cancellables)
-//
-//        addToCartButtonAction
-//            .flatMap { _ in
-//                self.addToCartRequest()
-//            }
-//            .assign(to: \.isAddedToCart, on: self)
-//            .store(in: &cancellables)
+        isLiked = nft.isLiked
+        isAddedToCart = nft.isInCart
+
+        likeButtonAction
+            .sink { [weak self] _ in
+                self?.likeRequest()
+            }
+            .store(in: &cancellables)
+
+        addToCartButtonAction
+            .sink { [weak self] _ in
+                self?.addToCart()
+            }
+            .store(in: &cancellables)
     }
 
-//    private func likeRequest() -> AnyPublisher<Bool, Never> {
-//        // Send post request and return its result
-//        // ...
-//    }
-//
-//    private func addToCartRequest() -> AnyPublisher<Bool, Never> {
-//        // Send post request and return its result
-//        // ...
-//    }
+    private func likeRequest() {
+        if isLiked {
+            likeService.removeLike(nftId: nft.id)
+            isLiked = false
+        } else {
+            likeService.setLike(nftId: nft.id)
+            isLiked = true
+        }
+    }
+
+    private func addToCart() {
+        if isAddedToCart {
+            basketService.removeNFTFromBasket(nft.toNFTModel())
+            isAddedToCart = false
+        } else {
+            basketService.addNFTToBasket(nft.toNFTModel())
+            isAddedToCart = true
+        }
+    }
 }
 
 extension NFTCellViewModel: Hashable {
