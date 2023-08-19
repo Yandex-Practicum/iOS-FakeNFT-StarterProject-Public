@@ -78,9 +78,8 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCollectionImage(link: String) {
-        let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
-        collectionImage.kf.setImage(with: url) { [weak self] _ in
+    func setCollectionImage(link: URL?) {
+        collectionImage.kf.setImage(with: link) { [weak self] _ in
             self?.viewController?.viewReadinessCheck()
         }
     }

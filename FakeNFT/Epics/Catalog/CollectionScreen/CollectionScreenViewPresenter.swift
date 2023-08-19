@@ -14,8 +14,8 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     var collectionName: String {
         catalogDataModel.name
     }
-    var collectionCover: String {
-        catalogDataModel.cover
+    var collectionCover: URL? {
+        takeURL(link: catalogDataModel.cover)
     }
     var collectionDescription: String {
         catalogDataModel.description

@@ -18,7 +18,7 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
 protocol CollectionScreenViewPresenterProtocol {
     var actualNftsCount: Int { get }
     var collectionName: String { get }
-    var collectionCover: String { get }
+    var collectionCover: URL? { get }
     var collectionDescription: String { get }
     var initialNftCount: Int { get }
     var webViewScreen: WebViewScreenViewController { get }
