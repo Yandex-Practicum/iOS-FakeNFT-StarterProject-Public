@@ -5,7 +5,7 @@
 //  Created by Богдан Полыгалов on 12.08.2023.
 //
 
-import UIKit
+import Foundation
 
 final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol {
     var actualNftsCount: Int {
@@ -71,25 +71,6 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     
     func viewDidRequestNftFromNfts(index: Int) -> NftModel {
         nfts[index]
-    }
-    
-    func viewDidRequestTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-        let textView = UITextView()
-        textView.text = text
-        textView.font = font
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
-        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        return newSize.height
-    }
-    
-    func viewDidRequestLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
-        let label = UILabel()
-        label.text = text
-        label.font = font
-        label.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let newSize = label.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
-        return newSize.height
     }
     
     private func updateCollection() {

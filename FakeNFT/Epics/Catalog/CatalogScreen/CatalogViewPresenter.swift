@@ -5,7 +5,7 @@
 //  Created by Богдан Полыгалов on 12.08.2023.
 //
 
-import UIKit
+import Foundation
 
 final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     var catalogCount: Int {

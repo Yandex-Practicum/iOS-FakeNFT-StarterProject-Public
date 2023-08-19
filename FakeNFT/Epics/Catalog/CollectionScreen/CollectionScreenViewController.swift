@@ -13,9 +13,9 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var mainContentHeight: CGFloat {
         let imageSize: CGFloat = 310
-        let nameHeight: CGFloat = presenter.viewDidRequestLabelHeight(text: presenter.collectionName, width: view.frame.width - 32, font: .headline3)
-        let authorHeight: CGFloat = presenter.viewDidRequestLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width - 32, font: .caption2)
-        let descriptionHeight: CGFloat = presenter.viewDidRequestTextViewHeight(text: presenter.collectionDescription, width: view.frame.width-32, font: .caption2)
+        let nameHeight: CGFloat = calculateLabelHeight(text: presenter.collectionName, width: view.frame.width - 32, font: .headline3)
+        let authorHeight: CGFloat = calculateLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width - 32, font: .caption2)
+        let descriptionHeight: CGFloat = calculateTextViewHeight(text: presenter.collectionDescription, width: view.frame.width-32, font: .caption2)
         let constraints: CGFloat = 16 + 13 + 5
         return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
     }
@@ -130,6 +130,25 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         cell.setRating(rate: nft.rating)
         cell.setNameLabel(name: nft.name)
         cell.setCostLabel(cost: nft.price)
+    }
+    
+    private func calculateTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+        let textView = UITextView()
+        textView.text = text
+        textView.font = font
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
+        textView.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let newSize = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        return newSize.height
+    }
+    
+    private func calculateLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat {
+        let label = UILabel()
+        label.text = text
+        label.font = font
+        label.frame.size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let newSize = label.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        return newSize.height
     }
     
     @objc func buttonBackTap() {

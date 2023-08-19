@@ -25,6 +25,4 @@ protocol CollectionScreenViewPresenterProtocol {
     func injectViewController(viewController: CollectionScreenViewControllerProtocol)
     func viewMadeFetchRequest()
     func viewDidRequestNftFromNfts(index: Int) -> NftModel
-    func viewDidRequestTextViewHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat
-    func viewDidRequestLabelHeight(text: String, width: CGFloat, font: UIFont) -> CGFloat
 }
