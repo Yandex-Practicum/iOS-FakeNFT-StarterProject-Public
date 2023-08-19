@@ -8,6 +8,13 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     var networkClient: NFTsNetworkClientProtocol?
     var callback: (() -> Void)?
     
+    @UserDefaultsManager(key: "currentSortOption", defaultValue: ProfileSortOption.byName)
+    var currentSortOption: ProfileSortOption{
+        didSet {
+            sortMyNFTs(by: currentSortOption)
+        }
+    }
+    
     // MARK: - Private properties
     
     private var profile: ProfileResponseModel
@@ -16,7 +23,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
     private var myNFTsResponces: [NFTResponseModel] = []
     private var nftAuthorsResponces: [AuthorResponseModel] = []
     private var presentationModels: [MyNFTPresentationModel] = []
-    
     
     // MARK: - Life cycle
     
@@ -50,7 +56,17 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         presentationModels[indexPath.row]
     }
     
-    func sortMyNFTs(by option: ProfileSortOption) {
+    // MARK: - Private Methods
+    
+    private func addNFT(responce: NFTResponseModel) {
+        myNFTsResponces.append(responce)
+    }
+    
+    private func addAuthor(responce: AuthorResponseModel) {
+        nftAuthorsResponces.append(responce)
+    }
+    
+    private func sortMyNFTs(by option: ProfileSortOption) {
         var newPresentationModels: [MyNFTPresentationModel] = []
         
         switch option {
@@ -63,16 +79,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         }
         presentationModels = newPresentationModels
         view?.updateTable()
-    }
-    
-    // MARK: - Private Methods
-    
-    private func addNFT(responce: NFTResponseModel) {
-        myNFTsResponces.append(responce)
-    }
-    
-    private func addAuthor(responce: AuthorResponseModel) {
-        nftAuthorsResponces.append(responce)
     }
     
     private func getNFTResponceModels(for nfts: [String]) {
@@ -160,6 +166,7 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         }
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            sortMyNFTs(by: currentSortOption)
             self.view?.updateTable()
             UIBlockingProgressHUD.dismiss()
         }

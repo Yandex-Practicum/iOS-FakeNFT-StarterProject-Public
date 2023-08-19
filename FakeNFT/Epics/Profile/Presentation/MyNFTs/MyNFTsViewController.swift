@@ -158,21 +158,21 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
             style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.presenter?.sortMyNFTs(by: .byPrice)
+            self.presenter?.currentSortOption = .byPrice
         }
         let ratingSortAction = UIAlertAction(
             title: NSLocalizedString("sort.byRating", comment: ""),
             style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.presenter?.sortMyNFTs(by: .byRating)
+            self.presenter?.currentSortOption = .byRating
         }
         let nameSortAction = UIAlertAction(
             title: NSLocalizedString("sort.byName", comment: ""),
             style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.presenter?.sortMyNFTs(by: .byName)
+            self.presenter?.currentSortOption = .byName
         }
         let closeAction = UIAlertAction(
             title: NSLocalizedString("sort.close", comment: ""),

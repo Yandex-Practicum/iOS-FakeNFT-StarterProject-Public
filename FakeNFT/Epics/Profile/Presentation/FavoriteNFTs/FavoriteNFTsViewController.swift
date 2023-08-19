@@ -120,7 +120,11 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
         
         let symbolConfiguration = UIImage.SymbolConfiguration(weight: .semibold)
         
-        let backImage = UIImage(systemName: "chevron.left", withConfiguration: symbolConfiguration) ?? UIImage()
+        let backImage = UIImage(
+            systemName: "chevron.left",
+            withConfiguration: symbolConfiguration
+        ) ?? UIImage()
+        
         let backButton = UIBarButtonItem(
             image: backImage,
             style: .plain,

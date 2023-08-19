@@ -36,6 +36,7 @@
 		8BC9B6212A8B71B600870C53 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9B6202A8B71B600870C53 /* NftModel.swift */; };
 		BA01A4792A856EE80045B77F /* UserAboutWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA01A4782A856EE80045B77F /* UserAboutWebView.swift */; };
 		BA01A47B2A85724B0045B77F /* UserAboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA01A47A2A85724B0045B77F /* UserAboutPresenter.swift */; };
+		BA180D4F2A90157100D8FED6 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA180D4E2A90157100D8FED6 /* UserDefaultsManager.swift */; };
 		BA2035002A7A445100147B23 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */; };
 		BA2035022A7A704200147B23 /* ProfileNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */; };
 		BA2035052A7A9ADC00147B23 /* ProfileResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */; };
@@ -124,6 +125,7 @@
 		8BC9B6202A8B71B600870C53 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
 		BA01A4782A856EE80045B77F /* UserAboutWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAboutWebView.swift; sourceTree = "<group>"; };
 		BA01A47A2A85724B0045B77F /* UserAboutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAboutPresenter.swift; sourceTree = "<group>"; };
+		BA180D4E2A90157100D8FED6 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		BA2034FF2A7A445100147B23 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
 		BA2035012A7A704200147B23 /* ProfileNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNetworkClient.swift; sourceTree = "<group>"; };
 		BA2035042A7A9ADC00147B23 /* ProfileResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseModel.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				BA98F52A2A783BC3000917BF /* ProfileConstants.swift */,
 				BAC234E62A8EA5ED00D00A2F /* ProfileSortOption.swift */,
 				BAC234E82A8EBDBF00D00A2F /* ProfileRequests.swift */,
+				BA180D4E2A90157100D8FED6 /* UserDefaultsManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
 				BAC234E22A8D872400D00A2F /* FavoriteNFTsProtocols.swift in Sources */,
 				8B96BF792A8CE664007A077C /* ProfileRequest.swift in Sources */,
+				BA180D4F2A90157100D8FED6 /* UserDefaultsManager.swift in Sources */,
 				8B96BF772A8CE605007A077C /* ProfileModel.swift in Sources */,
 				8B96BF742A8CE51F007A077C /* LikeService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
