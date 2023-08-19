@@ -19,4 +19,5 @@ protocol CatalogViewPresenterProtocol {
     func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController
     func viewMadeFetchRequest()
     func viewDidRequestDataByIndex(index: Int) -> CatalogDataModel
+    func takeURL(link: String) -> URL?
 }

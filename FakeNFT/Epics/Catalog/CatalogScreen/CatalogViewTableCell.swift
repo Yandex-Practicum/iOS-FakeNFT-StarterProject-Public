@@ -45,9 +45,8 @@ final class CatalogViewTableCell: UITableViewCell, ReuseIdentifying {
         nftCollectionLabel.text = "\(collectionName) (\(collectionCount))"
     }
     
-    func setImage(link: String) {
-        let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
-        nftCollectionImage.kf.setImage(with: url) { [weak self] _ in
+    func setImage(link: URL?) {
+        nftCollectionImage.kf.setImage(with: link) { [weak self] _ in
             // MARK: уменьшаю картинку под размеры экрана
             if let originalImage = self?.nftCollectionImage.image {
                 let needWidth = self?.superview?.frame.width ?? 1

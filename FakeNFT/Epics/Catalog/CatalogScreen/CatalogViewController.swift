@@ -78,7 +78,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     private func configureCell(cell: CatalogViewTableCell, index: Int) {
         let data = presenter.viewDidRequestDataByIndex(index: index)
         cell.selectionStyle = .none
-        cell.setImage(link: data.cover)
+        cell.setImage(link: presenter.takeURL(link: data.cover))
         cell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
     }
     

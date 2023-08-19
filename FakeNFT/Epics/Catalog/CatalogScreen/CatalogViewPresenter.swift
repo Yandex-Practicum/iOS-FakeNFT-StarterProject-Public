@@ -66,6 +66,10 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         catalogData[index]
     }
     
+    func takeURL(link: String) -> URL? {
+        URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+    }
+    
     private func updateTableView() {
         let oldCount = catalogCount
         let newCount = catalogNetworkService.collections.count
