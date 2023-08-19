@@ -11,6 +11,7 @@ extension UIImage {
     static let unliked = UIImage(named: "unliked")
     static let yellowStar = UIImage(named: "yellowStar")
     static let sortButton = UIImage(named: "sortButton")
+    static let statistics = UIImage(named: "statistics")
 
     static let mockCell = UIImage(named: "mock.cell")
     static let mockCollection = UIImage(named: "mock.collection")
