@@ -81,8 +81,8 @@ extension UserCardViewController: UICollectionViewDelegate {
             break
 
         case .site:
-            break
-            // TODO: - Добавить открытие сайта
+            let viewController = createWebView()
+            navigationController?.pushViewController(viewController, animated: true)
 
         case .collection(let viewModel):
             guard let nfts = viewModel.first?.nfts else {
@@ -225,5 +225,9 @@ private extension UserCardViewController {
         )
         let viewController = NFTCollectionViewController(viewModel: viewModel)
         return viewController
+    }
+
+    func createWebView() -> WebViewController {
+        return WebViewController()
     }
 }
