@@ -7,11 +7,14 @@
 
 import Foundation
 
-struct GetNFTByIdRequest: NetworkRequest {
+class GetNFTByIdRequest: NetworkRequest {
+    var httpMethod: HttpMethod
+
     private let id: String
 
-    init(id: String) {
+    init(id: String, httpMethod: HttpMethod) {
         self.id = id
+        self.httpMethod = httpMethod
     }
 
     var endpoint: URL? {

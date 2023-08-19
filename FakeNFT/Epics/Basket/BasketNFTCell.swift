@@ -13,7 +13,6 @@ protocol BasketNFTCellDelegate: AnyObject {
 }
 
 final class BasketNFTCell: UITableViewCell {
-    
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -64,70 +63,71 @@ final class BasketNFTCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     func configure(with model: NFTModel) {
         self.model = model
-//        if
-//            let image = model.images.first,
-//            let url = URL(string: image)
-//        {
-//            nftImageView.kf.setImage(with: url)
-//        }
-        nftImageView.image = UIImage(named: "mock.nft")
+        if
+            let image = model.images.first,
+            let url = URL(string: image)
+        {
+            nftImageView.kf.setImage(with: url)
+        }
         nftLabel.text = model.name
         priceValue.text = "\(model.price) ETH"
-
+        
         for star in 0..<model.rating {
             ratingStackView.arrangedSubviews[star].tintColor = .yellow
         }
+        for star in model.rating..<5 {
+            ratingStackView.arrangedSubviews[star].tintColor = .ypLightGrayDay
+        }
     }
-
     
-    @objc
-    private func didTapRemoveButton() {
+    
+    @objc private func didTapRemoveButton() {
         guard let model else { return }
         delegate?.didTapRemoveButton(on: model)
     }
 }
 
 private extension BasketNFTCell {
-
     func setupView() {
         contentView.backgroundColor = .white
-
-        [nftImageView,
-         nftLabel,
-         ratingStackView,
-         priceLabel,
-         priceValue,
-         removeButton
+        
+        [
+            nftImageView,
+            nftLabel,
+            ratingStackView,
+            priceLabel,
+            priceValue,
+            removeButton
         ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-
+        
         contentView.addSubview(nftImageView)
         contentView.addSubview(nftLabel)
         contentView.addSubview(ratingStackView)
         contentView.addSubview(priceLabel)
         contentView.addSubview(priceValue)
         contentView.addSubview(removeButton)
-
+        
         for _ in 0..<5 {
             let starImageView = UIImageView(image: UIImage(systemName: "star.fill"))
             starImageView.tintColor = .lightGray
             NSLayoutConstraint.activate([
                 starImageView.widthAnchor.constraint(equalToConstant: 12),
-                starImageView.heightAnchor.constraint(equalToConstant: 12),
+                starImageView.heightAnchor.constraint(equalToConstant: 12)
             ])
             ratingStackView.addArrangedSubview(starImageView)
         }
-
+        
         setupConstraints()
     }
-
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -149,7 +149,7 @@ private extension BasketNFTCell {
             priceValue.bottomAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: -8),
             
             removeButton.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
-            removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
 }
@@ -157,7 +157,6 @@ private extension BasketNFTCell {
 extension BasketNFTCell: ReuseIdentifying {}
 
 extension BasketNFTCell {
-
     enum Constants {
         static let imageSize: CGFloat = 108
     }

@@ -12,7 +12,6 @@ protocol CurrenciesServiceProtocol {
 }
 
 final class CurrenciesService: CurrenciesServiceProtocol {
-    
     private let networkClient: NetworkClient
     private var currencyTask: NetworkTask?
     

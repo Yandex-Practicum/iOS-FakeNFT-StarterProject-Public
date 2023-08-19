@@ -20,4 +20,3 @@ extension UIImage {
     static let mockCollection = UIImage(named: "mock.collection")
     static let mockUserImage = UIImage(named: "mock.userImage")
 }
-

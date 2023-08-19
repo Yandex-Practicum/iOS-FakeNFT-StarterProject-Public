@@ -13,7 +13,6 @@ protocol RemoveNFTViewControllerDelegate: AnyObject {
 }
 
 final class RemoveNFTViewController: UIViewController {
-
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -59,54 +58,44 @@ final class RemoveNFTViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
         return button
     }()
-
+    
     weak var delegate: RemoveNFTViewControllerDelegate?
     private var model: NFTModel?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-
-    @objc
-    private func didTapCancelButton() {
+    
+    @objc private func didTapCancelButton() {
         delegate?.didTapCancelButton()
     }
-
-    @objc
-    private func didTapConfirmButton() {
+    
+    @objc private func didTapConfirmButton() {
         guard let model else { return }
         delegate?.didTapConfirmButton(model)
     }
-
     func configure(with model: NFTModel) {
         self.model = model
-//        if
-//            let image = model.images.first,
-//            let url = URL(string: image)
-//        {
-//            nftImageView.kf.setImage(with: url)
-//        }
-//        TODO
         nftImageView.image = UIImage(named: "mock.nft")
     }
 }
 
 private extension RemoveNFTViewController {
     func setupView() {
-        [nftImageView, alertLabel, buttonsStackView ]
+        [nftImageView, alertLabel, buttonsStackView]
             .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-
+        
         view.addSubview(blurView)
         view.addSubview(nftImageView)
         view.addSubview(alertLabel)
         view.addSubview(buttonsStackView)
         buttonsStackView.addArrangedSubview(confirmButton)
         buttonsStackView.addArrangedSubview(cancelButton)
-
+        
         setupConstraints()
     }
-
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             nftImageView.centerXAnchor.constraint(equalTo: alertLabel.centerXAnchor),

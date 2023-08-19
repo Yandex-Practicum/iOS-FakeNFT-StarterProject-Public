@@ -13,10 +13,8 @@ protocol PayViewDelegate: AnyObject {
 }
 
 final class PayView: UIView {
-    
     private lazy var payButton: Button = {
         let button = Button(title: "Оплатить")
-        button.isEnabled = false
         button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return button
     }()
@@ -65,47 +63,44 @@ final class PayView: UIView {
     }
     
     
-    @objc
-    private func didTapPayButton() {
+    @objc private func didTapPayButton() {
         delegate?.didTapPayButton()
     }
-
-    @objc
-    private func didTapUserAgreementLink() {
+    
+    @objc private func didTapUserAgreementLink() {
         delegate?.didTapUserAgreementLink()
     }
-    
 }
-    
-    private extension PayView {
-        func setupView() {
-            backgroundColor = .ypLightGrayDay
-            layer.cornerRadius = 16
 
-            [payButton,
-             labelsStackView
-            ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-
-            addSubview(payButton)
-            addSubview(labelsStackView)
-            labelsStackView.addArrangedSubview(userAgreementLabel)
-            labelsStackView.addArrangedSubview(userAgreementLink)
-
-            setupConstraints()
-        }
-
-        func setupConstraints() {
-            NSLayoutConstraint.activate([
-                payButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-                payButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-                payButton.bottomAnchor.constraint(equalTo: bottomAnchor),
-                payButton.heightAnchor.constraint(equalToConstant: 60),
-    
-                labelsStackView.leadingAnchor.constraint(equalTo: payButton.leadingAnchor),
-                labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-                labelsStackView.trailingAnchor.constraint(equalTo: payButton.trailingAnchor),
-                labelsStackView.bottomAnchor.constraint(equalTo: payButton.topAnchor, constant: -16)
-            ])
-        }
+private extension PayView {
+    func setupView() {
+        backgroundColor = .ypLightGrayDay
+        layer.cornerRadius = 16
+        
+        [
+            payButton,
+            labelsStackView
+        ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        
+        addSubview(payButton)
+        addSubview(labelsStackView)
+        labelsStackView.addArrangedSubview(userAgreementLabel)
+        labelsStackView.addArrangedSubview(userAgreementLink)
+        
+        setupConstraints()
     }
-
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            payButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            payButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            payButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            payButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            labelsStackView.leadingAnchor.constraint(equalTo: payButton.leadingAnchor),
+            labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            labelsStackView.trailingAnchor.constraint(equalTo: payButton.trailingAnchor),
+            labelsStackView.bottomAnchor.constraint(equalTo: payButton.topAnchor, constant: -16)
+        ])
+    }
+}

@@ -8,7 +8,6 @@
 import UIKit
 
 final class CheckoutViewController: UIViewController, PayViewDelegate {
-
     private lazy var payView: PayView = {
         let view = PayView()
         view.delegate = self
@@ -44,11 +43,13 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
     
     private var currencies: [CurrencyModel] = []
     private let currenciesService = CurrenciesService()
+    private let orderService = OrderService()
+    private var selectedCurrencyId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currenciesService.load() { [weak self] result in
+        currenciesService.load { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let currencies):
@@ -63,15 +64,46 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
         setupView()
     }
     
-    @objc
-    private func didTapBackButton() {
+    @objc private func didTapBackButton() {
         dismiss(animated: true)
 //        navigationController?.popViewController(animated: true)
     }
     
     func didTapPayButton() {
-        let a = 5
-//TODO: Дописать логику
+        orderService.makePayment(currencyId: selectedCurrencyId ?? "") {[weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                print(response)
+                var content: ResultsViewController.Content
+                if response.success {
+                    content = .init(
+                        image: .paymentSuccess,
+                        title: "Успех! Оплата прошла, поздравляем с покупкой!",
+                        buttonTitle: "Вернуться в каталог",
+                        buttonAction: {
+                            self.tabBarController?.selectedIndex = 1
+                            self.navigationController?.popToRootViewController(animated: false)
+                        }
+                    )
+                } else {
+                    content = .init(
+                        image: .paymentError,
+                        title: "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!",
+                        buttonTitle: "Попробовать еще раз",
+                        buttonAction: { self.navigationController?.popViewController(animated: true) }
+                    )
+                }
+                
+                DispatchQueue.main.async {
+                    let resultsViewController = ResultsViewController()
+                    resultsViewController.configure(with: content)
+                    self.navigationController?.pushViewController(resultsViewController, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func didTapUserAgreementLink() {
@@ -80,16 +112,15 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
         navigationController.modalPresentationStyle = .overFullScreen
         present(navigationController, animated: true, completion: nil)
     }
-    
 }
 
 private extension CheckoutViewController {
-
     func setupView() {
         view.backgroundColor = .ypWhiteUniversal
 
-        [payView,
-         currenciesCollection
+        [
+            payView,
+            currenciesCollection
         ].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         view.addSubview(payView)
@@ -116,17 +147,16 @@ private extension CheckoutViewController {
             currenciesCollection.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             currenciesCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             currenciesCollection.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            currenciesCollection.bottomAnchor.constraint(equalTo: payView.topAnchor),
+            currenciesCollection.bottomAnchor.constraint(equalTo: payView.topAnchor)
         ])
     }
 }
 
 extension CheckoutViewController: UICollectionViewDataSource {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currencies.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: CurrencyCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = currencies[indexPath.row]
@@ -137,7 +167,6 @@ extension CheckoutViewController: UICollectionViewDataSource {
 }
 
 extension CheckoutViewController: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableSpace = collectionView.frame.width - collectionConfig.paddingWidth
         let cellWidth = availableSpace / collectionConfig.cellCount
@@ -156,19 +185,18 @@ extension CheckoutViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         collectionConfig.cellSpacing
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         collectionConfig.cellSpacing
     }
 }
 
 extension CheckoutViewController: UICollectionViewDelegate {
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell: CurrencyCell = collectionView.cellForItem(at: indexPath)
-        let model = currencies[indexPath.row]
+        selectedCurrencyId = currencies[indexPath.row].id
         cell.select()
-  }
+    }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell: CurrencyCell = collectionView.cellForItem(at: indexPath)
@@ -177,15 +205,3 @@ extension CheckoutViewController: UICollectionViewDelegate {
 }
 
 extension CheckoutViewController: UIGestureRecognizerDelegate {}
-
-//    extension CheckoutViewController: PayViewDelegate {
-//
-//        func didTapPayButton() {
-//            // TODO: pay
-//        }
-//
-//        func didTapUserAgreementLink() {
-//            let userAgreementViewController = UserAgreementViewController()
-//            navigationController?.pushViewController(userAgreementViewController, animated: true)
-//        }
-//    }

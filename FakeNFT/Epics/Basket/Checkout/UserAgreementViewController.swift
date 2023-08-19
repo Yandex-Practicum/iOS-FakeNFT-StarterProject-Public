@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 
 final class UserAgreementViewController: UIViewController {
-
     private let webView = WKWebView()
     
     private lazy var backButton = UIBarButtonItem(
@@ -25,8 +24,7 @@ final class UserAgreementViewController: UIViewController {
         loadPage()
     }
     
-    @objc
-    private func didTapBackButton() {
+    @objc private func didTapBackButton() {
         dismiss(animated: true)
     }
     
@@ -37,7 +35,6 @@ final class UserAgreementViewController: UIViewController {
 }
 
 private extension UserAgreementViewController {
-
     func setupView() {
         view.backgroundColor = .ypWhiteUniversal
         webView.backgroundColor = .ypWhiteUniversal
@@ -61,16 +58,16 @@ private extension UserAgreementViewController {
             webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
 
 private extension UserAgreementViewController {
-
     enum Constants {
-        static let userAgreementUrl: URL = URL(string: "https://yandex.ru/legal/practicum_termsofuse")!
+        static let userAgreementUrl = URL(string: "https://yandex.ru/legal/practicum_termsofuse")!
     }
 }
 
-extension UserAgreementViewController: UIGestureRecognizerDelegate {}
+extension UserAgreementViewController: UIGestureRecognizerDelegate {
+}

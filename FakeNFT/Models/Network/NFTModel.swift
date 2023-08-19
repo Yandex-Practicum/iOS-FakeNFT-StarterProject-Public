@@ -17,8 +17,3 @@ struct NFTModel: Codable, Equatable {
     let price: Double
     let author: String
 }
-
-struct OrderModel: Codable {
-    let id: String
-    let nfts: [String]
-}

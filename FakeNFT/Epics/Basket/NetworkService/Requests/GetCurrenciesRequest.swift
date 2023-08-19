@@ -8,7 +8,6 @@
 import Foundation
 
 class GetCurrenciesRequest: NetworkRequest {
-
     var httpMethod: HttpMethod
     var endpoint: URL? {
         URL(string: "https://\(BasketConstants.host.rawValue)/api/v1/currencies")
@@ -17,5 +16,4 @@ class GetCurrenciesRequest: NetworkRequest {
     init(httpMethod: HttpMethod) {
         self.httpMethod = httpMethod
     }
-    
 }

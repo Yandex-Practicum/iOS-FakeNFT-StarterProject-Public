@@ -8,7 +8,6 @@
 import UIKit
 
 final class CurrencyCell: UICollectionViewCell {
-
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -90,7 +89,6 @@ private extension CurrencyCell {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            
             imageBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             imageBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             imageBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),

@@ -8,7 +8,6 @@
 import UIKit
 
 class Button: UIButton {
-    
     convenience init(title: String) {
         self.init(type: .system)
 

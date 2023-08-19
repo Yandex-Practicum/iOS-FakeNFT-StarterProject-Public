@@ -12,8 +12,7 @@ protocol SumViewDelegate: AnyObject {
 }
 
 final class SumView: UIView {
-        
-    private let button: Button = {
+    lazy private var button: Button = {
         let button = Button(title: "К оплате")
         button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return button
@@ -53,23 +52,20 @@ final class SumView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc
-    private func didTapPayButton() {
+    @objc private func didTapPayButton() {
         delegate?.didTapPayButton()
     }
 }
 
 extension SumView {
-    
     func changeText(totalAmount: Int, totalPrice: Double) {
+        let roundedTotalPrice = Double(round(100 * totalPrice) / 100)
         countLabel.text = "\(totalAmount) NFT"
-        priceLabel.text = "\(totalPrice) ETH"
+        priceLabel.text = "\(roundedTotalPrice) ETH"
     }
-    
 }
 
 private extension SumView {
-    
     func setupView() {
         backgroundColor = .ypLightGrayDay
         layer.cornerRadius = 16
@@ -97,5 +93,4 @@ private extension SumView {
             button.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-
 }
