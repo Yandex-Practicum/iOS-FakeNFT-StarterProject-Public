@@ -9,15 +9,23 @@ import UIKit
 import WebKit
 
 final class WebViewScreenViewController: UIViewController, WebViewScreenViewControllerProtocol {
-    private var presenter: WebViewScreenViewPresenterProtocol?
+    private var presenter: WebViewScreenViewPresenterProtocol
     private let webView = WKWebView()
     private let backButton = UIButton()
     private let progressView = UIProgressView()
     private var estimatedProgressObservation: NSKeyValueObservation?
     
+    init(presenter: WebViewScreenViewPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = WebViewScreenViewPresenter(viewController: self)
         
         view.backgroundColor = .ypWhite
         configureBackButton()
@@ -25,7 +33,7 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
         configureProgressView()
         
         estimatedProgressObservation = webView.observe(\.estimatedProgress, options: []) { [weak self] _, _ in
-            guard let self = self, let presenter = self.presenter else { return }
+            guard let self = self else { return }
             presenter.viewDidUpdateProgressValue(estimatedProgress: Float(self.webView.estimatedProgress))
         }
     }
@@ -55,7 +63,7 @@ final class WebViewScreenViewController: UIViewController, WebViewScreenViewCont
     private func configureWebView() {
         guard view.contains(backButton) else { return }
         
-        guard let request = presenter?.authorWebSiteURLRequest else { return }
+        guard let request = presenter.authorWebSiteURLRequest else { return }
         webView.load(request)
         
         webView.translatesAutoresizingMaskIntoConstraints = false

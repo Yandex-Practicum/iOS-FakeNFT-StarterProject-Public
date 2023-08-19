@@ -11,10 +11,13 @@ final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
     var authorWebSiteURLRequest: URLRequest?
     weak private var viewController: WebViewScreenViewControllerProtocol?
     
-    init(viewController: WebViewScreenViewControllerProtocol) {
-        self.viewController = viewController
+    init() {
         guard let link = AuthorNetworkService.shared.author?.website.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: link) else { return }
         self.authorWebSiteURLRequest = URLRequest(url: url)
+    }
+    
+    func injectViewController(webViewViewController: WebViewScreenViewControllerProtocol) {
+        self.viewController = webViewViewController
     }
     
     func viewDidUpdateProgressValue(estimatedProgress: Float) {

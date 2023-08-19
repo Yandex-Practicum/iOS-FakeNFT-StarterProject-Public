@@ -24,7 +24,9 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         catalogDataModel.nfts.count
     }
     lazy var webViewScreen: WebViewScreenViewController = {
-        let webViewScreen = WebViewScreenViewController()
+        let presenter = WebViewScreenViewPresenter()
+        let webViewScreen = WebViewScreenViewController(presenter: presenter)
+        presenter.injectViewController(webViewViewController: webViewScreen)
         webViewScreen.modalPresentationStyle = .fullScreen
         return webViewScreen
     }()

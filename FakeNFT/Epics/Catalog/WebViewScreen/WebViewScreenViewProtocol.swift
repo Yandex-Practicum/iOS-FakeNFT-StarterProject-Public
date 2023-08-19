@@ -14,5 +14,6 @@ protocol WebViewScreenViewControllerProtocol: AnyObject {
 
 protocol WebViewScreenViewPresenterProtocol {
     var authorWebSiteURLRequest: URLRequest? { get }
+    func injectViewController(webViewViewController: WebViewScreenViewControllerProtocol)
     func viewDidUpdateProgressValue(estimatedProgress: Float)
 }
