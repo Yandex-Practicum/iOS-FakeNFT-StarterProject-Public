@@ -89,9 +89,8 @@ final class CollectionScreenNftCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setNftImage(link: String) {
-        let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
-        nftImage.kf.setImage(with: url)
+    func setNftImage(link: URL?) {
+        nftImage.kf.setImage(with: link)
     }
     
     func setNotEmptyBasketImage() {

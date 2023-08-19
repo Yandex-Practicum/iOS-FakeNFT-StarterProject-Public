@@ -25,4 +25,5 @@ protocol CollectionScreenViewPresenterProtocol {
     func injectViewController(viewController: CollectionScreenViewControllerProtocol)
     func viewMadeFetchRequest()
     func viewDidRequestNftFromNfts(index: Int) -> NftModel
+    func takeURL(link: String) -> URL?
 }

@@ -126,7 +126,7 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         if LikeService.shared.likes.contains(nft.id) {
             cell.setButtonLikeImage(image: .liked)
         }
-        cell.setNftImage(link: nft.images.first ?? "")
+        cell.setNftImage(link: presenter.takeURL(link: (nft.images.first ?? "")))
         cell.setRating(rate: nft.rating)
         cell.setNameLabel(name: nft.name)
         cell.setCostLabel(cost: nft.price)

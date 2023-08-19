@@ -73,6 +73,10 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         nfts[index]
     }
     
+    func takeURL(link: String) -> URL? {
+        URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+    }
+    
     private func updateCollection() {
         let oldCount = nfts.count
         let newCount = nftNetworkService.nfts.count
