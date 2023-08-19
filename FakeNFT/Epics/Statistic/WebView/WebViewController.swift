@@ -30,25 +30,15 @@ final class WebViewController: NiblessViewController {
     init(viewModel: WebViewModel) {
         self.viewModel = viewModel
         super.init()
-
-        viewModel.isProgressHidden
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.progressView.isHidden = $0 }
-            .store(in: &subscriptions)
-
-        viewModel.progress
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.progressView.progress = $0 }
-            .store(in: &subscriptions)
     }
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         addSubviews()
         addConstraints()
         createTabTabItem()
+        bind(to: viewModel)
         loadURL()
     }
 
@@ -73,6 +63,22 @@ final class WebViewController: NiblessViewController {
             .sink { [weak self] newValue in
                 self?.viewModel.checkProgress(newValue)
             }
+    }
+
+    func bind(to viewModel: WebViewModel) {
+        guard let viewModel = viewModel as? WebViewModelImpl else {
+            return
+        }
+
+        viewModel.$isProgressHidden
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.progressView.isHidden = $0 }
+            .store(in: &subscriptions)
+
+        viewModel.$progress
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.progressView.progress = $0 }
+            .store(in: &subscriptions)
     }
 
     private func loadURL() {

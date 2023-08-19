@@ -10,20 +10,18 @@ import Combine
 
 protocol WebViewModel {
     var url: URL? { get }
-    var progress: CurrentValueSubject<Float, Never> { get }
-    var isProgressHidden: CurrentValueSubject<Bool, Never> { get }
 
     func checkProgress(_ value: Double)
 }
 
 final class WebViewModelImpl: WebViewModel {
     let url = URL(string: "https://practicum.yandex.ru")
-    let progress: CurrentValueSubject<Float, Never> = .init(0)
-    let isProgressHidden: CurrentValueSubject<Bool, Never> = .init(false)
+    @Published private(set) var progress: Float = 0
+    @Published private(set) var isProgressHidden = false
 
     func checkProgress(_ value: Double) {
-        progress.send(Float(value))
-        isProgressHidden.send(shouldHideProgress(for: value))
+        progress = Float(value)
+        isProgressHidden = shouldHideProgress(for: value)
     }
 
     private func shouldHideProgress(for value: Double) -> Bool {
