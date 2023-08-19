@@ -48,7 +48,7 @@ final class CatalogViewTableCell: UITableViewCell, ReuseIdentifying {
     func setImage(link: String) {
         let url = URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
         nftCollectionImage.kf.setImage(with: url) { [weak self] _ in
-            // MARK: уменьшаю картинку в 4 раза
+            // MARK: уменьшаю картинку под размеры экрана
             if let originalImage = self?.nftCollectionImage.image {
                 let needWidth = self?.superview?.frame.width ?? 1
                 let coef = originalImage.size.width / needWidth
