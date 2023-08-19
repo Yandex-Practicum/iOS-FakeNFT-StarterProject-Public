@@ -9,7 +9,7 @@ import Kingfisher
 import UIKit
 
 protocol BasketNFTCellDelegate: AnyObject {
-    func didTapRemoveButton(on nft: NFTModel)
+    func didTapRemoveButton(on nft: NftModel)
 }
 
 final class BasketNFTCell: UITableViewCell {
@@ -57,7 +57,7 @@ final class BasketNFTCell: UITableViewCell {
     }()
     
     weak var delegate: BasketNFTCellDelegate?
-    private var model: NFTModel?
+    private var model: NftModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,7 +69,7 @@ final class BasketNFTCell: UITableViewCell {
     }
     
     
-    func configure(with model: NFTModel) {
+    func configure(with model: NftModel) {
         self.model = model
         if
             let image = model.images.first,

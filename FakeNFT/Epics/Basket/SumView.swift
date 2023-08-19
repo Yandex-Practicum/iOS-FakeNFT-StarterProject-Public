@@ -58,8 +58,8 @@ final class SumView: UIView {
 }
 
 extension SumView {
-    func changeText(totalAmount: Int, totalPrice: Double) {
-        let roundedTotalPrice = Double(round(100 * totalPrice) / 100)
+    func changeText(totalAmount: Int, totalPrice: Float) {
+        let roundedTotalPrice = Float(round(100 * totalPrice) / 100)
         countLabel.text = "\(totalAmount) NFT"
         priceLabel.text = "\(roundedTotalPrice) ETH"
     }

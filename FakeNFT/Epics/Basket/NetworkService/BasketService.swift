@@ -12,14 +12,13 @@ final class BasketService {
     private let userDefaults = UserDefaults.standard
     private let orderService = OrderService()
     private let basketKey = "basket"
-    private let sortKey = "basketSortKey"
     private init() {}
     
-    var basket: [NFTModel] {
+    var basket: [NftModel] {
         get {
             guard
                 let data = userDefaults.data(forKey: basketKey),
-                let basket = try? JSONDecoder().decode([NFTModel].self, from: data) else {
+                let basket = try? JSONDecoder().decode([NftModel].self, from: data) else {
                 return []
             }
             return basket
@@ -34,26 +33,7 @@ final class BasketService {
         }
     }
     
-    var sortingType: Sort {
-        get {
-            guard
-                let data = userDefaults.data(forKey: sortKey),
-                let sortingType = try? JSONDecoder().decode(Sort.self, from: data) else {
-                return Sort.name
-            }
-            return sortingType
-        }
-        set {
-            guard let encodedData = try? JSONEncoder().encode(newValue) else {
-                print("Невозможно сохранить результат")
-                return
-            }
-            userDefaults.set(encodedData, forKey: sortKey)
-            userDefaults.synchronize()
-        }
-    }
-    
-    func addNFTToBasket(_  nft: NFTModel) {
+    func addNFTToBasket(_  nft: NftModel) {
         basket.append(nft)
         var nftIds: [String] = []
         for nft in basket {
@@ -69,7 +49,7 @@ final class BasketService {
         }
     }
     
-    func removeNFTFromBasket(_ nft: NFTModel) {
+    func removeNFTFromBasket(_ nft: NftModel) {
         if let index = basket.firstIndex(of: nft) {
             basket.remove(at: index)
         }
@@ -84,10 +64,4 @@ final class BasketService {
             }
         }
     }
-}
-
-enum Sort: Codable, Equatable {
-    case price
-    case rating
-    case name
 }

@@ -3,6 +3,7 @@ import ProgressHUD
 
 final class BasketViewController: UIViewController {
     private let basketService = BasketService.shared
+    private let sortService = SortService.shared
     
     private lazy var sortButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(named: "sort")!, target: self, action: #selector(didTapSortButton))
@@ -34,13 +35,13 @@ final class BasketViewController: UIViewController {
     private var sort: Sort? {
         didSet {
             guard let sort else { return }
-            basketService.sortingType = sort
+            sortService.sortingType = sort
             nftsMocked = applySort(nfts: nftsMocked, by: sort)
             nftsTableView.reloadData()
         }
     }
     
-    var nftsMocked: [NFTModel] = []
+    var nftsMocked: [NftModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +101,7 @@ final class BasketViewController: UIViewController {
         sumView.isHidden = nftsMocked.isEmpty
     }
     
-    private func applySort(nfts: [NFTModel], by value: Sort) -> [NFTModel] {
+    private func applySort(nfts: [NftModel], by value: Sort) -> [NftModel] {
         switch value {
         case .price:
             return nfts.sorted(by: { $0.price < $1.price })
@@ -130,7 +131,7 @@ private extension BasketViewController {
         }
         setupConstraints()
         
-        sort = basketService.sortingType
+        sort = sortService.sortingType
         nftsTableView.reloadData()
     }
     
@@ -171,7 +172,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension BasketViewController: BasketNFTCellDelegate {
-    func didTapRemoveButton(on nft: NFTModel) {
+    func didTapRemoveButton(on nft: NftModel) {
         let removeNFTViewController = RemoveNFTViewController()
         removeNFTViewController.delegate = self
         removeNFTViewController.configure(with: nft)
@@ -186,7 +187,7 @@ extension BasketViewController: RemoveNFTViewControllerDelegate {
         dismiss(animated: true)
     }
     
-    func didTapConfirmButton(_ model: NFTModel) {
+    func didTapConfirmButton(_ model: NftModel) {
         print("before remove")
         print(basketService.basket)
         basketService.removeNFTFromBasket(model)

@@ -9,7 +9,7 @@ import UIKit
 
 protocol RemoveNFTViewControllerDelegate: AnyObject {
     func didTapCancelButton()
-    func didTapConfirmButton(_ model: NFTModel)
+    func didTapConfirmButton(_ model: NftModel)
 }
 
 final class RemoveNFTViewController: UIViewController {
@@ -60,7 +60,7 @@ final class RemoveNFTViewController: UIViewController {
     }()
     
     weak var delegate: RemoveNFTViewControllerDelegate?
-    private var model: NFTModel?
+    private var model: NftModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ final class RemoveNFTViewController: UIViewController {
         guard let model else { return }
         delegate?.didTapConfirmButton(model)
     }
-    func configure(with model: NFTModel) {
+    func configure(with model: NftModel) {
         self.model = model
         nftImageView.image = UIImage(named: "mock.nft")
     }

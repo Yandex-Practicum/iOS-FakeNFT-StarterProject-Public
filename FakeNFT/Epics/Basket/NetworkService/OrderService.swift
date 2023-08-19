@@ -39,9 +39,9 @@ final class OrderService: OrderServiceProtocol {
         }
     }
     
-    func loadNFT(by id: String, completion: @escaping (Result<NFTModel, Error>) -> Void) {
+    func loadNFT(by id: String, completion: @escaping (Result<NftModel, Error>) -> Void) {
         let getNFTByIdRequest = GetNFTByIdRequest(id: id, httpMethod: .get)
-        networkClient.send(request: getNFTByIdRequest, type: NFTModel.self) { result in
+        networkClient.send(request: getNFTByIdRequest, type: NftModel.self) { result in
             switch result {
             case .success(let nft):
                 completion(.success(nft))
@@ -51,12 +51,12 @@ final class OrderService: OrderServiceProtocol {
         }
     }
     
-    func getNFTModels(completion: @escaping ([NFTModel]?) -> Void) {
+    func getNFTModels(completion: @escaping ([NftModel]?) -> Void) {
         getOrder { result in
             switch result {
             case .success(let orderIds):
                 let group = DispatchGroup()
-                var nfts: [NFTModel] = []
+                var nfts: [NftModel] = []
                 
                 for nftId in orderIds {
                     group.enter()
