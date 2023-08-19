@@ -1,19 +1,19 @@
 //
-//  NftModel.swift
+//  Models.swift
 //  FakeNFT
 //
-//  Created by Богдан Полыгалов on 15.08.2023.
+//  Created by Marina Kolbina on 02/08/2023.
 //
 
-import Foundation
+import UIKit
 
-struct NftModel: Codable, Equatable {
+struct NFTModel: Codable, Equatable {
+    let id: String
     let createdAt: String
     let name: String
     let images: [String]
     let rating: Int
     let description: String
-    let price: Float
+    let price: Double
     let author: String
-    let id: String
 }
