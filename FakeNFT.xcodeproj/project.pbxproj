@@ -39,7 +39,6 @@
 		B3476E0E2A91743000D0500F /* GetNFTByOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E092A91743000D0500F /* GetNFTByOrderRequest.swift */; };
 		B3476E0F2A91743000D0500F /* GetOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E0A2A91743000D0500F /* GetOrderRequest.swift */; };
 		B3476E182A91744800D0500F /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E102A91744800D0500F /* PaymentModel.swift */; };
-		B3476E192A91744800D0500F /* SortService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E112A91744800D0500F /* SortService.swift */; };
 		B3476E1A2A91744800D0500F /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E122A91744800D0500F /* CurrencyModel.swift */; };
 		B3476E1B2A91744800D0500F /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E132A91744800D0500F /* OrderService.swift */; };
 		B3476E1C2A91744800D0500F /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E142A91744800D0500F /* BasketService.swift */; };
@@ -107,7 +106,6 @@
 		B3476E092A91743000D0500F /* GetNFTByOrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNFTByOrderRequest.swift; sourceTree = "<group>"; };
 		B3476E0A2A91743000D0500F /* GetOrderRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOrderRequest.swift; sourceTree = "<group>"; };
 		B3476E102A91744800D0500F /* PaymentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
-		B3476E112A91744800D0500F /* SortService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortService.swift; sourceTree = "<group>"; };
 		B3476E122A91744800D0500F /* CurrencyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		B3476E132A91744800D0500F /* OrderService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
 		B3476E142A91744800D0500F /* BasketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 				B3476E162A91744800D0500F /* OrderModel.swift */,
 				B3476E132A91744800D0500F /* OrderService.swift */,
 				B3476E102A91744800D0500F /* PaymentModel.swift */,
-				B3476E112A91744800D0500F /* SortService.swift */,
 				B3476E042A91741E00D0500F /* BasketConstants.swift */,
 				B3476DDD2A91680000D0500F /* Requests */,
 			);
@@ -531,7 +528,6 @@
 				F9F557402A741B5F004F6856 /* StatisticsViewController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				B3476E0F2A91743000D0500F /* GetOrderRequest.swift in Sources */,
-				B3476E192A91744800D0500F /* SortService.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				F9F5573A2A741B38004F6856 /* CatalogViewController.swift in Sources */,
 				F9F5573C2A741B48004F6856 /* ProfileViewController.swift in Sources */,
