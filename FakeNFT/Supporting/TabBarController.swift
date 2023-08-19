@@ -11,6 +11,7 @@ final class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureController()
+        self.subscribeToShowCatalogNotification()
     }
 
     private func createMockViewController(
@@ -91,5 +92,20 @@ final class TabBarController: UITabBarController {
         let tabBarItem = UITabBarItem(title: title, image: image, selectedImage: nil)
         tab.tabBarItem = tabBarItem
         return tab
+    }
+}
+
+// MARK: - NotificationCenter
+private extension TabBarController {
+    func subscribeToShowCatalogNotification() {
+        NotificationCenterWrapper.shared.subscribeToNotification(type: .showCatalog) { [weak self] _ in
+            guard let self = self else { return }
+            let cartNavigationControllerIndex = 1
+            let cartNavigationController = self.viewControllers?[cartNavigationControllerIndex]
+
+            cartNavigationController?.navigationController?.popToRootViewController(animated: true)
+
+            self.selectedIndex = cartNavigationControllerIndex
+        }
     }
 }

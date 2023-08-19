@@ -102,6 +102,7 @@
 		96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10E9F2A795F24008F6FA4 /* StarsView.swift */; };
 		96D10EA22A796157008F6FA4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */; };
 		96D10EA42A7A4124008F6FA4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D10EA32A7A4124008F6FA4 /* Colors.xcassets */; };
+		96D6176C2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D6176B2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift */; };
 		96D7DD112A7B69D000250612 /* NFTItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7DD102A7B69D000250612 /* NFTItemModel.swift */; };
 		F61908C12A73BE2600DEF2F5 /* catalogue_roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */; };
 		F61908C42A73C71A00DEF2F5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61908C32A73C71A00DEF2F5 /* TabBarController.swift */; };
@@ -232,6 +233,7 @@
 		96D10E9F2A795F24008F6FA4 /* StarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
 		96D10EA12A796157008F6FA4 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		96D10EA32A7A4124008F6FA4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		96D6176B2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificataionCenterWrapper.swift; sourceTree = "<group>"; };
 		96D7DD102A7B69D000250612 /* NFTItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTItemModel.swift; sourceTree = "<group>"; };
 		F61908C02A73BE2600DEF2F5 /* catalogue_roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalogue_roadmap.md; sourceTree = "<group>"; };
 		F61908C32A73C71A00DEF2F5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
 				961964312A7CFB880076BD88 /* NumberFormatter+Presets.swift */,
+				96D6176B2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -921,6 +924,7 @@
 				961964302A7CFB180076BD88 /* Double+Formatting.swift in Sources */,
 				96766A3D2A8D265B0071BA57 /* NetworkRequestSender.swift in Sources */,
 				F61908D72A73D23000DEF2F5 /* AppConstants.swift in Sources */,
+				96D6176C2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				961964362A7D533D0076BD88 /* CartOrderSorter.swift in Sources */,
 				961964622A8115CE0076BD88 /* CartPaymentResultViewController.swift in Sources */,

@@ -203,6 +203,10 @@ private extension CartPaymentViewController {
             let resultType: CartPaymentResultViewController.ResultType = purchaseState == .success ? .success : .failure
             self.router.showPaymentResult(on: self, resultType: resultType) { [weak self] in
                 self?.dismiss(animated: true)
+
+                if resultType == .success {
+                    NotificationCenterWrapper.shared.sendNotification(type: .showCatalog)
+                }
             }
         }
 

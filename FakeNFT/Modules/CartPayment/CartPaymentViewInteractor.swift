@@ -61,7 +61,9 @@ extension CartPaymentViewInteractor: CartPaymentViewInteractorProtocol {
             switch result {
             case .success(let purchase):
                 let state: CartPaymentViewModel.PurchaseState = purchase.success ? .success : .failure
-                onSuccess(state)
+                DispatchQueue.main.async {
+                    onSuccess(state)
+                }
             case .failure(let error):
                 self.handleError(error: error, onFailure: onFailure)
             }
