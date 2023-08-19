@@ -11,11 +11,11 @@ final class PutOrderRequest: NetworkRequest {
     var httpMethod: HttpMethod = .put
     var dto: Encodable?
 
-    init(nftIds: [String]) {
-        self.dto = ["nfts": nftIds]
-    }
-
     var endpoint: URL? {
         URL(string: "https://\(Constants.host.rawValue)/api/v1/orders/1")
+    }
+    
+    init(nftIds: [String]) {
+        self.dto = ["nfts": nftIds]
     }
 }

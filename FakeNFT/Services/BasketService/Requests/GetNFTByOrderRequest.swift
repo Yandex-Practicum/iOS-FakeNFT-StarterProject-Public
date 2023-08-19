@@ -12,12 +12,12 @@ final class GetNFTByIdRequest: NetworkRequest {
 
     private let id: String
 
+    var endpoint: URL? {
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/nft/\(id)")
+    }
+    
     init(id: String, httpMethod: HttpMethod) {
         self.id = id
         self.httpMethod = httpMethod
-    }
-
-    var endpoint: URL? {
-        URL(string: "https://\(Constants.host.rawValue)/api/v1/nft/\(id)")
     }
 }
