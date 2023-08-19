@@ -30,11 +30,15 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         configureSortButton()
         configureCatalogTable()
         
-        makeFetchRequest()
+        presenter.viewDidLoad()
     }
     
     func updateTableView() {
         catalogTable.reloadData()
+    }
+    
+    func showProgressHud() {
+        UIBlockingProgressHUD.show()
     }
     
     func removeHud() {
@@ -76,19 +80,14 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     private func configureCell(cell: CatalogViewTableCell, index: Int) {
-        let data = presenter.viewDidRequestDataByIndex(index: index)
+        let data = presenter.viewStartedCellConfiguration(at: index)
         cell.selectionStyle = .none
-        cell.setImage(link: presenter.takeURL(link: data.cover))
+        cell.setImage(link: presenter.viewWillSetImage(with: data.cover))
         cell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
     }
     
-    private func makeFetchRequest() {
-        UIBlockingProgressHUD.show()
-        presenter.viewMadeFetchRequest()
-    }
-    
     @objc private func sortButtonTap() {
-        alertPresenter.show(models: presenter.alertActions)
+        alertPresenter.didTapSortButton(models: presenter.alertActions)
     }
 }
 
@@ -110,13 +109,11 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionScreen = presenter.viewDidRequestCollectionScreen(collectionIndex: indexPath.row)
+        let collectionScreen = presenter.didTapCell(at: indexPath.row)
         present(collectionScreen, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == presenter.catalogCount {
-            makeFetchRequest()
-        }
+        presenter.tableWillEnd(currentIndex: indexPath.row)
     }
 }

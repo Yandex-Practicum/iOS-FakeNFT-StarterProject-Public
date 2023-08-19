@@ -50,24 +50,31 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         self.catalogViewController = catalogViewController
     }
     
-    func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
-        let presenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[collectionIndex])
+    func viewDidLoad() {
+        catalogNetworkService.fetchCollectionNextPage()
+        catalogViewController?.showProgressHud()
+    }
+    
+    func didTapCell(at index: Int) -> CollectionScreenViewController {
+        let presenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[index])
         let collectionScreenController = CollectionScreenViewController(presenter: presenter)
         presenter.injectViewController(viewController: collectionScreenController)
         collectionScreenController.modalPresentationStyle = .fullScreen
         return collectionScreenController
     }
     
-    func viewMadeFetchRequest() {
-        catalogNetworkService.fetchCollectionNextPage()
-    }
-    
-    func viewDidRequestDataByIndex(index: Int) -> CatalogDataModel {
+    func viewStartedCellConfiguration(at index: Int) -> CatalogDataModel {
         catalogData[index]
     }
     
-    func takeURL(link: String) -> URL? {
+    func viewWillSetImage(with link: String) -> URL? {
         URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+    }
+    
+    func tableWillEnd(currentIndex: Int) {
+        if currentIndex + 1 == catalogCount {
+            viewDidLoad()
+        }
     }
     
     private func updateTableView() {
