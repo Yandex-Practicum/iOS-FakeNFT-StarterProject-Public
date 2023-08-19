@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PutOrderRequest: NetworkRequest {
+final class PutOrderRequest: NetworkRequest {
     var httpMethod: HttpMethod = .put
     var dto: Encodable?
 
@@ -16,6 +16,6 @@ class PutOrderRequest: NetworkRequest {
     }
 
     var endpoint: URL? {
-        BasketConstants.baseUrl.appendingPathComponent("/orders/1")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/orders/1")
     }
 }

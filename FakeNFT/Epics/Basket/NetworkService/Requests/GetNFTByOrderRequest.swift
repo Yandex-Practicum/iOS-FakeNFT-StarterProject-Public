@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GetNFTByIdRequest: NetworkRequest {
+final class GetNFTByIdRequest: NetworkRequest {
     var httpMethod: HttpMethod
 
     private let id: String
@@ -18,6 +18,6 @@ class GetNFTByIdRequest: NetworkRequest {
     }
 
     var endpoint: URL? {
-        BasketConstants.baseUrl.appendingPathComponent("/nft/\(id)")
+        URL(string: "https://\(Constants.host.rawValue)/api/v1/nft/\(id)")
     }
 }

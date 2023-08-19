@@ -43,7 +43,7 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
     
     private var currencies: [CurrencyModel] = []
     private let currenciesService = CurrenciesService()
-    private let orderService = OrderService()
+    private let orderService = OrderService.shared
     private var selectedCurrencyId: String?
 
     override func viewDidLoad() {

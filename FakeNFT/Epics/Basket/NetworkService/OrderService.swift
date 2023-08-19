@@ -12,11 +12,11 @@ protocol OrderServiceProtocol {
 }
 
 final class OrderService: OrderServiceProtocol {
-    static let shared = OrderService() // Singleton
+    static let shared = OrderService()
     private let networkClient: NetworkClient
     private var currencyTask: NetworkTask?
 
-    init(networkClient: NetworkClient = DefaultNetworkClient()) {
+    private init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
 
@@ -82,7 +82,6 @@ final class OrderService: OrderServiceProtocol {
             }
         }
     }
-            
 
     func updateOrder(with nftIds: [String], completion: @escaping (Result<[String], Error>) -> Void) {
         assert(Thread.isMainThread)

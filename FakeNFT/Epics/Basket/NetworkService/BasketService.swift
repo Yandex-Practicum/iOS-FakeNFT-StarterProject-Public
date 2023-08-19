@@ -8,11 +8,10 @@
 import UIKit
 
 final class BasketService {
-    static let shared = BasketService() // Singleton
+    static let shared = BasketService()
     private let userDefaults = UserDefaults.standard
-    private let orderService = OrderService()
+    private let orderService = OrderService.shared
     private let basketKey = "basket"
-    private init() {}
     
     var basket: [NftModel] {
         get {
@@ -32,6 +31,8 @@ final class BasketService {
             userDefaults.synchronize()
         }
     }
+    
+    private init() {}
     
     func addNFTToBasket(_  nft: NftModel) {
         basket.append(nft)
