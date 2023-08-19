@@ -41,6 +41,8 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if badConnection { viewModel.getLikedNFTs(likedIDs: likedIDs) }
     }
     

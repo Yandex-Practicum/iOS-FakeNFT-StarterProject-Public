@@ -9,6 +9,7 @@ protocol MyNFTViewModelProtocol: AnyObject {
     var authors: [String: String] { get }
     var sort: MyNFTViewModel.Sort? { get set }
     
+    func checkStoredSort()
     func getMyNFTs(nftIDs: [String])
     func toggleLikeFromMyNFT(id: String)
 }
@@ -55,7 +56,6 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     }
     
     func getMyNFTs(nftIDs: [String]) {
-        UIBlockingProgressHUD.show()
         var loadedNFTs: [NFTNetworkModel] = []
         
         nftIDs.forEach { id in
@@ -126,6 +126,14 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         case .name:
             return myNFTs.sorted(by: { $0.name < $1.name })
         }
+    }
+    
+    func checkStoredSort() {
+        if let sortOrder = UserDefaults.standard.data(forKey: "sortOrder") {
+            let order = try? PropertyListDecoder().decode(MyNFTViewModel.Sort.self, from: sortOrder)
+            sort = order
+        }
+        sort = .rating
     }
 }
 
