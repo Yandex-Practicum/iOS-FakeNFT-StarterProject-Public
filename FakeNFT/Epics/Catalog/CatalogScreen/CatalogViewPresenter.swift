@@ -36,7 +36,6 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     init() {
-        
         catalogNetworkServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: CatalogNetworkService.didChangeNotification,
