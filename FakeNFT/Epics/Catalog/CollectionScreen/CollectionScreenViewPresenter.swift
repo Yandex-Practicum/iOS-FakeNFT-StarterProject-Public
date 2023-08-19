@@ -39,8 +39,7 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     private var authorNetworkServiceObserver: NSObjectProtocol?
     private var nftNetworkServiceObserver: NSObjectProtocol?
     
-    init(viewController: CollectionScreenViewControllerProtocol, catalogDataModel: CatalogDataModel) {
-        collectionScreenViewController = viewController
+    init(catalogDataModel: CatalogDataModel) {
         self.catalogDataModel = catalogDataModel
         
         authorNetworkServiceObserver = NotificationCenter.default
@@ -59,6 +58,10 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
             ) { [weak self] _ in
                 self?.updateCollection()
             }
+    }
+    
+    func injectViewController(viewController: CollectionScreenViewControllerProtocol) {
+        collectionScreenViewController = viewController
     }
     
     func viewMadeFetchRequest() {

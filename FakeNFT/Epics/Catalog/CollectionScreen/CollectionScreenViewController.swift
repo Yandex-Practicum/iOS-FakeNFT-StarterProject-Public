@@ -8,11 +8,10 @@
 import UIKit
 
 final class CollectionScreenViewController: UIViewController, CollectionScreenViewControllerProtocol {
-    private var presenter: CollectionScreenViewPresenterProtocol?
+    private var presenter: CollectionScreenViewPresenterProtocol
     private let backButton = UIButton()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var mainContentHeight: CGFloat {
-        guard let presenter = presenter else { return CGFloat() }
         let imageSize: CGFloat = 310
         let nameHeight: CGFloat = presenter.viewDidRequestLabelHeight(text: presenter.collectionName, width: view.frame.width - 32, font: .headline3)
         let authorHeight: CGFloat = presenter.viewDidRequestLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width - 32, font: .caption2)
@@ -21,9 +20,9 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
     }
     
-    init(catalogDataModel: CatalogDataModel) {
+    init(presenter: CollectionScreenViewPresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        presenter = CollectionScreenViewPresenter(viewController: self, catalogDataModel: catalogDataModel)
     }
     
     required init?(coder: NSCoder) {
@@ -46,7 +45,6 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
                 IndexPath(row: i, section: 1)
             }
             collectionView.insertItems(at: indexPaths)
-        } completion: { _ in
         }
     }
     
@@ -64,19 +62,18 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         guard let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell else { return }
         if !cell.authorDynamicPartLabelIsEmpty
             && !cell.collectionImageIsEmpty
-            && collectionView.numberOfItems(inSection: 1) == presenter?.initialNftCount {
+            && collectionView.numberOfItems(inSection: 1) == presenter.initialNftCount {
             removeHud()
         }
     }
     
     func authorLabelTap() {
-        guard let presenter = presenter else { return }
         present(presenter.webViewScreen, animated: true)
     }
     
     private func makeFetchRequest() {
         UIBlockingProgressHUD.show()
-        presenter?.viewMadeFetchRequest()
+        presenter.viewMadeFetchRequest()
     }
     
     private func configureBackButton() {
@@ -113,7 +110,6 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     private func configureMainContentCell(cell: CollectionScreenMainContentCell) {
-        guard let presenter = presenter else { return }
         cell.viewController = self
         cell.setCollectionImage(link: presenter.collectionCover)
         cell.setCollectionNameLabel(name: presenter.collectionName)
@@ -121,7 +117,6 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     private func configureNftCell(cell: CollectionScreenNftCell, index: Int) {
-        guard let presenter = presenter else { return }
         let nft = presenter.viewDidRequestNftFromNfts(index: index)
         let cellPresenter = CollectionScreenNftCellPresenter(nft: nft)
         cell.presenter = cellPresenter
@@ -196,7 +191,7 @@ extension CollectionScreenViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return presenter?.actualNftsCount ?? 0
+            return presenter.actualNftsCount
         default:
             return 0
         }
