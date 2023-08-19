@@ -37,11 +37,13 @@ final class CatalogNetworkService {
     private func resultHandler(_ res: Result<[CatalogDataModel], Error>) {
         switch res {
         case .success(let data):
-            collections.append(contentsOf: data)
-            if lastLoadedPage == nil {
-                lastLoadedPage = 1
-            } else {
-                lastLoadedPage! += 1
+            if !data.isEmpty {
+                collections.append(contentsOf: data)
+                if lastLoadedPage == nil {
+                    lastLoadedPage = 1
+                } else {
+                    lastLoadedPage! += 1
+                }
             }
             task = nil
             NotificationCenter.default.post(name: CatalogNetworkService.didChangeNotification, object: self)
