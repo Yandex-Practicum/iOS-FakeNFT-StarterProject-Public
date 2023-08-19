@@ -57,6 +57,7 @@
 		F96F2D2A2A7E8F98004CC5D2 /* SiteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D292A7E8F98004CC5D2 /* SiteCellView.swift */; };
 		F96F2D2C2A7E8FB1004CC5D2 /* CollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96F2D2B2A7E8FB1004CC5D2 /* CollectionCellView.swift */; };
 		F975B5D62A9110C9009865EF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975B5D52A9110C9009865EF /* WebViewController.swift */; };
+		F975B5DA2A91668A009865EF /* WebViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975B5D92A916689009865EF /* WebViewViewModel.swift */; };
 		F9997DB02A87B8D20040BE7F /* NFTCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DAF2A87B8D20040BE7F /* NFTCollectionViewController.swift */; };
 		F9997DB22A87BA5F0040BE7F /* NFTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DB12A87BA5F0040BE7F /* NFTCollectionViewModel.swift */; };
 		F9997DB42A87BA7E0040BE7F /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9997DB32A87BA7E0040BE7F /* NFTCell.swift */; };
@@ -147,6 +148,7 @@
 		F96F2D292A7E8F98004CC5D2 /* SiteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteCellView.swift; sourceTree = "<group>"; };
 		F96F2D2B2A7E8FB1004CC5D2 /* CollectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCellView.swift; sourceTree = "<group>"; };
 		F975B5D52A9110C9009865EF /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		F975B5D92A916689009865EF /* WebViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewModel.swift; sourceTree = "<group>"; };
 		F9997DAF2A87B8D20040BE7F /* NFTCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewController.swift; sourceTree = "<group>"; };
 		F9997DB12A87BA5F0040BE7F /* NFTCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewModel.swift; sourceTree = "<group>"; };
 		F9997DB32A87BA7E0040BE7F /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				F975B5D52A9110C9009865EF /* WebViewController.swift */,
+				F975B5D92A916689009865EF /* WebViewViewModel.swift */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -736,6 +739,7 @@
 				F9F557432A741CD5004F6856 /* TabBar.swift in Sources */,
 				F96F2D102A7E6B7F004CC5D2 /* Alert.swift in Sources */,
 				F96F2D012A7E4EAF004CC5D2 /* NiblessView.swift in Sources */,
+				F975B5DA2A91668A009865EF /* WebViewViewModel.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				F9997DCB2A8905FA0040BE7F /* NFTCellViewModel.swift in Sources */,
 				F96F2D1E2A7E83CE004CC5D2 /* UserCardViewModel.swift in Sources */,

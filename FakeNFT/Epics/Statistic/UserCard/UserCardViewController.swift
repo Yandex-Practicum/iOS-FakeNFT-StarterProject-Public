@@ -228,6 +228,8 @@ private extension UserCardViewController {
     }
 
     func createWebView() -> WebViewController {
-        return WebViewController()
+        let viewModel = WebViewModelImpl()
+
+        return WebViewController(viewModel: viewModel)
     }
 }
