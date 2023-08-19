@@ -32,7 +32,7 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
         cellCount: 2,
         leftInset: 16,
         rightInset: 16,
-        cellSpacing: 9
+        cellSpacing: 7
     )
     
     // MARK: - Life cycle
@@ -155,8 +155,8 @@ extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let avaliableSize = collectionView.frame.width - collectionParameters.paddingWidth
-        let cellWidth = (avaliableSize + 30) / CGFloat(collectionParameters.cellCount)
+        let availableWidth = view.frame.size.width - collectionParameters.paddingWidth
+        let cellWidth = availableWidth / CGFloat(collectionParameters.cellCount)
         return CGSize(width: cellWidth, height: 100)
     }
     
@@ -165,7 +165,7 @@ extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 9
+        return collectionParameters.cellSpacing
     }
     
     func collectionView(

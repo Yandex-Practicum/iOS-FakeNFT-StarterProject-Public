@@ -55,7 +55,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyRegular
+        label.font = .bodyBold
         label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

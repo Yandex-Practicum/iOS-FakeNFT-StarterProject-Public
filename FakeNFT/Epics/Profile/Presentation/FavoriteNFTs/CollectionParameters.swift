@@ -21,6 +21,6 @@ struct FeaturedCollectionParameters {
         self.leftInset = leftInset
         self.rightInset = rightInset
         self.cellSpacing = cellSpacing
-        self.paddingWidth = leftInset + rightInset + CGFloat(cellCount - 1) * cellSpacing
+        self.paddingWidth = leftInset + rightInset + (CGFloat(cellCount - 1) * cellSpacing)
     }
 }

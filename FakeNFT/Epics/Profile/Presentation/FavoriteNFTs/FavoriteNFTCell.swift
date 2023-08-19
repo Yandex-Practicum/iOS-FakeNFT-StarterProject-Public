@@ -45,7 +45,7 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyRegular
+        label.font = .bodyBold
         label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -62,7 +62,7 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
     
     private lazy var priceValueLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .caption1
         label.text = "0 ETH"
         label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,7 +122,8 @@ final class FavoriteNFTCell: UICollectionViewCell & ReuseIdentifying {
             
             aboutNFCStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             aboutNFCStack.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 12),
-            aboutNFCStack.heightAnchor.constraint(equalToConstant: 66)
+            aboutNFCStack.heightAnchor.constraint(equalToConstant: 66),
+            aboutNFCStack.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     
