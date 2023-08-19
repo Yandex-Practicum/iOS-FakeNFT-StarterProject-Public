@@ -15,7 +15,11 @@ class CustomTextField: UITextField {
     
     init(with text: String, textChangeHandler: @escaping (String) -> Void) {
         self.textChangeHandler = textChangeHandler
+        
         super.init(frame: .zero)
+        
+        self.autocorrectionType = .no
+        self.spellCheckingType = .no
         uiConfiguration(with: text)
         
         addTarget(self, action: #selector(handleTextChange), for: .editingChanged)

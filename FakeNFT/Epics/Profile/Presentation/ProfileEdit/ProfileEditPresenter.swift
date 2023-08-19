@@ -60,4 +60,14 @@ final class ProfileEditPresenter: ProfileEditPresenterProtocol {
             id: profile.id
         )
     }
+    
+    func calculateViewYOffset(textFieldY: CGFloat, viewHeight: CGFloat, keyboardHeight: CGFloat) -> CGFloat {
+        if viewHeight == 627 {
+            return keyboardHeight - 20
+        } else if viewHeight <= 752 {
+            return (keyboardHeight - (viewHeight - textFieldY)) + 10
+        } else {
+            return (keyboardHeight - (viewHeight - textFieldY)) + 60
+        }
+    }
 }

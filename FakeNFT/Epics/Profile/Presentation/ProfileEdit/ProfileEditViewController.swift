@@ -127,10 +127,28 @@ final class ProfileEditViewController: UIViewController {
         nameTextField.delegate = self
         siteTextField.delegate = self
         descriptionTextView.delegate = self
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+        
         guard let isProfileChanged = presenter?.isProfileChanged() else { return }
         if isProfileChanged {
             guard let profile = presenter?.getNewProfile() else { return }
@@ -273,6 +291,33 @@ final class ProfileEditViewController: UIViewController {
     
     @objc private func didTapCloseButton() {
         dismiss(animated: true)
+    }
+    
+    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        let textFieldMaxY = siteTextField.frame.maxY
+        let keyboardY = keyboardFrame.origin.y
+        let keyboardHeight = keyboardFrame.height
+        
+        let offsetY = presenter?.calculateViewYOffset(
+            textFieldY: textFieldMaxY,
+            viewHeight: view.frame.height,
+            keyboardHeight: keyboardHeight
+        ) ?? 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = -offsetY
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
     }
 }
 

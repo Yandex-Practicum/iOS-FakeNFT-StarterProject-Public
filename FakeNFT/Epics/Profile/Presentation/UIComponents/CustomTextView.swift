@@ -19,6 +19,8 @@ final class CustomTextView: UITextView {
         
         super.init(frame: .zero, textContainer: nil)
         
+        self.autocorrectionType = .no
+        self.spellCheckingType = .no
         isNeedToHidePlaceholderAndSet(text: text)
         uiConfiguration(with: placeholder)
         configurePlaceholder(with: placeholder)
