@@ -14,11 +14,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
         authorDynamicPartLabel.text?.isEmpty ?? true
     }
     var collectionImageIsEmpty: Bool {
-        if collectionImage.image == nil {
-            return true
-        } else {
-            return false
-        }
+        collectionImage.image == nil
     }
     
     private let collectionImage: UIImageView = {
