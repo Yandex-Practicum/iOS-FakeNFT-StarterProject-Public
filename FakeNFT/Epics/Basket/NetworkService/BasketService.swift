@@ -85,3 +85,9 @@ final class BasketService {
         }
     }
 }
+
+enum Sort: Codable, Equatable {
+    case price
+    case rating
+    case name
+}

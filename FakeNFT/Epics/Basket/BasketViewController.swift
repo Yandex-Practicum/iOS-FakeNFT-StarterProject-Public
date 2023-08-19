@@ -207,9 +207,3 @@ extension BasketViewController: SumViewDelegate {
         present(navigationController, animated: true, completion: nil)
     }
 }
-
-enum Sort: Codable, Equatable {
-    case price
-    case rating
-    case name
-}
