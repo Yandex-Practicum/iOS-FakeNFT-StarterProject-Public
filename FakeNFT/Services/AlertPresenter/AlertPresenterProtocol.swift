@@ -9,5 +9,5 @@ import UIKit
 
 protocol AlertPresenterProtocol {
     func injectDelegate(viewController: UIViewController)
-    func show(models: [AlertActionModel])
+    func didTapSortButton(models: [AlertActionModel])
 }
