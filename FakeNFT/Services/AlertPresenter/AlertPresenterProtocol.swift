@@ -5,8 +5,9 @@
 //  Created by Богдан Полыгалов on 17.08.2023.
 //
 
-import Foundation
+import UIKit
 
 protocol AlertPresenterProtocol {
+    func injectDelegate(viewController: UIViewController)
     func show(models: [AlertActionModel])
 }
