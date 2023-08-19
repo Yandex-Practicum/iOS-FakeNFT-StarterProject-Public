@@ -148,7 +148,7 @@ extension CollectionScreenViewController: UICollectionViewDelegateFlowLayout {
         case 0:
             return CGSize(width: view.frame.width, height: mainContentHeight)
         case 1:
-            let width = (collectionView.frame.width - 32 - 18) / 3    // MARK: из длинны экрана вычитаем констрейнты (16+16=32) и получаем длину коллекции, из неё вычитаем отступы между клетками (9x2=18)
+            let width = (collectionView.frame.width - 32) / 3 - 9  // MARK: из длинны экрана вычитаем констрейнты (16+16=32) и получаем длину коллекции, делим её на 3, так как по 3 ячейки, а также вычитаем расстояние между ячейками (9)
             let height = width * 1.593
             return CGSize(width: width, height: height)
         default:
