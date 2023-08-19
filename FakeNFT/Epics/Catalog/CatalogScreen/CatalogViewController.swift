@@ -8,15 +8,23 @@
 import UIKit
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
-    private var presenter: CatalogViewPresenterProtocol?
-    private var alertPresenter: AlertPresenterProtocol?
+    private var presenter: CatalogViewPresenterProtocol
+    private var alertPresenter: AlertPresenterProtocol
     private let sortButton = UIButton()
     private let catalogTable = UITableView()
     
+    init(presenter: CatalogViewPresenterProtocol, alertPresenter: AlertPresenterProtocol) {
+        self.presenter = presenter
+        self.alertPresenter = alertPresenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = CatalogViewPresenter(catalogViewController: self)
-        alertPresenter = AlertPresenter(delegate: self)
         
         view.backgroundColor = .ypWhite
         configureSortButton()
@@ -68,7 +76,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     private func configureCell(cell: CatalogViewTableCell, index: Int) {
-        guard let data = presenter?.viewDidRequestDataByIndex(index: index) else { return }
+        let data = presenter.viewDidRequestDataByIndex(index: index)
         cell.selectionStyle = .none
         cell.setImage(link: data.cover)
         cell.setNftCollectionLabel(collectionName: data.name, collectionCount: data.nfts.count)
@@ -76,18 +84,17 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     
     private func makeFetchRequest() {
         UIBlockingProgressHUD.show()
-        presenter?.viewMadeFetchRequest()
+        presenter.viewMadeFetchRequest()
     }
     
     @objc private func sortButtonTap() {
-        guard let presenter = presenter else { return }
-        alertPresenter?.show(models: presenter.alertActions)
+        alertPresenter.show(models: presenter.alertActions)
     }
 }
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.catalogCount ?? 0
+        presenter.catalogCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -103,13 +110,11 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let presenter = presenter else { return }
         let collectionScreen = presenter.viewDidRequestCollectionScreen(collectionIndex: indexPath.row)
         present(collectionScreen, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let presenter = presenter else { return }
         if indexPath.row + 1 == presenter.catalogCount {
             makeFetchRequest()
         }

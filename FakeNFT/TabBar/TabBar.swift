@@ -1,6 +1,15 @@
 import UIKit
 
 final class MainTabBarController: UITabBarController {
+    var catalogViewController: UIViewController {
+        let presenter = CatalogViewPresenter()
+        let alertPresenter = AlertPresenter()
+        let catalogView = CatalogViewController(presenter: presenter, alertPresenter: alertPresenter)
+        presenter.injectViewController(catalogViewController: catalogView)
+        alertPresenter.injectDelegate(viewController: catalogView)
+        return catalogView
+    }
+    
     // MARK: - Init
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +37,7 @@ final class MainTabBarController: UITabBarController {
                 title: NSLocalizedString("tabBar.profile", comment: "")
             ),
             generateViewController(
-                CatalogViewController(),
+                catalogViewController,
                 image: catalogImage,
                 selectedImage: catalogSelectedImage,
                 title: NSLocalizedString("tabBar.catalog", comment: "")

@@ -15,6 +15,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
 protocol CatalogViewPresenterProtocol {
     var catalogCount: Int { get }
     var alertActions: [AlertActionModel] { get }
+    func injectViewController(catalogViewController: CatalogViewControllerProtocol)
     func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController
     func viewMadeFetchRequest()
     func viewDidRequestDataByIndex(index: Int) -> CatalogDataModel

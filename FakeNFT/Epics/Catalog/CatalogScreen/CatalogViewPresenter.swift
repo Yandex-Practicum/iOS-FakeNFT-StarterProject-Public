@@ -35,8 +35,8 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         UserDefaults.standard.integer(forKey: "catalog.sort")
     }
     
-    init(catalogViewController: CatalogViewControllerProtocol) {
-        self.catalogViewController = catalogViewController
+    init() {
+        
         catalogNetworkServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: CatalogNetworkService.didChangeNotification,
@@ -45,6 +45,10 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             ) { [weak self] _ in
                 self?.updateTableView()
             }
+    }
+    
+    func injectViewController(catalogViewController: CatalogViewControllerProtocol) {
+        self.catalogViewController = catalogViewController
     }
     
     func viewDidRequestCollectionScreen(collectionIndex: Int) -> CollectionScreenViewController {
