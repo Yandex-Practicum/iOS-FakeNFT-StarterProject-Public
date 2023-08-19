@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum BasketConstants: String {
-    case host = "64858e8ba795d24810b71189.mockapi.io"
+enum BasketConstants {
+    static let baseUrl = URL(string: "https://64c516f8c853c26efada7af9.mockapi.io/api/v1")!
 }

@@ -1,9 +1,5 @@
 import Foundation
 
-enum NetworkConstants {
-    static let baseUrl = URL(string: "https://64c516f8c853c26efada7af9.mockapi.io/api/v1")!
-}
-
 enum HttpMethod: String {
     case get = "GET"
     case post = "POST"

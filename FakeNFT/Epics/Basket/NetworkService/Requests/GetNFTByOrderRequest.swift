@@ -18,6 +18,6 @@ class GetNFTByIdRequest: NetworkRequest {
     }
 
     var endpoint: URL? {
-        NetworkConstants.baseUrl.appendingPathComponent("/nft/\(id)")
+        BasketConstants.baseUrl.appendingPathComponent("/nft/\(id)")
     }
 }
