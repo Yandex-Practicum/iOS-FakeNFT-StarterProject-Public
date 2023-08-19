@@ -26,8 +26,8 @@ final class MainTabBarController: UITabBarController {
         let basketImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let basketSelectedImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
 
-        let statisticImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
-        let statisticSelectedImage = UIImage(systemName: "flag.2.crossed.fill", withConfiguration: statisticMediumConfigForImage)?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
+        let statisticImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
+        let statisticSelectedImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
 
         viewControllers = [
             generateViewController(
