@@ -88,19 +88,24 @@ final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
         myOrder: [Int]
     ) -> [NFTCellViewModel] {
         var nfts = userNfts
-        nfts.forEach({ print($0.nftNumber) })
+
         for (index, nft) in nfts.enumerated() {
-            let isLiked = myLikes.contains { $0 == nft.nftNumber }
-            let isInCart = myOrder.contains { $0 == nft.nftNumber }
+            let id = Int(nft.id) ?? 0
+
+            let isLiked = myLikes.contains { $0 == id }
+            let isInCart = myOrder.contains { $0 == id }
 
             let updatedNFT = NFT(
-                imageURL: nft.imageURL,
-                title: nft.title,
+                createdAt: nft.createdAt,
+                name: nft.name,
+                images: nft.images,
                 rating: nft.rating,
+                description: nft.description,
                 price: nft.price,
-                isLiked: isLiked,
-                isInCart: isInCart,
-                nftNumber: nft.nftNumber
+                author: nft.author,
+                id: nft.id,
+                isInCart: nft.isInCart,
+                isLiked: nft.isLiked
             )
 
             // заменяю нфт без лайка или пустой корзины на нфт с лайком или полной корзиной

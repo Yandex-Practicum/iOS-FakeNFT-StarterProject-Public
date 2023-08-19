@@ -18,7 +18,7 @@ final class NFTCellViewModel {
     @Published var isAddedToCart = false
 
     var url: URL? {
-        nft.imageURL
+        nft.images.first.flatMap { URL(string: $0) }
     }
 
     var isLikedReally: Bool {
@@ -34,7 +34,7 @@ final class NFTCellViewModel {
     }
 
     var title: String {
-        nft.title
+        nft.name
     }
 
     var price: String {

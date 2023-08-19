@@ -8,19 +8,21 @@
 import Foundation
 
 struct NFT {
-    let id = UUID()
+    let uuid = UUID()
 
-    let imageURL: URL?
-    let title: String
-    let rating: Float
+    let createdAt: String
+    let name: String
+    let images: [String]
+    let rating: Int
+    let description: String
     let price: Double
-    let isLiked: Bool
+    let author, id: String
     let isInCart: Bool
-    let nftNumber: Int
+    let isLiked: Bool
 }
 
 extension NFT: Hashable {
     static func == (lhs: NFT, rhs: NFT) -> Bool {
-        lhs.id == rhs.id
+        lhs.uuid == rhs.uuid
     }
 }

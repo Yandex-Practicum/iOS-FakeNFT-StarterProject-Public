@@ -30,7 +30,7 @@ final class UserListViewModelImpl: UserListViewModel {
     // Private Properties
     private let output: PassthroughSubject<UserListViewModelOutput, Never> = .init()
     private var cancellables = Set<AnyCancellable>()
-    private var currentFilter: Filters = .name
+    private var currentFilter: Filters = .rank
 
     private(set) var isPulledToRefresh = false
     private(set) var users: [User] = []
@@ -99,15 +99,6 @@ final class UserListViewModelImpl: UserListViewModel {
                         users = self.filterUsers()
                         output.send(.filteredData(users))
                 },
-                ActionModel(
-                    title: "Nft count",
-                    style: .default) { [weak self] in
-                        // Handle byRating sorting
-                        guard let self else { return }
-                        currentFilter = .nfts
-                        users = self.filterUsers()
-                        output.send(.filteredData(users))
-                },
 
                 ActionModel(
                     title: NSLocalizedString("sorting.close", comment: ""),
@@ -127,9 +118,6 @@ final class UserListViewModelImpl: UserListViewModel {
 
         case .rank:
             return users.sortByRank()
-
-        case .nfts:
-            return users.sortByNft()
         }
     }
 }
@@ -138,6 +126,5 @@ private extension UserListViewModelImpl {
     enum Filters {
         case name
         case rank
-        case nfts
     }
 }

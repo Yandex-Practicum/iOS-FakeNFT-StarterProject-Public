@@ -20,13 +20,16 @@ struct NFTResult: Codable {
 extension NFTResult {
     func toNFT() -> NFT {
         return NFT(
-            imageURL: images.first.flatMap { URL(string: $0) },
-            title: name,
-            rating: Float(rating),
+            createdAt: createdAt,
+            name: name,
+            images: images,
+            rating: rating,
+            description: description,
             price: price,
-            isLiked: false,
+            author: author,
+            id: id,
             isInCart: false,
-            nftNumber: Int(id) ?? 0
+            isLiked: false
         )
     }
 }
