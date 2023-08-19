@@ -8,7 +8,7 @@
 import Foundation
 
 final class CollectionScreenNftCellPresenter: CollectionScreenNftCellPresenterProtocol {
-    var nft: NftModel
+    private(set) var nft: NftModel
     private let basketService = BasketService.shared
     private let likeService = LikeService.shared
     
