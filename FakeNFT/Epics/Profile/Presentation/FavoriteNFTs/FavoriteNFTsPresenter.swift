@@ -2,13 +2,21 @@ import Kingfisher
 import UIKit
 
 final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsViewDelegate {
-    // MARK: - Public properties
+    // MARK: - FavoriteNFTsViewDelegate properties
     
     var view: NFTsViewControllerProtocol?
-    var networkClient: NFTsNetworkClientProtocol?
-    var profileNetworkClient: ProfileNetworkClientProtocol?
-    
+    var counterOfNFTs: Int {
+        return presentationModels.count
+    }
+    var placeholderLabelIsNeedToHide: Bool {
+        return !profile.likes.isEmpty && !presentationModels.isEmpty ? true : false
+    }
     var callback: (() -> Void)?
+    
+    // MARK: - FavoriteNFTsPresenterProtocol properties
+    
+    var profileNetworkClient: ProfileNetworkClientProtocol?
+    var networkClient: NFTsNetworkClientProtocol?
     
     // MARK: - Private properties
     
@@ -54,10 +62,6 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         presentationModels.remove(at: indexPath.row)
         updateProfile(with: profile)
         view?.updateTableOrCollection()
-    }
-    
-    func getNFTsCounter() -> Int {
-        presentationModels.count
     }
     
     func isNeedToHidePlaceholderLabel() -> Bool {

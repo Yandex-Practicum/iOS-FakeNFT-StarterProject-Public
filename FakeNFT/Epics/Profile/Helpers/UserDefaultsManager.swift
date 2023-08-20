@@ -1,9 +1,5 @@
 import Foundation
 
-protocol StringRepresentableEnum: RawRepresentable where RawValue == String {
-    var stringValue: String { get }
-}
-
 @propertyWrapper
 struct UserDefaultsManager<Value: StringRepresentableEnum> {
     let key: String

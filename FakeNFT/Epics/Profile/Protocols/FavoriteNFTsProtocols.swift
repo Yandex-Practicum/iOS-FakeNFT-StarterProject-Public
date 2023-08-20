@@ -10,10 +10,10 @@ protocol FavoriteNFTsPresenterProtocol: AnyObject {
 
 protocol FavoriteNFTsViewDelegate: AnyObject {
     var view: NFTsViewControllerProtocol? { get set }
-    var callback: (() -> Void)? { get set }
+    var counterOfNFTs: Int { get }
+    var placeholderLabelIsNeedToHide: Bool { get }
+    var callback: (() -> Void)? { get }
     func viewDidLoad()
-    func getNFTsCounter() -> Int
-    func isNeedToHidePlaceholderLabel() -> Bool
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
     func deleteNFT(at indexPath: IndexPath)
 }

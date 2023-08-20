@@ -2,10 +2,25 @@ import Kingfisher
 import UIKit
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
+    // MARK: - ProfileViewPresenterProtocol properties
+    
+    var editableProfile: EditableProfileModel? {
+        return currentProfileEditModel
+    }
+    var currentProfileResponse: ProfileResponseModel? {
+        return currentProfileResponseModel
+    }
+    var myNFTs: [String] {
+        guard let currentProfileResponseModel = currentProfileResponseModel else { return [] }
+        return currentProfileResponseModel.nfts
+    }
+    weak var view: ProfileViewControllerProtocol?
+    
     // MARK: - Public properties
     
-    weak var view: ProfileViewControllerProtocol?
     weak var networkClient: ProfileNetworkClientProtocol?
+    
+    // MARK: - Private properties
     
     private var currentProfileResponseModel: ProfileResponseModel?
     private var currentProfileEditModel: EditableProfileModel?

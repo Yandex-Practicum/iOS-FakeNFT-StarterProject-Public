@@ -149,18 +149,18 @@ final class ProfileEditViewController: UIViewController {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)
         
-        guard let isProfileChanged = presenter?.isProfileChanged() else { return }
+        guard let isProfileChanged = presenter?.profileChanged else { return }
         if isProfileChanged {
-            guard let profile = presenter?.getNewProfile() else { return }
+            guard let profile = presenter?.newProfile else { return }
             delegate?.sendNewProfile(profile)
         } else {
             dismiss(animated: true)
         }
     }
-    
+}
     
     // MARK: - Private methods
-    
+extension ProfileEditViewController {
     private func addingUIElements() {
         view.addSubview(mainStack)
         
@@ -301,7 +301,6 @@ final class ProfileEditViewController: UIViewController {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         
         let textFieldMaxY = siteTextField.frame.maxY
-        let keyboardY = keyboardFrame.origin.y
         let keyboardHeight = keyboardFrame.height
         
         let offsetY = presenter?.calculateViewYOffset(

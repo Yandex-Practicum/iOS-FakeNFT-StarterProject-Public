@@ -198,7 +198,7 @@ final class ProfileViewController: UIViewController {
     private func didTapMyNFTsCell() {
         guard
             let presenter = presenter,
-            let profile = presenter.getCurrentProfileResponse()
+            let profile = presenter.currentProfileResponse
         else { return }
         
         let myNFTsViewController = MyNFTsViewController()
@@ -218,7 +218,7 @@ final class ProfileViewController: UIViewController {
     private func didTapFeaturedNFTsCell() {
         guard
             let presenter = presenter,
-            let profile = presenter.getCurrentProfileResponse()
+            let profile = presenter.currentProfileResponse
         else { return }
         
         let featuredNFTsViewController = FavoriteNFTsViewController()
@@ -242,7 +242,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapEditProfileButton(){
-        guard let profile = presenter?.getEditableProfile() else { return }
+        guard let profile = presenter?.editableProfile else { return }
         let profileEditPresenter = ProfileEditPresenter(editableProfile: profile)
         let profileEditViewController = ProfileEditViewController(editableProfile: profile)
         profileEditViewController.presenter = profileEditPresenter
@@ -251,7 +251,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func openUserAboutWebView() {
-        guard let url = presenter?.getCurrentProfileResponse()?.website else { return }
+        guard let url = presenter?.currentProfileResponse?.website else { return }
         let presenter = WebViewPresenter(url: url)
         let webView = UserAboutWebView()
         webView.presenter = presenter

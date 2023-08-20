@@ -1,13 +1,26 @@
 import Foundation
 
-enum EditableParameter {
-    case name
-    case description
-    case site
-    case imageUrl
-}
-
 final class ProfileEditPresenter: ProfileEditPresenterProtocol {
+    // MARK: - ProfileEditPresenterProtocol properties
+    
+    var profileChanged: Bool {
+        return profile.name != name ||
+        profile.avatar != avatar ||
+        profile.description != description ||
+        profile.website.absoluteString != website
+    }
+    var newProfile: ProfileResponseModel {
+        return ProfileResponseModel(
+            name: name,
+            avatar: avatar,
+            description: description,
+            website: URL(string: website) ?? profile.website,
+            nfts: profile.nfts,
+            likes: profile.likes,
+            id: profile.id
+        )
+    }
+    
     // MARK: - Private properties
     
     private let profile: EditableProfileModel
@@ -16,6 +29,8 @@ final class ProfileEditPresenter: ProfileEditPresenterProtocol {
     private var description: String
     private var website: String
     
+    // MARK: - Life cycle
+    
     init(editableProfile: EditableProfileModel) {
         profile = editableProfile
         name = editableProfile.name
@@ -23,6 +38,8 @@ final class ProfileEditPresenter: ProfileEditPresenterProtocol {
         description = editableProfile.description
         website = editableProfile.website.absoluteString
     }
+    
+    // MARK: - ProfileEditPresenterProtocol
     
     func change(parameter: EditableParameter, with text: String) {
         switch parameter {
@@ -35,30 +52,6 @@ final class ProfileEditPresenter: ProfileEditPresenterProtocol {
         case .imageUrl:
             avatar = text
         }
-    }
-    
-    func isProfileChanged() -> Bool {
-        if profile.name == name &&
-            profile.avatar == avatar &&
-            profile.description == description &&
-            profile.website.absoluteString == website
-        {
-            return false
-        } else {
-            return true
-        }
-    }
-    
-    func getNewProfile() -> ProfileResponseModel {
-        return ProfileResponseModel(
-            name: name,
-            avatar: avatar,
-            description: description,
-            website: URL(string: website) ?? profile.website,
-            nfts: profile.nfts,
-            likes: profile.likes,
-            id: profile.id
-        )
     }
     
     func calculateViewYOffset(textFieldY: CGFloat, viewHeight: CGFloat, keyboardHeight: CGFloat) -> CGFloat {

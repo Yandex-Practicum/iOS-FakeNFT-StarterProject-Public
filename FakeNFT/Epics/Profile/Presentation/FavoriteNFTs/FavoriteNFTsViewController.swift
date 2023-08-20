@@ -136,7 +136,7 @@ final class FavoriteNFTsViewController: UIViewController & NFTsViewControllerPro
     }
     
     private func checkPlaceholderLabelVisibility() {
-        placeholderLabel.isHidden = presenter?.isNeedToHidePlaceholderLabel() ?? true
+        placeholderLabel.isHidden = presenter?.placeholderLabelIsNeedToHide ?? true
     }
     
     // MARK: - Actions
@@ -182,7 +182,7 @@ extension FavoriteNFTsViewController: UICollectionViewDelegateFlowLayout {
 
 extension FavoriteNFTsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter?.getNFTsCounter() ?? 0
+        return presenter?.counterOfNFTs ?? 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -192,7 +192,7 @@ extension FavoriteNFTsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
             let presenter = presenter,
-            indexPath.row < presenter.getNFTsCounter()
+            indexPath.row < presenter.counterOfNFTs
         else { return UICollectionViewCell() }
         
         let cell: FavoriteNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)

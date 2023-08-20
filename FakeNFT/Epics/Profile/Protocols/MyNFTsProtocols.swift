@@ -19,9 +19,9 @@ protocol MyNFTsPresenterProtocol: AnyObject {
 protocol MyNFTsViewDelegate: AnyObject {
     var view: MyNFTsViewControllerProtocol? { get set }
     var currentSortOption: ProfileSortOption { get set }
-    var callback: (() -> Void)? { get set }
+    var counterOfNFTs: Int { get }
+    var missingNFCLabelIsNeedToHide: Bool { get }
+    var callback: (() -> Void)? { get }
     func viewDidLoad()
-    func getMyNFTsCounter() -> Int
-    func isNeedToHideMissingNFCLabel() -> Bool
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel
 }

@@ -14,11 +14,11 @@ protocol ProfileViewControllerProtocol: AnyObject {
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
+    var editableProfile: EditableProfileModel? { get }
+    var currentProfileResponse: ProfileResponseModel? { get }
+    var myNFTs: [String] { get }
     func viewDidLoad()
-    func getEditableProfile() -> EditableProfileModel?
     func updateProfile(with data: ProfileResponseModel)
-    func getCurrentProfileResponse() -> ProfileResponseModel?
-    func getMyNFTs() -> [String]
 }
 
 // MARK: - ProfilePresenterNetworkProtocol

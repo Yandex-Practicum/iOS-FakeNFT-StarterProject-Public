@@ -128,7 +128,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
     }
     
     private func checkPlaceholderLabelVisibility() {
-        placeholderLabel.isHidden = presenter?.isNeedToHideMissingNFCLabel() ?? true
+        placeholderLabel.isHidden = presenter?.missingNFCLabelIsNeedToHide ?? true
     }
     
     private func tableViewConfigure(){
@@ -193,7 +193,7 @@ final class MyNFTsViewController: UIViewController & MyNFTsViewControllerProtoco
 extension MyNFTsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let presenter = presenter else { return 0 }
-        return presenter.getMyNFTsCounter()
+        return presenter.counterOfNFTs
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

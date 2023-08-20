@@ -2,12 +2,17 @@ import Kingfisher
 import UIKit
 
 final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
-    // MARK: - Public properties
+    // MARK: - MyNFTsViewDelegate properties
     
     var view: MyNFTsViewControllerProtocol?
     var networkClient: NFTsNetworkClientProtocol?
     var callback: (() -> Void)?
-    
+    var counterOfNFTs: Int {
+        return myNFTsResponces.count
+    }
+    var missingNFCLabelIsNeedToHide: Bool {
+        return !profile.nfts.isEmpty
+    }
     @UserDefaultsManager(key: "currentSortOption", defaultValue: ProfileSortOption.byName)
     var currentSortOption: ProfileSortOption{
         didSet {
@@ -42,14 +47,6 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
         myNFTsResponces = []
         
         getNFTResponceModels(for: profile.nfts)
-    }
-    
-    func getMyNFTsCounter() -> Int {
-        myNFTsResponces.count
-    }
-    
-    func isNeedToHideMissingNFCLabel() -> Bool {
-        !profile.nfts.isEmpty
     }
     
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel {
