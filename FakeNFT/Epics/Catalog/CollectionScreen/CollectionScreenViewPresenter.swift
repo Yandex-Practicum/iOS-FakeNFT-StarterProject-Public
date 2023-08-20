@@ -15,13 +15,13 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         catalogDataModel.name
     }
     var collectionCover: URL? {
-        takeURL(link: catalogDataModel.cover)
+        viewWillSetImage(with: catalogDataModel.cover)
     }
     var collectionDescription: String {
         catalogDataModel.description
     }
-    var initialNftCount: Int {
-        catalogDataModel.nfts.count
+    var authorName: String? {
+        authorNetworkService.author?.name
     }
     lazy var webViewScreen: WebViewScreenViewController = {
         let presenter = WebViewScreenViewPresenter()
@@ -60,21 +60,46 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
             }
     }
     
-    func injectViewController(viewController: CollectionScreenViewControllerProtocol) {
+    func viewControllerInitialized(viewController: CollectionScreenViewControllerProtocol) {
         collectionScreenViewController = viewController
     }
     
-    func viewMadeFetchRequest() {
+    func viewDidLoad() {
+        collectionScreenViewController?.showHud()
         authorNetworkService.fetchAuthor(id: catalogDataModel.author)
         nftNetworkService.fetchNft(id: catalogDataModel.author)
     }
     
-    func viewDidRequestNftFromNfts(index: Int) -> NftModel {
-        nfts[index]
+    func viewStartedCellConfiguration(at index: Int) -> NftModel {
+        takeNftByIndex(index: index)
     }
     
-    func takeURL(link: String) -> URL? {
+    func viewWillSetImage(with link: String) -> URL? {
         URL(string: link.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+    }
+    
+    func viewUpdatedUI(in cell: CollectionScreenMainContentCell) {
+        if !cell.authorDynamicPartLabelIsEmpty
+            && !cell.collectionImageIsEmpty
+            && collectionScreenViewController?.currentNumberOfNft == catalogDataModel.nfts.count {
+            collectionScreenViewController?.removeHud()
+        }
+    }
+    
+    func viewWillUpdateBasket(in cell: CollectionScreenNftCell, at index: Int) {
+        if BasketService.shared.basket.contains(where: )({ $0.id == takeNftByIndex(index: index).id }) {
+            cell.setNotEmptyBasketImage()
+        }
+    }
+    
+    func viewWillUpdateLike(in cell: CollectionScreenNftCell, at index: Int) {
+        if LikeService.shared.likes.contains(takeNftByIndex(index: index).id) {
+            cell.setButtonLikeImage(image: .liked)
+        }
+    }
+    
+    private func takeNftByIndex(index: Int) -> NftModel {
+        nfts[index]
     }
     
     private func updateCollection() {
@@ -84,6 +109,6 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         if oldCount != newCount {
             collectionScreenViewController?.updateCollection(oldCount: 0, newCount: newCount)
         }
-        collectionScreenViewController?.viewReadinessCheck()
+        collectionScreenViewController?.viewUpdatedUI()
     }
 }

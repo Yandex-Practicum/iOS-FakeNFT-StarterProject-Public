@@ -80,7 +80,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
     
     func setCollectionImage(link: URL?) {
         collectionImage.kf.setImage(with: link) { [weak self] _ in
-            self?.viewController?.viewReadinessCheck()
+            self?.viewController?.viewUpdatedUI()
         }
     }
     
@@ -90,7 +90,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
     
     func setAuthorDynamicPartLabel(author: String) {
         authorDynamicPartLabel.text = author
-        viewController?.viewReadinessCheck()
+        viewController?.viewUpdatedUI()
     }
     
     func setDescriptionTextView(description: String) {

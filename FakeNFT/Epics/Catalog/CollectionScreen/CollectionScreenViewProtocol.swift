@@ -8,10 +8,12 @@
 import UIKit
 
 protocol CollectionScreenViewControllerProtocol: AnyObject {
+    var currentNumberOfNft: Int { get }
     func updateCollection(oldCount: Int, newCount: Int)
     func updateAuthor()
+    func showHud()
     func removeHud()
-    func viewReadinessCheck()
+    func viewUpdatedUI()
     func authorLabelTap()
 }
 
@@ -20,10 +22,13 @@ protocol CollectionScreenViewPresenterProtocol {
     var collectionName: String { get }
     var collectionCover: URL? { get }
     var collectionDescription: String { get }
-    var initialNftCount: Int { get }
+    var authorName: String? { get }
     var webViewScreen: WebViewScreenViewController { get }
-    func injectViewController(viewController: CollectionScreenViewControllerProtocol)
-    func viewMadeFetchRequest()
-    func viewDidRequestNftFromNfts(index: Int) -> NftModel
-    func takeURL(link: String) -> URL?
+    func viewControllerInitialized(viewController: CollectionScreenViewControllerProtocol)
+    func viewDidLoad()
+    func viewStartedCellConfiguration(at index: Int) -> NftModel
+    func viewWillSetImage(with link: String) -> URL?
+    func viewUpdatedUI(in cell: CollectionScreenMainContentCell)
+    func viewWillUpdateBasket(in cell: CollectionScreenNftCell, at index: Int)
+    func viewWillUpdateLike(in cell: CollectionScreenNftCell, at index: Int)
 }

@@ -37,7 +37,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         catalogTable.reloadData()
     }
     
-    func showProgressHud() {
+    func showHud() {
         UIBlockingProgressHUD.show()
     }
     

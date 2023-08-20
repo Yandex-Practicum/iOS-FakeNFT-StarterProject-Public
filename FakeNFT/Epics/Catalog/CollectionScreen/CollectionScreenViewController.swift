@@ -8,6 +8,10 @@
 import UIKit
 
 final class CollectionScreenViewController: UIViewController, CollectionScreenViewControllerProtocol {
+    var currentNumberOfNft: Int {
+        collectionView.numberOfItems(inSection: 1)
+    }
+    
     private var presenter: CollectionScreenViewPresenterProtocol
     private let backButton = UIButton()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -15,7 +19,7 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         let imageSize: CGFloat = 310
         let nameHeight: CGFloat = calculateLabelHeight(text: presenter.collectionName, width: view.frame.width - 32, font: .headline3)
         let authorHeight: CGFloat = calculateLabelHeight(text: NSLocalizedString("catalog.author", comment: "Статическая надпись, представляющая автора коллекции nft"), width: view.frame.width - 32, font: .caption2)
-        let descriptionHeight: CGFloat = calculateTextViewHeight(text: presenter.collectionDescription, width: view.frame.width-32, font: .caption2)
+        let descriptionHeight: CGFloat = calculateTextViewHeight(text: presenter.collectionDescription, width: view.frame.width - 32, font: .caption2)
         let constraints: CGFloat = 16 + 13 + 5
         return imageSize + nameHeight + authorHeight + descriptionHeight + constraints
     }
@@ -36,7 +40,7 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
         configureCollection()
         configureBackButton()
         
-        makeFetchRequest()
+        presenter.viewDidLoad()
     }
     
     func updateCollection(oldCount: Int, newCount: Int) {
@@ -49,31 +53,26 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     func updateAuthor() {
-        guard let name = AuthorNetworkService.shared.author?.name else { return }
+        guard let name = presenter.authorName else { return }
         (collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell)?.setAuthorDynamicPartLabel(author: name)
-        viewReadinessCheck()
+        viewUpdatedUI()
+    }
+    
+    func showHud() {
+        UIBlockingProgressHUD.show()
     }
     
     func removeHud() {
         UIBlockingProgressHUD.dismiss()
     }
     
-    func viewReadinessCheck() {
+    func viewUpdatedUI() {
         guard let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? CollectionScreenMainContentCell else { return }
-        if !cell.authorDynamicPartLabelIsEmpty
-            && !cell.collectionImageIsEmpty
-            && collectionView.numberOfItems(inSection: 1) == presenter.initialNftCount {
-            removeHud()
-        }
+        presenter.viewUpdatedUI(in: cell)
     }
     
     func authorLabelTap() {
         present(presenter.webViewScreen, animated: true)
-    }
-    
-    private func makeFetchRequest() {
-        UIBlockingProgressHUD.show()
-        presenter.viewMadeFetchRequest()
     }
     
     private func configureBackButton() {
@@ -117,16 +116,12 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     private func configureNftCell(cell: CollectionScreenNftCell, index: Int) {
-        let nft = presenter.viewDidRequestNftFromNfts(index: index)
+        let nft = presenter.viewStartedCellConfiguration(at: index)
         let cellPresenter = CollectionScreenNftCellPresenter(nft: nft)
         cell.presenter = cellPresenter
-        if BasketService.shared.basket.contains(where: )({ $0.id == nft.id }) {
-            cell.setNotEmptyBasketImage()
-        }
-        if LikeService.shared.likes.contains(nft.id) {
-            cell.setButtonLikeImage(image: .liked)
-        }
-        cell.setNftImage(link: presenter.takeURL(link: (nft.images.first ?? "")))
+        presenter.viewWillUpdateBasket(in: cell, at: index)
+        presenter.viewWillUpdateLike(in: cell, at: index)
+        cell.setNftImage(link: presenter.viewWillSetImage(with: (nft.images.first ?? "")))
         cell.setRating(rate: nft.rating)
         cell.setNameLabel(name: nft.name)
         cell.setCostLabel(cost: nft.price)

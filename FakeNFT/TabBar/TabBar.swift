@@ -5,7 +5,7 @@ final class MainTabBarController: UITabBarController {
         let presenter = CatalogViewPresenter()
         let alertPresenter = AlertPresenter()
         let catalogView = CatalogViewController(presenter: presenter, alertPresenter: alertPresenter)
-        presenter.injectViewController(catalogViewController: catalogView)
+        presenter.viewControllerInitialized(catalogViewController: catalogView)
         alertPresenter.injectDelegate(viewController: catalogView)
         return catalogView
     }

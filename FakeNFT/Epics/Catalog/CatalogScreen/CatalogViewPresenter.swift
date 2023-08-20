@@ -46,19 +46,19 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             }
     }
     
-    func injectViewController(catalogViewController: CatalogViewControllerProtocol) {
+    func viewControllerInitialized(catalogViewController: CatalogViewControllerProtocol) {
         self.catalogViewController = catalogViewController
     }
     
     func viewDidLoad() {
+        catalogViewController?.showHud()
         catalogNetworkService.fetchCollectionNextPage()
-        catalogViewController?.showProgressHud()
     }
     
     func didTapCell(at index: Int) -> CollectionScreenViewController {
         let presenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[index])
         let collectionScreenController = CollectionScreenViewController(presenter: presenter)
-        presenter.injectViewController(viewController: collectionScreenController)
+        presenter.viewControllerInitialized(viewController: collectionScreenController)
         collectionScreenController.modalPresentationStyle = .fullScreen
         return collectionScreenController
     }
