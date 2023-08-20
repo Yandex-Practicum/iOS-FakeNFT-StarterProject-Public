@@ -1,78 +1,233 @@
 import UIKit
 
 final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
-    private var profileView: ProfileView?
     private var viewModel: ProfileViewModelProtocol
-    private var badConnection: Bool = false
+    private var assetViewControllers: [UIViewController] = []
+    
+    private lazy var assetNameLabel: [String] = [
+        "Мои NFT",
+        "Избранные NFT",
+        "О разработчике"
+    ]
+    
+    private lazy var assetValue: [String?] = [
+        "\(viewModel.profile?.nfts.count ?? 0)",
+        "\(viewModel.profile?.likes.count ?? 0)",
+        nil
+    ]
 
-    private lazy var editButton = UIBarButtonItem(
-        image: UIImage.Icons.edit,
-        style: .plain,
-        target: self,
-        action: #selector(didTapEditButton)
-    )
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        bind()
-        view.backgroundColor = .appWhite
-        self.view = profileView
-        setupNavBar()
-        viewModel.getProfileData()
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        if badConnection { viewModel.getProfileData() }
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-    }
-
-    init(viewModel: ProfileViewModel) {
+    private lazy var avatarImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage.Icons.userPlaceholder)
+        imageView.accessibilityIdentifier = "avatarImage"
+        imageView.layer.cornerRadius = 35
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    private lazy var nameLabel = {
+        let label = UILabel()
+        label.accessibilityIdentifier = "nameLabel"
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textColor = .appBlack
+        return label
+    }()
+    
+    private lazy var descriptionLabel = {
+        let label = UILabel()
+        label.accessibilityIdentifier = "descriptionLabel"
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = 18
+        label.attributedText = NSAttributedString(string: "", attributes: [.kern: 0.68, NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = .appBlack
+        return label
+    }()
+    
+    private lazy var websiteLabel = {
+        let label = UILabel()
+        label.accessibilityIdentifier = "websiteLabel"
+        let tapAction = UITapGestureRecognizer(target: self, action: #selector(websiteDidTap))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(tapAction)
+        label.attributedText = NSAttributedString(string: "", attributes: [.kern: 0.24])
+        label.font = .systemFont(ofSize: 15)
+        label.textColor = .appBlue
+        return label
+    }()
+    
+    private lazy var profileAssetsTable = {
+        let tableView = UITableView()
+        tableView.accessibilityIdentifier = "profileTable"
+        tableView.register(ProfileAssetsCell.self)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.allowsMultipleSelection = false
+        return tableView
+    }()
+    
+    init(viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.profileView = ProfileView(frame: .zero, viewModel: viewModel, viewController: self)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bind()
+        setupConstraints()
+        view.backgroundColor = .appWhite
+        setupNavBar()
+        UIBlockingProgressHUD.show()
+        viewModel.getProfileData()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(likesUpdated),
+            name: NSNotification.Name(rawValue: "likesUpdated"),
+            object: nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
+    func updateViews(
+        profile: ProfileModel?
+    ) {
+        avatarImage.loadImage(
+            urlString: profile?.avatar,
+            placeholder: UIImage.Icons.userPlaceholder,
+            radius: 35
+        )
+        nameLabel.text = profile?.name
+        descriptionLabel.text = profile?.description
+        websiteLabel.text = profile?.website
+        
+        let stringNftsCount = "(\(profile?.nfts.count ?? 0))"
+        let stringLikesCount = "(\(profile?.likes.count ?? 0))"
+        
+        let myNFTCell = profileAssetsTable.cellForRow(at: [0,0]) as? ProfileAssetsCell
+        myNFTCell?.setAssets(label: nil, value: stringNftsCount)
+        
+        let likesCell = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
+        likesCell?.setAssets(label: nil, value: stringLikesCount)
+    }
+    
     @objc
-    private func didTapEditButton() {
-        let editProfileViewController = EditProfileViewController(viewModel: viewModel)
-        editProfileViewController.modalPresentationStyle = .popover
-        self.present(editProfileViewController, animated: true)
+    private func websiteDidTap(_ sender: UITapGestureRecognizer) {
+        self.present(WebsiteViewController(link: viewModel.profile?.website), animated: true)
+    }
+    
+    @objc
+    private func likesUpdated(notification: Notification) {
+        guard let likesUpdated = notification.object as? Int else { return }
+        let cell = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
+        cell?.setAssets(label: nil, value: "(\(likesUpdated))")
     }
 
     private func bind() {
-        viewModel.onChange = { [weak self] in
-            self?.badConnection = false
-            let view = self?.view as? ProfileView
-            view?.updateViews(
-                avatarURL: self?.viewModel.avatarURL,
-                userName: self?.viewModel.name,
-                description: self?.viewModel.description,
-                website: self?.viewModel.website,
-                nftCount: "(\(String(self?.viewModel.nfts?.count ?? 0)))",
-                likesCount: "(\(String(self?.viewModel.likes?.count ?? 0)))"
-            )
+        if InternetConnectionManager.isConnectedToNetwork() {
+            viewModel.onChange = { [weak self] in
+                self?.updateViews(profile: self?.viewModel.profile)
+            }
+        } else {
+            viewModel.onError = { [weak self] in
+                UIBlockingProgressHUD.dismiss()
+                self?.view = NoContentView(frame: .zero, noContent: .noInternet)
+                self?.navigationController?.navigationBar.isHidden = true
+            }
         }
         
-        viewModel.onLoaded = { [weak self] in
-            let view = self?.view as? ProfileView
-            view?.initialViewControllers()
-        }
-        
-        viewModel.onError = { [weak self] in
-            self?.badConnection = true
-            self?.view = NoContentView(frame: .zero, noContent: .noInternet)
-            self?.navigationController?.navigationBar.isHidden = true
-        }
     }
 
     private func setupNavBar() {
-        navigationController?.navigationBar.tintColor = .appBlack
-        navigationItem.rightBarButtonItem = editButton
+        (navigationController as? NavigationController)?.editProfileButtonDelegate = self
+        navigationItem.backButtonTitle = ""
         self.navigationController?.navigationBar.isHidden = false
+    }
+    
+    private func setupConstraints() {
+        [avatarImage, nameLabel, descriptionLabel, websiteLabel, profileAssetsTable].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            avatarImage.heightAnchor.constraint(equalToConstant: 70),
+            avatarImage.widthAnchor.constraint(equalToConstant: 70),
+            avatarImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            avatarImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            nameLabel.topAnchor.constraint(equalTo: avatarImage.topAnchor, constant: 21),
+            nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 20),
+            descriptionLabel.heightAnchor.constraint(equalToConstant: 72),
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            websiteLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            websiteLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
+            
+            profileAssetsTable.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 40),
+            profileAssetsTable.heightAnchor.constraint(equalToConstant: 54 * 3),
+            profileAssetsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileAssetsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+}
+
+extension ProfileViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return assetNameLabel.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: ProfileAssetsCell = tableView.dequeueReusableCell()
+        cell.backgroundColor = .appWhite
+        cell.setAssets(label: assetNameLabel[indexPath.row], value: assetValue[indexPath.row])
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 54
+    }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            navigationController?.pushViewController(NyNFTViewController(nftIDs: viewModel.nfts ?? [], likedIDs: viewModel.profile?.likes ?? []), animated: true)
+        case 1:
+            navigationController?.pushViewController(FavoritesViewController(likedIDs: viewModel.profile?.likes ?? []), animated: true)
+        case 2:
+            navigationController?.pushViewController(WebsiteViewController(), animated: true)
+        default:
+            return
+        }
+    }
+}
+
+extension ProfileViewController: EditProfileButtonDelegate {
+    func proceedToEditing() {
+        guard let profile = viewModel.profile else { return }
+        present(EditProfileViewController(viewModel: EditProfileViewModel(profile: profile), delegate: self), animated: true)
+    }
+}
+
+extension ProfileViewController: ProfileUpdateDelegate {
+    func update() {
+        viewModel.getProfileData()
+        bind()
     }
 }

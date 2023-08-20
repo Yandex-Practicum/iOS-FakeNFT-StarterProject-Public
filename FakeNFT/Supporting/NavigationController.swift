@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol EditProfileButtonDelegate: AnyObject {
+    func proceedToEditing()
+}
+
 final class NavigationController: UINavigationController {
+    var editProfileButtonDelegate: EditProfileButtonDelegate?
+    
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        configureNavigationController()
+        configureNavigationController(forVC: rootViewController)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -20,12 +26,32 @@ final class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    @objc private func editTapped() {
+        editProfileButtonDelegate?.proceedToEditing()
+    }
 
-    private func configureNavigationController() {
+    @objc private func sortTapped() {
+//        if let cartVC = viewControllers.first as? CartScreenViewController {
+//            cartVC.filterButtonTapped()
+//        }
+//        sortingButtonDelegate?.sortTapped()
+    }
+
+    private func configureNavigationController(forVC viewController: UIViewController) {
         navigationBar.tintColor = .appBlack
         navigationBar.titleTextAttributes = [
             .font: UIFont.getFont(style: .bold, size: 17),
             .foregroundColor: UIColor.appBlack
         ]
+        
+        if viewController is ProfileViewController {
+            navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage.Icons.edit,
+                style: .done,
+                target: nil,
+                action: #selector(editTapped)
+            )
+        }
     }
 }
