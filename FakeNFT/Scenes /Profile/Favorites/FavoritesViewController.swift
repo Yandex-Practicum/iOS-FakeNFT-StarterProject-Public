@@ -1,10 +1,19 @@
 import UIKit
 
 final class FavoritesViewController: UIViewController, UIGestureRecognizerDelegate {
-    private let likedIDs: [String]
     private var viewModel: FavoritesViewModelProtocol
     
-    private var badConnection: Bool = false
+    private lazy var favoriteNFTCollection: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(FavoritesCell.self)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        return collectionView
+    }()
     
     private lazy var backButton = UIBarButtonItem(
         image: UIImage.Icons.back,
@@ -27,12 +36,14 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
         
         bind()
         setupView()
+        setupConstraints()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+        view.backgroundColor = .white
     }
     
-    init(likedIDs: [String]) {
-        self.likedIDs = likedIDs
-        self.viewModel = FavoritesViewModel(likedIDs: likedIDs)
+    init(viewModel: FavoritesViewModelProtocol) {
+        self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,19 +54,15 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if badConnection { viewModel.getLikedNFTs(likedIDs: likedIDs) }
     }
     
     private func bind() {
         viewModel.onChange = { [weak self] in
-            self?.badConnection = false
-            guard let view = self?.view as? FavoritesView,
-                  let nfts = self?.viewModel.likedNFTs else { return }
-            view.updateNFT(nfts: nfts)
+            self?.favoriteNFTCollection.reloadData()
+            
         }
         
         viewModel.onError = { [weak self] error in
-            self?.badConnection = true
             let alert = UIAlertController(
                 title: "Нет интернета",
                 message: error.localizedDescription,
@@ -74,12 +81,11 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     }
     
     private func setupView() {
-        if likedIDs.isEmpty {
+        if ((viewModel.likedNFTs?.isEmpty) != nil) {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             setupEmptyLabel()
         } else {
-            self.view = FavoritesView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
         }
     }
@@ -100,5 +106,70 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    private func setupConstraints() {
+        view.addSubview(favoriteNFTCollection)
+        
+        NSLayoutConstraint.activate([
+            favoriteNFTCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            favoriteNFTCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            favoriteNFTCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            favoriteNFTCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+}
+
+extension FavoritesViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let likedNFTs = viewModel.likedNFTs else { return 0 }
+        return likedNFTs.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: FavoritesCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        cell.backgroundColor = .white
+        guard let likedNFTs = viewModel.likedNFTs,
+              !likedNFTs.isEmpty else { return FavoritesCell() }
+        let likedNFT = likedNFTs[indexPath.row]
+        
+        let model = FavoritesCell.Model(
+            image: likedNFT.images.first ?? "",
+            name: likedNFT.name,
+            rating: likedNFT.rating,
+            price: likedNFT.price,
+            isFavorite: true,
+            id: likedNFT.id
+        )
+        cell.tapAction = { [unowned viewModel] in
+            print(viewModel)
+            viewModel.favoriteUnliked(id: likedNFT.id)
+        }
+        cell.configureCell(with: model)
+        
+        return cell
+    }
+}
+
+extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.frame.width - 16 * 2 - 7
+        return CGSize(width: availableWidth / 2, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 12, left: 16, bottom: 16, right: 16)
     }
 }

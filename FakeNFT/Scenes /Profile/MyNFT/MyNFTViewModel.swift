@@ -4,6 +4,7 @@ protocol MyNFTViewModelProtocol: AnyObject {
     var onChange: (() -> Void)? { get set }
     var onError: ((_ error: Error) -> Void)? { get set }
     
+    var profile: ProfileModel? { get }
     var myNFTs: [NFTNetworkModel]? { get }
     var likedIDs: [String]? { get }
     var authors: [String: String] { get }
@@ -17,7 +18,9 @@ protocol MyNFTViewModelProtocol: AnyObject {
 final class MyNFTViewModel: MyNFTViewModelProtocol {
     var onChange: (() -> Void)?
     var onError: ((_ error: Error) -> Void)?
-    private let networkClient = DefaultNetworkClient()
+    private var networkClient: NetworkClient = DefaultNetworkClient()
+    private(set) var profile: ProfileModel?
+    private let dispatchGroup = DispatchGroup()
     
     var sort: Sort? {
         didSet {
@@ -40,12 +43,16 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     
     
     
-    private(set) var authors: [String: String] = [:]
+    private(set) var authors: [String: String] = [:] {
+        didSet {
+            onChange?()
+        }
+    }
     
-    init(nftIDs: [String], likedIDs: [String]){
-        self.myNFTs = []
-        self.likedIDs = likedIDs
-        getMyNFTs(nftIDs: nftIDs)
+    init(networkClient: NetworkClient? = nil, profile: ProfileModel){
+        if let networkClient = networkClient { self.networkClient = networkClient }
+        self.profile = profile
+        getMyNFTs(nftIDs: profile.nfts)
         
         NotificationCenter.default.addObserver(
             self,
@@ -59,18 +66,17 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         var loadedNFTs: [NFTNetworkModel] = []
         
         nftIDs.forEach { id in
+            dispatchGroup.enter()
             networkClient.send(request: GetMyNFTRequest(id: id, item: .nft), type: NFTNetworkModel.self) { [weak self] result in
                 DispatchQueue.main.async {
+                    guard let self = self else { return }
                     switch result {
                     case .success(let nft):
+                        self.getAuthors(nft: nft)
                         loadedNFTs.append(nft)
-                        if loadedNFTs.count == nftIDs.count {
-                            self?.getAuthors(nfts: loadedNFTs)
-                            self?.myNFTs? = loadedNFTs
-                            UIBlockingProgressHUD.dismiss()
-                        }
+                        self.myNFTs? = loadedNFTs
                     case .failure(let error):
-                        self?.onError?(error)
+                        self.onError?(error)
                         UIBlockingProgressHUD.dismiss()
                     }
                 }
@@ -94,26 +100,20 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         self.likedIDs = likedIDs?.filter({ $0 != nftId })
     }
     
-    private func getAuthors(nfts: [NFTNetworkModel]) {
-        var authorsSet: Set<String> = []
-        nfts.forEach { nft in
-            authorsSet.insert(nft.author)
-        }
-        
-        let semaphore = DispatchSemaphore(value: 0)
-        authorsSet.forEach { author in
-            networkClient.send(request: GetMyNFTRequest(id: author, item: .author), type: AuthorNetworkModel.self) { [weak self] result in
-                switch result {
-                case .success(let author):
-                    self?.authors.updateValue(author.name, forKey: author.id)
-                    if self?.authors.count == authorsSet.count { semaphore.signal() }
-                case .failure(let failure):
-                    self?.onError?(failure)
-                    return
+    private func getAuthors(nft: NFTNetworkModel) {
+        networkClient.send(request: GetMyNFTRequest(id: nft.author, item: .author), type: AuthorNetworkModel.self) { [weak self] result in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let author):
+                        self.authors.updateValue(author.name, forKey: author.id)
+                        self.dispatchGroup.leave()
+                    case .failure(let failure):
+                        self.onError?(failure)
+                        return
+                    }
                 }
-            }
         }
-        semaphore.wait()
     }
     
     private func applySort(by value: Sort) -> [NFTNetworkModel] {

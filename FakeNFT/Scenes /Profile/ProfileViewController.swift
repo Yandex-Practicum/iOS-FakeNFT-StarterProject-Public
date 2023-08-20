@@ -205,11 +205,12 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let profile = viewModel.profile else { return }
         switch indexPath.row {
         case 0:
-            navigationController?.pushViewController(NyNFTViewController(nftIDs: viewModel.nfts ?? [], likedIDs: viewModel.profile?.likes ?? []), animated: true)
+            navigationController?.pushViewController(NyNFTViewController(viewModel: MyNFTViewModel(profile: profile)), animated: true)
         case 1:
-            navigationController?.pushViewController(FavoritesViewController(likedIDs: viewModel.profile?.likes ?? []), animated: true)
+            navigationController?.pushViewController(FavoritesViewController(viewModel: FavoritesViewModel(profile: profile)), animated: true)
         case 2:
             navigationController?.pushViewController(WebsiteViewController(), animated: true)
         default:

@@ -3,9 +3,18 @@ import UIKit
 final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     private let viewModel: MyNFTViewModelProtocol
     
-    private let nftsID: [String]
-    private let likedsID: [String]
-    private var badConnection: Bool = false
+    private lazy var myNFTTable: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(MyNFTCell.self)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.allowsMultipleSelection = false
+        tableView.isUserInteractionEnabled = true
+        return tableView
+    }()
     
     private lazy var emptyLabel = {
         let label = UILabel()
@@ -29,10 +38,8 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         action: #selector(didTapSortButton)
     )
     
-    init(nftIDs: [String], likedIDs: [String]) {
-        self.nftsID = nftIDs
-        self.likedsID = likedIDs
-        self.viewModel = MyNFTViewModel(nftIDs: nftIDs, likedIDs: likedIDs)
+    init(viewModel: MyNFTViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,7 +52,9 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         
         bind()
         setupView()
+        setupConstraints()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+        view.backgroundColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,24 +65,16 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if badConnection {
-            UIBlockingProgressHUD.show()
-            viewModel.getMyNFTs(nftIDs: nftsID)
-        }
+
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     private func bind() {
         viewModel.onChange = { [weak self] in
-            self?.badConnection = false
-            guard let view = self?.view as? MyNFTView,
-                  let nfts = self?.viewModel.myNFTs else { return }
-            view.updateNFT(nfts: nfts)
+            self?.myNFTTable.reloadData()
         }
         
         viewModel.onError = { [weak self] error in
-            self?.badConnection = true
             let alert = UIAlertController(
                 title: "Нет интернета",
                 message: error.localizedDescription,
@@ -127,12 +128,11 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func setupView() {
-        if nftsID.isEmpty {
+        if ((viewModel.myNFTs?.isEmpty) != nil) {
             view.backgroundColor = .white
             setupNavBar(emptyNFTs: true)
             setupEmptyLabel()
         } else {
-            self.view = MyNFTView(frame: .zero, viewModel: self.viewModel)
             setupNavBar(emptyNFTs: false)
         }
     }
@@ -156,4 +156,55 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
+    private func setupConstraints() {
+        view.addSubview(myNFTTable)
+        
+        NSLayoutConstraint.activate([
+            myNFTTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            myNFTTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            myNFTTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            myNFTTable.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
 }
+
+extension NyNFTViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let myNFTs = viewModel.myNFTs else { return 0 }
+        return myNFTs.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: MyNFTCell = tableView.dequeueReusableCell()
+        cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        guard let myNFTs = viewModel.myNFTs,
+              !myNFTs.isEmpty else { return MyNFTCell() }
+              
+        let myNFT = myNFTs[indexPath.row]
+        
+        let model = MyNFTCell.CellModel(
+            image: myNFT.images.first ?? "",
+            name: myNFT.name,
+            rating: myNFT.rating,
+            author: viewModel.authors[myNFT.author] ?? "",
+            price: myNFT.price,
+            isFavorite: viewModel.likedIDs?.contains(myNFT.id) ?? false,
+            id: myNFT.id
+        )
+        
+        cell.tapAction = { [weak self] in
+            let tappedNFT = self?.viewModel.myNFTs?.filter({ $0.id == myNFT.id }).first
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "myNFTliked"), object: tappedNFT)
+            if let tappedNFTid = tappedNFT?.id { self?.viewModel.toggleLikeFromMyNFT(id: tappedNFTid) }
+        }
+        cell.configureCell(with: model)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
+}
+
