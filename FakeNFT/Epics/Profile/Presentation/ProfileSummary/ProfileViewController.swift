@@ -50,23 +50,33 @@ final class ProfileViewController: UIViewController {
         label.textColor = .ypBlack
         label.font = .headline3
         label.textAlignment = .left
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         return label
     }()
-    private let userDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .ypBlack
-        label.font = .caption2
-        label.textAlignment = .left
-        label.numberOfLines = 0
+    private let userDescriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = .ypBlack
+        textView.font = .caption2
+        textView.textAlignment = .left
+        textView.isScrollEnabled = true
+        textView.isEditable = false
+        textView.backgroundColor = .clear
+        textView.textContainerInset = UIEdgeInsets.zero
+        textView.textContainer.lineFragmentPadding = 0
         
         let lineHeightPoints: CGFloat = 18.0
         let lineHeightPixels = lineHeightPoints / UIScreen.main.scale
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineHeightPixels
         
-        label.lineBreakMode = .byWordWrapping
-        return label
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.typingAttributes = [
+            .font: UIFont.caption2,
+            .foregroundColor: UIColor.ypBlack,
+            .paragraphStyle: paragraphStyle
+        ]
+        
+        return textView
     }()
     private let userSiteLabel: UILabel = {
         let label = UILabel()
@@ -112,7 +122,7 @@ final class ProfileViewController: UIViewController {
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mainStack)
         
-        [editProfileButton, photoAndNameStack, userDescriptionLabel, userSiteLabel, tableView].forEach{
+        [editProfileButton, photoAndNameStack, userDescriptionTextView, userSiteLabel, tableView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             mainStack.addSubview($0)
         }
@@ -147,10 +157,10 @@ final class ProfileViewController: UIViewController {
             userNameLabel.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
             userNameLabel.centerYAnchor.constraint(equalTo: photoView.centerYAnchor),
             
-            userDescriptionLabel.topAnchor.constraint(equalTo: photoAndNameStack.bottomAnchor, constant: 20),
-            userDescriptionLabel.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
-            userDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            userDescriptionLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 72),
+            userDescriptionTextView.topAnchor.constraint(equalTo: photoAndNameStack.bottomAnchor, constant: 20),
+            userDescriptionTextView.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+            userDescriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            userDescriptionTextView.heightAnchor.constraint(lessThanOrEqualToConstant: 72),
             
             userSiteLabel.topAnchor.constraint(equalTo: photoAndNameStack.bottomAnchor, constant: 100),
             userSiteLabel.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
@@ -320,7 +330,7 @@ extension ProfileViewController: ProfileViewControllerProtocol{
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            self.userDescriptionLabel.text = profile.description
+            self.userDescriptionTextView.text = profile.description
             self.userNameLabel.text = profile.name
             self.userSiteLabel.text = profile.website.absoluteString
             self.updateTableCellsLabels(from: profile)
