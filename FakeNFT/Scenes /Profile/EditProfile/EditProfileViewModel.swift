@@ -4,7 +4,8 @@ protocol EditProfileViewModelProtocol: AnyObject {
     var profile: ProfileModel? { get set }
     var error: Error? { get }
     
-    func updateProfile()
+    func updateProfile(profile: ProfileModel?)
+    func updateAvatar(withLink newLink: String)
 }
 
 final class EditProfileViewModel: EditProfileViewModelProtocol {
@@ -13,14 +14,12 @@ final class EditProfileViewModel: EditProfileViewModelProtocol {
     var profile: ProfileModel?
     private(set) var error: Error?
     
-//    var updateProfile: ((ProfileModel) -> Void)?
-    
     init(networkClient: NetworkClient? = nil, profile: ProfileModel) {
         self.profile = profile
         if let networkClient = networkClient { self.networkClient = networkClient }
     }
     
-    func updateProfile() {
+    func updateProfile(profile: ProfileModel?) {
         networkClient.send(request: ProfileRequest(httpMethod: .put, dto: profile), type: ProfileModel.self) { _ in
             return
         }
@@ -28,6 +27,6 @@ final class EditProfileViewModel: EditProfileViewModelProtocol {
     
     func updateAvatar(withLink newLink: String) {
         profile?.avatar = newLink
-        updateProfile()
+        updateProfile(profile: profile)
     }
 }

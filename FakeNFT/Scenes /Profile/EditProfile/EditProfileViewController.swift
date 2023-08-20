@@ -174,42 +174,43 @@ final class EditProfileViewController: UIViewController {
     @objc
     private func changeAvatarDidTap(_ sender: UITapGestureRecognizer) {
         avatarUpdateURLLabel.isHidden = false
-        let alert = UIAlertController(
-            title: "Загрузить изображение",
-            message: "Укажите ссылку на аватар",
-            preferredStyle: .alert
-        )
-        
+//        let alert = UIAlertController(
+//            title: "Загрузить изображение",
+//            message: "Укажите ссылку на аватар",
+//            preferredStyle: .alert
+//        )
+//
 //        alert.addTextField(configurationHandler: {(textField: UITextField) in
 //            textField.placeholder = "Введите ссылку:"
 //        })
+//
+//        alert.addAction(UIAlertAction(
+//            title: "Ок",
+//            style: .default,
+//            handler: { [weak self] _ in
+//                guard
+//                    let self = self,
+//                    let textField = alert.textFields?[0],
+//                    let updateURL = textField.text
+//                else { return }
+//
+//                if checkURL(urlString: updateURL) {
+//                    self.avatarUpdateURLLabel.text = updateURL
+//                } else {
+//                    let wrongURLAlert = UIAlertController(
+//                        title: "Неверная ссылка",
+//                        message: "Проверьте формат ссылки",
+//                        preferredStyle: .alert)
+//                    wrongURLAlert.addAction(UIAlertAction(title: "Ок", style: .cancel, handler: { _ in
+//                        wrongURLAlert.dismiss(animated: true)
+//                    }))
+//                    self.present(wrongURLAlert, animated: true)
+//                }
+//                alert.dismiss(animated: true)
+//            })
+//        )
         
-        alert.addAction(UIAlertAction(
-            title: "Ок",
-            style: .default,
-            handler: { [weak self] _ in
-                guard
-                    let self = self,
-                    let textField = alert.textFields?[0],
-                    let updateURL = textField.text
-                else { return }
-                
-                if checkURL(urlString: updateURL) {
-                    self.avatarUpdateURLLabel.text = updateURL
-                } else {
-                    let wrongURLAlert = UIAlertController(
-                        title: "Неверная ссылка",
-                        message: "Проверьте формат ссылки",
-                        preferredStyle: .alert)
-                    wrongURLAlert.addAction(UIAlertAction(title: "Ок", style: .cancel, handler: { _ in
-                        wrongURLAlert.dismiss(animated: true)
-                    }))
-                    self.present(wrongURLAlert, animated: true)
-                }
-                alert.dismiss(animated: true)
-            })
-        )
-        self.present(alert, animated: true)
+        self.present(EditProfileAlertController(viewModel: viewModel), animated: true)
     }
     
     private func getData() {

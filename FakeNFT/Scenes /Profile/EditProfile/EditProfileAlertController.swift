@@ -1,9 +1,9 @@
 import UIKit
 
 final class EditProfileAlertController: UIAlertController {
-    private let viewModel: EditProfileViewModel
+    private let viewModel: EditProfileViewModelProtocol
     
-    init(viewModel: EditProfileViewModel) {
+    init(viewModel: EditProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
