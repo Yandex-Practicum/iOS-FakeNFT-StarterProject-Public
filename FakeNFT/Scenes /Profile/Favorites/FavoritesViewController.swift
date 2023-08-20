@@ -146,7 +146,6 @@ extension FavoritesViewController: UICollectionViewDataSource {
             id: likedNFT.id
         )
         cell.tapAction = { [unowned viewModel] in
-            print(viewModel)
             viewModel.favoriteUnliked(id: likedNFT.id)
         }
         cell.configureCell(with: model)
