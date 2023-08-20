@@ -1,11 +1,11 @@
 import Foundation
 
 struct ProfileModel: Codable {
-    let name: String
-    let avatar: String
-    let description: String
-    let website: String
-    let nfts: [String]
-    let likes: [String]
-    let id: String
+    var name: String
+    var avatar: String
+    var description: String
+    var website: String
+    var nfts: [String]
+    var likes: [String]
+    var id: String
 }

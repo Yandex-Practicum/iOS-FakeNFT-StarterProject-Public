@@ -180,9 +180,9 @@ final class EditProfileViewController: UIViewController {
             preferredStyle: .alert
         )
         
-        alert.addTextField(configurationHandler: {(textField: UITextField) in
-            textField.placeholder = "Введите ссылку:"
-        })
+//        alert.addTextField(configurationHandler: {(textField: UITextField) in
+//            textField.placeholder = "Введите ссылку:"
+//        })
         
         alert.addAction(UIAlertAction(
             title: "Ок",
@@ -210,14 +210,6 @@ final class EditProfileViewController: UIViewController {
             })
         )
         self.present(alert, animated: true)
-    }
-    
-    private func checkURL(urlString: String?) -> Bool {
-        if let urlString = urlString,
-           let url = NSURL(string: urlString) {
-            return UIApplication.shared.canOpenURL(url as URL)
-        }
-        return false
     }
     
     private func getData() {

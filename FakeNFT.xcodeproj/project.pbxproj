@@ -75,6 +75,7 @@
 		F61AB33A2A8530F30064F057 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61AB3392A8530F30064F057 /* FavoritesCell.swift */; };
 		F61AB33C2A8536630064F057 /* MockNFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61AB33B2A8536630064F057 /* MockNFT.swift */; };
 		F6B081012A91A3F100DD269C /* InternetConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B081002A91A3F100DD269C /* InternetConnectionManager.swift */; };
+		F6B081032A91A75800DD269C /* EditProfileAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B081022A91A75800DD269C /* EditProfileAlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		F61AB3392A8530F30064F057 /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		F61AB33B2A8536630064F057 /* MockNFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNFT.swift; sourceTree = "<group>"; };
 		F6B081002A91A3F100DD269C /* InternetConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionManager.swift; sourceTree = "<group>"; };
+		F6B081022A91A75800DD269C /* EditProfileAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileAlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +439,7 @@
 			children = (
 				F61AB2F82A803BF80064F057 /* EditProfileViewController.swift */,
 				F6084F6A2A911EE400DBE5AA /* EditProfileViewModel.swift */,
+				F6B081022A91A75800DD269C /* EditProfileAlertController.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				F61AB2F62A80376D0064F057 /* ProfileViewController.swift in Sources */,
 				F61908D12A73CD2300DEF2F5 /* NFTsFactory.swift in Sources */,
 				F61AB3012A8043240064F057 /* ProfileViewModel.swift in Sources */,
+				F6B081032A91A75800DD269C /* EditProfileAlertController.swift in Sources */,
 				96D10EA02A795F24008F6FA4 /* StarsView.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				F61AB3322A852DE70064F057 /* FavoritesViewModel.swift in Sources */,
