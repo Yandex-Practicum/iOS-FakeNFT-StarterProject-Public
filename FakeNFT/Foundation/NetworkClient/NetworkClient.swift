@@ -9,13 +9,17 @@ enum NetworkClientError: Error {
 
 protocol NetworkClient {
     @discardableResult
-    func send(request: NetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask?
+    func send(
+        request: NetworkRequest,
+        onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask?
 
     @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    func send<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        onResponse: @escaping (Result<T, Error>) -> Void
+    ) -> NetworkTask?
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -23,9 +27,11 @@ struct DefaultNetworkClient: NetworkClient {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
-         encoder: JSONEncoder = JSONEncoder()) {
+    init(
+        session: URLSession = URLSession.shared,
+        decoder: JSONDecoder = JSONDecoder(),
+        encoder: JSONEncoder = JSONEncoder()
+    ) {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
@@ -87,7 +93,7 @@ struct DefaultNetworkClient: NetworkClient {
         urlRequest.httpMethod = request.httpMethod.rawValue
 
         if let dto = request.dto,
-           let dtoEncoded = try? encoder.encode(dto) {
+            let dtoEncoded = try? encoder.encode(dto) {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = dtoEncoded
         }
