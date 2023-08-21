@@ -49,7 +49,7 @@ final class CatalogViewTableCell: UITableViewCell, ReuseIdentifying {
         nftCollectionImage.kf.setImage(with: link) { [weak self] _ in
             // MARK: уменьшаю картинку под размеры экрана
             if let originalImage = self?.nftCollectionImage.image {
-                let needWidth = self?.superview?.frame.width ?? 1
+                let needWidth = self?.superview?.frame.width ?? UIScreen.main.bounds.size.width
                 let coef = originalImage.size.width / needWidth
                 let scaledSize = CGSize(width: originalImage.size.width / coef, height: originalImage.size.height / coef)
                 
