@@ -8,7 +8,10 @@ public struct Changeset<T: Equatable> {
     var modifications: [IndexPath] = []
 
     public init(oldItems: [T], newItems: [T]) {
-        guard !self.hasChanges(oldItems: oldItems, newItems: newItems) else { return }
+        guard !self.hasChanges(oldItems: oldItems, newItems: newItems) else {
+            self.setupModifications(oldItems: oldItems)
+            return
+        }
         self.setupChangset(oldItems: oldItems, newItems: newItems)
     }
 }
@@ -27,14 +30,15 @@ private extension Changeset {
         }
     }
 
-    mutating func hasChanges(oldItems: [T], newItems: [T]) -> Bool {
+    func hasChanges(oldItems: [T], newItems: [T]) -> Bool {
         let containedItems = oldItems.filter { newItems.contains($0) }
 
-        if oldItems.count == newItems.count, containedItems.isEmpty {
-            self.modifications = (0..<oldItems.count).map { IndexPath(row: $0, section: 0) }
-            return true
-        }
+        let doesCapacityEqual = oldItems.count == newItems.count
+        let doesNotHaveChanges = containedItems.isEmpty
+        return doesCapacityEqual && doesNotHaveChanges
+    }
 
-        return false
+    mutating func setupModifications(oldItems: [T]) {
+        self.modifications = (0..<oldItems.count).map { IndexPath(row: $0, section: 0) }
     }
 }
