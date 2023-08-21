@@ -40,6 +40,7 @@ final class CollectionScreenMainContentCell: UICollectionViewCell, ReuseIdentify
         authorStaticPartLabel.font = .caption2
         authorStaticPartLabel.textColor = .ypBlack
         authorStaticPartLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        authorStaticPartLabel.setContentHuggingPriority(.required, for: .horizontal)
         authorStaticPartLabel.translatesAutoresizingMaskIntoConstraints = false
         return authorStaticPartLabel
     }()
