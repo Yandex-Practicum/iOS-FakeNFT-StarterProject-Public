@@ -72,7 +72,11 @@ final class CollectionScreenViewController: UIViewController, CollectionScreenVi
     }
     
     func authorLabelTap() {
-        present(presenter.webViewScreen, animated: true)
+        presenter.didTapAuthorLabel()
+    }
+    
+    func show(_ webView: WebViewScreenViewController) {
+        present(webView, animated: true)
     }
     
     private func configureBackButton() {

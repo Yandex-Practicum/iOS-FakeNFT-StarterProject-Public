@@ -15,6 +15,7 @@ protocol CollectionScreenViewControllerProtocol: AnyObject {
     func removeHud()
     func viewUpdatedUI()
     func authorLabelTap()
+    func show(_ webView: WebViewScreenViewController)
 }
 
 protocol CollectionScreenViewPresenterProtocol {
@@ -23,7 +24,6 @@ protocol CollectionScreenViewPresenterProtocol {
     var collectionCover: URL? { get }
     var collectionDescription: String { get }
     var authorName: String? { get }
-    var webViewScreen: WebViewScreenViewController { get }
     func viewControllerInitialized(viewController: CollectionScreenViewControllerProtocol)
     func viewDidLoad()
     func viewStartedCellConfiguration(at index: Int) -> NftModel
@@ -31,4 +31,5 @@ protocol CollectionScreenViewPresenterProtocol {
     func viewUpdatedUI(in cell: CollectionScreenMainContentCell)
     func viewWillUpdateBasket(in cell: CollectionScreenNftCell, at index: Int)
     func viewWillUpdateLike(in cell: CollectionScreenNftCell, at index: Int)
+    func didTapAuthorLabel()
 }

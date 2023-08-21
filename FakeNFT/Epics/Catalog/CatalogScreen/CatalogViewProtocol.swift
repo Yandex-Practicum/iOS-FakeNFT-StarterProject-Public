@@ -11,6 +11,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
     func updateTableView()
     func showHud()
     func removeHud()
+    func show(_ view: CollectionScreenViewController) 
 }
 
 protocol CatalogViewPresenterProtocol {
@@ -18,7 +19,7 @@ protocol CatalogViewPresenterProtocol {
     var alertActions: [AlertActionModel] { get }
     func viewControllerInitialized(catalogViewController: CatalogViewControllerProtocol)
     func viewDidLoad()
-    func didTapCell(at index: Int) -> CollectionScreenViewController
+    func didTapCell(at index: Int)
     func viewStartedCellConfiguration(at index: Int) -> CatalogDataModel
     func viewWillSetImage(with link: String) -> URL?
     func tableWillEnd(currentIndex: Int)

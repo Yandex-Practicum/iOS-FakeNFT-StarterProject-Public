@@ -55,12 +55,12 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         catalogNetworkService.fetchCollectionNextPage()
     }
     
-    func didTapCell(at index: Int) -> CollectionScreenViewController {
+    func didTapCell(at index: Int) {
         let presenter = CollectionScreenViewPresenter(catalogDataModel: catalogData[index])
         let collectionScreenController = CollectionScreenViewController(presenter: presenter)
         presenter.viewControllerInitialized(viewController: collectionScreenController)
         collectionScreenController.modalPresentationStyle = .fullScreen
-        return collectionScreenController
+        catalogViewController?.show(collectionScreenController)
     }
     
     func viewStartedCellConfiguration(at index: Int) -> CatalogDataModel {

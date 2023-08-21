@@ -23,13 +23,6 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     var authorName: String? {
         authorNetworkService.author?.name
     }
-    lazy var webViewScreen: WebViewScreenViewController = {
-        let presenter = WebViewScreenViewPresenter()
-        let webViewScreen = WebViewScreenViewController(presenter: presenter)
-        presenter.injectViewController(webViewViewController: webViewScreen)
-        webViewScreen.modalPresentationStyle = .fullScreen
-        return webViewScreen
-    }()
     
     weak private var collectionScreenViewController: CollectionScreenViewControllerProtocol?
     private var nfts: [NftModel] = []
@@ -96,6 +89,14 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         if LikeService.shared.likes.contains(takeNftByIndex(index: index).id) {
             cell.setButtonLikeImage(image: .liked)
         }
+    }
+    
+    func didTapAuthorLabel() {
+        let presenter = WebViewScreenViewPresenter()
+        let webViewScreen = WebViewScreenViewController(presenter: presenter)
+        presenter.injectViewController(webViewViewController: webViewScreen)
+        webViewScreen.modalPresentationStyle = .fullScreen
+        collectionScreenViewController?.show(webViewScreen)
     }
     
     private func takeNftByIndex(index: Int) -> NftModel {

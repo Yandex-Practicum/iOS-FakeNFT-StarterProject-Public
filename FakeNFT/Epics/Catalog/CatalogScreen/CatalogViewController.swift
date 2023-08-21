@@ -45,6 +45,10 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         UIBlockingProgressHUD.dismiss()
     }
     
+    func show(_ view: CollectionScreenViewController) {
+        present(view, animated: true)
+    }
+    
     private func configureSortButton() {
         sortButton.setImage(UIImage.sortButton?.withTintColor(.ypBlack), for: .normal)
         sortButton.addTarget(self, action: #selector(sortButtonTap), for: .touchUpInside)
@@ -109,8 +113,7 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionScreen = presenter.didTapCell(at: indexPath.row)
-        present(collectionScreen, animated: true)
+        presenter.didTapCell(at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
