@@ -12,6 +12,7 @@ final class CatalogNetworkService {
     static let didChangeNotification = Notification.Name(rawValue: "CatalogNetworkServiceDidChange")
     
     private(set) var collections: [CatalogDataModel] = []
+    private(set) var isPaginationDoesntEnd = true
     
     private let defaultNetworkClient = DefaultNetworkClient()
     private var task: NetworkTask?
@@ -38,12 +39,17 @@ final class CatalogNetworkService {
         switch res {
         case .success(let data):
             if !data.isEmpty {
+                if (data.count % 10) > 0 {
+                    isPaginationDoesntEnd = false
+                }
                 collections.append(contentsOf: data)
                 if lastLoadedPage == nil {
                     lastLoadedPage = 1
                 } else {
                     lastLoadedPage! += 1
                 }
+            } else {
+                isPaginationDoesntEnd = false
             }
             task = nil
             NotificationCenter.default.post(name: CatalogNetworkService.didChangeNotification, object: self)

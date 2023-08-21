@@ -51,6 +51,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
     }
     
     func viewDidLoad() {
+        guard catalogNetworkService.isPaginationDoesntEnd else { return }
         catalogViewController?.showHud()
         catalogNetworkService.fetchCollectionNextPage()
     }
