@@ -17,10 +17,6 @@ final class NavigationController: UINavigationController {
         fatalError("NavigationController: init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     private func configureNavigationController() {
         navigationBar.tintColor = .appBlack
         navigationBar.titleTextAttributes = [

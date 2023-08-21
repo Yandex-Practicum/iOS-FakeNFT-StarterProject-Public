@@ -1,7 +1,7 @@
 import Foundation
 
 struct CartViewFactory {
-    static func create() -> CartViewController {
+    static func create() -> NavigationController {
         let networkClient = DefaultNetworkClient()
         let networkRequestSender = NetworkRequestSender(networkClient: networkClient)
 
@@ -31,6 +31,8 @@ struct CartViewFactory {
             tableViewHelper: tableViewHelper,
             router: router
         )
-        return viewController
+
+        let navigationController = NavigationController(rootViewController: viewController)
+        return navigationController
     }
 }

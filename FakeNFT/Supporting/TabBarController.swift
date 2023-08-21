@@ -42,12 +42,12 @@ final class TabBarController: UITabBarController {
 
         tabBar.backgroundColor = .appWhite
 
+        let cartNavigationController = CartViewFactory.create()
+
         let profileNavigationController = NavigationController(
             rootViewController: firstMockVc
         )
-        let cartNavigationController = NavigationController(
-            rootViewController: CartViewFactory.create()
-        )
+
         let statisticsNavigationController = NavigationController(
             rootViewController: forthMockVc
         )
@@ -100,12 +100,12 @@ private extension TabBarController {
     func subscribeToShowCatalogNotification() {
         NotificationCenterWrapper.shared.subscribeToNotification(type: .showCatalog) { [weak self] _ in
             guard let self = self else { return }
-            let cartNavigationControllerIndex = 1
-            let cartNavigationController = self.viewControllers?[cartNavigationControllerIndex]
+            let catalogNavigationControllerIndex = 1
+            let cartNavigationControllerIndex = 2
+            guard let cartNavigationController = self.viewControllers?[cartNavigationControllerIndex] as? UINavigationController else { return }
 
-            cartNavigationController?.navigationController?.popToRootViewController(animated: true)
-
-            self.selectedIndex = cartNavigationControllerIndex
+            cartNavigationController.popToRootViewController(animated: false)
+            self.selectedIndex = catalogNavigationControllerIndex
         }
     }
 }
