@@ -24,7 +24,7 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         authorNetworkService.author?.name
     }
     
-    weak private var collectionScreenViewController: CollectionScreenViewControllerProtocol?
+    weak private var viewController: CollectionScreenViewControllerProtocol?
     private var nfts: [NftModel] = []
     private var catalogDataModel: CatalogDataModel
     private let nftNetworkService = NftNetworkService.shared
@@ -41,7 +41,7 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.collectionScreenViewController?.updateAuthor()
+                self?.viewController?.updateAuthor()
             }
         nftNetworkServiceObserver = NotificationCenter.default
             .addObserver(
@@ -54,11 +54,11 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     }
     
     func viewControllerInitialized(viewController: CollectionScreenViewControllerProtocol) {
-        collectionScreenViewController = viewController
+        self.viewController = viewController
     }
     
     func viewDidLoad() {
-        collectionScreenViewController?.showHud()
+        viewController?.showHud()
         authorNetworkService.fetchAuthor(id: catalogDataModel.author)
         nftNetworkService.fetchNft(id: catalogDataModel.author)
     }
@@ -74,8 +74,8 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     func viewUpdatedUI(in cell: CollectionScreenMainContentCell) {
         if !cell.authorDynamicPartLabelIsEmpty
             && !cell.collectionImageIsEmpty
-            && collectionScreenViewController?.currentNumberOfNft == catalogDataModel.nfts.count {
-            collectionScreenViewController?.removeHud()
+            && viewController?.currentNumberOfNft == catalogDataModel.nfts.count {
+            viewController?.removeHud()
         }
     }
     
@@ -94,9 +94,9 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
     func didTapAuthorLabel() {
         let presenter = WebViewScreenViewPresenter()
         let webViewScreen = WebViewScreenViewController(presenter: presenter)
-        presenter.injectViewController(webViewViewController: webViewScreen)
+        presenter.viewControllerInitialized(viewController: webViewScreen)
         webViewScreen.modalPresentationStyle = .fullScreen
-        collectionScreenViewController?.show(webViewScreen)
+        viewController?.show(webViewScreen)
     }
     
     private func takeNftByIndex(index: Int) -> NftModel {
@@ -108,8 +108,8 @@ final class CollectionScreenViewPresenter: CollectionScreenViewPresenterProtocol
         let newCount = nftNetworkService.nfts.count
         nfts = nftNetworkService.nfts.sorted(by: ) { $0.rating > $1.rating }
         if oldCount != newCount {
-            collectionScreenViewController?.updateCollection(oldCount: 0, newCount: newCount)
+            viewController?.updateCollection(oldCount: 0, newCount: newCount)
         }
-        collectionScreenViewController?.viewUpdatedUI()
+        viewController?.viewUpdatedUI()
     }
 }

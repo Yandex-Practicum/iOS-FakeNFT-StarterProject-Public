@@ -16,18 +16,18 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             guard self?.sortState != 2 else { return }
             UserDefaults.standard.set(2, forKey: "catalog.sort")
             self?.updateCatalogData()
-            self?.catalogViewController?.updateTableView()
+            self?.viewController?.updateTableView()
         }
         let sortByNFTAction = AlertActionModel(buttonText: NSLocalizedString("catalog.sorting.nft", comment: "Алерт сортировки: сортировка по количеству nft"), style: .default) { [weak self] in
             guard self?.sortState != 1 else { return }
             UserDefaults.standard.set(1, forKey: "catalog.sort")
             self?.updateCatalogData()
-            self?.catalogViewController?.updateTableView()
+            self?.viewController?.updateTableView()
         }
         return [sortByNameAction, sortByNFTAction]
     }
     
-    private weak var catalogViewController: CatalogViewControllerProtocol?
+    private weak var viewController: CatalogViewControllerProtocol?
     private var catalogData: [CatalogDataModel] = []
     private var catalogNetworkService = CatalogNetworkService.shared
     private var catalogNetworkServiceObserver: NSObjectProtocol?
@@ -46,13 +46,13 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
             }
     }
     
-    func viewControllerInitialized(catalogViewController: CatalogViewControllerProtocol) {
-        self.catalogViewController = catalogViewController
+    func viewControllerInitialized(viewController: CatalogViewControllerProtocol) {
+        self.viewController = viewController
     }
     
     func viewDidLoad() {
         guard catalogNetworkService.isPaginationDoesntEnd else { return }
-        catalogViewController?.showHud()
+        viewController?.showHud()
         catalogNetworkService.fetchCollectionNextPage()
     }
     
@@ -61,7 +61,7 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         let collectionScreenController = CollectionScreenViewController(presenter: presenter)
         presenter.viewControllerInitialized(viewController: collectionScreenController)
         collectionScreenController.modalPresentationStyle = .fullScreen
-        catalogViewController?.show(collectionScreenController)
+        viewController?.show(collectionScreenController)
     }
     
     func viewStartedCellConfiguration(at index: Int) -> CatalogDataModel {
@@ -83,9 +83,9 @@ final class CatalogViewPresenter: CatalogViewPresenterProtocol {
         let newCount = catalogNetworkService.collections.count
         updateCatalogData()
         if oldCount != newCount {
-            catalogViewController?.updateTableView()
+            viewController?.updateTableView()
         }
-        catalogViewController?.removeHud()
+        viewController?.removeHud()
     }
     
     private func updateCatalogData() {

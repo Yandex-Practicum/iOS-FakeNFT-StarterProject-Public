@@ -11,13 +11,13 @@ protocol CatalogViewControllerProtocol: AnyObject {
     func updateTableView()
     func showHud()
     func removeHud()
-    func show(_ view: CollectionScreenViewController) 
+    func show(_ view: CollectionScreenViewController)
 }
 
 protocol CatalogViewPresenterProtocol {
     var catalogCount: Int { get }
     var alertActions: [AlertActionModel] { get }
-    func viewControllerInitialized(catalogViewController: CatalogViewControllerProtocol)
+    func viewControllerInitialized(viewController: CatalogViewControllerProtocol)
     func viewDidLoad()
     func didTapCell(at index: Int)
     func viewStartedCellConfiguration(at index: Int) -> CatalogDataModel

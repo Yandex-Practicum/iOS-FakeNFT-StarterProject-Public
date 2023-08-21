@@ -16,8 +16,8 @@ final class WebViewScreenViewPresenter: WebViewScreenViewPresenterProtocol {
         self.authorWebSiteURLRequest = URLRequest(url: url)
     }
     
-    func injectViewController(webViewViewController: WebViewScreenViewControllerProtocol) {
-        self.viewController = webViewViewController
+    func viewControllerInitialized(viewController: WebViewScreenViewControllerProtocol) {
+        self.viewController = viewController
     }
     
     func viewDidUpdateProgressValue(estimatedProgress: Float) {
