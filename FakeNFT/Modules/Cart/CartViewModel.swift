@@ -26,7 +26,7 @@ public final class CartViewModel {
     public let finalOrderCost = Box<String>("0 ETH")
     public let cartViewState = Box<ViewState>(.loading)
     public let error = Box<Error?>(nil)
-    public let tableViewChangeset = Box<Changeset<NFTCartCellViewModel>?>(Changeset(oldItems: [], newItems: []))
+    public let tableViewChangeset = Box<Changeset<NFTCartCellViewModel>?>(nil)
 
     private(set) public var order: OrderViewModel = []
 

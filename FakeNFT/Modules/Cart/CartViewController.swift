@@ -32,16 +32,16 @@ public final class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func loadView() {
+    public override func loadView() {
         self.view = self.cartView
     }
 
-    override public func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.configure()
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.fetchOrder()
     }
