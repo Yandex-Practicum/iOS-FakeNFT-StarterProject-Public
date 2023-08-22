@@ -9,7 +9,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         return presentationModels.count
     }
     var placeholderLabelIsNeedToHide: Bool {
-        return !profile.likes.isEmpty && !presentationModels.isEmpty ? true : false
+        return !likeService.likes.isEmpty && !presentationModels.isEmpty ? true : false
     }
     var callback: (() -> Void)?
     
@@ -22,6 +22,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     // MARK: - Private properties
     
     private var profile: ProfileResponseModel
+    private var likeIDs: Set<String> = []
     private var nftAuthors: Set<String> = []
     
     private var myNFTsResponces: [NFTResponseModel] = []
@@ -32,6 +33,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     
     init(profile: ProfileResponseModel) {
         self.profile = profile
+        likeIDs = likeService.likes
     }
     
     required init?(coder: NSCoder) {
@@ -45,19 +47,19 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         nftAuthorsResponces = []
         myNFTsResponces = []
         
-        getNFTResponceModels(for: profile.likes)
+        getNFTResponceModels(for: likeService.likes)
     }
     
     func deleteNFT(at indexPath: IndexPath) {
         guard indexPath.row < presentationModels.count else { return }
-        let deletedId = profile.likes[indexPath.row]
+        let id = presentationModels[indexPath.row].id
+        likeService.removeLike(nftId: id )
         presentationModels.remove(at: indexPath.row)
-        removeLike(forNFT: deletedId)
         view?.updateTableOrCollection()
     }
     
     func isNeedToHidePlaceholderLabel() -> Bool {
-        !profile.likes.isEmpty && !presentationModels.isEmpty ? true : false
+        !likeService.likes.isEmpty && !presentationModels.isEmpty ? true : false
     }
     
     func getModelFor(indexPath: IndexPath) -> MyNFTPresentationModel {
@@ -74,7 +76,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         nftAuthorsResponces.append(responce)
     }
     
-    private func getNFTResponceModels(for nfts: [String]) {
+    private func getNFTResponceModels(for nfts: Set<String>) {
         guard let networkClient = networkClient else {
             print("networkClient is nil")
             return
@@ -155,7 +157,8 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
                 image: image,
                 price: responce.price,
                 rating: String(responce.rating),
-                isLiked: true
+                isLiked: true,
+                id: responce.id
             )
             presentationModels.append(nftPresentationModel)
         }
@@ -164,11 +167,6 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
             self.view?.updateTableOrCollection()
             UIBlockingProgressHUD.dismiss()
         }
-    }
-    
-    private func removeLike(forNFT id: String) {
-        let updatedLikes = profile.likes.filter { $0 != id }
-        likeService.removeLike(nftId: id)
     }
 }
 

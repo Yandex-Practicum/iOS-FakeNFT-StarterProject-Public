@@ -157,7 +157,8 @@ final class MyNFTsPresenter: MyNFTsPresenterProtocol & MyNFTsViewDelegate {
                 image: image,
                 price: responce.price,
                 rating: String(responce.rating),
-                isLiked: isThisNFCLiked(id: responce)
+                isLiked: isThisNFCLiked(id: responce),
+                id: responce.id
             )
             presentationModels.append(nftPresentationModel)
         }

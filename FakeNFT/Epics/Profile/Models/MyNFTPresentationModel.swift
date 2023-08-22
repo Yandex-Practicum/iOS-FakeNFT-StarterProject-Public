@@ -14,4 +14,6 @@ struct MyNFTPresentationModel {
     let rating: String
     /// Флаг, указывающий на то, что NFT в списке избранных.
     let isLiked: Bool
+    
+    let id: String
 }
