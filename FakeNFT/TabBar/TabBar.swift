@@ -11,6 +11,8 @@ final class MainTabBarController: UITabBarController {
     }
     
     // MARK: - Init
+    var profileNetworkClient: ProfileNetworkClientProtocol?
+    
     init() {
         super.init(nibName: nil, bundle: nil)
 
@@ -25,13 +27,25 @@ final class MainTabBarController: UITabBarController {
 
         let basketImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let basketSelectedImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
-
+        
         let statisticImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let statisticSelectedImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
+        
+        
+        let profilePresenter = ProfileViewPresenter()
+        let profileViewController = ProfileViewController()
+            
+        let profileNetworkClient = ProfileNetworkClient()
+        self.profileNetworkClient = profileNetworkClient
+        
+        profileViewController.presenter = profilePresenter
+        profilePresenter.view = profileViewController
+        profilePresenter.networkClient = profileNetworkClient
+        profileNetworkClient.presenter = profilePresenter
 
         viewControllers = [
             generateViewController(
-                ProfileViewController(),
+                profileViewController,
                 image: profileImage,
                 selectedImage: profileSelectedImage,
                 title: NSLocalizedString("tabBar.profile", comment: "")
@@ -76,7 +90,7 @@ private extension MainTabBarController {
         viewController.tabBarItem.title = title
         return viewController
     }
-
+    
     func setAppearance() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.backgroundColor = .ypWhite
