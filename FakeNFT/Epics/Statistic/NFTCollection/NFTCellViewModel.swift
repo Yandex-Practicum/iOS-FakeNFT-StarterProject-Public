@@ -53,18 +53,12 @@ final class NFTCellViewModel {
 
         likeButtonAction
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] _ in
-                print("Tap", Date())
-                self?.likeRequest()
-            }
+            .sink { [weak self] _ in self?.likeRequest() }
             .store(in: &cancellables)
 
         addToCartButtonAction
             .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] _ in
-                print("Tap", Date())
-                self?.addToCart()
-            }
+            .sink { [weak self] _ in self?.addToCart() }
             .store(in: &cancellables)
     }
 
