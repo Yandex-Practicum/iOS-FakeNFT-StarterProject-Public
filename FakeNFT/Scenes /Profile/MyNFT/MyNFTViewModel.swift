@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol MyNFTViewModelProtocol: AnyObject {
     var onChange: (() -> Void)? { get set }
@@ -6,19 +7,24 @@ protocol MyNFTViewModelProtocol: AnyObject {
     
     var profile: ProfileModel? { get }
     var myNFTs: [NFTNetworkModel]? { get }
-    var likedIDs: [String]? { get }
+    var likedIDs: [String] { get }
     var authors: [String: String] { get }
     var sort: MyNFTViewModel.Sort? { get set }
     
     func checkStoredSort()
+    func saveSortOrder(order: MyNFTViewModel.Sort)
     func getMyNFTs(nftIDs: [String])
     func toggleLikeFromMyNFT(id: String)
+    func checkNoNFT() -> Bool
+    func setTitle() -> String
+    func setImageForButton() -> UIImage
+    func deleteNFT(atRow row: Int?)
 }
 
 final class MyNFTViewModel: MyNFTViewModelProtocol {
     var onChange: (() -> Void)?
     var onError: ((_ error: Error) -> Void)?
-    private var networkClient: NetworkClient = DefaultNetworkClient()
+    private var networkClient: NetworkClient
     private(set) var profile: ProfileModel?
     private let dispatchGroup = DispatchGroup()
     
@@ -35,7 +41,7 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         }
     }
     
-    private(set) var likedIDs: [String]? {
+    private(set) var likedIDs: [String] {
         didSet {
             onChange?()
         }
@@ -49,9 +55,10 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         }
     }
     
-    init(networkClient: NetworkClient? = nil, profile: ProfileModel){
-        if let networkClient = networkClient { self.networkClient = networkClient }
+    init(profile: ProfileModel){
+        self.networkClient = DefaultNetworkClient()
         self.profile = profile
+        likedIDs = profile.likes
         getMyNFTs(nftIDs: profile.nfts)
         
         NotificationCenter.default.addObserver(
@@ -85,35 +92,43 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     }
     
     func toggleLikeFromMyNFT(id: String) {
-        guard var likedIDs = self.likedIDs else { return }
         if likedIDs.contains(id) {
-            self.likedIDs = likedIDs.filter({ $0 != id })
+            likedIDs.removeAll(where: { $0 == id })
+            profile?.likes.removeAll(where: { $0 == id })
         } else {
             likedIDs.append(id)
-            self.likedIDs = likedIDs
+            profile?.likes.append(id)
         }
+        uploadData()
     }
     
     @objc
     private func unlikeNFTFromFavorites(notification: Notification) {
         let nftId = notification.object as? String
-        self.likedIDs = likedIDs?.filter({ $0 != nftId })
+        self.likedIDs = likedIDs.filter({ $0 != nftId })
     }
     
     private func getAuthors(nft: NFTNetworkModel) {
         networkClient.send(request: GetMyNFTRequest(id: nft.author, item: .author), type: AuthorNetworkModel.self) { [weak self] result in
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let author):
-                        self.authors.updateValue(author.name, forKey: author.id)
-                        self.dispatchGroup.leave()
-                    case .failure(let failure):
-                        self.onError?(failure)
-                        return
-                    }
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let author):
+                    self.authors.updateValue(author.name, forKey: author.id)
+                    self.dispatchGroup.leave()
+                case .failure(let failure):
+                    self.onError?(failure)
+                    self.dispatchGroup.leave()
+                    return
                 }
+            }
         }
+    }
+    
+    func uploadData() {
+        networkClient.send(request: ProfileRequest(httpMethod: .put, dto: profile),
+                           type: ProfileModel.self
+        ) { _ in return }
     }
     
     private func applySort(by value: Sort) -> [NFTNetworkModel] {
@@ -129,16 +144,42 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     }
     
     func checkStoredSort() {
-        if let sortOrder = UserDefaults.standard.data(forKey: "sortOrder") {
-            let order = try? PropertyListDecoder().decode(MyNFTViewModel.Sort.self, from: sortOrder)
+        if let sortOrder = UserDefaults.standard.string(forKey: AppConstants.String.sortOrder) {
+            let order = Sort(rawValue: sortOrder)
             sort = order
         }
         sort = .rating
     }
+    
+    func saveSortOrder(order: MyNFTViewModel.Sort) {
+        UserDefaults.standard.set(order.rawValue, forKey: AppConstants.String.sortOrder)
+    }
+    
+    func checkNoNFT() -> Bool {
+        guard let nft = myNFTs else { return false }
+        return nft.isEmpty
+    }
+    
+    func setTitle() -> String {
+        guard let nft = myNFTs else { return "" }
+        return nft.isEmpty ? "" : "Избранные NFT"
+    }
+    
+    func setImageForButton() -> UIImage {
+        guard let nft = myNFTs else { return UIImage() }
+        return nft.isEmpty ? UIImage() : UIImage.Icons.sort
+    }
+    
+    func deleteNFT(atRow row: Int?) {
+        guard let row else { return }
+        let nftToRemove = myNFTs?.remove(at: row)
+        profile?.nfts.removeAll(where: {$0 == nftToRemove?.id})
+        uploadData()
+    }
 }
 
 extension MyNFTViewModel {
-    enum Sort: Codable {
+    enum Sort: String {
         case price
         case rating
         case name

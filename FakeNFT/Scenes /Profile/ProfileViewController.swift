@@ -1,8 +1,7 @@
 import UIKit
 
 final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
-    private var viewModel: ProfileViewModelProtocol
-    private var assetViewControllers: [UIViewController] = []
+    private let viewModel: ProfileViewModelProtocol
     
     private lazy var assetNameLabel: [String] = [
         "Мои NFT",
@@ -15,7 +14,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         "\(viewModel.profile?.likes.count ?? 0)",
         nil
     ]
-
+    
     private lazy var avatarImage: UIImageView = {
         let imageView = UIImageView(image: UIImage.Icons.userPlaceholder)
         imageView.accessibilityIdentifier = "avatarImage"
@@ -29,6 +28,9 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         label.accessibilityIdentifier = "nameLabel"
         label.font = .boldSystemFont(ofSize: 22)
         label.textColor = .appBlack
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
         return label
     }()
     
@@ -71,11 +73,11 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,8 +87,9 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         setupNavBar()
         UIBlockingProgressHUD.show()
         viewModel.getProfileData()
+        UIBlockingProgressHUD.dismiss()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-
+        
         
         NotificationCenter.default.addObserver(
             self,
@@ -94,8 +97,10 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
             name: NSNotification.Name(rawValue: "likesUpdated"),
             object: nil)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
@@ -132,9 +137,9 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         let cell = profileAssetsTable.cellForRow(at: [0,1]) as? ProfileAssetsCell
         cell?.setAssets(label: nil, value: "(\(likesUpdated))")
     }
-
+    
     private func bind() {
-        if InternetConnectionManager.isConnectedToNetwork() {
+        if viewModel.isCheckConnectToInternet() {
             viewModel.onChange = { [weak self] in
                 self?.updateViews(profile: self?.viewModel.profile)
             }
@@ -147,7 +152,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         }
         
     }
-
+    
     private func setupNavBar() {
         (navigationController as? NavigationController)?.editProfileButtonDelegate = self
         navigationItem.backButtonTitle = ""
@@ -168,6 +173,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
             
             nameLabel.topAnchor.constraint(equalTo: avatarImage.topAnchor, constant: 21),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             descriptionLabel.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 20),
             descriptionLabel.heightAnchor.constraint(equalToConstant: 72),
@@ -230,5 +236,6 @@ extension ProfileViewController: ProfileUpdateDelegate {
     func update() {
         viewModel.getProfileData()
         bind()
+        UIBlockingProgressHUD.dismiss()
     }
 }

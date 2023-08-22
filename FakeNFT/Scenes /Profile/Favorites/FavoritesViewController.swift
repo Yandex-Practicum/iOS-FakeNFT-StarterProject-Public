@@ -1,7 +1,7 @@
 import UIKit
 
 final class FavoritesViewController: UIViewController, UIGestureRecognizerDelegate {
-    private var viewModel: FavoritesViewModelProtocol
+    private let viewModel: FavoritesViewModelProtocol
     
     private lazy var favoriteNFTCollection: UICollectionView = {
         let collectionView = UICollectionView(
@@ -14,13 +14,6 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
         collectionView.delegate = self
         return collectionView
     }()
-    
-    private lazy var backButton = UIBarButtonItem(
-        image: UIImage.Icons.back,
-        style: .plain,
-        target: self,
-        action: #selector(didTapBackButton)
-    )
     
     private lazy var emptyLabel: UILabel = {
         let emptyLabel = UILabel()
@@ -43,7 +36,7 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     
     init(viewModel: FavoritesViewModelProtocol) {
         self.viewModel = viewModel
-
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,27 +44,28 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
     private func bind() {
         viewModel.onChange = { [weak self] in
-            self?.favoriteNFTCollection.reloadData()
-            
+            guard let self = self else { return }
+            self.favoriteNFTCollection.reloadData()
+            favoriteNFTCollection.isHidden = viewModel.checkNoNFT()
+            emptyLabel.isHidden = !viewModel.checkNoNFT()
+            navigationItem.title = viewModel.setTitle()
         }
         
         viewModel.onError = { [weak self] error in
-            let alert = UIAlertController(
+            guard let self = self else { return }
+            let errorAlert = AlertModel(
                 title: "Нет интернета",
                 message: error.localizedDescription,
-                preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ok", style: .cancel) { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            }
-            alert.addAction(action)
-            self?.present(alert, animated: true)
+                textField: false,
+                placeholder: "",
+                buttonText: "Ok",
+                styleAction: .cancel) { [weak self] _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            let alert = self.viewModel.showAlert(errorAlert)
+            self.present(alert, animated: true)
         }
     }
     
@@ -81,22 +75,8 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     }
     
     private func setupView() {
-        if ((viewModel.likedNFTs?.isEmpty) != nil) {
-            view.backgroundColor = .white
-            setupNavBar(emptyNFTs: true)
-            setupEmptyLabel()
-        } else {
-            setupNavBar(emptyNFTs: false)
-        }
-    }
-    
-    private func setupNavBar(emptyNFTs: Bool) {
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.leftBarButtonItem = backButton
-        backButton.accessibilityIdentifier = "backButton"
-        if !emptyNFTs {
-            navigationItem.title = "Избранные NFT"
-        }
+        setupEmptyLabel()
+        view.backgroundColor = .white
     }
     
     private func setupEmptyLabel() {

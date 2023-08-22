@@ -14,4 +14,7 @@ struct AppConstants {
         static let profile = "ProfileIcon"
         static let statistics = "StatisticsIcon"
     }
+    struct String {
+        static let sortOrder = "sortOrder"
+    }
 }

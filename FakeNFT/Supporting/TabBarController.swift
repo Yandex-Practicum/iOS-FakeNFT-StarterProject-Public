@@ -42,7 +42,7 @@ final class TabBarController: UITabBarController {
         tabBar.backgroundColor = .appWhite
         
         let profileNavigationController = NavigationController(
-            rootViewController: ProfileViewController(viewModel: ProfileViewModel(networkClient: nil))
+            rootViewController: ProfileViewController(viewModel: ProfileViewModel())
         )
         let cartNavigationController = NavigationController(
             rootViewController: thirdMockVc

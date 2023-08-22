@@ -24,13 +24,6 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         return label
     }()
     
-    private lazy var backButton = UIBarButtonItem(
-        image: UIImage.Icons.back,
-        style: .plain,
-        target: self,
-        action: #selector(didTapBackButton)
-    )
-    
     private lazy var sortButton = UIBarButtonItem(
         image: UIImage.Icons.sort,
         style: .plain,
@@ -65,13 +58,20 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     private func bind() {
         viewModel.onChange = { [weak self] in
-            self?.myNFTTable.reloadData()
+            guard let self = self else { return }
+            self.myNFTTable.reloadData()
+            myNFTTable.isHidden = viewModel.checkNoNFT()
+            emptyLabel.isHidden = !viewModel.checkNoNFT()
+            navigationItem.rightBarButtonItem?.isEnabled = viewModel.checkNoNFT()
+            navigationItem.rightBarButtonItem?.image = viewModel.setImageForButton()
+            
+            title = viewModel.setTitle()
         }
         
         viewModel.onError = { [weak self] error in
@@ -99,18 +99,18 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
             message: "Сортировка",
             preferredStyle: .actionSheet
         )
-                
+        
         let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { [weak self] _ in
             self?.viewModel.sort = .price
-            self?.saveSortOrder(order: .price)
+            self?.viewModel.saveSortOrder(order: .price)
         }
         let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
             self?.viewModel.sort = .rating
-            self?.saveSortOrder(order: .rating)
+            self?.viewModel.saveSortOrder(order: .rating)
         }
         let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
             self?.viewModel.sort = .name
-            self?.saveSortOrder(order: .name)
+            self?.viewModel.saveSortOrder(order: .name)
         }
         let closeAction = UIAlertAction(title: "Закрыть", style: .cancel)
         
@@ -122,29 +122,12 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         present(alert, animated: true)
     }
     
-    private func saveSortOrder(order: MyNFTViewModel.Sort) {
-        let data = try? PropertyListEncoder().encode(order)
-        UserDefaults.standard.set(data, forKey: "sortOrder")
-    }
-    
     private func setupView() {
-        if ((viewModel.myNFTs?.isEmpty) != nil) {
-            view.backgroundColor = .white
-            setupNavBar(emptyNFTs: true)
-            setupEmptyLabel()
-        } else {
-            setupNavBar(emptyNFTs: false)
-        }
-    }
-    
-    private func setupNavBar(emptyNFTs: Bool) {
         navigationController?.navigationBar.tintColor = .black
-        navigationItem.leftBarButtonItem = backButton
-        backButton.accessibilityIdentifier = "backButton"
-        if !emptyNFTs {
-            navigationItem.rightBarButtonItem = sortButton
-            navigationItem.title = "Мои NFT"
-        }
+        navigationItem.rightBarButtonItem = sortButton
+        navigationItem.title = "Мои NFT"
+        view.backgroundColor = .white
+        setupEmptyLabel()
     }
     
     private func setupEmptyLabel() {
@@ -169,7 +152,7 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-extension NyNFTViewController: UITableViewDataSource, UITableViewDelegate {
+extension NyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let myNFTs = viewModel.myNFTs else { return 0 }
         return myNFTs.count
@@ -181,7 +164,7 @@ extension NyNFTViewController: UITableViewDataSource, UITableViewDelegate {
         cell.selectionStyle = .none
         guard let myNFTs = viewModel.myNFTs,
               !myNFTs.isEmpty else { return MyNFTCell() }
-              
+        
         let myNFT = myNFTs[indexPath.row]
         
         let model = MyNFTCell.CellModel(
@@ -190,7 +173,7 @@ extension NyNFTViewController: UITableViewDataSource, UITableViewDelegate {
             rating: myNFT.rating,
             author: viewModel.authors[myNFT.author] ?? "",
             price: myNFT.price,
-            isFavorite: viewModel.likedIDs?.contains(myNFT.id) ?? false,
+            isFavorite: viewModel.likedIDs.contains(myNFT.id),
             id: myNFT.id
         )
         
@@ -205,6 +188,48 @@ extension NyNFTViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
+    }
+}
+
+extension NyNFTViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let removeButton = UIContextualAction(style: .destructive,
+                                              title: "Удалить") { [weak self] _, _, _ in
+            guard let self else { return }
+            let alertController = UIAlertController(title: "Вы уверены что хотите удалить этот NFT?",
+                                                    message: nil,
+                                                    preferredStyle: .actionSheet)
+            let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+                guard let self else { return }
+                self.viewModel.deleteNFT(atRow: indexPath.row)
+            }
+            let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { _ in
+                tableView.reloadRows(at: [indexPath], with: .none)
+            }
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true)
+        }
+        removeButton.backgroundColor = UIColor.appRed.withAlphaComponent(0)
+        let config = UISwipeActionsConfiguration(actions: [removeButton])
+        config.performsFirstActionWithFullSwipe = true
+        return config
+    }
+    
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        tableView.subviews.forEach { subview in
+            if String(describing: type(of: subview)) == "_UITableViewCellSwipeContainerView" {
+                if let actionView = subview.subviews.first,
+                   String(describing: type(of: actionView)) == "UISwipeActionPullView" {
+                    actionView.layer.cornerRadius = 12
+                    actionView.layer.masksToBounds = true
+                    actionView.backgroundColor = .appRed
+                    (actionView.subviews.first as? UIButton)?.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+                }
+            }
+        }
     }
 }
 
