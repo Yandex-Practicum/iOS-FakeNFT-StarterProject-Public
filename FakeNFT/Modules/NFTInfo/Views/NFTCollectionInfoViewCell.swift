@@ -150,8 +150,8 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            image.heightAnchor.constraint(equalToConstant: 108),
-            image.widthAnchor.constraint(equalToConstant: 108),
+            image.heightAnchor.constraint(greaterThanOrEqualToConstant: 108),
+            image.widthAnchor.constraint(greaterThanOrEqualToConstant: 108),
 
             binImageView.heightAnchor.constraint(equalToConstant: 40),
             binImageView.widthAnchor.constraint(equalToConstant: 40),
