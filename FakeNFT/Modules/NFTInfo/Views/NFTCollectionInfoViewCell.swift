@@ -85,7 +85,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
     private lazy var nameLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .black
+        view.textColor = .appBlack
         view.font = .boldSystemFont(ofSize: 17)
         view.numberOfLines = 0
         return view
@@ -94,7 +94,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
     private lazy var priceLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .black
+        view.textColor = .appBlack
         view.font = .systemFont(ofSize: 10)
         view.numberOfLines = 0
         return view

@@ -36,7 +36,7 @@ final class NFTListCell: UITableViewCell {
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = .boldSystemFont(ofSize: 17)
         label.numberOfLines = 0
         return label
