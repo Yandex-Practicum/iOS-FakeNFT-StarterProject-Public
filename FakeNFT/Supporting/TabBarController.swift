@@ -11,8 +11,9 @@ final class TabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureController()
+        self.subscribeToShowCatalogNotification()
     }
-    
+
     private func createMockViewController(
         title: String,
         backgroundColor: UIColor
@@ -22,13 +23,13 @@ final class TabBarController: UITabBarController {
         vc.view.backgroundColor = backgroundColor
         return vc
     }
-    
+
     private func configureController() {
         let firstMockVc = createMockViewController(
             title: "1-st mock vc",
             backgroundColor: .appWhite
         )
-        
+
         let thirdMockVc = createMockViewController(
             title: "3-rd mock vc",
             backgroundColor: .appWhite
@@ -38,49 +39,50 @@ final class TabBarController: UITabBarController {
             title: "4-th mock vc",
             backgroundColor: .appWhite
         )
-        
+
         tabBar.backgroundColor = .appWhite
-        
+
+        let cartNavigationController = CartViewFactory.create()
+
         let profileNavigationController = NavigationController(
             rootViewController: firstMockVc
         )
-        let cartNavigationController = NavigationController(
-            rootViewController: thirdMockVc
-        )
+
         let statisticsNavigationController = NavigationController(
             rootViewController: forthMockVc
         )
-        
+
         let catalogueNavigationController = NFTsFactory.create()
-        
+
         self.viewControllers = [
             configureTab(
                 controller: profileNavigationController,
                 title: "PROFILE".localized,
-                image: UIImage(named: AppConstants.Icons.profile) ?? UIImage()
+                image: UIImage.Icons.profile
             ),
-            
+
             configureTab(
                 controller: catalogueNavigationController,
                 title: "CATALOGUE".localized,
-                image: UIImage(named: AppConstants.Icons.catalog) ?? UIImage()
+                image: UIImage.Icons.catalog
             ),
-            
+
             configureTab(
                 controller: cartNavigationController,
                 title: "CART".localized,
-                image: UIImage(named: AppConstants.Icons.cart) ?? UIImage()
+                image: UIImage.Icons.cart
             ),
-            
+
             configureTab(
                 controller: statisticsNavigationController,
                 title: "STATISTICS".localized,
-                image: UIImage(named: AppConstants.Icons.statistics) ?? UIImage()
+                image: UIImage.Icons.statistics
             )
         ]
 
+        self.tabBar.unselectedItemTintColor = .appBlack
     }
-    
+
     private func configureTab(
         controller: UIViewController,
         title: String? = nil,
@@ -90,5 +92,20 @@ final class TabBarController: UITabBarController {
         let tabBarItem = UITabBarItem(title: title, image: image, selectedImage: nil)
         tab.tabBarItem = tabBarItem
         return tab
+    }
+}
+
+// MARK: - NotificationCenter
+private extension TabBarController {
+    func subscribeToShowCatalogNotification() {
+        NotificationCenterWrapper.shared.subscribeToNotification(type: .showCatalog) { [weak self] _ in
+            guard let self = self else { return }
+            let catalogNavigationControllerIndex = 1
+            let cartNavigationControllerIndex = 2
+            guard let cartNavigationController = self.viewControllers?[cartNavigationControllerIndex] as? UINavigationController else { return }
+
+            cartNavigationController.popToRootViewController(animated: false)
+            self.selectedIndex = catalogNavigationControllerIndex
+        }
     }
 }

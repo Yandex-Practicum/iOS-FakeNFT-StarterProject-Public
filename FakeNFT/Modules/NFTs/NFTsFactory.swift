@@ -23,5 +23,3 @@ struct NFTsFactory {
         )
     }
 }
-
-
