@@ -21,7 +21,6 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     
     // MARK: - Private properties
     
-    private let oldProfile: ProfileResponseModel
     private var profile: ProfileResponseModel
     private var nftAuthors: Set<String> = []
     
@@ -32,18 +31,11 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     // MARK: - Life cycle
     
     init(profile: ProfileResponseModel) {
-        self.oldProfile = profile
         self.profile = profile
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Public properties
-    
-    func getCurrentProfileResponse() -> ProfileResponseModel? {
-        profile == oldProfile ? nil : profile
     }
     
     // MARK: - MyNFTsViewDelegate
@@ -59,9 +51,8 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     func deleteNFT(at indexPath: IndexPath) {
         guard indexPath.row < presentationModels.count else { return }
         let deletedId = profile.likes[indexPath.row]
-        removeLike(forNFT: deletedId)
         presentationModels.remove(at: indexPath.row)
-        updateProfile(with: profile)
+        removeLike(forNFT: deletedId)
         view?.updateTableOrCollection()
     }
     
@@ -176,6 +167,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     }
     
     private func removeLike(forNFT id: String) {
+        let updatedLikes = profile.likes.filter { $0 != id }
         likeService.removeLike(nftId: id)
     }
 }

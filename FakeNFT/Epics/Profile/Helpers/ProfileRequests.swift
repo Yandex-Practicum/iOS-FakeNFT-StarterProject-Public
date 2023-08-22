@@ -39,17 +39,17 @@ struct  UserProfileRequest: NetworkRequest {
 // MARK: - Structure for update user profile
 
 struct ProfileUpdateRequest: NetworkRequest {
-    // MARK: - URL to user profile update
+    // URL to user profile update
     
     var endpoint: URL? {
         return URL(string: ProfileConstants.endpoint + ProfileConstants.apiV1Profile1Get)
     }
-    // MARK: - selected http method for request
+    // selected http method for request
     
     var httpMethod: HttpMethod {
         return .put
     }
-    // MARK: - data for sending
+    // data for sending
     
     var dto: Encodable?
     init(updatedData: ProfileResponseModel) {

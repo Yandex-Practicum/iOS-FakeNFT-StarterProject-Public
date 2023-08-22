@@ -1,8 +1,8 @@
 // Каталог
 tabBar.catalog = "Catalog";
-
-
-
+catalog.sorting.name = "By name";
+catalog.sorting.nft = "By NFT's count";
+catalog.author = "Collection's author:";
 sorting.name = "Sorting";
 sorting.close = "Close";
 
