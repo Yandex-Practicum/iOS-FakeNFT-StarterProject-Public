@@ -20,31 +20,31 @@ final class NFTsContainerView: UIView {
     }
 
     private let eventHandler: EventHandler<ViewEvent>
-    
+
     private lazy var listView: NFTListView = {
         let view = NFTListView { [weak self] index in
             self?.eventHandler(.cellSelected(index))
         }
-        
+
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private let loadingView: UIView = {
         let view = NFTLoadingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private lazy var errorView: UIView = {
         let view = NFTErrorView { [weak self] in
             self?.eventHandler(.reload)
         }
-        
+
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     init(handler: @escaping EventHandler<ViewEvent>) {
         self.eventHandler = handler
         super.init(frame: .null)
@@ -56,7 +56,7 @@ final class NFTsContainerView: UIView {
             "NFTsContainerView -> init(coder:) has not been implemented"
         )
     }
-    
+
     func configure(for state: ViewState) {
         switch state {
         case .error:
@@ -75,12 +75,11 @@ final class NFTsContainerView: UIView {
         }
     }
 
-
     private func setupViews() {
         addSubview(listView)
         addSubview(loadingView)
         addSubview(errorView)
-        
+
         let constraints = [
             listView.topAnchor.constraint(equalTo: topAnchor),
             listView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -97,8 +96,7 @@ final class NFTsContainerView: UIView {
             errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
             errorView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
 }
-

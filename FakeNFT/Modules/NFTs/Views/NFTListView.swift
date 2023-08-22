@@ -9,13 +9,13 @@ import UIKit
 
 final class NFTListView: UIView {
     private let cellSelectedHandler: EventHandler<IndexPath>
-    
+
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private var items: [NFTCollectionModel] = [] {
         didSet {
             tableView.reloadData()
@@ -45,17 +45,17 @@ final class NFTListView: UIView {
         tableView.separatorStyle = .none
 
         addSubview(tableView)
-        
+
         let constraints = [
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 108),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
-    
+
     func configure(with modelItems: [NFTCollectionModel]) {
         items = modelItems
     }

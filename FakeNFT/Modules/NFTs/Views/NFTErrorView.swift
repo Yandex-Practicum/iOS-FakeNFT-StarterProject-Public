@@ -72,7 +72,7 @@ final class NFTErrorView: UIView {
 
     private func setupSubViews() {
         backgroundColor = .appWhite
-        
+
         addSubview(image)
         addSubview(title)
         addSubview(button)
@@ -91,8 +91,7 @@ final class NFTErrorView: UIView {
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -26),
             button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -200)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
 }
-

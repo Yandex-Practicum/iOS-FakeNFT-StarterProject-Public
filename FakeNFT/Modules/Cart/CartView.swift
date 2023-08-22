@@ -179,7 +179,7 @@ private extension CartView {
             self.placeholderView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.placeholderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.placeholderView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.placeholderView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            self.placeholderView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

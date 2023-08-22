@@ -23,25 +23,25 @@ final class NFtStorageServiceImpl: NFtStorageService {
            let nfts = try? JSONDecoder().decode([NFT].self, from: data) {
             return .init(nfts)
         }
-        
+
         return nil
     }
-    
+
     private func fetchSelectedNfts() {
         selectedNfts =
         fetchNftData(for: NFtStorageServiceImpl.selectedNftKey) ?? .init([])
     }
-    
+
     private func fetchFavouriteNfts() {
         favouriteNfts =
         fetchNftData(for: NFtStorageServiceImpl.favouriteNftKey) ?? .init([])
     }
-    
+
     init(storageService: StorageService) {
         self.service = storageService
-        
+
         fetchSelectedNfts()
-        fetchFavouriteNfts()        
+        fetchFavouriteNfts()
     }
 
     func selectNft(_ nft: NFT) {

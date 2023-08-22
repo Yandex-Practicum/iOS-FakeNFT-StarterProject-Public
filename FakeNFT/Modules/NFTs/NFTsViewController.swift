@@ -9,7 +9,7 @@ import UIKit
 
 final class NFTsViewController: UIViewController {
     private let viewModel: NFTsViewModel
-    
+
     private lazy var container = NFTsContainerView { [weak self] event in
         switch event {
         case .reload:
@@ -18,7 +18,7 @@ final class NFTsViewController: UIViewController {
             self?.viewModel.cellSelected(index: index)
         }
     }
-    
+
     init(viewModel: NFTsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,16 +29,16 @@ final class NFTsViewController: UIViewController {
             "NFTsViewController -> init(coder:) has not been impl"
         )
     }
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureController()
     }
-    
+
     override func loadView() {
         view = container
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         prepareViewToBeAppeared()
@@ -72,12 +72,12 @@ final class NFTsViewController: UIViewController {
     @objc private func sortClickHandler() {
         present(
             NFTSortingFactory.create { [weak self] output in
-                self?.viewModel.sortItems(by: output)
+                self?.viewModel.sortItems(with: output)
             },
             animated: true
         )
     }
-    
+
     private func handleViewModelStateChangeForUi(
         tint: UIColor,
         isToBeHidden: Bool
@@ -85,7 +85,7 @@ final class NFTsViewController: UIViewController {
         navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = tint
         tabBarController?.tabBar.isHidden = isToBeHidden
     }
-    
+
     private func configureModelBindings() {
         viewModel.state.bind { [weak self] state in
             switch state {
@@ -120,7 +120,7 @@ final class NFTsViewController: UIViewController {
 
         viewModel.visibleNft.bind { [weak self] cellInfo in
             guard let self, let cellInfo else { return }
-            
+
             self.showNFTInfoScreen(info: cellInfo)
         }
     }
@@ -131,7 +131,7 @@ final class NFTsViewController: UIViewController {
         viewModel.viewDidLoad()
         configureModelBindings()
     }
-    
+
     private func showNFTInfoScreen(info: NFTInfo) {
         navigationController?.pushViewController(
             NFTInfoFactory.create(info: info),

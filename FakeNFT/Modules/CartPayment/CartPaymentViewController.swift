@@ -168,7 +168,7 @@ private extension CartPaymentViewController {
             self.purchaseButton.bottomAnchor.constraint(
                 equalTo: self.purchaseBackgroundView.bottomAnchor,
                 constant: -Constants.purchaseButtonInsets.bottom
-            ),
+            )
         ])
     }
 

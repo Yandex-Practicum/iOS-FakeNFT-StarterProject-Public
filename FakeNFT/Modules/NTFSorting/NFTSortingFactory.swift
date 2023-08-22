@@ -14,4 +14,3 @@ struct NFTSortingFactory {
         return alertController
     }
 }
-

@@ -18,7 +18,7 @@ struct NFT: Codable, Hashable {
     let id: String
     var isFavourite = false
     var isSelected = false
-    
+
     private static let formatter: NumberFormatter = {
         let fmt = NumberFormatter()
         fmt.numberStyle = .currency
@@ -27,7 +27,7 @@ struct NFT: Codable, Hashable {
         fmt.locale = Locale(identifier: "ru_RU")
         return fmt
     }()
-    
+
     var formattedPrice: String {
         guard let result = NFT.formatter.string(from: NSNumber(value: price)) else {
             return "INVALID_PRICE_FORMAT".localized

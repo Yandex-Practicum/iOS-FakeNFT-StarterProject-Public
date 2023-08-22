@@ -18,10 +18,10 @@ final class TabBarController: UITabBarController {
         title: String,
         backgroundColor: UIColor
     ) -> UIViewController {
-        let vc = UIViewController()
-        vc.title = title
-        vc.view.backgroundColor = backgroundColor
-        return vc
+        let controller = UIViewController()
+        controller.title = title
+        controller.view.backgroundColor = backgroundColor
+        return controller
     }
 
     private func configureController() {
@@ -30,7 +30,7 @@ final class TabBarController: UITabBarController {
             backgroundColor: .appWhite
         )
 
-        let thirdMockVc = createMockViewController(
+        _ = createMockViewController(
             title: "3-rd mock vc",
             backgroundColor: .appWhite
         )
@@ -98,11 +98,14 @@ final class TabBarController: UITabBarController {
 // MARK: - NotificationCenter
 private extension TabBarController {
     func subscribeToShowCatalogNotification() {
-        NotificationCenterWrapper.shared.subscribeToNotification(type: .showCatalog) { [weak self] _ in
+        NotificationCenterWrapper
+            .shared
+            .subscribeToNotification(type: .showCatalog) { [weak self] _ in
             guard let self = self else { return }
             let catalogNavigationControllerIndex = 1
             let cartNavigationControllerIndex = 2
-            guard let cartNavigationController = self.viewControllers?[cartNavigationControllerIndex] as? UINavigationController else { return }
+            guard let cartNavigationController =
+                    self.viewControllers?[cartNavigationControllerIndex] as? UINavigationController else { return }
 
             cartNavigationController.popToRootViewController(animated: false)
             self.selectedIndex = catalogNavigationControllerIndex

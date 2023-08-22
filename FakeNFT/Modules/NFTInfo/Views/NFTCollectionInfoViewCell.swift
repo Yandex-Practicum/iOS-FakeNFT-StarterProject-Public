@@ -159,7 +159,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
             favouriteImageView.heightAnchor.constraint(equalToConstant: 40),
             favouriteImageView.widthAnchor.constraint(equalToConstant: 40)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
 
         stackView.addArrangedSubview(image)
@@ -180,7 +180,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
 
         horizontalDetailsStackView.addArrangedSubview(binImageView)
     }
-    
+
     func configure(with configuration: Configuration) {
         nameLabel.text = configuration.name
         priceLabel.text = configuration.price
@@ -220,7 +220,7 @@ final class NFTCollectionInfoViewCell: UICollectionViewCell {
             let emptyView = UIImageView(image: starImage)
             emptyView.contentMode = .scaleAspectFit
             emptyView.tintColor = .lightGrey
-            
+
             if index <= configuration.rating {
                 ratingStackView.addArrangedSubview(filledView)
             } else {

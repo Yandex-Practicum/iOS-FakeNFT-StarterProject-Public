@@ -13,7 +13,7 @@ public protocol CurrenciesServiceProtocol {
 
 final class CurrenciesService {
     private let networkRequestSender: NetworkRequestSenderProtocol
-    
+
     private var fetchingTask: DefaultNetworkTask?
 
     init(networkRequestSender: NetworkRequestSenderProtocol) {

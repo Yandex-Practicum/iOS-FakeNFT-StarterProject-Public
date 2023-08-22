@@ -18,7 +18,7 @@ final class CartPaymentViewInteractorTests: XCTestCase {
         let expectation = self.expectation(description: "Loading currencies")
 
         let onSuccess: LoadingCompletionBlock<CartPaymentViewModel.ViewState> = { state in
-            if case .loaded(_) = state {
+            if case .loaded = state {
                 expectation.fulfill()
             }
         }

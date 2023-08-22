@@ -80,7 +80,7 @@ final class NFTListCell: UITableViewCell {
 
             bottomView.heightAnchor.constraint(equalToConstant: 21)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
 
         stackView.addArrangedSubview(image)
@@ -88,15 +88,14 @@ final class NFTListCell: UITableViewCell {
         stackView.addArrangedSubview(infoLabel)
         stackView.addArrangedSubview(bottomView)
     }
-    
+
     func configure(with configuration: Settings) {
         let url = URL(string: configuration.imageUrl.encodeUrl)
         image.kf.setImage(with: url)
-        
+
         infoLabel.text =
             configuration.collectionDescription +
             " " +
             "(\(configuration.collectionItems))"
     }
 }
-

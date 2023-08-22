@@ -58,7 +58,7 @@ final class NFTInfoViewController: UIViewController {
 
         tabBarController?.tabBar.isHidden = true
     }
-    
+
     func pushWebView() {
         self.navigationController?.pushViewController(
             WebViewFactory.create(url: "https://practicum.yandex.ru"),
@@ -66,4 +66,3 @@ final class NFTInfoViewController: UIViewController {
         )
     }
 }
-

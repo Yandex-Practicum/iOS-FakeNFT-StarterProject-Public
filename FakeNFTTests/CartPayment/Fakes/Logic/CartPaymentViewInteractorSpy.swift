@@ -7,7 +7,7 @@ final class CartPaymentViewInteractorSpy: CartPaymentViewInteractorProtocol {
 
     let currencies = [
         CurrencyCellViewModel(id: "123", title: "123", name: "123", image: nil),
-        CurrencyCellViewModel(id: "1234", title: "1234", name: "1234", image: nil),
+        CurrencyCellViewModel(id: "1234", title: "1234", name: "1234", image: nil)
     ]
 
     func fetchCurrencies(

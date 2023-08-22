@@ -19,7 +19,7 @@ final class NFTInfoContainerView: UIView {
         case selectBin(index: Int)
         case openWebView
     }
-    
+
     struct ViewConfiguration {
         let nfts: [NFT]
     }
@@ -27,7 +27,7 @@ final class NFTInfoContainerView: UIView {
     func configure(with configuration: ViewConfiguration) {
         items = configuration.nfts
     }
-    
+
     private var imageURL: String
     private var sectionName: String
     private var sectionAuthor: String
@@ -60,7 +60,7 @@ final class NFTInfoContainerView: UIView {
         self.sectionAuthor = sectionAuthor
         self.sectionDescription = sectionDescription
         super.init(frame: .null)
-        
+
         configureCollectionView()
         setupSubViews()
     }
@@ -73,7 +73,7 @@ final class NFTInfoContainerView: UIView {
 
     private func setupSubViews() {
         backgroundColor = .appWhite
-        
+
         addSubview(collectionView)
 
         let constraints = [
@@ -82,7 +82,7 @@ final class NFTInfoContainerView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
 
@@ -167,7 +167,7 @@ extension NFTInfoContainerView: UICollectionViewDataSource {
 
             return cell
         }
-        
+
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: String(
                 describing: NFTCollectionInfoViewCell.self
@@ -195,7 +195,7 @@ extension NFTInfoContainerView: UICollectionViewDataSource {
                 self?.eventHandler(
                     .selectBin(index: indexPath.row)
                 )
-            
+
             case .favouriteClicked:
                 self?.eventHandler(
                     .toggleFavouriteState(index: indexPath.row)
@@ -212,13 +212,13 @@ extension NFTInfoContainerView: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         let leftRightInset: CGFloat
-        
+
         if section == NFTInfoSectionType.sectionImage.rawValue {
             leftRightInset = 0
         } else {
             leftRightInset = 16
         }
-        
+
         return UIEdgeInsets(
             top: 0,
             left: leftRightInset,

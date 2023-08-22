@@ -28,7 +28,7 @@ extension CartViewModelSpy: CartViewModelProtocol {
     var tableViewChangeset: FakeNFT.Box<FakeNFT.Changeset<FakeNFT.NFTCartCellViewModel>?> {
         Box(Changeset(oldItems: [self.model], newItems: [self.model]))
     }
-    
+
     var orderId: String { "1" }
 
     func fetchOrder() {

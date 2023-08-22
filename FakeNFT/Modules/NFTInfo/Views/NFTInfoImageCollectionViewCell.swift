@@ -46,14 +46,13 @@ final class NFTInfoImageCollectionViewCell: UICollectionViewCell {
             image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
-    
+
     func configure(with configuration: Configuration) {
         image.kf.setImage(
             with: URL(string: configuration.imageUrl.encodeUrl)
         )
     }
 }
-

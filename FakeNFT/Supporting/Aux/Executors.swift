@@ -9,7 +9,7 @@ import Foundation
 
 final class Executors {
     private init() {}
-    
+
     static func asyncMain(block: @escaping ExecutionBlock) {
         DispatchQueue.main.async {
             block()
