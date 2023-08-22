@@ -9,6 +9,14 @@ PROFILE = "Profile";
 CATALOGUE = "Catalogue";
 CART = "Cart";
 STATISTICS = "Statistics";
+NFT_ERROR = "Ops! Something went wrong: try again!";
+ONE_MORE_TRY = "Try once more";
+SORT_BY_NAME = "By name";
+SORT_BY_AMOUNT = "By NFT amount";
+TITLE_SORT = "Sorting";
+CLOSE_ALERT_TITLE = "Close";
+INVALID_PRICE_FORMAT = "Invalid price format";
+COLLECTION_AUTHOR = "Collection author:";
 
 DEFAULT_ERROR_TITLE = "Error";
 

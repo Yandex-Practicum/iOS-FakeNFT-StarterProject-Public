@@ -13,6 +13,8 @@ struct AppConstants {
         static let catalog = "CatalogueIcon"
         static let profile = "ProfileIcon"
         static let statistics = "StatisticsIcon"
+        
+        static let sort = "SortIcon"
     }
 
     enum Api {

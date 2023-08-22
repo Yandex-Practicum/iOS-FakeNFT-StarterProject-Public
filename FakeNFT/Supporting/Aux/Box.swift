@@ -1,11 +1,6 @@
-//
-//  Box.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 04.08.2023.
-//
-
 import Foundation
+
+// Reference - https://www.kodeco.com/6733535-ios-mvvm-tutorial-refactoring-from-mvc
 
 public final class Box<T> {
     typealias Listener = (T) -> Void
