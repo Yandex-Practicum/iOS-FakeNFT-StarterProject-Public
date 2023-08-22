@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class ResultsViewController: UIViewController {
+protocol ResultsView: AnyObject {}
+
+final class ResultsViewController: UIViewController, ResultsView {
     private let imageView = UIImageView()
     private let label: UILabel = {
         let label = UILabel()
@@ -33,9 +35,12 @@ final class ResultsViewController: UIViewController {
     }()
 
     private var buttonAction: (() -> Void)?
+    
+    private var presenter: ResultsPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ResultsPresenter(view: self)
         setupView()
     }
 
@@ -59,9 +64,10 @@ private extension ResultsViewController {
             .forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         view.addSubview(stackView)
+        view.addSubview(button)
+        
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(label)
-        view.addSubview(button)
 
         setupNavBar()
         setupConstraints()
@@ -74,15 +80,14 @@ private extension ResultsViewController {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // stackView
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26),
-            // imageView
+            
             imageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
             imageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
-            // button
+            
             button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),

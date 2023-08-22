@@ -7,7 +7,12 @@
 
 import UIKit
 
-final class CheckoutViewController: UIViewController, PayViewDelegate {
+protocol CheckoutView: AnyObject {
+    func updateCurrencies(_ currencies: [CurrencyModel])
+    func displayPaymentResult(success: Bool)
+}
+
+final class CheckoutViewController: UIViewController, CheckoutView {
     private lazy var payView: PayView = {
         let view = PayView()
         view.delegate = self
@@ -42,75 +47,21 @@ final class CheckoutViewController: UIViewController, PayViewDelegate {
     )
     
     private var currencies: [CurrencyModel] = []
-    private let currenciesService = CurrenciesService()
-    private let orderService = OrderService.shared
-    private var selectedCurrencyId: String?
+    private var presenter: CheckoutPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        currenciesService.load { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let currencies):
-                self.currencies = currencies
-                DispatchQueue.main.async {
-                    self.currenciesCollection.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+        presenter = CheckoutPresenter(view: self)
         setupView()
     }
     
     @objc private func didTapBackButton() {
         dismiss(animated: true)
-//        navigationController?.popViewController(animated: true)
     }
     
-    func didTapPayButton() {
-        orderService.makePayment(currencyId: selectedCurrencyId ?? "") {[weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                print(response)
-                var content: ResultsViewController.Content
-                if response.success {
-                    content = .init(
-                        image: .paymentSuccess,
-                        title: "Успех! Оплата прошла, поздравляем с покупкой!",
-                        buttonTitle: "Вернуться в каталог",
-                        buttonAction: {
-                            self.tabBarController?.selectedIndex = 1
-                            self.navigationController?.popToRootViewController(animated: false)
-                        }
-                    )
-                } else {
-                    content = .init(
-                        image: .paymentError,
-                        title: "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!",
-                        buttonTitle: "Попробовать еще раз",
-                        buttonAction: { self.navigationController?.popViewController(animated: true) }
-                    )
-                }
-                
-                DispatchQueue.main.async {
-                    let resultsViewController = ResultsViewController()
-                    resultsViewController.configure(with: content)
-                    self.navigationController?.pushViewController(resultsViewController, animated: true)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func didTapUserAgreementLink() {
-        let userAgreementViewController = UserAgreementViewController()
-        let navigationController = UINavigationController(rootViewController: userAgreementViewController)
-        navigationController.modalPresentationStyle = .overFullScreen
-        present(navigationController, animated: true, completion: nil)
+    func updateCurrencies(_ currencies: [CurrencyModel]) {
+        self.currencies = currencies
+        currenciesCollection.reloadData()
     }
 }
 
@@ -149,6 +100,45 @@ private extension CheckoutViewController {
             currenciesCollection.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             currenciesCollection.bottomAnchor.constraint(equalTo: payView.topAnchor)
         ])
+    }
+}
+
+extension CheckoutViewController: PayViewDelegate {
+    func didTapPayButton() {
+        presenter.makePayment()
+    }
+    
+    func displayPaymentResult(success: Bool) {
+        var content: ResultsViewController.Content
+        if success {
+            content = .init(
+                image: .paymentSuccess,
+                title: "Успех! Оплата прошла, поздравляем с покупкой!",
+                buttonTitle: "Вернуться в каталог",
+                buttonAction: {
+                    self.tabBarController?.selectedIndex = 1
+                    self.dismiss(animated: true)
+                }
+            )
+        } else {
+            content = .init(
+                image: .paymentError,
+                title: "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!",
+                buttonTitle: "Попробовать еще раз",
+                buttonAction: { self.dismiss(animated: true) }
+            )
+        }
+        
+        let resultsViewController = ResultsViewController()
+        resultsViewController.configure(with: content)
+        navigationController?.pushViewController(resultsViewController, animated: true)
+    }
+    
+    func didTapUserAgreementLink() {
+        let userAgreementViewController = UserAgreementViewController()
+        let navigationController = UINavigationController(rootViewController: userAgreementViewController)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true, completion: nil)
     }
 }
 
@@ -193,8 +183,8 @@ extension CheckoutViewController: UICollectionViewDelegateFlowLayout {
 
 extension CheckoutViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.didSelectCurrency(id: currencies[indexPath.row].id)
         let cell: CurrencyCell = collectionView.cellForItem(at: indexPath)
-        selectedCurrencyId = currencies[indexPath.row].id
         cell.select()
     }
 

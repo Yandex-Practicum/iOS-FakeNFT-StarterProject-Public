@@ -1,16 +1,23 @@
 import UIKit
 import ProgressHUD
 
-final class BasketViewController: UIViewController {
-    private let basketService = BasketService.shared
-    private let sortService = SortService.shared
-    
+protocol BasketView: AnyObject {
+    func updateNfts(_ nfts: [NftModel])
+    func showEmptyLabel(_ show: Bool)
+    func changeSumText(totalAmount: Int, totalPrice: Float)
+}
+
+final class BasketViewController: UIViewController, BasketView {
     private lazy var sortButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(named: "sort")!, target: self, action: #selector(didTapSortButton))
         return button
     }()
     
-    private let sumView = SumView()
+    private lazy var sumView: SumView = {
+        let sum = SumView()
+        sum.delegate = self
+        return sum
+    }()
     
     private lazy var nftsTableView: UITableView = {
         let tableView = UITableView()
@@ -32,29 +39,15 @@ final class BasketViewController: UIViewController {
         return label
     }()
     
-    private var sort: Sort? {
-        didSet {
-            guard let sort else { return }
-            sortService.sortingType = sort
-            nftsMocked = applySort(nfts: nftsMocked, by: sort)
-            nftsTableView.reloadData()
-        }
-    }
-    
-    var nftsMocked: [NftModel] = []
+    private var presenter: BasketPresenter!
+    private var nfts: [NftModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nftsMocked = basketService.basket
-        print(nftsMocked)
-//        OrderService.shared.updateOrder(with: ["92", "91", "93", "94", "95"]) {result in
-//            switch result {
-//            case .success(_):
-//                print("added successfully")
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
+
+        presenter = BasketPresenter(view: self)
+        presenter.loadBasket()
+
         setupView()
     }
     
@@ -76,40 +69,31 @@ final class BasketViewController: UIViewController {
             preferredStyle: .actionSheet
         )
         
-        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { [weak self] _ in
-            self?.sort = .price
+        let sorts: [(String, Sort)] = [("По цене", .price), ("По рейтингу", .rating), ("По названию", .name)]
+        sorts.forEach { title, sortValue in
+            let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+                self?.presenter.sortNfts(by: sortValue)
+            }
+            alert.addAction(action)
         }
-        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
-            self?.sort = .rating
-        }
-        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
-            self?.sort = .name
-        }
-        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel)
-        
-        alert.addAction(sortByPriceAction)
-        alert.addAction(sortByRatingAction)
-        alert.addAction(sortByNameAction)
-        alert.addAction(closeAction)
-        
+
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         present(alert, animated: true)
     }
     
-    private func setupTableLabel() {
-        emptyLabel.isHidden = !nftsMocked.isEmpty
-        nftsTableView.isHidden = nftsMocked.isEmpty
-        sumView.isHidden = nftsMocked.isEmpty
+    func updateNfts(_ nfts: [NftModel]) {
+        self.nfts = nfts
+        nftsTableView.reloadData()
     }
     
-    private func applySort(nfts: [NftModel], by value: Sort) -> [NftModel] {
-        switch value {
-        case .price:
-            return nfts.sorted(by: { $0.price < $1.price })
-        case .rating:
-            return nfts.sorted(by: { $0.rating < $1.rating })
-        case .name:
-            return nfts.sorted(by: { $0.name < $1.name })
-        }
+    func showEmptyLabel(_ show: Bool) {
+        emptyLabel.isHidden = !show
+        nftsTableView.isHidden = show
+        sumView.isHidden = show
+    }
+    
+    func changeSumText(totalAmount: Int, totalPrice: Float) {
+        sumView.changeText(totalAmount: totalAmount, totalPrice: totalPrice)
     }
 }
 
@@ -117,9 +101,6 @@ private extension BasketViewController {
     func setupView() {
         view.backgroundColor = .white
         sortButton.tintColor = .ypBlackUniversal
-        sumView.changeText(totalAmount: nftsMocked.count, totalPrice: nftsMocked.reduce(0.0) { $0 + $1.price })
-        
-        sumView.delegate = self
         [
             sumView,
             sortButton,
@@ -131,7 +112,6 @@ private extension BasketViewController {
         }
         setupConstraints()
         
-        sort = sortService.sortingType
         nftsTableView.reloadData()
     }
     
@@ -158,12 +138,12 @@ private extension BasketViewController {
 
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        nftsMocked.count
+        nfts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BasketNFTCell = tableView.dequeueReusableCell(indexPath: indexPath)
-        let model = nftsMocked[indexPath.row]
+        let model = nfts[indexPath.row]
         cell.delegate = self
         cell.configure(with: model)
         
@@ -173,9 +153,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension BasketViewController: BasketNFTCellDelegate {
     func didTapRemoveButton(on nft: NftModel) {
-        let removeNFTViewController = RemoveNFTViewController()
-        removeNFTViewController.delegate = self
-        removeNFTViewController.configure(with: nft)
+        let removeNFTViewController = RemoveNFTViewController(nftModel: nft, delegate: self)
         removeNFTViewController.modalPresentationStyle = .overFullScreen
         removeNFTViewController.modalTransitionStyle = .crossDissolve
         present(removeNFTViewController, animated: true)
@@ -188,14 +166,7 @@ extension BasketViewController: RemoveNFTViewControllerDelegate {
     }
     
     func didTapConfirmButton(_ model: NftModel) {
-        print("before remove")
-        print(basketService.basket)
-        basketService.removeNFTFromBasket(model)
-        print("after remove")
-        print(basketService.basket)
-        nftsMocked = basketService.basket
-        self.nftsTableView.reloadData()
-        sumView.changeText(totalAmount: nftsMocked.count, totalPrice: nftsMocked.reduce(0.0) { $0 + $1.price })
+        presenter.removeNFTFromBasket(model)
         dismiss(animated: true)
     }
 }

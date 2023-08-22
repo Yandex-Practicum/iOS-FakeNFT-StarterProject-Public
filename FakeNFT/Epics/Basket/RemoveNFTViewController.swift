@@ -7,12 +7,16 @@
 
 import UIKit
 
+protocol RemoveNFTView: AnyObject {
+    func updateImage(with url: URL?)
+}
+
 protocol RemoveNFTViewControllerDelegate: AnyObject {
     func didTapCancelButton()
     func didTapConfirmButton(_ model: NftModel)
 }
 
-final class RemoveNFTViewController: UIViewController {
+final class RemoveNFTViewController: UIViewController, RemoveNFTView {
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -61,23 +65,41 @@ final class RemoveNFTViewController: UIViewController {
     
     weak var delegate: RemoveNFTViewControllerDelegate?
     private var model: NftModel?
+    private var presenter: RemoveNFTPresenter!
+    
+    init(nftModel: NftModel, delegate: RemoveNFTViewControllerDelegate) {
+        self.model = nftModel
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter = RemoveNFTPresenter(view: self, delegate: delegate)
+        if let model = model {
+            presenter.configure(with: model)
+        }
+        
         setupView()
+    }
+
+    func updateImage(with url: URL?) {
+        if let url = url {
+            nftImageView.kf.setImage(with: url)
+        }
     }
     
     @objc private func didTapCancelButton() {
-        delegate?.didTapCancelButton()
+        presenter.didTapCancelButton()
     }
     
     @objc private func didTapConfirmButton() {
-        guard let model else { return }
-        delegate?.didTapConfirmButton(model)
-    }
-    func configure(with model: NftModel) {
-        self.model = model
-        nftImageView.image = UIImage(named: "mock.nft")
+        presenter.didTapConfirmButton()
     }
 }
 
