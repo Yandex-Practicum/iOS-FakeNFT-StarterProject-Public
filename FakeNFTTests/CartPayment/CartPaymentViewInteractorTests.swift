@@ -46,7 +46,7 @@ final class CartPaymentViewInteractorTests: XCTestCase {
 
         let onSuccess: LoadingCompletionBlock<CartPaymentViewModel.ViewState> = { _ in }
         let onFailure: LoadingFailureCompletionBlock = { error in
-            if let _ = error as? CurrenciesServiceSpy.TestError {
+            if error as? CurrenciesServiceSpy.TestError != nil {
                 expectation.fulfill()
             }
         }
