@@ -52,13 +52,17 @@ final class NFTCellViewModel {
         isAddedToCart = nft.isInCart
 
         likeButtonAction
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] _ in
+                print("Tap", Date())
                 self?.likeRequest()
             }
             .store(in: &cancellables)
 
         addToCartButtonAction
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] _ in
+                print("Tap", Date())
                 self?.addToCart()
             }
             .store(in: &cancellables)

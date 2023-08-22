@@ -235,7 +235,7 @@ private extension UserListViewController {
         let user = viewModel.users[indexPath.item]
         let viewModel = UserCardViewModelImpl(user: user)
         let viewController = UserCardViewController(viewModel: viewModel)
-        
+
         return viewController
     }
 }
