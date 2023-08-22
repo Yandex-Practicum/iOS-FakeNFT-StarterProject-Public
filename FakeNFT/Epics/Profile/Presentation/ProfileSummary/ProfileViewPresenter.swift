@@ -27,7 +27,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - ProfileViewPresenterProtocol
     
-    func viewDidLoad() {
+    func viewWillAppear() {
         ProfileNetworkService.shared.fetchProfile(id: "1")
         UIBlockingProgressHUD.show()
         view?.activityIndicatorAnimation(inProcess: true)

@@ -117,7 +117,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter?.viewDidLoad()
+        presenter?.viewWillAppear()
     }
     
     // MARK: - Private methods
@@ -240,7 +240,7 @@ final class ProfileViewController: UIViewController {
         let featuredNFTsPresenter = FavoriteNFTsPresenter(profile: profile)
         let profileNetworkClient = ProfileNetworkClient()
         featuredNFTsPresenter.callback = {
-            presenter.viewDidLoad()
+            presenter.viewWillAppear()
         }
         featuredNFTsViewController.presenter = featuredNFTsPresenter
         
@@ -365,7 +365,7 @@ extension ProfileViewController: ProfileViewDelegate {
             title: NSLocalizedString("profile.photo.retryButton", comment: ""),
             style: .default
         ) { _ in
-            self.presenter?.viewDidLoad()
+            self.presenter?.viewWillAppear()
         }
         let cancelAction = UIAlertAction(
             title: NSLocalizedString("profile.photo.cancelButton", comment: ""),
