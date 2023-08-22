@@ -9,16 +9,16 @@ import UIKit
 import Kingfisher
 
 final class UserCell: UICollectionViewCell {
-    // MARK: - Public
-    func configure(with user: User) {
-        rankingLabel.text = user.ranking
+    // MARK: - Public Methods
+    func configure(with user: User, number: Int) {
+        rankingLabel.text = "\(number + 1)"
         usernameLabel.text = user.username
-        nftCountLabel.text = user.nftCount
+        nftCountLabel.text = user.ranking
         let placeholder = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
         imageView.kf.setImage(with: user.avatarURL, placeholder: placeholder)
     }
 
-    // MARK: - Private UI Elements
+    // MARK: - Private Properties
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -46,6 +46,7 @@ final class UserCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .ypBlack
         label.font = .headline3
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
 
@@ -57,13 +58,14 @@ final class UserCell: UICollectionViewCell {
         return view
     }()
 
-    private let stackView: UIStackView = {
+    private let horizontalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 8
         return view
     }()
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -75,15 +77,18 @@ final class UserCell: UICollectionViewCell {
     }
 }
 
+// MARK: - UI
 private extension UserCell {
     private func addSubviews() {
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(usernameLabel)
-        stackView.addArrangedSubview(nftCountLabel)
+        horizontalStackView.addArrangedSubview(imageView)
+        horizontalStackView.addArrangedSubview(usernameLabel)
+        horizontalStackView.addArrangedSubview(nftCountLabel)
 
-        container.addSubview(stackView)
-        contentView.addSubview(container)
+        container.addSubview(horizontalStackView)
         contentView.addSubview(rankingLabel)
+        contentView.addSubview(container)
+
+        horizontalStackView.setCustomSpacing(16, after: usernameLabel)
     }
 
     private func setupConstraints() {
@@ -93,7 +98,7 @@ private extension UserCell {
             make.leading.equalTo(contentView).inset(0)
         }
 
-        stackView.snp.makeConstraints { make in
+        horizontalStackView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(26)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(28)

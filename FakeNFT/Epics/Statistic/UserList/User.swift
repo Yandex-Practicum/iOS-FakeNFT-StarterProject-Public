@@ -28,7 +28,7 @@ extension Array where Element == User {
     func sortByRank() -> [User] {
         return self.sorted { user, newUser in
             if let rank1 = Int(user.ranking), let rank2 = Int(newUser.ranking)  {
-                return rank1 < rank2
+                return rank1 > rank2
             }
             return false
         }

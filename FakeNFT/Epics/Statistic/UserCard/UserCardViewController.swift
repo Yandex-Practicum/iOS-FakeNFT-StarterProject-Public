@@ -13,6 +13,7 @@ final class UserCardViewController: NiblessViewController {
     typealias SectionType = UserCardViewModelImpl.SectionType
     typealias ItemIdentifier = UserCardViewModelImpl.ItemIdentifier
 
+    // MARK: - Private Properties
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.contentInset.top = 20
@@ -49,15 +50,17 @@ final class UserCardViewController: NiblessViewController {
         viewModel.sections.value
     }
 
+    // MARK: - Dependencies
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: UserCardViewModel
 
-    init(viewModel: UserCardViewModel) {
+    // MARK: - Init
+    init(viewModel: any UserCardViewModel) {
         self.viewModel = viewModel
         super.init()
     }
 
-    // MARK: - Lifecycle
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -66,7 +69,7 @@ final class UserCardViewController: NiblessViewController {
         bind(to: viewModel)
     }
 
-    // MARK: - @objc methods
+    // MARK: - Private Methods
     @objc private func pullToRefresh() { }
 
     @objc private func backButtonTap() {
@@ -74,6 +77,7 @@ final class UserCardViewController: NiblessViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension UserCardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch sectionType[indexPath.section] {

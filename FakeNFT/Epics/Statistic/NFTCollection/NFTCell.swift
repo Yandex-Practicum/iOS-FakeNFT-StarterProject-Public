@@ -11,10 +11,7 @@ import SnapKit
 import Combine
 
 final class NFTCell: UICollectionViewCell {
-    private var viewModel: NFTCellViewModel?
-    private var subscriptions = Set<AnyCancellable>()
-
-    // MARK: - Public
+    // MARK: - Public Methods
     func configure(with viewModel: NFTCellViewModel) {
         self.viewModel = viewModel
         let rating = viewModel.rating
@@ -43,7 +40,7 @@ final class NFTCell: UICollectionViewCell {
             .store(in: &subscriptions)
     }
 
-    // MARK: - Private UI Elements
+    // MARK: - Private Properties
     private let nftImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -107,11 +104,21 @@ final class NFTCell: UICollectionViewCell {
         return view
     }()
 
+    // MARK: - Dependencies
+    private var viewModel: NFTCellViewModel?
+    private var subscriptions = Set<AnyCancellable>()
+
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("Unsupported")
+    }
+
+    // MARK: - View Life Cycles
     override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
@@ -124,19 +131,17 @@ final class NFTCell: UICollectionViewCell {
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 
-    @objc func likeButtonTapped(_ sender: UIButton) {
+    // MARK: - Private Methods
+    @objc private func likeButtonTapped(_ sender: UIButton) {
         viewModel?.likeButtonAction.send()
     }
 
-    @objc func addToCartButtonTapped(_ sender: UIButton) {
+    @objc private func addToCartButtonTapped(_ sender: UIButton) {
         viewModel?.addToCartButtonAction.send()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("Unsupported")
     }
 }
 
+// MARK: - UI
 private extension NFTCell {
     private func addSubviews() {
         verticalStackView.addArrangedSubview(nftNameLabel)

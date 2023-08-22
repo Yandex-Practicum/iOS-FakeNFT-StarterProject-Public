@@ -16,4 +16,5 @@ extension UIImage {
     static let mockCell = UIImage(named: "mock.cell")
     static let mockCollection = UIImage(named: "mock.collection")
     static let mockUserImage = UIImage(named: "mock.userImage")
+    static let emptyPlaceholder = UIImage(named: "emptyPlaceholder")
 }

@@ -10,9 +10,11 @@ import WebKit
 import Combine
 
 final class WebViewController: NiblessViewController {
+    // MARK: - Private Properties
     @objc private var webView: WKWebView = {
         let webView = WKWebView()
         webView.accessibilityIdentifier = "WebView"
+        webView.backgroundColor = .ypWhite
         return webView
     }()
 
@@ -23,16 +25,18 @@ final class WebViewController: NiblessViewController {
         return progressView
     }()
 
+    // MARK: - Dependencies
     private var webViewSubscription: Cancellable?
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: WebViewModel
 
-    init(viewModel: WebViewModel) {
+    // MARK: - Init
+    init(viewModel: any WebViewModel) {
         self.viewModel = viewModel
         super.init()
     }
 
-    // MARK: - LifeCycle
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -54,6 +58,7 @@ final class WebViewController: NiblessViewController {
         webViewSubscription = nil
     }
 
+    // MARK: - Private Methods
     @objc private func backButtonTap() {
         navigationController?.popViewController(animated: true)
     }
@@ -65,7 +70,7 @@ final class WebViewController: NiblessViewController {
             }
     }
 
-    func bind(to viewModel: WebViewModel) {
+    private func bind(to viewModel: WebViewModel) {
         guard let viewModel = viewModel as? WebViewModelImpl else {
             return
         }
@@ -91,6 +96,7 @@ final class WebViewController: NiblessViewController {
     }
 }
 
+// MARK - UI
 private extension WebViewController {
     func addSubviews() {
         view.backgroundColor = .ypWhite

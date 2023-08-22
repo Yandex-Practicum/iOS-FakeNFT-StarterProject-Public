@@ -11,7 +11,8 @@ import Combine
 protocol NFTCollectionViewModel {
     var nftViewModels: CurrentValueSubject<[NFTCellViewModel], Never> { get }
     var isLoading: CurrentValueSubject<Bool, Never> { get }
-    var error: PassthroughSubject<(), Never> { get }
+    var isHiddenEmptyCollectionPlaceholder: CurrentValueSubject<Bool, Never> { get }
+    var isErrorHidden: CurrentValueSubject<Bool, Never> { get }
     var isPulledToRefresh: Bool { get }
 
     func viewDidLoad()
@@ -19,9 +20,10 @@ protocol NFTCollectionViewModel {
 }
 
 final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
-    var nftViewModels: CurrentValueSubject<[NFTCellViewModel], Never> = .init([])
-    var isLoading: CurrentValueSubject<Bool, Never> = .init(true)
-    var error: PassthroughSubject<(), Never> = .init()
+    let nftViewModels: CurrentValueSubject<[NFTCellViewModel], Never> = .init([])
+    let isLoading: CurrentValueSubject<Bool, Never> = .init(true)
+    let isHiddenEmptyCollectionPlaceholder: CurrentValueSubject<Bool, Never> = .init(true)
+    let isErrorHidden: CurrentValueSubject<Bool, Never> = .init(true)
 
     private(set) var isPulledToRefresh = false
     private let nftsIdsToFetch: [Int]
@@ -53,33 +55,41 @@ final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
     }
 
     private func getNFTWithLikesAndCartInfo() {
-        let combinedPublisher = Publishers.CombineLatest3(
-            nftService.fetchNFTS(numbers: nftsIdsToFetch),
-            likesService.fetchLikes(),
-            orderService.fetchOrder()
-        )
+        if nftsIdsToFetch.isEmpty {
+            isHiddenEmptyCollectionPlaceholder.send(false)
+            isLoading.send(false)
+        } else {
+            let combinedPublisher = Publishers.CombineLatest3(
+                nftService.fetchNFTS(numbers: nftsIdsToFetch),
+                likesService.fetchLikes(),
+                orderService.fetchOrder()
+            )
 
-        combinedPublisher
-            .sink(receiveCompletion: { [weak self] completion in
-                guard case .failure = completion else {
-                    return
-                }
+            combinedPublisher
+                .timeout(20, scheduler: DispatchQueue.main)
+                .sink(receiveCompletion: { [weak self] completion in
+                    guard case .failure = completion else {
+                        return
+                    }
 
-                self?.isLoading.send(false)
-                self?.error.send()
-            }, receiveValue: { [weak self] userNfts, myLikes, myOrder in
-                guard let self else { return }
+                    self?.isHiddenEmptyCollectionPlaceholder.send(true)
+                    self?.isLoading.send(false)
+                    self?.isErrorHidden.send(false)
+                }, receiveValue: { [weak self] userNfts, myLikes, myOrder in
+                    guard let self else { return }
 
-                let nftViewModels = self.configureLikesAndIfInCart(
-                    userNfts: userNfts,
-                    myLikes: myLikes,
-                    myOrder: myOrder
-                )
+                    let nftViewModels = self.configureLikesAndIfInCart(
+                        userNfts: userNfts,
+                        myLikes: myLikes,
+                        myOrder: myOrder
+                    )
 
-                self.isLoading.send(false)
-                self.nftViewModels.send(nftViewModels)
-            })
-            .store(in: &cancellables)
+                    self.isHiddenEmptyCollectionPlaceholder.send(nftViewModels.isEmpty ? false : true)
+                    self.isLoading.send(false)
+                    self.nftViewModels.send(nftViewModels)
+                })
+                .store(in: &cancellables)
+        }
     }
 
     private func configureLikesAndIfInCart(

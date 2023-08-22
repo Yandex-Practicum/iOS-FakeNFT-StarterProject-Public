@@ -30,11 +30,11 @@ final class UserServiceImpl: UserService {
             return
         }
 
-        let task = defaultNetworkClient.send(request: userResult, type: [UserResult].self) { result in
+        let task = defaultNetworkClient.send(request: userResult, type: [UserResult].self) { [weak self] result in
             completion(result.map { data in
                 data.map { $0.toUser() }
             })
-            self.task = nil
+            self?.task = nil
         }
 
         self.task = task

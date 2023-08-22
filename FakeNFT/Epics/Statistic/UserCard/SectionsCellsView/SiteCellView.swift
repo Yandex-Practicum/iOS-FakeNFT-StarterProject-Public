@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class SiteCellView: UICollectionViewCell {
-    // MARK: - Private UI Elements
+    // MARK: - Private Properties
     private let containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
@@ -28,6 +28,7 @@ final class SiteCellView: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -39,6 +40,7 @@ final class SiteCellView: UICollectionViewCell {
     }
 }
 
+// MARK: - UI
 private extension SiteCellView {
     func addSubviews() {
         contentView.addSubview(containerView)

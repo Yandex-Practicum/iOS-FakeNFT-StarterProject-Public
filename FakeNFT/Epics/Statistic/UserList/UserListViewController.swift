@@ -9,6 +9,7 @@ enum UsetListViewControllerInput {
 }
 
 final class UserListViewController: NiblessViewController {
+    // MARK: - Private Properties
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.contentInset.top = 20
@@ -23,9 +24,9 @@ final class UserListViewController: NiblessViewController {
     }()
 
     private lazy var dataSource: UICollectionViewDiffableDataSource<Int, User> = {
-        return .init(collectionView: collectionView) { collectionView, indexPath, item in
+        return .init(collectionView: collectionView) { collectionView, indexPath, user in
             let cell: UserCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-            cell.configure(with: item)
+            cell.configure(with: user, number: indexPath.row)
             return cell
         }
     }()
@@ -50,12 +51,13 @@ final class UserListViewController: NiblessViewController {
     private let input: PassthroughSubject<UsetListViewControllerInput, Never> = .init()
     private var cancellables = Set<AnyCancellable>()
 
-    init(viewModel: UserListViewModel) {
+    // MARK: - Init
+    init(viewModel: any UserListViewModel) {
         self.viewModel = viewModel
         super.init()
     }
 
-    // MARK: - Lifecycle
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -65,7 +67,7 @@ final class UserListViewController: NiblessViewController {
         input.send(.viewDidLoad)
     }
 
-    // MARK: - @objc methods
+    // MARK: - Private Methods
     @objc private func filterTap() {
         input.send(.filterButtonTapped)
     }
@@ -75,6 +77,7 @@ final class UserListViewController: NiblessViewController {
     }
 }
 
+// MARK:  - UICollectionViewDelegate
 extension UserListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewController = createUserCardViewController(for: indexPath)

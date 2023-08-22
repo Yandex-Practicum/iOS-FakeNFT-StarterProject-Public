@@ -10,12 +10,12 @@ import SnapKit
 import Combine
 
 final class NFTCollectionViewController: NiblessViewController {
+    // MARK: - Private Properties
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         view.contentInset.top = 20
         view.showsVerticalScrollIndicator = false
         view.backgroundColor = .ypWhite
-        view.delegate = self
         view.isHidden = true
         view.alpha = 0
         view.refreshControl = refreshControl
@@ -44,16 +44,26 @@ final class NFTCollectionViewController: NiblessViewController {
         return spinner
     }()
 
+    private let placeholder: UIImageView = {
+        let image: UIImage? = .emptyPlaceholder?.withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+        let placeholder = UIImageView(image: image)
+        placeholder.isHidden = true
+        return placeholder
+    }()
+
     private let errorView = ErrorView()
 
+    // MARK: - Dependencies
     private let viewModel: NFTCollectionViewModel
-    private var cancellables = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
 
-    init(viewModel: NFTCollectionViewModel) {
+    // MARK: - Init
+    init(viewModel: any NFTCollectionViewModel) {
         self.viewModel = viewModel
         super.init()
     }
 
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -74,9 +84,8 @@ final class NFTCollectionViewController: NiblessViewController {
     }
 }
 
-extension NFTCollectionViewController: UICollectionViewDelegate { }
-
 // MARK: - Data
+
 private extension NFTCollectionViewController {
     func bind(to viewModel: NFTCollectionViewModel) {
         viewModel.nftViewModels
@@ -84,24 +93,28 @@ private extension NFTCollectionViewController {
             .sink { [weak self] nfts in
                 self?.configureUI(with: nfts)
             }
-            .store(in: &cancellables)
+            .store(in: &subscriptions)
 
         viewModel.isLoading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoading in
-                self?.errorView.hideErrorView()
                 isLoading ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
             }
-            .store(in: &cancellables)
+            .store(in: &subscriptions)
 
-        viewModel.error
+        viewModel.isErrorHidden
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
+            .sink { [weak self] isErrorHidden in
                 self?.hideCollectionView()
                 self?.collectionView.refreshControl?.endRefreshing()
-                self?.errorView.showErrorView()
+                isErrorHidden ? self?.errorView.hideErrorView() : self?.errorView.showErrorView()
             }
-            .store(in: &cancellables)
+            .store(in: &subscriptions)
+
+        viewModel.isHiddenEmptyCollectionPlaceholder
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.placeholder.isHidden = $0 }
+            .store(in: &subscriptions)
     }
 
     func updateSnapshot(with data: [NFTCellViewModel]) {
@@ -112,26 +125,22 @@ private extension NFTCollectionViewController {
     }
 
     func configureUI(with nfts: [NFTCellViewModel]) {
-        if !nfts.isEmpty {
-            self.showCollectionView()
-            self.errorView.hideErrorView()
+        self.showCollectionView()
 
-            if viewModel.isPulledToRefresh {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.updateSnapshot(with: nfts)
-                    self.collectionView.refreshControl?.endRefreshing()
-                }
-            } else {
+        if viewModel.isPulledToRefresh {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.updateSnapshot(with: nfts)
                 self.collectionView.refreshControl?.endRefreshing()
             }
         } else {
-            // TODO: - Добавить заглушку если массив пустой
+            self.updateSnapshot(with: nfts)
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
 }
 
 // MARK: - UI
+
 private extension NFTCollectionViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { _, _ in
@@ -184,6 +193,7 @@ private extension NFTCollectionViewController {
         view.addSubview(collectionView)
         view.addSubview(spinner)
         view.addSubview(errorView)
+        view.addSubview(placeholder)
         view.backgroundColor = .ypWhite
     }
 
@@ -195,6 +205,10 @@ private extension NFTCollectionViewController {
         }
 
         spinner.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+
+        placeholder.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
 

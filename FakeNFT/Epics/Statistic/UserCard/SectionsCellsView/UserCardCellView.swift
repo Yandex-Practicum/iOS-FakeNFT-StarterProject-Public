@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
-    // MARK: - Public
+    // MARK: - Public Methods
     func configure(with viewModel: UserCardCellViewModel) {
         imageView.image = .mockUserImage
         titleLabel.text = viewModel.name
@@ -21,7 +21,7 @@ final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
         layoutIfNeeded()
     }
 
-    // MARK: - Private UI Elements
+    // MARK: - Private Properties
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -62,6 +62,7 @@ final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
         return view
     }()
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -77,6 +78,7 @@ final class UserCardCellView: UICollectionViewCell, ReuseIdentifying {
     }
 }
 
+// MARK: - UI
 private extension UserCardCellView {
     func addSubviews() {
         stackViewHorizontal.addArrangedSubview(imageView)

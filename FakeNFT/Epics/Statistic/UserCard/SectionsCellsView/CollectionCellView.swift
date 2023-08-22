@@ -9,11 +9,12 @@ import UIKit
 import SnapKit
 
 final class CollectionCellView: UICollectionViewCell {
+    // MARK: - Public Methods
     func configure(with viewModel: NFTCollectionCellViewModel) {
         nftNumberInCollection.text = viewModel.formattedNftsNumber
     }
 
-    // MARK: - Private UI Elements
+    // MARK: - Private Properties
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -46,6 +47,7 @@ final class CollectionCellView: UICollectionViewCell {
         return view
     }()
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
@@ -57,6 +59,7 @@ final class CollectionCellView: UICollectionViewCell {
     }
 }
 
+// MARK: - UI
 private extension CollectionCellView {
     func addSubviews() {
         stackViewHorizontal.addArrangedSubview(nftCollectionLabel)
