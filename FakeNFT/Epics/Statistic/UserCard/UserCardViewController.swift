@@ -228,11 +228,13 @@ private extension UserCardViewController {
             orderService: orderService
         )
         let viewController = NFTCollectionViewController(viewModel: viewModel)
+        
         return viewController
     }
 
     func createWebView() -> WebViewController {
-        let viewModel = WebViewModelImpl()
+        let url = URL(string: "https://practicum.yandex.ru")
+        let viewModel = WebViewModelImpl(url: url)
 
         return WebViewController(viewModel: viewModel)
     }
