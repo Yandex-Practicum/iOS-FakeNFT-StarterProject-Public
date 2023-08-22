@@ -17,6 +17,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     
     var profileNetworkClient: ProfileNetworkClientProtocol?
     var networkClient: NFTsNetworkClientProtocol?
+    let likeService = LikeService.shared
     
     // MARK: - Private properties
     
@@ -58,7 +59,7 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
     func deleteNFT(at indexPath: IndexPath) {
         guard indexPath.row < presentationModels.count else { return }
         let deletedId = profile.likes[indexPath.row]
-        setNewProfile(without: deletedId)
+        removeLike(forNFT: deletedId)
         presentationModels.remove(at: indexPath.row)
         updateProfile(with: profile)
         view?.updateTableOrCollection()
@@ -143,12 +144,12 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         }
         dispatchGroup.notify(queue: .main) {
             print("All author requests completed.")
-            self.createNFCPresentationModels()
+            self.createNFTPresentationModels()
         }
     }
     
     
-    private func createNFCPresentationModels() {
+    private func createNFTPresentationModels() {
         for responce in myNFTsResponces {
             let author = nftAuthorsResponces.first { $0.id == responce.author }
             guard
@@ -174,19 +175,8 @@ final class FavoriteNFTsPresenter: FavoriteNFTsPresenterProtocol & FavoriteNFTsV
         }
     }
     
-    private func setNewProfile(without id: String) {
-        let updatedLikes = profile.likes.filter { $0 != id }
-        
-        let updatedProfile = ProfileResponseModel(
-            name: profile.name,
-            avatar: profile.avatar,
-            description: profile.description,
-            website: profile.website,
-            nfts: profile.nfts,
-            likes: updatedLikes,
-            id: profile.id
-        )
-        profile = updatedProfile
+    private func removeLike(forNFT id: String) {
+        likeService.removeLike(nftId: id)
     }
 }
 
