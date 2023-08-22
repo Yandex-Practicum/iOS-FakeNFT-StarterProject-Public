@@ -31,7 +31,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
     private lazy var sectionNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = .boldSystemFont(ofSize: 22)
         label.numberOfLines = 0
         return label
@@ -40,7 +40,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = .systemFont(ofSize: 13)
         label.numberOfLines = 0
         return label
@@ -49,7 +49,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
     private lazy var authorLabelName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = .systemFont(ofSize: 15)
         label.textColor = .link
         label.numberOfLines = 0
@@ -59,7 +59,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = .systemFont(ofSize: 13)
         label.numberOfLines = 0
         return label
