@@ -13,7 +13,7 @@ protocol NFTInfoViewModel {
     var sectionAuthor: String { get }
     var sectionDescription: String { get }
     var nfts: Box<[NFT]> { get }
-    
+
     func toggleNftSelectedState(index: Int)
     func toggleNftFavouriteState(index: Int)
 }
@@ -40,19 +40,23 @@ final class NFTInfoViewModelImpl: NFTInfoViewModel {
         nfts.value[index].isSelected.toggle()
 
         let nftValue = nfts.value[index]
-        
-        nfts.value[index].isSelected
-        ? storage.selectNft(nftValue)
-        : storage.unselectNft(nftValue)
+
+        if nfts.value[index].isSelected {
+            storage.selectNft(nftValue)
+        } else {
+            storage.unselectNft(nftValue)
+        }
     }
 
     func toggleNftFavouriteState(index: Int) {
         nfts.value[index].isFavourite.toggle()
 
         let nftValue = nfts.value[index]
-        
-        nfts.value[index].isSelected
-        ? storage.addToFavourite(nftValue)
-        : storage.removeFromFavourite(nftValue)
+
+        if nfts.value[index].isSelected {
+            storage.addToFavourite(nftValue)
+        } else {
+            storage.removeFromFavourite(nftValue)
+        }
     }
 }

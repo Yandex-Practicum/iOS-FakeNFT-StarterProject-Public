@@ -5,7 +5,7 @@ final class CartViewInteractorSpy: CartViewInteractorProtocol {
     var isOrderEmpty = false
 
     let cost: Double = 2
-    
+
     lazy var model = NFTCartCellViewModelFactory.makeNFTCartCellViewModel(
         id: "",
         name: "asd",

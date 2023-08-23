@@ -9,23 +9,23 @@ import UIKit
 
 final class NFTSortingAlertController: UIAlertController {
     private let viewModel: NFTSortingViewModel
-    
+
     init(viewModel: NFTSortingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError(
             "NFTSortingAlertController -> init(coder:) has not been implemented"
         )
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubViews()
     }
-    
+
     private func setupSubViews() {
         title = "TITLE_SORT".localized
         addAction(
@@ -34,7 +34,7 @@ final class NFTSortingAlertController: UIAlertController {
                 style: .default
             ) { [weak self] _ in
             guard let self else { return }
-            self.viewModel.sorting(by: .name)
+            self.viewModel.sorting(with: .name)
         })
         addAction(
             UIAlertAction(
@@ -42,7 +42,7 @@ final class NFTSortingAlertController: UIAlertController {
                 style: .default
             ) { [weak self] _ in
             guard let self else { return }
-            self.viewModel.sorting(by: .number)
+            self.viewModel.sorting(with: .number)
         })
         addAction(
             UIAlertAction(

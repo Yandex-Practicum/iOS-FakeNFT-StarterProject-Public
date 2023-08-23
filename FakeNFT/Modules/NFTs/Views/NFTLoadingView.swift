@@ -30,15 +30,14 @@ final class NFTLoadingView: UIView {
 
     private func setupSubViews() {
         backgroundColor = .appWhite
-        
+
         addSubview(indicator)
-        
+
         let constraints = [
             indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
 }
-

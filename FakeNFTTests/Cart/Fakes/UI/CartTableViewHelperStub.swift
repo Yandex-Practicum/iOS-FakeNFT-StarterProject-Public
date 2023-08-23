@@ -10,7 +10,7 @@ final class CartTableViewHelperStub: NSObject {
 extension CartTableViewHelperStub: CartTableViewHelperProtocol {
     var delegate: FakeNFT.CartTableViewHelperDelegate? {
         get { nil }
-        set {}
+        set(newValue) {}
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

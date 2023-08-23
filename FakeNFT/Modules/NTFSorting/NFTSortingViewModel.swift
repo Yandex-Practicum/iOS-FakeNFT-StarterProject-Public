@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NFTSortingViewModel {
-    func sorting(by: SortingTraits)
+    func sorting(with: SortingTraits)
 }
 
 final class NFTSortingViewModelImpl: NFTSortingViewModel {
@@ -18,7 +18,7 @@ final class NFTSortingViewModelImpl: NFTSortingViewModel {
         self.output = output
     }
 
-    func sorting(by: SortingTraits) {
-        output(by)
+    func sorting(with: SortingTraits) {
+        output(with)
     }
 }

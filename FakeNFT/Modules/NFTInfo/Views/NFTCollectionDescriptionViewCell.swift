@@ -103,9 +103,9 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
 
             authorLabel.widthAnchor.constraint(equalToConstant: 120)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
-        
+
         stackView.addArrangedSubview(sectionNameLabel)
         stackView.setCustomSpacing(5, after: sectionNameLabel)
         stackView.addArrangedSubview(horizontalStackView)
@@ -113,7 +113,7 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         horizontalStackView.addArrangedSubview(authorLabelName)
         stackView.addArrangedSubview(descriptionLabel)
     }
-    
+
     func configure(with configuration: Configuration) {
         sectionNameLabel.text = configuration.sectionName
         authorLabel.text = "COLLECTION_AUTHOR".localized
@@ -121,4 +121,3 @@ final class NFTCollectionDescriptionViewCell: UICollectionViewCell {
         descriptionLabel.text = configuration.description
     }
 }
-

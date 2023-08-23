@@ -145,7 +145,7 @@ private extension CartRemoveNftViewController {
                 equalTo: self.view.trailingAnchor,
                 constant: -Constants.buttonsSideInset
             ),
-            self.cancelButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight),
+            self.cancelButton.heightAnchor.constraint(equalToConstant: Constants.buttonsHeight)
         ])
     }
 }

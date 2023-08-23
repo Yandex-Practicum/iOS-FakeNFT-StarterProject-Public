@@ -8,7 +8,8 @@ public protocol CartPaymentCollectionViewHelperDelegate: AnyObject {
     )
 }
 
-public protocol CartPaymentCollectionViewHelperProtocol: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+public protocol CartPaymentCollectionViewHelperProtocol:
+    UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     var delegate: CartPaymentCollectionViewHelperDelegate? { get set }
 }
 

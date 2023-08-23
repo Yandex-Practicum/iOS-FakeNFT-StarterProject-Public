@@ -18,7 +18,7 @@ final class CartViewInteractorTests: XCTestCase {
         let expectation = self.expectation(description: "Loading order")
 
         let onSuccess: LoadingCompletionBlock<CartViewModel.ViewState> = { state in
-            if case .loaded(_, _) = state {
+            if case .loaded = state {
                 expectation.fulfill()
             }
         }
@@ -47,7 +47,7 @@ final class CartViewInteractorTests: XCTestCase {
 
         let onSuccess: LoadingCompletionBlock<CartViewModel.ViewState> = { _ in }
         let onFailure: LoadingFailureCompletionBlock = { error in
-            if let _ = error as? OrderServiceSpy.TestError {
+            if error as? OrderServiceSpy.TestError != nil {
                 expectation.fulfill()
             }
         }

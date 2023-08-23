@@ -11,7 +11,7 @@ enum NFTState {
     case loading
     case loaded([NFTCollectionModel])
     case error
-    
+
     func isError() -> Bool {
         if case .error = self {
             return true
@@ -29,10 +29,10 @@ enum SortingTraits {
 protocol NFTsViewModel {
     var state: Box<NFTState> { get }
     var visibleNft: Box<NFTInfo?> { get }
-    
+
     func viewDidLoad()
     func cellSelected(index: IndexPath)
-    func sortItems(by: SortingTraits)
+    func sortItems(with: SortingTraits)
     func reload()
 }
 
@@ -50,7 +50,7 @@ final class NFTsViewModelImpl: NFTsViewModel {
     func cellSelected(index: IndexPath) {
         if case let .loaded(nftCollectionItems) = state.value {
             let selected = nftCollectionItems[index.row]
- 
+
             visibleNft.value = NFTInfo(
                 sectionLabel: selected.name,
                 sectionAuthor: selected.author,
@@ -69,10 +69,10 @@ final class NFTsViewModelImpl: NFTsViewModel {
         parallelItemsLoad()
     }
 
-    func sortItems(by: SortingTraits) {
+    func sortItems(with: SortingTraits) {
         if case let .loaded(nftCollectionItems) = state.value {
             let sortedItems = nftCollectionItems
-            switch by {
+            switch with {
             case .name:
                 state.value = .loaded(
                     sortedItems.sorted {
@@ -93,7 +93,7 @@ final class NFTsViewModelImpl: NFTsViewModel {
         state.value = .loading
         var itemsCollection: [NFTCollectionModel] = []
         var collectionLoadingState = NFTState.loading
-        
+
         let group = DispatchGroup()
 
         group.enter()
