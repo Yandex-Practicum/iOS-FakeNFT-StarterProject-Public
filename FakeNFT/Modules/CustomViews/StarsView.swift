@@ -1,10 +1,3 @@
-//
-//  StarsView.swift
-//  FakeNFT
-//
-//  Created by Aleksandr Bekrenev on 01.08.2023.
-//
-
 import UIKit
 
 final class StarsView: UIView {
@@ -17,6 +10,10 @@ final class StarsView: UIView {
         case five
     }
 
+    private enum Constants {
+        static let stackViewSpacing: CGFloat = 2
+    }
+
     var rating: Rating = .zero {
         didSet {
             self.setRating(self.rating)
@@ -27,7 +24,7 @@ final class StarsView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 2
+        stackView.spacing = Constants.stackViewSpacing
         stackView.alignment = .leading
         stackView.distribution = .fillEqually
         return stackView
@@ -36,9 +33,9 @@ final class StarsView: UIView {
     private let stars: [UIImageView] = {
         var stars: [UIImageView] = []
 
-        for i in 0..<5 {
-            let star = UIImage.Icons.star
-            let starImageView = UIImageView(image: star)
+        for _ in 0..<5 {
+            let starImage = UIImage.Icons.star
+            let starImageView = UIImageView(image: starImage)
             starImageView.translatesAutoresizingMaskIntoConstraints = false
             starImageView.tintColor = .appLightGray
             starImageView.contentMode = .scaleAspectFit
@@ -61,6 +58,8 @@ final class StarsView: UIView {
 
 private extension StarsView {
     func configure() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+
         self.addSubviews()
         self.addConstraints()
     }
@@ -83,10 +82,10 @@ private extension StarsView {
 private extension StarsView {
     func setRating(_ rating: Rating) {
         let rating = rating.rawValue
-        // swiftlint:disable:next line_length
-        for i in 0..<rating {
-            let star = self.stars[i]
-            star.tintColor = .yellowUniversal
+      
+        self.stars.forEach { star in
+            guard let indexOfStar = self.stars.firstIndex(of: star) else { return }
+            star.tintColor = indexOfStar < rating ? .yellowUniversal : .appLightGray
         }
     }
 }

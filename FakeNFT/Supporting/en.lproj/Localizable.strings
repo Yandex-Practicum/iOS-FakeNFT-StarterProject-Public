@@ -9,5 +9,39 @@ PROFILE = "Profile";
 CATALOGUE = "Catalogue";
 CART = "Cart";
 STATISTICS = "Statistics";
+NFT_ERROR = "Ops! Something went wrong: try again!";
+ONE_MORE_TRY = "Try once more";
+SORT_BY_NAME = "By name";
+SORT_BY_AMOUNT = "By NFT amount";
+TITLE_SORT = "Sorting";
+CLOSE_ALERT_TITLE = "Close";
+INVALID_PRICE_FORMAT = "Invalid price format";
+COLLECTION_AUTHOR = "Collection author:";
 
 NOINTERNET = "No Internet";
+
+DEFAULT_ERROR_TITLE = "Error";
+
+CART_PLACEHOLDER_LABEL_TEXT = "Cart is empty";
+
+CART_CELL_PRICE_TITLE_LABEL = "Price";
+CART_PURCHASE_BUTTON_TITLE = "Purchase";
+CART_SORT_ALERT_TITLE = "Sorting NFTs";
+CART_SORT_ALERT_PRICE_ACTION_TITLE = "By price";
+CART_SORT_ALERT_RATING_ACTION_TITLE = "By rating";
+CART_SORT_ALERT_NAME_ACTION_TITLE = "By name";
+CART_SORT_ALERT_CLOSE_ACTION_TITLE = "Close";
+
+CART_REMOVE_NFT_REMOVE_LABEL_TEXT = "Are you sure you want to \n remove the item from the order?";
+CART_REMOVE_NFT_REMOVE_BUTTON_TITLE = "Remove";
+CART_REMOVE_NFT_CANCEL_BUTTON_TITLE = "Cancel";
+
+CART_PAYMENT_VIEW_TITLE = "Select a Payment Method";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "By making a purchase, you agree to \n";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT = "the terms of the User Agreement";
+CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Pay";
+
+CART_PAYMENT_RESULT_SUCCESS_LABEL_TEXT = "Success! Payment completed, congratulations on your purchase!";
+CART_PAYMENT_RESULT_SUCCESS_BUTTON_TITLE = "Back to catalog";
+CART_PAYMENT_RESULT_FAILURE_LABEL_TEXT = "Oops! Something went wrong :( Try again!";
+CART_PAYMENT_RESULT_FAILURE_BUTTON_TITLE = "Try again";

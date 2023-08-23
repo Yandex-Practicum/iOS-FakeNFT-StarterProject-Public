@@ -32,10 +32,6 @@ final class NavigationController: UINavigationController {
     }
 
     @objc private func sortTapped() {
-//        if let cartVC = viewControllers.first as? CartScreenViewController {
-//            cartVC.filterButtonTapped()
-//        }
-//        sortingButtonDelegate?.sortTapped()
     }
 
     private func configureNavigationController(forVC viewController: UIViewController) {
