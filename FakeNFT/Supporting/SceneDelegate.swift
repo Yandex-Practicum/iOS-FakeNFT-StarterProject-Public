@@ -17,10 +17,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 // MARK: - Creating TabBarController
 private extension SceneDelegate {
     func getTabBarController() -> TabBarController {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-
-        let networkClient = DefaultNetworkClient(decoder: decoder)
+        let networkClient = DefaultNetworkClient()
         let requestSender = NetworkRequestSender(networkClient: networkClient)
 
         let tabBarController = TabBarController(

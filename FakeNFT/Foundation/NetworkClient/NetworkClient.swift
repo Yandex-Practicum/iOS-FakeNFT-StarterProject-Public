@@ -29,6 +29,8 @@ struct DefaultNetworkClient: NetworkClient {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
+
+        self.decoder.dateDecodingStrategy = .iso8601
     }
 
     @discardableResult
