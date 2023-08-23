@@ -68,7 +68,7 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
             self.myNFTTable.reloadData()
             myNFTTable.isHidden = viewModel.checkNoNFT()
             emptyLabel.isHidden = !viewModel.checkNoNFT()
-            navigationItem.rightBarButtonItem?.isEnabled = viewModel.checkNoNFT()
+            navigationItem.rightBarButtonItem?.isEnabled = !viewModel.checkNoNFT()
             navigationItem.rightBarButtonItem?.image = viewModel.setImageForButton()
             
             title = viewModel.setTitle()
@@ -76,7 +76,7 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         
         viewModel.onError = { [weak self] error in
             let alert = UIAlertController(
-                title: "Нет интернета",
+                title: "Ошибка, Нет интернета",
                 message: error.localizedDescription,
                 preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .cancel) { [weak self] _ in
@@ -154,18 +154,16 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
 
 extension NyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let myNFTs = viewModel.myNFTs else { return 0 }
-        return myNFTs.count
+        return viewModel.myNFTs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: MyNFTCell = tableView.dequeueReusableCell()
         cell.backgroundColor = .white
         cell.selectionStyle = .none
-        guard let myNFTs = viewModel.myNFTs,
-              !myNFTs.isEmpty else { return MyNFTCell() }
+        guard !viewModel.myNFTs.isEmpty else { return MyNFTCell() }
         
-        let myNFT = myNFTs[indexPath.row]
+        let myNFT = viewModel.myNFTs[indexPath.row]
         
         let model = MyNFTCell.CellModel(
             image: myNFT.images.first ?? "",
@@ -178,9 +176,10 @@ extension NyNFTViewController: UITableViewDataSource {
         )
         
         cell.tapAction = { [weak self] in
-            let tappedNFT = self?.viewModel.myNFTs?.filter({ $0.id == myNFT.id }).first
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "myNFTliked"), object: tappedNFT)
-            if let tappedNFTid = tappedNFT?.id { self?.viewModel.toggleLikeFromMyNFT(id: tappedNFTid) }
+            let tappedNFT = self?.viewModel.myNFTs.filter({ $0.id == myNFT.id }).first
+            if let tappedNFT = tappedNFT {
+                self?.viewModel.notificationMyNFTliked(myNFTs: tappedNFT)
+                self?.viewModel.toggleLikeFromMyNFT(id: tappedNFT.id) }
         }
         cell.configureCell(with: model)
         return cell

@@ -6,7 +6,7 @@ protocol MyNFTViewModelProtocol: AnyObject {
     var onError: ((_ error: Error) -> Void)? { get set }
     
     var profile: ProfileModel? { get }
-    var myNFTs: [NFTNetworkModel]? { get }
+    var myNFTs: [NFTNetworkModel] { get }
     var likedIDs: [String] { get }
     var authors: [String: String] { get }
     var sort: MyNFTViewModel.Sort? { get set }
@@ -19,6 +19,7 @@ protocol MyNFTViewModelProtocol: AnyObject {
     func setTitle() -> String
     func setImageForButton() -> UIImage
     func deleteNFT(atRow row: Int?)
+    func notificationMyNFTliked(myNFTs: NFTNetworkModel)
 }
 
 final class MyNFTViewModel: MyNFTViewModelProtocol {
@@ -35,7 +36,7 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
         }
     }
     
-    private(set) var myNFTs: [NFTNetworkModel]? {
+    private(set) var myNFTs: [NFTNetworkModel] = [] {
         didSet {
             onChange?()
         }
@@ -46,8 +47,6 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
             onChange?()
         }
     }
-    
-    
     
     private(set) var authors: [String: String] = [:] {
         didSet {
@@ -81,8 +80,9 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
                     case .success(let nft):
                         self.getAuthors(nft: nft)
                         loadedNFTs.append(nft)
-                        self.myNFTs? = loadedNFTs
+                        self.myNFTs = loadedNFTs
                     case .failure(let error):
+                        self.dispatchGroup.leave()
                         self.onError?(error)
                         UIBlockingProgressHUD.dismiss()
                     }
@@ -115,12 +115,11 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
                 switch result {
                 case .success(let author):
                     self.authors.updateValue(author.name, forKey: author.id)
-                    self.dispatchGroup.leave()
                 case .failure(let failure):
                     self.onError?(failure)
-                    self.dispatchGroup.leave()
                     return
                 }
+                self.dispatchGroup.leave()
             }
         }
     }
@@ -132,7 +131,6 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     }
     
     private func applySort(by value: Sort) -> [NFTNetworkModel] {
-        guard let myNFTs = myNFTs else { return [] }
         switch value {
         case .price:
             return myNFTs.sorted(by: { $0.price < $1.price })
@@ -156,25 +154,26 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     }
     
     func checkNoNFT() -> Bool {
-        guard let nft = myNFTs else { return false }
-        return nft.isEmpty
+        return myNFTs.isEmpty
     }
     
     func setTitle() -> String {
-        guard let nft = myNFTs else { return "" }
-        return nft.isEmpty ? "" : "Избранные NFT"
+        return myNFTs.isEmpty ? "" : "Мои NFT"
     }
     
     func setImageForButton() -> UIImage {
-        guard let nft = myNFTs else { return UIImage() }
-        return nft.isEmpty ? UIImage() : UIImage.Icons.sort
+        return myNFTs.isEmpty ? UIImage() : UIImage.Icons.sort
     }
     
     func deleteNFT(atRow row: Int?) {
         guard let row else { return }
-        let nftToRemove = myNFTs?.remove(at: row)
-        profile?.nfts.removeAll(where: {$0 == nftToRemove?.id})
+        let nftToRemove = myNFTs.remove(at: row)
+        profile?.nfts.removeAll(where: {$0 == nftToRemove.id})
         uploadData()
+    }
+    
+    func notificationMyNFTliked(myNFTs: NFTNetworkModel) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "myNFTliked"), object: myNFTs)
     }
 }
 

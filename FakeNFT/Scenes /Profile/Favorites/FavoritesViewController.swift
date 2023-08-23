@@ -56,7 +56,7 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
         viewModel.onError = { [weak self] error in
             guard let self = self else { return }
             let errorAlert = AlertModel(
-                title: "Нет интернета",
+                title: "Ошибка, Нет интернета",
                 message: error.localizedDescription,
                 textField: false,
                 placeholder: "",
