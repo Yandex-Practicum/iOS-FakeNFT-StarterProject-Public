@@ -231,4 +231,3 @@ extension NyNFTViewController: UITableViewDelegate {
         }
     }
 }
-
