@@ -10,11 +10,22 @@ import UIKit
 final class NFTsViewController: UIViewController {
     private let viewModel: NFTsViewModel
 
+    private lazy var sortButton: UIBarButtonItem = {
+        let image = UIImage.Icons.sort
+        let button = UIBarButtonItem(
+            image: image,
+            style: .plain,
+            target: self,
+            action: #selector(sortClickHandler)
+        )
+        return button
+    }()
+
     private lazy var container = NFTsContainerView { [weak self] event in
         switch event {
         case .reload:
             self?.viewModel.reload()
-        case let .cellSelected(index):
+        case .cellSelected(let index):
             self?.viewModel.cellSelected(index: index)
         }
     }
@@ -51,15 +62,7 @@ final class NFTsViewController: UIViewController {
     }
 
     private func configureNavigationController() {
-        navigationController?.navigationBar.topItem?.rightBarButtonItem =
-            UIBarButtonItem(
-                image: UIImage(
-                    named: AppConstants.Icons.sort
-                ),
-                style: .done,
-                target: self,
-                action: #selector(sortClickHandler)
-            )
+        navigationItem.rightBarButtonItem = sortButton
 
         navigationController?.navigationBar.tintColor = .appBlack
         navigationController?.navigationBar.backgroundColor = .appWhite
@@ -79,10 +82,8 @@ final class NFTsViewController: UIViewController {
     }
 
     private func handleViewModelStateChangeForUi(
-        tint: UIColor,
         isToBeHidden: Bool
     ) {
-        navigationController?.navigationBar.topItem?.rightBarButtonItem?.tintColor = tint
         tabBarController?.tabBar.isHidden = isToBeHidden
     }
 
@@ -93,7 +94,6 @@ final class NFTsViewController: UIViewController {
                 Executors.asyncMain {
                     self?.container.configure(for: .loading)
                     self?.handleViewModelStateChangeForUi(
-                        tint: .clear,
                         isToBeHidden: false
                     )
                 }
@@ -103,7 +103,6 @@ final class NFTsViewController: UIViewController {
                         for: .loaded(items)
                     )
                     self?.handleViewModelStateChangeForUi(
-                        tint: .black,
                         isToBeHidden: false
                     )
                 }
@@ -111,7 +110,6 @@ final class NFTsViewController: UIViewController {
                 Executors.asyncMain {
                     self?.container.configure(for: .error)
                     self?.handleViewModelStateChangeForUi(
-                        tint: .clear,
                         isToBeHidden: true
                     )
                 }

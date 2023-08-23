@@ -66,8 +66,7 @@ final class NFTListCell: UITableViewCell {
     }
 
     private func setupSubviews() {
-        contentView.layer.cornerRadius = 12
-
+        contentView.backgroundColor = .appWhite
         contentView.addSubview(stackView)
 
         let constraints = [
