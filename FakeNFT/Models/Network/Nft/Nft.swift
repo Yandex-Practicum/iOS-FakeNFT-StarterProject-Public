@@ -1,10 +1,3 @@
-//
-//  Nft.swift
-//  FakeNFT
-//
-//  Created by macOS on 22.06.2023.
-//
-
 struct Nft: Codable {
     let createdAt: String
     let name: String

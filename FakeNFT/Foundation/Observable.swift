@@ -1,10 +1,3 @@
-//
-//  Observable.swift
-//  FakeNFT
-//
-//  Created by macOS on 21.06.2023.
-//
-
 @propertyWrapper
 final class Observable<Value> {
     private var onChange: ((Value) -> Void)? = nil

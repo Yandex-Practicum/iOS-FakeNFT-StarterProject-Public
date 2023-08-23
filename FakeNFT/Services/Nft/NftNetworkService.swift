@@ -1,15 +1,12 @@
-//
-//  UserServiceImpl.swift
-//  FakeNFT
-//
-//  Created by macOS on 22.06.2023.
-//
-
 import Foundation
 
 class NftNetworkService: NftServiceProtocol {
     
+    static let shared = NftNetworkService()
+    
     private let client = DefaultNetworkClient()
+    
+    private init() { }
     
     func getNftList(nftIds: [Int], onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         var nfts: [Nft] = []
@@ -33,11 +30,10 @@ class NftNetworkService: NftServiceProtocol {
             onCompletion(.success(nfts))
         }
     }
-
+    
     func getNft(nftId: Int, onCompletion: @escaping (Result<Nft, Error>) -> Void) {
         let request = GetNftRequest(nftId: nftId)
         
         client.send(request: request, type: Nft.self, onResponse: onCompletion)
     }
-    
 }

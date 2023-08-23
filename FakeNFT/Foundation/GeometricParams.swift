@@ -1,10 +1,3 @@
-//
-//  GeometricParams.swift
-//  FakeNFT
-//
-//  Created by macOS on 23.06.2023.
-//
-
 import Foundation
 
 public struct GeometricParams {

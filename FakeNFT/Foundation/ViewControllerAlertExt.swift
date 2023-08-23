@@ -1,10 +1,3 @@
-//
-//  ViewControllerAlertExt.swift
-//  FakeNFT
-//
-//  Created by macOS on 21.06.2023.
-//
-
 import UIKit
 
 extension UIViewController {

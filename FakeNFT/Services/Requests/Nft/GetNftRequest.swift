@@ -1,10 +1,3 @@
-//
-//  GetUserRequest.swift
-//  FakeNFT
-//
-//  Created by macOS on 22.06.2023.
-//
-
 import Foundation
 
 struct GetNftRequest: NetworkRequest {
