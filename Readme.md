@@ -1,5 +1,6 @@
 Скринкаст эпика "Каталог" - https://disk.yandex.ru/i/y_ySXxmxXXjipw \
 Скринкаст эпика "Корзина" - https://disk.yandex.com/i/0o5nayNCJoUjaA
+Скринкаст эпика "Профиль" - https://disk.yandex.ru/i/iTT3nFrGu4btRg
 
 # ТЗ мобильного приложения FakeNFT
 
