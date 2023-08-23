@@ -8,18 +8,13 @@
 import UIKit
 
 struct NFTsFactory {
-    static func create() -> UINavigationController {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+    static func create(
+        nftService: NFTNetworkService
+    ) -> UINavigationController {
+        let viewModel = NFTsViewModelImpl(networkService: nftService)
+        let viewController = NFTsViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
 
-        return UINavigationController(
-            rootViewController: NFTsViewController(
-                viewModel: NFTsViewModelImpl(
-                    networkService: NFTNetworkServiceImpl(
-                        networkClient: DefaultNetworkClient(decoder: decoder)
-                    )
-                )
-            )
-        )
+        return navigationController
     }
 }

@@ -8,9 +8,32 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    private let nftService: NFTNetworkService & NFTNetworkCartService
+    private let orderService: OrderServiceProtocol
+    private let currenciesService: CurrenciesServiceProtocol
+    private let imageLoadingService: ImageLoadingServiceProtocol
+
+    init(
+        nftService: NFTNetworkService & NFTNetworkCartService,
+        orderService: OrderServiceProtocol,
+        currenciesService: CurrenciesServiceProtocol,
+        imageLoadingService: ImageLoadingServiceProtocol
+    ) {
+        self.nftService = nftService
+        self.orderService = orderService
+        self.currenciesService = currenciesService
+        self.imageLoadingService = imageLoadingService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureController()
+
+        self.configureController()
         self.subscribeToShowCatalogNotification()
     }
 
@@ -30,19 +53,17 @@ final class TabBarController: UITabBarController {
             backgroundColor: .appWhite
         )
 
-        _ = createMockViewController(
-            title: "3-rd mock vc",
-            backgroundColor: .appWhite
-        )
-
         let forthMockVc = createMockViewController(
             title: "4-th mock vc",
             backgroundColor: .appWhite
         )
 
-        tabBar.backgroundColor = .appWhite
-
-        let cartNavigationController = CartViewFactory.create()
+        let cartNavigationController = CartViewFactory.create(
+            nftService: self.nftService,
+            orderService: self.orderService,
+            currenciesService: self.currenciesService,
+            imageLoadingService: self.imageLoadingService
+        )
 
         let profileNavigationController = NavigationController(
             rootViewController: firstMockVc
@@ -52,7 +73,9 @@ final class TabBarController: UITabBarController {
             rootViewController: forthMockVc
         )
 
-        let catalogueNavigationController = NFTsFactory.create()
+        let catalogueNavigationController = NFTsFactory.create(
+            nftService: self.nftService
+        )
 
         self.viewControllers = [
             configureTab(
@@ -80,6 +103,7 @@ final class TabBarController: UITabBarController {
             )
         ]
 
+        self.tabBar.backgroundColor = .appWhite
         self.tabBar.unselectedItemTintColor = .appBlack
     }
 
@@ -98,14 +122,15 @@ final class TabBarController: UITabBarController {
 // MARK: - NotificationCenter
 private extension TabBarController {
     func subscribeToShowCatalogNotification() {
-        NotificationCenterWrapper
-            .shared
-            .subscribeToNotification(type: .showCatalog) { [weak self] _ in
+        let wrapper = NotificationCenterWrapper.shared
+
+        wrapper.subscribeToNotification(type: .showCatalog) { [weak self] _ in
             guard let self = self else { return }
             let catalogNavigationControllerIndex = 1
             let cartNavigationControllerIndex = 2
-            guard let cartNavigationController =
-                    self.viewControllers?[cartNavigationControllerIndex] as? UINavigationController else { return }
+
+            guard let cartController = self.viewControllers?[cartNavigationControllerIndex] else { return }
+            guard let cartNavigationController = cartController as? UINavigationController else { return }
 
             cartNavigationController.popToRootViewController(animated: false)
             self.selectedIndex = catalogNavigationControllerIndex
