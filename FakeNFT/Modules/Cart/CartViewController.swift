@@ -5,10 +5,12 @@ public final class CartViewController: UIViewController {
 
     private lazy var sortButton: UIBarButtonItem = {
         let image = UIImage.Icons.sort
-        let button = UIBarButtonItem(image: image,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(self.didTapSortButton))
+        let button = UIBarButtonItem(
+            image: image,
+            style: .plain,
+            target: self,
+            action: #selector(self.didTapSortButton)
+        )
         return button
     }()
 
@@ -78,6 +80,8 @@ private extension CartViewController {
 
         self.navigationItem.rightBarButtonItem = self.sortButton
         self.navigationItem.backButtonTitle = ""
+
+        self.navigationController?.navigationBar.tintColor = .appBlack
     }
 
     func bind() {

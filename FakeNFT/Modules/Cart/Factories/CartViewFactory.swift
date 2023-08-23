@@ -1,7 +1,12 @@
 import Foundation
 
 struct CartViewFactory {
-    static func create() -> NavigationController {
+    static func create(
+        nftService: NFTNetworkCartService,
+        orderService: OrderServiceProtocol,
+        currenciesService: CurrenciesServiceProtocol,
+        imageLoadingService: ImageLoadingServiceProtocol
+    ) -> NavigationController {
         let networkClient = DefaultNetworkClient()
         let networkRequestSender = NetworkRequestSender(networkClient: networkClient)
 
@@ -14,6 +19,7 @@ struct CartViewFactory {
             orderService: orderService,
             imageLoadingService: imageLoadingService
         )
+
         let orderSorter = CartOrderSorter()
 
         let viewModel = CartViewModel(intercator: cartViewInteractor, orderSorter: orderSorter)

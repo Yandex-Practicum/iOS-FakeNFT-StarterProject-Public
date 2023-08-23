@@ -12,6 +12,7 @@ final class NFTListView: UIView {
 
     private lazy var tableView: UITableView = {
         let view = UITableView()
+        view.backgroundColor = .appWhite
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
