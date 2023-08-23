@@ -8,13 +8,18 @@ import Foundation
 
 class CheckoutPresenter {
     private weak var view: CheckoutView?
-    private var currencies: [CurrencyModel] = []
-    private let currenciesService = CurrenciesService()
-    private let orderService = OrderService.shared
+    private var currencies: [CurrencyModel]
+    private let currenciesService: CurrenciesService
+    private let orderService: OrderService
     private var selectedCurrencyId: String?
     
     init(view: CheckoutView) {
         self.view = view
+        
+        currencies = []
+        currenciesService = CurrenciesService()
+        orderService = OrderService.shared
+        
         loadCurrencies()
     }
     

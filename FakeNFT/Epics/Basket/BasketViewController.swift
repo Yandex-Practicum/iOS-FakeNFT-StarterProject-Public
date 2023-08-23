@@ -9,7 +9,9 @@ protocol BasketView: AnyObject {
 
 final class BasketViewController: UIViewController, BasketView {
     private lazy var sortButton: UIButton = {
-        let button = UIButton.systemButton(with: UIImage(named: "sort")!, target: self, action: #selector(didTapSortButton))
+        let button = UIButton()
+        button.setImage(UIImage(named: "sort"), for: .normal)
+        button.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
         return button
     }()
     

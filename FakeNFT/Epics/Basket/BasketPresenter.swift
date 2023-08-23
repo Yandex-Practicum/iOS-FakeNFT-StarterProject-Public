@@ -9,12 +9,17 @@ import Foundation
 
 class BasketPresenter {
     private weak var view: BasketView?
-    private var nfts: [NftModel] = []
-    private let basketService = BasketService.shared
-    private let sortService = SortService.shared
+    private var nfts: [NftModel]
+    private let basketService: BasketService
+    private let sortService: SortService
     
     init(view: BasketView) {
         self.view = view
+        
+        nfts = []
+        basketService = BasketService.shared
+        sortService = SortService.shared
+        
         loadBasket()
 //        OrderService.shared.updateOrder(with: ["92", "91", "93", "94", "95"]) {result in
 //            switch result {
