@@ -38,4 +38,7 @@ struct AppConstants {
     enum Links {
         static let purchaseUserAgreement = "https://yandex.ru/legal/practicum_termsofuse/"
     }
+    struct String {
+        static let sortOrder = "sortOrder"
+    }
 }

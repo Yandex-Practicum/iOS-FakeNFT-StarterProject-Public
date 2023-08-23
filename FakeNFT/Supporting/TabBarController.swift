@@ -66,7 +66,7 @@ final class TabBarController: UITabBarController {
         )
 
         let profileNavigationController = NavigationController(
-            rootViewController: firstMockVc
+            rootViewController: ProfileViewController(viewModel: ProfileViewModel())
         )
 
         let statisticsNavigationController = NavigationController(

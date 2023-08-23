@@ -1,5 +1,11 @@
 import Foundation
 
+enum NetworkConstants {
+    static let baseURL = URL(string: "https://64c51750c853c26efada7c53.mockapi.io/api/v1")!
+    static let profileEndpoint = "profile/1"
+    static let linkYandexPracticum = "https://practicum.yandex.ru/ios-developer"
+}
+
 enum HttpMethod: String {
     case get = "GET"
     case post = "POST"

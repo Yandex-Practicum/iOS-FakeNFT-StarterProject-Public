@@ -18,6 +18,8 @@ CLOSE_ALERT_TITLE = "Close";
 INVALID_PRICE_FORMAT = "Invalid price format";
 COLLECTION_AUTHOR = "Collection author:";
 
+NOINTERNET = "No Internet";
+
 DEFAULT_ERROR_TITLE = "Error";
 
 CART_PLACEHOLDER_LABEL_TEXT = "Cart is empty";

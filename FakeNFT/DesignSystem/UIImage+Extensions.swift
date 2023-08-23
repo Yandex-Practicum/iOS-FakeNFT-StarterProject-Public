@@ -9,7 +9,14 @@ extension UIImage {
         static let close = UIImage.named("Close")
         static let sort = UIImage.named("Sort")
 
+        static let edit = UIImage(named: "Edit")
+        static let userPlaceholder = UIImage(named: "UserImagePlaceholder")
+        static let back = UIImage(named: "Back")
+        static let emptyStar = UIImage(named: "StarEmpty")
+        static let fillStar = UIImage(named: "StarFilled")
+        
         static let star = UIImage(systemName: "star.fill")
+        
     }
 
     enum Cart {
