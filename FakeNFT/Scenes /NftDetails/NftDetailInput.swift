@@ -1,3 +1,3 @@
 public struct NftDetailInput {
-  let id: String
+    let id: String
 }

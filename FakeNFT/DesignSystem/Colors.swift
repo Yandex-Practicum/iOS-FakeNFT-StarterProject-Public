@@ -18,30 +18,30 @@ extension UIColor {
             (alpha, red, green, blue) = (255, 0, 0, 0)
         }
         self.init(
-          red: CGFloat(red) / 255,
-          green: CGFloat(green) / 255,
-          blue: CGFloat(blue) / 255,
-          alpha: CGFloat(alpha) / 255
+            red: CGFloat(red) / 255,
+            green: CGFloat(green) / 255,
+            blue: CGFloat(blue) / 255,
+            alpha: CGFloat(alpha) / 255
         )
     }
-
+    
     // Ниже приведены примеры цветов, настоящие цвета надо взять из фигмы
-
+    
     // Primary Colors
     static let primary = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1.0)
-
+    
     // Secondary Colors
     static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
-
+    
     // Background Colors
     static let background = UIColor.white
-
+    
     // Text Colors
     static let textPrimary = UIColor.black
     static let textSecondary = UIColor.gray
     static let textOnPrimary = UIColor.white
     static let textOnSecondary = UIColor.black
-
+    
     static let segmentBlack = UIColor(hexString: "1A1B22")
     static let segmentLightGray = UIColor(hexString: "#F7F7F8")
 }
