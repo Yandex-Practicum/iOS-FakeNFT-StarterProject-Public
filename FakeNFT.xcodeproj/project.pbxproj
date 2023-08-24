@@ -32,6 +32,7 @@
 		B3476E432A93C1C100D0500F /* RemovePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E422A93C1C100D0500F /* RemovePresenter.swift */; };
 		B3476E472A93C48900D0500F /* CheckoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E462A93C48900D0500F /* CheckoutPresenter.swift */; };
 		B3476E492A95626900D0500F /* ResultsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E482A95626900D0500F /* ResultsPresenter.swift */; };
+		B3476E4B2A978EBE00D0500F /* Catalog.md in Resources */ = {isa = PBXBuildFile; fileRef = B3476E4A2A978EBE00D0500F /* Catalog.md */; };
 		B355038D2A7A835000A76A25 /* SumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355038C2A7A835000A76A25 /* SumView.swift */; };
 		B355038F2A7A844100A76A25 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355038E2A7A844100A76A25 /* Buttons.swift */; };
 		B35503912A7AD47900A76A25 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35503902A7AD47900A76A25 /* NftModel.swift */; };
@@ -108,6 +109,7 @@
 		B3476E422A93C1C100D0500F /* RemovePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePresenter.swift; sourceTree = "<group>"; };
 		B3476E462A93C48900D0500F /* CheckoutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenter.swift; sourceTree = "<group>"; };
 		B3476E482A95626900D0500F /* ResultsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsPresenter.swift; sourceTree = "<group>"; };
+		B3476E4A2A978EBE00D0500F /* Catalog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Catalog.md; path = ../../../../Downloads/Catalog.md; sourceTree = "<group>"; };
 		B355038C2A7A835000A76A25 /* SumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SumView.swift; sourceTree = "<group>"; };
 		B355038E2A7A844100A76A25 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		B35503902A7AD47900A76A25 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 		F9F5574D2A743375004F6856 /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
+				B3476E4A2A978EBE00D0500F /* Catalog.md */,
 			);
 			path = Decomposition;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3476E4B2A978EBE00D0500F /* Catalog.md in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				F9F557512A743E3E004F6856 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
