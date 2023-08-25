@@ -7,15 +7,15 @@
 
 import UIKit
 
-struct AlertPresenter: AlertPresenterProtocol {
+class AlertPresenter: AlertPresenterProtocol {
     private weak var delegate: UIViewController?
     
-    init(delegate: UIViewController?) {
-        self.delegate = delegate
+    func injectDelegate(viewController: UIViewController) {
+        delegate = viewController
     }
     
     /// Метод, в который передаются модели действия - AlertActionModel, которые будут представлены в алерте. Действие закрытия алерта уже добавлено.
-    func show(models: [AlertActionModel]) {
+    func didTapSortButton(models: [AlertActionModel]) {
         let alert = UIAlertController(
             title: NSLocalizedString("sorting.name", comment: "Заголовок алерта сортировки"),
             message: nil,
