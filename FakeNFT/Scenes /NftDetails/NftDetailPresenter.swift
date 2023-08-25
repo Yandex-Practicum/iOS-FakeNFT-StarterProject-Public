@@ -9,7 +9,7 @@ enum NftDetailState {
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
-    
+
     weak var view: NftDetailView?
     private let input: NftDetailInput
     private let service: NftService
@@ -18,16 +18,16 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
             stateDidChanged()
         }
     }
-    
+
     init(input: NftDetailInput, service: NftService) {
         self.input = input
         self.service = service
     }
-    
+
     func loadImages() {
         state = .loading
     }
-    
+
     private func stateDidChanged() {
         switch state {
         case .initial:
@@ -45,7 +45,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
             view?.showError(errorModel)
         }
     }
-    
+
     private func loadNft() {
         service.loadNft(id: input.id) { [weak self] result in
             switch result {
@@ -56,17 +56,18 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
             }
         }
     }
-    
+
     private func makeErrorModel(_ error: Error) -> ErrorModel {
         let message: String
         switch error {
-        case _ as NetworkClientError:
-            message = "Произошла ошибка сети"
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
         default:
-            message = "Произошла неизвестная ошибка"
+            message = NSLocalizedString("Error.unknown", comment: "")
         }
-        
-        return ErrorModel(message: message, actionText: "Повторить") { [weak self] in
+
+        let actionText = NSLocalizedString("Error.repeat", comment: "")
+        return ErrorModel(message: message, actionText: actionText) { [weak self] in
             self?.loadImages()
         }
     }

@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIView {
-    
+
     func constraintEdges(to view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -11,7 +11,7 @@ extension UIView {
             bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     func constraintCenters(to view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
