@@ -2,6 +2,8 @@ import UIKit
 
 final class LinePageControl: UIView {
 
+    // MARK: - Properties
+
     var numberOfItems: Int = 0 {
         didSet {
             setupStackView()
@@ -14,6 +16,12 @@ final class LinePageControl: UIView {
         }
     }
 
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: height)
+    }
+
+    // MARK: - Private properties
+
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 8
@@ -21,6 +29,8 @@ final class LinePageControl: UIView {
         stackView.axis = .horizontal
         return stackView
     }()
+
+    // MARK: - Init
 
     init() {
         super.init(frame: .zero)
@@ -33,9 +43,7 @@ final class LinePageControl: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: height)
-    }
+    // MARK: - Functions
 
     func setupStackView() {
         stackView.arrangedSubviews.forEach { stackView.removeArrangedSubview($0) }
@@ -57,5 +65,7 @@ final class LinePageControl: UIView {
         }
     }
 }
+
+// MARK: - Constants
 
 private let height: CGFloat = 4

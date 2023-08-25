@@ -37,6 +37,8 @@ final class NftDetailViewController: UIViewController {
 
     private var cellModels: [NftDetailCellModel] = []
 
+    // MARK: - Init
+
     init(presenter: NftDetailPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -46,13 +48,17 @@ final class NftDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Functions
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
         setupLayout()
-        presenter.loadImages()
+        presenter.viewDidLoad()
     }
+
+    // MARK: - private functions
 
     private func setupLayout() {
         collectionView.addSubview(activityIndicator)
@@ -83,6 +89,8 @@ final class NftDetailViewController: UIViewController {
     }
 }
 
+// MARK: - NftDetailView
+
 extension NftDetailViewController: NftDetailView {
     func displayCells(_ cellModels: [NftDetailCellModel]) {
         self.cellModels = cellModels
@@ -90,6 +98,8 @@ extension NftDetailViewController: NftDetailView {
         pageControl.numberOfItems = cellModels.count
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension NftDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -107,6 +117,8 @@ extension NftDetailViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -117,53 +129,5 @@ extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let selectedItem = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.selectedItem = selectedItem
-    }
-}
-
-final class NftImageCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
-
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.delegate = self
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 3.0
-        return scrollView
-    }()
-
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        contentView.addSubview(scrollView)
-        scrollView.constraintEdges(to: contentView)
-
-        scrollView.addSubview(imageView)
-        imageView.constraintCenters(to: scrollView)
-        imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func configure(with cellModel: NftDetailCellModel) {
-        imageView.kf.setImage(with: cellModel.url)
-    }
-}
-
-extension NftImageCollectionViewCell: UIScrollViewDelegate {
-
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
-    }
-
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imageView
     }
 }

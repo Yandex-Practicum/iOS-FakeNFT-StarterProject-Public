@@ -1,14 +1,20 @@
 import Foundation
 
+// MARK: - Protocol
+
 protocol NftDetailPresenter {
-    func loadImages()
+    func viewDidLoad()
 }
+
+// MARK: - State
 
 enum NftDetailState {
     case initial, loading, failed(Error), data(Nft)
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
+
+    // MARK: - Properties
 
     weak var view: NftDetailView?
     private let input: NftDetailInput
@@ -19,12 +25,16 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         }
     }
 
+    // MARK: - Init
+
     init(input: NftDetailInput, service: NftService) {
         self.input = input
         self.service = service
     }
 
-    func loadImages() {
+    // MARK: - Functions
+
+    func viewDidLoad() {
         state = .loading
     }
 
@@ -68,7 +78,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
         let actionText = NSLocalizedString("Error.repeat", comment: "")
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
-            self?.loadImages()
+            self?.state = .loading
         }
     }
 }
