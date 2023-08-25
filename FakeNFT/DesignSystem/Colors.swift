@@ -17,23 +17,28 @@ extension UIColor {
         default:
             (alpha, red, green, blue) = (255, 0, 0, 0)
         }
-        self.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha) / 255)
+        self.init(red: CGFloat(red) / 255,
+                  green: CGFloat(green) / 255,
+                  blue: CGFloat(blue) / 255,
+                  alpha: CGFloat(alpha) / 255)
     }
 
-    // Ниже приведены примеры цветов, настоящие цвета надо взять из фигмы
+    // Themed colors
+    enum Themed {
+        static let black = UIColor(named: "Black")
+        static let white = UIColor(named: "White")
+        static let lightGray = UIColor(named: "Light gray")
+    }
 
-    // Primary Colors
-    static let primary = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1.0)
-
-    // Secondary Colors
-    static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
-
-    // Background Colors
-    static let background = UIColor.white
-
-    // Text Colors
-    static let textPrimary = UIColor.black
-    static let textSecondary = UIColor.gray
-    static let textOnPrimary = UIColor.white
-    static let textOnSecondary = UIColor.black
+    // Universal colors
+    enum Universal {
+        static let gray = UIColor(named: "Gray Universal")
+        static let red = UIColor(named: "Red Universal")
+        static let background = UIColor(named: "Background Universal")
+        static let green = UIColor(named: "Green Universal")
+        static let blue = UIColor(named: "Blue Universal")
+        static let black = UIColor(named: "Black Universal")
+        static let white = UIColor(named: "White Universal")
+        static let yellow = UIColor(named: "Yellow Universal")
+    }
 }
