@@ -9,9 +9,12 @@ final class CartView: UIView {
         static let labelsLeadingInset: CGFloat = 16
         static let nftCountLabelTopInset: CGFloat = 16
         static let finalCostLabelTopInset: CGFloat = 2
+
+        static let purchaseButtonTitle = "CART_PURCHASE_BUTTON_TITLE".localized
     }
 
     var onTapPurchaseButton: ActionCallback<Void>?
+    var onTapSortButton: ActionCallback<Void>?
     var onRefreshTable: ActionCallback<Void>?
 
     var tableViewHelper: CartTableViewHelperProtocol? {
@@ -57,10 +60,12 @@ final class CartView: UIView {
     }()
 
     private lazy var purchaseButton: AppButton = {
-        let button = AppButton(type: .filled, title: "CART_PURCHASE_BUTTON_TITLE".localized)
+        let button = AppButton(type: .filled, title: Constants.purchaseButtonTitle)
         button.addTarget(self, action: #selector(self.didTapPurchaseButton), for: .touchUpInside)
         return button
     }()
+
+    private(set) lazy var sortButton = SortBarButtonItem(target: self, action: #selector(self.didTapSortButton))
 
     private let placeholderView: CartPlaceholderView = {
         let view = CartPlaceholderView()
@@ -102,7 +107,6 @@ extension CartView {
     func setFinalOrderCost(_ cost: String) {
         self.finalCostLabel.text = cost
         self.finalCostLabelWidthConstraint.constant = self.finalCostLabel.intrinsicContentSize.width
-//        self.setNeedsUpdateConstraints()
     }
 
     func shouldHidePlaceholder(_ shouldHide: Bool) {
@@ -189,6 +193,11 @@ private extension CartView {
     @objc
     func didTapPurchaseButton() {
         self.onTapPurchaseButton?(())
+    }
+
+    @objc
+    func didTapSortButton() {
+
     }
 
     @objc

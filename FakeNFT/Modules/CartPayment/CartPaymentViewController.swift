@@ -48,7 +48,7 @@ public final class CartPaymentViewController: UIViewController {
         return refreshControl
     }()
 
-    private var collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
+    private let collectionViewHelper: CartPaymentCollectionViewHelperProtocol?
     private let viewModel: CartPaymentViewModelProtocol
     private let router: CartPaymentRouterProtocol
 

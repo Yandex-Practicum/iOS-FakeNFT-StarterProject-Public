@@ -216,11 +216,16 @@ extension ProfileViewController: UITableViewDelegate {
         guard let profile = viewModel.profile else { return }
         switch indexPath.row {
         case 0:
-            navigationController?.pushViewController(MyNFTViewController(viewModel: MyNFTViewModel(profile: profile)), animated: true)
+            let viewController = MyNFTViewController(viewModel: MyNFTViewModel(profile: profile))
+            navigationController?.pushViewController(viewController, animated: true)
         case 1:
-            navigationController?.pushViewController(FavoritesViewController(viewModel: FavoritesViewModel(profile: profile)), animated: true)
+            let networkClient = DefaultNetworkClient()
+            let viewModel = FavoritesViewModel(networkClient:networkClient, profile: profile)
+            let viewController = FavoritesViewController(viewModel: viewModel)
+            navigationController?.pushViewController(viewController, animated: true)
         case 2:
-            navigationController?.pushViewController(WebsiteViewController(), animated: true)
+            let viewController = WebsiteViewController()
+            navigationController?.pushViewController(viewController, animated: true)
         default:
             return
         }

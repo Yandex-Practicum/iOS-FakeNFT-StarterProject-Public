@@ -10,16 +10,7 @@ import UIKit
 final class NFTsViewController: UIViewController {
     private let viewModel: NFTsViewModel
 
-    private lazy var sortButton: UIBarButtonItem = {
-        let image = UIImage.Icons.sort
-        let button = UIBarButtonItem(
-            image: image,
-            style: .plain,
-            target: self,
-            action: #selector(sortClickHandler)
-        )
-        return button
-    }()
+    private lazy var sortButton = SortBarButtonItem(target: self, action: #selector(sortClickHandler))
 
     private lazy var container = NFTsContainerView { [weak self] event in
         switch event {

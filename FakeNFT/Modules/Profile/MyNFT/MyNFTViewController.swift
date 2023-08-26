@@ -23,13 +23,8 @@ final class MyNFTViewController: UIViewController {
         label.textColor = .appBlack
         return label
     }()
-    
-    private lazy var sortButton = UIBarButtonItem(
-        image: UIImage.Icons.sort,
-        style: .plain,
-        target: self,
-        action: #selector(didTapSortButton)
-    )
+
+    private lazy var sortButton = SortBarButtonItem(target: self, action: #selector(didTapSortButton))
     
     init(viewModel: MyNFTViewModelProtocol) {
         self.viewModel = viewModel

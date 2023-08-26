@@ -48,11 +48,6 @@ final class TabBarController: UITabBarController {
     }
 
     private func configureController() {
-        let firstMockVc = createMockViewController(
-            title: "1-st mock vc",
-            backgroundColor: .appWhite
-        )
-
         let forthMockVc = createMockViewController(
             title: "4-th mock vc",
             backgroundColor: .appWhite
