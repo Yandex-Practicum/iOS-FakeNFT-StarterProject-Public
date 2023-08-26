@@ -102,6 +102,7 @@
 		96D6176C2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D6176B2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift */; };
 		96D7DD112A7B69D000250612 /* NFTItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D7DD102A7B69D000250612 /* NFTItemModel.swift */; };
 		96F96C482A99D8C4007449BC /* SortBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F96C472A99D8C4007449BC /* SortBarButtonItem.swift */; };
+		96F96C4A2A9A21C0007449BC /* CartPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F96C492A9A21C0007449BC /* CartPaymentView.swift */; };
 		F6084F6B2A911EE500DBE5AA /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6084F6A2A911EE400DBE5AA /* EditProfileViewModel.swift */; };
 		F6084F6D2A914E6A00DBE5AA /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6084F6C2A914E6A00DBE5AA /* ProfileModel.swift */; };
 		F6084F712A916A3800DBE5AA /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6084F702A916A3800DBE5AA /* UIImageView+Extensions.swift */; };
@@ -288,6 +289,7 @@
 		96D6176B2A90F96600E9DDC1 /* NotificataionCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificataionCenterWrapper.swift; sourceTree = "<group>"; };
 		96D7DD102A7B69D000250612 /* NFTItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTItemModel.swift; sourceTree = "<group>"; };
 		96F96C472A99D8C4007449BC /* SortBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortBarButtonItem.swift; sourceTree = "<group>"; };
+		96F96C492A9A21C0007449BC /* CartPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPaymentView.swift; sourceTree = "<group>"; };
 		F6084F6A2A911EE400DBE5AA /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		F6084F6C2A914E6A00DBE5AA /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		F6084F702A916A3800DBE5AA /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 				961964432A7FBC0C0076BD88 /* CartPaymentCollectionViewHelper.swift */,
 				961964452A7FBC1F0076BD88 /* CartPaymentCollectionViewCell.swift */,
 				9619644B2A809E440076BD88 /* CartPaymentRouter.swift */,
+				96F96C492A9A21C0007449BC /* CartPaymentView.swift */,
 				96766A3A2A8D16F30071BA57 /* CartPaymentViewModel+ViewState.swift */,
 			);
 			path = CartPayment;
@@ -1224,6 +1227,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				F61AB32A2A8513D20064F057 /* FavoriteButton.swift in Sources */,
 				F61AB3152A84AF4C0064F057 /* MyNFTViewController.swift in Sources */,
+				96F96C4A2A9A21C0007449BC /* CartPaymentView.swift in Sources */,
 				F6084F732A9173FE00DBE5AA /* ProfileUpdateDelegate.swift in Sources */,
 				F6084F6B2A911EE500DBE5AA /* EditProfileViewModel.swift in Sources */,
 				F61AB3252A8511280064F057 /* MyNFTCell.swift in Sources */,
