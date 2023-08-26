@@ -265,6 +265,7 @@ final class EditProfileViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension EditProfileViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

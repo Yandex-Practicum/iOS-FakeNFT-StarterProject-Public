@@ -157,6 +157,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         (navigationController as? NavigationController)?.editProfileButtonDelegate = self
         navigationItem.backButtonTitle = ""
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .appBlack
     }
     
     private func setupConstraints() {
@@ -191,6 +192,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return assetNameLabel.count
@@ -209,29 +211,39 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let profile = viewModel.profile else { return }
         switch indexPath.row {
         case 0:
-            navigationController?.pushViewController(NyNFTViewController(viewModel: MyNFTViewModel(profile: profile)), animated: true)
+            let viewController = MyNFTViewController(viewModel: MyNFTViewModel(profile: profile))
+            navigationController?.pushViewController(viewController, animated: true)
         case 1:
-            navigationController?.pushViewController(FavoritesViewController(viewModel: FavoritesViewModel(profile: profile)), animated: true)
+            let networkClient = DefaultNetworkClient()
+            let viewModel = FavoritesViewModel(networkClient:networkClient, profile: profile)
+            let viewController = FavoritesViewController(viewModel: viewModel)
+            navigationController?.pushViewController(viewController, animated: true)
         case 2:
-            navigationController?.pushViewController(WebsiteViewController(), animated: true)
+            let viewController = WebsiteViewController()
+            navigationController?.pushViewController(viewController, animated: true)
         default:
             return
         }
     }
 }
 
+// MARK: - EditProfileButtonDelegate
 extension ProfileViewController: EditProfileButtonDelegate {
     func proceedToEditing() {
         guard let profile = viewModel.profile else { return }
-        present(EditProfileViewController(viewModel: EditProfileViewModel(profile: profile), delegate: self), animated: true)
+        let viewModel = EditProfileViewModel(networkClient: DefaultNetworkClient(), profile: profile)
+        let viewController = EditProfileViewController(viewModel: viewModel, delegate: self)
+        present(viewController, animated: true)
     }
 }
 
+// MARK: - ProfileUpdateDelegate
 extension ProfileViewController: ProfileUpdateDelegate {
     func update() {
         viewModel.getProfileData()

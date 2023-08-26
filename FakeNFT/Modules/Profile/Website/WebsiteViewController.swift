@@ -1,8 +1,9 @@
 import UIKit
 import WebKit
 
-final class WebsiteViewController: UIViewController, WKUIDelegate, UIGestureRecognizerDelegate {
+final class WebsiteViewController: UIViewController {
     let link: String?
+
     private lazy var backButton = UIBarButtonItem(
         image: UIImage.Icons.back,
         style: .plain,
@@ -68,3 +69,9 @@ final class WebsiteViewController: UIViewController, WKUIDelegate, UIGestureReco
         ])
     }
 }
+
+// MARK: - WKUIDelegate
+extension WebsiteViewController: WKUIDelegate {}
+
+// MARK: - UIGestureRecognizerDelegate
+extension WebsiteViewController: UIGestureRecognizerDelegate {}

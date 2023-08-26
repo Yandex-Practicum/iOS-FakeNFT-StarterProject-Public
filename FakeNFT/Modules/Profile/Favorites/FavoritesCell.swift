@@ -1,6 +1,15 @@
 import UIKit
 
 final class FavoritesCell: UICollectionViewCell, ReuseIdentifying {
+    struct Model {
+        let image: String
+        let name: String
+        let rating: Int
+        let price: Float
+        let isFavorite: Bool
+        let id: String
+    }
+
     var tapAction: (() -> Void)?
     
     private lazy var nftImage: UIImageView = {
@@ -100,13 +109,3 @@ final class FavoritesCell: UICollectionViewCell, ReuseIdentifying {
     
 }
 
-extension FavoritesCell {
-    struct Model {
-        let image: String
-        let name: String
-        let rating: Int
-        let price: Float
-        let isFavorite: Bool
-        let id: String
-    }
-}

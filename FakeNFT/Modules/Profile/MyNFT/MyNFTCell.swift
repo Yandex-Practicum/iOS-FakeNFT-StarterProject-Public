@@ -1,6 +1,17 @@
 import UIKit
 
 final class MyNFTCell: UITableViewCell, ReuseIdentifying {
+    struct CellModel {
+        let image: String
+        let name: String
+        let rating: Int
+        let author: String
+        let price: Float
+        let isFavorite: Bool
+        let id: String
+    }
+
+
     var tapAction: (() -> Void)?
     
     private lazy var nftImage = {
@@ -71,6 +82,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupConstraints()
+        contentView.backgroundColor = .appWhite
     }
     
     required init?(coder: NSCoder) {
@@ -130,17 +142,5 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
             nftPriceStack.leadingAnchor.constraint(equalTo: nftStack.trailingAnchor),
             nftPriceStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -39)
         ])
-    }
-}
-
-extension MyNFTCell {
-    struct CellModel {
-        let image: String
-        let name: String
-        let rating: Int
-        let author: String
-        let price: Float
-        let isFavorite: Bool
-        let id: String
     }
 }

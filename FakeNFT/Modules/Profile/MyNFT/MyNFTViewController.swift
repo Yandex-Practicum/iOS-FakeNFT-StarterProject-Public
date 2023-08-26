@@ -1,6 +1,6 @@
 import UIKit
 
-final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
+final class MyNFTViewController: UIViewController {
     private let viewModel: MyNFTViewModelProtocol
     
     private lazy var myNFTTable: UITableView = {
@@ -9,10 +9,10 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         tableView.register(MyNFTCell.self)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
         tableView.isUserInteractionEnabled = true
+        tableView.backgroundColor = .appWhite
         return tableView
     }()
     
@@ -23,13 +23,8 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         label.textColor = .appBlack
         return label
     }()
-    
-    private lazy var sortButton = UIBarButtonItem(
-        image: UIImage.Icons.sort,
-        style: .plain,
-        target: self,
-        action: #selector(didTapSortButton)
-    )
+
+    private lazy var sortButton = SortBarButtonItem(target: self, action: #selector(didTapSortButton))
     
     init(viewModel: MyNFTViewModelProtocol) {
         self.viewModel = viewModel
@@ -47,7 +42,7 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
         setupView()
         setupConstraints()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhite
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,7 +147,8 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-extension NyNFTViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.myNFTs.count
     }
@@ -190,9 +186,11 @@ extension NyNFTViewController: UITableViewDataSource {
     }
 }
 
-extension NyNFTViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+// MARK: - UITableViewDelegate
+extension MyNFTViewController: UITableViewDelegate {
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         let removeButton = UIContextualAction(style: .destructive,
                                               title: "Удалить") { [weak self] _, _, _ in
@@ -231,3 +229,6 @@ extension NyNFTViewController: UITableViewDelegate {
         }
     }
 }
+
+// MARK: - UIGestureRecognizerDelegatef              f
+extension MyNFTViewController: UIGestureRecognizerDelegate {}

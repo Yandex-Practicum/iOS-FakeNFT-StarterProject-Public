@@ -2,6 +2,7 @@ import UIKit
 
 final class NoContentView: UIView {
     private let noContent: NoContent
+
     private lazy var noContentLabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

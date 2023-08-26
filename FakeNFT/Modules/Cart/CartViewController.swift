@@ -3,20 +3,8 @@ import UIKit
 public final class CartViewController: UIViewController {
     private let cartView = CartView()
 
-    private lazy var sortButton: UIBarButtonItem = {
-        let image = UIImage.Icons.sort
-        let button = UIBarButtonItem(
-            image: image,
-            style: .plain,
-            target: self,
-            action: #selector(self.didTapSortButton)
-        )
-        return button
-    }()
-
-    private var tableViewHelper: CartTableViewHelperProtocol
-    private var viewModel: CartViewModelProtocol
-
+    private let tableViewHelper: CartTableViewHelperProtocol
+    private let viewModel: CartViewModelProtocol
     private let router: CartViewRouterProtocol
 
     public init(
@@ -78,7 +66,7 @@ private extension CartViewController {
         self.configureView()
         self.bind()
 
-        self.navigationItem.rightBarButtonItem = self.sortButton
+        self.navigationItem.rightBarButtonItem = self.cartView.sortButton
         self.navigationItem.backButtonTitle = ""
 
         self.navigationController?.navigationBar.tintColor = .appBlack
@@ -121,7 +109,7 @@ private extension CartViewController {
     }
 
     func shouldHideSortButton(_ shouldHide: Bool) {
-        let button = shouldHide ? nil : self.sortButton
+        let button = shouldHide ? nil : self.cartView.sortButton
         self.navigationItem.setRightBarButton(button, animated: true)
     }
 
@@ -134,18 +122,15 @@ private extension CartViewController {
             self.router.showCartPayment(on: self, orderId: self.viewModel.orderId)
         }
 
+        self.cartView.onTapSortButton = { [weak self] _ in
+            guard let self = self else { return }
+            self.router.showSortAlert(viewController: self) { [weak self] trait in
+                self?.viewModel.sortOrder(trait: trait)
+            }
+        }
+
         self.cartView.onRefreshTable = { [weak self] _ in
             self?.viewModel.fetchOrder()
-        }
-    }
-}
-
-// MARK: - Actions
-private extension CartViewController {
-    @objc
-    func didTapSortButton() {
-        self.router.showSortAlert(viewController: self) { [weak self] trait in
-            self?.viewModel.sortOrder(trait: trait)
         }
     }
 }

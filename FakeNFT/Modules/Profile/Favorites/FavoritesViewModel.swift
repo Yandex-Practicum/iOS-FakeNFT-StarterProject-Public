@@ -27,8 +27,8 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
         }
     }
     
-    init(profile: ProfileModel){
-        self.networkClient = DefaultNetworkClient()
+    init(networkClient: NetworkClient, profile: ProfileModel){
+        self.networkClient = networkClient
         getLikedNFTs(likedIDs: profile.likes)
         
         NotificationCenter.default.addObserver(
