@@ -1,10 +1,11 @@
 import UIKit
-import ProgressHUD
 
 protocol BasketView: AnyObject {
     func updateNfts(_ nfts: [NftModel])
     func showEmptyLabel(_ show: Bool)
     func changeSumText(totalAmount: Int, totalPrice: Float)
+    func showHud()
+    func removeHud()
 }
 
 final class BasketViewController: UIViewController, BasketView {
@@ -41,14 +42,13 @@ final class BasketViewController: UIViewController, BasketView {
         return label
     }()
     
-    private var presenter: BasketPresenter!
+    private var presenter: BasketPresenter?
     private var nfts: [NftModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         presenter = BasketPresenter(view: self)
-        presenter.loadBasket()
 
         setupView()
     }
@@ -74,13 +74,21 @@ final class BasketViewController: UIViewController, BasketView {
         let sorts: [(String, Sort)] = [("По цене", .price), ("По рейтингу", .rating), ("По названию", .name)]
         sorts.forEach { title, sortValue in
             let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
-                self?.presenter.sortNfts(by: sortValue)
+                self?.presenter?.sortNfts(by: sortValue)
             }
             alert.addAction(action)
         }
 
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         present(alert, animated: true)
+    }
+    
+    func showHud() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func removeHud() {
+        UIBlockingProgressHUD.dismiss()
     }
     
     func updateNfts(_ nfts: [NftModel]) {
@@ -168,7 +176,7 @@ extension BasketViewController: RemoveNFTViewControllerDelegate {
     }
     
     func didTapConfirmButton(_ model: NftModel) {
-        presenter.removeNFTFromBasket(model)
+        presenter?.removeNFTFromBasket(model)
         dismiss(animated: true)
     }
 }

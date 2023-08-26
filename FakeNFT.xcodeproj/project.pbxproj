@@ -32,7 +32,6 @@
 		B3476E432A93C1C100D0500F /* RemovePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E422A93C1C100D0500F /* RemovePresenter.swift */; };
 		B3476E472A93C48900D0500F /* CheckoutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E462A93C48900D0500F /* CheckoutPresenter.swift */; };
 		B3476E492A95626900D0500F /* ResultsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3476E482A95626900D0500F /* ResultsPresenter.swift */; };
-		B3476E4B2A978EBE00D0500F /* Catalog.md in Resources */ = {isa = PBXBuildFile; fileRef = B3476E4A2A978EBE00D0500F /* Catalog.md */; };
 		B355038D2A7A835000A76A25 /* SumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355038C2A7A835000A76A25 /* SumView.swift */; };
 		B355038F2A7A844100A76A25 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355038E2A7A844100A76A25 /* Buttons.swift */; };
 		B35503912A7AD47900A76A25 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35503902A7AD47900A76A25 /* NftModel.swift */; };
@@ -41,6 +40,7 @@
 		B355039B2A7D771B00A76A25 /* BasketNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355039A2A7D771B00A76A25 /* BasketNFTCell.swift */; };
 		B355039F2A802AB700A76A25 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355039E2A802AB700A76A25 /* CheckoutViewController.swift */; };
 		B35503A12A80310600A76A25 /* PayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35503A02A80310600A76A25 /* PayView.swift */; };
+		B358E3E32A9A034B00DF15D3 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358E3E22A9A034B00DF15D3 /* UIBlockingProgressHUD.swift */; };
 		B3686BA52A8A59F70089CF2F /* BasketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3686BA42A8A59F70089CF2F /* BasketService.swift */; };
 		B398BA0E2A811C5C00AAD0FB /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B398BA0D2A811C5C00AAD0FB /* CurrencyCell.swift */; };
 		B398BA102A813F9100AAD0FB /* UserAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B398BA0F2A813F9100AAD0FB /* UserAgreementViewController.swift */; };
@@ -109,7 +109,6 @@
 		B3476E422A93C1C100D0500F /* RemovePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePresenter.swift; sourceTree = "<group>"; };
 		B3476E462A93C48900D0500F /* CheckoutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPresenter.swift; sourceTree = "<group>"; };
 		B3476E482A95626900D0500F /* ResultsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsPresenter.swift; sourceTree = "<group>"; };
-		B3476E4A2A978EBE00D0500F /* Catalog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Catalog.md; path = ../../../../Downloads/Catalog.md; sourceTree = "<group>"; };
 		B355038C2A7A835000A76A25 /* SumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SumView.swift; sourceTree = "<group>"; };
 		B355038E2A7A844100A76A25 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		B35503902A7AD47900A76A25 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
@@ -118,6 +117,7 @@
 		B355039A2A7D771B00A76A25 /* BasketNFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketNFTCell.swift; sourceTree = "<group>"; };
 		B355039E2A802AB700A76A25 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		B35503A02A80310600A76A25 /* PayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayView.swift; sourceTree = "<group>"; };
+		B358E3E22A9A034B00DF15D3 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		B3686BA42A8A59F70089CF2F /* BasketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketService.swift; sourceTree = "<group>"; };
 		B398BA0D2A811C5C00AAD0FB /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		B398BA0F2A813F9100AAD0FB /* UserAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgreementViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C38F29D245250081F015 /* Requests */,
+				B358E3E22A9A034B00DF15D3 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -412,7 +413,6 @@
 		F9F5574D2A743375004F6856 /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
-				B3476E4A2A978EBE00D0500F /* Catalog.md */,
 			);
 			path = Decomposition;
 			sourceTree = "<group>";
@@ -531,7 +531,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3476E4B2A978EBE00D0500F /* Catalog.md in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				F9F557512A743E3E004F6856 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
@@ -615,6 +614,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				B398BA102A813F9100AAD0FB /* UserAgreementViewController.swift in Sources */,
 				F9F5574F2A743AE1004F6856 /* Image.swift in Sources */,
+				B358E3E32A9A034B00DF15D3 /* UIBlockingProgressHUD.swift in Sources */,
 				B355039B2A7D771B00A76A25 /* BasketNFTCell.swift in Sources */,
 				B3476E432A93C1C100D0500F /* RemovePresenter.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,

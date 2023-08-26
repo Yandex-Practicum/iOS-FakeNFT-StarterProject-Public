@@ -36,7 +36,7 @@ final class ResultsViewController: UIViewController, ResultsView {
 
     private var buttonAction: (() -> Void)?
     
-    private var presenter: ResultsPresenter!
+    private var presenter: ResultsPresenter?
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -19,8 +19,9 @@ class RemoveNFTPresenter {
 
     func configure(with model: NftModel) {
         self.model = model
-        if let image = model.images.first,
-           let url = URL(string: image) {
+        if
+            let image = model.images.first,
+            let url = URL(string: image) {
             view?.updateImage(with: url)
         }
     }

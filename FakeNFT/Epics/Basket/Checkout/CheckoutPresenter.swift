@@ -15,9 +15,10 @@ class CheckoutPresenter {
     
     init(view: CheckoutView) {
         self.view = view
+        view.showHud()
         
         currencies = []
-        currenciesService = CurrenciesService()
+        currenciesService = CurrenciesService.shared
         orderService = OrderService.shared
         
         loadCurrencies()
@@ -30,6 +31,7 @@ class CheckoutPresenter {
             case .success(let currencies):
                 DispatchQueue.main.async {
                     self.view?.updateCurrencies(currencies)
+                    self.view?.removeHud()
                 }
             case .failure(let error):
                 print(error)

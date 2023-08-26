@@ -12,15 +12,18 @@ class BasketPresenter {
     private var nfts: [NftModel]
     private let basketService: BasketService
     private let sortService: SortService
+    private let orderService: OrderService
     
     init(view: BasketView) {
         self.view = view
+        view.showHud()
         
         nfts = []
         basketService = BasketService.shared
         sortService = SortService.shared
+        orderService = OrderService.shared
         
-        loadBasket()
+        loadOrder()
 //        OrderService.shared.updateOrder(with: ["92", "91", "93", "94", "95"]) {result in
 //            switch result {
 //            case .success(_):
@@ -29,6 +32,20 @@ class BasketPresenter {
 //                print(error)
 //            }
 //        }
+    }
+    
+    func loadOrder() {
+        orderService.getNFTModels { nfts in
+            if let nfts = nfts {
+                self.basketService.basket = nfts
+            } else {
+                print("Error with handling nfts")
+                self.basketService.basket = []
+            }
+            
+            self.loadBasket()
+            self.view?.removeHud()
+        }
     }
 
     func loadBasket() {

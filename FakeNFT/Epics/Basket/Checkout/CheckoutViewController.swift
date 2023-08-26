@@ -10,6 +10,8 @@ import UIKit
 protocol CheckoutView: AnyObject {
     func updateCurrencies(_ currencies: [CurrencyModel])
     func displayPaymentResult(success: Bool)
+    func showHud()
+    func removeHud()
 }
 
 final class CheckoutViewController: UIViewController, CheckoutView {
@@ -47,7 +49,7 @@ final class CheckoutViewController: UIViewController, CheckoutView {
     )
     
     private var currencies: [CurrencyModel] = []
-    private var presenter: CheckoutPresenter!
+    private var presenter: CheckoutPresenter?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +59,14 @@ final class CheckoutViewController: UIViewController, CheckoutView {
     
     @objc private func didTapBackButton() {
         dismiss(animated: true)
+    }
+    
+    func showHud() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func removeHud() {
+        UIBlockingProgressHUD.dismiss()
     }
     
     func updateCurrencies(_ currencies: [CurrencyModel]) {
@@ -105,7 +115,7 @@ private extension CheckoutViewController {
 
 extension CheckoutViewController: PayViewDelegate {
     func didTapPayButton() {
-        presenter.makePayment()
+        presenter?.makePayment()
     }
     
     func displayPaymentResult(success: Bool) {
@@ -114,19 +124,19 @@ extension CheckoutViewController: PayViewDelegate {
             content = .init(
                 image: .paymentSuccess,
                 title: "Успех! Оплата прошла, поздравляем с покупкой!",
-                buttonTitle: "Вернуться в каталог",
-                buttonAction: {
-                    self.tabBarController?.selectedIndex = 1
-                    self.dismiss(animated: true)
-                }
-            )
+                buttonTitle: "Вернуться в каталог"
+            ) {
+                self.tabBarController?.selectedIndex = 1
+                self.dismiss(animated: true)
+            }
         } else {
             content = .init(
                 image: .paymentError,
                 title: "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!",
-                buttonTitle: "Попробовать еще раз",
-                buttonAction: { self.dismiss(animated: true) }
-            )
+                buttonTitle: "Попробовать еще раз"
+            ) {
+                self.dismiss(animated: true)
+            }
         }
         
         let resultsViewController = ResultsViewController()
@@ -183,7 +193,7 @@ extension CheckoutViewController: UICollectionViewDelegateFlowLayout {
 
 extension CheckoutViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.didSelectCurrency(id: currencies[indexPath.row].id)
+        presenter?.didSelectCurrency(id: currencies[indexPath.row].id)
         let cell: CurrencyCell = collectionView.cellForItem(at: indexPath)
         cell.select()
     }

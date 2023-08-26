@@ -65,7 +65,7 @@ final class RemoveNFTViewController: UIViewController, RemoveNFTView {
     
     weak var delegate: RemoveNFTViewControllerDelegate?
     private var model: NftModel?
-    private var presenter: RemoveNFTPresenter!
+    private var presenter: RemoveNFTPresenter?
     
     init(nftModel: NftModel, delegate: RemoveNFTViewControllerDelegate) {
         self.model = nftModel
@@ -82,7 +82,7 @@ final class RemoveNFTViewController: UIViewController, RemoveNFTView {
         
         presenter = RemoveNFTPresenter(view: self, delegate: delegate)
         if let model = model {
-            presenter.configure(with: model)
+            presenter?.configure(with: model)
         }
         
         setupView()
@@ -95,11 +95,11 @@ final class RemoveNFTViewController: UIViewController, RemoveNFTView {
     }
     
     @objc private func didTapCancelButton() {
-        presenter.didTapCancelButton()
+        presenter?.didTapCancelButton()
     }
     
     @objc private func didTapConfirmButton() {
-        presenter.didTapConfirmButton()
+        presenter?.didTapConfirmButton()
     }
 }
 
