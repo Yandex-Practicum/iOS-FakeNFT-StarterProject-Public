@@ -149,8 +149,12 @@ tabBar.basket = "Basket";
 "sort.close" = "Close";
 // Статистика
 tabBar.statistic = "Statistics";
+failedToLoadData = "Failed to load data.";
 
-
+sorting = "Sorting";
+sorting.byName = "By name";
+sorting.byRating = "By rating";
+sorting.close = "Close";
 
 
 
