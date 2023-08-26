@@ -9,10 +9,10 @@ final class MyNFTViewController: UIViewController {
         tableView.register(MyNFTCell.self)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
         tableView.isUserInteractionEnabled = true
+        tableView.backgroundColor = .appWhite
         return tableView
     }()
     
@@ -42,7 +42,7 @@ final class MyNFTViewController: UIViewController {
         setupView()
         setupConstraints()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhite
     }
     
     override func viewWillAppear(_ animated: Bool) {

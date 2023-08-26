@@ -82,6 +82,7 @@ final class MyNFTCell: UITableViewCell, ReuseIdentifying {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupConstraints()
+        contentView.backgroundColor = .appWhite
     }
     
     required init?(coder: NSCoder) {

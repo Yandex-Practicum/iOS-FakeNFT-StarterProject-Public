@@ -157,6 +157,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         (navigationController as? NavigationController)?.editProfileButtonDelegate = self
         navigationItem.backButtonTitle = ""
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .appBlack
     }
     
     private func setupConstraints() {
