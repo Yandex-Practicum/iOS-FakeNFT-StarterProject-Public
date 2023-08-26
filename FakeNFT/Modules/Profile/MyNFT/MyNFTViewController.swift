@@ -1,6 +1,6 @@
 import UIKit
 
-final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
+final class MyNFTViewController: UIViewController {
     private let viewModel: MyNFTViewModelProtocol
     
     private lazy var myNFTTable: UITableView = {
@@ -152,7 +152,8 @@ final class NyNFTViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-extension NyNFTViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.myNFTs.count
     }
@@ -190,9 +191,11 @@ extension NyNFTViewController: UITableViewDataSource {
     }
 }
 
-extension NyNFTViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+// MARK: - UITableViewDelegate
+extension MyNFTViewController: UITableViewDelegate {
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         let removeButton = UIContextualAction(style: .destructive,
                                               title: "Удалить") { [weak self] _, _, _ in
@@ -231,3 +234,6 @@ extension NyNFTViewController: UITableViewDelegate {
         }
     }
 }
+
+// MARK: - UIGestureRecognizerDelegatef              f
+extension MyNFTViewController: UIGestureRecognizerDelegate {}

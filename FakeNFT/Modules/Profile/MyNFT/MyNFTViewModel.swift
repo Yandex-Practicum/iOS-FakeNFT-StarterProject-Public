@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 protocol MyNFTViewModelProtocol: AnyObject {
@@ -23,6 +22,12 @@ protocol MyNFTViewModelProtocol: AnyObject {
 }
 
 final class MyNFTViewModel: MyNFTViewModelProtocol {
+    enum Sort: String {
+        case price
+        case rating
+        case name
+    }
+
     var onChange: (() -> Void)?
     var onError: ((_ error: Error) -> Void)?
     private var networkClient: NetworkClient
@@ -174,13 +179,5 @@ final class MyNFTViewModel: MyNFTViewModelProtocol {
     
     func notificationMyNFTliked(myNFTs: NFTNetworkModel) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "myNFTliked"), object: myNFTs)
-    }
-}
-
-extension MyNFTViewModel {
-    enum Sort: String {
-        case price
-        case rating
-        case name
     }
 }

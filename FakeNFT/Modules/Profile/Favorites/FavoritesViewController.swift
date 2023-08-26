@@ -1,6 +1,6 @@
 import UIKit
 
-final class FavoritesViewController: UIViewController, UIGestureRecognizerDelegate {
+final class FavoritesViewController: UIViewController {
     private let viewModel: FavoritesViewModelProtocol
     
     private lazy var favoriteNFTCollection: UICollectionView = {
@@ -100,6 +100,7 @@ final class FavoritesViewController: UIViewController, UIGestureRecognizerDelega
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension FavoritesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -134,6 +135,7 @@ extension FavoritesViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.frame.width - 16 * 2 - 7
@@ -152,3 +154,6 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 12, left: 16, bottom: 16, right: 16)
     }
 }
+
+// MARK: - UIGestureRecognizerDelegate
+extension FavoritesViewController: UIGestureRecognizerDelegate {}

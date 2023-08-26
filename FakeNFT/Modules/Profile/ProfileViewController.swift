@@ -191,6 +191,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return assetNameLabel.count
@@ -209,12 +210,13 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let profile = viewModel.profile else { return }
         switch indexPath.row {
         case 0:
-            navigationController?.pushViewController(NyNFTViewController(viewModel: MyNFTViewModel(profile: profile)), animated: true)
+            navigationController?.pushViewController(MyNFTViewController(viewModel: MyNFTViewModel(profile: profile)), animated: true)
         case 1:
             navigationController?.pushViewController(FavoritesViewController(viewModel: FavoritesViewModel(profile: profile)), animated: true)
         case 2:
@@ -225,13 +227,17 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - EditProfileButtonDelegate
 extension ProfileViewController: EditProfileButtonDelegate {
     func proceedToEditing() {
         guard let profile = viewModel.profile else { return }
-        present(EditProfileViewController(viewModel: EditProfileViewModel(profile: profile), delegate: self), animated: true)
+        let viewModel = EditProfileViewModel(networkClient: DefaultNetworkClient(), profile: profile)
+        let viewController = EditProfileViewController(viewModel: viewModel, delegate: self)
+        present(viewController, animated: true)
     }
 }
 
+// MARK: - ProfileUpdateDelegate
 extension ProfileViewController: ProfileUpdateDelegate {
     func update() {
         viewModel.getProfileData()

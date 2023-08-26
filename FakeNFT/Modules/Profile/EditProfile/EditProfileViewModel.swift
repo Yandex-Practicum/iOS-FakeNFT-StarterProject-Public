@@ -44,13 +44,14 @@ final class EditProfileViewModel: EditProfileViewModelProtocol {
     var profile: ProfileModel?
     private(set) var error: Error?
     
-    init(profile: ProfileModel) {
-        self.networkClient = DefaultNetworkClient()
+    init(networkClient: NetworkClient, profile: ProfileModel) {
+        self.networkClient = networkClient
         self.profile = profile
     }
     
     func updateProfile(profile: ProfileModel?) {
-        networkClient.send(request: ProfileRequest(httpMethod: .put, dto: profile), type: ProfileModel.self) { _ in
+        let request = ProfileRequest(httpMethod: .put, dto: profile)
+        networkClient.send(request: request, type: ProfileModel.self) { _ in
             return
         }
     }
