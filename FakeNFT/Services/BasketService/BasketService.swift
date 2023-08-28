@@ -42,8 +42,8 @@ final class BasketService {
         }
         orderService.updateOrder(with: nftIds) {result in
             switch result {
-            case .success(_):
-                print("added successfully")
+            case .success:
+                break
             case .failure(let error):
                 print(error)
             }
@@ -58,8 +58,8 @@ final class BasketService {
         let nftIds = basket.map { $0.id }
         orderService.updateOrder(with: nftIds) { result in
             switch result {
-            case .success(_):
-                print("deleted successfully")
+            case .success:
+                break
             case .failure(let error):
                 print(error)
             }

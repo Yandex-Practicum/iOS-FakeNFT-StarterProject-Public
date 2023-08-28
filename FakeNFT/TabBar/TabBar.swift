@@ -1,7 +1,18 @@
 import UIKit
 
 final class MainTabBarController: UITabBarController {
+    var catalogViewController: UIViewController {
+        let presenter = CatalogViewPresenter()
+        let alertPresenter = AlertPresenter()
+        let catalogView = CatalogViewController(presenter: presenter, alertPresenter: alertPresenter)
+        presenter.viewControllerInitialized(viewController: catalogView)
+        alertPresenter.injectDelegate(viewController: catalogView)
+        return catalogView
+    }
+    
     // MARK: - Init
+    var profileNetworkClient: ProfileNetworkClientProtocol?
+    
     init() {
         super.init(nibName: nil, bundle: nil)
 
@@ -16,19 +27,31 @@ final class MainTabBarController: UITabBarController {
 
         let basketImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let basketSelectedImage = UIImage(named: "basket")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
-
+        
         let statisticImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack)
         let statisticSelectedImage = UIImage.statistics?.withConfiguration(statisticMediumConfigForImage).withRenderingMode(.alwaysOriginal).withTintColor(.ypBlueUniversal)
+        
+        
+        let profilePresenter = ProfileViewPresenter()
+        let profileViewController = ProfileViewController()
+            
+        let profileNetworkClient = ProfileNetworkClient()
+        self.profileNetworkClient = profileNetworkClient
+        
+        profileViewController.presenter = profilePresenter
+        profilePresenter.view = profileViewController
+        profilePresenter.networkClient = profileNetworkClient
+        profileNetworkClient.presenter = profilePresenter
 
         viewControllers = [
             generateViewController(
-                ProfileViewController(),
+                profileViewController,
                 image: profileImage,
                 selectedImage: profileSelectedImage,
                 title: NSLocalizedString("tabBar.profile", comment: "")
             ),
             generateViewController(
-                CatalogViewController(),
+                catalogViewController,
                 image: catalogImage,
                 selectedImage: catalogSelectedImage,
                 title: NSLocalizedString("tabBar.catalog", comment: "")
@@ -40,7 +63,7 @@ final class MainTabBarController: UITabBarController {
                 title: NSLocalizedString("tabBar.basket", comment: "")
             ),
             generateViewController(
-                StatisticsViewController(),
+                UINavigationController(rootViewController: createUserViewController()),
                 image: statisticImage,
                 selectedImage: statisticSelectedImage,
                 title: NSLocalizedString("tabBar.statistic", comment: "")
@@ -67,7 +90,7 @@ private extension MainTabBarController {
         viewController.tabBarItem.title = title
         return viewController
     }
-
+    
     func setAppearance() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.backgroundColor = .ypWhite
@@ -77,5 +100,21 @@ private extension MainTabBarController {
             tabBar.scrollEdgeAppearance = tabBarAppearance
         }
         tabBar.standardAppearance = tabBarAppearance
+    }
+}
+
+private extension MainTabBarController {
+    func createUserViewController() -> UserListViewController {
+        let networkClient = DefaultNetworkClient()
+        let userRequest = UserRequest()
+
+        let userService = UserServiceImpl(
+            defaultNetworkClient: networkClient,
+            userResult: userRequest
+        )
+
+        let viewModel = UserListViewModelImpl(userStatisticService: userService)
+
+        return UserListViewController(viewModel: viewModel)
     }
 }
