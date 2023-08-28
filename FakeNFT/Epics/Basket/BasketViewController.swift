@@ -55,8 +55,8 @@ final class BasketViewController: UIViewController, BasketView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        ProgressHUD.show()
-        // загрузить корзину
+        showHud()
+        presenter?.loadOrder()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
