@@ -29,14 +29,14 @@ final class NFTCollectionViewModelImpl: NFTCollectionViewModel {
     private let nftsIdsToFetch: [Int]
     private let nftService: NFTSService
     private let likesService: LikesService
-    private let orderService: OrderService
+    private let orderService: StatisticsOrderService
     private var cancellables = Set<AnyCancellable>()
 
     init(
         nftsNumbers: [Int],
         nftService: NFTSService,
         likesService: LikesService,
-        orderService: OrderService
+        orderService: StatisticsOrderService
     ) {
         self.nftsIdsToFetch = nftsNumbers
         self.nftService = nftService

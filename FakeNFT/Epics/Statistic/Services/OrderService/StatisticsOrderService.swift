@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol OrderService {
+protocol StatisticsOrderService {
     func fetchOrder() -> AnyPublisher<[Int], Error>
 }
 
-final class OrderServiceImpl: OrderService {
+final class OrderServiceImpl: StatisticsOrderService {
     private let decoder: JSONDecoder
 
     init(decoder: JSONDecoder = JSONDecoder()) {
