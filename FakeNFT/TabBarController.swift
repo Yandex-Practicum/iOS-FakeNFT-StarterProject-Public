@@ -41,5 +41,9 @@ final class TabBarController: UITabBarController {
             profileNavigationController, catalogueNavigationController,
             cartNavigationController, statisticsNavigationController
         ]
+
+        let backItem = UIBarButtonItem()
+        backItem.title = String()
+        catalogueViewController.navigationItem.backBarButtonItem = backItem
     }
 }
