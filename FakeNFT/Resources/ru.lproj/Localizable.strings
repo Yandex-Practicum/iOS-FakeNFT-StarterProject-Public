@@ -1,0 +1,200 @@
+// Каталог
+tabBar.catalog = "Каталог";
+catalog.sorting.name = "По названию";
+catalog.sorting.nft = "По количеству NFT";
+catalog.author = "Автор коллекции:";
+sorting.name = "Cортировка";
+sorting.close = "Закрыть";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Корзина
+tabBar.basket = "Корзина";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Профиль
+"tabBar.profile" = "Профиль";
+// Лэйблы ячеек навигационной таблицы
+"profile.myNFTs" = "Мои NFT";
+"profile.featured" = "Избранные NFT";
+"profile.about" = "О разработчике";
+"profile.name" = "Имя";
+"profile.description" = "Описание";
+"profile.site" = "Сайт";
+// Плэйсхолдеры полей редоктирования профиля
+"profile.name.placeholder" = "Введите ваше имя пользователя";
+"profile.description.placeholder" = "Введите описание профиля";
+"profile.site.placeholder" = "Введите адрес вашего сайта";
+// Текст лэйблов
+"profile.photo.change" = "Сменить фото";
+"profile.photo.download" = "Загрузить фото";
+// Заголовок для диалогового окна выбора URL
+"profile.photo.title" = "Добавить изображение";
+"profile.photo.message" = "Укажите ссылку на фото";
+"profile.photo.placeholder" = "Введите ссылку:";
+// Подсказка для текстового поля
+"profile.photo.urlPlaceholder" = "Введите ссылку сюда";
+"profile.photo.urlExample" = "Например, https://example.com/image.jpg";
+// Уведомление об ошибке ввода неверного URL
+"profile.photo.invalidURLTitle" = "Неправильный формат ссылки";
+"profile.photo.invalidURLMessage" = "Проверьте URL и попробуйте снова";
+// Кнопки подтверждения в диалоговом окне
+"profile.photo.saveButton" = "Сохранить";
+"profile.photo.okButton" = "Ок";
+"profile.photo.applyButton" = "Применить";
+"profile.photo.cancelButton" = "Отмена";
+// Лэйблы ячейки мой NFT
+"nft.price" = "Цена";
+"nft.by" = "от";
+// Плэйсхолдер экрана "Мои NFT"
+"nft.missing" = "У Вас ещё нет NFT";
+// Сообщения об ошибке
+"nft.error.title" = "Ошибка";
+"nft.error.message" = "Произошла ошибка при получении данных:";
+// Кнопки
+"profile.photo.retryButton" = "Повторить";
+"profile.photo.cancelButton" = "Отмена";
+// Плэйсхолдер экрана "Избранные NFT"
+"nft.no.favorite" = "У Вас ещё нет NFT";
+// Сортировка
+"sort.title" = "Сортировка";
+"sort.byPrice" = "По цене";
+"sort.byRating" = "По рейтингу";
+"sort.byName" = "По названию";
+"sort.close" = "Закрыть";
+// Статистика
+tabBar.statistic = "Статистика";
+failedToLoadData = "Не удалось загрузить данные.";
+
+sorting = "Сортировка";
+sorting.byName = "По имени";
+sorting.byRating = "По рейтингу";
+sorting.close = "Закрыть";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

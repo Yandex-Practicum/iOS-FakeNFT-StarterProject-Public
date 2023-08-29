@@ -1,0 +1,203 @@
+// Каталог
+tabBar.catalog = "Catalog";
+catalog.sorting.name = "By name";
+catalog.sorting.nft = "By NFT's count";
+catalog.author = "Collection's author:";
+sorting.name = "Sorting";
+sorting.close = "Close";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Корзина
+tabBar.basket = "Basket";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Profile
+"tabBar.profile" = "Profile";
+// Navigation table cell labels
+"profile.myNFTs" = "My NFTs";
+"profile.featured" = "Featured NFTs";
+"profile.about" = "About Developer";
+"profile.name" = "Name";
+"profile.description" = "Description";
+"profile.site" = "Website";
+// Profile editing field placeholders
+"profile.name.placeholder" = "Enter your username";
+"profile.description.placeholder" = "Enter your profile description";
+"profile.site.placeholder" = "Enter your website address";
+// Text for labels
+"profile.photo.change" = "Change photo";
+"profile.photo.download" = "Download photo";
+// Dialog title for choosing a URL
+"profile.photo.title" = "Add Image";
+"profile.photo.message" = "Enter the URL for the photo";
+"profile.photo.placeholder" = "Enter URL:";
+// Text field placeholder
+"profile.photo.urlPlaceholder" = "Enter the URL here";
+"profile.photo.urlExample" = "For example, https://example.com/image.jpg";
+// Error notification for invalid URL input
+"profile.photo.invalidURLTitle" = "Invalid URL";
+"profile.photo.invalidURLMessage" = "Check the URL and try again";
+// Confirmation buttons in the dialog
+"profile.photo.saveButton" = "Save";
+"profile.photo.okButton" = "Ok";
+"profile.photo.applyButton" = "Apply";
+"profile.photo.cancelButton" = "Cancel";
+// My NFT cell labels
+"nft.price" = "Price";
+"nft.by" = "by";
+// My NFTs screen placeholder
+"nft.missing" = "You don't have an NFT yet";
+// Error alerts
+"nft.error.title" = "Error";
+"nft.error.message" = "An error occurred while fetching data:";
+// Buttons
+"profile.photo.retryButton" = "Retry";
+"profile.photo.cancelButton" = "Cancel";
+// Placeholder for the "Favorite NFTs" screen
+"nft.no.favorite" = "You don't have any NFTs yet";
+// Сортировка
+"sort.title" = "Sort";
+"sort.byPrice" = "By Price";
+"sort.byRating" = "By Rating";
+"sort.byName" = "By Name";
+"sort.close" = "Close";
+// Статистика
+tabBar.statistic = "Statistics";
+failedToLoadData = "Failed to load data.";
+
+sorting = "Sorting";
+sorting.byName = "By name";
+sorting.byRating = "By rating";
+sorting.close = "Close";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

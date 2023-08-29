@@ -28,6 +28,14 @@ extension UITableView {
         }
         return cell
     }
+    
+    func dequeueReusableCell<T: UITableViewCell>(indexPath: IndexPath) -> T where T: ReuseIdentifying {
+        guard let cell = dequeueReusableCell(withIdentifier: T.defaultReuseIdentifier, for: indexPath) as? T else {
+            assertionFailure("Could not dequeue cell with identifier: \(T.defaultReuseIdentifier) for: \(indexPath)")
+            return T()
+        }
+        return cell
+    }
 }
 
 extension UICollectionView {
@@ -38,6 +46,15 @@ extension UICollectionView {
     func dequeueReusableCell<T: UICollectionViewCell>(indexPath: IndexPath) -> T where T: ReuseIdentifying {
         guard let cell = dequeueReusableCell(withReuseIdentifier: T.defaultReuseIdentifier, for: indexPath) as? T else {
             assertionFailure("Could not dequeue cell with identifier: \(T.defaultReuseIdentifier) for: \(indexPath)")
+            return T()
+        }
+        return cell
+    }
+    
+    
+    func cellForItem<T: UICollectionViewCell>(at indexPath: IndexPath) -> T where T: ReuseIdentifying {
+        guard let cell = cellForItem(at: indexPath) as? T else {
+            assertionFailure("Could not find cell with identifier: \(T.defaultReuseIdentifier) for: \(indexPath)")
             return T()
         }
         return cell
