@@ -1,0 +1,115 @@
+// MARK: - Onboarding
+"onboarding.research" = "Исследуйте";
+"onboarding.research.text" = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров";
+"onboarding.collect" = "Коллекционируйте";
+"onboarding.collect.text" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
+"onboarding.competit" = "Состязайтесь";
+"onboarding.competit.text" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
+"onboarding.isWhatInside" = "Что внутри?";
+
+
+// MARK: - TabBar
+
+"profile.title" = "Профиль";
+"catalog.title" = "Каталог";
+"basket.title" = "Корзина";
+"statistic.title" = "Статистика";
+
+// MARK: - General
+
+"general.cancel" = "Отменить";
+"general.delete" = "Удалить";
+"general.return" = "Вернуться";
+"general.close" = "Закрыть";
+"general.price" = "Цена";
+"general.OK" = "OK";
+
+// MARK: - Authorization
+"authorization.enter" = "Вход";
+"authorization.password" = "Пароль";
+"authorization.entering" = "Войти";
+"authorization.forgetPassword" = "Забыли пароль?";
+"authorization.demo" = "Демо";
+"authorization.registration" = "Зарегистрироваться";
+"authorization.registrate" = "Регистрация";
+"authorization.error.loginIsBusy" = "Данное имя пользователя занято";
+"authorization.error.loginPasswordMistake" = "Введен неверный логин или пароль";
+"authorization.error.passwordMistake" = "Пароль должен иметь минимум 6 символов";
+"authorization.error.mailMistake" = "Введите email";
+
+// MARK: - Alerts
+"alert.authorization.title" = "Что-то пошло не так (";
+"alert.authorization.message" = "Не удалось войти в систему";
+
+// MARK: - Sorting
+"sorting.title" = "Сортировка";
+"sorting.byName" = "По имени";
+"sorting.byTitle" = "По названию";
+"sorting.byPrice" = "По цене";
+"sorting.byNFTCount" = "По количеству NFT";
+"sorting.byRating" = "По рейтингу";
+
+// MARK: - Catalog
+"catalog.currentCollection.author" = "Автор коллекции";
+"catalog.nftCard.button.addToCart" = "Добавить в корзину";
+"catalog.nftCard.button.removeFromCart" = "Удалить из корзины";
+"catalog.nftCard.button.goToSellerSite" = "Перейти на сайт продавца";
+
+// MARK: - Cart
+
+// Main Screen
+"cart.mainScreen.emptyCart" = "Корзина пуста";
+"cart.mainScreen.toPayButton" = "К оплате";
+"cart.mainScreen.deleteItemAlert" = "Вы уверены, что хотите удалить объект из корзины?";
+"cart.mainScreen.deleteItemButton" = "Удалить";
+"cart.mainScreen.returnButton" = "Вернуться";
+
+// Pay Screen
+"cart.payScreen.paymentChoice" = "Выберите способ оплаты";
+"cart.payScreen.userTerms" = "Совершая покупку, вы соглашаетесь с условиями";
+"cart.payScreen.userTermsLink" = "Пользовательского соглашения";
+"cart.payScreen.payButton" = "Оплатить";
+
+// Successful Payment Screen
+"cart.successfulPayment.successful" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"cart.successfulPayment.toBackCatalogButton" = "Вернуться в каталог";
+
+// Unuccessful Payment Screen
+"cart.unsuccessfulPayment.unsuccessful" = "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!";
+"cart.unsuccessfulPayment.tryAgain" = "Попробовать еще раз";
+
+// MARK: - Profile
+
+// MainScreen
+"profile.mainScreen.myNFT" = "Мои NFT";
+"profile.mainScreen.favouritesNFT" = "Избранные NFT";
+"profile.mainScreen.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"profile.editScreen.changePhoto" = "Сменить фото";
+"profile.editScreen.name" = "Имя";
+"profile.editScreen.description" = "Описание";
+"profile.editScreen.site" = "Cайт";
+
+// MyNFTScreen
+"profile.myNFT.plug" = "У Вас еще нет NFT";
+"profile.myNFT.from" = "От";
+
+// FavouritesScreen
+"profile.favouritesNFT.plug" = "У Вас еще нет избранных NFT";
+
+// MARK: - Statistic
+"statistic.profile.buttonUser.title" = "Перейти на сайт пользователя";
+"statistic.profile.buttonCollection.title" = "Коллекция NFT";
+"statistic.profile.userCollection.stub" = "У пользователя еще нет NFT";
+
+// MARK: - Netword Errors:
+"networkError.http.404" = "По запросу ничего не найдено";
+"networkError.http.409" = "Ошибка обновления ресурса";
+"networkError.http.410" = "Запрошенный ресурс больше недоступен";
+"networkError.http.5хх" = "Ошибка на стороне сервера";
+"networkError.URLSessionError" = "Проверьте интернет - соединение";
+"networkError.parsingError" = "Не удалось конвертировать полученные данные";
+"networkError.anotherError" = "Не удалось получить данные, попробуйте позже";
+"networkError.requestError" = "Ошибка выполнения запроса";
+"networkError.tryLater" = "Попробуйте позже";
