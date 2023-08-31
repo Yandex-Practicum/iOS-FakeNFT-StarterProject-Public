@@ -2,7 +2,7 @@ import UIKit
 
 final class CartViewController: UIViewController {
     
-    private var index: Int?
+    private var indexDelete: Int?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -35,7 +35,7 @@ final class CartViewController: UIViewController {
     
     private lazy var buttonPaymentView: UIView = {
         let buttonPaymentView = UIView()
-        buttonPaymentView.backgroundColor = .lightGray
+        buttonPaymentView.backgroundColor = .ypLightGrey
         buttonPaymentView.layer.cornerRadius = 12
         buttonPaymentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return buttonPaymentView
@@ -59,8 +59,9 @@ final class CartViewController: UIViewController {
         payButton.setTitle("К оплате", for: .normal)
         payButton.titleLabel?.font = .bodyBold
         payButton.setTitleColor(.white, for: .normal)
-        payButton.backgroundColor = .black
+        payButton.backgroundColor = .ypBlack
         payButton.layer.cornerRadius = 16
+        payButton.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return payButton
     }()
     
@@ -91,7 +92,7 @@ final class CartViewController: UIViewController {
         let deleteButton = UIButton()
         deleteButton.setTitle("Удалить", for: .normal)
         deleteButton.setTitleColor(.red, for: .normal)
-        deleteButton.backgroundColor = .black
+        deleteButton.backgroundColor = .ypBlack
         deleteButton.layer.cornerRadius = 12
         deleteButton.isHidden = true
         deleteButton.addTarget(self, action: #selector(method), for: .touchUpInside)
@@ -103,7 +104,7 @@ final class CartViewController: UIViewController {
         let returnButton = UIButton()
         returnButton.setTitle("Вернуться", for: .normal)
         returnButton.setTitleColor(.white, for: .normal)
-        returnButton.backgroundColor = .black
+        returnButton.backgroundColor = .ypBlack
         returnButton.layer.cornerRadius = 12
         returnButton.isHidden = true
         returnButton.addTarget(self, action: #selector(method), for: .touchUpInside)
@@ -151,6 +152,12 @@ final class CartViewController: UIViewController {
         ])
     }
     
+    @objc private func didTapPayButton() {
+        let vc = PaymentChoiceViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -168,15 +175,18 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        let count = MockNFT.nfts.count
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()
         }
+        let model = MockNFT.nfts[indexPath.row]
         cell.backgroundColor = .systemBackground
         cell.selectionStyle = .none
+        cell.configureCell(with: model)
         cell.indexCell = indexPath.row
         cell.delegate = self
         return cell
@@ -185,16 +195,16 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension CartViewController: NFTTableViewCellDelegate {
     func showDeleteView(index: Int) {
-            
-            self.index = index
-            deleteView.isHidden = false
-            deletingImage.isHidden = false
-            deleteLabel.isHidden = false
-            deleteButton.isHidden = false
-            returnButton.isHidden = false
-            navigationController?.isNavigationBarHidden = true
-            tabBarController?.tabBar.isHidden = true
-            
+        indexDelete = index
+        print("TAPP")
+        deleteView.isHidden = false
+        deletingImage.isHidden = false
+        deleteLabel.isHidden = false
+        deleteButton.isHidden = false
+        returnButton.isHidden = false
+        navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = true
+
         deleteView.isUserInteractionEnabled = true
 
         view.addSubview(deleteView)
@@ -202,12 +212,12 @@ extension CartViewController: NFTTableViewCellDelegate {
         deleteView.contentView.addSubview(deleteLabel)
         deleteView.contentView.addSubview(deleteButton)
         deleteView.contentView.addSubview(returnButton)
-        
-            NSLayoutConstraint.activate([
-                deleteView.topAnchor.constraint(equalTo: view.topAnchor),
-                deleteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                deleteView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                deleteView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+
+        NSLayoutConstraint.activate([
+            deleteView.topAnchor.constraint(equalTo: view.topAnchor),
+            deleteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            deleteView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            deleteView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 }

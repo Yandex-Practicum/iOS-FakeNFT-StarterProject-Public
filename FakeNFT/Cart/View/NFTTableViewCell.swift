@@ -6,10 +6,10 @@ protocol NFTTableViewCellDelegate: AnyObject {
 
 final class NFTTableViewCell: UITableViewCell {
     
-    var delegate: NFTTableViewCellDelegate?
+    public weak var delegate: NFTTableViewCellDelegate?
     var indexCell: Int?
     static let identifier = "NFTTableViewCell"
-    
+
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.image = UIImage(named: "mockImageNft")
@@ -29,6 +29,14 @@ final class NFTTableViewCell: UITableViewCell {
         return nftRatingLabel
     }()
     
+    private lazy var nftRatingStack: UIStackView = {
+        let nftRatingStack = UIStackView()
+        nftRatingStack.axis = .horizontal
+        nftRatingStack.spacing = 4
+        nftRatingStack.distribution = .fillEqually
+        return nftRatingStack
+    }()
+    
     private lazy var nftPriceLabel: UILabel = {
         let nftPriceLabel = UILabel()
         nftPriceLabel.text = "Цена"
@@ -46,12 +54,13 @@ final class NFTTableViewCell: UITableViewCell {
     private lazy var deleteFromBasketButton: UIButton = {
         let deleteFromBasketButton = UIButton()
         deleteFromBasketButton.setImage(UIImage(named: "deleteButton"), for: .normal)
-        deleteFromBasketButton.addTarget(nil, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        deleteFromBasketButton.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        deleteFromBasketButton.translatesAutoresizingMaskIntoConstraints = false
         return deleteFromBasketButton
     }()
     
     private func addViews() {
-        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingLabel, deleteFromBasketButton].forEach(setupView(_:))
+        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingStack, deleteFromBasketButton].forEach(setupView(_:))
     }
     
     private func setupUI() {
@@ -60,29 +69,51 @@ final class NFTTableViewCell: UITableViewCell {
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             nftNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             nftNameLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftRatingLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftRatingLabel.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor, constant: 4),
+            nftRatingStack.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
+            nftRatingStack.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor, constant: 4),
             nftPriceLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-            nftPriceLabel.topAnchor.constraint(equalTo: nftRatingLabel.bottomAnchor, constant: 12),
+            nftPriceLabel.topAnchor.constraint(equalTo: nftRatingStack.bottomAnchor, constant: 12),
             nftPrice.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nftPrice.topAnchor.constraint(equalTo: nftPriceLabel.bottomAnchor, constant: 2),
             deleteFromBasketButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            deleteFromBasketButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+            deleteFromBasketButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
         ])
     }
     
-    @objc func didTapDeleteButton() {
+    func configureCell(with model: MockNFTModel) {
+        nftImageView.image = model.image
+        nftPrice.text = "\(model.price)" + "ETH"
+        nftNameLabel.text = model.name
+        
+        let rating = model.rating
+    
+        for _ in 0...rating - 1 {
+            let ratingStar = UIImageView(image: UIImage(named: "ratingStarNft"))
+            nftRatingStack.addArrangedSubview(ratingStar)
+        }
+        for _ in rating..<5 {
+            let emptyStar =  UIImageView(image: UIImage(named: "emptyStarNft"))
+            nftRatingStack.addArrangedSubview(emptyStar)
+        }
+    }
+    
+    @objc func didTapDeleteButton(_ sender: UIButton) {
         delegate?.showDeleteView(index: indexCell ?? 0)
         print("TAP")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: NFTTableViewCell.identifier)
         addViews()
         setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 }
