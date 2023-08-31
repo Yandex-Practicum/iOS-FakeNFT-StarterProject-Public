@@ -1,14 +1,15 @@
 import UIKit
+enum Rating: Int {
+    case zero = 0
+    case one
+    case two
+    case three
+    case four
+    case five
+}
 
 final class StarView: UIView {
-    enum Rating: Int {
-        case zero = 0
-        case one
-        case two
-        case three
-        case four
-        case five
-    }
+
     var rating: Rating = .zero {
         didSet {
             setRating(rating)

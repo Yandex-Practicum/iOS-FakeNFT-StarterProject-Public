@@ -1,23 +1,35 @@
 import UIKit
 
-final class DeleteNFTController: UIViewController {
-
+final class DeleteView: UIView {
+    
+    private let viewModel: CartViewModel
+    init(viewModel: CartViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        configureView()
+    }
+    var onCancelButtonTapped: (() -> Void)?
+    var onDeleteButtonTapped: (() -> Void)?
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private let bluredBackgroundView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
         let view = UIVisualEffectView(effect: effect)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     private let nftImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "AppIcon")
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-
+    
     private let nftDeleteConfirmLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.Regular.size13
@@ -29,7 +41,7 @@ final class DeleteNFTController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private lazy var nftDeleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить", for: .normal)
@@ -43,7 +55,7 @@ final class DeleteNFTController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     private lazy var nftCancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("Вернуться", for: .normal)
@@ -57,7 +69,7 @@ final class DeleteNFTController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -66,52 +78,64 @@ final class DeleteNFTController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureView()
-    }
-
+    
+    
     private func configureView() {
-        view.backgroundColor = .clear
         addSubviews()
         setConstraints()
     }
-
+    
     private func addSubviews() {
-        view.addSubview(bluredBackgroundView)
-        view.addSubview(nftDeleteConfirmLabel)
-        view.addSubview(nftImageView)
-        view.addSubview(buttonStackView)
+        addSubview(bluredBackgroundView)
+        addSubview(nftDeleteConfirmLabel)
+        addSubview(nftImageView)
+        addSubview(buttonStackView)
         buttonStackView.addArrangedSubview(nftDeleteButton)
         buttonStackView.addArrangedSubview(nftCancelButton)
     }
-
+    
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            bluredBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            bluredBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bluredBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bluredBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            nftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nftImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 244),
+            bluredBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+            bluredBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bluredBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bluredBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            nftImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            nftImageView.topAnchor.constraint(equalTo: topAnchor, constant: 244),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftDeleteConfirmLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 12),
-            nftDeleteConfirmLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nftDeleteConfirmLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             nftDeleteConfirmLabel.widthAnchor.constraint(equalToConstant: 180),
             buttonStackView.topAnchor.constraint(equalTo: nftDeleteConfirmLabel.bottomAnchor, constant: 20),
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             nftCancelButton.widthAnchor.constraint(equalToConstant: 127),
             nftDeleteButton.widthAnchor.constraint(equalToConstant: 127),
             nftCancelButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-
-    @objc func cancelButtonTapped() {
-        dismiss(animated: false)
+    
+    func showDeleteView(atIndex index: Int) {
+        bluredBackgroundView.isHidden = false
+        nftImageView.kf.setImage(with: viewModel.cartModels[index].images.first)
+        nftImageView.isHidden = false
+        nftDeleteConfirmLabel.isHidden = false
+        buttonStackView.isHidden = false
+        nftCancelButton.isHidden = false
+        nftDeleteButton.isHidden = false
     }
-
+    
     @objc func deleteButtonTapped() {
+        onDeleteButtonTapped?()
+    }
+    @objc func cancelButtonTapped() {
+        onCancelButtonTapped?()
+    }
+    func removeDeleteView() {
+        bluredBackgroundView.isHidden = true
+        nftImageView.isHidden = true
+        nftDeleteButton.isHidden = true
+        nftCancelButton.isHidden = true
+        nftDeleteConfirmLabel.isHidden = true
     }
 }

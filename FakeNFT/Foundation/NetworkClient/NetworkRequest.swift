@@ -18,3 +18,9 @@ extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
 }
+
+struct NFTNetworkRequest: NetworkRequest {
+    var endpoint: URL?
+    var httpMethod: HttpMethod
+    var dto: Encodable?
+}

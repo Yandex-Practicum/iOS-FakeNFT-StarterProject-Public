@@ -1,7 +1,18 @@
 import UIKit
+import Kingfisher
 
 final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     static let identifier = "cartCellID"
+    var indexCell: Int?
+    weak var delegate: CartCellDelegate?
+    var imageURL: URL? {
+        didSet {
+            guard let imageURL = imageURL else {
+              return nftImageView.kf.cancelDownloadTask()
+            }
+            nftImageView.kf.setImage(with: imageURL)
+        }
+    }
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -53,24 +64,30 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
         return button
     }()
     @objc func deleteButtonTapped() {
-        // TODO: show deleteController from cart
+        delegate?.didTapDeleteButton(at: indexCell ?? 0)
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureCell()
+        addSubviews()
+        setConstraints()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func prepareForReuse() {
         super.prepareForReuse()
+        // TODO: prepare cell for reuse
     }
-    func configureCell() {
+    func configureCell(with nft: NFTCartModel) {
         contentView.backgroundColor = .systemBackground
-        addSubviews()
-        setConstraints()
+
+        self.imageURL = nft.images.first
+        self.nftNameLabel.text = nft.name
+        self.starView.rating =  nft.rating
+        self.nftPriceLabel.text = "\(nft.price) ETH"
     }
     func addSubviews() {
+        addSubview(contentView)
         addSubview(nftImageView)
         addSubview(nftNameLabel)
         addSubview(nftPriceTitleLabel)
