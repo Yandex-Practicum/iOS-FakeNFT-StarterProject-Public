@@ -9,14 +9,3 @@ struct UserResponse: Decodable {
     let rating: String
     let id: String
 }
-
-typealias UsersResponse = [UserResponse]
-
-extension UserResponse {
-    func convert() -> User {
-        return User(name: self.name,
-                    avatar: self.avatar,
-                    rating: self.rating,
-                    id: self.id)
-    }
-}

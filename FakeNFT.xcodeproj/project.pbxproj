@@ -25,8 +25,6 @@
 		400531792A73EC58008CAF3B /* BaseWhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400531782A73EC58008CAF3B /* BaseWhiteButton.swift */; };
 		406DEE2B2A7FED5D008E2227 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406DEE2A2A7FED5D008E2227 /* UIViewController + Extension.swift */; };
 		407047572A88B86400067E68 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407047562A88B86400067E68 /* UIFont + Extension.swift */; };
-		4070B1182A76CADF00CF6E74 /* SortNavBarBaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4070B1172A76CADF00CF6E74 /* SortNavBarBaseButton.swift */; };
-		4071F5C42A7CFF8400ADA546 /* StatisticViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F5C02A7CFF8400ADA546 /* StatisticViewModelProtocol.swift */; };
 		4071F5C52A7CFF8400ADA546 /* -StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F5C12A7CFF8400ADA546 /* -StatisticViewController.swift */; };
 		4071F5C62A7CFF8400ADA546 /* -StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F5C22A7CFF8400ADA546 /* -StatisticViewModel.swift */; };
 		4071F5C72A7CFF8400ADA546 /* -StatisticCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F5C32A7CFF8400ADA546 /* -StatisticCollectionViewCell.swift */; };
@@ -41,7 +39,6 @@
 		409EEFE72A7A710D00B23FF8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409EEFE62A7A710D00B23FF8 /* User.swift */; };
 		409EEFE92A7A711A00B23FF8 /* UsersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409EEFE82A7A711A00B23FF8 /* UsersResponse.swift */; };
 		40EEA7CF2A768BE700A1AE93 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EEA7CE2A768BE700A1AE93 /* AnalyticsService.swift */; };
-		7E71E3B52A73F10A00B0073D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E71E3B42A73F10A00B0073D /* TabBarController.swift */; };
 		7EB552D92A896CFC0046EA33 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7EB552D82A896CFC0046EA33 /* NotificationBannerSwift */; };
 		7EB78A682A78EAD000BE892B /* NFTCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB78A672A78EAD000BE892B /* NFTCollectionView.swift */; };
 		7EB78A6A2A78EEC100BE892B /* NFTCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB78A692A78EEC100BE892B /* NFTCollectionCell.swift */; };
@@ -54,19 +51,15 @@
 		7EB78AE72A7BFE0700BE892B /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB78AE62A7BFE0700BE892B /* Order.swift */; };
 		7EB78AE92A7BFE7200BE892B /* OrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB78AE82A7BFE7200BE892B /* OrderPayment.swift */; };
 		7EB78AEB2A7BFEEE00BE892B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB78AEA2A7BFEEE00BE892B /* Profile.swift */; };
-		7EC0B5352A76678100688EC9 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0B5342A76678100688EC9 /* AlertService.swift */; };
-		7EC0B5392A766ABA00688EC9 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0B5382A766ABA00688EC9 /* DataProvider.swift */; };
 		7EC0B53D2A766C1C00688EC9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0B53C2A766C1C00688EC9 /* Observable.swift */; };
 		7EC0B5422A76958500688EC9 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0B5412A76958500688EC9 /* CustomNavigationController.swift */; };
 		7EE68CFA2A7FCB8A00CAE2AC /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE68CF92A7FCB8A00CAE2AC /* NFTCell.swift */; };
 		7EE68CFF2A80099B00CAE2AC /* NFTCollectionCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE68CFE2A80099B00CAE2AC /* NFTCollectionCellDelegate.swift */; };
 		7EF4C5D12A73F86C001E8C67 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF4C5D02A73F86C001E8C67 /* UIColor + Extension.swift */; };
 		7EFB26362A84F341001901B6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7EFB26352A84F341001901B6 /* FirebaseAuth */; };
-		7EFB26382A84F49B001901B6 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB26372A84F49B001901B6 /* SplashScreen.swift */; };
-		7EFB263B2A850CC4001901B6 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB263A2A850CC4001901B6 /* OnboardingViewController.swift */; };
-		7EFB26432A860030001901B6 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB26422A860030001901B6 /* OnboardingViewModel.swift */; };
 		7EFB26452A86012C001901B6 /* OnboardingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB26442A86012C001901B6 /* OnboardingViewModelProtocol.swift */; };
 		7EFB26482A860773001901B6 /* OnboardingViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB26472A860773001901B6 /* OnboardingViewControllerDelegate.swift */; };
+		FA4E5FA72AA3361B00B0C954 /* NFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E5FA62AA3361B00B0C954 /* NFTRequest.swift */; };
 		FACDC70F2AA200890064EA9A /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDC70E2AA200890064EA9A /* UserServiceProtocol.swift */; };
 		FACDC7112AA200AF0064EA9A /* UserNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDC7102AA200AF0064EA9A /* UserNetworkService.swift */; };
 		FACDC7132AA203250064EA9A /* ViewControllerAlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACDC7122AA203250064EA9A /* ViewControllerAlertExt.swift */; };
@@ -116,8 +109,6 @@
 		400531782A73EC58008CAF3B /* BaseWhiteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWhiteButton.swift; sourceTree = "<group>"; };
 		406DEE2A2A7FED5D008E2227 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		407047562A88B86400067E68 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
-		4070B1172A76CADF00CF6E74 /* SortNavBarBaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortNavBarBaseButton.swift; sourceTree = "<group>"; };
-		4071F5C02A7CFF8400ADA546 /* StatisticViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticViewModelProtocol.swift; sourceTree = "<group>"; };
 		4071F5C12A7CFF8400ADA546 /* -StatisticViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "-StatisticViewController.swift"; sourceTree = "<group>"; };
 		4071F5C22A7CFF8400ADA546 /* -StatisticViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "-StatisticViewModel.swift"; sourceTree = "<group>"; };
 		4071F5C32A7CFF8400ADA546 /* -StatisticCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "-StatisticCollectionViewCell.swift"; sourceTree = "<group>"; };
@@ -132,7 +123,6 @@
 		409EEFE62A7A710D00B23FF8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		409EEFE82A7A711A00B23FF8 /* UsersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersResponse.swift; sourceTree = "<group>"; };
 		40EEA7CE2A768BE700A1AE93 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
-		7E71E3B42A73F10A00B0073D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7EB78A672A78EAD000BE892B /* NFTCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionView.swift; sourceTree = "<group>"; };
 		7EB78A692A78EEC100BE892B /* NFTCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionCell.swift; sourceTree = "<group>"; };
 		7EB78A962A7A5C7D00BE892B /* -WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-WebViewViewController.swift"; sourceTree = "<group>"; };
@@ -144,18 +134,14 @@
 		7EB78AE62A7BFE0700BE892B /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		7EB78AE82A7BFE7200BE892B /* OrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPayment.swift; sourceTree = "<group>"; };
 		7EB78AEA2A7BFEEE00BE892B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		7EC0B5342A76678100688EC9 /* AlertService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertService.swift; path = FakeNFT/Services/AlertService.swift; sourceTree = SOURCE_ROOT; };
-		7EC0B5382A766ABA00688EC9 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		7EC0B53C2A766C1C00688EC9 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		7EC0B5412A76958500688EC9 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		7EE68CF92A7FCB8A00CAE2AC /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 		7EE68CFE2A80099B00CAE2AC /* NFTCollectionCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionCellDelegate.swift; sourceTree = "<group>"; };
 		7EF4C5D02A73F86C001E8C67 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
-		7EFB26372A84F49B001901B6 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		7EFB263A2A850CC4001901B6 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		7EFB26422A860030001901B6 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		7EFB26442A86012C001901B6 /* OnboardingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelProtocol.swift; sourceTree = "<group>"; };
 		7EFB26472A860773001901B6 /* OnboardingViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerDelegate.swift; sourceTree = "<group>"; };
+		FA4E5FA62AA3361B00B0C954 /* NFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTRequest.swift; sourceTree = "<group>"; };
 		FACDC70E2AA200890064EA9A /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
 		FACDC7102AA200AF0064EA9A /* UserNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkService.swift; sourceTree = "<group>"; };
 		FACDC7122AA203250064EA9A /* ViewControllerAlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAlertExt.swift; sourceTree = "<group>"; };
@@ -251,7 +237,6 @@
 			children = (
 				409EEFE42A7A707D00B23FF8 /* DataProvider */,
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
-				7EC0B5342A76678100688EC9 /* AlertService.swift */,
 				40EEA7CE2A768BE700A1AE93 /* AnalyticsService.swift */,
 				407340E72A838C44008E0C1E /* UserDefaultsService.swift */,
 			);
@@ -261,7 +246,6 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
-				7EFB26392A84F4A3001901B6 /* SplashScreen */,
 				7EFB263C2A850CC7001901B6 /* Onboarding */,
 				7EC0B5312A7666C600688EC9 /* Catalog */,
 				7EC0B53E2A766E3400688EC9 /* Cart */,
@@ -327,7 +311,6 @@
 		4071F5BF2A7CFF8400ADA546 /* StatisticRating */ = {
 			isa = PBXGroup;
 			children = (
-				4071F5C02A7CFF8400ADA546 /* StatisticViewModelProtocol.swift */,
 				4071F5C12A7CFF8400ADA546 /* -StatisticViewController.swift */,
 				4071F5C22A7CFF8400ADA546 /* -StatisticViewModel.swift */,
 				4071F5C32A7CFF8400ADA546 /* -StatisticCollectionViewCell.swift */,
@@ -379,7 +362,6 @@
 			children = (
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
-				7E71E3B42A73F10A00B0073D /* TabBarController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -388,7 +370,6 @@
 			isa = PBXGroup;
 			children = (
 				409EEFE22A7A707700B23FF8 /* DataProviderProtocol.swift */,
-				7EC0B5382A766ABA00688EC9 /* DataProvider.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -417,7 +398,6 @@
 			children = (
 				400531762A73EB4D008CAF3B /* BlackBaseButton.swift */,
 				400531782A73EC58008CAF3B /* BaseWhiteButton.swift */,
-				4070B1172A76CADF00CF6E74 /* SortNavBarBaseButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -465,6 +445,7 @@
 				7EB78AE02A7BFBC300BE892B /* NFTCollection.swift */,
 				7EB78AE22A7BFCFF00BE892B /* NFTCard.swift */,
 				7EE68CF92A7FCB8A00CAE2AC /* NFTCell.swift */,
+				FA4E5FA62AA3361B00B0C954 /* NFTRequest.swift */,
 			);
 			path = NFT;
 			sourceTree = "<group>";
@@ -501,20 +482,10 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		7EFB26392A84F4A3001901B6 /* SplashScreen */ = {
-			isa = PBXGroup;
-			children = (
-				7EFB26372A84F49B001901B6 /* SplashScreen.swift */,
-			);
-			path = SplashScreen;
-			sourceTree = "<group>";
-		};
 		7EFB263C2A850CC7001901B6 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				7EFB26462A86012F001901B6 /* Protocols */,
-				7EFB26422A860030001901B6 /* OnboardingViewModel.swift */,
-				7EFB263A2A850CC4001901B6 /* OnboardingViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -714,18 +685,16 @@
 				407047572A88B86400067E68 /* UIFont + Extension.swift in Sources */,
 				7EFB26482A860773001901B6 /* OnboardingViewControllerDelegate.swift in Sources */,
 				7EC0B5422A76958500688EC9 /* CustomNavigationController.swift in Sources */,
-				7EFB263B2A850CC4001901B6 /* OnboardingViewController.swift in Sources */,
 				FAF35E682AA2113200DEBC5D /* GeometricParams.swift in Sources */,
 				7EB78A972A7A5C7D00BE892B /* -WebViewViewController.swift in Sources */,
 				4071F5D72A7D002000ADA546 /* StatisticNFTCollectionViewModelProtocol.swift in Sources */,
-				4071F5C42A7CFF8400ADA546 /* StatisticViewModelProtocol.swift in Sources */,
 				4071F5D62A7D002000ADA546 /* -StatisticNFTCollectionViewModel.swift in Sources */,
 				4071F5CD2A7D001800ADA546 /* -StatisticUserViewController.swift in Sources */,
 				7EE68CFA2A7FCB8A00CAE2AC /* NFTCell.swift in Sources */,
 				7EF4C5D12A73F86C001E8C67 /* UIColor + Extension.swift in Sources */,
 				7EB78AE12A7BFBC300BE892B /* NFTCollection.swift in Sources */,
+				FA4E5FA72AA3361B00B0C954 /* NFTRequest.swift in Sources */,
 				7EFB26452A86012C001901B6 /* OnboardingViewModelProtocol.swift in Sources */,
-				7EC0B5392A766ABA00688EC9 /* DataProvider.swift in Sources */,
 				400531792A73EC58008CAF3B /* BaseWhiteButton.swift in Sources */,
 				4071F5CF2A7D001800ADA546 /* StatisticUserTableViewCell.swift in Sources */,
 				4005316E2A73DDFC008CAF3B /* UIView + Extension.swift in Sources */,
@@ -733,10 +702,8 @@
 				400531772A73EB4D008CAF3B /* BlackBaseButton.swift in Sources */,
 				407340E82A838C44008E0C1E /* UserDefaultsService.swift in Sources */,
 				409EEFE92A7A711A00B23FF8 /* UsersResponse.swift in Sources */,
-				7EFB26432A860030001901B6 /* OnboardingViewModel.swift in Sources */,
 				7EB78AE92A7BFE7200BE892B /* OrderPayment.swift in Sources */,
 				7EB78A682A78EAD000BE892B /* NFTCollectionView.swift in Sources */,
-				7E71E3B52A73F10A00B0073D /* TabBarController.swift in Sources */,
 				4071F5D52A7D002000ADA546 /* -StatisticNFTCollectionViewController.swift in Sources */,
 				7EC0B53D2A766C1C00688EC9 /* Observable.swift in Sources */,
 				FACDC71D2AA2078F0064EA9A /* NftCollectionCellDelegate.swift in Sources */,
@@ -751,8 +718,6 @@
 				7EB78A6A2A78EEC100BE892B /* NFTCollectionCell.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				40EEA7CF2A768BE700A1AE93 /* AnalyticsService.swift in Sources */,
-				7EC0B5352A76678100688EC9 /* AlertService.swift in Sources */,
-				4070B1182A76CADF00CF6E74 /* SortNavBarBaseButton.swift in Sources */,
 				409EEFE72A7A710D00B23FF8 /* User.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* NetworkRequestModel.swift in Sources */,
 				7EE68CFF2A80099B00CAE2AC /* NFTCollectionCellDelegate.swift in Sources */,
@@ -763,7 +728,6 @@
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				409EEFE32A7A707700B23FF8 /* DataProviderProtocol.swift in Sources */,
 				7EB78AE72A7BFE0700BE892B /* Order.swift in Sources */,
-				7EFB26382A84F49B001901B6 /* SplashScreen.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				7EB78AE52A7BFDB200BE892B /* Currency.swift in Sources */,
 				7EB78AEB2A7BFEEE00BE892B /* Profile.swift in Sources */,

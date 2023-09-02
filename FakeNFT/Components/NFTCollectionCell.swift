@@ -121,34 +121,7 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
         nftModel
     }
     
-    // MARK: - Private Methods:
-    private func setupRatingStackView(rating: Int) {
-        (1...5).forEach { [weak self] number in
-            guard let self = self else { return }
-            
-            if number <= rating {
-                let goldStar = UIImageView(image: Resources.Images.NFTCollectionCell.goldRatingStar)
-                self.ratingStackView.addArrangedSubview(goldStar)
-            } else {
-                let grayStar = UIImageView(image: Resources.Images.NFTCollectionCell.grayRatingStar)
-                self.ratingStackView.addArrangedSubview(grayStar)
-            }
-        }
-    }
-    
-    private func setButtonImages() {
-        if nftModel?.isLiked == true {
-            nftLikeButton.setImage(Resources.Images.NFTCollectionCell.likedButton, for: .normal)
-        } else {
-            nftLikeButton.setImage(Resources.Images.NFTCollectionCell.unlikedButton, for: .normal)
-        }
-        
-        if nftModel?.isAddedToCard == true {
-            cartButton.setImage(Resources.Images.NFTCollectionCell.removeFromBasket, for: .normal)
-        } else {
-            cartButton.setImage(Resources.Images.NFTCollectionCell.putInBasket, for: .normal)
-        }
-    }
+   
     
     private func setLikeButtonImageWithAnimate() {
         UIView.animateKeyframes(withDuration: 1, delay: 0, options: [.repeat]) {

@@ -5,13 +5,11 @@
 //  Created by MacBook on 01.09.2023.
 //
 
-import Foundation
-
 class NftNetworkService: NftServiceProtocol {
 
     private let client = DefaultNetworkClient()
 
-    func getNftList(nftIds: [Int], onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
+    func getNftList(nftIds: [Int], onCompletion: @escaping (Result<[NFTCard], Error>) -> Void) {
         var nfts: [NFTCard] = []
         let group = DispatchGroup()
 
@@ -34,7 +32,7 @@ class NftNetworkService: NftServiceProtocol {
         }
     }
 
-    func getNft(nftId: Int, onCompletion: @escaping (Result<Nft, Error>) -> Void) {
+    func getNft(nftId: Int, onCompletion: @escaping (Result<NFTCard, Error>) -> Void) {
         let request = GetNftRequest(nftId: nftId)
 
         client.send(request: request, type: NFTCard.self, onResponse: onCompletion)
