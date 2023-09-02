@@ -1,17 +1,15 @@
-import Foundation
-
 import UIKit
 
 extension UIColor {
-        static let backgroundUniversal = UIColor(named: "Background Universal") ?? UIColor.black
-        static let blackDay = UIColor(named: "Black [day]") ?? UIColor.black
-        static let blackUniversal = UIColor(named: "Black Universal") ?? UIColor.black
-        static let blueUniversal = UIColor(named: "Blue Universal") ?? UIColor.blue
-        static let grayUniversal = UIColor(named: "Gray Universal") ?? UIColor.gray
-        static let greenUniversal = UIColor(named: "Green Universal") ?? UIColor.green
-        static let lightGrayDay = UIColor(named: "Light gray [day]") ?? UIColor.lightGray
-        static let redUniversal = UIColor(named: "Red Universal") ?? UIColor.red
-        static let whiteDay = UIColor(named: "White [day]") ?? UIColor.white
-        static let whiteUniversal = UIColor(named: "White Universal") ?? UIColor.white
-        static let yellowUniversal = UIColor(named: "Yellow Universal") ?? UIColor.yellow
+    static var appBlack: UIColor { UIColor(named: "AppBlack") ?? .red }
+    static var appBlackOnly: UIColor { UIColor(named: "AppBlackOnly") ?? .red }
+    static var appBlue: UIColor { UIColor(named: "AppBlue") ?? .red }
+    static var appGray: UIColor { UIColor(named: "AppGray") ?? .red }
+    static var appLightGray: UIColor { UIColor(named: "AppLightGray") ?? .red }
+    static var appRed: UIColor { UIColor(named: "AppRed") ?? .red }
+    static var appWhite: UIColor { UIColor(named: "AppWhite") ?? .red }
+    static var yellowUniversal: UIColor { UIColor(named: "YellowUniversal") ?? .red }
+    static var lightGrey: UIColor { UIColor(named: "LightGray") ?? .red }
+    static var appWhiteOnly: UIColor { UIColor(named: "AppWhiteOnly") ?? .red }
+    static var greenUniversal: UIColor { UIColor(named: "GreenUniversal") ?? .red }
 }

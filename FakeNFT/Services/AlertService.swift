@@ -8,22 +8,6 @@ enum SortingOption: CaseIterable {
     case byQuantity
     case close
     
-    var localizedString: String {
-        switch self {
-        case .byName:
-            return L10n.Sorting.byName
-        case .byRating:
-            return L10n.Sorting.byRating
-        case .byTitle:
-            return L10n.Sorting.byTitle
-        case .byPrice:
-            return L10n.Sorting.byPrice
-        case .byQuantity:
-            return L10n.Sorting.byNFTCount
-        case .close:
-            return L10n.General.close
-        }
-    }
     
     var sortingOptions: String {
         switch self {
