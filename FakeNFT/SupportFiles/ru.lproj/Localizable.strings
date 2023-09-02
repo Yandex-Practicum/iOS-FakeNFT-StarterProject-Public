@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  FakeNFT
+
+  Created by Дмитрий Никишов on 28.07.2023.
+  
+*/
+PROFILE = "Профиль";
+CATALOGUE = "Каталог";
+CART = "Корзина";
+STATISTICS = "Статистика";
+
+NOINTERNET = "Нет интернета";
+NFT_ERROR = "Упс! Что-то пошло не так : Попробуйте ещё раз!";
+ONE_MORE_TRY = "Попробовать еще раз";
+SORT_BY_NAME = "По названию";
+SORT_BY_AMOUNT = "По количеству NFT";
+TITLE_SORT = "Сортировка";
+CLOSE_ALERT_TITLE = "Закрыть";
+INVALID_PRICE_FORMAT = "Неверный формат цены";
+COLLECTION_AUTHOR = "Автор коллекции:";
+
+DEFAULT_ERROR_TITLE = "Ошибка";
+
+CART_PLACEHOLDER_LABEL_TEXT = "Корзина пуста";
+
+CART_CELL_PRICE_TITLE_LABEL = "Цена";
+CART_PURCHASE_BUTTON_TITLE = "К оплате";
+CART_SORT_ALERT_TITLE = "Cортировка";
+CART_SORT_ALERT_PRICE_ACTION_TITLE = "По цене";
+CART_SORT_ALERT_RATING_ACTION_TITLE = "По рейтингу";
+CART_SORT_ALERT_NAME_ACTION_TITLE = "По имени";
+CART_SORT_ALERT_CLOSE_ACTION_TITLE = "Закрыть";
+
+CART_REMOVE_NFT_REMOVE_LABEL_TEXT = "Вы уверены, что хотите \n удалить объект из корзины?";
+CART_REMOVE_NFT_REMOVE_BUTTON_TITLE = "Удалить";
+CART_REMOVE_NFT_CANCEL_BUTTON_TITLE = "Вернуться";
+
+CART_PAYMENT_VIEW_TITLE = "Выберите способ оплаты";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_TEXT = "Совершая покупку, вы соглашаетесь с условиями \n";
+CART_PAYMENT_USER_AGREEMENT_TEXTVIEW_LINK_TEXT = "Пользовательского соглашения";
+CART_PAYMENT_PURCHASE_BUTTON_TITLE = "Оплатить";
+
+CART_PAYMENT_RESULT_SUCCESS_LABEL_TEXT = "Успех! Оплата прошла, поздравляем с покупкой!";
+CART_PAYMENT_RESULT_SUCCESS_BUTTON_TITLE = "Вернуться в каталог";
+CART_PAYMENT_RESULT_FAILURE_LABEL_TEXT = "Упс! Что-то пошло не так :(\n Попробуйте ещё раз!";
+CART_PAYMENT_RESULT_FAILURE_BUTTON_TITLE = "Попробовать еще раз";
