@@ -1,6 +1,6 @@
 import Foundation
 
-struct OrderServer: Decodable {
+struct OrderModel: Decodable {
     let nfts: [String]
     let id: String
 }

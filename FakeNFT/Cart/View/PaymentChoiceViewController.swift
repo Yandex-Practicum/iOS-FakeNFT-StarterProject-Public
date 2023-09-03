@@ -2,7 +2,6 @@ import UIKit
 
 final class PaymentChoiceViewController: UIViewController {
     
-    
     private var selectedMethodPayCell: IndexPath? = nil
     
     private var selectedMethodPay: PaymentMethod? = nil {
@@ -10,7 +9,6 @@ final class PaymentChoiceViewController: UIViewController {
             updatePaymentButton()
         }
     }
-    
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -49,11 +47,14 @@ final class PaymentChoiceViewController: UIViewController {
         return firstLabel
     }()
     
-    private lazy var secondLabel: UILabel = {
-        let secondLabel = UILabel()
-        secondLabel.text = "Пользовательского соглашения"
-        secondLabel.font = UIFont.systemFont(ofSize: 13)
-        return secondLabel
+    private lazy var termOfUseLabel: UILabel = {
+        let termOfUseLabel = UILabel()
+        termOfUseLabel.text = "Пользовательского соглашения"
+        termOfUseLabel.font = UIFont.systemFont(ofSize: 13)
+        termOfUseLabel.textColor = .ypBlue
+        termOfUseLabel.isUserInteractionEnabled = true
+        termOfUseLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapTermOfUseLabel)))
+        return termOfUseLabel
     }()
     
     private lazy var paymentButton: UIButton = {
@@ -69,7 +70,7 @@ final class PaymentChoiceViewController: UIViewController {
     }()
     
     private func addView() {
-        [titleLabel, collectionView, returnButton, buttonPaymentView, firstLabel, secondLabel, paymentButton].forEach(view.setupView(_:))
+        [titleLabel, collectionView, returnButton, buttonPaymentView, firstLabel, termOfUseLabel, paymentButton].forEach(view.setupView(_:))
     }
     
     private func applyConstraints() {
@@ -84,8 +85,8 @@ final class PaymentChoiceViewController: UIViewController {
             buttonPaymentView.heightAnchor.constraint(equalToConstant: 186),
             firstLabel.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 16),
             firstLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 4),
-            secondLabel.leadingAnchor.constraint(equalTo: firstLabel.leadingAnchor),
+            termOfUseLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 4),
+            termOfUseLabel.leadingAnchor.constraint(equalTo: firstLabel.leadingAnchor),
             paymentButton.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 76),
             paymentButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             paymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -121,6 +122,13 @@ final class PaymentChoiceViewController: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
+    }
+    
+    @objc private func didTapTermOfUseLabel() {
+        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
+       
+        let vc = WebViewController(url: url)
+        present(vc, animated: true)
     }
     
     override func viewDidLoad() {

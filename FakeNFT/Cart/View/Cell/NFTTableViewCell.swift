@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 protocol NFTTableViewCellDelegate: AnyObject {
     func showDeleteView(index: Int)
@@ -6,12 +7,23 @@ protocol NFTTableViewCellDelegate: AnyObject {
 
 final class NFTTableViewCell: UITableViewCell {
     
+    var imageURL: URL? {
+        didSet {
+            guard let url = imageURL else {
+                return nftImageView.kf.cancelDownloadTask()
+            }
+
+            nftImageView.kf.setImage(with: url)
+        }
+    }
+    
     public weak var delegate: NFTTableViewCellDelegate?
-    var indexCell: Int?
     static let identifier = "NFTTableViewCell"
 
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
+        nftImageView.layer.cornerRadius = 16
+        nftImageView.layer.masksToBounds = true
         nftImageView.image = UIImage(named: "mockImageNft")
         return nftImageView
     }()
@@ -67,6 +79,8 @@ final class NFTTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            nftImageView.heightAnchor.constraint(equalToConstant: 108),
+            nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             nftNameLabel.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nftRatingStack.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
@@ -81,8 +95,8 @@ final class NFTTableViewCell: UITableViewCell {
         ])
     }
     
-    func configureCell(with model: MockNFTModel) {
-        nftImageView.image = model.image
+    func configureCell(model: NFTModel) {
+        imageURL = model.images.first
         nftPrice.text = "\(model.price)" + "ETH"
         nftNameLabel.text = model.name
         
@@ -99,7 +113,7 @@ final class NFTTableViewCell: UITableViewCell {
     }
     
     @objc func didTapDeleteButton(_ sender: UIButton) {
-        delegate?.showDeleteView(index: indexCell ?? 0)
+        delegate?.showDeleteView(index: 0)
         print("TAP")
     }
     

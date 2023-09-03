@@ -1,8 +1,8 @@
 import UIKit
 
 final class CartViewController: UIViewController {
-    
-    private var indexDelete: Int?
+
+    private var viewModel: CartViewModel
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -158,6 +158,29 @@ final class CartViewController: UIViewController {
         present(vc, animated: true)
     }
     
+    func initialize(viewModel: CartViewModel) {
+        self.viewModel = viewModel
+        viewModel.$NFTModels.bind { [weak self] nfts in
+            self?.tableView.reloadData()
+            self?.countNFTLabel.text = "\(nfts.count)" + "NFT"
+            var totalPrice: Float = 0
+            for nft in nfts {
+                totalPrice += nft.price
+            }
+            let formattedPrice = String(format: "%.2f", totalPrice)
+            self?.totalCoastNFTLabel.text = formattedPrice + "ETH"
+        }
+    }
+    
+    init(viewModel: CartViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -165,6 +188,7 @@ final class CartViewController: UIViewController {
         setNavBar()
         setupUI()
         setupButtonPaymentView()
+        viewModel.didLoad()
     }
 }
 
@@ -175,7 +199,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = MockNFT.nfts.count
+        let count = viewModel.NFTModels.count
         return count
     }
     
@@ -183,11 +207,11 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()
         }
-        let model = MockNFT.nfts[indexPath.row]
+    
+        let model = viewModel.NFTModels[indexPath.row]
         cell.backgroundColor = .systemBackground
         cell.selectionStyle = .none
-        cell.configureCell(with: model)
-        cell.indexCell = indexPath.row
+        cell.configureCell(model: model)
         cell.delegate = self
         return cell
     }
@@ -195,29 +219,6 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension CartViewController: NFTTableViewCellDelegate {
     func showDeleteView(index: Int) {
-        indexDelete = index
         print("TAPP")
-        deleteView.isHidden = false
-        deletingImage.isHidden = false
-        deleteLabel.isHidden = false
-        deleteButton.isHidden = false
-        returnButton.isHidden = false
-        navigationController?.isNavigationBarHidden = true
-        tabBarController?.tabBar.isHidden = true
-
-        deleteView.isUserInteractionEnabled = true
-
-        view.addSubview(deleteView)
-        deleteView.contentView.addSubview(deletingImage)
-        deleteView.contentView.addSubview(deleteLabel)
-        deleteView.contentView.addSubview(deleteButton)
-        deleteView.contentView.addSubview(returnButton)
-
-        NSLayoutConstraint.activate([
-            deleteView.topAnchor.constraint(equalTo: view.topAnchor),
-            deleteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            deleteView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            deleteView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
     }
 }

@@ -19,3 +19,11 @@ class MockNFT {
                      image: UIImage(named: "mockImageNft") ?? .add)
     ]
 }
+
+struct MockNFTModel: Hashable {
+    let id: UUID
+    let name: String
+    let price: Float
+    let rating: Int
+    let image: UIImage
+}
