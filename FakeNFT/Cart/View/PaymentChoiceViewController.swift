@@ -116,9 +116,9 @@ final class PaymentChoiceViewController: UIViewController {
     }
     
     @objc private func didTapPaymentButton() {
-        var vc = PurchaseResultViewController(nibName: nil, bundle: nil, completePurchase: false)
+        var vc = PurchaseResultViewController(completePurchase: false)
         if selectedMethodPay != nil {
-            vc = PurchaseResultViewController(nibName: nil, bundle: nil, completePurchase: true)
+            vc = PurchaseResultViewController(completePurchase: true)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
@@ -126,7 +126,7 @@ final class PaymentChoiceViewController: UIViewController {
     
     @objc private func didTapTermOfUseLabel() {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
-       
+        
         let vc = WebViewController(url: url)
         present(vc, animated: true)
     }
@@ -156,8 +156,6 @@ extension PaymentChoiceViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 extension PaymentChoiceViewController: UICollectionViewDelegateFlowLayout {

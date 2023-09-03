@@ -4,7 +4,7 @@ final class PurchaseResultViewController: UIViewController {
     
     var completePurchase: Bool
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, completePurchase: Bool) {
+    init(completePurchase: Bool) {
         self.completePurchase = completePurchase
         super.init(nibName: nil, bundle: nil)
     }

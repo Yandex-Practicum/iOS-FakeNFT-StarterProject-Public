@@ -1,7 +1,7 @@
 import UIKit
 
 final class CartViewController: UIViewController {
-
+    
     private var viewModel: CartViewModel
     
     private lazy var tableView: UITableView = {
@@ -161,7 +161,6 @@ final class CartViewController: UIViewController {
     func initialize(viewModel: CartViewModel) {
         self.viewModel = viewModel
         viewModel.$NFTModels.bind { [weak self] nfts in
-            self?.tableView.reloadData()
             self?.countNFTLabel.text = "\(nfts.count)" + "NFT"
             var totalPrice: Float = 0
             for nft in nfts {
@@ -169,6 +168,7 @@ final class CartViewController: UIViewController {
             }
             let formattedPrice = String(format: "%.2f", totalPrice)
             self?.totalCoastNFTLabel.text = formattedPrice + "ETH"
+            self?.tableView.reloadData()
         }
     }
     
@@ -207,7 +207,6 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()
         }
-    
         let model = viewModel.NFTModels[indexPath.row]
         cell.backgroundColor = .systemBackground
         cell.selectionStyle = .none
