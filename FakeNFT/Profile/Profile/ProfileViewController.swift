@@ -119,9 +119,18 @@ extension ProfileViewController: UITableViewDelegate {
         return 54
     }
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+             let myNftVC = MyNftViewController()
+            navigationController?.pushViewController(myNftVC, animated: true)
+        case 1:
+            let myNftVC = MyNftViewController()
+            navigationController?.pushViewController(myNftVC, animated: true)
+        default:
+            return
+        }
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
