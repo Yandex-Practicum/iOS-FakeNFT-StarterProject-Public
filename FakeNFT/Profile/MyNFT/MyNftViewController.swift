@@ -51,8 +51,41 @@ final class MyNftViewController: UIViewController {
     }
 
    @objc private func sortNft() {
-
+          showAlert()
     }
+
+    private func showAlert() {
+        let alertController = UIAlertController(title: nil,
+                                      message: "Сортировка",
+                                      preferredStyle: .actionSheet)
+
+        let actionFirst = UIAlertAction(title: "По цене", style: .default) { [weak self] (_) in
+            guard let self = self else { return }
+            print("price sorted")
+        }
+        alertController.addAction(actionFirst)
+
+        let actionSecond = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] (_) in
+            guard let self = self else { return }
+            print("rating sorted")
+        }
+        alertController.addAction(actionSecond)
+
+        let actionThird = UIAlertAction(title: "По имени", style: .default) { [weak self] (_) in
+            guard let self = self else { return }
+            print("by name sorted")
+        }
+        alertController.addAction(actionThird)
+
+        let actionCancel = UIAlertAction(title: "Закрыть", style: .cancel) { [weak self] (_) in
+            guard let self = self else { return }
+            print("cancel")
+        }
+        alertController.addAction(actionCancel)
+
+        navigationController?.present(alertController, animated: true)
+    }
+
 }
 
 extension MyNftViewController: UITableViewDelegate {
