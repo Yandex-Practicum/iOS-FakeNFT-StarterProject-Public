@@ -5,4 +5,4 @@ struct OrderModel: Codable {
     let id: String
 }
 
-typealias Order = [OrderModel]
+typealias OrderNet = [OrderModel]

@@ -8,4 +8,4 @@ struct UserModel: Codable {
     let website: String
 }
 
-typealias User = [UserModel]
+typealias UserNet = [UserModel]

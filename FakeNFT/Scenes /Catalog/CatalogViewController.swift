@@ -4,6 +4,10 @@ import Kingfisher
 final class CatalogViewController: UIViewController {
         
     private var viewModel = CatalogViewModel()
+    private var collectons: [NFTsCollectionModel] {
+        viewModel.collections
+    }
+    
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -14,6 +18,15 @@ final class CatalogViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        viewModel.reloadData = self.tableView.reloadData
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,12 +82,17 @@ final class CatalogViewController: UIViewController {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        collectons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.reuseIdentifier, for: indexPath) as? CatalogCell else { return UITableViewCell()}
-
+        let collection = collectons[indexPath.row]
+        if let imageURLString = collection.cover,
+           let imageURL = URL(string: imageURLString.encodeURL) {
+            cell.itemImageView.kf.setImage(with: imageURL)
+        }
+        cell.nameLabel.text = collection.nameAndNFTsCount
         return cell
     }
 }
@@ -82,5 +100,14 @@ extension CatalogViewController: UITableViewDataSource {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         179
+    }
+}
+
+extension String {
+    var encodeURL: String {
+        return self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+    }
+    var decodeURL: String {
+        return self.removingPercentEncoding!
     }
 }
