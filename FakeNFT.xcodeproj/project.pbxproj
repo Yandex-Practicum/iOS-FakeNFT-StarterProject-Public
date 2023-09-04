@@ -36,6 +36,7 @@
 		CE742A532AA5F182008E7AE9 /* MyNftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE742A522AA5F182008E7AE9 /* MyNftTableViewCell.swift */; };
 		CE742A552AA5F3FD008E7AE9 /* NftAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE742A542AA5F3FD008E7AE9 /* NftAvatarView.swift */; };
 		CE742A572AA608AC008E7AE9 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE742A562AA608AC008E7AE9 /* RatingView.swift */; };
+		CE742A5A2AA65DAA008E7AE9 /* MockNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE742A592AA65DAA008E7AE9 /* MockNft.swift */; };
 		CE86BAB32AA50AAB0051DB5E /* ProfileVCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		CE742A522AA5F182008E7AE9 /* MyNftTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNftTableViewCell.swift; sourceTree = "<group>"; };
 		CE742A542AA5F3FD008E7AE9 /* NftAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftAvatarView.swift; sourceTree = "<group>"; };
 		CE742A562AA608AC008E7AE9 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		CE742A592AA65DAA008E7AE9 /* MockNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNft.swift; sourceTree = "<group>"; };
 		CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				CE742A582AA65D90008E7AE9 /* Modell */,
 				CE742A4B2AA5C754008E7AE9 /* Profile */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
@@ -298,6 +301,14 @@
 				CE742A522AA5F182008E7AE9 /* MyNftTableViewCell.swift */,
 			);
 			path = MyNFT;
+			sourceTree = "<group>";
+		};
+		CE742A582AA65D90008E7AE9 /* Modell */ = {
+			isa = PBXGroup;
+			children = (
+				CE742A592AA65DAA008E7AE9 /* MockNft.swift */,
+			);
+			path = Modell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,6 +474,7 @@
 			files = (
 				CA9C1B012A9F79ED005FBA8D /* CatalogViewController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				CE742A5A2AA65DAA008E7AE9 /* MockNft.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,

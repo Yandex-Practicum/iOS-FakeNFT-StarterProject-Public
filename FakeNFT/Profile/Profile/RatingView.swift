@@ -8,54 +8,54 @@
 import UIKit
 
 final class RatingView: UIView {
-    
+
     private  var  stars: [UIImageView]
     var rating: Int? {
         didSet {
             config(with: rating)
         }
     }
-    
+
     override init(frame: CGRect) {
-        super.init(frame: frame)
         stars = (1...5).map { _ in
-            let view = UIImageView
+            let view = UIImageView()
             view.image = UIImage(named: "star")
             return view
         }
+        super.init(frame: frame)
         setupViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension RatingView {
-    
+
     private func setupViews() {
         let stackView = UIStackView(arrangedSubviews: stars)
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 2
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         addSubview(stackView)
-        
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-       
+config(with: nil)
     }
-    
+
     private func config(with rating: Int?) {
         let rating = rating ?? 0
         let noStarRating = UIImage(named: "greyStar")
         stars.enumerated().forEach { offset, star in
-           // star.tintColor = rating > offset ? UIImage(named: "star") : noStarRating
+            star.tintColor = rating > offset ? .yellow : .gray
         }
     }
 }
