@@ -32,8 +32,8 @@ final class TabBarController: UITabBarController {
             image: .TabBar.catalog,
             selectedImage: nil
         )
-
-        let cartVC = UINavigationController(rootViewController: CartViewController())
+        let viewModel = CartViewModel(model: NFTCartManager(networkClient: DefaultNetworkClient()))
+        let cartVC = UINavigationController(rootViewController: CartViewController(viewModel: viewModel))
         cartVC.tabBarItem = UITabBarItem(
             title: .TabBar.cart,
             image: .TabBar.cart,
