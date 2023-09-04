@@ -32,6 +32,7 @@
 		CA9C1B012A9F79ED005FBA8D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */; };
 		CA9C1B032A9F7A2F005FBA8D /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */; };
 		CA9C1B052A9F7A4E005FBA8D /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */; };
+		CE86BAB32AA50AAB0051DB5E /* ProfileVCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
+		CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */,
 				CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */,
 				CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */,
+				CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				CA9C1AFD2A9F62B4005FBA8D /* TabBatViewController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				CE86BAB32AA50AAB0051DB5E /* ProfileVCTableViewCell.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				CA9C1B032A9F7A2F005FBA8D /* CartViewController.swift in Sources */,

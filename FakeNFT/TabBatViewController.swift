@@ -1,13 +1,13 @@
 import UIKit
 
 final class TabBarViewController: UITabBarController {
-   
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         generateTabBar()
     }
-    
+
     private func generateTabBar() {
         viewControllers = [
         generateVC(viewController: ProfileViewController(), title: "Профиль", image: UIImage(systemName: "person.crop.circle.fill")),
@@ -16,11 +16,10 @@ final class TabBarViewController: UITabBarController {
         generateVC(viewController: StatisticViewController(), title: "Статистика", image: UIImage(systemName: "flag.2.crossed.fill"))
         ]
     }
-    
+
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = image
         return UINavigationController(rootViewController: viewController)
     }
 }
-
