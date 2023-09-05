@@ -8,7 +8,7 @@ struct NFTsCollectionModel: Codable {
     let nfts: [String]
     
     var nameAndNFTsCount: String {
-        name + "(\(nfts.count))"
+        name + " (\(nfts.count))"
     }
     
     init(with collection: NFTsCollectionModel) {

@@ -12,8 +12,6 @@ final class CatalogViewController: UIViewController {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CatalogCell.self, forCellReuseIdentifier: CatalogCell.reuseIdentifier)
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -100,6 +98,11 @@ extension CatalogViewController: UITableViewDataSource {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         179
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let collectionVC = CollectionViewController()
+        self.navigationController?.pushViewController(collectionVC, animated: true)
     }
 }
 

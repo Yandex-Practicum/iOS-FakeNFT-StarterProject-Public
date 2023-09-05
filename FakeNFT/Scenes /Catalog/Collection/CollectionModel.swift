@@ -1,5 +1,10 @@
 import UIKit
 
+struct CollectionModel {
+    let user: User?
+    let collection: NFTsCollectionCatalogModel?
+}
+
 struct User {
     let name: String
     let website: String

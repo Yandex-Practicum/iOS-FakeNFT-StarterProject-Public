@@ -1,5 +1,6 @@
 import UIKit
 
+
 final class CollectionViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
