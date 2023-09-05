@@ -83,7 +83,7 @@ final class MyNftTableViewCell: UITableViewCell {
     func configureTableView(image: UIImage, rating: Int, name: String, value: Float ) {
         nameLabel.text = name
         ratingView.rating = rating
-        priceValueLabel.text = "\(value)"
+        priceValueLabel.text = "\(value) ETH"
         avatar.image = image
     }
 
@@ -121,7 +121,7 @@ final class MyNftTableViewCell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
 
             priceStackView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
-            priceStackView.leadingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -39),
+            priceStackView.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -114),
             priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }

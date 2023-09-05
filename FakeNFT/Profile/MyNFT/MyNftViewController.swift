@@ -82,7 +82,6 @@ final class MyNftViewController: UIViewController {
             print("cancel")
         }
         alertController.addAction(actionCancel)
-
         navigationController?.present(alertController, animated: true)
     }
 

@@ -47,6 +47,8 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    private let tableViewTitles: [String] = ["Мои NFT", "Избранные NFT", "О разработчике"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -99,7 +101,7 @@ final class ProfileViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: urlTextButton.bottomAnchor, constant: 44),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: 54)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 
         ])
     }
@@ -125,8 +127,8 @@ extension ProfileViewController: UITableViewDelegate {
              let myNftVC = MyNftViewController()
             navigationController?.pushViewController(myNftVC, animated: true)
         case 1:
-            let myNftVC = MyNftViewController()
-            navigationController?.pushViewController(myNftVC, animated: true)
+            let favoritesNftVC = FavoritesNFTViewController()
+            navigationController?.pushViewController(favoritesNftVC, animated: true)
         default:
             return
         }
@@ -135,7 +137,7 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 3
+        return 3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,7 +147,8 @@ extension ProfileViewController: UITableViewDataSource {
             assertionFailure("Не удалось создать ячейку таблыцы ProfileVCTableViewCell")
             return UITableViewCell()
         }
-        cell.configureCell(text: "Мои NFT")
+
+        cell.configureCell(text: tableViewTitles[indexPath.row])
         return cell
     }
 
