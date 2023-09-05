@@ -3,6 +3,8 @@ import UIKit
 final class PaymentChoiceCell: UICollectionViewCell {
     static let identifier = "PaymentChoiceCell"
     
+    
+    
     private lazy var collectionView: UIView = {
         let collectionView = UIView()
         collectionView.backgroundColor = .ypLightGrey

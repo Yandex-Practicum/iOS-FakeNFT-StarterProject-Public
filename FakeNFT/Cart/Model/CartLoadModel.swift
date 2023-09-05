@@ -24,6 +24,7 @@ final class CartLoadModel {
                         switch result {
                         case .success(let nft):
                             self.nfts.append(nft)
+                            print("IM HERE")
                             if self.nfts.count == orderServer.nfts.count {
                                 completion(.success(self.nfts))
                                 print(self.nfts)
