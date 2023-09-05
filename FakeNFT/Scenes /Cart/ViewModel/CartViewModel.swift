@@ -1,6 +1,8 @@
 import Foundation
 protocol CartViewModelProtocol: AnyObject {
     var cartModels: [NFTCartModel] { get }
+    var isPlaceholderHidden: Bool { get }
+    var isTableViewHidden: Bool { get }
     func viewDidLoad(completion: @escaping () -> Void)
     func didDeleteNFT(at index: Int)
     func didSortByPrice()

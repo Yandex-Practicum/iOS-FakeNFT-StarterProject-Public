@@ -1,13 +1,9 @@
 import UIKit
-import WebKit
+import SafariServices
 
 final class AgreementWebViewController: UIViewController {
     
-    private let webView: WKWebView = {
-        let webView = WKWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        return webView
-    }()
+    private var safariViewController: SFSafariViewController?
     
     private let request: URLRequest
     
@@ -22,18 +18,22 @@ final class AgreementWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setWebView()
+        presentSafariViewController()
     }
     
-    func setWebView() {
-        view.backgroundColor = .white
-        view.addSubview(webView)
-        NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        webView.load(request)
+    func presentSafariViewController() {
+        guard let url = request.url else { return }
+        safariViewController = SFSafariViewController(url: url)
+        safariViewController?.modalPresentationStyle = .fullScreen
+        if let safariVC = safariViewController {
+            safariVC.delegate = self
+            present(safariVC, animated: true)
+        }
+    }
+}
+
+extension AgreementWebViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
     }
 }

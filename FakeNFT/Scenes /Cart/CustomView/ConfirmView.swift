@@ -61,8 +61,7 @@ final class ConfirmView: UIView {
             agreementLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -152),
 
             linkAgreementButton.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor),
-            linkAgreementButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            linkAgreementButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -157),
+            linkAgreementButton.leadingAnchor.constraint(equalTo: agreementLabel.leadingAnchor),
             linkAgreementButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -126),
 
             confirmPurchaseButton.topAnchor.constraint(equalTo: linkAgreementButton.bottomAnchor, constant: 16),

@@ -188,7 +188,10 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CartTableViewCell.identifier,
-            for: indexPath) as? CartTableViewCell else { fatalError() }
+            for: indexPath) as? CartTableViewCell
+        else { assertionFailure("Unable to dequeue CartTableViewCell")
+            return UITableViewCell()
+        }
         let nft = viewModel.cartModels[indexPath.row]
         cell.delegate = self
         cell.indexCell = indexPath.row

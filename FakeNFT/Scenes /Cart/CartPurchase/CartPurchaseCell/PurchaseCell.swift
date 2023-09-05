@@ -38,6 +38,8 @@ final class CartPurchaseCell: UICollectionViewCell {
     private let currencyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "AppIcon")
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 6
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -57,22 +59,28 @@ final class CartPurchaseCell: UICollectionViewCell {
     }
 
     private func addSubviews() {
+        backgroundColor = .clear
         addSubview(bitcoinView)
-        addSubview(titleLabel)
-        addSubview(currencyLabel)
-        addSubview(currencyImageView)
+        bitcoinView.addSubview(titleLabel)
+        bitcoinView.addSubview(currencyLabel)
+        bitcoinView.addSubview(currencyImageView)
     }
 
     private func setCostraints() {
         NSLayoutConstraint.activate([
             bitcoinView.topAnchor.constraint(equalTo: topAnchor),
             bitcoinView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            bitcoinView.widthAnchor.constraint(equalToConstant: 168),
-            bitcoinView.heightAnchor.constraint(equalToConstant: 46),
+            bitcoinView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bitcoinView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
             titleLabel.topAnchor.constraint(equalTo: bitcoinView.topAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: currencyImageView.trailingAnchor, constant: 4),
+            titleLabel.heightAnchor.constraint(equalToConstant: 18),
+            
             currencyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             currencyLabel.leadingAnchor.constraint(equalTo: currencyImageView.trailingAnchor, constant: 4),
+            titleLabel.heightAnchor.constraint(equalToConstant: 18),
+            
             currencyImageView.topAnchor.constraint(equalTo: bitcoinView.topAnchor, constant: 4),
             currencyImageView.leadingAnchor.constraint(equalTo: bitcoinView.leadingAnchor, constant: 12),
             currencyImageView.widthAnchor.constraint(equalToConstant: 36),

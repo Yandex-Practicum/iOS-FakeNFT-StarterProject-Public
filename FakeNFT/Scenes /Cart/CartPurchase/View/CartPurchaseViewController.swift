@@ -4,6 +4,7 @@ protocol CartPurchaseDelegate: AnyObject {
 }
 
 final class CartPurchaseViewController: UIViewController {
+    private let numbersOfCurrencies = 8
     private let purchaseTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.Bold.size17
@@ -26,7 +27,6 @@ final class CartPurchaseViewController: UIViewController {
 
     private let currencyCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
         collectionView.register(CartPurchaseCell.self, forCellWithReuseIdentifier: CartPurchaseCell.identifier)
@@ -75,10 +75,10 @@ final class CartPurchaseViewController: UIViewController {
         view.addSubview(currencyCollectionView)
         view.addSubview(confirmView)
         NSLayoutConstraint.activate([
-            currencyCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            currencyCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            currencyCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            currencyCollectionView.bottomAnchor.constraint(equalTo: confirmView.topAnchor),
+            currencyCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 108),
+            currencyCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            currencyCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            currencyCollectionView.heightAnchor.constraint(equalToConstant: 205),
 
             confirmView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             confirmView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -96,14 +96,17 @@ extension CartPurchaseViewController: UICollectionViewDelegate { }
 
 extension CartPurchaseViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return numbersOfCurrencies
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CartPurchaseCell.identifier,
-            for: indexPath) as? CartPurchaseCell else { fatalError() }
+            for: indexPath) as? CartPurchaseCell else {
+            assertionFailure("Unable to dequeue CartPurchaseCell")
+            return UICollectionViewCell()
+    }
         cell.configureCell()
         return cell
     }
@@ -111,22 +114,39 @@ extension CartPurchaseViewController: UICollectionViewDataSource {
 
 extension CartPurchaseViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt
                         indexPath: IndexPath) -> CGSize {
-        let leftInset: CGFloat = 16
-        let rightInset: CGFloat = 16
         let horizontalSpacing: CGFloat = 7
-
-              let cellsPerRow: CGFloat = 2
-              let cellsHorizontalSpace = leftInset + rightInset + horizontalSpacing * cellsPerRow
-
-              let width = (collectionView.bounds.width - cellsHorizontalSpace) / cellsPerRow
-              return CGSize(width: width, height: 46)
+        let cellsPerRow: CGFloat = 2
+        
+        let width = (collectionView.bounds.width - horizontalSpacing) / cellsPerRow
+        return CGSize(width: width, height: 46)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        let minimumLineSpacing: CGFloat = 7
+        return minimumLineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        let minimumInterSpacing: CGFloat = 7
+        return minimumInterSpacing
     }
 }
 
 extension CartPurchaseViewController: CartPurchaseDelegate {
     func didTappedAgreementLink() {
-
+        guard let url = URL(string: Constants.linkAgreement.rawValue)
+        else { return }
+        let request = URLRequest(url: url)
+        let agreementVC = AgreementWebViewController(request: request)
+        let navigationController = UINavigationController(rootViewController: agreementVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
 }

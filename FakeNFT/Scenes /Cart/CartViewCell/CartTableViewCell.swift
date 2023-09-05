@@ -80,13 +80,14 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     func configureCell(with nft: NFTCartModel) {
         contentView.backgroundColor = .systemBackground
-
+        
         self.imageURL = nft.images.first
         self.nftNameLabel.text = nft.name
         self.starView.rating =  nft.rating
         self.nftPriceLabel.text = "\(nft.price) ETH"
     }
     func addSubviews() {
+
         addSubview(contentView)
         addSubview(nftImageView)
         addSubview(nftNameLabel)
@@ -98,7 +99,7 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     func setConstraints() {
         NSLayoutConstraint.activate([
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftNameLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 8),

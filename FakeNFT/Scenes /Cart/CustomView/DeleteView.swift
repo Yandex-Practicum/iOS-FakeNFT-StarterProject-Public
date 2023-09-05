@@ -79,7 +79,6 @@ final class DeleteView: UIView {
         return stackView
     }()
     
-    
     private func configureView() {
         addSubviews()
         setConstraints()
