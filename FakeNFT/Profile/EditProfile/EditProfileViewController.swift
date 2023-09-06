@@ -111,10 +111,10 @@ final class EditProfileViewController: UIViewController {
         setupNavBar()
         setupProfile()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-       // let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: descriptionTextField.frame.height))
         descriptionTextField.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 0, right: 16)
     }
 
@@ -132,10 +132,7 @@ final class EditProfileViewController: UIViewController {
                                      target: self,
                                      action: #selector(closeButtonTapped))
         button.tintColor = .label
-//        let nextButton = UIBarButtonItem(image: UIImage(systemName: "checkmark"),
-//                                         style: .plain,
-//                                         target: self,
-//                                         action: #selector(saveProfile))
+
         navigationItem.setRightBarButton(button, animated: true)
         navigationItem.setHidesBackButton(true, animated: false)
     }
@@ -193,10 +190,23 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-        // save and dissmis
+      showErrorAlert()
        dismiss(animated: true)
     }
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Ссылка на сайт не валидна",
+            preferredStyle: .alert)
 
+        let action = UIAlertAction(title: "Ок", style: .default)
+
+        alert.addAction(action)
+
+        present(alert, animated: true, completion: nil)
+    }
+    
     private func showAlert() {
         let alertController = UIAlertController(
             title: "Сменить аватар",
