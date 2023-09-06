@@ -111,6 +111,9 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editProfile() {
+        let viewController = EditProfileViewController()
+        let editVC = UINavigationController(rootViewController: viewController)
+        present(editVC, animated: true)
 
     }
 

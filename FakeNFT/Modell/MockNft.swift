@@ -22,6 +22,11 @@ class MockNft {
                      image: UIImage(named: "Archi") ?? .add)
 
     ]
+    var profile = Profile(avatar: UIImage(named: "userPic") ?? .add,
+                          id: UUID(),
+                          name: "Joakin Phoenix",
+                          desctoption: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше на моем сайте. Открыт к коллаборяциям",
+                          website: "yandex.ru")
     private init() { }
 }
 
@@ -31,4 +36,12 @@ struct MockNftModel {
     let price: Float
     let rating: Int
     let image: UIImage
+}
+
+struct Profile {
+    let avatar: UIImage
+    let id: UUID
+    let name: String
+    let desctoption: String
+    let website: String
 }
