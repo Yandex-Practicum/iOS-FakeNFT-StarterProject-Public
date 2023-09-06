@@ -41,6 +41,7 @@
 		CE7E263C2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E263B2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift */; };
 		CE7E263E2AA7687A00D8623E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E263D2AA7687A00D8623E /* EditProfileViewController.swift */; };
 		CE7E26412AA88A4E00D8623E /* UIColors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E26402AA88A4E00D8623E /* UIColors+Extensions.swift */; };
+		CE7E26432AA8B68600D8623E /* NftAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E26422AA8B68600D8623E /* NftAvatarViewModel.swift */; };
 		CE86BAB32AA50AAB0051DB5E /* ProfileVCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		CE7E263B2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE7E263D2AA7687A00D8623E /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		CE7E26402AA88A4E00D8623E /* UIColors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColors+Extensions.swift"; sourceTree = "<group>"; };
+		CE7E26422AA8B68600D8623E /* NftAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftAvatarViewModel.swift; sourceTree = "<group>"; };
 		CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				CE742A542AA5F3FD008E7AE9 /* NftAvatarView.swift */,
+				CE7E26422AA8B68600D8623E /* NftAvatarViewModel.swift */,
 				CE742A4C2AA5C806008E7AE9 /* Profile */,
 				CE742A4F2AA5C886008E7AE9 /* MyNFT */,
 				CE742A4E2AA5C839008E7AE9 /* FavoritesNFT */,
@@ -494,6 +497,7 @@
 			files = (
 				CA9C1B012A9F79ED005FBA8D /* CatalogViewController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				CE7E26432AA8B68600D8623E /* NftAvatarViewModel.swift in Sources */,
 				CE742A5A2AA65DAA008E7AE9 /* MockNft.swift in Sources */,
 				CE7E26412AA88A4E00D8623E /* UIColors+Extensions.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
