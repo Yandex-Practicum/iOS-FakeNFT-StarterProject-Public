@@ -7,6 +7,7 @@ final class CatalogCell: UITableViewCell {
     var itemImageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .white
+        view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -14,13 +15,6 @@ final class CatalogCell: UITableViewCell {
     }()
     
     var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
-    
-    var countLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .black
@@ -40,24 +34,21 @@ final class CatalogCell: UITableViewCell {
     
     private func setupUI() {
         contentView.backgroundColor = .white
-        [itemImageView, nameLabel, countLabel].forEach {
+        [itemImageView, nameLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             itemImageView.heightAnchor.constraint(equalToConstant: 140),
             
             nameLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 4),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            
-            countLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor),
-            countLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            countLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            countLabel.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor)
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -21)
         ])
     }
 }

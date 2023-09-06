@@ -6,21 +6,29 @@ final class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         generateTabBar()
+        customizeTabBar()
     }
     
     private func generateTabBar() {
-        viewControllers = [
-        generateVC(viewController: ProfileViewController(), title: "Профиль", image: UIImage(systemName: "person.crop.circle.fill")),
-        generateVC(viewController: CatalogViewController(), title: "Каталог", image: UIImage(systemName: "rectangle.stack.fill")),
-        generateVC(viewController: CartViewController(), title: "Корзина", image: UIImage(systemName: "bag")),
-        generateVC(viewController: StatisticViewController(), title: "Статистика", image: UIImage(systemName: "flag.2.crossed.fill"))
-        ]
+        
+       let profileVC = generateVC(viewController: ProfileViewController(), title: "Профиль", image: UIImage(named: "profile"))
+        let catalogVC = generateVC(viewController: CatalogViewController(), title: "Каталог", image: UIImage(named: "catalog"))
+        let cartVC = generateVC(viewController: CartViewController(), title: "Корзина", image: UIImage(named: "cart"))
+        let statisticsVC = generateVC(viewController: StatisticViewController(), title: "Статистика", image: UIImage(named: "statistics"))
+        viewControllers = [profileVC, catalogVC, cartVC, statisticsVC]
     }
     
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
         viewController.tabBarItem.title = title
         viewController.tabBarItem.image = image
         return UINavigationController(rootViewController: viewController)
+    }
+    
+    private func customizeTabBar() {
+        tabBar.unselectedItemTintColor = .black
+        tabBar.backgroundColor = .background
+        tabBar.isTranslucent = false
+        tabBar.clipsToBounds = true
     }
 }
 

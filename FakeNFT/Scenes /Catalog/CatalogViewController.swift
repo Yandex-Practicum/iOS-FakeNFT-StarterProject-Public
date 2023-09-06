@@ -12,7 +12,9 @@ final class CatalogViewController: UIViewController {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CatalogCell.self, forCellReuseIdentifier: CatalogCell.reuseIdentifier)
-        tableView.backgroundColor = .clear
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 8, right: 0)
+        tableView.backgroundColor = .background
+        tableView.separatorColor = .background
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -39,9 +41,9 @@ final class CatalogViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         
@@ -49,14 +51,14 @@ final class CatalogViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
     }
     
     private func setupNavBar() {
-        let sortButtonImage = UIImage(systemName: "line.3.horizontal.decrease")
+        let sortButtonImage = UIImage(named: "sortButton")
         let sortButton = UIBarButtonItem(image: sortButtonImage, style: .plain, target: self, action: #selector(sortButtonTapped))
         sortButton.target = self
         sortButton.action = #selector(sortButtonTapped)
+        sortButton.tintColor = .black
         navigationItem.rightBarButtonItem = sortButton
     }
     
@@ -108,9 +110,17 @@ extension CatalogViewController: UITableViewDelegate {
 
 extension String {
     var encodeURL: String {
-        return self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+        if let encodedString = self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) {
+            return encodedString
+        } else {
+            return ""
+        }
     }
     var decodeURL: String {
-        return self.removingPercentEncoding!
+        if let decodedString =  self.removingPercentEncoding {
+            return decodedString
+        } else {
+            return ""
+        }
     }
 }
