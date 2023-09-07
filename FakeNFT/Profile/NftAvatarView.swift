@@ -42,7 +42,7 @@ final class NftAvatarView: UIView {
     private func reset() {
         imageView.image = nil
         likeButton.tintColor = .ypWhite
-        likeButton.setImage(UIImage(systemName: "hear.fill"), for: .normal)
+        likeButton.setImage(UIImage(systemName: "like"), for: .normal)
     }
 
     // MARK: - Setup
@@ -73,7 +73,7 @@ final class NftAvatarView: UIView {
         imageView.kf.indicatorType = .activity
     }
 }
-
+// MARK: - Configuration
 extension NftAvatarView {
     private func configure(with viewModel: NftAvatarViewModel?) {
         guard let viewModel = viewModel else {
@@ -83,12 +83,12 @@ extension NftAvatarView {
         let placeHolder = UIImage(named: "placeHolder")
 
         imageView.kf.setImage(with: viewModel.imageURL,
-        placeholder: placeHolder,
+                              placeholder: placeHolder,
                               options: [.scaleFactor(UIScreen.main.scale), .transition(.fade(1))])
         if let isLiked = viewModel.isLiked {
             likeButton.isHidden = false
             likeButton.tintColor = isLiked ? .ypRed : .ypWhite
-            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.setImage(UIImage(systemName: "like"), for: .normal)
         } else {
             likeButton.isHidden = true
         }

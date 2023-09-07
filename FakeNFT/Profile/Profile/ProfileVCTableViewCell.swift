@@ -13,7 +13,7 @@ final class ProfileVCTableViewCell: UITableViewCell {
     private  let cellTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,8 +34,7 @@ final class ProfileVCTableViewCell: UITableViewCell {
     }
 
      func configureCell(text: String) {
-        cellTitleLabel.text = text
-
+         cellTitleLabel.text = text
     }
 
     private func layouts() {

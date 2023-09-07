@@ -18,6 +18,7 @@ final class FavoritesNFTViewController: UIViewController {
         collectionView.delegate = self
         return collectionView
     }()
+
     private let placeHolderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -25,13 +26,22 @@ final class FavoritesNFTViewController: UIViewController {
         label.text = "У Вас еще нет избранных NFT"
         return label
     }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Избранные NFT"
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     private var visibleNFT: [MockNftModel] = []
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Избранные NFT"
         layouts()
         setupNavBar()
         visibleNFT = mockNft.nft
@@ -40,6 +50,7 @@ final class FavoritesNFTViewController: UIViewController {
     // MARK: - Methods
     private func setupNavBar() {
         navigationController?.navigationBar.tintColor = .label
+        navigationItem.titleView = titleLabel
         navigationController?.navigationBar.topItem?.title = ""
     }
     private func checkPlaceholder() {

@@ -26,7 +26,7 @@ final class EditProfileViewController: UIViewController {
         return label
     }()
 
-    private let nameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
@@ -37,6 +37,7 @@ final class EditProfileViewController: UIViewController {
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
+        textField.delegate = self
 
         return textField
     }()
@@ -60,7 +61,10 @@ final class EditProfileViewController: UIViewController {
         textView.isSelectable = true
         textView.isScrollEnabled = false
 
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textView.frame.height))
+        let paddingViewHeight: CGFloat = 16
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: paddingViewHeight))
+        textView.textContainerInset = UIEdgeInsets(top: paddingViewHeight, left: 16, bottom: paddingViewHeight, right: 16)
 
         return textView
     }()
@@ -79,13 +83,11 @@ final class EditProfileViewController: UIViewController {
         textField.textColor = .label
         textField.backgroundColor = .ypLightGray
         textField.layer.cornerRadius = 12
-
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
-
         return textField
     }()
 
@@ -107,15 +109,10 @@ final class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+
         layouts()
         setupNavBar()
         setupProfile()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        descriptionTextField.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 0, right: 16)
     }
 
     // MARK: - Methods
@@ -240,4 +237,12 @@ final class EditProfileViewController: UIViewController {
         return false
     }
 
+}
+
+extension EditProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nameTextField.text = textField.text ?? ""
+        textField.resignFirstResponder()
+        return true
+    }
 }

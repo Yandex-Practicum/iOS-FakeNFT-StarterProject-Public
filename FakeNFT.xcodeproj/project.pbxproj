@@ -45,9 +45,9 @@
 		CE86BAB32AA50AAB0051DB5E /* ProfileVCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */; };
 		CEFF4DF32AA9F3AA00785AB0 /* FakeNftAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF22AA9F3AA00785AB0 /* FakeNftAPI.swift */; };
 		CEFF4DF52AA9F61F00785AB0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF42AA9F61F00785AB0 /* Profile.swift */; };
-		CEFF4DF72AA9F79600785AB0 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF62AA9F79600785AB0 /* ProfileModel.swift */; };
 		CEFF4DF92AA9F85300785AB0 /* FakeAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF82AA9F85300785AB0 /* FakeAPIRequest.swift */; };
 		CEFF4DFB2AAA005800785AB0 /* profileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */; };
+		CEFF4DFE2AAA483D00785AB0 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,10 +108,10 @@
 		CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCTableViewCell.swift; sourceTree = "<group>"; };
 		CEFF4DF22AA9F3AA00785AB0 /* FakeNftAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNftAPI.swift; sourceTree = "<group>"; };
 		CEFF4DF42AA9F61F00785AB0 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		CEFF4DF62AA9F79600785AB0 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		CEFF4DF82AA9F85300785AB0 /* FakeAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAPIRequest.swift; sourceTree = "<group>"; };
 		CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = profileDecomposition.md; sourceTree = "<group>"; };
 		CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Декомпозиция ред. профиля.md"; sourceTree = "<group>"; };
+		CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +287,7 @@
 		CE742A4B2AA5C754008E7AE9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */,
 				CE742A542AA5F3FD008E7AE9 /* NftAvatarView.swift */,
 				CE7E26422AA8B68600D8623E /* NftAvatarViewModel.swift */,
 				CE742A4C2AA5C806008E7AE9 /* Profile */,
@@ -338,7 +339,6 @@
 			children = (
 				CE742A592AA65DAA008E7AE9 /* MockNft.swift */,
 				CEFF4DF42AA9F61F00785AB0 /* Profile.swift */,
-				CEFF4DF62AA9F79600785AB0 /* ProfileModel.swift */,
 			);
 			path = Modell;
 			sourceTree = "<group>";
@@ -536,6 +536,7 @@
 				CE742A5A2AA65DAA008E7AE9 /* MockNft.swift in Sources */,
 				CE7E26412AA88A4E00D8623E /* UIColors+Extensions.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				CEFF4DFE2AAA483D00785AB0 /* ProfileService.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				CEFF4DF52AA9F61F00785AB0 /* Profile.swift in Sources */,
@@ -544,7 +545,6 @@
 				CE742A572AA608AC008E7AE9 /* RatingView.swift in Sources */,
 				CE7E263A2AA7490C00D8623E /* FavoritesNFTViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
-				CEFF4DF72AA9F79600785AB0 /* ProfileModel.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				CE742A512AA5C8BC008E7AE9 /* MyNftViewController.swift in Sources */,

@@ -19,11 +19,18 @@ final class MyNftViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Мои NFT"
+        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Мои NFT"
         layouts()
         setupNavBar()
     }
@@ -41,7 +48,7 @@ final class MyNftViewController: UIViewController {
 
     private func setupNavBar() {
         navigationController?.navigationBar.tintColor = .label
-
+        navigationItem.titleView = titleLabel
         navigationController?.navigationBar.topItem?.title = ""
         let sortButton = UIBarButtonItem(image: UIImage(named: "Vector"),
                                          style: .plain,
