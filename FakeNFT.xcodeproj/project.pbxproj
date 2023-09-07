@@ -178,11 +178,10 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
-				CE742A582AA65D90008E7AE9 /* Modell */,
+				3F6806C929CBBCAF00B4F915 /* Models */,
 				CE742A4B2AA5C754008E7AE9 /* Profile */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
-				3F6806C929CBBCAF00B4F915 /* Models */,
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
@@ -242,6 +241,8 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CE742A592AA65DAA008E7AE9 /* MockNft.swift */,
+				CEFF4DF42AA9F61F00785AB0 /* Profile.swift */,
 				3F6806D829CC979D00B4F915 /* Network */,
 			);
 			path = Models;
@@ -332,15 +333,6 @@
 				CE742A522AA5F182008E7AE9 /* MyNftTableViewCell.swift */,
 			);
 			path = MyNFT;
-			sourceTree = "<group>";
-		};
-		CE742A582AA65D90008E7AE9 /* Modell */ = {
-			isa = PBXGroup;
-			children = (
-				CE742A592AA65DAA008E7AE9 /* MockNft.swift */,
-				CEFF4DF42AA9F61F00785AB0 /* Profile.swift */,
-			);
-			path = Modell;
 			sourceTree = "<group>";
 		};
 		CE7E263F2AA88A1B00D8623E /* Helpers */ = {
