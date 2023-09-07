@@ -66,27 +66,37 @@ final class MyNftViewController: UIViewController {
                                       message: "Сортировка",
                                       preferredStyle: .actionSheet)
 
-        let actionFirst = UIAlertAction(title: "По цене", style: .default) { [weak self] (_) in
+        let actionFirst = UIAlertAction(
+            title: "По цене",
+            style: .default
+        ) { [weak self] (_) in
             guard let self = self else { return }
-            print("price sorted")
+            // TODO: реализовать сортировку по цене
         }
         alertController.addAction(actionFirst)
 
-        let actionSecond = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] (_) in
+        let actionSecond = UIAlertAction(
+            title: "По рейтингу",
+            style: .default
+        ) { [weak self] (_) in
             guard let self = self else { return }
-            print("rating sorted")
+            // TODO: реализовать сортировку по рейтингу
         }
         alertController.addAction(actionSecond)
 
-        let actionThird = UIAlertAction(title: "По имени", style: .default) { [weak self] (_) in
+        let actionThird = UIAlertAction(
+            title: "По имени", style: .default
+        ) { [weak self] (_) in
             guard let self = self else { return }
-            print("by name sorted")
+            // TODO: реализовать сортировку по имени
         }
         alertController.addAction(actionThird)
 
-        let actionCancel = UIAlertAction(title: "Закрыть", style: .cancel) { [weak self] (_) in
+        let actionCancel = UIAlertAction(
+            title: "Закрыть", style: .cancel
+        ) { [weak self] (_) in
             guard let self = self else { return }
-            print("cancel")
+            // TODO: реализовать закрыть
         }
         alertController.addAction(actionCancel)
         navigationController?.present(alertController, animated: true)

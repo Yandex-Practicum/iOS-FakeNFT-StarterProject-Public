@@ -218,17 +218,17 @@ final class EditProfileViewController: UIViewController {
             title: "Ок",
             style: .default,
             handler: { [weak self] (_) in
-//                guard let self = self else { return }
+              guard let self = self else { return }
                 if let text = alertController.textFields?[0].text,
                    let url = URL(string: text),
-                   let valid = self?.verifiUrl(urlString: text),
+                   let valid = self.verifiUrl(urlString: text),
                    valid { print(url) }
             }
         ))
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func verifiUrl (urlString: String?) -> Bool {
+    func verifiUrl (urlString: String?) -> Bool? {
         if let urlString = urlString {
             if let url = NSURL(string: urlString) {
                 return UIApplication.shared.canOpenURL(url as URL)

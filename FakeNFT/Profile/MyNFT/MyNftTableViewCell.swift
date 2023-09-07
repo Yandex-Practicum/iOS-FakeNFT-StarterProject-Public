@@ -95,16 +95,6 @@ final class MyNftTableViewCell: UITableViewCell {
         priceStackView.addArrangedSubview(priceLabel)
         priceStackView.addArrangedSubview(priceValueLabel)
 
-//        [nameLabel, ratingView, authorLabel].forEach { view in
-//            view.translatesAutoresizingMaskIntoConstraints = false
-//            stackView.arrangedSubviews(view)
-//        }
-
-//        [priceLabel, priceValueLabel].forEach { view in
-//            view.translatesAutoresizingMaskIntoConstraints = false
-//            priceStackView.arrangedSubviews(view)
-//        }
-
         [avatar, stackView, priceStackView].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
             self.contentView.addSubview(view)

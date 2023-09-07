@@ -42,16 +42,4 @@ struct FakeNftAPI {
     }
 }
 
-// extension FakeNftAPI {
-//    func updateProfile(id: Int,
-//                       name: String,
-//                       description: String,
-//                       website: URL,
-//                       likes: [Int],
-//                       onResponse: @escaping(Result<ProfileModel,Error>) -> Void) -> NetworkTask? {
-//        networkClient.send(request: <#T##NetworkRequest#>,
-//                           type: <#T##Decodable.Protocol#>,
-//                           onResponse: <#T##(Result<Decodable, Error>) -> Void#>)
-//    }
-//
-// }
+

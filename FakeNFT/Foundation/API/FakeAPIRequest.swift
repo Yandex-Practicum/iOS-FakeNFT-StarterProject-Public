@@ -9,13 +9,11 @@ import Foundation
 
 enum FakeAPIRequest {
     case getProfile(id: Int)
-    case updateProfile(id: Int, name: String, description: String, website: URL, likes: [Int])
+    case updateProfile(
+        id: Int,
+        name: String,
+        description: String,
+        website: URL,
+        likes: [Int]
+    )
 }
-//
-// extension FakeAPIRequest {
-//    var request: NetworkRequest {
-//        .init(endpoint: URL(string: urlString),
-//        )
-//        
-//    }
-// }
