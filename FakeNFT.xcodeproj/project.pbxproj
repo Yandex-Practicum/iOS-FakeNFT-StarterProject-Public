@@ -48,6 +48,7 @@
 		CEFF4DF92AA9F85300785AB0 /* FakeAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF82AA9F85300785AB0 /* FakeAPIRequest.swift */; };
 		CEFF4DFB2AAA005800785AB0 /* profileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */; };
 		CEFF4DFE2AAA483D00785AB0 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */; };
+		CEFF4E002AAA64E100785AB0 /* UploadProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DFF2AAA64E100785AB0 /* UploadProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = profileDecomposition.md; sourceTree = "<group>"; };
 		CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Декомпозиция ред. профиля.md"; sourceTree = "<group>"; };
 		CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		CEFF4DFF2AAA64E100785AB0 /* UploadProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProfileModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CEFF4DFF2AAA64E100785AB0 /* UploadProfileModel.swift */,
 				CE742A592AA65DAA008E7AE9 /* MockNft.swift */,
 				CEFF4DF42AA9F61F00785AB0 /* Profile.swift */,
 				3F6806D829CC979D00B4F915 /* Network */,
@@ -302,8 +305,8 @@
 		CE742A4C2AA5C806008E7AE9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */,
 				CA9C1AFE2A9F79CC005FBA8D /* ProfileViewController.swift */,
+				CE86BAB22AA50AAB0051DB5E /* ProfileVCTableViewCell.swift */,
 				CE742A562AA608AC008E7AE9 /* RatingView.swift */,
 			);
 			path = Profile;
@@ -531,6 +534,7 @@
 				CEFF4DFE2AAA483D00785AB0 /* ProfileService.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				CEFF4E002AAA64E100785AB0 /* UploadProfileModel.swift in Sources */,
 				CEFF4DF52AA9F61F00785AB0 /* Profile.swift in Sources */,
 				CE742A532AA5F182008E7AE9 /* MyNftTableViewCell.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
