@@ -111,7 +111,7 @@ final class EditProfileViewController: UIViewController {
         setupNavBar()
         setupProfile()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -193,7 +193,7 @@ final class EditProfileViewController: UIViewController {
       showErrorAlert()
        dismiss(animated: true)
     }
-    
+
     private func showErrorAlert() {
         let alert = UIAlertController(
             title: "Что-то пошло не так(",
@@ -206,7 +206,7 @@ final class EditProfileViewController: UIViewController {
 
         present(alert, animated: true, completion: nil)
     }
-    
+
     private func showAlert() {
         let alertController = UIAlertController(
             title: "Сменить аватар",

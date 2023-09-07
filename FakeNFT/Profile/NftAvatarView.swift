@@ -10,7 +10,7 @@ import UIKit
 final class NftAvatarView: UIView {
     private let imageView = UIImageView()
     private let likeButton = UIButton()
-    
+
     var viewModel: NftAvatarViewModel? {
         didSet {
             configure(with: viewModel)
@@ -38,7 +38,7 @@ final class NftAvatarView: UIView {
 
     }
     // MARK: - Reset to default
-    
+
     private func reset() {
         imageView.image = nil
         likeButton.tintColor = .ypWhite
@@ -46,7 +46,7 @@ final class NftAvatarView: UIView {
     }
 
     // MARK: - Setup
-    
+
     private func setupViews() {
         let radius = CGFloat(12)
         addSubview(imageView)
@@ -81,7 +81,7 @@ extension NftAvatarView {
             return
         }
         let placeHolder = UIImage(named: "placeHolder")
-        
+
         imageView.kf.setImage(with: viewModel.imageURL,
         placeholder: placeHolder,
                               options: [.scaleFactor(UIScreen.main.scale), .transition(.fade(1))])
