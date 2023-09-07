@@ -47,6 +47,7 @@
 		CEFF4DF52AA9F61F00785AB0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF42AA9F61F00785AB0 /* Profile.swift */; };
 		CEFF4DF72AA9F79600785AB0 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF62AA9F79600785AB0 /* ProfileModel.swift */; };
 		CEFF4DF92AA9F85300785AB0 /* FakeAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DF82AA9F85300785AB0 /* FakeAPIRequest.swift */; };
+		CEFF4DFB2AAA005800785AB0 /* profileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		CEFF4DF42AA9F61F00785AB0 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CEFF4DF62AA9F79600785AB0 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		CEFF4DF82AA9F85300785AB0 /* FakeAPIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAPIRequest.swift; sourceTree = "<group>"; };
+		CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = profileDecomposition.md; sourceTree = "<group>"; };
+		CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Декомпозиция ред. профиля.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */,
+				CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */,
 				CA9C1AFA2A9F60D9005FBA8D /* .swiftlint.yml */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
@@ -475,6 +480,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEFF4DFB2AAA005800785AB0 /* profileDecomposition.md in Resources */,
 				CA9C1AFB2A9F60D9005FBA8D /* .swiftlint.yml in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
