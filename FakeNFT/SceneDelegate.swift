@@ -11,7 +11,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
 
-        let vc = CartViewController(viewModel: CartViewModel(model: CartLoadModel(networkClient: DefaultNetworkClient())))
+        let vc = CartViewController()
         
         let cartModel = (UIApplication.shared.delegate as! AppDelegate).cartModel
         let viewModel = CartViewModel(model: cartModel)

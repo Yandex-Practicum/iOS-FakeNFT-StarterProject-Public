@@ -2,7 +2,27 @@ import UIKit
 
 final class CartViewController: UIViewController {
     
-    private var viewModel: CartViewModel
+    private var viewModel: CodeInputViewModelProtocol?
+    private var router: Router?
+    
+    init(viewModel: CodeInputViewModelProtocol = CartViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addViews()
+        setNavBar()
+        setupUI()
+        setupButtonPaymentView()
+        viewModel?.didLoad()
+    }
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -156,6 +176,7 @@ final class CartViewController: UIViewController {
         let vc = PaymentChoiceViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+//        router?.showVC()
     }
     
     func initialize(viewModel: CartViewModel) {
@@ -171,25 +192,6 @@ final class CartViewController: UIViewController {
             self?.tableView.reloadData()
         }
     }
-    
-    init(viewModel: CartViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addViews()
-        setNavBar()
-        setupUI()
-        setupButtonPaymentView()
-        viewModel.didLoad()
-    }
 }
 
 extension CartViewController: UITableViewDelegate, UITableViewDataSource {
@@ -199,7 +201,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.NFTModels.count
+        guard let count = viewModel?.NFTModels.count else { return 0 }
         return count
     }
     
@@ -207,10 +209,8 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()
         }
-        let model = viewModel.NFTModels[indexPath.row]
-        cell.backgroundColor = .systemBackground
-        cell.selectionStyle = .none
-        cell.configureCell(model: model)
+        guard let model = viewModel?.NFTModels[indexPath.row] else { return cell}
+        cell.configureCell(model: model, cell: cell)
         cell.delegate = self
         return cell
     }

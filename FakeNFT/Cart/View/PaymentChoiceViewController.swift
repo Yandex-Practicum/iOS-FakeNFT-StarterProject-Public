@@ -116,9 +116,9 @@ final class PaymentChoiceViewController: UIViewController {
     }
     
     @objc private func didTapPaymentButton() {
-        var vc = PurchaseResultViewController(completePurchase: false)
+        var vc = PurchaseResultViewController(completePurchase: false, viewModel: CartViewModel())
         if selectedMethodPay != nil {
-            vc = PurchaseResultViewController(completePurchase: true)
+            vc = PurchaseResultViewController(completePurchase: true, viewModel: CartViewModel())
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

@@ -6,29 +6,34 @@ enum Сonstants {
     static let defaultURL: URL = URL(string: "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/")!
 }
 
-final class CartLoadModel {
+protocol CartLoadServiceProtocol {
+    var networkClient: NetworkClient { get }
+    func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void)
+    
+}
+
+final class CartLoadService: CartLoadServiceProtocol {
     
     let networkClient: NetworkClient
     private (set) var nfts: [NFTServerModel] = []
     
-    init(networkClient: NetworkClient) {
+    init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
     
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void) {
-        loadCart { result in
+        let group = DispatchGroup()
+        loadCart { [weak self] result in
             switch result {
             case .success(let orderServer):
                 orderServer.nfts.forEach { nftId in
-                    self.loadNFT(id: nftId) { result in
+                    group.enter()
+                    self?.loadNFT(id: nftId) { result in
                         switch result {
                         case .success(let nft):
-                            self.nfts.append(nft)
-                            print("IM HERE")
-                            if self.nfts.count == orderServer.nfts.count {
-                                completion(.success(self.nfts))
-                                print(self.nfts)
-                            }
+                            self?.nfts.append(nft)
+                            group.leave()
                         case .failure(let error):
                             print(error)
                             completion(.failure(error))
@@ -37,6 +42,9 @@ final class CartLoadModel {
                 }
             case .failure(let error):
                 completion(.failure(error))
+            }
+            group.notify(queue: .main) {
+                completion(.success(self?.nfts ?? []))
             }
         }
     }
@@ -49,8 +57,13 @@ final class CartLoadModel {
     }
     
     private func loadNFT(id: String, completion: @escaping (Result<NFTServerModel, Error>) -> Void) {
-        let request = DefaultNetworkRequest( endpoint: URL(string: Сonstants.nftAPI + "\(id)"), dto: nil, httpMethod: .get)
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.nftAPI + "\(id)"), dto: nil, httpMethod: .get)
         networkClient.send(request: request, type: NFTServerModel.self, onResponse: completion)
     }
+    
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.ordersAPI), dto: OrderModel(nfts: nfts, id: id), httpMethod: .put)
+        networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
+        }
 }
 

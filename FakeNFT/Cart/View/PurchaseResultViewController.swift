@@ -3,14 +3,26 @@ import UIKit
 final class PurchaseResultViewController: UIViewController {
     
     var completePurchase: Bool
+    private var viewModel: CodeInputViewModelProtocol
     
-    init(completePurchase: Bool) {
+    
+    init(completePurchase: Bool, viewModel: CodeInputViewModelProtocol = CartViewModel()) {
         self.completePurchase = completePurchase
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+        updateFinalResult()
+        viewModel.didLoad()
     }
     
     private lazy var image: UIImageView = {
@@ -36,7 +48,7 @@ final class PurchaseResultViewController: UIViewController {
     }()
     
     private func updateFinalResult() {
-        if completePurchase == true {
+        if completePurchase {
             label.text = "Успех! Оплата прошла, поздравляем с покупкой!"
             image.image = UIImage(named: "successfullPurchase")
             button.setTitle("Вернуться в каталог", for: .normal)
@@ -70,13 +82,5 @@ final class PurchaseResultViewController: UIViewController {
         guard let firstWindow = firstScene.windows.first else { return }
         let window = firstWindow
         window.rootViewController = CatalogViewController()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-        updateFinalResult()
     }
 }

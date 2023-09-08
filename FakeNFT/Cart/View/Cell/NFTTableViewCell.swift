@@ -17,7 +17,7 @@ final class NFTTableViewCell: UITableViewCell {
         }
     }
     
-    public weak var delegate: NFTTableViewCellDelegate?
+    weak var delegate: NFTTableViewCellDelegate?
     static let identifier = "NFTTableViewCell"
 
     private lazy var nftImageView: UIImageView = {
@@ -95,7 +95,9 @@ final class NFTTableViewCell: UITableViewCell {
         ])
     }
     
-    func configureCell(model: NFTModel) {
+    func configureCell(model: NFTModel, cell: UITableViewCell) {
+        cell.backgroundColor = .systemBackground
+        cell.selectionStyle = .none
         imageURL = model.images.first
         nftPrice.text = "\(model.price)" + "ETH"
         nftNameLabel.text = model.name
