@@ -13,6 +13,7 @@ final class PaymentChoiceViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "Выберите способ оплаты"
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return titleLabel
     }()
     
@@ -91,7 +92,7 @@ final class PaymentChoiceViewController: UIViewController {
             paymentButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             paymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             paymentButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 108),
+            collectionView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 50),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.heightAnchor.constraint(equalToConstant: 212)

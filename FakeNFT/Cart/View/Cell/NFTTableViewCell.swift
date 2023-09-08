@@ -16,9 +16,23 @@ final class NFTTableViewCell: UITableViewCell {
             nftImageView.kf.setImage(with: url)
         }
     }
-    
+    var indexCell: Int?
     weak var delegate: NFTTableViewCellDelegate?
     static let identifier = "NFTTableViewCell"
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: NFTTableViewCell.identifier)
+        addViews()
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
 
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
@@ -67,7 +81,6 @@ final class NFTTableViewCell: UITableViewCell {
         let deleteFromBasketButton = UIButton()
         deleteFromBasketButton.setImage(UIImage(named: "deleteButton"), for: .normal)
         deleteFromBasketButton.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
-        deleteFromBasketButton.translatesAutoresizingMaskIntoConstraints = false
         return deleteFromBasketButton
     }()
     
@@ -91,7 +104,6 @@ final class NFTTableViewCell: UITableViewCell {
             nftPrice.topAnchor.constraint(equalTo: nftPriceLabel.bottomAnchor, constant: 2),
             deleteFromBasketButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             deleteFromBasketButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
         ])
     }
     
@@ -99,7 +111,7 @@ final class NFTTableViewCell: UITableViewCell {
         cell.backgroundColor = .systemBackground
         cell.selectionStyle = .none
         imageURL = model.images.first
-        nftPrice.text = "\(model.price)" + "ETH"
+        nftPrice.text = "\(model.price)" + " " + "ETH"
         nftNameLabel.text = model.name
         
         let rating = model.rating
@@ -114,22 +126,8 @@ final class NFTTableViewCell: UITableViewCell {
         }
     }
     
-    @objc func didTapDeleteButton(_ sender: UIButton) {
-        delegate?.showDeleteView(index: 0)
-        print("TAP")
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: NFTTableViewCell.identifier)
-        addViews()
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    @objc func didTapDeleteButton() {
+        delegate?.showDeleteView(index: indexCell ?? 0)
+        print(indexCell)
     }
 }

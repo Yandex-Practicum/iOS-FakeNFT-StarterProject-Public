@@ -33,6 +33,7 @@ final class PurchaseResultViewController: UIViewController {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        label.font = .bodyBold
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -43,6 +44,7 @@ final class PurchaseResultViewController: UIViewController {
         button.backgroundColor = .ypBlack
         button.layer.cornerRadius = 16
         button.setTitleColor(.ypWhite, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return button
     }()

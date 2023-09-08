@@ -3,8 +3,6 @@ import UIKit
 final class PaymentChoiceCell: UICollectionViewCell {
     static let identifier = "PaymentChoiceCell"
     
-    
-    
     private lazy var collectionView: UIView = {
         let collectionView = UIView()
         collectionView.backgroundColor = .ypLightGrey
@@ -22,12 +20,14 @@ final class PaymentChoiceCell: UICollectionViewCell {
     lazy var firstLabel: UILabel = {
         let firstLabel = UILabel()
         firstLabel.textColor = .ypBlack
+        firstLabel.font = .caption2
         return firstLabel
     }()
     
     lazy var secondLabel: UILabel = {
         let secondLabel = UILabel()
         secondLabel.textColor = .ypGreen
+        secondLabel.font = .caption2
         return secondLabel
     }()
     
@@ -46,7 +46,7 @@ final class PaymentChoiceCell: UICollectionViewCell {
             payMethodImage.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -4),
             firstLabel.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 4),
             firstLabel.leadingAnchor.constraint(equalTo: payMethodImage.trailingAnchor, constant: 4),
-            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor),
+            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 1),
             secondLabel.leadingAnchor.constraint(equalTo: payMethodImage.trailingAnchor, constant: 4),
             secondLabel.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -4)
         ])

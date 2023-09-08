@@ -2,8 +2,16 @@ import UIKit
 
 final class CartViewController: UIViewController {
     
+    enum Route: String {
+          case pay
+          case paymentChoice
+          case purchasResult
+       }
+    
     private var viewModel: CodeInputViewModelProtocol?
     private var router: Router?
+    
+    private var indexDelete: Int?
     
     init(viewModel: CodeInputViewModelProtocol = CartViewModel()) {
         self.viewModel = viewModel
@@ -16,12 +24,15 @@ final class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
         view.backgroundColor = .systemBackground
         addViews()
         setNavBar()
         setupUI()
         setupButtonPaymentView()
         viewModel?.didLoad()
+        initialize(viewModel: viewModel as! CartViewModel)
     }
     
     private lazy var tableView: UITableView = {
@@ -32,8 +43,6 @@ final class CartViewController: UIViewController {
         tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         tableView.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
-        tableView.dataSource = self
-        tableView.delegate = self
         return tableView
     }()
     
@@ -70,7 +79,9 @@ final class CartViewController: UIViewController {
     
     private lazy var totalCoastNFTLabel: UILabel = {
         let totalCoastNFTLabel = UILabel()
-        totalCoastNFTLabel.text = "0.0"
+        totalCoastNFTLabel.text = "0,0"
+        totalCoastNFTLabel.textColor = .ypGreen
+        totalCoastNFTLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return totalCoastNFTLabel
     }()
     
@@ -148,7 +159,7 @@ final class CartViewController: UIViewController {
         NSLayoutConstraint.activate([
             countNFTLabel.leadingAnchor.constraint(equalTo: buttonPaymentView.leadingAnchor, constant: 16),
             countNFTLabel.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 16),
-            totalCoastNFTLabel.topAnchor.constraint(equalTo: countNFTLabel.bottomAnchor, constant: -2),
+            totalCoastNFTLabel.topAnchor.constraint(equalTo: countNFTLabel.bottomAnchor, constant: 1),
             totalCoastNFTLabel.leadingAnchor.constraint(equalTo: buttonPaymentView.leadingAnchor, constant: 16),
             payButton.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 16),
             payButton.trailingAnchor.constraint(equalTo: buttonPaymentView.trailingAnchor, constant: -16),
@@ -176,19 +187,17 @@ final class CartViewController: UIViewController {
         let vc = PaymentChoiceViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-//        router?.showVC()
+//        router?.route(to: Route.pay.rawValue, from: self)
+
     }
     
-    func initialize(viewModel: CartViewModel) {
+    private func initialize(viewModel: CartViewModel) {
         self.viewModel = viewModel
-        viewModel.$NFTModels.bind { [weak self] nfts in
-            self?.countNFTLabel.text = "\(nfts.count)" + "NFT"
-            var totalPrice: Float = 0
-            for nft in nfts {
-                totalPrice += nft.price
-            }
-            let formattedPrice = String(format: "%.2f", totalPrice)
-            self?.totalCoastNFTLabel.text = formattedPrice + "ETH"
+        viewModel.$nfts.bind { [weak self] _ in
+
+            self?.countNFTLabel.text = "\(viewModel.nftInfo.count)" + " " + "NFT"
+            
+            self?.totalCoastNFTLabel.text = "\(viewModel.nftInfo.price)" + " " + "ETH"
             self?.tableView.reloadData()
         }
     }
@@ -201,7 +210,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = viewModel?.NFTModels.count else { return 0 }
+        guard let count = viewModel?.nfts.count else { return 0 }
         return count
     }
     
@@ -209,8 +218,9 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()
         }
-        guard let model = viewModel?.NFTModels[indexPath.row] else { return cell}
+        guard let model = viewModel?.nfts[indexPath.row] else { return cell}
         cell.configureCell(model: model, cell: cell)
+        cell.indexCell = indexPath.row
         cell.delegate = self
         return cell
     }
@@ -218,6 +228,9 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension CartViewController: NFTTableViewCellDelegate {
     func showDeleteView(index: Int) {
-        print("TAPP")
+        print(index)
+        print("tap tap")
     }
+    
+
 }
