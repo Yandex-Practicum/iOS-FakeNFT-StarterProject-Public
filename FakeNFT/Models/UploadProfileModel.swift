@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+///Структура  измененных данных пользователя
 struct UploadProfileModel: Encodable {
     let name: String?
     let description: String?

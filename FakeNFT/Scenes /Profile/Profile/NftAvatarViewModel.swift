@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+/// структура  НФТ изображения пользователя
 struct NftAvatarViewModel {
     let imageURL: URL?
     var isLiked: Bool?

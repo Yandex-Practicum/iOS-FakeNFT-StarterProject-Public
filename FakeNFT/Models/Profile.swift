@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/// Структура данных профиля пользователя
 struct Profile: Codable {
     let id: String
     let name: String
