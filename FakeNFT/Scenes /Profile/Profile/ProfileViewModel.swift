@@ -61,12 +61,14 @@ final class ProfileViewModel {
 
     func getProfile() {
         profileService.getUserProfile { [weak self] result in
-            switch result {
-            case.success(let profile):
-                self?.profile = profile
-                self?.showErrorAlert = false
-            case.failure:
-                self?.showErrorAlert = true
+            DispatchQueue.main.async {
+                switch result {
+                case.success(let profile):
+                    self?.profile = profile
+                    self?.showErrorAlert = false
+                case.failure:
+                    self?.showErrorAlert = true
+                }
             }
         }
     }
