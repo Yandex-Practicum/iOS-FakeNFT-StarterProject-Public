@@ -1,8 +1,11 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
 
-    private  var avatarImageView: UIImageView = {
+    private var viewModel: ProfileViewModel
+
+    private  var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 70 / 2
         imageView.clipsToBounds = true
@@ -49,13 +52,34 @@ final class ProfileViewController: UIViewController {
 
     private let tableViewTitles: [String] = ["Мои NFT", "Избранные NFT", "О разработчике"]
 
+    // MARK: - Initialiser
+
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - LifeCircle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        bind()
+        initialisation()
         layout()
-        setupView()
         setupNavBar()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getProfile()
+    }
+
+    // MARK: - Private Methods
 
     private func setupNavBar() {
         let button = UIBarButtonItem(image: UIImage(named: "square.and.pencil"),
@@ -66,32 +90,50 @@ final class ProfileViewController: UIViewController {
         navigationItem.setRightBarButtonItems([button], animated: true)
     }
 
-    private func setupView() {
+    private func initialisation() {
+        guard let profile = viewModel.profile else { return }
+        setupView(with: profile)
+    }
 
-        avatarImageView.image = UIImage(named: "avatar")
-        nameLabel.text = "Joaquin Phoenix"
-        urlTextButton.setTitle("yandex.ru", for: .normal)
-        descriptionLabel.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше на моем сайте. Открыт к коллаборяциям"
+    private func bind() {
+        viewModel.profileDidChange = { [weak self] in
+            guard let profile = self?.viewModel.profile else { return }
+            self?.setupView(with: profile)
+        }
+        viewModel.showErrorAlertDidChange = { [weak self] in
+            if let needShow = self?.viewModel.showErrorAlert, needShow {
+                self?.showErrorAlert {
+                    self?.viewModel.getProfile()
+                }
+            }
+        }
+    }
 
+    private func setupView(with profile: Profile) {
+        profileImageView.kf.setImage(with: profile.avatar)
+        nameLabel.text = profile.name
+        urlTextButton.setTitle(profile.website, for: .normal)
+        descriptionLabel.text = profile.description
+        tableView.reloadData()
     }
 
     private func layout() {
-        [tableView, nameLabel, descriptionLabel, urlTextButton, avatarImageView].forEach { view in
+        [tableView, nameLabel, descriptionLabel, urlTextButton, profileImageView].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(view)
         }
         NSLayoutConstraint.activate([
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
+            profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileImageView.heightAnchor.constraint(equalToConstant: 70),
+            profileImageView.widthAnchor.constraint(equalToConstant: 70),
 
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
+            nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
 
-            descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 20),
+            descriptionLabel.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
 
             urlTextButton.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
@@ -104,6 +146,21 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 
         ])
+    }
+
+    private func showErrorAlert(action: @escaping () -> Void) {
+        let alertController = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Ошибка загрузки данных",
+            preferredStyle: .alert
+        )
+
+        let alertAction = UIAlertAction(
+            title: "Ок",
+            style: .default
+        )
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
     }
 
     @objc private func showWebView() {
