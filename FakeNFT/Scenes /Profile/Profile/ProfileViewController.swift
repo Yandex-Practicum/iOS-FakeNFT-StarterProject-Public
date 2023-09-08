@@ -112,7 +112,7 @@ final class ProfileViewController: UIViewController {
     private func setupView(with profile: Profile) {
         profileImageView.kf.setImage(with: profile.avatar)
         nameLabel.text = profile.name
-        urlTextButton.setTitle(profile.website, for: .normal)
+        urlTextButton.setTitle(profile.website.absoluteString, for: .normal)
         descriptionLabel.text = profile.description
         tableView.reloadData()
     }
@@ -164,6 +164,10 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func showWebView() {
+        guard let url = viewModel.profile?.website else { return }
+
+        let webView = WebView(url: url)
+        present(webView, animated: true)
 
     }
 
