@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct ProfileService {
+protocol ProfileServiceProtocol: AnyObject {
+    func getUserProfile(completion: @escaping (Result<Profile, Error> ) -> Void)
+    func updateUserProfile(with data: UploadProfileModel, completion: @escaping (Result<Profile, Error> ) -> Void)
+}
+
+final class ProfileService: ProfileServiceProtocol {
     private let networkClient: NetworkClient
 
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
@@ -23,7 +28,7 @@ struct ProfileService {
     }
 
     func updateUserProfile(with data: UploadProfileModel, completion: @escaping (Result<Profile, Error> ) -> Void) {
-        let request = UserProfileUpdateRequest(userId: "1", updateProfile: data)
+        let request = UserProfileUpdateRequest(userId: "2", updateProfile: data)
         networkClient.send(request: request, type: Profile.self, onResponse: completion)
     }
 
@@ -54,5 +59,4 @@ struct UserProfileUpdateRequest: NetworkRequest {
     var dto: Encodable? {
         return updateProfile
     }
-
 }

@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class EditProfileViewController: UIViewController {
-    // MARK: - Properties
     let mockNft = MockNft.shared
+    // MARK: - Properties
+    let viewmodel: EditProfileViewModel
 
     private let profileImage: UIImageView = {
         let image = UIImageView()
@@ -105,6 +107,16 @@ final class EditProfileViewController: UIViewController {
         return button
     }()
 
+    // MARK: - Initialisers
+    init(viewmodel: EditProfileViewModel) {
+        self.viewmodel = viewmodel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,25 +124,34 @@ final class EditProfileViewController: UIViewController {
 
         layouts()
         setupNavBar()
-        setupProfile()
+        setupProfile(with: viewmodel.profile)
     }
 
     // MARK: - Methods
-    private func setupProfile() {
-        profileImage.image = mockNft.profile.avatar
-        nameTextField.text = mockNft.profile.name
-        descriptionTextField.text = mockNft.profile.desctoption
-        urlTextField.text = mockNft.profile.website
+    private func setupProfile(with profile: Profile) {
+
+        nameTextField.text = profile.name
+        descriptionTextField.text = profile.description
+        urlTextField.text = profile.website.absoluteString
+        profileImage.kf.setImage(with: profile.avatar)
 
     }
     private func setupNavBar() {
-        let button = UIBarButtonItem(image: UIImage(named: "close"),
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(closeButtonTapped))
-        button.tintColor = .label
+        let button = UIBarButtonItem(
+            image: UIImage(named: "close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
 
-        navigationItem.setRightBarButton(button, animated: true)
+        button.tintColor = .label
+        let buttonSave = UIBarButtonItem(
+            image: UIImage(systemName: "checkmark"),
+            style: .plain,
+            target: self,
+            action: #selector(saveProfile)
+        )
+        navigationItem.setRightBarButtonItems([button, buttonSave], animated: true)
         navigationItem.setHidesBackButton(true, animated: false)
     }
 
@@ -189,6 +210,19 @@ final class EditProfileViewController: UIViewController {
     @objc private func closeButtonTapped() {
       showErrorAlert()
        dismiss(animated: true)
+    }
+
+    @objc private func saveProfile() {
+        guard verifiUrl(urlString: urlTextField.text) ?? false else {
+            showErrorAlert()
+            return
+        }
+        viewmodel.saveProfile(
+            name: nameTextField.text,
+            description: descriptionTextField.text,
+            websiteString: urlTextField.text
+        )
+        dismiss(animated: true)
     }
 
     private func showErrorAlert() {

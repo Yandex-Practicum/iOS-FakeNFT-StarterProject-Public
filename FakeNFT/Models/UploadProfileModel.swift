@@ -10,6 +10,6 @@ import Foundation
 struct UploadProfileModel: Encodable {
     let name: String?
     let description: String?
-    let website: String?
+    let website: URL
     let likes: [String]?
 }

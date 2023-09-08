@@ -172,12 +172,10 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editProfile() {
-        let viewController = EditProfileViewController()
+        guard let viewController = viewModel.getEditProfileViewController() else { return }
         let editVC = UINavigationController(rootViewController: viewController)
         present(editVC, animated: true)
-
     }
-
 }
 
 extension ProfileViewController: UITableViewDelegate {

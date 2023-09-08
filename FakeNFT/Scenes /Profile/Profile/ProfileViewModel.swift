@@ -11,7 +11,7 @@ final class ProfileViewModel {
 
     // MARK: - Properties
 
-    private let profileService: ProfileService
+    private let profileService: ProfileServiceProtocol
     private let settingsStorage: SettingsStorageProtocol
 
     private (set) var profile: Profile? {
@@ -31,7 +31,7 @@ final class ProfileViewModel {
 
     // MARK: - Initialiser
 
-    init(profileService: ProfileService,
+    init(profileService: ProfileServiceProtocol,
          settingsStorage: SettingsStorageProtocol) {
         self.profileService = profileService
         self.settingsStorage = settingsStorage
@@ -57,6 +57,19 @@ final class ProfileViewModel {
             labelString = " "
         }
         return labelString
+    }
+
+    func getEditProfileViewController() -> EditProfileViewController? {
+        guard let profile = profile else { return nil }
+        let viewModel = EditProfileViewModel(
+            profile: profile,
+            profileService: profileService
+        )
+        viewModel.updateProfile = { [weak self] profile in
+            self?.profile = profile
+        }
+        let viewController = EditProfileViewController(viewmodel: viewModel)
+        return viewController
     }
 
     func getProfile() {

@@ -23,7 +23,6 @@ final class WebView: UIViewController, WKNavigationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .ypWhite
         setupNavBar()
         layouts()
