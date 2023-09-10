@@ -16,7 +16,6 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "AppIcon")
         imageView.backgroundColor = UIColor.lightGray
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +24,6 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     private let nftNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.Bold.size17
-        label.text = "April"
         label.backgroundColor = .systemBackground
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -76,8 +74,11 @@ final class CartTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        // TODO: prepare cell for reuse
+        imageURL = nil
+        nftNameLabel.text = ""
+        nftPriceLabel.text = ""
     }
+    
     func configureCell(with nft: NFTCartModel) {
         contentView.backgroundColor = .systemBackground
         

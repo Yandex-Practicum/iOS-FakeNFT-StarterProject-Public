@@ -1,10 +1,24 @@
 import UIKit
 protocol CartPurchaseDelegate: AnyObject {
     func didTappedAgreementLink()
+    func didTappedConfirmButton()
 }
 
 final class CartPurchaseViewController: UIViewController {
-    private let numbersOfCurrencies = 8
+    
+    private let viewModel: CurrencyViewModel
+    private var selectedCurrencyIndexPath: IndexPath?
+    private var selectedCurrencyID: String?
+    
+    init(viewModel: CurrencyViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private let purchaseTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.Bold.size17
@@ -53,9 +67,11 @@ final class CartPurchaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollection()
-        setupView()
-        confirmView.delegate = self
+        viewModel.viewDidLoad {
+            self.configureCollection()
+            self.setupView()
+            self.confirmView.delegate = self
+        }
     }
 
     private func configureCollection() {
@@ -91,12 +107,42 @@ final class CartPurchaseViewController: UIViewController {
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
+    
+   private func presentSuccessVC() {
+        let successVC = CheckoutFlowViewController(currentFlow: .success)
+        successVC.modalPresentationStyle = .fullScreen
+        present(successVC, animated: true)
+    }
+    
+    private func presentFailureVC() {
+        let failureVC = CheckoutFlowViewController(currentFlow: .failure)
+        failureVC.modalPresentationStyle = .fullScreen
+        present(failureVC, animated: true)
+    }
 }
-extension CartPurchaseViewController: UICollectionViewDelegate { }
+extension CartPurchaseViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let previousIndexPath = selectedCurrencyIndexPath {
+            if let previousCell = collectionView.cellForItem(at: previousIndexPath) as? CartPurchaseCell {
+                previousCell.isSelectedCurrency = false
+            }
+        }
+        guard let selectedCell =
+                collectionView.cellForItem(at: indexPath) as? CartPurchaseCell
+        else { assertionFailure("Couldn't choose currency cell")
+            return
+        }
+        selectedCurrencyIndexPath = indexPath
+        selectedCell.isSelectedCurrency = true
+        let currency = viewModel.currencies[indexPath.row]
+        self.selectedCurrencyID = currency.id
+    }
+}
 
 extension CartPurchaseViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numbersOfCurrencies
+        return viewModel.currencies.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -107,7 +153,8 @@ extension CartPurchaseViewController: UICollectionViewDataSource {
             assertionFailure("Unable to dequeue CartPurchaseCell")
             return UICollectionViewCell()
     }
-        cell.configureCell()
+        let currency = viewModel.currencies[indexPath.row]
+        cell.configureCell(with: currency)
         return cell
     }
 }
@@ -140,6 +187,18 @@ extension CartPurchaseViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension CartPurchaseViewController: CartPurchaseDelegate {
+    func didTappedConfirmButton() {
+        guard let selectedCurrencyID = selectedCurrencyID else { return }
+        viewModel.sendGetPayment(selectedId: selectedCurrencyID) { [weak self] success in
+            DispatchQueue.main.async {
+                switch success {
+                case true: self?.presentSuccessVC()
+                case false: self?.presentFailureVC()
+                }
+            }
+        }
+    }
+   
     func didTappedAgreementLink() {
         guard let url = URL(string: Constants.linkAgreement.rawValue)
         else { return }

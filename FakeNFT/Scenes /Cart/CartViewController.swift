@@ -131,6 +131,15 @@ final class CartViewController: UIViewController {
             setupFilledView()
         }
     }
+    private func presentPurachaseVC() {
+        let manager = CurrencyManager(networkClient: DefaultNetworkClient())
+        let viewModel = CurrencyViewModel(model: manager)
+        let purchaseVC = CartPurchaseViewController(viewModel: viewModel)
+        purchaseVC.hidesBottomBarWhenPushed = true
+        let navigationController = UINavigationController(rootViewController: purchaseVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
     
    private func updatePurchaseView() {
         let cartCount = viewModel.cartModels.count
@@ -202,11 +211,7 @@ extension CartViewController: UITableViewDataSource {
 
 extension CartViewController: CartViewDelegate {
     func didTapPurchaseButton() {
-        let purchaseVC = CartPurchaseViewController()
-        purchaseVC.hidesBottomBarWhenPushed = true
-        let navigationController = UINavigationController(rootViewController: purchaseVC)
-        navigationController.modalPresentationStyle = .fullScreen
-        present(navigationController, animated: true)
+        presentPurachaseVC()
     }
 }
 extension CartViewController: CartCellDelegate {

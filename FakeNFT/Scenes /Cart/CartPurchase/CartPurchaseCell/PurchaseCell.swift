@@ -2,6 +2,21 @@ import UIKit
 
 final class CartPurchaseCell: UICollectionViewCell {
     static let identifier = "CartPurchaseCell"
+    
+    var imageURL: URL? {
+        didSet {
+            guard let imageURL = imageURL else {
+                return currencyImageView.kf.cancelDownloadTask() }
+            currencyImageView.kf.setImage(with: imageURL)
+        }
+    }
+    
+    var isSelectedCurrency: Bool = false {
+        didSet {
+            bitcoinView.layer.borderWidth = isSelectedCurrency ? 1.0 : 0
+            bitcoinView.layer.borderColor = isSelectedCurrency ? UIColor.black.cgColor : nil
+        }
+    }
 
     private let bitcoinView: UIView = {
         let view = UIView()
@@ -46,16 +61,18 @@ final class CartPurchaseCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureCell()
+        addSubviews()
+        setCostraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell() {
-        addSubviews()
-        setCostraints()
+    func configureCell(with model: CurrencyModel) {
+        self.titleLabel.text = model.title
+        self.currencyLabel.text = model.name
+        self.imageURL = model.image
     }
 
     private func addSubviews() {
