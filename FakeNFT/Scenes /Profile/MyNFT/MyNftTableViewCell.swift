@@ -94,7 +94,15 @@ final class MyNftTableViewCell: UITableViewCell {
             })
         nameLabel.text = nft.name
         ratingView.rating = nft.rating
-        priceValueLabel.text = "\(nft.price) ETH"
+        let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale(identifier: "ru_RU")
+        numberFormatter.numberStyle = .decimal
+        if let formattedPrice = numberFormatter.string(from: NSNumber(value: nft.price)) {
+            priceValueLabel.text = "\(formattedPrice) ETH"
+        } else {
+            priceValueLabel.text = "\(nft.price) ETH"
+        }
+
     }
 
     private func layouts() {
