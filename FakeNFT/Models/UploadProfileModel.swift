@@ -6,10 +6,10 @@
 //
 
 import Foundation
-///Структура  измененных данных пользователя
+/// Структура  измененных данных пользователя
 struct UploadProfileModel: Encodable {
     let name: String?
     let description: String?
     let website: URL
-    let likes: [String]?
+    let likes: [Int]?
 }

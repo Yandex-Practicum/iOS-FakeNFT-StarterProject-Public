@@ -72,6 +72,12 @@ final class ProfileViewModel {
         return viewController
     }
 
+//    func get MyNftViewController() -> MyNftViewController? {
+//
+//
+//        return viewController
+//    }
+
     func getProfile() {
         profileService.getUserProfile { [weak self] result in
             DispatchQueue.main.async {
