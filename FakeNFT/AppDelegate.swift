@@ -3,7 +3,7 @@ import UIKit
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    lazy var cartModel = CartLoadService(networkClient: DefaultNetworkClient())
+    lazy var cartModel = CartLoadService()
     
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true

@@ -3,17 +3,17 @@ import UIKit
 final class CartViewController: UIViewController {
     
     enum Route: String {
-          case pay
-          case paymentChoice
-          case purchasResult
-       }
+        case pay
+        case paymentChoice
+        case purchasResult
+    }
     
-    private var viewModel: CodeInputViewModelProtocol?
-    private var router: Router?
+    var viewModel: CartViewModelProtocol?
+    var router: CartRouter?
     
     private var indexDelete: Int?
     
-    init(viewModel: CodeInputViewModelProtocol = CartViewModel()) {
+    init(viewModel: CartViewModelProtocol = CartViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,7 +32,7 @@ final class CartViewController: UIViewController {
         setupUI()
         setupButtonPaymentView()
         viewModel?.didLoad()
-        initialize(viewModel: viewModel as! CartViewModel)
+        configure(viewModel: viewModel as! CartViewModel)
     }
     
     private lazy var tableView: UITableView = {
@@ -184,19 +184,18 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapPayButton() {
-        let vc = PaymentChoiceViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-//        router?.route(to: Route.pay.rawValue, from: self)
-
+                let vc = PaymentChoiceViewController()
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+        
+//        router?.perform(.pay, from: self)
+        
     }
     
-    private func initialize(viewModel: CartViewModel) {
+    private func configure(viewModel: CartViewModel) {
         self.viewModel = viewModel
         viewModel.$nfts.bind { [weak self] _ in
-
             self?.countNFTLabel.text = "\(viewModel.nftInfo.count)" + " " + "NFT"
-            
             self?.totalCoastNFTLabel.text = "\(viewModel.nftInfo.price)" + " " + "ETH"
             self?.tableView.reloadData()
         }
@@ -232,5 +231,5 @@ extension CartViewController: NFTTableViewCellDelegate {
         print("tap tap")
     }
     
-
+    
 }

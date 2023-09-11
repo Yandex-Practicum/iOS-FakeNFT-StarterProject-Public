@@ -1,17 +1,17 @@
 import UIKit
 
-protocol CodeInputViewModelProtocol {
+protocol CartViewModelProtocol {
     func didLoad()
     var nfts: [NFTModel]  { get }
     var nftInfo: NFTInfo { get }
     func deleteFromCart(index: Int)
 }
 
-final class CartViewModel: CodeInputViewModelProtocol {
-    
+final class CartViewModel: CartViewModelProtocol {
     
     @Observable
     var nfts: [NFTModel] = []
+    
     
     var nftInfo: NFTInfo {
         let price = nfts.reduce(0.0) { $0 + $1.price}

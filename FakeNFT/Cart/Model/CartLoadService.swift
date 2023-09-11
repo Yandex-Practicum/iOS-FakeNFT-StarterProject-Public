@@ -3,12 +3,15 @@ import UIKit
 enum Сonstants {
     static let ordersAPI: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/orders/1"
     static let nftAPI: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/nft/"
-    static let defaultURL: URL = URL(string: "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/")!
+    static let defaultURL: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/"
+    static let currencies: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/currencies"
+    
 }
 
 protocol CartLoadServiceProtocol {
     var networkClient: NetworkClient { get }
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
+    func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void)
     func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void)
     
 }
@@ -49,6 +52,18 @@ final class CartLoadService: CartLoadServiceProtocol {
         }
     }
     
+    func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {
+        loadCurrencies { [weak self] result in
+            switch result {
+            case .success(let currencies):
+                print(currencies)
+                completion(.success(currencies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     
     
     private func loadCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
@@ -59,6 +74,11 @@ final class CartLoadService: CartLoadServiceProtocol {
     private func loadNFT(id: String, completion: @escaping (Result<NFTServerModel, Error>) -> Void) {
         let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.nftAPI + "\(id)"), dto: nil, httpMethod: .get)
         networkClient.send(request: request, type: NFTServerModel.self, onResponse: completion)
+    }
+    
+    private func loadCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.currencies), dto: nil, httpMethod: .get)
+        networkClient.send(request: request, type: [CurrencyModel].self, onResponse: completion)
     }
     
     func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {

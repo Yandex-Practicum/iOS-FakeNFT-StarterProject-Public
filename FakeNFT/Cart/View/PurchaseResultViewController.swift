@@ -3,12 +3,10 @@ import UIKit
 final class PurchaseResultViewController: UIViewController {
     
     var completePurchase: Bool
-    private var viewModel: CodeInputViewModelProtocol
     
     
-    init(completePurchase: Bool, viewModel: CodeInputViewModelProtocol = CartViewModel()) {
+    init(completePurchase: Bool) {
         self.completePurchase = completePurchase
-        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,7 +20,6 @@ final class PurchaseResultViewController: UIViewController {
         addView()
         applyConstraints()
         updateFinalResult()
-        viewModel.didLoad()
     }
     
     private lazy var image: UIImageView = {
