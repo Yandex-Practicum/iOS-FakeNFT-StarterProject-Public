@@ -71,13 +71,16 @@ final class ProfileViewModel {
         let viewController = EditProfileViewController(viewmodel: viewModel)
         return viewController
     }
-
-//    func get MyNftViewController() -> MyNftViewController? {
-//
-//
-//        return viewController
-//    }
-
+    func getMyNftViewController() -> MyNftViewController? {
+        guard let profile = profile else { return nil}
+        let viewModel = MyNftViewModel(
+            profileService: profileService,
+            profile: profile,
+            settingsStorage: settingsStorage
+        )
+        let viewController = MyNftViewController(viewModel: viewModel)
+        return viewController
+    }
     func getProfile() {
         profileService.getUserProfile { [weak self] result in
             DispatchQueue.main.async {
@@ -86,10 +89,10 @@ final class ProfileViewModel {
                     self?.profile = profile
                     self?.showErrorAlert = false
                 case.failure:
+                    print()
                     self?.showErrorAlert = true
                 }
             }
         }
     }
-
 }

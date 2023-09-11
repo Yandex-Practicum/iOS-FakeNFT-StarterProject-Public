@@ -186,7 +186,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-             let myNftVC = MyNftViewController()
+            guard let myNftVC = viewModel.getMyNftViewController() else { return }
             navigationController?.pushViewController(myNftVC, animated: true)
         case 1:
             let favoritesNftVC = FavoritesNFTViewController()

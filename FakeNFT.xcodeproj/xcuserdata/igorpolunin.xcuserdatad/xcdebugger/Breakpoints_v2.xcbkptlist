@@ -3,4 +3,133 @@
    uuid = "26D96DFC-D752-4CF1-AF1E-7FE3D82CA2E4"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9903C6F3-8F5D-4260-97C0-D628F7B810A2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Services/ProfileService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "getMyNfts(with:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "397BA2CA-B090-4E3D-ACB3-37F941E0F7A2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Services/ProfileService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "getMyNfts(with:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "397BA2CA-B090-4E3D-ACB3-37F941E0F7A2 - 2b3f62e8ab613732"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; () in FakeNFT.ProfileService.getMyNfts(with: FakeNFT.Profile, completion: (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Services/ProfileService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "397BA2CA-B090-4E3D-ACB3-37F941E0F7A2 - c7e24a7e1f088074"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;FakeNFT.NftDTO&gt;, Swift.Error&gt;) -&gt; () in FakeNFT.ProfileService.getMyNfts(with: FakeNFT.Profile, completion: (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Services/ProfileService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "328">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "61946F28-3C79-40C3-82AA-0BAB074F4FDB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Services/ProfileService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "getMyNfts(with:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "61946F28-3C79-40C3-82AA-0BAB074F4FDB - c7e24a7e1f08818f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;FakeNFT.NftDTO&gt;, Swift.Error&gt;) -&gt; () in FakeNFT.ProfileService.getMyNfts(with: FakeNFT.Profile, completion: (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Services/ProfileService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "828">
+               </Location>
+               <Location
+                  uuid = "61946F28-3C79-40C3-82AA-0BAB074F4FDB - d1193839267199ff"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Swift.Array&lt;FakeNFT.NftDTO&gt;, Swift.Error&gt;) -&gt; () in FakeNFT.ProfileService.getMyNfts(with: FakeNFT.Profile, completion: (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Services/ProfileService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "61946F28-3C79-40C3-82AA-0BAB074F4FDB - c7e24a7e1f08818f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;FakeNFT.NftDTO&gt;, Swift.Error&gt;) -&gt; () in FakeNFT.ProfileService.getMyNfts(with: FakeNFT.Profile, completion: (Swift.Result&lt;Swift.Array&lt;FakeNFT.Nft&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Services/ProfileService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "864">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -11,5 +11,5 @@ struct UploadProfileModel: Encodable {
     let name: String?
     let description: String?
     let website: URL
-    let likes: [Int]?
+    let likes: [String]?
 }

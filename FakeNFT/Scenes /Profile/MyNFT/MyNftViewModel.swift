@@ -44,13 +44,14 @@ final class MyNftViewModel {
         self.profileService = profileService
         self.profile = profile
         self.settingsStorage = settingsStorage
-        self.likes = profile.likes
+
+        self.likes = (profile.likes).compactMap({Int($0)})
         initialisation()
     }
 
     // MARK: - Methods
 
-    private func initialisation() {
+     func initialisation() {
         getMyNfts(with: profile)
     }
 
@@ -73,7 +74,33 @@ final class MyNftViewModel {
         }
     }
 
-    private func sort(by descriptor: SortDescriptor) {
+    func likeButtonTapped(indexPath: IndexPath) {
+        let id = myNft[indexPath.row].id
+        if likes.contains(id) {
+            likes.removeAll { $0 == id }
+        } else {
+            likes.append(id)
+        }
+        let stringLikes = likes.map({String($0)})
+        let newProfile = Profile(
+            id: profile.id,
+            name: profile.name,
+            description: profile.description,
+            avatar: profile.avatar,
+            website: profile.website,
+            nfts: profile.nfts,
+            likes: stringLikes
+        )
+        let uploadModel = UploadProfileModel(
+            name: newProfile.name,
+            description: newProfile.description,
+            website: newProfile.website,
+            likes: newProfile.likes
+        )
+        profileService.updateUserProfile(with: uploadModel) { _ in}
+    }
+
+     func sort(by descriptor: SortDescriptor) {
         switch descriptor {
         case .name:
             myNft.sort(by: { $0.name < $1.name })

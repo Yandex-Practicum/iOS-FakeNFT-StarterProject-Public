@@ -73,7 +73,7 @@ final class EditProfileViewModel {
             website: website,
             likes: profile.likes
         )
-
         profileService.updateUserProfile(with: uploadModel) { _ in}
+
     }
 }

@@ -22,7 +22,6 @@ final class ProfileService: ProfileServiceProtocol {
     }
 
     func getUserProfile(completion: @escaping (Result<Profile, Error> ) -> Void) {
-
         let request = UserProfileRequest(userId: "1")
         networkClient.send(request: request,
                            type: Profile.self,
@@ -40,14 +39,13 @@ final class ProfileService: ProfileServiceProtocol {
             case .success(let ntfsDTO):
                 DispatchQueue.main.async {
                     let ntfs = ntfsDTO.map {
-                        Nft(id: $0.id,
-                            name: $0.name,
-                            description: $0.description,
-                            rating: $0.rating,
-                            images: $0.images,
-                            price: $0.price)
+                        Nft(nftDTO: $0)
                     }
-                    let nftsFiltered = ntfs.filter { profile.nfts.contains($0.id) }
+                    let nftsFiltered = ntfs.filter { nft in
+                        let idString = String(nft.id)
+                        return profile.nfts.contains(idString)
+                    }
+                    completion(.success(nftsFiltered))
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -57,10 +55,10 @@ final class ProfileService: ProfileServiceProtocol {
         }
     }
 
-    func getNfts(completion: @escaping(Result<[Nft], Error>) -> Void) {
+    func getNfts(completion: @escaping(Result<[NftDTO], Error>) -> Void) {
         let request = UserGetNftsRequest(userId: "1")
         networkClient.send(request: request,
-                           type: [Nft].self,
+                           type: [NftDTO].self,
                            onResponse: completion)
     }
 
@@ -96,7 +94,7 @@ struct UserProfileUpdateRequest: NetworkRequest {
 struct UserGetNftsRequest: NetworkRequest {
     var userId: String
     var endpoint: URL? {
-        return URL(string: "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/nft/\(userId)")
+        return URL(string: "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/nft")
     }
 
     var httpMethod: HttpMethod {
