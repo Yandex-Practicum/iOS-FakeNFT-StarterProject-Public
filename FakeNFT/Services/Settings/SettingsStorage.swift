@@ -21,13 +21,11 @@ final class SettingsStorage: SettingsStorageProtocol {
     // MARK: - Methods
     func saveSorting(_ descriptor: SortDescriptor) {
         storage.set(descriptor.rawValue, forKey: sortingKey)
-        print(" save = \(descriptor.rawValue)")
     }
 
     func fetchSorting() -> SortDescriptor? {
         if let sortDescriptorRawValue = storage.object(forKey: sortingKey) as? String {
             if let sortDescriptor = SortDescriptor(rawValue: sortDescriptorRawValue) {
-                print(" read = \(sortDescriptor.rawValue)")
                 return sortDescriptor
             }
         }

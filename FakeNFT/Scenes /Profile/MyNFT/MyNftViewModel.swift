@@ -51,7 +51,7 @@ final class MyNftViewModel {
 
     // MARK: - Methods
 
-     func initialisation() {
+    func initialisation() {
         getMyNfts(with: profile)
     }
 
@@ -100,7 +100,7 @@ final class MyNftViewModel {
         profileService.updateUserProfile(with: uploadModel) { _ in}
     }
 
-     func sort(by descriptor: SortDescriptor) {
+    func sort(by descriptor: SortDescriptor) {
         switch descriptor {
         case .name:
             myNft.sort(by: { $0.name < $1.name })
@@ -111,5 +111,4 @@ final class MyNftViewModel {
         }
         settingsStorage.saveSorting(descriptor)
     }
-
 }

@@ -8,8 +8,7 @@
 import UIKit
 
 final class MyNftViewController: UIViewController {
-    private let mockNft = MockNft.shared
-
+    // MARK: - Properties
     private let viewModel: MyNftViewModel
 
     private lazy var myNftTableView: UITableView = {
@@ -76,7 +75,6 @@ final class MyNftViewController: UIViewController {
             myNftTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             myNftTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-
     }
 
     private func setupNavBar() {
@@ -90,8 +88,8 @@ final class MyNftViewController: UIViewController {
         navigationItem.setRightBarButton(sortButton, animated: true)
     }
 
-   @objc private func sortNft() {
-          showAlert()
+    @objc private func sortNft() {
+        showAlert()
     }
 
     private func showErrorAlert(action: @escaping () -> Void) {
@@ -107,8 +105,8 @@ final class MyNftViewController: UIViewController {
 
     private func showAlert() {
         let alertController = UIAlertController(title: nil,
-                                      message: "Сортировка",
-                                      preferredStyle: .actionSheet)
+                                                message: "Сортировка",
+                                                preferredStyle: .actionSheet)
 
         let actionFirst = UIAlertAction(
             title: "По цене",
@@ -172,5 +170,4 @@ extension MyNftViewController: UITableViewDataSource {
         }
         return cell
     }
-
 }

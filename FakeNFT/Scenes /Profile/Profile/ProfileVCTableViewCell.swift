@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileVCTableViewCell: UITableViewCell {
     static let identifier = "ProfileVCTableViewCellIdentifier"
-
+    // MARK: - Properties
     private  let cellTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -24,19 +24,21 @@ final class ProfileVCTableViewCell: UITableViewCell {
         imageView.tintColor = .label
         return imageView
     }()
-
+    // MARK: - Initialize
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         contentView.backgroundColor = .systemBackground
-
         layouts()
     }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    // MARK: - Methods
 
      func configureCell(text: String) {
          cellTitleLabel.text = text
     }
-
     private func layouts() {
         [cellTitleLabel, arrowImage].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,11 +52,5 @@ final class ProfileVCTableViewCell: UITableViewCell {
             arrowImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             arrowImage.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 }

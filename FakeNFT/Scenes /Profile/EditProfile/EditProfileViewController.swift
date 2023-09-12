@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 final class EditProfileViewController: UIViewController {
-    let mockNft = MockNft.shared
     // MARK: - Properties
     let viewmodel: EditProfileViewModel
 
@@ -58,7 +57,7 @@ final class EditProfileViewController: UIViewController {
         textView.textColor = .label
         textView.backgroundColor = .ypLightGray
         textView.layer.cornerRadius = 12
-          // Разрешаем многострочный текст
+        // Разрешаем многострочный текст
         textView.isEditable = true
         textView.isSelectable = true
         textView.isScrollEnabled = false
@@ -66,8 +65,12 @@ final class EditProfileViewController: UIViewController {
         let paddingViewHeight: CGFloat = 16
 
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: paddingViewHeight))
-        textView.textContainerInset = UIEdgeInsets(top: paddingViewHeight, left: 16, bottom: paddingViewHeight, right: 16)
-
+        textView.textContainerInset = UIEdgeInsets(
+            top: paddingViewHeight,
+            left: 16,
+            bottom: paddingViewHeight,
+            right: 16
+        )
         return textView
     }()
 
@@ -121,7 +124,6 @@ final class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-
         layouts()
         setupNavBar()
         setupProfile(with: viewmodel.profile)
@@ -129,13 +131,12 @@ final class EditProfileViewController: UIViewController {
 
     // MARK: - Methods
     private func setupProfile(with profile: Profile) {
-
         nameTextField.text = profile.name
         descriptionTextField.text = profile.description
         urlTextField.text = profile.website.absoluteString
         profileImage.kf.setImage(with: profile.avatar)
-
     }
+
     private func setupNavBar() {
         let button = UIBarButtonItem(
             image: UIImage(named: "close"),
@@ -160,7 +161,6 @@ final class EditProfileViewController: UIViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(view)
         }
-
         NSLayoutConstraint.activate([
             profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
             profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -198,9 +198,7 @@ final class EditProfileViewController: UIViewController {
             urlTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             urlTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             urlTextField.heightAnchor.constraint(equalToConstant: 44)
-
         ])
-
     }
 
     @objc private func changeAvatarButtonTapped() {
@@ -208,8 +206,8 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-      showErrorAlert()
-       dismiss(animated: true)
+        showErrorAlert()
+        dismiss(animated: true)
     }
 
     @objc private func saveProfile() {
@@ -252,7 +250,7 @@ final class EditProfileViewController: UIViewController {
             title: "Ок",
             style: .default,
             handler: { [weak self] (_) in
-              guard let self = self else { return }
+                guard let self = self else { return }
                 if let text = alertController.textFields?[0].text,
                    let url = URL(string: text),
                    let valid = self.verifiUrl(urlString: text),

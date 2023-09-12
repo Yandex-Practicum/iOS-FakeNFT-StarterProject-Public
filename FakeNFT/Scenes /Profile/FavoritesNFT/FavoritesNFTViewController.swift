@@ -8,12 +8,18 @@
 import UIKit
 
 final class FavoritesNFTViewController: UIViewController {
-    private let viewModel: FavouritesNftViewModel
-    private let mockNft = MockNft.shared
     // MARK: - Properties
+    private let viewModel: FavouritesNftViewModel
+
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(FavoritesNFTCollectionViewCell.self, forCellWithReuseIdentifier: FavoritesNFTCollectionViewCell.identifier)
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        collectionView.register(
+            FavoritesNFTCollectionViewCell.self,
+            forCellWithReuseIdentifier: FavoritesNFTCollectionViewCell.identifier
+        )
         collectionView.allowsMultipleSelection = false
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -95,13 +101,6 @@ final class FavoritesNFTViewController: UIViewController {
     }
 
     private func updateView() {
-//        if viewModel.favoritesNft.isEmpty {
-//            placeHolderLabel.isHidden = false
-//            collectionView.isHidden = true
-//        } else {
-//            collectionView.isHidden = false
-//            placeHolderLabel.isHidden = true
-//        }
         collectionView.reloadData()
         collectionView.isHidden = viewModel.favoritesNft.isEmpty
         placeHolderLabel.isHidden = !viewModel.favoritesNft.isEmpty

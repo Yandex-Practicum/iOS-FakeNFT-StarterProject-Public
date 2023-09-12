@@ -74,6 +74,5 @@ final class EditProfileViewModel {
             likes: profile.likes
         )
         profileService.updateUserProfile(with: uploadModel) { _ in}
-
     }
 }

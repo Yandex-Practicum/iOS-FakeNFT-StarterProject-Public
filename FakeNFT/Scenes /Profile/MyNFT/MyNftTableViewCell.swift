@@ -12,12 +12,6 @@ final class MyNftTableViewCell: UITableViewCell {
     // MARK: - Properties
     let nftView = NftAvatarView()
 
-//    private let avatar: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -102,7 +96,6 @@ final class MyNftTableViewCell: UITableViewCell {
         } else {
             priceValueLabel.text = "\(nft.price) ETH"
         }
-
     }
 
     private func layouts() {
@@ -117,7 +110,6 @@ final class MyNftTableViewCell: UITableViewCell {
             view.translatesAutoresizingMaskIntoConstraints = false
             self.contentView.addSubview(view)
         }
-
         NSLayoutConstraint.activate([
             nftView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             nftView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),

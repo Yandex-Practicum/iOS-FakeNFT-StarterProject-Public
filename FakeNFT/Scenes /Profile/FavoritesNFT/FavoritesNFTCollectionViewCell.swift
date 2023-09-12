@@ -9,6 +9,8 @@ import UIKit
 import Kingfisher
 
 final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
+    // MARK: - Properties
+
     static let identifier = "FavoritesNFTCollectionViewCellIdentifier"
 
     let avatarView = NftAvatarView()

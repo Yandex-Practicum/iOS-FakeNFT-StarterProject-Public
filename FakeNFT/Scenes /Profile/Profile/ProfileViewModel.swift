@@ -48,7 +48,7 @@ final class ProfileViewModel {
         var labelString = ""
         switch indexPath.row {
         case 0:
-            labelString = "Мои NFT (\(profile?.nfts.count ?? 0)"
+            labelString = "Мои NFT (\(profile?.nfts.count ?? 0))"
         case 1:
             labelString = "Избранные NFT (\(profile?.likes.count ?? 0))"
         case 2:
