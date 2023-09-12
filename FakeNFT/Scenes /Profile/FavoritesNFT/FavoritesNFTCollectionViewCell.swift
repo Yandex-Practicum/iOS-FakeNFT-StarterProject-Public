@@ -6,17 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     static let identifier = "FavoritesNFTCollectionViewCellIdentifier"
 
     let avatarView = NftAvatarView()
-
-    private let avatar: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +39,10 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+
+    var likeButtonAction: (() -> Void)?
+
+    // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -56,11 +55,21 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell(name: String, price: Float, rating: Int, image: UIImage) {
-        self.avatar.image = image
-        self.nameLabel.text = name
-        self.priceValueLabel.text = "\(price) ETH"
-        self.ratingView.rating = rating
+    func configureCell(with nft: Nft) {
+        avatarView.viewModel = NftAvatarViewModel(
+            imageURL: nft.images.first,
+            isLiked: true
+        ) { [weak self] in
+            self?.likeButtonAction?()
+        }
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.locale = Locale(identifier: "ru_Ru")
+        if let formattedPrice = numberFormatter.string(from: NSNumber(value: nft.price)) {
+            self.priceValueLabel.text = "\(formattedPrice) ETH"
+        }
+        self.nameLabel.text = nft.name
+        self.ratingView.rating = nft.rating
     }
 
     private func layouts() {
@@ -69,22 +78,21 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
             priceStackView.addArrangedSubview(view)
         }
 
-        [avatar, priceStackView].forEach { view in
+        [avatarView, priceStackView].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(view)
         }
 
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: topAnchor),
-            avatar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            avatar.heightAnchor.constraint(equalToConstant: 80),
-            avatar.widthAnchor.constraint(equalToConstant: 80),
+            avatarView.topAnchor.constraint(equalTo: topAnchor),
+            avatarView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            avatarView.heightAnchor.constraint(equalToConstant: 80),
+            avatarView.widthAnchor.constraint(equalToConstant: 80),
 
-            priceStackView.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
+            priceStackView.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor),
             priceStackView.topAnchor.constraint(equalTo: topAnchor, constant: 7),
-            priceStackView.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 12),
+            priceStackView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
             priceStackView.trailingAnchor.constraint(equalTo: trailingAnchor)
-
         ])
-
     }
 }

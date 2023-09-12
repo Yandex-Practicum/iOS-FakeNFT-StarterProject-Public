@@ -71,7 +71,7 @@ final class ProfileViewModel {
         let viewController = EditProfileViewController(viewmodel: viewModel)
         return viewController
     }
-    
+
     func getMyNftViewController() -> MyNftViewController? {
         guard let profile = profile else { return nil}
         let viewModel = MyNftViewModel(
@@ -82,14 +82,14 @@ final class ProfileViewModel {
         let viewController = MyNftViewController(viewModel: viewModel)
         return viewController
     }
-    
+
     func getMyFavouritesNftViewController() -> FavoritesNFTViewController? {
         guard let profile = profile else { return nil }
         let viewModel = FavouritesNftViewModel(profileService: profileService)
         let viewController = FavoritesNFTViewController(viewModel: viewModel)
         return viewController
     }
-    
+
     func getProfile() {
         profileService.getUserProfile { [weak self] result in
             DispatchQueue.main.async {

@@ -33,7 +33,7 @@ final class NftAvatarView: UIView {
 
     @objc private func likeButtonTapped() {
         guard let isLiked = viewModel?.isLiked else { return }
-        viewModel?.isLiked = isLiked
+        viewModel?.isLiked = !isLiked
         viewModel?.likeButtonAction?()
 
     }

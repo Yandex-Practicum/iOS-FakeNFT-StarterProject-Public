@@ -12,6 +12,7 @@ protocol ProfileServiceProtocol: AnyObject {
     func updateUserProfile(with data: UploadProfileModel, completion: @escaping (Result<Profile, Error> ) -> Void)
     func getMyNfts(with profile: Profile, completion: @escaping(Result<[Nft], Error>) -> Void)
     func getMyFaforitesNft(completion: @escaping(Result<[Nft], Error>) -> Void)
+    func updateFavoritesNfts(with likes: [Nft])
 
 }
 
@@ -19,6 +20,35 @@ final class ProfileService: ProfileServiceProtocol {
     private let networkClient: NetworkClient
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
+    }
+
+    func updateFavoritesNfts(with nfts: [Nft]) {
+        let likesId = nfts.compactMap { String($0.id) }
+        getUserProfile { [weak self] result in
+            switch result {
+            case .success(let profile):
+                let newProfile = Profile(
+                    id: profile.id,
+                    name: profile.name,
+                    description: profile.description,
+                    avatar: profile.avatar,
+                    website: profile.website,
+                    nfts: profile.nfts,
+                    likes: likesId
+                )
+
+                let uploadModel = UploadProfileModel(
+                    name: newProfile.name,
+                    description: newProfile.description,
+                    website: newProfile.website,
+                    likes: newProfile.likes
+                )
+
+                self?.updateUserProfile(with: uploadModel, completion: { _ in })
+            case.failure:
+                return
+            }
+        }
     }
 
     func getMyNfts(with profile: Profile, completion: @escaping(Result<[Nft], Error>) -> Void) {
@@ -66,7 +96,7 @@ final class ProfileService: ProfileServiceProtocol {
             }
         }
     }
-    
+
     func getFavoritesNfts(with profile: Profile, completion: @escaping(Result<[Nft], Error>) -> Void) {
         getNfts { [weak self] result in
             switch result {
@@ -98,9 +128,7 @@ extension ProfileService {
                            type: [NftDTO].self,
                            onResponse: completion)
     }
-    
-  
-    
+
     func getUserProfile(completion: @escaping (Result<Profile, Error> ) -> Void) {
         let request = UserProfileRequest(userId: "1")
         networkClient.send(request: request,
@@ -113,7 +141,6 @@ extension ProfileService {
         networkClient.send(request: request, type: Profile.self, onResponse: completion)
     }
 }
-
 
 struct UserProfileRequest: NetworkRequest {
     let userId: String

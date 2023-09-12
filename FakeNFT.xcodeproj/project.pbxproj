@@ -356,8 +356,8 @@
 			isa = PBXGroup;
 			children = (
 				CE7E26392AA7490C00D8623E /* FavoritesNFTViewController.swift */,
-				CE7E263B2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift */,
 				CE6522132AB0661200738BAD /* FavouritesNftViewModel.swift */,
+				CE7E263B2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift */,
 			);
 			path = FavoritesNFT;
 			sourceTree = "<group>";
