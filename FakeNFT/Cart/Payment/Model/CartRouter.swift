@@ -47,7 +47,7 @@ final class DefaultCartRouter: CartRouter {
     }
     
     static func makePurchaseViewController() -> UINavigationController {
-        let vc = PurchaseResultViewController(completePurchase: true)
+        let vc = PurchaseResultViewController()
         let nc = UINavigationController(rootViewController: vc)
         return nc
     }

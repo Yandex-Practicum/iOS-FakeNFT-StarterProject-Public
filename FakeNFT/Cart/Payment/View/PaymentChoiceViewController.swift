@@ -13,8 +13,6 @@ final class PaymentChoiceViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var selectedMethodPayCell: IndexPath? = nil
-    
     private var selectedMethodPay: CurrencyModel? = nil {
         didSet {
             updatePaymentButton()
@@ -124,9 +122,24 @@ final class PaymentChoiceViewController: UIViewController {
         viewModel.currenciesObservable.bind { [weak self] _ in
             self?.collectionView.reloadData()
         }
+        
+        viewModel.paymentStatusObservable.bind { [weak self] result in
+            let vc = PurchaseResultViewController()
+            switch result {
+            case .pay:
+                vc.completePurchase = true
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            case .notPay:
+                vc.completePurchase = false
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }
+        }
     }
     
     @objc private func didTapReturnButton() {
+        
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let firstWindow = firstScene.windows.first else { return }
         let vc = firstWindow.rootViewController
@@ -134,12 +147,7 @@ final class PaymentChoiceViewController: UIViewController {
     }
     
     @objc private func didTapPaymentButton() {
-        var vc = PurchaseResultViewController(completePurchase: false)
-        if selectedMethodPay != nil {
-            vc = PurchaseResultViewController(completePurchase: true)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
+        viewModel.makingPayment()
     }
     
     @objc private func didTapTermOfUseLabel() {

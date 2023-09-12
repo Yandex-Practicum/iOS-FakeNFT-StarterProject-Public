@@ -5,15 +5,14 @@ enum Сonstants {
     static let nftAPI: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/nft/"
     static let defaultURL: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/"
     static let currencies: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/currencies"
-    
+    static let putOrders: String = "https://64e7948bb0fd9648b7902415.mockapi.io/api/v1/orders/1/payment/"
 }
 
 protocol CartLoadServiceProtocol {
     var networkClient: NetworkClient { get }
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void)
-    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void)
-    
+    func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void)
 }
 
 final class CartLoadService: CartLoadServiceProtocol {
@@ -34,10 +33,10 @@ final class CartLoadService: CartLoadServiceProtocol {
                     group.enter()
                     self?.loadNFT(id: nftId) { result in
                         switch result {
-                        case .success(let nft):
+                        case let .success(nft):
                             self?.nfts.append(nft)
                             group.leave()
-                        case .failure(let error):
+                        case let .failure(error):
                             print(error)
                             completion(.failure(error))
                         }
@@ -55,17 +54,28 @@ final class CartLoadService: CartLoadServiceProtocol {
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {
         loadCurrencies { [weak self] result in
             switch result {
-            case .success(let currencies):
+            case let .success(currencies):
                 print(currencies)
                 completion(.success(currencies))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
     
-    
-    
+    func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void) {
+        putOrders(id: id) { [weak self] result in
+            switch result {
+            case let .success(paymentInfo):
+                completion(.success(paymentInfo))
+                print(paymentInfo)
+            case let .failure(error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+
     private func loadCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
         let request = DefaultNetworkRequest(endpoint:URL(string: Сonstants.ordersAPI) , dto: nil, httpMethod: .get )
         networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
@@ -81,9 +91,9 @@ final class CartLoadService: CartLoadServiceProtocol {
         networkClient.send(request: request, type: [CurrencyModel].self, onResponse: completion)
     }
     
-    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {
-        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.ordersAPI), dto: OrderModel(nfts: nfts, id: id), httpMethod: .put)
-        networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
-        }
+    private func putOrders(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.putOrders + "\(id)"), dto: nil, httpMethod: .get)
+        networkClient.send(request: request, type: PaymentCurrencyModel.self, onResponse: completion)
+    }
 }
 

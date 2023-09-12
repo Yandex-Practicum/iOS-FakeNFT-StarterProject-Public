@@ -8,10 +8,9 @@ final class CartViewController: UIViewController {
         case purchasResult
     }
     
-    var viewModel: CartViewModelProtocol?
-    var router: CartRouter?
+    var viewModel: CartViewModelProtocol
     
-    private var indexDelete: Int?
+    //var router: CartRouter
     
     init(viewModel: CartViewModelProtocol = CartViewModel()) {
         self.viewModel = viewModel
@@ -31,9 +30,10 @@ final class CartViewController: UIViewController {
         setNavBar()
         setupUI()
         setupButtonPaymentView()
-        viewModel?.didLoad()
-        configure(viewModel: viewModel as! CartViewModel)
+        viewModel.didLoad()
+        bind()
     }
+
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -42,7 +42,7 @@ final class CartViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
-        tableView.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
+        tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         return tableView
     }()
     
@@ -184,21 +184,27 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapPayButton() {
-                let vc = PaymentChoiceViewController()
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+        let vc = PaymentChoiceViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
-//        router?.perform(.pay, from: self)
+        //router?.perform(.pay, from: self)
         
     }
     
-    private func configure(viewModel: CartViewModel) {
-        self.viewModel = viewModel
-        viewModel.$nfts.bind { [weak self] _ in
-            self?.countNFTLabel.text = "\(viewModel.nftInfo.count)" + " " + "NFT"
-            self?.totalCoastNFTLabel.text = "\(viewModel.nftInfo.price)" + " " + "ETH"
-            self?.tableView.reloadData()
+    private func bind() {
+        viewModel.nftsObservable.bind { [weak self] _ in
+            guard let self else { return }
+            self.configureView(model: self.viewModel.nftInfo)
+            self.tableView.reloadData()
         }
+    }
+    
+    private func configureView(model: NFTInfo) {
+        if let formattedPrice = viewModel.formattedPrice.string(from: NSNumber(value: model.price)) {
+            totalCoastNFTLabel.text = "\(formattedPrice) ETH"
+        }
+        countNFTLabel.text = "\(model.count) NFT"
     }
 }
 
@@ -209,26 +215,23 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = viewModel?.nfts.count else { return 0 }
-        return count
+        return viewModel.nfts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.identifier, for: indexPath) as? CartCell else {
             return UITableViewCell()
         }
-        guard let model = viewModel?.nfts[indexPath.row] else { return cell}
+        let model = viewModel.nfts[indexPath.row]
         cell.configureCell(model: model, cell: cell)
-        cell.indexCell = indexPath.row
         cell.delegate = self
         return cell
     }
 }
 
-extension CartViewController: NFTTableViewCellDelegate {
-    func showDeleteView(index: Int) {
-        print(index)
-        print("tap tap")
+extension CartViewController: CartCellDelegate {
+    func showDeleteView() {
+        print("tap")
     }
     
     

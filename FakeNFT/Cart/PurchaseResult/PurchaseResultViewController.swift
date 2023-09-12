@@ -2,17 +2,7 @@ import UIKit
 
 final class PurchaseResultViewController: UIViewController {
     
-    var completePurchase: Bool
-    
-    
-    init(completePurchase: Bool) {
-        self.completePurchase = completePurchase
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var completePurchase: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +19,8 @@ final class PurchaseResultViewController: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        label.font = .bodyBold
+        label.font = .headline3
+        label.textColor = .ypBlack
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -47,13 +37,13 @@ final class PurchaseResultViewController: UIViewController {
     }()
     
     private func updateFinalResult() {
-        if completePurchase {
+        if completePurchase == true {
             label.text = "Успех! Оплата прошла, поздравляем с покупкой!"
             image.image = UIImage(named: "successfullPurchase")
             button.setTitle("Вернуться в каталог", for: .normal)
         } else {
             label.text = "Упс! Что-то пошло не так :( Попробуйте ещё раз!"
-            image.image = UIImage(named: "unsuccessfullPurchase")
+            image.image = UIImage(named: "unsuccessfulPurchase")
             button.setTitle("Вернуться в каталог", for: .normal)
         }
     }
