@@ -8,6 +8,7 @@
 import UIKit
 
 final class FavoritesNFTViewController: UIViewController {
+    private let viewModel: FavouritesNftViewModel
     private let mockNft = MockNft.shared
     // MARK: - Properties
     private lazy var collectionView: UICollectionView = {
@@ -37,7 +38,17 @@ final class FavoritesNFTViewController: UIViewController {
     }()
 
     private var visibleNFT: [MockNftModel] = []
-
+    // MARK: - Initialiser
+    
+    init(viewModel: FavouritesNftViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
