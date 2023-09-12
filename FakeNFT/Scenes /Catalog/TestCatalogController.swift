@@ -17,12 +17,11 @@ final class TestCatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-        title = "Католог"
+        view.backgroundColor = .systemBackground
 
         view.addSubview(testNftButton)
         testNftButton.constraintCenters(to: view)
-        testNftButton.setTitle("Show Nft 22", for: .normal)
+        testNftButton.setTitle(Constants.openNftTitle, for: .normal)
         testNftButton.addTarget(self, action: #selector(showNft), for: .touchUpInside)
         testNftButton.setTitleColor(.systemBlue, for: .normal)
     }
@@ -30,8 +29,13 @@ final class TestCatalogViewController: UIViewController {
     @objc
     func showNft() {
         let assembly = NftDetailAssembly(servicesAssembler: servicesAssembly)
-        let nftInput = NftDetailInput(id: "22")
+        let nftInput = NftDetailInput(id: Constants.testNftId)
         let nftViewController = assembly.build(with: nftInput)
         present(nftViewController, animated: true)
     }
+}
+
+private enum Constants {
+    static let openNftTitle = NSLocalizedString("Catalog.openNft", comment: "")
+    static let testNftId = "22"
 }
