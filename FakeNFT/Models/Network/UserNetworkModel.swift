@@ -1,6 +1,6 @@
 import Foundation
 
-struct UserModel: Codable {
+struct UserNetworkModel: Codable {
     let avatar: String
     let description, id, name: String
     let nfts: [String]
@@ -8,4 +8,4 @@ struct UserModel: Codable {
     let website: String
 }
 
-typealias UserNet = [UserModel]
+typealias UserNet = [UserNetworkModel]

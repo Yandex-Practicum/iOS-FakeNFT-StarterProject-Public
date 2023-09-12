@@ -1,26 +1,28 @@
 import Foundation
 
 final class CollectionViewModel: NSObject {
-    private (set) var model: CollectionModel?
+    let collection: NFTsCollectionNetworkModel
+    
+    var user: User?
     
     var reloadData: (() -> Void)?
     
-    init(collection: NFTsCollectionCatalogModel) {
-        self.model = CollectionModel(user: self.model?.user, collection: collection)
-        super.init()
+    init(collection: NFTsCollectionNetworkModel) {
+        self.collection = collection
+        super .init()
         fetchUserData(by: collection.author)
     }
     
     func fetchUserData(by id: String) {
-        DefaultNetworkClient().send(request: UserIdRequest(userId: id), type: UserModel.self) { [weak self] result in
+        DefaultNetworkClient().send(request: UserIdRequest(userId: id), type: UserNetworkModel.self) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.model = CollectionModel(user: User(with: data), collection: self?.model?.collection)
-                DispatchQueue.main.async {
+                self?.user = User(with: data)
+                DispatchQueue.main.async { [weak self] in
                     self?.reloadData?()
                 }
             case .failure(let error):
-                print(error)
+                print("Error status \(error)")
             }
         }
     }

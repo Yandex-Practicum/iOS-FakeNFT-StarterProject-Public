@@ -4,7 +4,7 @@ import Kingfisher
 final class CatalogViewController: UIViewController {
         
     private var viewModel = CatalogViewModel()
-    private var collectons: [NFTsCollectionModel] {
+    private var collectons: [NFTsCollectionNetworkModel] {
         viewModel.collections
     }
     
@@ -103,7 +103,7 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let collectionVC = CollectionViewController()
+        let collectionVC = CollectionViewController(viewModel: CollectionViewModel(collection: collectons[indexPath.row]))
         self.navigationController?.pushViewController(collectionVC, animated: true)
     }
 }
@@ -113,14 +113,14 @@ extension String {
         if let encodedString = self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) {
             return encodedString
         } else {
-            return ""
+            return "encode error!"
         }
     }
     var decodeURL: String {
         if let decodedString =  self.removingPercentEncoding {
             return decodedString
         } else {
-            return ""
+            return "decode error!"
         }
     }
 }
