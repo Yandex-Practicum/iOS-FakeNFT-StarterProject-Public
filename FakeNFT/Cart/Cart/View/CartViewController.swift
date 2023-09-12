@@ -233,6 +233,4 @@ extension CartViewController: CartCellDelegate {
     func showDeleteView() {
         print("tap")
     }
-    
-    
 }
