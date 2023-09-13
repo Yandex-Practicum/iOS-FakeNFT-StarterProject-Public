@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class PaymentChoiceViewController: UIViewController {
     
@@ -140,10 +141,19 @@ final class PaymentChoiceViewController: UIViewController {
                 self.present(vc, animated: true)
             }
         }
+        
+        viewModel.isLoadingObservable.bind { [weak self] isLoading in
+            guard let self else { return }
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     @objc private func didTapReturnButton() {
-        
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let firstWindow = firstScene.windows.first else { return }
         let vc = firstWindow.rootViewController

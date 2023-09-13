@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class CartViewController: UIViewController {
     
@@ -41,7 +42,7 @@ final class CartViewController: UIViewController {
         tableView.backgroundColor = .background
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.isUserInteractionEnabled = true
+//        tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         return tableView
@@ -198,6 +199,16 @@ final class CartViewController: UIViewController {
             guard let self else { return }
             self.configureView(model: self.viewModel.nftInfo)
             self.tableView.reloadData()
+        }
+        
+        viewModel.isLoadingObservable.bind { [weak self] isLoading in
+            guard let self else { return }
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+                self.tableView.reloadData()
+            }
         }
     }
     

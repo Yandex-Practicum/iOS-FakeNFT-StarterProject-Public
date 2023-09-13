@@ -2,8 +2,10 @@ import UIKit
 
 protocol PaymentViewModelProtocol {
     var currencies: [CurrencyModel] { get }
+    var isLoading: Bool { get }
     var currenciesObservable: Observable<[CurrencyModel]> { get }
     var paymentStatusObservable: Observable<PaymentStatus> { get }
+    var isLoadingObservable: Observable<Bool> { get }
     func selectCurrency(with id: String)
     func didLoad()
     func didTapPaymentButton()
@@ -17,10 +19,14 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     @Observable
     private (set) var paymentStatus: PaymentStatus = .notPay
     
+    @Observable
+    private (set) var isLoading: Bool = true
+    
     private var selectedCurrency: CurrencyModel?
     
     var currenciesObservable: Observable<[CurrencyModel]> { $currencies }
     var paymentStatusObservable: Observable<PaymentStatus> { $paymentStatus }
+    var isLoadingObservable: Observable<Bool> { $isLoading}
     
     private let model: CartLoadServiceProtocol
     
@@ -29,9 +35,11 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     }
     
     func didLoad() {
+        isLoading = true
         model.fetchCurrencies { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
+                self.isLoading = false
                 switch result {
                 case let .success(currencies):
                     self.currencies = currencies

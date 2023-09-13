@@ -3,15 +3,20 @@ import UIKit
 protocol CartViewModelProtocol {
     func didLoad()
     var nfts: [NFTModel]  { get }
+    var isLoading: Bool { get }
     var nftInfo: NFTInfo { get }
     var formattedPrice: NumberFormatter { get }
     var nftsObservable: Observable<[NFTModel]> { get }
+    var isLoadingObservable: Observable<Bool> { get }
 }
 
 final class CartViewModel: CartViewModelProtocol {
     
     @Observable
-    var nfts: [NFTModel] = []
+    private (set) var nfts: [NFTModel] = []
+    
+    @Observable
+    private (set) var isLoading: Bool = true
     
     var nftInfo: NFTInfo {
         let price = nfts.reduce(0.0) { $0 + $1.price}
@@ -19,6 +24,8 @@ final class CartViewModel: CartViewModelProtocol {
     }
     
     var nftsObservable: Observable<[NFTModel]> { $nfts }
+    
+    var isLoadingObservable: Observable<Bool> { $isLoading}
     
     private let cartLoadService: CartLoadServiceProtocol
     
@@ -34,11 +41,13 @@ final class CartViewModel: CartViewModelProtocol {
     }()
     
     func didLoad() {
+        isLoading = true
         cartLoadService.fetchNft { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else {
                     return
                 }
+                self.isLoading = false
                 switch result {
                 case let .success(models):
                     let viewModelModels = models.map(NFTModel.init(model:))
