@@ -2,10 +2,13 @@ import UIKit
 
 final class PaymentChoiceViewController: UIViewController {
     
-    var viewModel: PaymentViewModelProtocol
+    private let viewModel: PaymentViewModelProtocol
     
-    init(viewModel: PaymentViewModelProtocol = PaymentViewModel()) {
+    var router: CartRouter
+    
+    init(viewModel: PaymentViewModelProtocol = PaymentViewModel(), router: CartRouter = DefaultCartRouter()) {
         self.viewModel = viewModel
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -124,16 +127,17 @@ final class PaymentChoiceViewController: UIViewController {
         }
         
         viewModel.paymentStatusObservable.bind { [weak self] result in
+            guard let self else { return }
             let vc = PurchaseResultViewController()
             switch result {
             case .pay:
                 vc.completePurchase = true
                 vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
+                self.present(vc, animated: true)
             case .notPay:
                 vc.completePurchase = false
                 vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
+                self.present(vc, animated: true)
             }
         }
     }
@@ -147,7 +151,7 @@ final class PaymentChoiceViewController: UIViewController {
     }
     
     @objc private func didTapPaymentButton() {
-        viewModel.makingPayment()
+        viewModel.didTapPaymentButton()
     }
     
     @objc private func didTapTermOfUseLabel() {

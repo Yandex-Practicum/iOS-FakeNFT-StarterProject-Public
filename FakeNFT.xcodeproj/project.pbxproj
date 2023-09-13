@@ -319,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				CE68BA9E2AA0E05200488E47 /* OrderModel.swift */,
-				CE2E5D1F2AAB5C88003FECAE /* CartRouter.swift */,
 				CE4C5ED02AAF513C00245B10 /* CurrencyModel.swift */,
 				CEDF7A692AB0B8B5009FD8DA /* PaymentCurrencyModel.swift */,
 			);
@@ -379,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				CE68BA942A9FA5E500488E47 /* CartViewModel.swift */,
+				CE2E5D1F2AAB5C88003FECAE /* CartRouter.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

@@ -6,7 +6,7 @@ protocol PaymentViewModelProtocol {
     var paymentStatusObservable: Observable<PaymentStatus> { get }
     func selectCurrency(with id: String)
     func didLoad()
-    func makingPayment()
+    func didTapPaymentButton()
 }
 
 final class PaymentViewModel: PaymentViewModelProtocol {
@@ -46,7 +46,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
         self.selectedCurrency = currencies.first(where: { $0.id == id } )
     }
     
-    func makingPayment() {
+    func didTapPaymentButton() {
         guard let id = selectedCurrency?.id else { return }
         model.sendingPaymentInfo(id: id) { [weak self] result in
             guard let self else { return }

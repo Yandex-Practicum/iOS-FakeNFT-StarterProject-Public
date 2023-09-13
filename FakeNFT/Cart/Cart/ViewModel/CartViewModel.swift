@@ -20,10 +20,10 @@ final class CartViewModel: CartViewModelProtocol {
     
     var nftsObservable: Observable<[NFTModel]> { $nfts }
     
-    private let model: CartLoadServiceProtocol
+    private let cartLoadService: CartLoadServiceProtocol
     
     init(model: CartLoadServiceProtocol = CartLoadService()) {
-        self.model = model
+        self.cartLoadService = model
     }
     
     var formattedPrice: NumberFormatter = {
@@ -34,7 +34,7 @@ final class CartViewModel: CartViewModelProtocol {
     }()
     
     func didLoad() {
-        model.fetchNft { [weak self] result in
+        cartLoadService.fetchNft { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self else {
                     return
@@ -43,8 +43,6 @@ final class CartViewModel: CartViewModelProtocol {
                 case let .success(models):
                     let viewModelModels = models.map(NFTModel.init(model:))
                     self.nfts = viewModelModels
-                    print(self.nfts)
-                    print("IM HERE TOO")
                 case let .failure(error):
                     print(error)
                 }

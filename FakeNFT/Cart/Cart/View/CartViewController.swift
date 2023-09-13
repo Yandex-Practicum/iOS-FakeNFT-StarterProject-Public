@@ -8,12 +8,13 @@ final class CartViewController: UIViewController {
         case purchasResult
     }
     
-    var viewModel: CartViewModelProtocol
+    private let viewModel: CartViewModelProtocol
     
-    //var router: CartRouter
+    var router: CartRouter
     
-    init(viewModel: CartViewModelProtocol = CartViewModel()) {
+    init(viewModel: CartViewModelProtocol = CartViewModel(), router: CartRouter = DefaultCartRouter()) {
         self.viewModel = viewModel
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -188,7 +189,7 @@ final class CartViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
-        //router?.perform(.pay, from: self)
+       // router.perform(.pay, from: self)
         
     }
     

@@ -7,34 +7,33 @@ enum CartSegue {
 }
 
 protocol CartRouter {
-    func perform(_ segue: CartSegue, from source: CartViewController)
+    func perform(_ segue: CartSegue, from source: UIViewController)
 }
 
 final class DefaultCartRouter: CartRouter {
     
-    unowned var viewModel: CartViewModel
+    private var viewModel: CartViewModelProtocol
     
     init(viewModel: CartViewModelProtocol = CartViewModel()) {
-        self.viewModel = viewModel as! CartViewModel
+        self.viewModel = viewModel
     }
     
-    func perform(_ segue: CartSegue, from source: CartViewController) {
+    func perform(_ segue: CartSegue, from source: UIViewController) {
         switch segue {
         case .pay:
             let vc = DefaultCartRouter.makePaymentViewController()
-            source.navigationController?.pushViewController(vc, animated: true)
+            source.navigationController?.present(vc, animated: true)
         case .choicePayment:
             let vc = DefaultCartRouter.makePaymentViewController()
-            source.navigationController?.pushViewController(vc, animated: true)
+            source.navigationController?.present(vc, animated: true)
         case .purchaseResult:
             let vc = DefaultCartRouter.makePaymentViewController()
-            source.navigationController?.pushViewController(vc, animated: true)
+            source.navigationController?.present(vc, animated: true)
         }
     }
     
     static func makeCartViewController() -> UINavigationController {
         let vc = CartViewController()
-        vc.viewModel = CartViewModel()
         let nc = UINavigationController(rootViewController: vc)
         return nc
     }
@@ -48,6 +47,7 @@ final class DefaultCartRouter: CartRouter {
     
     static func makePurchaseViewController() -> UINavigationController {
         let vc = PurchaseResultViewController()
+        vc.modalPresentationStyle = .fullScreen
         let nc = UINavigationController(rootViewController: vc)
         return nc
     }

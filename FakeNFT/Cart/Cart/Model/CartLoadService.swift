@@ -9,7 +9,6 @@ enum Сonstants {
 }
 
 protocol CartLoadServiceProtocol {
-    var networkClient: NetworkClient { get }
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void)
     func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void)
@@ -17,7 +16,7 @@ protocol CartLoadServiceProtocol {
 
 final class CartLoadService: CartLoadServiceProtocol {
     
-    let networkClient: NetworkClient
+    private let networkClient: NetworkClient
     private (set) var nfts: [NFTServerModel] = []
     
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
@@ -27,18 +26,19 @@ final class CartLoadService: CartLoadServiceProtocol {
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void) {
         let group = DispatchGroup()
         loadCart { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let orderServer):
                 orderServer.nfts.forEach { nftId in
                     group.enter()
-                    self?.loadNFT(id: nftId) { result in
+                    self.loadNFT(id: nftId) { result in
                         switch result {
                         case let .success(nft):
-                            self?.nfts.append(nft)
+                            self.nfts.append(nft)
                             group.leave()
                         case let .failure(error):
-                            print(error)
                             completion(.failure(error))
+                            group.leave()
                         }
                     }
                 }
@@ -46,16 +46,15 @@ final class CartLoadService: CartLoadServiceProtocol {
                 completion(.failure(error))
             }
             group.notify(queue: .main) {
-                completion(.success(self?.nfts ?? []))
+                completion(.success(self.nfts))
             }
         }
     }
     
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {
-        loadCurrencies { [weak self] result in
+        loadCurrencies { result in
             switch result {
             case let .success(currencies):
-                print(currencies)
                 completion(.success(currencies))
             case let .failure(error):
                 completion(.failure(error))
@@ -64,13 +63,11 @@ final class CartLoadService: CartLoadServiceProtocol {
     }
     
     func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void) {
-        putOrders(id: id) { [weak self] result in
+        putOrders(id: id) { result in
             switch result {
             case let .success(paymentInfo):
                 completion(.success(paymentInfo))
-                print(paymentInfo)
             case let .failure(error):
-                print(error)
                 completion(.failure(error))
             }
         }
