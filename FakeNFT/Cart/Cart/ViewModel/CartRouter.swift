@@ -7,7 +7,7 @@ enum CartSegue {
 }
 
 protocol CartRouter {
-    func perform(_ segue: CartSegue, from source: UIViewController)
+    func perform(_ segue: CartSegue, from source: CartViewController)
 }
 
 final class DefaultCartRouter: CartRouter {
@@ -18,7 +18,7 @@ final class DefaultCartRouter: CartRouter {
         self.viewModel = viewModel
     }
     
-    func perform(_ segue: CartSegue, from source: UIViewController) {
+    func perform(_ segue: CartSegue, from source: CartViewController) {
         switch segue {
         case .pay:
             let vc = DefaultCartRouter.makePaymentViewController()
@@ -38,18 +38,16 @@ final class DefaultCartRouter: CartRouter {
         return nc
     }
     
-    static func makePaymentViewController() -> UINavigationController {
+    static func makePaymentViewController() -> UIViewController {
         let vc = PaymentChoiceViewController()
         vc.modalPresentationStyle = .fullScreen
-        let nc = UINavigationController(rootViewController: vc)
-        return nc
+        return vc
     }
     
-    static func makePurchaseViewController() -> UINavigationController {
+    static func makePurchaseViewController() -> UIViewController {
         let vc = PurchaseResultViewController()
         vc.modalPresentationStyle = .fullScreen
-        let nc = UINavigationController(rootViewController: vc)
-        return nc
+        return vc
     }
 }
 

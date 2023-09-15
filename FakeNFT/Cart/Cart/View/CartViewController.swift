@@ -42,7 +42,7 @@ final class CartViewController: UIViewController {
         tableView.backgroundColor = .background
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.isUserInteractionEnabled = true
+        tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         return tableView
@@ -186,11 +186,10 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapPayButton() {
-        let vc = PaymentChoiceViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-        
-       // router.perform(.pay, from: self)
+//        let vc = PaymentChoiceViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+       router.perform(.pay, from: self)
         
     }
     
