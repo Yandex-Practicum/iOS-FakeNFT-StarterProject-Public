@@ -186,11 +186,7 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapPayButton() {
-//        let vc = PaymentChoiceViewController()
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
        router.perform(.pay, from: self)
-        
     }
     
     private func bind() {
