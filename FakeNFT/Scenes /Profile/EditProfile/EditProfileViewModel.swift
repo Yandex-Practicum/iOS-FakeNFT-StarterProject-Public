@@ -50,10 +50,15 @@ final class EditProfileViewModel {
         website = newWebsite
     }
 
-    func saveProfile(name: String?, description: String?, websiteString: String?) {
+    func saveProfile(name: String?, description: String?, websiteString: String?, newAvatar: String?) {
         if let url = URL(string: websiteString ?? "") {
             website = url
         }
+
+        if let avatarUrl = URL(string: newAvatar ?? "") {
+            avatar = avatarUrl
+        }
+
         let name = name ?? profile.name
         let description = description ?? profile.description
         let newProfile = Profile(

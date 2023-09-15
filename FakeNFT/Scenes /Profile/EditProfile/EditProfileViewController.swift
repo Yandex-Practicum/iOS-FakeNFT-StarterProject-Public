@@ -110,12 +110,13 @@ final class EditProfileViewController: UIViewController {
         return button
     }()
 
+    private var changeAvatar: String?
+    
     // MARK: - Initialisers
     init(viewmodel: EditProfileViewModel) {
         self.viewmodel = viewmodel
         super.init(nibName: nil, bundle: nil)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -146,13 +147,7 @@ final class EditProfileViewController: UIViewController {
         )
 
         button.tintColor = .label
-        let buttonSave = UIBarButtonItem(
-            image: UIImage(systemName: "checkmark"),
-            style: .plain,
-            target: self,
-            action: #selector(saveProfile)
-        )
-        navigationItem.setRightBarButtonItems([button, buttonSave], animated: true)
+        navigationItem.setRightBarButton(button, animated: true)
         navigationItem.setHidesBackButton(true, animated: false)
     }
 
@@ -206,19 +201,19 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-        showErrorAlert()
-        dismiss(animated: true)
-    }
-
-    @objc private func saveProfile() {
         guard verifiUrl(urlString: urlTextField.text) ?? false else {
+            showErrorAlert()
+            return
+        }
+        guard verifiUrl(urlString: changeAvatar) ?? false else {
             showErrorAlert()
             return
         }
         viewmodel.saveProfile(
             name: nameTextField.text,
             description: descriptionTextField.text,
-            websiteString: urlTextField.text
+            websiteString: urlTextField.text,
+            newAvatar: changeAvatar
         )
         dismiss(animated: true)
     }
@@ -248,19 +243,18 @@ final class EditProfileViewController: UIViewController {
 
         alertController.addAction(UIAlertAction(
             title: "Ок",
-            style: .default,
-            handler: { [weak self] (_) in
+            style: .default) { [weak self] _ in
                 guard let self = self else { return }
-                if let text = alertController.textFields?[0].text,
-                   let url = URL(string: text),
-                   let valid = self.verifiUrl(urlString: text),
-                   valid { print(url) }
+                if let text = alertController.textFields?[0].text {
+                    self.changeAvatar = text
+                }
             }
-        ))
-        self.present(alertController, animated: true, completion: nil)
+        )
+
+        self.present(alertController, animated: true)
     }
 
-    func verifiUrl (urlString: String?) -> Bool? {
+    private func verifiUrl (urlString: String?) -> Bool? {
         if let urlString = urlString {
             if let url = NSURL(string: urlString) {
                 return UIApplication.shared.canOpenURL(url as URL)
