@@ -1,13 +1,13 @@
 import UIKit
 
 protocol CartViewModelProtocol {
-    func didLoad()
     var nfts: [NFTModel]  { get }
     var isLoading: Bool { get }
     var nftInfo: NFTInfo { get }
     var formattedPrice: NumberFormatter { get }
     var nftsObservable: Observable<[NFTModel]> { get }
     var isLoadingObservable: Observable<Bool> { get }
+    func didLoad()
 }
 
 final class CartViewModel: CartViewModelProtocol {
@@ -25,7 +25,7 @@ final class CartViewModel: CartViewModelProtocol {
     
     var nftsObservable: Observable<[NFTModel]> { $nfts }
     
-    var isLoadingObservable: Observable<Bool> { $isLoading}
+    var isLoadingObservable: Observable<Bool> { $isLoading }
     
     private let cartLoadService: CartLoadServiceProtocol
     
@@ -44,9 +44,7 @@ final class CartViewModel: CartViewModelProtocol {
         isLoading = true
         cartLoadService.fetchNft { [weak self] result in
             DispatchQueue.main.async { [weak self] in
-                guard let self else {
-                    return
-                }
+                guard let self else { return }
                 self.isLoading = false
                 switch result {
                 case let .success(models):

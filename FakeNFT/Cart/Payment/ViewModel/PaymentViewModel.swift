@@ -26,20 +26,20 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     
     var currenciesObservable: Observable<[CurrencyModel]> { $currencies }
     var paymentStatusObservable: Observable<PaymentStatus> { $paymentStatus }
-    var isLoadingObservable: Observable<Bool> { $isLoading}
+    var isLoadingObservable: Observable<Bool> { $isLoading }
     
-    private let model: CartLoadServiceProtocol
+    private let cartLoadService: CartLoadServiceProtocol
     
     init(model: CartLoadServiceProtocol = CartLoadService()) {
-        self.model = model
+        self.cartLoadService = model
     }
     
     func didLoad() {
         isLoading = true
-        model.fetchCurrencies { [weak self] result in
+        cartLoadService.fetchCurrencies { [weak self] result in
+            self?.isLoading = false
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
-                self.isLoading = false
                 switch result {
                 case let .success(currencies):
                     self.currencies = currencies
@@ -55,8 +55,9 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     }
     
     func didTapPaymentButton() {
+        isLoading = true
         guard let id = selectedCurrency?.id else { return }
-        model.sendingPaymentInfo(id: id) { [weak self] result in
+        cartLoadService.sendingPaymentInfo(id: id) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
@@ -64,10 +65,12 @@ final class PaymentViewModel: PaymentViewModelProtocol {
                     self.paymentStatus = .pay
                 case let .failure(error):
                     print(error)
+                    self.isLoading = false
                     self.paymentStatus = .notPay
                     self.selectedCurrency = nil
                 }
             }
         }
+        isLoading = false
     }
 }

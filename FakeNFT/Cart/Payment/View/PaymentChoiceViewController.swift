@@ -17,6 +17,22 @@ final class PaymentChoiceViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        view.addSubview(collectionView)
+        addView()
+        applyConstraints()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.didLoad()
+    }
+    
+    
     private var selectedMethodPay: CurrencyModel? = nil {
         didSet {
             updatePaymentButton()
@@ -80,6 +96,7 @@ final class PaymentChoiceViewController: UIViewController {
         paymentButton.setTitle("Оплатить", for: .normal)
         paymentButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         paymentButton.addTarget(self, action: #selector(didTapPaymentButton), for: .touchUpInside)
+        paymentButton.isEnabled = false
         return paymentButton
     }()
     
@@ -127,6 +144,17 @@ final class PaymentChoiceViewController: UIViewController {
             self?.collectionView.reloadData()
         }
         
+        viewModel.isLoadingObservable.bind { isLoading in
+            if isLoading {
+                print("isLoading")
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+                self.collectionView.reloadData()
+                print("DONE")
+            }
+        }
+        
         viewModel.paymentStatusObservable.bind { [weak self] result in
             guard let self else { return }
             let vc = PurchaseResultViewController()
@@ -139,16 +167,6 @@ final class PaymentChoiceViewController: UIViewController {
                 vc.completePurchase = false
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-            }
-        }
-        
-        viewModel.isLoadingObservable.bind { [weak self] isLoading in
-            guard let self else { return }
-            if isLoading {
-                ProgressHUD.show()
-            } else {
-                ProgressHUD.dismiss()
-                self.collectionView.reloadData()
             }
         }
     }
@@ -170,14 +188,8 @@ final class PaymentChoiceViewController: UIViewController {
         present(vc, animated: true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        view.addSubview(collectionView)
-        addView()
-        applyConstraints()
-        bind()
-        viewModel.didLoad()
+    func enableButton() {
+        paymentButton.isEnabled = true
     }
 }
 
@@ -215,7 +227,7 @@ extension PaymentChoiceViewController: UICollectionViewDelegateFlowLayout {
         viewModel.selectCurrency(with: id)
         cell.selectedCell()
         selectedMethodPay = viewModel.currencies[indexPath.row]
-        
+        enableButton()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -225,3 +237,4 @@ extension PaymentChoiceViewController: UICollectionViewDelegateFlowLayout {
         selectedMethodPay = nil
     }
 }
+

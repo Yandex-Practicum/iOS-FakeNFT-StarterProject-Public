@@ -93,8 +93,11 @@ final class CartCell: UITableViewCell {
     }()
     
     private func addViews() {
-        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingStack, deleteFromBasketButton].forEach(setupView(_:))
+        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingStack].forEach(setupView(_:))
+        [deleteFromBasketButton].forEach(contentView.setupView(_:))
     }
+    
+    
     
     private func setupUI() {
         NSLayoutConstraint.activate([

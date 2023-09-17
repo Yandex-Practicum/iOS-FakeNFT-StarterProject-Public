@@ -68,8 +68,16 @@ final class PaymentChoiceCell: UICollectionViewCell {
         return secondLabel
     }()
     
+    private let labelStackView: UIStackView = {
+        let labelStackView = UIStackView()
+        labelStackView.axis = .vertical
+        return labelStackView
+    }()
+    
     private func addView() {
-        [collectionView,payMethodBackgorundImage, payMethodImage, firstLabel, secondLabel].forEach(contentView.setupView(_:))
+        [collectionView,payMethodBackgorundImage, payMethodImage, labelStackView].forEach(contentView.setupView(_:))
+        labelStackView.addArrangedSubview(firstLabel)
+        labelStackView.addArrangedSubview(secondLabel)
     }
     
     private func applyConstraints() {
@@ -87,11 +95,8 @@ final class PaymentChoiceCell: UICollectionViewCell {
             payMethodImage.centerYAnchor.constraint(equalTo: payMethodBackgorundImage.centerYAnchor),
             payMethodImage.heightAnchor.constraint(equalToConstant: 31),
             payMethodImage.widthAnchor.constraint(equalToConstant: 31),
-            firstLabel.topAnchor.constraint(equalTo: collectionView.topAnchor, constant: 4),
-            firstLabel.leadingAnchor.constraint(equalTo: payMethodBackgorundImage.trailingAnchor, constant: 4),
-            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 1),
-            secondLabel.leadingAnchor.constraint(equalTo: payMethodBackgorundImage.trailingAnchor, constant: 4),
-            secondLabel.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -4)
+            labelStackView.leadingAnchor.constraint(equalTo: payMethodBackgorundImage.trailingAnchor, constant: 4),
+            labelStackView.centerYAnchor.constraint(equalTo: payMethodBackgorundImage.centerYAnchor)
         ])
     }
    

@@ -42,7 +42,7 @@ final class CartViewController: UIViewController {
         tableView.backgroundColor = .background
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.isUserInteractionEnabled = true
+        tableView.allowsSelection = false
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         return tableView
@@ -50,11 +50,13 @@ final class CartViewController: UIViewController {
     
     private lazy var plugLabel: UILabel = {
         let plugLabel = UILabel()
+        plugLabel.isHidden = true
         return plugLabel
     }()
     
     private lazy var plugImage: UIImageView = {
         let plugImage = UIImageView()
+        plugImage.isHidden = true
         return plugImage
     }()
     
@@ -145,7 +147,7 @@ final class CartViewController: UIViewController {
     }()
     
     private func addViews(){
-        [tableView, plugImage, plugLabel, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton, deleteView, deletingImage, deleteLabel, deleteButton, returnButton].forEach(view.setupView(_:))
+        [tableView, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton, deletingImage, deleteLabel, deleteButton, returnButton].forEach(view.setupView(_:))
     }
     
     private func setNavBar() {

@@ -53,11 +53,13 @@ final class CartLoadService: CartLoadServiceProtocol {
     
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {
         loadCurrencies { result in
-            switch result {
-            case let .success(currencies):
-                completion(.success(currencies))
-            case let .failure(error):
-                completion(.failure(error))
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(currencies):
+                    completion(.success(currencies))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
             }
         }
     }
