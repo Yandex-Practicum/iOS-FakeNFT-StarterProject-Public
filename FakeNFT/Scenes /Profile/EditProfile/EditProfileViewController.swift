@@ -39,7 +39,6 @@ final class EditProfileViewController: UIViewController {
         textField.leftViewMode = .always
         textField.rightViewMode = .always
         textField.delegate = self
-
         return textField
     }()
 
@@ -111,7 +110,7 @@ final class EditProfileViewController: UIViewController {
     }()
 
     private var changeAvatar: String?
-    
+
     // MARK: - Initialisers
     init(viewmodel: EditProfileViewModel) {
         self.viewmodel = viewmodel
@@ -201,14 +200,6 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func closeButtonTapped() {
-        guard verifiUrl(urlString: urlTextField.text) ?? false else {
-            showErrorAlert()
-            return
-        }
-        guard verifiUrl(urlString: changeAvatar) ?? false else {
-            showErrorAlert()
-            return
-        }
         viewmodel.saveProfile(
             name: nameTextField.text,
             description: descriptionTextField.text,
@@ -225,9 +216,7 @@ final class EditProfileViewController: UIViewController {
             preferredStyle: .alert)
 
         let action = UIAlertAction(title: "Ок", style: .default)
-
         alert.addAction(action)
-
         present(alert, animated: true, completion: nil)
     }
 
@@ -246,21 +235,11 @@ final class EditProfileViewController: UIViewController {
             style: .default) { [weak self] _ in
                 guard let self = self else { return }
                 if let text = alertController.textFields?[0].text {
-                    self.changeAvatar = text
+                        self.changeAvatar = text
                 }
             }
         )
-
         self.present(alertController, animated: true)
-    }
-
-    private func verifiUrl (urlString: String?) -> Bool? {
-        if let urlString = urlString {
-            if let url = NSURL(string: urlString) {
-                return UIApplication.shared.canOpenURL(url as URL)
-            }
-        }
-        return false
     }
 
 }

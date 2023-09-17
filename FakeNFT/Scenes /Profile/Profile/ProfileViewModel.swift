@@ -84,7 +84,6 @@ final class ProfileViewModel {
     }
 
     func getMyFavouritesNftViewController() -> FavoritesNFTViewController? {
-        guard let profile = profile else { return nil }
         let viewModel = FavouritesNftViewModel(profileService: profileService)
         let viewController = FavoritesNFTViewController(viewModel: viewModel)
         return viewController

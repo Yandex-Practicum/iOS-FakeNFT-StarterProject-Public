@@ -46,7 +46,8 @@ final class MyNftViewModel {
         self.settingsStorage = settingsStorage
 
         self.likes = (profile.likes).compactMap({Int($0)})
-        initialisation()
+        getMyNfts(with: profile)
+
     }
 
     // MARK: - Methods
@@ -55,7 +56,7 @@ final class MyNftViewModel {
         getMyNfts(with: profile)
     }
 
-    private func getMyNfts(with profile: Profile) {
+     func getMyNfts(with profile: Profile) {
         profileService.getMyNfts(with: profile) { [weak self] result in
             switch result {
             case .success(let myNfts):

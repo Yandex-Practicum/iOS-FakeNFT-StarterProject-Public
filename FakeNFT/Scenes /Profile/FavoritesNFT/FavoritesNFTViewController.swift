@@ -128,9 +128,7 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         return viewModel.favoritesNft.count
     }
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
     func collectionView(
         _ collectionView: UICollectionView,

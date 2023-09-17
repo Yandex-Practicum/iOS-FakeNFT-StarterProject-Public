@@ -53,9 +53,9 @@ final class ProfileService: ProfileServiceProtocol {
 
     func getMyNfts(with profile: Profile, completion: @escaping(Result<[Nft], Error>) -> Void) {
         getNfts { result in
-            switch result {
-            case .success(let ntfsDTO):
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let ntfsDTO):
                     let ntfs = ntfsDTO.map {
                         Nft(nftDTO: $0)
                     }
@@ -64,9 +64,7 @@ final class ProfileService: ProfileServiceProtocol {
                         return profile.nfts.contains(idString)
                     }
                     completion(.success(nftsFiltered))
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+                case .failure(let error):
                     completion(.failure(error))
                 }
             }
@@ -75,22 +73,18 @@ final class ProfileService: ProfileServiceProtocol {
 
     func getMyFaforitesNft(completion: @escaping(Result<[Nft], Error>) -> Void) {
         getUserProfile { [weak self] result in
-            switch result {
-            case .success(let profile):
-                self?.getFavoritesNfts(with: profile, completion: { result in
-                    switch result {
-                    case.success(let nfts):
-                        DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self?.getFavoritesNfts(with: profile, completion: { result in
+                        switch result {
+                        case.success(let nfts):
                             completion(.success(nfts))
-                        }
-                    case.failure(let error):
-                        DispatchQueue.main.async {
+                        case.failure(let error):
                             completion(.failure(error))
                         }
-                    }
-                })
-            case.failure(let error):
-                DispatchQueue.main.async {
+                    })
+                case.failure(let error):
                     completion(.failure(error))
                 }
             }
@@ -98,10 +92,10 @@ final class ProfileService: ProfileServiceProtocol {
     }
 
     func getFavoritesNfts(with profile: Profile, completion: @escaping(Result<[Nft], Error>) -> Void) {
-        getNfts { [weak self] result in
-            switch result {
-            case .success(let ntfsDTO):
-                DispatchQueue.main.async {
+        getNfts { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let ntfsDTO):
                     let ntfs = ntfsDTO.map {
                         Nft(nftDTO: $0)
                     }
@@ -110,15 +104,12 @@ final class ProfileService: ProfileServiceProtocol {
                         return profile.likes.contains(idString)
                     }
                     completion(.success(ntfsFiltered))
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+                case .failure(let error):
                     completion(.failure(error))
                 }
             }
         }
     }
-
 }
 
 extension ProfileService {

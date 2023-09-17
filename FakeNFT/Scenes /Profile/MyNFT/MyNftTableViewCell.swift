@@ -40,7 +40,7 @@ final class MyNftTableViewCell: UITableViewCell {
         return label
     }()
 
-    private var priceValueLabel: UILabel = {
+    private lazy var priceValueLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .label

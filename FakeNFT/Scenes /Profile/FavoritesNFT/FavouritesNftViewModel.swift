@@ -12,7 +12,7 @@ final class FavouritesNftViewModel {
 
     private let profileService: ProfileServiceProtocol
 
-    private (set) var favoritesNft: [Nft] = [ ] {
+    private (set) var favoritesNft: [Nft] = [] {
         didSet {
             favoritesNftDidChange?()
         }
@@ -30,7 +30,7 @@ final class FavouritesNftViewModel {
     // MARK: - Initialiser
     init(profileService: ProfileServiceProtocol) {
         self.profileService = profileService
-        initialisation()
+        getMyFavoritesNft()
     }
 
     // MARK: - Methods

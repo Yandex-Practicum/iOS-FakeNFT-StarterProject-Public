@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class EditProfileViewModel {
     // MARK: - Properties
@@ -27,36 +28,32 @@ final class EditProfileViewModel {
         self.name = profile.name
         self.description = profile.description
         self.website = profile.website
-        self.initialisation()
     }
 
-    private func initialisation() {
+    private func verifiUrl (urlString: String?) -> Bool {
+        if let urlString = urlString,
+           let url = URL(string: urlString) {
+            return UIApplication.shared.canOpenURL(url)
 
-    }
-
-    func updateName(_ newName: String) {
-        name = newName
-    }
-
-    func updateAvatar(_ newAvatar: URL) {
-        avatar = newAvatar
-    }
-
-    func updateDescript(_ newDescription: String) {
-        description = newDescription
-    }
-
-    func updateWebsite(_ newWebsite: URL) {
-        website = newWebsite
+        }
+        return false
     }
 
     func saveProfile(name: String?, description: String?, websiteString: String?, newAvatar: String?) {
         if let url = URL(string: websiteString ?? "") {
-            website = url
+            if verifiUrl(urlString: websiteString) {
+                website = url
+            } else {
+                return
+            }
         }
 
         if let avatarUrl = URL(string: newAvatar ?? "") {
-            avatar = avatarUrl
+            if verifiUrl(urlString: newAvatar) {
+                avatar = avatarUrl
+            } else {
+                return
+            }
         }
 
         let name = name ?? profile.name
