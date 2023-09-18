@@ -8,6 +8,8 @@ final class CollectionViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(ImageCollectionCell.self, forCellWithReuseIdentifier: ImageCollectionCell.identifier)
+        collectionView.register(DescriptionCollectionCell.self, forCellWithReuseIdentifier: DescriptionCollectionCell.identifier)
+        collectionView.register(NFTCell.self, forCellWithReuseIdentifier: NFTCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -25,21 +27,35 @@ final class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .never
+        
+        addSubviews()
+        setupConstraints()
     }
         
-    private func setupUI() {
+    private func addSubviews() {
         [collectionView].forEach {
             view.addSubview($0)
         }
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    }
+    
+    private func likeButtonTapped(nftIndex: String) {
+        viewModel.isNFTLiked(with: nftIndex)
+    }
+    
+    private func cartButton(nftIndex: String) {
+        viewModel.isNFTInOrder(with: nftIndex)
     }
 }
 
@@ -55,8 +71,8 @@ extension CollectionViewController: UICollectionViewDataSource {
             return 1
         case .description:
             return 1
-        case .collection:
-            return 1
+        case .nft:
+            return viewModel.collection.nfts.count
         }
     }
     
@@ -74,9 +90,30 @@ extension CollectionViewController: UICollectionViewDataSource {
             }
             return imageCell
         case .description:
-            return UICollectionViewCell()
-        case .collection:
-            return UICollectionViewCell()
+            guard let descriptionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DescriptionCollectionCell.identifier, for: indexPath) as? DescriptionCollectionCell else { return UICollectionViewCell() }
+            descriptionCell.configure(collectionName: viewModel.collection.name, subTitle: "Автор коллекции:", authorName: viewModel.user?.name ?? "Jack Noris", description: viewModel.collection.description)
+            return descriptionCell
+        case .nft:
+            var likeButton: String
+            var cartButton: String
+            guard let nftCell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCell.identifier, for: indexPath) as? NFTCell else { return UICollectionViewCell() }
+            let nftIndex = viewModel.collection.nfts[indexPath.row]
+            if let imageURLString = viewModel.nfts(by: nftIndex)?.images.first,
+               let imageURL = URL(string: imageURLString.encodeURL),
+               let price = viewModel.nfts(by: nftIndex)?.price.ethCurrency,
+               let rating = viewModel.nfts(by: nftIndex)?.rating {
+                let isNFTLiked = viewModel.isNFTLiked(with: nftIndex)
+                let isNFTInOrder = viewModel.isNFTInOrder(with: nftIndex)
+                likeButton = isNFTLiked ? "like" : "dislike"
+                cartButton = isNFTInOrder ? "inCart" : "cart"
+                nftCell.configure(nftImage: imageURL, likeOrDislike: likeButton, rating: rating, nftName: viewModel.nfts(by: nftIndex)?.name ?? "", pirce: price, cartImage: cartButton, likeButtonInteraction: { [weak self] in
+                    self?.likeButtonTapped(nftIndex: nftIndex)
+                },
+                                  cartButtonInteraction: { [weak self] in
+                    self?.cartButton(nftIndex: nftIndex)
+                })
+            }
+            return nftCell
         }
     }
     
@@ -97,9 +134,11 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
         case .image:
             return CGSize(width: self.collectionView.bounds.width, height: 310)
         case .description:
-            return .zero
-        case .collection:
-            return .zero
+            return CGSize(width: self.collectionView.bounds.width, height: 160)
+        case .nft:
+            let bounds = UIScreen.main.bounds
+            let width = (bounds.width - 50) / 3
+            return CGSize(width: width, height: 200)
         }
     }
     
@@ -130,8 +169,8 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         case .description:
             return .zero
-        case .collection:
-            return .zero
+        case .nft:
+            return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
     }
 }

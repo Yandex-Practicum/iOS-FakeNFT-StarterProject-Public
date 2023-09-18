@@ -15,6 +15,7 @@ final class CatalogViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 8, right: 0)
         tableView.backgroundColor = .background
         tableView.separatorColor = .background
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -31,26 +32,28 @@ final class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        view.backgroundColor = .white
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        addSubviews()
+        setupConstraints()
         setupNavBar()
     }
     
-    private func setupUI() {
+    private func addSubviews() {
         [tableView].forEach {
             view.addSubview($0)
         }
-        
+    }
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
-        view.backgroundColor = .white
-        
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     private func setupNavBar() {
@@ -80,6 +83,7 @@ final class CatalogViewController: UIViewController {
     }
 }
 
+//MARK: -UITableViewDataSource
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         collectons.count
@@ -97,6 +101,7 @@ extension CatalogViewController: UITableViewDataSource {
     }
 }
 
+//MARK: -UITableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         179
@@ -105,22 +110,5 @@ extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let collectionVC = CollectionViewController(viewModel: CollectionViewModel(collection: collectons[indexPath.row]))
         self.navigationController?.pushViewController(collectionVC, animated: true)
-    }
-}
-
-extension String {
-    var encodeURL: String {
-        if let encodedString = self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) {
-            return encodedString
-        } else {
-            return "encode error!"
-        }
-    }
-    var decodeURL: String {
-        if let decodedString =  self.removingPercentEncoding {
-            return decodedString
-        } else {
-            return "decode error!"
-        }
     }
 }

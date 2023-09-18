@@ -1,8 +1,10 @@
-//
-//  Float+Extension.swift
-//  FakeNFT
-//
-//  Created by arthack on 14.09.2023.
-//
-
 import Foundation
+
+extension Float {
+    var ethCurrency: String {
+        let formater = NumberFormatter()
+        formater.numberStyle = .currency
+        formater.currencySymbol = "ETH"
+        return formater.string(from: NSNumber(value: self)) ?? ""
+    }
+}
