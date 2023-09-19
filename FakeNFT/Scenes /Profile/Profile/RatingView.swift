@@ -9,7 +9,9 @@ import UIKit
 
 final class RatingView: UIView {
     // MARK: - Properties
-    private  var  stars: [UIImageView]
+    private  var  stars: [UIImageView] = []
+    private let stackView = UIStackView()
+
     var rating: Int? {
         didSet {
             config(with: rating)
@@ -18,11 +20,6 @@ final class RatingView: UIView {
 
     // MARK: - Initialize
     override init(frame: CGRect) {
-        stars = (1...5).map { _ in
-            let view = UIImageView()
-            view.image = UIImage(named: "star")
-            return view
-        }
         super.init(frame: frame)
         setupViews()
     }
@@ -33,7 +30,6 @@ final class RatingView: UIView {
 
 extension RatingView {
     private func setupViews() {
-        let stackView = UIStackView(arrangedSubviews: stars)
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 2
@@ -45,13 +41,22 @@ extension RatingView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        for _ in 1...5 {
+            let star = UIImageView()
+            stars.append(star)
+            stackView.addArrangedSubview(star)
+        }
         config(with: nil)
     }
 
     private func config(with rating: Int?) {
         let rating = rating ?? 0
-        stars.enumerated().forEach { offset, star in
-            star.tintColor = rating > offset ? .yellow : .gray
+        for (index, star) in stars.enumerated() {
+            if index < rating {
+                star.image = UIImage(named: "yellowStar")
+            } else {
+                star.image = UIImage(named: "grayStar")
+            }
         }
     }
 }

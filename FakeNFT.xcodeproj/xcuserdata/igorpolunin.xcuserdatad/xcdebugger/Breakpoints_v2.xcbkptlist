@@ -18,6 +18,83 @@
             endingLineNumber = "65"
             landmarkName = "saveProfile(name:description:websiteString:newAvatar:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "778EB244-298C-4531-BE16-319BB31295A7 - c266652210d19cd2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "832">
+               </Location>
+               <Location
+                  uuid = "778EB244-298C-4531-BE16-319BB31295A7 - c266652210d19cd2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1972">
+               </Location>
+               <Location
+                  uuid = "778EB244-298C-4531-BE16-319BB31295A7 - c266652210d19cd2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1748">
+               </Location>
+               <Location
+                  uuid = "778EB244-298C-4531-BE16-319BB31295A7 - 10d51faa13dcf01b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1592">
+               </Location>
+               <Location
+                  uuid = "778EB244-298C-4531-BE16-319BB31295A7 - c266652210d19cd2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "616">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,86 +111,83 @@
             endingLineNumber = "70"
             landmarkName = "saveProfile(name:description:websiteString:newAvatar:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5E370F60-F032-42F3-8247-0E072A183CAB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FakeNFT/Scenes /Profile/EditProfile/EditProfileViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "saveProfile(name:description:websiteString:newAvatar:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "86797F0F-DBB3-4DD2-BCFA-30CEE44E1053"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FakeNFT/Scenes /Profile/EditProfile/EditProfileViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "saveProfile(name:description:websiteString:newAvatar:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4F540C35-AEE7-4721-9A6B-E82090DE9180"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FakeNFT/Scenes /Profile/EditProfile/EditProfileViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "verifiUrl(urlString:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2C1F661F-AE00-4D42-A1AC-2CB7FA5CE72C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FakeNFT/Scenes /Profile/EditProfile/EditProfileViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "verifiUrl(urlString:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E7D6607A-650C-4F88-A72C-5C2839731F07"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FakeNFT/Scenes /Profile/EditProfile/EditProfileViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "saveProfile(name:description:websiteString:newAvatar:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A70FE580-62FC-4440-8954-496F3807C2C0 - c266652210d19d8f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "1208">
+               </Location>
+               <Location
+                  uuid = "A70FE580-62FC-4440-8954-496F3807C2C0 - c266652210d19d8f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "2368">
+               </Location>
+               <Location
+                  uuid = "A70FE580-62FC-4440-8954-496F3807C2C0 - c266652210d19d8f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "2020">
+               </Location>
+               <Location
+                  uuid = "A70FE580-62FC-4440-8954-496F3807C2C0 - 10d51faa13dcf146"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "2164">
+               </Location>
+               <Location
+                  uuid = "A70FE580-62FC-4440-8954-496F3807C2C0 - c266652210d19d8f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.EditProfileViewModel.saveProfile(name: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, websiteString: Swift.Optional&lt;Swift.String&gt;, newAvatar: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igorpolunin/Documents/NFT/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Profile/EditProfile/EditProfileViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "916">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

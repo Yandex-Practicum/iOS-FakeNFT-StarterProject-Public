@@ -98,7 +98,7 @@ final class ProfileViewModel {
                     self?.showErrorAlert = false
                 case.failure:
                     print()
-                    self?.showErrorAlert = true
+                     self?.showErrorAlert = true
                 }
             }
         }
