@@ -80,9 +80,8 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
             priceStackView.addArrangedSubview(view)
         }
 
-        [avatarView, priceStackView].forEach { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview(view)
+        [avatarView, priceStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
+            addSubview($0)
         }
 
         NSLayoutConstraint.activate([
