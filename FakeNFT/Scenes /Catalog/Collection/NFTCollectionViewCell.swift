@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-final class NFTCell: UICollectionViewCell {
+final class NFTCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "NFTCell"
     
@@ -10,7 +10,6 @@ final class NFTCell: UICollectionViewCell {
             
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = UIImage(systemName: "star")
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12
@@ -20,7 +19,6 @@ final class NFTCell: UICollectionViewCell {
     
     private lazy var likeButton: UIButton = {
        let button = UIButton()
-//        button.setImage(UIImage(named: "like"), for: .normal)
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -37,7 +35,6 @@ final class NFTCell: UICollectionViewCell {
     private lazy var nftNameLabel: UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-//        label.text = "Name"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,7 +42,6 @@ final class NFTCell: UICollectionViewCell {
     private lazy var priceLabel: UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-//        label.text = "0.004 ETH"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,7 +49,6 @@ final class NFTCell: UICollectionViewCell {
     private lazy var cartButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
-//        button.setImage(UIImage(named: "cart"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

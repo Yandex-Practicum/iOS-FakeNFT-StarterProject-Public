@@ -7,9 +7,9 @@ final class CollectionViewController: UIViewController {
  
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(ImageCollectionCell.self, forCellWithReuseIdentifier: ImageCollectionCell.identifier)
-        collectionView.register(DescriptionCollectionCell.self, forCellWithReuseIdentifier: DescriptionCollectionCell.identifier)
-        collectionView.register(NFTCell.self, forCellWithReuseIdentifier: NFTCell.identifier)
+        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        collectionView.register(DescriptionCollectionViewCell.self, forCellWithReuseIdentifier: DescriptionCollectionViewCell.identifier)
+        collectionView.register(NFTCollectionViewCell.self, forCellWithReuseIdentifier: NFTCollectionViewCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -82,30 +82,38 @@ extension CollectionViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         guard let section = CollectionNFTSection(rawValue: indexPath.section) else { return UICollectionViewCell() }
         switch section {
+            
         case .image:
-            guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionCell.identifier, for: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
+            guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
             if let imageURLString = viewModel.collection.cover,
                let imageURl = URL(string: imageURLString.encodeURL) {
                 imageCell.imageView.kf.setImage(with: imageURl)
             }
             return imageCell
+            
         case .description:
-            guard let descriptionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DescriptionCollectionCell.identifier, for: indexPath) as? DescriptionCollectionCell else { return UICollectionViewCell() }
+            guard let descriptionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DescriptionCollectionViewCell.identifier, for: indexPath) as? DescriptionCollectionViewCell else { return UICollectionViewCell() }
             descriptionCell.configure(collectionName: viewModel.collection.name, subTitle: "Автор коллекции:", authorName: viewModel.user?.name ?? "Jack Noris", description: viewModel.collection.description)
             return descriptionCell
+            
         case .nft:
             var likeButton: String
             var cartButton: String
-            guard let nftCell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCell.identifier, for: indexPath) as? NFTCell else { return UICollectionViewCell() }
+            
+            guard let nftCell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCollectionViewCell.identifier, for: indexPath) as? NFTCollectionViewCell else { return UICollectionViewCell() }
+            
             let nftIndex = viewModel.collection.nfts[indexPath.row]
+            
             if let imageURLString = viewModel.nfts(by: nftIndex)?.images.first,
                let imageURL = URL(string: imageURLString.encodeURL),
                let price = viewModel.nfts(by: nftIndex)?.price.ethCurrency,
                let rating = viewModel.nfts(by: nftIndex)?.rating {
                 let isNFTLiked = viewModel.isNFTLiked(with: nftIndex)
                 let isNFTInOrder = viewModel.isNFTInOrder(with: nftIndex)
+                
                 likeButton = isNFTLiked ? "like" : "dislike"
                 cartButton = isNFTInOrder ? "inCart" : "cart"
+                
                 nftCell.configure(nftImage: imageURL, likeOrDislike: likeButton, rating: rating, nftName: viewModel.nfts(by: nftIndex)?.name ?? "", pirce: price, cartImage: cartButton, likeButtonInteraction: { [weak self] in
                     self?.likeButtonTapped(nftIndex: nftIndex)
                 },

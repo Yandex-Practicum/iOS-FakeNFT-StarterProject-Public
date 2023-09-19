@@ -9,15 +9,22 @@ final class CatalogViewController: UIViewController {
     }
     
     
-    private let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(CatalogCell.self, forCellReuseIdentifier: CatalogCell.reuseIdentifier)
+        tableView.register(CatalogTabelViewCell.self, forCellReuseIdentifier: CatalogTabelViewCell.reuseIdentifier)
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 8, right: 0)
-        tableView.backgroundColor = .background
-        tableView.separatorColor = .background
-
+        tableView.backgroundColor = .white
+        tableView.separatorColor = .white
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var loadIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
     
     init() {
@@ -31,19 +38,19 @@ final class CatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
-        
-        tableView.delegate = self
-        tableView.dataSource = self
         
         addSubviews()
         setupConstraints()
         setupNavBar()
+        
+        viewModel.loadingStarted = self.loadIndicatorStartAnimating
+        viewModel.loadingFinished = self.loadIndicatorStopAnimating
+        viewModel.updateData()
     }
     
     private func addSubviews() {
-        [tableView].forEach {
+        [tableView, loadIndicator].forEach {
             view.addSubview($0)
         }
     }
@@ -53,6 +60,9 @@ final class CatalogViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            loadIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
     
@@ -81,6 +91,14 @@ final class CatalogViewController: UIViewController {
         
         present(allert, animated: true, completion: nil)
     }
+    
+    private func loadIndicatorStartAnimating() {
+        loadIndicator.startAnimating()
+    }
+    
+    private func loadIndicatorStopAnimating() {
+        loadIndicator.stopAnimating()
+    }
 }
 
 //MARK: -UITableViewDataSource
@@ -90,13 +108,14 @@ extension CatalogViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogCell.reuseIdentifier, for: indexPath) as? CatalogCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogTabelViewCell.reuseIdentifier, for: indexPath) as? CatalogTabelViewCell else { return UITableViewCell()}
         let collection = collectons[indexPath.row]
         if let imageURLString = collection.cover,
            let imageURL = URL(string: imageURLString.encodeURL) {
             cell.itemImageView.kf.setImage(with: imageURL)
         }
         cell.nameLabel.text = collection.nameAndNFTsCount
+        cell.selectionStyle = .none
         return cell
     }
 }

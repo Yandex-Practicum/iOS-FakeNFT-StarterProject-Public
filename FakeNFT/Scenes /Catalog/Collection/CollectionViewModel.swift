@@ -28,7 +28,9 @@ final class CollectionViewModel: NSObject {
                     self?.reloadData?()
                 }
             case .failure(let error):
-                print("fetch user data error status - \(error)")
+                DispatchQueue.main.async {
+                    print("fetch user data error status - \(error)")
+                }
             }
         }
     }
@@ -39,7 +41,7 @@ final class CollectionViewModel: NSObject {
                 switch result {
                 case .success(let data):
                     self?.nft = data.map { $0 }
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         self?.reloadData?()
                     }
                 case .failure(let error):
@@ -56,11 +58,13 @@ final class CollectionViewModel: NSObject {
             DefaultNetworkClient().send(request: OrderRequest(), type: OrderNetworkModel.self) { [weak self] result in
                 switch result {
                 case .success(let data):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         self?.reloadData?()
                     }
                 case .failure(let error):
+                    DispatchQueue.main.async {
                         print("fetch order data error status - \(error)")
+                    }
                 }
             }
         }
@@ -76,7 +80,9 @@ final class CollectionViewModel: NSObject {
                         self?.reloadData?()
                     }
                 case .failure(let error):
-                    print("fetch profile data error status - \(error)")
+                    DispatchQueue.main.async {
+                        print("fetch profile data error status - \(error)")
+                    }
                 }
             }
         }

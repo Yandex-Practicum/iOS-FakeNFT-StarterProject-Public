@@ -1,6 +1,6 @@
 import UIKit
 
-final class CatalogCell: UITableViewCell {
+final class CatalogTabelViewCell: UITableViewCell {
     
     static let reuseIdentifier = "catalogCell"
     
@@ -48,7 +48,7 @@ final class CatalogCell: UITableViewCell {
             nameLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 4),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -21)
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -13)
         ])
     }
 }

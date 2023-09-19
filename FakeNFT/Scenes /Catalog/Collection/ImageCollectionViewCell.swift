@@ -1,6 +1,6 @@
 import UIKit
 
-final class ImageCollectionCell: UICollectionViewCell {
+final class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCell"
     
