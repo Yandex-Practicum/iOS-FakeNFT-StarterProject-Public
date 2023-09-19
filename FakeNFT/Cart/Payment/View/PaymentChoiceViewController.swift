@@ -1,10 +1,39 @@
 import UIKit
+import ProgressHUD
 
 final class PaymentChoiceViewController: UIViewController {
     
-    private var selectedMethodPayCell: IndexPath? = nil
+    private let viewModel: PaymentViewModelProtocol
     
-    private var selectedMethodPay: PaymentMethod? = nil {
+    var router: CartRouter
+    
+    init(viewModel: PaymentViewModelProtocol = PaymentViewModel(), router: CartRouter = DefaultCartRouter()) {
+        self.viewModel = viewModel
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        view.addSubview(collectionView)
+        addView()
+        applyConstraints()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.didLoad()
+    }
+    
+    
+    private var selectedMethodPay: CurrencyModel? = nil {
         didSet {
             updatePaymentButton()
         }
@@ -13,6 +42,7 @@ final class PaymentChoiceViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "Выберите способ оплаты"
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return titleLabel
     }()
     
@@ -66,6 +96,7 @@ final class PaymentChoiceViewController: UIViewController {
         paymentButton.setTitle("Оплатить", for: .normal)
         paymentButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         paymentButton.addTarget(self, action: #selector(didTapPaymentButton), for: .touchUpInside)
+        paymentButton.isEnabled = false
         return paymentButton
     }()
     
@@ -91,7 +122,7 @@ final class PaymentChoiceViewController: UIViewController {
             paymentButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             paymentButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             paymentButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 108),
+            collectionView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 50),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.heightAnchor.constraint(equalToConstant: 212)
@@ -108,6 +139,38 @@ final class PaymentChoiceViewController: UIViewController {
         }
     }
     
+    private func bind() {
+        viewModel.currenciesObservable.bind { [weak self] _ in
+            self?.collectionView.reloadData()
+        }
+        
+        viewModel.isLoadingObservable.bind { isLoading in
+            if isLoading {
+                print("isLoading")
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+                self.collectionView.reloadData()
+                print("DONE")
+            }
+        }
+        
+        viewModel.paymentStatusObservable.bind { [weak self] result in
+            guard let self else { return }
+            let vc = PurchaseResultViewController()
+            switch result {
+            case .pay:
+                vc.completePurchase = true
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            case .notPay:
+                vc.completePurchase = false
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }
+    }
+    
     @objc private func didTapReturnButton() {
         guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         guard let firstWindow = firstScene.windows.first else { return }
@@ -116,44 +179,31 @@ final class PaymentChoiceViewController: UIViewController {
     }
     
     @objc private func didTapPaymentButton() {
-        var vc = PurchaseResultViewController(completePurchase: false)
-        if selectedMethodPay != nil {
-            vc = PurchaseResultViewController(completePurchase: true)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
+        viewModel.didTapPaymentButton()
     }
     
     @objc private func didTapTermOfUseLabel() {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
-        
         let vc = WebViewController(url: url)
         present(vc, animated: true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        view.addSubview(collectionView)
-        addView()
-        applyConstraints()
+    func enableButton() {
+        paymentButton.isEnabled = true
     }
 }
 
 extension PaymentChoiceViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PaymentMethod.allCases.count
+        return viewModel.currencies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaymentChoiceCell.identifier, for: indexPath) as? PaymentChoiceCell else {
             return UICollectionViewCell()
         }
-        let items = PaymentMethod(rawValue: indexPath.item)
-        cell.payMethodImage.image = UIImage(named: items?.fullName ?? "Bitcoin")
-        cell.firstLabel.text = items?.fullName
-        cell.secondLabel.text = items?.shortName
-        
+        let model = viewModel.currencies[indexPath.row]
+        cell.configureCell(model: model)
         return cell
     }
 }
@@ -173,21 +223,18 @@ extension PaymentChoiceViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PaymentChoiceCell else { return }
-        if selectedMethodPayCell != nil {
-            collectionView.deselectItem(at: selectedMethodPayCell ?? [0], animated: true)
-            collectionView.cellForItem(at: selectedMethodPayCell ?? [0])
-        }
-        cell.layer.cornerRadius = 12
-        cell.layer.borderWidth = 1.0
-        cell.layer.borderColor = UIColor.ypBlack?.cgColor
-        selectedMethodPay = PaymentMethod(rawValue: indexPath.item)
-        selectedMethodPayCell = indexPath
+        guard let id = cell.currencyModel?.id else { return }
+        viewModel.selectCurrency(with: id)
+        cell.selectedCell()
+        selectedMethodPay = viewModel.currencies[indexPath.row]
+        enableButton()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PaymentChoiceCell else { return }
         collectionView.deselectItem(at: indexPath, animated: true)
-        cell.layer.borderWidth = 0.0
-        selectedMethodPayCell = nil
+        cell.deselectedCell()
+        selectedMethodPay = nil
     }
 }
+

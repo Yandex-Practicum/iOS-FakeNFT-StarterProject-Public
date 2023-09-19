@@ -2,15 +2,14 @@ import UIKit
 
 final class PurchaseResultViewController: UIViewController {
     
-    var completePurchase: Bool
+    var completePurchase: Bool?
     
-    init(completePurchase: Bool) {
-        self.completePurchase = completePurchase
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        addView()
+        applyConstraints()
+        updateFinalResult()
     }
     
     private lazy var image: UIImageView = {
@@ -20,7 +19,8 @@ final class PurchaseResultViewController: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        label.font = .headline3
+        label.textColor = .ypBlack
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -31,6 +31,7 @@ final class PurchaseResultViewController: UIViewController {
         button.backgroundColor = .ypBlack
         button.layer.cornerRadius = 16
         button.setTitleColor(.ypWhite, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return button
     }()
@@ -42,7 +43,7 @@ final class PurchaseResultViewController: UIViewController {
             button.setTitle("Вернуться в каталог", for: .normal)
         } else {
             label.text = "Упс! Что-то пошло не так :( Попробуйте ещё раз!"
-            image.image = UIImage(named: "unsuccessfullPurchase")
+            image.image = UIImage(named: "unsuccessfulPurchase")
             button.setTitle("Вернуться в каталог", for: .normal)
         }
     }
@@ -70,13 +71,5 @@ final class PurchaseResultViewController: UIViewController {
         guard let firstWindow = firstScene.windows.first else { return }
         let window = firstWindow
         window.rootViewController = CatalogViewController()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addView()
-        applyConstraints()
-        updateFinalResult()
     }
 }

@@ -1,29 +1,62 @@
 import UIKit
+import ProgressHUD
 
 final class CartViewController: UIViewController {
     
-    private var viewModel: CartViewModel
+    enum Route: String {
+        case pay
+        case paymentChoice
+        case purchasResult
+    }
+    
+    private let viewModel: CartViewModelProtocol
+    
+    var router: CartRouter
+    
+    init(viewModel: CartViewModelProtocol = CartViewModel(), router: CartRouter = DefaultCartRouter()) {
+        self.viewModel = viewModel
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.backgroundColor = .systemBackground
+        addViews()
+        setNavBar()
+        setupUI()
+        setupButtonPaymentView()
+        viewModel.didLoad()
+        bind()
+    }
+
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .background
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.isUserInteractionEnabled = true
+        tableView.allowsSelection = false
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
-        tableView.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         return tableView
     }()
     
     private lazy var plugLabel: UILabel = {
         let plugLabel = UILabel()
+        plugLabel.isHidden = true
         return plugLabel
     }()
     
     private lazy var plugImage: UIImageView = {
         let plugImage = UIImageView()
+        plugImage.isHidden = true
         return plugImage
     }()
     
@@ -50,7 +83,9 @@ final class CartViewController: UIViewController {
     
     private lazy var totalCoastNFTLabel: UILabel = {
         let totalCoastNFTLabel = UILabel()
-        totalCoastNFTLabel.text = "0.0"
+        totalCoastNFTLabel.text = "0,0"
+        totalCoastNFTLabel.textColor = .ypGreen
+        totalCoastNFTLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return totalCoastNFTLabel
     }()
     
@@ -112,7 +147,7 @@ final class CartViewController: UIViewController {
     }()
     
     private func addViews(){
-        [tableView, plugImage, plugLabel, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton, deleteView, deletingImage, deleteLabel, deleteButton, returnButton].forEach(view.setupView(_:))
+        [tableView, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton, deletingImage, deleteLabel, deleteButton, returnButton].forEach(view.setupView(_:))
     }
     
     private func setNavBar() {
@@ -128,7 +163,7 @@ final class CartViewController: UIViewController {
         NSLayoutConstraint.activate([
             countNFTLabel.leadingAnchor.constraint(equalTo: buttonPaymentView.leadingAnchor, constant: 16),
             countNFTLabel.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 16),
-            totalCoastNFTLabel.topAnchor.constraint(equalTo: countNFTLabel.bottomAnchor, constant: -2),
+            totalCoastNFTLabel.topAnchor.constraint(equalTo: countNFTLabel.bottomAnchor, constant: 1),
             totalCoastNFTLabel.leadingAnchor.constraint(equalTo: buttonPaymentView.leadingAnchor, constant: 16),
             payButton.topAnchor.constraint(equalTo: buttonPaymentView.topAnchor, constant: 16),
             payButton.trailingAnchor.constraint(equalTo: buttonPaymentView.trailingAnchor, constant: -16),
@@ -153,42 +188,32 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapPayButton() {
-        let vc = PaymentChoiceViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+       router.perform(.pay, from: self)
     }
     
-    func initialize(viewModel: CartViewModel) {
-        self.viewModel = viewModel
-        viewModel.$NFTModels.bind { [weak self] nfts in
-            self?.countNFTLabel.text = "\(nfts.count)" + "NFT"
-            var totalPrice: Float = 0
-            for nft in nfts {
-                totalPrice += nft.price
+    private func bind() {
+        viewModel.nftsObservable.bind { [weak self] _ in
+            guard let self else { return }
+            self.configureView(model: self.viewModel.nftInfo)
+            self.tableView.reloadData()
+        }
+        
+        viewModel.isLoadingObservable.bind { [weak self] isLoading in
+            guard let self else { return }
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+                self.tableView.reloadData()
             }
-            let formattedPrice = String(format: "%.2f", totalPrice)
-            self?.totalCoastNFTLabel.text = formattedPrice + "ETH"
-            self?.tableView.reloadData()
         }
     }
     
-    init(viewModel: CartViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        addViews()
-        setNavBar()
-        setupUI()
-        setupButtonPaymentView()
-        viewModel.didLoad()
+    private func configureView(model: NFTInfo) {
+        if let formattedPrice = viewModel.formattedPrice.string(from: NSNumber(value: model.price)) {
+            totalCoastNFTLabel.text = "\(formattedPrice) ETH"
+        }
+        countNFTLabel.text = "\(model.count) NFT"
     }
 }
 
@@ -199,25 +224,22 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.NFTModels.count
-        return count
+        return viewModel.nfts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.identifier, for: indexPath) as? CartCell else {
             return UITableViewCell()
         }
-        let model = viewModel.NFTModels[indexPath.row]
-        cell.backgroundColor = .systemBackground
-        cell.selectionStyle = .none
-        cell.configureCell(model: model)
+        let model = viewModel.nfts[indexPath.row]
+        cell.configureCell(model: model, cell: cell)
         cell.delegate = self
         return cell
     }
 }
 
-extension CartViewController: NFTTableViewCellDelegate {
-    func showDeleteView(index: Int) {
-        print("TAPP")
+extension CartViewController: CartCellDelegate {
+    func showDeleteView() {
+        print("tap")
     }
 }

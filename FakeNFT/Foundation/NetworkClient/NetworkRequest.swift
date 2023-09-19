@@ -13,6 +13,14 @@ struct DefaultNetworkRequest: NetworkRequest {
     let httpMethod: HttpMethod
 }
 
+//struct PaymentNetworkRequest: NetworkRequest {
+//    var endpoint: URL? {
+//        
+//    }
+//    let id: String
+//    let httpMethod: HttpMethod
+//}
+
 protocol NetworkRequest {
     var endpoint: URL? { get }
     var httpMethod: HttpMethod { get }

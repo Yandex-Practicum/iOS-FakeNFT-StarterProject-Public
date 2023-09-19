@@ -1,25 +1,47 @@
 import UIKit
 import Kingfisher
 
-protocol NFTTableViewCellDelegate: AnyObject {
-    func showDeleteView(index: Int)
+protocol CartCellDelegate: AnyObject {
+    func showDeleteView()
 }
 
-final class NFTTableViewCell: UITableViewCell {
+final class CartCell: UITableViewCell {
+    
+    static let identifier = "NFTTableViewCell"
     
     var imageURL: URL? {
         didSet {
             guard let url = imageURL else {
                 return nftImageView.kf.cancelDownloadTask()
             }
-
+            
             nftImageView.kf.setImage(with: url)
         }
     }
-    
-    public weak var delegate: NFTTableViewCellDelegate?
-    static let identifier = "NFTTableViewCell"
 
+    weak var delegate: CartCellDelegate?
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: CartCell.identifier)
+        addViews()
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
+    private lazy var formattedPrice: NumberFormatter = {
+        let formatted = NumberFormatter()
+         formatted.locale = Locale(identifier: "ru_RU")
+         formatted.numberStyle = .decimal
+         return formatted
+     }()
+    
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.layer.cornerRadius = 16
@@ -64,16 +86,18 @@ final class NFTTableViewCell: UITableViewCell {
     }()
     
     private lazy var deleteFromBasketButton: UIButton = {
-        let deleteFromBasketButton = UIButton()
+        let deleteFromBasketButton = UIButton(type: .custom)
         deleteFromBasketButton.setImage(UIImage(named: "deleteButton"), for: .normal)
         deleteFromBasketButton.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
-        deleteFromBasketButton.translatesAutoresizingMaskIntoConstraints = false
         return deleteFromBasketButton
     }()
     
     private func addViews() {
-        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingStack, deleteFromBasketButton].forEach(setupView(_:))
+        [nftImageView, nftNameLabel, nftPriceLabel, nftPrice, nftRatingStack].forEach(setupView(_:))
+        [deleteFromBasketButton].forEach(contentView.setupView(_:))
     }
+    
+    
     
     private func setupUI() {
         NSLayoutConstraint.activate([
@@ -91,17 +115,20 @@ final class NFTTableViewCell: UITableViewCell {
             nftPrice.topAnchor.constraint(equalTo: nftPriceLabel.bottomAnchor, constant: 2),
             deleteFromBasketButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             deleteFromBasketButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
         ])
     }
     
-    func configureCell(model: NFTModel) {
+    func configureCell(model: NFTModel, cell: UITableViewCell) {
+        cell.backgroundColor = .systemBackground
+        cell.selectionStyle = .none
         imageURL = model.images.first
-        nftPrice.text = "\(model.price)" + "ETH"
+        if let formattedPrice = formattedPrice.string(from: NSNumber(value: model.price)) {
+            nftPrice.text = "\(formattedPrice) ETH"
+        }
         nftNameLabel.text = model.name
         
         let rating = model.rating
-    
+        
         for _ in 0...rating - 1 {
             let ratingStar = UIImageView(image: UIImage(named: "ratingStarNft"))
             nftRatingStack.addArrangedSubview(ratingStar)
@@ -112,22 +139,7 @@ final class NFTTableViewCell: UITableViewCell {
         }
     }
     
-    @objc func didTapDeleteButton(_ sender: UIButton) {
-        delegate?.showDeleteView(index: 0)
-        print("TAP")
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: NFTTableViewCell.identifier)
-        addViews()
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    @objc func didTapDeleteButton() {
+        delegate?.showDeleteView()
     }
 }
