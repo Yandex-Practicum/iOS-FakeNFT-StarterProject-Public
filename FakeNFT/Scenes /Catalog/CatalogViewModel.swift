@@ -2,7 +2,7 @@ import Foundation
 
 final class CatalogViewModel: NSObject {
     
-    private (set) var collections: [NFTsCollectionModel] = []
+    private (set) var collections: [NFTsCollectionNetworkModel] = []
     
     var reloadData: (() -> Void)?
     
@@ -12,10 +12,10 @@ final class CatalogViewModel: NSObject {
     }
     
     private func fetchData() {
-        DefaultNetworkClient().send(request: CollectionRequest(), type: [NFTsCollectionModel].self) { [weak self] result in
+        DefaultNetworkClient().send(request: CollectionRequest(), type: [NFTsCollectionNetworkModel].self) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.collections = data.map { NFTsCollectionModel(with: $0) }
+                self?.collections = data
                 DispatchQueue.main.async {
                     self?.reloadData?()
                 }

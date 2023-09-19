@@ -1,8 +1,8 @@
 import Foundation
 
-struct OrderModel: Codable {
+struct OrderNetworkModel: Codable {
     let nfts: [String]
     let id: String
 }
 
-typealias OrderNet = [OrderModel]
+typealias OrderNet = [OrderNetworkModel]

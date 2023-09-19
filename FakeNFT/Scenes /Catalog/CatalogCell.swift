@@ -7,6 +7,7 @@ final class CatalogCell: UITableViewCell {
     var itemImageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .white
+        view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -17,47 +18,37 @@ final class CatalogCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .black
-        return label
-    }()
-    
-    var countLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupUI()
+        addSubviews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    private func setupUI() {
-        contentView.backgroundColor = .white
-        [itemImageView, nameLabel, countLabel].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
+    private func addSubviews() {
+        [itemImageView, nameLabel].forEach {
             contentView.addSubview($0)
         }
-        
+    }
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             itemImageView.heightAnchor.constraint(equalToConstant: 140),
             
             nameLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 4),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            
-            countLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor),
-            countLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            countLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            countLabel.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor)
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -21)
         ])
     }
 }

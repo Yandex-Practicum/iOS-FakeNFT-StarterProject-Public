@@ -5,19 +5,18 @@ struct User {
     let website: String
     let id: String
     
-    init(with user: UserModel) {
+    init(with user: UserNetworkModel) {
         self.name = user.name
         self.website = user.website
         self.id = user.id
     }
 }
 
-
 struct Order {
     let nfts: [String]
     let id: String
     
-    init(with nft: OrderModel) {
+    init(with nft: OrderNetworkModel) {
         self.nfts = nft.nfts
         self.id = nft.id
     }

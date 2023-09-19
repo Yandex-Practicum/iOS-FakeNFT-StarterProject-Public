@@ -1,6 +1,6 @@
 import Foundation
 
-struct NFTsCollectionModel: Codable {
+struct NFTsCollectionNetworkModel: Codable {
     let author: String
     let cover: String?
     let createdAt: String
@@ -8,18 +8,7 @@ struct NFTsCollectionModel: Codable {
     let nfts: [String]
     
     var nameAndNFTsCount: String {
-        name + "(\(nfts.count))"
-    }
-    
-    init(with collection: NFTsCollectionModel) {
-        self.author = collection.author
-        self.cover = collection.cover
-        self.createdAt = collection.createdAt
-        self.description = collection.description
-        self.id = collection.id
-        self.name = collection.name
-        self.nfts = collection.nfts
+        name + " (\(nfts.count))"
     }
 }
 
-typealias NFTsCollectionNet = [NFTsCollectionModel]

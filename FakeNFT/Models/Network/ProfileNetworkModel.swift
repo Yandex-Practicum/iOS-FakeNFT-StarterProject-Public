@@ -1,11 +1,9 @@
 import Foundation
 
-struct UserNetworkModel: Codable {
+struct ProfileNetworkModel: Codable {
     let avatar: String
     let description, id, name: String
     let nfts: [String]
-    let rating: String
+    let likes: [String]
     let website: String
 }
-
-typealias UserNet = [UserNetworkModel]
