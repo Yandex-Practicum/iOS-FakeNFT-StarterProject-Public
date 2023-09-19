@@ -7,6 +7,7 @@ final class CatalogViewModel: NSObject {
     var reloadData: (() -> Void)?
     var loadingStarted: (() -> Void)?
     var loadingFinished: (() -> Void)?
+    private let sorter = SortNFTsCollections()
     
     override init() {
         super.init()
@@ -32,5 +33,21 @@ final class CatalogViewModel: NSObject {
                 }
             }
         }
+    }
+    
+    func sortByName() {
+        collections = collections.sorted {
+            $0.name < $1.name
+        }
+        sorter.setSortValue(value: SortNFTsCollectionType.byName.rawValue)
+        reloadData?()
+    }
+    
+    func sortByNFTsCount() {
+        collections = collections.sorted {
+            $0.nfts.count > $1.nfts.count
+        }
+        sorter.setSortValue(value: SortNFTsCollectionType.byNFTsCount.rawValue)
+        reloadData?()
     }
 }

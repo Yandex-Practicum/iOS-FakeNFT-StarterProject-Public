@@ -77,11 +77,11 @@ final class CatalogViewController: UIViewController {
     
     @objc private func sortButtonTapped() {
         let allert = UIAlertController(title: "Cортировка", message: nil, preferredStyle: .actionSheet)
-        let sortByName = UIAlertAction(title: "По названию", style: .default) { _ in
-            //ToDo
+        let sortByName = UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
+            self?.viewModel.sortByName()
         }
-        let sortByCount = UIAlertAction(title: "По количеству NFT", style: .default) { _ in
-            //ToDo
+        let sortByCount = UIAlertAction(title: "По количеству NFT", style: .default) { [weak self] _ in
+            self?.viewModel.sortByNFTsCount()
         }
         let cancel = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
         
