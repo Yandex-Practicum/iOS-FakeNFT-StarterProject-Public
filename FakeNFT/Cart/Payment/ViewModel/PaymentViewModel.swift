@@ -61,7 +61,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
-                case let .success(payment):
+                case .success(_):
                     self.paymentStatus = .pay
                 case let .failure(error):
                     print(error)

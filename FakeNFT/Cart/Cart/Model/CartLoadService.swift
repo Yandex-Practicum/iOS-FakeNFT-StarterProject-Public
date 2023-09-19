@@ -12,6 +12,8 @@ protocol CartLoadServiceProtocol {
     func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void)
     func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void)
+    func updateNft(nfts: [String], completion: @escaping(Result<OrderModel, Error>) -> Void)
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void)
 }
 
 final class CartLoadService: CartLoadServiceProtocol {
@@ -74,7 +76,31 @@ final class CartLoadService: CartLoadServiceProtocol {
             }
         }
     }
-
+    
+    func updateNft(nfts: [String], completion: @escaping(Result<OrderModel, Error>) -> Void) {
+        putNft(nfts: nfts) { result in
+            switch result {
+            case let .success(nfts):
+                print(nfts)
+                completion(.success(nfts))
+            case let .failure(error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func putNft(nfts: [String], completion: @escaping(Result<OrderModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.ordersAPI), dto: ["nfts": nfts], httpMethod: .put)
+        networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
+    }
+    
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.ordersAPI), dto: OrderModel(nfts: nfts, id: id), httpMethod: .put
+        )
+        networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
+    }
+    
     private func loadCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
         let request = DefaultNetworkRequest(endpoint:URL(string: Сonstants.ordersAPI) , dto: nil, httpMethod: .get )
         networkClient.send(request: request, type: OrderModel.self, onResponse: completion)

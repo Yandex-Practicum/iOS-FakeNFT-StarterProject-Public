@@ -2,7 +2,8 @@ import UIKit
 import Kingfisher
 
 protocol CartCellDelegate: AnyObject {
-    func showDeleteView()
+    //func showDeleteView(model: NFTModel)
+    func showDeleteView(index: Int)
 }
 
 final class CartCell: UITableViewCell {
@@ -20,6 +21,8 @@ final class CartCell: UITableViewCell {
     }
 
     weak var delegate: CartCellDelegate?
+    var indexCell: Int?
+    private var model: NFTModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: CartCell.identifier)
@@ -119,6 +122,7 @@ final class CartCell: UITableViewCell {
     }
     
     func configureCell(model: NFTModel, cell: UITableViewCell) {
+        self.model = model
         cell.backgroundColor = .systemBackground
         cell.selectionStyle = .none
         imageURL = model.images.first
@@ -140,6 +144,8 @@ final class CartCell: UITableViewCell {
     }
     
     @objc func didTapDeleteButton() {
-        delegate?.showDeleteView()
+        //guard let model else { return }
+        guard let indexCell else { return }
+        delegate?.showDeleteView(index: indexCell)
     }
 }
