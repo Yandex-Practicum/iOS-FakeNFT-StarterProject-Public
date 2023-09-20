@@ -96,6 +96,7 @@ final class MyNftViewModel {
             name: newProfile.name,
             description: newProfile.description,
             website: newProfile.website,
+            avatar: newProfile.avatar,
             likes: newProfile.likes
         )
         profileService.updateUserProfile(with: uploadModel) { _ in}
@@ -104,9 +105,9 @@ final class MyNftViewModel {
     func sort(by descriptor: SortDescriptor) {
         switch descriptor {
         case .name:
-            myNft.sort(by: { $0.name > $1.name })
+            myNft.sort(by: { $0.name < $1.name })
         case.price:
-            myNft.sort(by: { $0.price > $1.price })
+            myNft.sort(by: { $0.price < $1.price })
         case.rating:
             myNft.sort(by: { $0.rating > $1.rating })
         }

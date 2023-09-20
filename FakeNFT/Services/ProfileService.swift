@@ -41,6 +41,7 @@ final class ProfileService: ProfileServiceProtocol {
                     name: newProfile.name,
                     description: newProfile.description,
                     website: newProfile.website,
+                    avatar: profile.avatar,
                     likes: newProfile.likes
                 )
 

@@ -226,22 +226,18 @@ final class EditProfileViewController: UIViewController {
             message: "Введите новый URL",
             preferredStyle: .alert
         )
-        alertController.addTextField { (textField) in
-            textField.text = " "
+
+        alertController.addTextField()
+        let addAction = UIAlertAction(
+            title: "Ok", style: .default
+        ) { [unowned alertController] _ in
+            guard let avatarNew = alertController.textFields?[0] else { return }
+            self.changeAvatar = avatarNew.text
+
         }
-
-        alertController.addAction(UIAlertAction(
-            title: "Ок",
-            style: .default) { [weak self] _ in
-                guard let self = self else { return }
-                if let text = alertController.textFields?[0].text {
-                        self.changeAvatar = text
-                }
-            }
-        )
-        self.present(alertController, animated: true)
+        alertController.addAction(addAction)
+        present(alertController, animated: true)
     }
-
 }
 
 extension EditProfileViewController: UITextFieldDelegate {
