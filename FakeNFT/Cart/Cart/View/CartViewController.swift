@@ -28,13 +28,11 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         addViews()
-        setNavBar()
-        setupUI()
-        setupButtonPaymentView()
-        viewModel.didLoad()
+        setupAllView()
+        viewModel.Observe()
         bind()
     }
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .background
@@ -51,6 +49,9 @@ final class CartViewController: UIViewController {
     private lazy var plugLabel: UILabel = {
         let plugLabel = UILabel()
         plugLabel.isHidden = true
+        plugLabel.text = "Корзина пуста"
+        plugLabel.font = .bodyBold
+        plugLabel.textColor = .textOnSecondary
         return plugLabel
     }()
     
@@ -63,6 +64,7 @@ final class CartViewController: UIViewController {
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
         sortButton.setImage(UIImage(named: "sortButton"), for: .normal)
+        sortButton.addTarget(self, action: #selector(didTapSortButton), for: .touchUpInside)
         return sortButton
     }()
     
@@ -148,12 +150,27 @@ final class CartViewController: UIViewController {
     }()
     
     private func addViews(){
-        [tableView, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton].forEach(view.setupView(_:))
+        [tableView, sortButton, buttonPaymentView, countNFTLabel, totalCoastNFTLabel, payButton, plugLabel].forEach(view.setupView(_:))
     }
     
     private func setNavBar() {
-        let sortButton = UIBarButtonItem(customView: sortButton)
-        self.navigationItem.rightBarButtonItem = sortButton
+        if let navigationBar = navigationController?.navigationBar {
+            let sortButton = UIBarButtonItem(customView: sortButton)
+            self.navigationItem.rightBarButtonItem = sortButton
+            NSLayoutConstraint.activate([
+                self.sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+                self.sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            ])
+            navigationBar.topItem?.setRightBarButton(sortButton, animated: false)
+        }
+    }
+    
+    private func setupEmptyLabel() {
+        view.setupView(plugLabel)
+        NSLayoutConstraint.activate([
+            plugLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            plugLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
     private func setupButtonPaymentView(){
@@ -178,61 +195,28 @@ final class CartViewController: UIViewController {
         ])
     }
     
-    private func setupUI() {
+    private func setupTableView() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 108),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
-            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
         ])
     }
-  
     
-    @objc private func didTapPayButton() {
-       router.perform(.pay, from: self)
+    private func setupAllView() {
+        setupEmptyLabel()
+        setNavBar()
+        setupTableView()
+        setupButtonPaymentView()
     }
-    
-    @objc private func didTapReturnButton() {
-        deleteView.removeFromSuperview()
-        deleteLabel.removeFromSuperview()
-        deleteButton.removeFromSuperview()
-        returnButton.removeFromSuperview()
-        navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    @objc private func didTapDeleteButton() {
-        deleteView.removeFromSuperview()
-        deleteLabel.removeFromSuperview()
-        deleteButton.removeFromSuperview()
-        returnButton.removeFromSuperview()
-        navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = false
-        guard let indexDelete = indexDelete else { return }
-        viewModel.didDeleteNFT(index: indexDelete)
-    }
-    
-    private func deletingNft(model: NFTModel) {
-        print("HERE")
-        viewModel.deleteNFT(model) { [weak self] in
-            guard let self else { return }
-            self.deleteView.removeFromSuperview()
-            self.deleteLabel.removeFromSuperview()
-            self.deleteButton.removeFromSuperview()
-            self.returnButton.removeFromSuperview()
-            self.navigationController?.navigationBar.isHidden = false
-            self.tabBarController?.tabBar.isHidden = false
-            print("TAP TAP")
-        }
-    }
-    
     
     private func bind() {
         viewModel.nftsObservable.bind { [weak self] _ in
             guard let self else { return }
-            self.configureView(model: self.viewModel.nftInfo)
+            UIView.animate(withDuration: 0.3) {
+                self.configureView(model: self.viewModel.nftInfo)
+            }
             self.tableView.reloadData()
         }
         
@@ -245,6 +229,35 @@ final class CartViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
+        
+        viewModel.isCartEmptyObservable.bind { [weak self] isEmptyCart in
+            guard let self else { return }
+            if isEmptyCart {
+                self.showEmptyCart()
+            } else {
+                self.showCart()
+            }
+        }
+    }
+    
+    private func showEmptyCart() {
+        plugLabel.isHidden = false
+        navigationController?.isNavigationBarHidden = true
+        tableView.isHidden = true
+        buttonPaymentView.isHidden = true
+        payButton.isHidden = true
+        countNFTLabel.isHidden = true
+        totalCoastNFTLabel.isHidden = true
+    }
+    
+    private func showCart() {
+        plugLabel.isHidden = true
+        navigationController?.isNavigationBarHidden = false
+        tableView.isHidden = false
+        buttonPaymentView.isHidden = false
+        payButton.isHidden = false
+        countNFTLabel.isHidden = false
+        totalCoastNFTLabel.isHidden = false
     }
     
     private func configureView(model: NFTInfo) {
@@ -252,6 +265,52 @@ final class CartViewController: UIViewController {
             totalCoastNFTLabel.text = "\(formattedPrice) ETH"
         }
         countNFTLabel.text = "\(model.count) NFT"
+    }
+    
+    @objc private func didTapPayButton() {
+        router.perform(.pay, from: self)
+    }
+    
+    @objc private func didTapReturnButton() {
+        deleteView.removeFromSuperview()
+        deleteLabel.removeFromSuperview()
+        deleteButton.removeFromSuperview()
+        returnButton.removeFromSuperview()
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func didTapDeleteButton() {
+        deleteView.removeFromSuperview()
+        deleteLabel.removeFromSuperview()
+        deleteButton.removeFromSuperview()
+        returnButton.removeFromSuperview()
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        guard let indexDelete = indexDelete else { return }
+        viewModel.didDeleteNFT(index: indexDelete)
+        if viewModel.nfts.isEmpty {
+            showEmptyCart()
+        }
+    }
+    
+    @objc private func didTapSortButton() {
+        let action = UIAlertController(title: nil, message: "Сортировка", preferredStyle: .actionSheet)
+        let sortByPrice = UIAlertAction(title: "Сортировка по цене", style: .default) { _ in
+            self.viewModel.sortByPrice()
+        }
+        let sortByRating = UIAlertAction(title: "Сортировка по рейтингу", style: .default) { _ in
+            self.viewModel.sortByRating()
+        }
+        let sortByName = UIAlertAction(title: "Соритровка по названию", style: .default) { _ in
+            self.viewModel.sortByName()
+        }
+        let cancel = UIAlertAction(title: "Закрыть", style: .cancel)
+        action.addAction(sortByPrice)
+        action.addAction(sortByRating)
+        action.addAction(sortByName)
+        action.addAction(cancel)
+        present(action, animated: true)
     }
 }
 
@@ -262,7 +321,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.nfts.count
+        viewModel.nfts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -270,7 +329,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let model = viewModel.nfts[indexPath.row]
-        cell.configureCell(model: model, cell: cell)
+        cell.configureCell(model: model)
         cell.indexCell = indexPath.row
         cell.delegate = self
         return cell
@@ -290,7 +349,7 @@ extension CartViewController: CartCellDelegate {
         deleteView.isUserInteractionEnabled = true
         
         deletingImage.kf.setImage(with: viewModel.nfts[index].images.first)
-
+        
         view.setupView(deleteView)
         deleteView.contentView.setupView(deleteLabel)
         deleteView.contentView.setupView(deleteButton)
