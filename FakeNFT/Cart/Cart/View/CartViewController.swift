@@ -29,7 +29,7 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .systemBackground
         addViews()
         setupAllView()
-        viewModel.Observe()
+        viewModel.observe()
         bind()
     }
 
@@ -54,13 +54,7 @@ final class CartViewController: UIViewController {
         plugLabel.textColor = .textOnSecondary
         return plugLabel
     }()
-    
-    private lazy var plugImage: UIImageView = {
-        let plugImage = UIImageView()
-        plugImage.isHidden = true
-        return plugImage
-    }()
-    
+ 
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
         sortButton.setImage(UIImage(named: "sortButton"), for: .normal)
@@ -112,6 +106,8 @@ final class CartViewController: UIViewController {
     private lazy var deletingImage: UIImageView = {
         let deletingImage = UIImageView()
         deletingImage.image = UIImage(named: "mockImageNft")
+        deletingImage.layer.cornerRadius = 16
+        deletingImage.layer.masksToBounds = true
         deletingImage.isHidden = true
         return deletingImage
     }()
@@ -296,13 +292,13 @@ final class CartViewController: UIViewController {
     
     @objc private func didTapSortButton() {
         let action = UIAlertController(title: nil, message: "Сортировка", preferredStyle: .actionSheet)
-        let sortByPrice = UIAlertAction(title: "Сортировка по цене", style: .default) { _ in
+        let sortByPrice = UIAlertAction(title: "По цене", style: .default) { _ in
             self.viewModel.sortByPrice()
         }
-        let sortByRating = UIAlertAction(title: "Сортировка по рейтингу", style: .default) { _ in
+        let sortByRating = UIAlertAction(title: "По рейтингу", style: .default) { _ in
             self.viewModel.sortByRating()
         }
-        let sortByName = UIAlertAction(title: "Соритровка по названию", style: .default) { _ in
+        let sortByName = UIAlertAction(title: "По названию", style: .default) { _ in
             self.viewModel.sortByName()
         }
         let cancel = UIAlertAction(title: "Закрыть", style: .cancel)

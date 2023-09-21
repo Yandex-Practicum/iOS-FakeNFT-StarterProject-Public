@@ -11,7 +11,7 @@ protocol CartViewModelProtocol {
     var isCartEmptyObservable: Observable<Bool> { get }
     var orders: [String] { get }
     func didDeleteNFT(index: Int)
-    func Observe()
+    func observe()
     func sortByPrice()
     func sortByRating()
     func sortByName()
@@ -59,7 +59,7 @@ final class CartViewModel: CartViewModelProtocol {
         return formatted
     }()
     
-    func Observe() {
+    func observe() {
         isEmptyCart()
         getOrder()
     }

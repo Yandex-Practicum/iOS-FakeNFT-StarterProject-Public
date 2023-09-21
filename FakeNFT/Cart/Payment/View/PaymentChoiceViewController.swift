@@ -25,6 +25,8 @@ final class PaymentChoiceViewController: UIViewController {
         addView()
         applyConstraints()
         bind()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,7 +152,6 @@ final class PaymentChoiceViewController: UIViewController {
                 UIBlockingProgressHUD.show()
             } else {
                 UIBlockingProgressHUD.dismiss()
-                self.collectionView.reloadData()
                 print("DONE")
             }
         }
