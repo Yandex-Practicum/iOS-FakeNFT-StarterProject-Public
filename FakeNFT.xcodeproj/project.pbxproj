@@ -184,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				CE68BA8F2A9F9C4100488E47 /* Helpers */,
-				CE68BA892A9F9B6600488E47 /* Cart */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
@@ -230,6 +229,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				CE68BA892A9F9B6600488E47 /* Cart */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 			);
 			path = "Scenes ";
