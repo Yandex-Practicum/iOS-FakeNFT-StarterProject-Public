@@ -20,7 +20,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     private (set) var paymentStatus: PaymentStatus = .notPay
     
     @Observable
-    private (set) var isLoading: Bool = true
+    private (set) var isLoading: Bool = false
     
     private var selectedCurrency: CurrencyModel?
     
@@ -38,7 +38,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
             isLoading = true
             cartLoadService.fetchCurrencies { [weak self] result in
                 self?.isLoading = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: { [weak self] in
+                DispatchQueue.main.async {
                        guard let self else { return }
                        switch result {
                        case let .success(currencies):
@@ -48,12 +48,10 @@ final class PaymentViewModel: PaymentViewModelProtocol {
                            print(error)
                            self.isLoading = false
                        }
-                })
+                }
             }
         isLoading = false 
     }
-    
-    
     
     func selectCurrency(with id: String) {
         self.selectedCurrency = currencies.first(where: { $0.id == id } )
