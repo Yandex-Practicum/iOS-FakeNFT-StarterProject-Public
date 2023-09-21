@@ -2,6 +2,7 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    // MARK: - Properties
 
     private var viewModel: ProfileViewModel
 
@@ -9,7 +10,6 @@ final class ProfileViewController: UIViewController {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 70 / 2
         imageView.clipsToBounds = true
-
         return imageView
     }()
 
@@ -17,7 +17,6 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-
         return label
     }()
 
@@ -25,7 +24,6 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.numberOfLines = 0
-
         return label
     }()
 
@@ -35,7 +33,6 @@ final class ProfileViewController: UIViewController {
         button.contentHorizontalAlignment = .left
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(showWebView), for: .touchUpInside)
-
         return button
     }()
 
@@ -46,25 +43,19 @@ final class ProfileViewController: UIViewController {
         tableView.register(ProfileVCTableViewCell.self, forCellReuseIdentifier: ProfileVCTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
-
         return tableView
     }()
-
-    private let tableViewTitles: [String] = ["Мои NFT", "Избранные NFT", "О разработчике"]
-
     // MARK: - Initialiser
 
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - LifeCircle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -144,7 +135,6 @@ final class ProfileViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-
         ])
     }
 
@@ -165,10 +155,8 @@ final class ProfileViewController: UIViewController {
 
     @objc private func showWebView() {
         guard let url = viewModel.profile?.website else { return }
-
         let webView = WebView(url: url)
         present(webView, animated: true)
-
     }
 
     @objc private func editProfile() {
@@ -186,10 +174,10 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-             let myNftVC = MyNftViewController()
+            guard let myNftVC = viewModel.getMyNftViewController() else { return }
             navigationController?.pushViewController(myNftVC, animated: true)
         case 1:
-            let favoritesNftVC = FavoritesNFTViewController()
+            guard let favoritesNftVC = viewModel.getMyFavouritesNftViewController() else { return }
             navigationController?.pushViewController(favoritesNftVC, animated: true)
         default:
             return
@@ -209,8 +197,8 @@ extension ProfileViewController: UITableViewDataSource {
             assertionFailure("Не удалось создать ячейку таблыцы ProfileVCTableViewCell")
             return UITableViewCell()
         }
-
-        cell.configureCell(text: tableViewTitles[indexPath.row])
+        let title = viewModel.fetchViewTitleForCell(with: indexPath)
+        cell.configureCell(text: title)
         return cell
     }
 

@@ -8,7 +8,8 @@
 import UIKit
 
 final class MyNftViewController: UIViewController {
-    private let mockNft = MockNft.shared
+    // MARK: - Properties
+    private let viewModel: MyNftViewModel
 
     private lazy var myNftTableView: UITableView = {
         let tableView = UITableView()
@@ -28,11 +29,42 @@ final class MyNftViewController: UIViewController {
         return label
     }()
 
+    // MARK: - Initialiser
+    init(viewModel: MyNftViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         layouts()
         setupNavBar()
+        bind()
+    }
+
+    // MARK: - Private Methods
+
+    private func bind() {
+        viewModel.myNftsDidChange = { [weak self] in
+            self?.myNftTableView.reloadData()
+        }
+        viewModel.likesDidChange = { [weak self] in
+            self?.myNftTableView.reloadData()
+        }
+        viewModel.showErrorAlertDidChange = { [weak self] in
+            if let needShow = self?.viewModel.showErrorAlert, needShow {
+                self?.showErrorAlert(action: {
+                    self?.viewModel.initialisation()
+                })
+            }
+        }
     }
 
     private func layouts() {
@@ -43,7 +75,6 @@ final class MyNftViewController: UIViewController {
             myNftTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             myNftTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-
     }
 
     private func setupNavBar() {
@@ -57,21 +88,32 @@ final class MyNftViewController: UIViewController {
         navigationItem.setRightBarButton(sortButton, animated: true)
     }
 
-   @objc private func sortNft() {
-          showAlert()
+    @objc private func sortNft() {
+        showAlert()
+    }
+
+    private func showErrorAlert(action: @escaping () -> Void) {
+        let alertController = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Ошибка загрузки данных",
+            preferredStyle: .alert
+        )
+        let alertAction = UIAlertAction(title: "Ок", style: .default) { _ in action() }
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
     }
 
     private func showAlert() {
         let alertController = UIAlertController(title: nil,
-                                      message: "Сортировка",
-                                      preferredStyle: .actionSheet)
+                                                message: "Сортировка",
+                                                preferredStyle: .actionSheet)
 
         let actionFirst = UIAlertAction(
             title: "По цене",
             style: .default
         ) { [weak self] (_) in
             guard let self = self else { return }
-            // TODO: реализовать сортировку по цене
+            self.viewModel.sort(by: .price)
         }
         alertController.addAction(actionFirst)
 
@@ -80,7 +122,7 @@ final class MyNftViewController: UIViewController {
             style: .default
         ) { [weak self] (_) in
             guard let self = self else { return }
-            // TODO: реализовать сортировку по рейтингу
+            self.viewModel.sort(by: .rating)
         }
         alertController.addAction(actionSecond)
 
@@ -88,20 +130,16 @@ final class MyNftViewController: UIViewController {
             title: "По имени", style: .default
         ) { [weak self] (_) in
             guard let self = self else { return }
-            // TODO: реализовать сортировку по имени
+            self.viewModel.sort(by: .name)
         }
         alertController.addAction(actionThird)
 
         let actionCancel = UIAlertAction(
             title: "Закрыть", style: .cancel
-        ) { [weak self] (_) in
-            guard let self = self else { return }
-            // TODO: реализовать закрыть
-        }
+        )
         alertController.addAction(actionCancel)
         navigationController?.present(alertController, animated: true)
     }
-
 }
 
 extension MyNftViewController: UITableViewDelegate {
@@ -112,18 +150,24 @@ extension MyNftViewController: UITableViewDelegate {
 
 extension MyNftViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mockNft.nft.count
+        return viewModel.myNft.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyNftTableViewCell.identifier, for: indexPath) as? MyNftTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MyNftTableViewCell.identifier,
+            for: indexPath
+        ) as? MyNftTableViewCell else {
+            assertionFailure("Не удалось создать ячейку таблицы MyNftViewController")
+            return UITableViewCell()
+        }
+        let myNft = viewModel.myNft[indexPath.row]
+        let isLike = viewModel.likes.contains(myNft.id)
 
-        cell.configureTableView(image: mockNft.nft[indexPath.row].image,
-                                rating: mockNft.nft[indexPath.row].rating,
-                                name: mockNft.nft[indexPath.row].name,
-                                value: mockNft.nft[indexPath.row].price)
-
+        cell.configureMyNftCell(with: myNft, isLiked: isLike)
+        cell.likeButtonAction = {[weak self] in
+            self?.viewModel.likeButtonTapped(indexPath: indexPath)
+        }
         return cell
     }
-
 }

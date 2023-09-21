@@ -48,7 +48,7 @@ final class ProfileViewModel {
         var labelString = ""
         switch indexPath.row {
         case 0:
-            labelString = "Мои NFT (\(profile?.nfts.count ?? 0)"
+            labelString = "Мои NFT (\(profile?.nfts.count ?? 0))"
         case 1:
             labelString = "Избранные NFT (\(profile?.likes.count ?? 0))"
         case 2:
@@ -72,6 +72,23 @@ final class ProfileViewModel {
         return viewController
     }
 
+    func getMyNftViewController() -> MyNftViewController? {
+        guard let profile = profile else { return nil}
+        let viewModel = MyNftViewModel(
+            profileService: profileService,
+            profile: profile,
+            settingsStorage: settingsStorage
+        )
+        let viewController = MyNftViewController(viewModel: viewModel)
+        return viewController
+    }
+
+    func getMyFavouritesNftViewController() -> FavoritesNFTViewController? {
+        let viewModel = FavouritesNftViewModel(profileService: profileService)
+        let viewController = FavoritesNFTViewController(viewModel: viewModel)
+        return viewController
+    }
+
     func getProfile() {
         profileService.getUserProfile { [weak self] result in
             DispatchQueue.main.async {
@@ -80,10 +97,10 @@ final class ProfileViewModel {
                     self?.profile = profile
                     self?.showErrorAlert = false
                 case.failure:
-                    self?.showErrorAlert = true
+                    print()
+                     self?.showErrorAlert = true
                 }
             }
         }
     }
-
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class EditProfileViewModel {
     // MARK: - Properties
@@ -27,33 +28,34 @@ final class EditProfileViewModel {
         self.name = profile.name
         self.description = profile.description
         self.website = profile.website
-        self.initialisation()
     }
 
-    private func initialisation() {
+    private func verifiUrl (urlString: String?) -> Bool {
+        if let urlString = urlString,
+           let url = URL(string: urlString) {
+            return UIApplication.shared.canOpenURL(url)
 
-    }
-
-    func updateName(_ newName: String) {
-        name = newName
-    }
-
-    func updateAvatar(_ newAvatar: URL) {
-        avatar = newAvatar
-    }
-
-    func updateDescript(_ newDescription: String) {
-        description = newDescription
-    }
-
-    func updateWebsite(_ newWebsite: URL) {
-        website = newWebsite
-    }
-
-    func saveProfile(name: String?, description: String?, websiteString: String?) {
-        if let url = URL(string: websiteString ?? "") {
-            website = url
         }
+        return false
+    }
+
+    func saveProfile(name: String?, description: String?, websiteString: String?, newAvatar: String?) {
+        if let url = URL(string: websiteString ?? "") {
+            if verifiUrl(urlString: websiteString) {
+                website = url
+            } else {
+                return
+            }
+        }
+
+        if let avatarUrl = URL(string: newAvatar ?? "") {
+            if verifiUrl(urlString: newAvatar) {
+                avatar = avatarUrl
+            } else {
+                return
+            }
+        }
+
         let name = name ?? profile.name
         let description = description ?? profile.description
         let newProfile = Profile(
@@ -71,9 +73,9 @@ final class EditProfileViewModel {
             name: name,
             description: description,
             website: website,
+            avatar: avatar,
             likes: profile.likes
         )
-
         profileService.updateUserProfile(with: uploadModel) { _ in}
     }
 }

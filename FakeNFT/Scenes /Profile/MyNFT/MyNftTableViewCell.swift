@@ -9,13 +9,8 @@ import UIKit
 
 final class MyNftTableViewCell: UITableViewCell {
     static let identifier = "MyNftTableViewCellidentifier"
-
-    let avatarView = NftAvatarView()
-    private let avatar: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    // MARK: - Properties
+    let nftView = NftAvatarView()
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -45,7 +40,7 @@ final class MyNftTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let priceValueLabel: UILabel = {
+    private lazy var priceValueLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .label
@@ -69,6 +64,9 @@ final class MyNftTableViewCell: UITableViewCell {
         return stackView
     }()
 
+    var likeButtonAction: (() -> Void)?
+
+    // MARK: - Initialiser
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -80,11 +78,24 @@ final class MyNftTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureTableView(image: UIImage, rating: Int, name: String, value: Float ) {
-        nameLabel.text = name
-        ratingView.rating = rating
-        priceValueLabel.text = "\(value) ETH"
-        avatar.image = image
+    // MARK: - Methods
+    func configureMyNftCell(with nft: Nft, isLiked: Bool) {
+        nftView.viewModel = NftAvatarViewModel(
+            imageURL: nft.images.first,
+            isLiked: isLiked,
+            likeButtonAction: { [weak self] in
+                self?.likeButtonAction?()
+            })
+        nameLabel.text = nft.name
+        ratingView.rating = nft.rating
+        let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale(identifier: "ru_RU")
+        numberFormatter.numberStyle = .decimal
+        if let formattedPrice = numberFormatter.string(from: NSNumber(value: nft.price)) {
+            priceValueLabel.text = "\(formattedPrice) ETH"
+        } else {
+            priceValueLabel.text = "\(nft.price) ETH"
+        }
     }
 
     private func layouts() {
@@ -95,20 +106,18 @@ final class MyNftTableViewCell: UITableViewCell {
         priceStackView.addArrangedSubview(priceLabel)
         priceStackView.addArrangedSubview(priceValueLabel)
 
-        [avatar, stackView, priceStackView].forEach { view in
+        [nftView, stackView, priceStackView].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
             self.contentView.addSubview(view)
         }
-
         NSLayoutConstraint.activate([
+            nftView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            nftView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nftView.heightAnchor.constraint(equalToConstant: 108),
+            nftView.widthAnchor.constraint(equalToConstant: 108),
 
-            avatar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            avatar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            avatar.heightAnchor.constraint(equalToConstant: 108),
-            avatar.widthAnchor.constraint(equalToConstant: 108),
-
-            stackView.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
+            stackView.centerYAnchor.constraint(equalTo: nftView.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: nftView.trailingAnchor, constant: 20),
 
             priceStackView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
             priceStackView.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -114),

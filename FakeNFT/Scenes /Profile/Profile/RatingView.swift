@@ -8,54 +8,55 @@
 import UIKit
 
 final class RatingView: UIView {
+    // MARK: - Properties
+    private  var  stars: [UIImageView] = []
+    private let stackView = UIStackView()
 
-    private  var  stars: [UIImageView]
     var rating: Int? {
         didSet {
             config(with: rating)
         }
     }
 
+    // MARK: - Initialize
     override init(frame: CGRect) {
-        stars = (1...5).map { _ in
-            let view = UIImageView()
-            view.image = UIImage(named: "star")
-            return view
-        }
         super.init(frame: frame)
         setupViews()
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension RatingView {
-
     private func setupViews() {
-        let stackView = UIStackView(arrangedSubviews: stars)
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 2
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
         addSubview(stackView)
-
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-config(with: nil)
+        for _ in 1...5 {
+            let star = UIImageView()
+            stars.append(star)
+            stackView.addArrangedSubview(star)
+        }
+        config(with: nil)
     }
 
     private func config(with rating: Int?) {
         let rating = rating ?? 0
-        let noStarRating = UIImage(named: "greyStar")
-        stars.enumerated().forEach { offset, star in
-            star.tintColor = rating > offset ? .yellow : .gray
+        for (index, star) in stars.enumerated() {
+            if index < rating {
+                star.image = UIImage(named: "yellowStar")
+            } else {
+                star.image = UIImage(named: "grayStar")
+            }
         }
     }
 }

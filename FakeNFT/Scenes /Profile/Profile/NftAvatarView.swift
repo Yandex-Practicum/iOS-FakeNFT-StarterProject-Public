@@ -33,7 +33,7 @@ final class NftAvatarView: UIView {
 
     @objc private func likeButtonTapped() {
         guard let isLiked = viewModel?.isLiked else { return }
-        viewModel?.isLiked = isLiked
+        viewModel?.isLiked = !isLiked
         viewModel?.likeButtonAction?()
 
     }
@@ -42,7 +42,7 @@ final class NftAvatarView: UIView {
     private func reset() {
         imageView.image = nil
         likeButton.tintColor = .ypWhite
-        likeButton.setImage(UIImage(systemName: "like"), for: .normal)
+        likeButton.setImage(UIImage(named: "like"), for: .normal)
     }
 
     // MARK: - Setup
@@ -61,10 +61,10 @@ final class NftAvatarView: UIView {
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            likeButton.topAnchor.constraint(equalTo: imageView.topAnchor),
-            likeButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
-            likeButton.heightAnchor.constraint(equalToConstant: 42),
-            likeButton.widthAnchor.constraint(equalToConstant: 42)
+            likeButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 5.81),
+            likeButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -4.81),
+            likeButton.heightAnchor.constraint(equalToConstant: 18),
+            likeButton.widthAnchor.constraint(equalToConstant: 21)
         ])
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         self.layer.cornerRadius = radius
@@ -88,7 +88,10 @@ extension NftAvatarView {
         if let isLiked = viewModel.isLiked {
             likeButton.isHidden = false
             likeButton.tintColor = isLiked ? .ypRed : .ypWhite
-            likeButton.setImage(UIImage(systemName: "like"), for: .normal)
+        if isLiked {
+                likeButton.setImage(UIImage(named: "like"), for: .normal)
+            } else {
+                likeButton.setImage(UIImage(named: "dislike"), for: .normal)}
         } else {
             likeButton.isHidden = true
         }
