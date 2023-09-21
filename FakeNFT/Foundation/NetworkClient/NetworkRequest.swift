@@ -7,6 +7,20 @@ enum HttpMethod: String {
     case delete = "DELETE"
 }
 
+struct DefaultNetworkRequest: NetworkRequest {
+    var endpoint: URL?
+    let dto: Encodable?
+    let httpMethod: HttpMethod
+}
+
+//struct PaymentNetworkRequest: NetworkRequest {
+//    var endpoint: URL? {
+//        
+//    }
+//    let id: String
+//    let httpMethod: HttpMethod
+//}
+
 protocol NetworkRequest {
     var endpoint: URL? { get }
     var httpMethod: HttpMethod { get }
