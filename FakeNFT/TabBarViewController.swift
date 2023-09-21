@@ -12,7 +12,7 @@ final class TabBarViewController: UITabBarController {
         viewControllers = [
         generateVC(viewController: ProfileViewController(), title: "Профиль", image: UIImage(named: "profile")),
         generateVC(viewController: CatalogViewController(), title: "Каталог", image: UIImage(named: "catalog")),
-        generateVC(viewController: CartViewController(), title: "Корзина", image: UIImage(named: "cart")),
+        generateVC(viewController: CartViewController(), title: "Корзина", image: UIImage(named: "cart_main")),
         generateVC(viewController: StatisticViewController(), title: "Статистика", image: UIImage(named: "statistics"))
         ]
     }
