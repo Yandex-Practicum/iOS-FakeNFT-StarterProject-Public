@@ -16,6 +16,7 @@ final class EditProfileViewController: UIViewController {
         let image = UIImageView()
         image.layer.cornerRadius = 70/2
         image.clipsToBounds = true
+        image.accessibilityIdentifier = "profileImage"
         return image
     }()
 
@@ -24,6 +25,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Имя"
+        label.accessibilityIdentifier = "nameLabel"
         return label
     }()
 
@@ -39,6 +41,7 @@ final class EditProfileViewController: UIViewController {
         textField.leftViewMode = .always
         textField.rightViewMode = .always
         textField.delegate = self
+        textField.accessibilityIdentifier = "nameTextField"
         return textField
     }()
 
@@ -47,6 +50,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Описание"
+        label.accessibilityIdentifier = "descriptionLabel"
         return label
     }()
 
@@ -70,6 +74,7 @@ final class EditProfileViewController: UIViewController {
             bottom: paddingViewHeight,
             right: 16
         )
+        textView.accessibilityIdentifier = "descriptionTextField"
         return textView
     }()
 
@@ -78,6 +83,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Сайт"
+        label.accessibilityIdentifier = "urlLabel"
         return label
     }()
 
@@ -92,6 +98,7 @@ final class EditProfileViewController: UIViewController {
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
+        textField.accessibilityIdentifier = "urlTextField"
         return textField
     }()
 
@@ -106,6 +113,7 @@ final class EditProfileViewController: UIViewController {
         button.layer.cornerRadius = 70 / 2
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(changeAvatarButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = "changeAvatarButton"
         return button
     }()
 
@@ -146,6 +154,7 @@ final class EditProfileViewController: UIViewController {
         )
 
         button.tintColor = .label
+        button.accessibilityIdentifier = "closeButtonTapped"
         navigationItem.setRightBarButton(button, animated: true)
         navigationItem.setHidesBackButton(true, animated: false)
     }
@@ -235,6 +244,7 @@ final class EditProfileViewController: UIViewController {
             self.changeAvatar = avatarNew.text
 
         }
+        addAction.accessibilityIdentifier = "showErrorAlertDoOk"
         alertController.addAction(addAction)
         present(alertController, animated: true)
     }

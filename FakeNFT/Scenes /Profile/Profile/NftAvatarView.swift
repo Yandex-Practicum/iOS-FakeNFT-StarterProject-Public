@@ -9,7 +9,7 @@ import UIKit
 
 final class NftAvatarView: UIView {
     private let imageView = UIImageView()
-    private let likeButton = UIButton()
+     let likeButton = UIButton()
 
     var viewModel: NftAvatarViewModel? {
         didSet {

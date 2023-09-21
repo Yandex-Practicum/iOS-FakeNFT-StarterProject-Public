@@ -70,6 +70,8 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         if let formattedPrice = numberFormatter.string(from: NSNumber(value: nft.price)) {
             self.priceValueLabel.text = "\(formattedPrice) ETH"
         }
+        avatarView.likeButton.accessibilityIdentifier = "likeButtonTapped"
+
         self.nameLabel.text = nft.name
         self.ratingView.rating = nft.rating
     }
