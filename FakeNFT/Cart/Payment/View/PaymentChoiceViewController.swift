@@ -144,14 +144,13 @@ final class PaymentChoiceViewController: UIViewController {
             self?.collectionView.reloadData()
         }
         
-        viewModel.isLoadingObservable.bind { isLoading in
+        viewModel.isLoadingObservable.bind { [self] isLoading in
             if isLoading {
-                print("isLoading")
                 UIBlockingProgressHUD.show()
+            } else if self.viewModel.currencies.isEmpty {
+                UIBlockingProgressHUD.dismiss()
             } else {
                 UIBlockingProgressHUD.dismiss()
-                self.collectionView.reloadData()
-                print("DONE")
             }
         }
         
@@ -188,8 +187,17 @@ final class PaymentChoiceViewController: UIViewController {
         present(vc, animated: true)
     }
     
-    func enableButton() {
-        paymentButton.isEnabled = true
+    func showAlert() {
+        let alert = UIAlertController(title: nil, message: "Ошибка загрузки", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Попробовать снова", style: .default) { _ in
+            self.viewModel.didLoad()
+        }
+        let cancel = UIAlertAction(title: "Вернуться в корзину", style: .cancel) { _ in
+            self.didTapReturnButton()
+        }
+        alert.addAction(action)
+        alert.addAction(cancel)
+        present(alert, animated: true)
     }
 }
 
@@ -227,7 +235,7 @@ extension PaymentChoiceViewController: UICollectionViewDelegateFlowLayout {
         viewModel.selectCurrency(with: id)
         cell.selectedCell()
         selectedMethodPay = viewModel.currencies[indexPath.row]
-        enableButton()
+        updatePaymentButton()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

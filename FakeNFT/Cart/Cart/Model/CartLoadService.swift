@@ -9,44 +9,43 @@ enum Сonstants {
 }
 
 protocol CartLoadServiceProtocol {
-    func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void)
     func fetchCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void)
     func sendingPaymentInfo(id: String, completion: @escaping (Result<PaymentCurrencyModel, Error>) -> Void)
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void)
+    func fetchOrder(completion: @escaping (Result<[String], Error>)-> Void)
+    func fetchNfts(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void)
 }
 
 final class CartLoadService: CartLoadServiceProtocol {
     
     private let networkClient: NetworkClient
-    private (set) var nfts: [NFTServerModel] = []
     
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
     
-    func fetchNft(completion: @escaping (Result<[NFTServerModel], Error>) -> Void) {
-        let group = DispatchGroup()
-        loadCart { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let orderServer):
-                orderServer.nfts.forEach { nftId in
-                    group.enter()
-                    self.loadNFT(id: nftId) { result in
-                        switch result {
-                        case let .success(nft):
-                            self.nfts.append(nft)
-                            group.leave()
-                        case let .failure(error):
-                            completion(.failure(error))
-                            group.leave()
-                        }
-                    }
+    func fetchOrder(completion: @escaping (Result<[String], Error>)-> Void) {
+        loadCart { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(order):
+                    completion(.success(order.nfts))
+                case let .failure(error):
+                    completion(.failure(error))
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
-            group.notify(queue: .main) {
-                completion(.success(self.nfts))
+        }
+    }
+    
+    func fetchNfts(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void) {
+        getNft(id: id) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(nft):
+                    completion(.success(nft))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -75,14 +74,20 @@ final class CartLoadService: CartLoadServiceProtocol {
         }
     }
 
-    private func loadCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
-        let request = DefaultNetworkRequest(endpoint:URL(string: Сonstants.ordersAPI) , dto: nil, httpMethod: .get )
+    func removeFromCart(id: String, nfts: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.ordersAPI), dto: OrderModel(nfts: nfts, id: id), httpMethod: .put
+        )
         networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
     }
     
-    private func loadNFT(id: String, completion: @escaping (Result<NFTServerModel, Error>) -> Void) {
+    private func getNft(id: String, completion: @escaping (Result<NFTModel, Error>) -> Void) {
         let request = DefaultNetworkRequest(endpoint: URL(string: Сonstants.nftAPI + "\(id)"), dto: nil, httpMethod: .get)
-        networkClient.send(request: request, type: NFTServerModel.self, onResponse: completion)
+        networkClient.send(request: request, type: NFTModel.self, onResponse: completion)
+    }
+    
+    private func loadCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
+        let request = DefaultNetworkRequest(endpoint:URL(string: Сonstants.ordersAPI) , dto: nil, httpMethod: .get )
+        networkClient.send(request: request, type: OrderModel.self, onResponse: completion)
     }
     
     private func loadCurrencies(completion: @escaping (Result<[CurrencyModel], Error>) -> Void) {

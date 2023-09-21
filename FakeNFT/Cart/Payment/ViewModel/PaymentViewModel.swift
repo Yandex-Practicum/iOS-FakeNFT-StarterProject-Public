@@ -20,7 +20,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     private (set) var paymentStatus: PaymentStatus = .notPay
     
     @Observable
-    private (set) var isLoading: Bool = true
+    private (set) var isLoading: Bool = false
     
     private var selectedCurrency: CurrencyModel?
     
@@ -35,19 +35,22 @@ final class PaymentViewModel: PaymentViewModelProtocol {
     }
     
     func didLoad() {
-        isLoading = true
-        cartLoadService.fetchCurrencies { [weak self] result in
-            self?.isLoading = false
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                switch result {
-                case let .success(currencies):
-                    self.currencies = currencies
-                case let .failure(error):
-                    print(error)
+            isLoading = true
+            cartLoadService.fetchCurrencies { [weak self] result in
+                self?.isLoading = true
+                DispatchQueue.main.async {
+                       guard let self else { return }
+                       switch result {
+                       case let .success(currencies):
+                           self.currencies = currencies
+                           self.isLoading = false
+                       case let .failure(error):
+                           print(error)
+                           self.isLoading = false
+                       }
                 }
             }
-        }
+        isLoading = false 
     }
     
     func selectCurrency(with id: String) {
@@ -61,7 +64,7 @@ final class PaymentViewModel: PaymentViewModelProtocol {
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
-                case let .success(payment):
+                case .success(_):
                     self.paymentStatus = .pay
                 case let .failure(error):
                     print(error)

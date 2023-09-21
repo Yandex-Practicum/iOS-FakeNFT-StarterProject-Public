@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 protocol CartCellDelegate: AnyObject {
-    func showDeleteView()
+    func showDeleteView(index: Int)
 }
 
 final class CartCell: UITableViewCell {
@@ -18,8 +18,9 @@ final class CartCell: UITableViewCell {
             nftImageView.kf.setImage(with: url)
         }
     }
-
+    
     weak var delegate: CartCellDelegate?
+    var indexCell: Int?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: CartCell.identifier)
@@ -37,10 +38,10 @@ final class CartCell: UITableViewCell {
     
     private lazy var formattedPrice: NumberFormatter = {
         let formatted = NumberFormatter()
-         formatted.locale = Locale(identifier: "ru_RU")
-         formatted.numberStyle = .decimal
-         return formatted
-     }()
+        formatted.locale = Locale(identifier: "ru_RU")
+        formatted.numberStyle = .decimal
+        return formatted
+    }()
     
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
@@ -59,7 +60,6 @@ final class CartCell: UITableViewCell {
     
     private lazy var nftRatingLabel: UIImageView = {
         let nftRatingLabel = UIImageView()
-        nftRatingLabel.image = UIImage(named: "ratingStarNft")
         return nftRatingLabel
     }()
     
@@ -67,7 +67,6 @@ final class CartCell: UITableViewCell {
         let nftRatingStack = UIStackView()
         nftRatingStack.axis = .horizontal
         nftRatingStack.spacing = 4
-        nftRatingStack.distribution = .fillEqually
         return nftRatingStack
     }()
     
@@ -118,18 +117,20 @@ final class CartCell: UITableViewCell {
         ])
     }
     
-    func configureCell(model: NFTModel, cell: UITableViewCell) {
-        cell.backgroundColor = .systemBackground
-        cell.selectionStyle = .none
+    func configureCell(model: NFTModel) {
         imageURL = model.images.first
         if let formattedPrice = formattedPrice.string(from: NSNumber(value: model.price)) {
             nftPrice.text = "\(formattedPrice) ETH"
         }
         nftNameLabel.text = model.name
         
+        for rating in nftRatingStack.arrangedSubviews {
+            rating.removeFromSuperview()
+        }
+        
         let rating = model.rating
         
-        for _ in 0...rating - 1 {
+        for _ in 0..<rating {
             let ratingStar = UIImageView(image: UIImage(named: "ratingStarNft"))
             nftRatingStack.addArrangedSubview(ratingStar)
         }
@@ -140,6 +141,7 @@ final class CartCell: UITableViewCell {
     }
     
     @objc func didTapDeleteButton() {
-        delegate?.showDeleteView()
+        guard let indexCell else { return }
+        delegate?.showDeleteView(index: indexCell)
     }
 }
