@@ -10,6 +10,9 @@ final class CollectionViewController: UIViewController {
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.register(DescriptionCollectionViewCell.self, forCellWithReuseIdentifier: DescriptionCollectionViewCell.identifier)
         collectionView.register(NFTCollectionViewCell.self, forCellWithReuseIdentifier: NFTCollectionViewCell.identifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -26,11 +29,7 @@ final class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.contentInsetAdjustmentBehavior = .never
-        
+    
         addSubviews()
         setupConstraints()
     }
@@ -54,8 +53,8 @@ final class CollectionViewController: UIViewController {
         viewModel.updateLikeForNFT(with: nftIndex)
     }
     
-    private func cartButton(nftIndex: String) {
-        viewModel.isNFTInOrder(with: nftIndex)
+    private func cartButtonTapped(nftIndex: String) {
+        viewModel.updateCartForNFT(with: nftIndex)
     }
 }
 
@@ -118,7 +117,7 @@ extension CollectionViewController: UICollectionViewDataSource {
                     self?.likeButtonTapped(nftIndex: nftIndex)
                 },
                                   cartButtonInteraction: { [weak self] in
-                    self?.cartButton(nftIndex: nftIndex)
+                    self?.cartButtonTapped(nftIndex: nftIndex)
                 })
             }
             return nftCell

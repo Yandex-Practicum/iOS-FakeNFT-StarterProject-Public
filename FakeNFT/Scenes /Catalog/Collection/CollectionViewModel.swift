@@ -58,6 +58,7 @@ final class CollectionViewModel: NSObject {
             DefaultNetworkClient().send(request: OrderRequest(), type: OrderNetworkModel.self) { [weak self] result in
                 switch result {
                 case .success(let data):
+                    self?.order = Order(with: data)
                     DispatchQueue.main.async { [weak self] in
                         self?.reloadData?()
                     }
@@ -113,6 +114,38 @@ final class CollectionViewModel: NSObject {
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print("update order data error status \(error)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateCartForNFT(with id: String) {
+        var nfts = order?.nfts
+        if let index = nfts?.firstIndex(of: id) {
+            nfts?.remove(at: index)
+        } else {
+            nfts?.append(id)
+        }
+        guard let nfts = nfts,
+              let id = order?.id
+        else { return }
+        let dto = OrderUpdateDTO(nfts: nfts, id: id)
+        updateOrderData(with: dto)
+    }
+    
+    private func updateOrderData(with dto: OrderUpdateDTO) {
+        DispatchQueue.global(qos: .background).async {
+            DefaultNetworkClient().send(request: OrderUpdateRequest(orderUpdateDTO: dto), type: OrderNetworkModel.self) { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.order = Order(with: data)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.reloadData?()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("update order data status error - \(error)")
                     }
                 }
             }
