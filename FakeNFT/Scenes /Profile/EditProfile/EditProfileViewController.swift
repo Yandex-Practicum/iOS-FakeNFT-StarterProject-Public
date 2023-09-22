@@ -16,7 +16,7 @@ final class EditProfileViewController: UIViewController {
         let image = UIImageView()
         image.layer.cornerRadius = 70/2
         image.clipsToBounds = true
-        image.accessibilityIdentifier = "profileImage"
+        image.accessibilityIdentifier = AccessibilityIdentifiers.profileImage
         return image
     }()
 
@@ -25,7 +25,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Имя"
-        label.accessibilityIdentifier = "nameLabel"
+        label.accessibilityIdentifier = AccessibilityIdentifiers.nameLabel
         return label
     }()
 
@@ -41,7 +41,7 @@ final class EditProfileViewController: UIViewController {
         textField.leftViewMode = .always
         textField.rightViewMode = .always
         textField.delegate = self
-        textField.accessibilityIdentifier = "nameTextField"
+        textField.accessibilityIdentifier = AccessibilityIdentifiers.nameTextField
         return textField
     }()
 
@@ -50,7 +50,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Описание"
-        label.accessibilityIdentifier = "descriptionLabel"
+        label.accessibilityIdentifier = AccessibilityIdentifiers.descriptionLabel
         return label
     }()
 
@@ -74,7 +74,7 @@ final class EditProfileViewController: UIViewController {
             bottom: paddingViewHeight,
             right: 16
         )
-        textView.accessibilityIdentifier = "descriptionTextField"
+        textView.accessibilityIdentifier = AccessibilityIdentifiers.descriptionTextField
         return textView
     }()
 
@@ -83,7 +83,7 @@ final class EditProfileViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         label.textColor = .label
         label.text = "Сайт"
-        label.accessibilityIdentifier = "urlLabel"
+        label.accessibilityIdentifier = AccessibilityIdentifiers.urlLabel
         return label
     }()
 
@@ -98,7 +98,7 @@ final class EditProfileViewController: UIViewController {
         textField.rightView = paddingView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
-        textField.accessibilityIdentifier = "urlTextField"
+        textField.accessibilityIdentifier = AccessibilityIdentifiers.urlTextField
         return textField
     }()
 
@@ -113,7 +113,7 @@ final class EditProfileViewController: UIViewController {
         button.layer.cornerRadius = 70 / 2
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(changeAvatarButtonTapped), for: .touchUpInside)
-        button.accessibilityIdentifier = "changeAvatarButton"
+        button.accessibilityIdentifier = AccessibilityIdentifiers.changeAvatarButton
         return button
     }()
 
@@ -154,7 +154,7 @@ final class EditProfileViewController: UIViewController {
         )
 
         button.tintColor = .label
-        button.accessibilityIdentifier = "closeButtonTapped"
+        button.accessibilityIdentifier = AccessibilityIdentifiers.closeButtonTapped
         navigationItem.setRightBarButton(button, animated: true)
         navigationItem.setHidesBackButton(true, animated: false)
     }
@@ -244,7 +244,7 @@ final class EditProfileViewController: UIViewController {
             self.changeAvatar = avatarNew.text
 
         }
-        addAction.accessibilityIdentifier = "showErrorAlertDoOk"
+        addAction.accessibilityIdentifier = AccessibilityIdentifiers.showErrorAlertDoOk
         alertController.addAction(addAction)
         present(alertController, animated: true)
     }
@@ -256,4 +256,22 @@ extension EditProfileViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+}
+
+enum AccessibilityIdentifiers {
+    static let profileImage = "profileImage"
+    static let nameLabel = "nameLabel"
+    static let nameTextField = "nameTextField"
+    static let descriptionLabel = "descriptionLabel"
+    static let descriptionTextField = "descriptionTextField"
+    static let urlLabel = "urlLabel"
+    static let urlTextField = "urlTextField"
+    static let changeAvatarButton = "changeAvatarButton"
+    static let closeButtonTapped = "closeButtonTapped"
+    static let showErrorAlertDoOk = "showErrorAlertDoOk"
+    static let likeButtonTapped = "likeButtonTapped"
+    static let priceSorting = "priceSorting"
+    static let ratingSorting = "ratingSorting"
+    static let nameSorting = "nameSorting"
+
 }

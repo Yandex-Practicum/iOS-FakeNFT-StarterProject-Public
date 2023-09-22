@@ -116,7 +116,7 @@ final class MyNftViewController: UIViewController {
             self.viewModel.sort(by: .price)
         }
         alertController.addAction(actionFirst)
-        actionFirst.accessibilityIdentifier = "priceSorting"
+        actionFirst.accessibilityIdentifier = AccessibilityIdentifiers.priceSorting
 
         let actionSecond = UIAlertAction(
             title: "По рейтингу",
@@ -126,7 +126,7 @@ final class MyNftViewController: UIViewController {
             self.viewModel.sort(by: .rating)
         }
         alertController.addAction(actionSecond)
-        actionSecond.accessibilityIdentifier = "ratingSorting"
+        actionSecond.accessibilityIdentifier = AccessibilityIdentifiers.ratingSorting
 
         let actionThird = UIAlertAction(
             title: "По имени", style: .default
@@ -135,7 +135,7 @@ final class MyNftViewController: UIViewController {
             self.viewModel.sort(by: .name)
         }
         alertController.addAction(actionThird)
-        actionThird.accessibilityIdentifier = "nameSorting"
+        actionThird.accessibilityIdentifier = AccessibilityIdentifiers.nameSorting
 
         let actionCancel = UIAlertAction(
             title: "Закрыть", style: .cancel

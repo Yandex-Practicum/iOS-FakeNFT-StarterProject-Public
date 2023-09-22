@@ -9,7 +9,7 @@ import UIKit
 
 final class NftAvatarView: UIView {
     private let imageView = UIImageView()
-     let likeButton = UIButton()
+    private let likeButton = UIButton()
 
     var viewModel: NftAvatarViewModel? {
         didSet {
@@ -43,6 +43,11 @@ final class NftAvatarView: UIView {
         imageView.image = nil
         likeButton.tintColor = .ypWhite
         likeButton.setImage(UIImage(named: "like"), for: .normal)
+    }
+    // MARK: - Methods
+
+    func setAI() {
+        likeButton.accessibilityIdentifier = AccessibilityIdentifiers.likeButtonTapped
     }
 
     // MARK: - Setup

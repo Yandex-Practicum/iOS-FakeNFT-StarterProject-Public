@@ -96,8 +96,7 @@ final class MyNftTableViewCell: UITableViewCell {
         } else {
             priceValueLabel.text = "\(nft.price) ETH"
         }
-        nftView.likeButton.accessibilityIdentifier = "likeButtonTapped"
-
+        nftView.setAI()
     }
 
     private func layouts() {
