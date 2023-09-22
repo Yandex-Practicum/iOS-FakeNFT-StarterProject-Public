@@ -20,7 +20,7 @@ final class CollectionViewModel: NSObject {
     }
     
     func fetchUserData(by id: String) {
-        DefaultNetworkClient().send(request: UserIdRequest(userId: id), type: UserNetworkModel.self) { [weak self] result in
+        DefaultNetworkClient().send(request: NetworkRequests.userId(userId: id), type: UserNetworkModel.self) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.user = User(with: data)
@@ -37,7 +37,7 @@ final class CollectionViewModel: NSObject {
     
     func fetchNFTData() {
         DispatchQueue.global(qos: .background).async {
-            DefaultNetworkClient().send(request: NFTRequest(), type: [NFTNetworkModel].self) { [weak self] result in
+            DefaultNetworkClient().send(request: NetworkRequests.nft, type: [NFTNetworkModel].self) { [weak self] result in
                 switch result {
                 case .success(let data):
                     self?.nft = data.map { $0 }
@@ -55,7 +55,7 @@ final class CollectionViewModel: NSObject {
     
     private func fetchOrderData() {
         DispatchQueue.global(qos: .background).async {
-            DefaultNetworkClient().send(request: OrderRequest(), type: OrderNetworkModel.self) { [weak self] result in
+            DefaultNetworkClient().send(request: NetworkRequests.order, type: OrderNetworkModel.self) { [weak self] result in
                 switch result {
                 case .success(let data):
                     self?.order = Order(with: data)
@@ -73,7 +73,7 @@ final class CollectionViewModel: NSObject {
     
     private func fetchProfileData() {
         DispatchQueue.global(qos: .background).async {
-            DefaultNetworkClient().send(request: ProfileRequest(), type: ProfileNetworkModel.self) { [weak self] result in
+            DefaultNetworkClient().send(request: NetworkRequests.profile, type: ProfileNetworkModel.self) { [weak self] result in
                 switch result {
                 case .success(let data):
                     self?.profile = data

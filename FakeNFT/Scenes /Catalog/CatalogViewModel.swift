@@ -19,7 +19,7 @@ final class CatalogViewModel: NSObject {
     
     private func fetchData() {
         loadingStarted?()
-        DefaultNetworkClient().send(request: CollectionRequest(), type: [NFTsCollectionNetworkModel].self) { [weak self] result in
+        DefaultNetworkClient().send(request: NetworkRequests.collection, type: [NFTsCollectionNetworkModel].self) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.collections = data

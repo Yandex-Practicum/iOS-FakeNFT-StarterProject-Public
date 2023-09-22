@@ -10,10 +10,6 @@ final class CollectionViewController: UIViewController {
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.register(DescriptionCollectionViewCell.self, forCellWithReuseIdentifier: DescriptionCollectionViewCell.identifier)
         collectionView.register(NFTCollectionViewCell.self, forCellWithReuseIdentifier: NFTCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
@@ -33,6 +29,7 @@ final class CollectionViewController: UIViewController {
         addSubviews()
         setupConstraints()
         configureNavigationBar()
+        setupCollectionView()
     }
         
     private func addSubviews() {
@@ -48,6 +45,13 @@ final class CollectionViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func likeButtonTapped(nftIndex: String) {
@@ -176,7 +180,7 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 0
+        return .zero
     }
     
     func collectionView(
@@ -184,7 +188,7 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 0
+        return .zero
     }
     
     func collectionView(

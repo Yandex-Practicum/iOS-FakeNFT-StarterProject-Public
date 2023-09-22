@@ -31,7 +31,7 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

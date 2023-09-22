@@ -121,7 +121,16 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         cartButtonAction?()
     }
     
-    func configure(nftImage: URL, likeOrDislike: String, rating: Int, nftName: String, pirce: String, cartImage: String, likeButtonInteraction: @escaping () -> Void, cartButtonInteraction: @escaping () -> Void) {
+    func configure(
+        nftImage: URL,
+        likeOrDislike: String,
+        rating: Int,
+        nftName: String,
+        pirce: String,
+        cartImage: String,
+        likeButtonInteraction: @escaping () -> Void,
+        cartButtonInteraction: @escaping () -> Void
+    ) {
         nftImageView.kf.setImage(with: nftImage)
         likeButton.setImage(UIImage(named: likeOrDislike), for: .normal)
         fillRatingStackView(by: rating)
