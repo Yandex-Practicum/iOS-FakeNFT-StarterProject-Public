@@ -6,7 +6,7 @@ final class CollectionViewModel: NSObject {
     var user: User?
     var nft: [NFTNetworkModel]?
     var profile: ProfileNetworkModel?
-    var order: OrderNetworkModel?
+    var order: Order?
     
     var reloadData: (() -> Void)?
     
@@ -76,12 +76,43 @@ final class CollectionViewModel: NSObject {
                 switch result {
                 case .success(let data):
                     self?.profile = data
+                    DispatchQueue.main.async { [weak self] in                         self?.reloadData?()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("fetch profile data error status - \(error)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateLikeForNFT(with id: String) {
+        var likes = profile?.likes
+        if let index = likes?.firstIndex(of: id) {
+            likes?.remove(at: index)
+        } else {
+            likes?.append(id)
+        }
+        guard let likes = likes,
+              let id = profile?.id
+        else { return }
+        let dto = ProfileUpdateDTO(likes: likes, id: id)
+        updateProfileData(with: dto)
+    }
+    
+    private func updateProfileData(with dto: ProfileUpdateDTO) {
+        DispatchQueue.global(qos: .background).async {
+            DefaultNetworkClient().send(request: ProfileUpdateRequest(profileUpdateDTO: dto), type: ProfileNetworkModel.self) { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.profile = data
                     DispatchQueue.main.async {
                         self?.reloadData?()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        print("fetch profile data error status - \(error)")
+                        print("update order data error status \(error)")
                     }
                 }
             }
@@ -93,10 +124,10 @@ final class CollectionViewModel: NSObject {
     }
     
     func isNFTLiked(with nftId: String) -> Bool {
-        return ((profile?.likes.contains(nftId)) != nil)
+        return profile?.likes.contains(nftId) ?? false
     }
     
     func isNFTInOrder(with nftId: String) -> Bool {
-        return ((order?.nfts.contains(nftId)) != nil)
+        return order?.nfts.contains(nftId) ?? false
     }
 }

@@ -51,7 +51,7 @@ final class CollectionViewController: UIViewController {
     }
     
     private func likeButtonTapped(nftIndex: String) {
-        viewModel.isNFTLiked(with: nftIndex)
+        viewModel.updateLikeForNFT(with: nftIndex)
     }
     
     private func cartButton(nftIndex: String) {
