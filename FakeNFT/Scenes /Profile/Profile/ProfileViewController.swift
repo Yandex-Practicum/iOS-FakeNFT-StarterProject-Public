@@ -179,6 +179,10 @@ extension ProfileViewController: UITableViewDelegate {
         case 1:
             guard let favoritesNftVC = viewModel.getMyFavouritesNftViewController() else { return }
             navigationController?.pushViewController(favoritesNftVC, animated: true)
+        case 2:
+            guard let url = viewModel.profile?.website else { return }
+            let webView = WebView(url: url)
+            present(webView, animated: true)
         default:
             return
         }
