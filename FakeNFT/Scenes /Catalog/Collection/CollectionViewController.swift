@@ -32,6 +32,7 @@ final class CollectionViewController: UIViewController {
     
         addSubviews()
         setupConstraints()
+        configureNavigationBar()
     }
         
     private func addSubviews() {
@@ -55,6 +56,27 @@ final class CollectionViewController: UIViewController {
     
     private func cartButtonTapped(nftIndex: String) {
         viewModel.updateCartForNFT(with: nftIndex)
+    }
+    
+    private func configureNavigationBar() {
+        if let navBar = navigationController?.navigationBar {
+            let leftImageButton = UIImage(systemName: "chevron.backward")?
+                .withTintColor(.black)
+                .withRenderingMode(.alwaysOriginal)
+            let leftBarButton = UIBarButtonItem(
+                image: leftImageButton,
+                style: .plain,
+                target: self,
+                action: #selector(self.leftNavigationBarButtonTapped)
+            )
+            navigationItem.leftBarButtonItem = leftBarButton
+            navBar.tintColor = .black
+            navBar.isTranslucent = true
+        }
+    }
+    
+    @objc private func leftNavigationBarButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
