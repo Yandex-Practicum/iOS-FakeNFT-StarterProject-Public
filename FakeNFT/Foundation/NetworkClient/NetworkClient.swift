@@ -29,8 +29,6 @@ struct DefaultNetworkClient: NetworkClient {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
-
-        self.decoder.dateDecodingStrategy = .iso8601
     }
 
     @discardableResult
@@ -66,11 +64,7 @@ struct DefaultNetworkClient: NetworkClient {
     }
 
     @discardableResult
-    func send<T: Decodable>(
-        request: NetworkRequest,
-        type: T.Type,
-        onResponse: @escaping (Result<T, Error>) -> Void
-    ) -> NetworkTask? {
+    func send<T: Decodable>(request: NetworkRequest, type: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
         return send(request: request) { result in
             switch result {
             case let .success(data):
