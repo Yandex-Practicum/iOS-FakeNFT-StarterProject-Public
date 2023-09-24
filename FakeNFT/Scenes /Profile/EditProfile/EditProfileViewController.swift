@@ -274,4 +274,10 @@ enum AccessibilityIdentifiers {
     static let ratingSorting = "ratingSorting"
     static let nameSorting = "nameSorting"
 
+    static let devsImageView = "devsImageView"
+    static let devsNameLabel = "devsNameLabel"
+    static let telegramLabel = "telegramLabel"
+    static let emailLabel = "emailLabel"
+    static let devsDescriptionLabel = "devsDescriptionLabel"
+    static let stackView = "stackView"
 }

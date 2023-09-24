@@ -69,7 +69,7 @@ final class ImageFeedzUITests: XCTestCase {
 
     }
 
-    func testАavouritesNft() throws {
+    func testFavouritesNft() throws {
        /* Тестируем избранные НФТ
          Подождать, пока открывается и загружается экран профиля
          нажать на ячейку таблицы избранные НФТ
@@ -79,7 +79,7 @@ final class ImageFeedzUITests: XCTestCase {
 
         let tablesQuery = app.tables
         // Перейти на экран избранные нфт
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 1) // Берем ячейку по индексу 0
+        let cell = tablesQuery.children(matching: .cell).element(boundBy: 1) // Берем ячейку по индексу 1
         XCTAssertTrue(cell.waitForExistence(timeout: 5))// Подождёт появления ячейки на экране в течение 5 секунд.
         cell.tap()
         sleep(2)
@@ -152,5 +152,34 @@ final class ImageFeedzUITests: XCTestCase {
 
         // Нажатие на кнопку закрытия окна редактирования профиля
         app.buttons["closeButtonTapped"].tap()
+    }
+
+    func testAboutDevelopers() throws {
+        /* Тестируем экран О разработчиках
+         Проверить, что открылся экран профиля
+         Проверить наличие всех заполненных полей
+         Вернуться на экран профиля
+         */
+
+        let tablesQuery = app.tables
+        // Перейти на экран избранные о разработчиках
+        let cell = tablesQuery.children(matching: .cell).element(boundBy: 2) // Берем первую ячейку
+        XCTAssertTrue(cell.waitForExistence(timeout: 5))// Подождёт появления ячейки на экране в течение 5 секунд.
+
+        cell.tap()
+        sleep(2)
+        cell.swipeUp() // Сделать жест «смахивания» вверх по экрану
+
+        // Проверка существования всех полей
+        XCTAssertTrue(app.images["devsImageView"].exists)
+        XCTAssertTrue(app.staticTexts["devsNameLabel"].exists)
+        XCTAssertTrue(app.staticTexts["devsDescriptionLabel"].exists)
+        XCTAssertTrue(app.staticTexts["emailLabel"].exists)
+        XCTAssertTrue(app.staticTexts["telegramLabel"].exists)
+
+        sleep(3)
+
+        // Нажатие на кнопку закрытия окна 
+        app.navigationBars.buttons.element(boundBy: 0).tap()
     }
 }
