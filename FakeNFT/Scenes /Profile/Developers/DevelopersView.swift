@@ -52,7 +52,7 @@ final class DevelopersView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(telegrammButtonTapped))
 
        // label.addGestureRecognizer(tap)
-        
+
         return label
     }()
 
@@ -66,7 +66,7 @@ final class DevelopersView: UIView {
         label.accessibilityIdentifier = AccessibilityIdentifiers.emailLabel
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(emailButtonTapped))
-        //label.addGestureRecognizer(tap)
+        // label.addGestureRecognizer(tap)
         return label
     }()
 
