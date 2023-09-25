@@ -122,8 +122,8 @@ final class ImageFeedzUITests: XCTestCase {
         // Ввод текста в поле ЮРЛ
         let urlTextField = app.textFields["urlTextField"]
         urlTextField.tap()
-        urlTextField.press(forDuration: 2)
-        app.menuItems["Select All"].tap()
+        urlTextField.doubleTap()
+        urlTextField.press(forDuration: 3)
         urlTextField.typeText("https://practicum.yandex.ru/ios-developer")
 
         // Нажимаем на кнопку сменить аватар
