@@ -44,6 +44,11 @@ final class NftAvatarView: UIView {
         likeButton.tintColor = .ypWhite
         likeButton.setImage(UIImage(named: "like"), for: .normal)
     }
+    // MARK: - Methods
+
+    func setAI() {
+        likeButton.accessibilityIdentifier = AccessibilityIdentifiers.likeButtonTapped
+    }
 
     // MARK: - Setup
 

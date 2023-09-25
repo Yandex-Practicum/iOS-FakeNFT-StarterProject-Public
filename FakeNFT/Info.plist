@@ -19,5 +19,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>mailto</string>
+        <string>tg</string>
+        <string>googlegmail</string>
+	</array>
 </dict>
 </plist>

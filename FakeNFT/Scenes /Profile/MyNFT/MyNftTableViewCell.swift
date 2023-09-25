@@ -96,6 +96,7 @@ final class MyNftTableViewCell: UITableViewCell {
         } else {
             priceValueLabel.text = "\(nft.price) ETH"
         }
+        nftView.setAI()
     }
 
     private func layouts() {

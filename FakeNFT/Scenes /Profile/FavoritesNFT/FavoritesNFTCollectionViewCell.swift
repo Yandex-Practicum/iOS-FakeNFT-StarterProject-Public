@@ -72,6 +72,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         }
         self.nameLabel.text = nft.name
         self.ratingView.rating = nft.rating
+        avatarView.setAI()
     }
 
     private func layouts() {

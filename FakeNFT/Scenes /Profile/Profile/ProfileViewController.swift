@@ -179,6 +179,10 @@ extension ProfileViewController: UITableViewDelegate {
         case 1:
             guard let favoritesNftVC = viewModel.getMyFavouritesNftViewController() else { return }
             navigationController?.pushViewController(favoritesNftVC, animated: true)
+        case 2:
+            let viewModel = DevelopersViewModel()
+            let developerVC = DevelopersViewController(viewModel: viewModel)
+            navigationController?.pushViewController(developerVC, animated: true)
         default:
             return
         }
