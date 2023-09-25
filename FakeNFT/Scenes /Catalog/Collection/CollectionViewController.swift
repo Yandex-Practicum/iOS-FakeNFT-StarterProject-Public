@@ -28,7 +28,7 @@ final class CollectionViewController: UIViewController {
     
         addSubviews()
         setupConstraints()
-        configureNavigationBar()
+        setupNavBar()
         setupCollectionView()
     }
         
@@ -62,7 +62,7 @@ final class CollectionViewController: UIViewController {
         viewModel.updateCartForNFT(with: nftIndex)
     }
     
-    private func configureNavigationBar() {
+    private func setupNavBar() {
         if let navBar = navigationController?.navigationBar {
             let leftImageButton = UIImage(systemName: "chevron.backward")?
                 .withTintColor(.black)
@@ -81,6 +81,13 @@ final class CollectionViewController: UIViewController {
     
     @objc private func leftNavigationBarButtonTapped() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func showWebViewAboutAuthor() {
+        let webViewVC = WebView()
+        guard let url = URL(string: viewModel.user?.website ?? "") else { return }
+        webViewVC.url = url
+        self.navigationController?.pushViewController(webViewVC, animated: true)
     }
 }
 
@@ -118,7 +125,12 @@ extension CollectionViewController: UICollectionViewDataSource {
             
         case .description:
             guard let descriptionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DescriptionCollectionViewCell.identifier, for: indexPath) as? DescriptionCollectionViewCell else { return UICollectionViewCell() }
-            descriptionCell.configure(collectionName: viewModel.collection.name, subTitle: "Автор коллекции:", authorName: viewModel.user?.name ?? "Jack Noris", description: viewModel.collection.description)
+            descriptionCell.configure(
+                collectionName: viewModel.collection.name,
+                subTitle: "Автор коллекции:",
+                authorName: viewModel.user?.name ?? "",
+                description: viewModel.collection.description,
+                authorNameButtonAction: showWebViewAboutAuthor)
             return descriptionCell
             
         case .nft:

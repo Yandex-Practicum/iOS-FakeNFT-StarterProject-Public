@@ -4,6 +4,8 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "DescriptionCell"
     
+    var authorButtonTapped: (() -> Void)?
+    
     private lazy var collectionsNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
@@ -22,7 +24,7 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
     private lazy var authorNameLabel: UILabel = {
        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .blue
+        label.textColor = UIColor(named: "ypBlue")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,6 +36,17 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var authorNameButton: UIButton = {
+       let button = UIButton()
+        button.setTitleColor(UIColor(named: "ypBlue"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.titleLabel?.tintColor = UIColor(named: "ypBlue")
+        button.addTarget(self, action: #selector(authorNameButtonTapped), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -48,7 +61,7 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
     }
     
     private func addSubviews() {
-        [collectionsNameLabel, authorLabel, authorNameLabel, descriptionLabel].forEach {
+        [collectionsNameLabel, authorLabel, authorNameLabel, descriptionLabel, authorNameButton].forEach {
             contentView.addSubview($0)
         }
     }
@@ -69,13 +82,29 @@ final class DescriptionCollectionViewCell: UICollectionViewCell {
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             descriptionLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 5),
             descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -24),
+            
+            authorNameButton.topAnchor.constraint(equalTo: collectionsNameLabel.bottomAnchor, constant: 12),
+            authorNameButton.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
+            authorNameButton.trailingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor),
+            authorNameButton.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: 4)
         ])
     }
     
-    func configure(collectionName: String, subTitle: String, authorName: String, description: String) {
+    @objc private func authorNameButtonTapped() {
+        authorButtonTapped?()
+    }
+    
+    func configure(
+        collectionName: String,
+        subTitle: String,
+        authorName: String,
+        description: String,
+        authorNameButtonAction: @escaping() -> Void
+    ) {
         collectionsNameLabel.text = collectionName
         authorLabel.text = subTitle
         authorNameLabel.text = authorName
         descriptionLabel.text = description
+        authorButtonTapped = authorNameButtonAction
     }
 }
