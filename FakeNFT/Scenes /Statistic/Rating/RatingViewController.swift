@@ -81,7 +81,7 @@ final class RatingViewController: UIViewController {
             sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
             
             ratingTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
-            ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -9),
             ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])

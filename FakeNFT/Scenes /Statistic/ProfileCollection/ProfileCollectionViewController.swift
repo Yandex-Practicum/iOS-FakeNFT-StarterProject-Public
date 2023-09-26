@@ -7,9 +7,9 @@ final class ProfileCollectionViewController: UIViewController {
     var nftIds: [Int] = []
     
     private let viewModel = ProfileCollectionViewModel()
-    private var nftList: [Nft] = []
-    
-    private var backButton: UIButton = {
+    lazy var nftList: [Nft] = []
+
+    lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "backIcon"), for: .normal)
         button.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
@@ -105,7 +105,7 @@ final class ProfileCollectionViewController: UIViewController {
 
 extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return nftList.count
+       nftList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
