@@ -53,9 +53,9 @@ extension RatingView {
         let rating = rating ?? 0
         for (index, star) in stars.enumerated() {
             if index < rating {
-                star.image = UIImage(named: "yellowStar")
+                star.image = UIImage(named: "star_yellow")
             } else {
-                star.image = UIImage(named: "grayStar")
+                star.image = UIImage(named: "star")
             }
         }
     }

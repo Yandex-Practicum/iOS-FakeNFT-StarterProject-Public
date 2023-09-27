@@ -20,25 +20,25 @@ final class TabBarViewController: UITabBarController {
         generateVC(
             viewController: profileViewController,
             title: "Профиль",
-            image: UIImage(systemName: "person.crop.circle.fill")
+            image: UIImage(named: "profile")
         ),
 
         generateVC(
             viewController: CatalogViewController(),
             title: "Каталог",
-            image: UIImage(systemName: "rectangle.stack.fill")
+            image: UIImage(named: "catalog")
         ),
 
         generateVC(
             viewController: CartViewController(),
             title: "Корзина",
-            image: UIImage(systemName: "bag")
+            image: UIImage(named: "cart_main")
         ),
 
         generateVC(
             viewController: StatisticViewController(),
             title: "Статистика",
-            image: UIImage(systemName: "flag.2.crossed.fill")
+            image: UIImage(named: "statistics")
         )]
     }
 
