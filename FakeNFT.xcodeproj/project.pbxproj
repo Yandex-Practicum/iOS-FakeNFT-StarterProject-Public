@@ -27,7 +27,7 @@
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		CA9C1AFB2A9F60D9005FBA8D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CA9C1AFA2A9F60D9005FBA8D /* .swiftlint.yml */; };
-		CA9C1AFD2A9F62B4005FBA8D /* TabBatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1AFC2A9F62B4005FBA8D /* TabBatViewController.swift */; };
+		CA9C1AFD2A9F62B4005FBA8D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1AFC2A9F62B4005FBA8D /* TabBarViewController.swift */; };
 		CA9C1AFF2A9F79CC005FBA8D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1AFE2A9F79CC005FBA8D /* ProfileViewController.swift */; };
 		CA9C1B012A9F79ED005FBA8D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */; };
 		CA9C1B032A9F7A2F005FBA8D /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */; };
@@ -102,7 +102,7 @@
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		CA9C1AFA2A9F60D9005FBA8D /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		CA9C1AFC2A9F62B4005FBA8D /* TabBatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBatViewController.swift; sourceTree = "<group>"; };
+		CA9C1AFC2A9F62B4005FBA8D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		CA9C1AFE2A9F79CC005FBA8D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 				CE7E263F2AA88A1B00D8623E /* Helpers */,
-				CA9C1AFC2A9F62B4005FBA8D /* TabBatViewController.swift */,
+				CA9C1AFC2A9F62B4005FBA8D /* TabBarViewController.swift */,
 				CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */,
 				CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */,
 				CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */,
@@ -594,7 +594,7 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				CE742A512AA5C8BC008E7AE9 /* MyNftViewController.swift in Sources */,
-				CA9C1AFD2A9F62B4005FBA8D /* TabBatViewController.swift in Sources */,
+				CA9C1AFD2A9F62B4005FBA8D /* TabBarViewController.swift in Sources */,
 				CE742A552AA5F3FD008E7AE9 /* NftAvatarView.swift in Sources */,
 				CE67F6E72AAF8C0600466CA4 /* NftDTO.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
