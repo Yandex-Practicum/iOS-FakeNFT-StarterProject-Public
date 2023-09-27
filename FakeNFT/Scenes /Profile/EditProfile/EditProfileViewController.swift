@@ -33,7 +33,7 @@ final class EditProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .ypLightGray
+        textField.backgroundColor = .ypLightGrey
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -58,7 +58,7 @@ final class EditProfileViewController: UIViewController {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textView.textColor = .label
-        textView.backgroundColor = .ypLightGray
+        textView.backgroundColor = .ypLightGrey
         textView.layer.cornerRadius = 12
         // Разрешаем многострочный текст
         textView.isEditable = true
@@ -91,7 +91,7 @@ final class EditProfileViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .label
-        textField.backgroundColor = .ypLightGray
+        textField.backgroundColor = .ypLightGrey
         textField.layer.cornerRadius = 12
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
