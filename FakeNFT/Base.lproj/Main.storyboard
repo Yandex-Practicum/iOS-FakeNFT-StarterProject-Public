@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,7 +35,7 @@
                             <constraint firstItem="qWk-zT-AG8" firstAttribute="top" secondItem="Jse-zw-T38" secondAttribute="top" constant="100" id="vow-DL-xVp"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Каталог" image="square.stack.3d.up.fill" catalog="system" id="X74-Ak-ux8"/>
+                    <tabBarItem key="tabBarItem" title="Каталог" image="catalogTabBarImageActive" id="X74-Ak-ux8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yEn-qE-qUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -159,9 +159,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="catalogTabBarImageActive" width="30" height="30"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
-        <image name="flag.2.crossed.fill" catalog="system" width="128" height="72"/>
-        <image name="square.stack.3d.up.fill" catalog="system" width="128" height="125"/>
+        <image name="flag.2.crossed.fill" catalog="system" width="128" height="80"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
