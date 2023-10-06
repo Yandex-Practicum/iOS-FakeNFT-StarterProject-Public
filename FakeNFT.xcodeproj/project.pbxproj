@@ -179,6 +179,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				A226A86C2ACFF1F000E782E3 /* Basket */,
 				A226A8692ACFECE500E782E3 /* Catalog */,
 				A2D5203B2ACF2B070083FAA7 /* Profile */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
@@ -245,6 +246,13 @@
 				A226A86A2ACFECE500E782E3 /* CatalogView.swift */,
 			);
 			path = Catalog;
+			sourceTree = "<group>";
+		};
+		A226A86C2ACFF1F000E782E3 /* Basket */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Basket;
 			sourceTree = "<group>";
 		};
 		A2D5203B2ACF2B070083FAA7 /* Profile */ = {
