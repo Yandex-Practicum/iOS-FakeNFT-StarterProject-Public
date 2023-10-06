@@ -5,4 +5,8 @@
 //  Created by Respect on 06.10.2023.
 //
 
-import Foundation
+import UIKit
+
+final class CatalogViewController: UIViewController {
+    var catalogViewModel: CatalogViewModel?
+}
