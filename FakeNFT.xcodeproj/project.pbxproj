@@ -27,6 +27,15 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		A226A86B2ACFECE500E782E3 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A86A2ACFECE500E782E3 /* CatalogViewController.swift */; };
+		A226A86F2ACFF2A900E782E3 /* ShoppingCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A86E2ACFF2A900E782E3 /* ShoppingCartViewController.swift */; };
+		A226A8712ACFF2BA00E782E3 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A8702ACFF2BA00E782E3 /* StatisticsViewController.swift */; };
+		A226A8732ACFF4B500E782E3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A8722ACFF4B500E782E3 /* TabBarController.swift */; };
+		A226A8752ACFF69B00E782E3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A8742ACFF69B00E782E3 /* ProfileViewModel.swift */; };
+		A226A8772ACFF72500E782E3 /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A8762ACFF72500E782E3 /* CatalogViewModel.swift */; };
+		A226A8792ACFF76900E782E3 /* ShoppingCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A8782ACFF76900E782E3 /* ShoppingCartViewModel.swift */; };
+		A226A87B2ACFF78900E782E3 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A226A87A2ACFF78900E782E3 /* StatisticsViewModel.swift */; };
+		A2D5203D2ACF2B210083FAA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +78,15 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		A226A86A2ACFECE500E782E3 /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
+		A226A86E2ACFF2A900E782E3 /* ShoppingCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartViewController.swift; sourceTree = "<group>"; };
+		A226A8702ACFF2BA00E782E3 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		A226A8722ACFF4B500E782E3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		A226A8742ACFF69B00E782E3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		A226A8762ACFF72500E782E3 /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
+		A226A8782ACFF76900E782E3 /* ShoppingCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCartViewModel.swift; sourceTree = "<group>"; };
+		A226A87A2ACFF78900E782E3 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
+		A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +150,7 @@
 			children = (
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+				A226A8722ACFF4B500E782E3 /* TabBarController.swift */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
@@ -172,6 +191,10 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				A226A86D2ACFF27B00E782E3 /* Statistics */,
+				A226A86C2ACFF1F000E782E3 /* ShoppingCart */,
+				A226A8692ACFECE500E782E3 /* Catalog */,
+				A2D5203B2ACF2B070083FAA7 /* Profile */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 			);
 			path = "Scenes ";
@@ -228,6 +251,42 @@
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		A226A8692ACFECE500E782E3 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				A226A86A2ACFECE500E782E3 /* CatalogViewController.swift */,
+				A226A8762ACFF72500E782E3 /* CatalogViewModel.swift */,
+			);
+			path = Catalog;
+			sourceTree = "<group>";
+		};
+		A226A86C2ACFF1F000E782E3 /* ShoppingCart */ = {
+			isa = PBXGroup;
+			children = (
+				A226A86E2ACFF2A900E782E3 /* ShoppingCartViewController.swift */,
+				A226A8782ACFF76900E782E3 /* ShoppingCartViewModel.swift */,
+			);
+			path = ShoppingCart;
+			sourceTree = "<group>";
+		};
+		A226A86D2ACFF27B00E782E3 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				A226A8702ACFF2BA00E782E3 /* StatisticsViewController.swift */,
+				A226A87A2ACFF78900E782E3 /* StatisticsViewModel.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		A2D5203B2ACF2B070083FAA7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */,
+				A226A8742ACFF69B00E782E3 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,17 +451,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				A226A8752ACFF69B00E782E3 /* ProfileViewModel.swift in Sources */,
+				A226A8792ACFF76900E782E3 /* ShoppingCartViewModel.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				A226A8732ACFF4B500E782E3 /* TabBarController.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				A226A86B2ACFECE500E782E3 /* CatalogViewController.swift in Sources */,
+				A2D5203D2ACF2B210083FAA7 /* ProfileViewController.swift in Sources */,
+				A226A8772ACFF72500E782E3 /* CatalogViewModel.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				A226A8712ACFF2BA00E782E3 /* StatisticsViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				A226A87B2ACFF78900E782E3 /* StatisticsViewModel.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				A226A86F2ACFF2A900E782E3 /* ShoppingCartViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
