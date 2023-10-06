@@ -192,7 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				A226A86D2ACFF27B00E782E3 /* Statistics */,
-				A226A86C2ACFF1F000E782E3 /* Basket */,
+				A226A86C2ACFF1F000E782E3 /* ShoppingCart */,
 				A226A8692ACFECE500E782E3 /* Catalog */,
 				A2D5203B2ACF2B070083FAA7 /* Profile */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
@@ -262,13 +262,13 @@
 			path = Catalog;
 			sourceTree = "<group>";
 		};
-		A226A86C2ACFF1F000E782E3 /* Basket */ = {
+		A226A86C2ACFF1F000E782E3 /* ShoppingCart */ = {
 			isa = PBXGroup;
 			children = (
 				A226A86E2ACFF2A900E782E3 /* ShoppingCartViewController.swift */,
 				A226A8782ACFF76900E782E3 /* ShoppingCartViewModel.swift */,
 			);
-			path = Basket;
+			path = ShoppingCart;
 			sourceTree = "<group>";
 		};
 		A226A86D2ACFF27B00E782E3 /* Statistics */ = {
