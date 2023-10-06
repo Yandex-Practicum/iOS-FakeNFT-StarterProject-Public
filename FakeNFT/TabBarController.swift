@@ -18,7 +18,7 @@ final class TabBarController: UITabBarController {
         let profileViewModel = ProfileViewModel()
         profileViewController.profileViewModel = profileViewModel
         
-        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "record.circle.fill"), selectedImage: nil)
+        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "circle.fill"), selectedImage: nil)
         
         //Каталог
         let catalogViewController = CatalogViewController()
@@ -26,7 +26,7 @@ final class TabBarController: UITabBarController {
         let catalogViewModel = CatalogViewModel()
         catalogViewController.catalogViewModel = catalogViewModel
         
-        catalogViewController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "hare.fill"), selectedImage: nil)
+        catalogViewController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "square.stack.3d.up.fill"), selectedImage: nil)
         
         //Корзина
         let shoppingCartViewController = ShoppingCartViewController()
@@ -34,7 +34,7 @@ final class TabBarController: UITabBarController {
         let shoppingCartViewModel = ShoppingCartViewModel()
         shoppingCartViewController.shoppingCartViewModel = shoppingCartViewModel
         
-        shoppingCartViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "hare.fill"), selectedImage: nil)
+        shoppingCartViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "trash"), selectedImage: nil)
         
         //Статистика
         let statisticsViewController = StatisticsViewController()
@@ -42,7 +42,7 @@ final class TabBarController: UITabBarController {
         let statisticsViewModel = StatisticsViewModel()
         statisticsViewController.statisticsViewModel = statisticsViewModel
         
-        statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(systemName: "hare.fill"), selectedImage: nil)
+        statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(systemName: "flag.2.crossed.fill"), selectedImage: nil)
         
         self.viewControllers = [profileViewController, catalogViewController, shoppingCartViewController, statisticsViewController]
     }
