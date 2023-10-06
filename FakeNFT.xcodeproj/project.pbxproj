@@ -28,6 +28,7 @@
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
 		3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 3FC8C39629D24D9D0081F015 /* .swiftlint.yml */; };
+    A232AA212ACFE7D500A3FF17 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232AA202ACFE7D500A3FF17 /* CatalogView.swift */; };
 		A2D5203D2ACF2B210083FAA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +73,11 @@
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
 		3FC8C39629D24D9D0081F015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+
+		A232AA202ACFE7D500A3FF17 /* CatalogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
+
 		A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,7 +182,11 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+
+				A232AA1F2ACFE7D500A3FF17 /* Catalog */,
+
 				A2D5203B2ACF2B070083FAA7 /* Profile */,
+
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 			);
 			path = "Scenes ";
@@ -236,12 +245,21 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+
+		A232AA1F2ACFE7D500A3FF17 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				A232AA202ACFE7D500A3FF17 /* CatalogView.swift */,
+			);
+			path = Catalog;
+
 		A2D5203B2ACF2B070083FAA7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				A2D5203C2ACF2B210083FAA7 /* ProfileViewController.swift */,
 			);
 			path = Profile;
+
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,6 +433,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				A232AA212ACFE7D500A3FF17 /* CatalogView.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
