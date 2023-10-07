@@ -8,7 +8,7 @@ final class TabBarController: UITabBarController {
         let profileViewController = ProfileViewController()
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         profileNavigationController.tabBarItem = UITabBarItem(
-            title: "Профиль",
+            title: NSLocalizedString("TabBarController.Profile", comment: ""),
             image: UIImage(named: "TabBar.Profile"),
             tag: 0
         )
@@ -16,7 +16,7 @@ final class TabBarController: UITabBarController {
         let catalogViewController = CatalogViewController()
         let catalogNavigationController = UINavigationController(rootViewController: catalogViewController)
         catalogNavigationController.tabBarItem = UITabBarItem(
-            title: "Каталог",
+            title: NSLocalizedString("TabBarController.Catalog", comment: ""),
             image: UIImage(named: "TabBar.Catalog"),
             tag: 1
         )
@@ -24,7 +24,7 @@ final class TabBarController: UITabBarController {
         let basketViewController = BasketViewController()
         let basketNavigationController = UINavigationController(rootViewController: basketViewController)
         basketNavigationController.tabBarItem = UITabBarItem(
-            title: "Корзина",
+            title: NSLocalizedString("TabBarController.Basket", comment: ""),
             image: UIImage(named: "TabBar.Basket"),
             tag: 2
         )
@@ -32,7 +32,7 @@ final class TabBarController: UITabBarController {
         let statisticsViewController = StatisticsViewController()
         let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
         statisticsNavigationController.tabBarItem = UITabBarItem(
-            title: "Статистика",
+            title: NSLocalizedString("TabBarController.Statistics", comment: ""),
             image: UIImage(named: "TabBar.Statistics"),
             tag: 3
         )
