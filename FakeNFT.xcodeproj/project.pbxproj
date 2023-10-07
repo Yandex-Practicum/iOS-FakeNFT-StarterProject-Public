@@ -29,6 +29,9 @@
 		D827F56E2ACEDD0000F01BBE /* ProductDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D827F56C2ACEDD0000F01BBE /* ProductDetailsTableViewController.swift */; };
 		D827F56F2ACEDD0000F01BBE /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D827F56D2ACEDD0000F01BBE /* ProductDetailsTableViewCell.swift */; };
 		D827F5712ACF10C900F01BBE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D827F5702ACF10C900F01BBE /* .gitignore */; };
+		D84751442AD0AC9100CEA0A7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84751462AD0AC9100CEA0A7 /* Localizable.strings */; };
+		D84751492AD0B01500CEA0A7 /* swiftgenconfig in Resources */ = {isa = PBXBuildFile; fileRef = D84751482AD0B01500CEA0A7 /* swiftgenconfig */; };
+		D84751522AD0B84300CEA0A7 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84751512AD0B84300CEA0A7 /* Strings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,14 @@
 		D827F56C2ACEDD0000F01BBE /* ProductDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsTableViewController.swift; path = FakeNFT/Scenes/ProductDetails/ProductDetailsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		D827F56D2ACEDD0000F01BBE /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsTableViewCell.swift; path = FakeNFT/Scenes/ProductDetails/ProductDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D827F5702ACF10C900F01BBE /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		D84751402AD0ABCF00CEA0A7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		D84751412AD0ABCF00CEA0A7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		D84751422AD0AC6700CEA0A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		D84751432AD0AC6700CEA0A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		D84751452AD0AC9100CEA0A7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D84751472AD0AC9500CEA0A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D84751482AD0B01500CEA0A7 /* swiftgenconfig */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgenconfig; sourceTree = "<group>"; };
+		D84751512AD0B84300CEA0A7 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Strings.swift; path = Generated/Strings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +147,9 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				D84751512AD0B84300CEA0A7 /* Strings.swift */,
+				D84751482AD0B01500CEA0A7 /* swiftgenconfig */,
+				D847513D2AD0AB0400CEA0A7 /* Resources */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
@@ -236,6 +250,14 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		D847513D2AD0AB0400CEA0A7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D84751462AD0AC9100CEA0A7 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,6 +265,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F6806BD29CBBAF200B4F915 /* Build configuration list for PBXNativeTarget "FakeNFT" */;
 			buildPhases = (
+				D84751502AD0B4B100CEA0A7 /* Swiftgen */,
 				3FC8C39529D24CDB0081F015 /* Swiftlint */,
 				3F68068F29CBBAF100B4F915 /* Sources */,
 				3F68069029CBBAF100B4F915 /* Frameworks */,
@@ -322,11 +345,12 @@
 			};
 			buildConfigurationList = 3F68068E29CBBAF100B4F915 /* Build configuration list for PBXProject "FakeNFT" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ru,
+				en,
 			);
 			mainGroup = 3F68068A29CBBAF100B4F915;
 			packageReferences = (
@@ -350,6 +374,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D827F5712ACF10C900F01BBE /* .gitignore in Resources */,
+				D84751442AD0AC9100CEA0A7 /* Localizable.strings in Resources */,
+				D84751492AD0B01500CEA0A7 /* swiftgenconfig in Resources */,
 				3FC8C39729D24D9D0081F015 /* .swiftlint.yml in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
@@ -392,6 +418,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		D84751502AD0B4B100CEA0A7 /* Swiftgen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftgen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n#PATH=${PROJECT_DIR}/Tracker/swiftgenbin/:$PATH\ncd ${PROJECT_DIR}/FakeNFT/swiftgenconfig/\npwd\necho ${PROJECT_DIR}\nswiftgen config run\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -405,6 +449,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				D84751522AD0B84300CEA0A7 /* Strings.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
@@ -451,6 +496,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				3F68069D29CBBAF100B4F915 /* Base */,
+				D84751402AD0ABCF00CEA0A7 /* ru */,
+				D84751422AD0AC6700CEA0A7 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -459,8 +506,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
+				D84751412AD0ABCF00CEA0A7 /* ru */,
+				D84751432AD0AC6700CEA0A7 /* en */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D84751462AD0AC9100CEA0A7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D84751452AD0AC9100CEA0A7 /* ru */,
+				D84751472AD0AC9500CEA0A7 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -470,6 +528,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -530,6 +589,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
