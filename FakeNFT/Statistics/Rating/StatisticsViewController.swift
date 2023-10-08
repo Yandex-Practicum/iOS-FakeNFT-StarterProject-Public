@@ -17,11 +17,11 @@ final class StatisticsViewController: UIViewController {
         return tableView
     }()
     
-    private let users: [UserCard] = [
-        UserCard(rating: 3, image: UIImage(systemName: "person.crop.circle.fill"), name: "Alex", userCollection: 112),
-        UserCard(rating: 2, image: UIImage(systemName: "person.crop.circle.fill"), name: "Bill", userCollection: 10),
+    private var users: [UserCard] = [
+        UserCard(rating: 3, image: UIImage(systemName: "person.crop.circle.fill"), name: "Sara", userCollection: 112),
+        UserCard(rating: 2, image: UIImage(systemName: "person.crop.circle.fill"), name: "Will", userCollection: 10),
         UserCard(rating: 1, image: UIImage(systemName: "person.crop.circle.fill"), name: "Lion", userCollection: 32),
-        UserCard(rating: 4, image: UIImage(systemName: "person.crop.circle.fill"), name: "Sara", userCollection: 54)
+        UserCard(rating: 4, image: UIImage(systemName: "person.crop.circle.fill"), name: "Alex", userCollection: 54)
     ]
     
     override func viewDidLoad() {
@@ -37,8 +37,16 @@ final class StatisticsViewController: UIViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-        let sortByNameButton = UIAlertAction(title: "По имени", style: .default)
-        let sortByRatingButton = UIAlertAction(title: "По рейтингу", style: .default)
+        let sortByNameButton = UIAlertAction(title: "По имени", style: .default) { [weak self] _ in
+            self?.users.sort { $0.name < $1.name }
+            self?.tableView.reloadData()
+        }
+        
+        let sortByRatingButton = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+            self?.users.sort { $0.userCollection > $1.userCollection }
+            self?.tableView.reloadData()
+        }
+        
         let closeButton = UIAlertAction(title: "Закрыть", style: .default)
         alert.addAction(sortByNameButton)
         alert.addAction(sortByRatingButton)
