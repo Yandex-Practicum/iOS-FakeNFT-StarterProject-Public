@@ -149,7 +149,10 @@
 			children = (
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				715D0F162AD156E300300497 /* TabBarController.swift */,
-				715D0F1B2AD1570000300497 /* UI */,
+				715D0F222AD1570000300497 /* Profile */,
+				715D0F1E2AD1570000300497 /* Basket */,
+				715D0F202AD1570000300497 /* Catalog */,
+				715D0F1C2AD1570000300497 /* Statistics */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
@@ -255,17 +258,6 @@
 				715D0F192AD156EF00300497 /* Catalog.md */,
 			);
 			path = Doc;
-			sourceTree = "<group>";
-		};
-		715D0F1B2AD1570000300497 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				715D0F1C2AD1570000300497 /* Statistics */,
-				715D0F1E2AD1570000300497 /* Basket */,
-				715D0F202AD1570000300497 /* Catalog */,
-				715D0F222AD1570000300497 /* Profile */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		715D0F1C2AD1570000300497 /* Statistics */ = {
