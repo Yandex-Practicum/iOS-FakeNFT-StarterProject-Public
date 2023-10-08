@@ -33,6 +33,7 @@
 		715D0F2B2AD1577A00300497 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D0F2A2AD1577A00300497 /* UIColor+Extensions.swift */; };
 		715D0F322AD1691D00300497 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 715D0F342AD1691D00300497 /* Localizable.strings */; };
 		715D0F352AD1693200300497 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 715D0F362AD1693200300497 /* LaunchScreen.storyboard */; };
+		71E3D1FC2AD2F20C0019EBCC /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E3D1FB2AD2F20C0019EBCC /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		715D0F332AD1691D00300497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		715D0F362AD1693200300497 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		715D0F372AD1694C00300497 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		71E3D1FB2AD2F20C0019EBCC /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 		3F6806CE29CBBD1B00B4F915 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				71E3D1FB2AD2F20C0019EBCC /* Observable.swift */,
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
@@ -459,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71E3D1FC2AD2F20C0019EBCC /* Observable.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
