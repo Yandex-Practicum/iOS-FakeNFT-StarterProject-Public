@@ -74,7 +74,9 @@ final class UserCardViewController: UIViewController {
     
     @objc
     private func goToCollection() {
-        
+        let usersCollection = UserCollectionViewController()
+        usersCollection.title = "Коллекция NFT"
+        navigationController?.pushViewController(usersCollection, animated: true)
     }
 // MARK: - setupUI
     private func setupNavigationBar() {
