@@ -102,5 +102,7 @@ extension StatisticsViewController: UITableViewDataSource {
 extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let userCard = UserCardViewController()
+        navigationController?.pushViewController(userCard, animated: true)
     }
 }
