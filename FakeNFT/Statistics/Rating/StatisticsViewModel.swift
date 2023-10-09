@@ -5,6 +5,12 @@
 
 import Foundation
 
+enum SortType: String {
+    case name
+    case rating
+    case none
+}
+
 protocol StatisticsViewModelProtocol: AnyObject {
     var dataChanged: (() -> Void)? { get set }
     var users: [User] { get set }
@@ -15,6 +21,8 @@ protocol StatisticsViewModelProtocol: AnyObject {
 }
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
+    private let sortTypeKey = "sortTypeKey"
+    
     var dataChanged: (() -> Void)?
     
     var users: [User] = [] {
@@ -43,6 +51,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 
                     DispatchQueue.main.async {
                         self?.users = users
+                        self?.loadPreviousSortingState()
                     }
                 } catch {
                     print("Error: \(error)")
@@ -54,9 +63,26 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     
     func sortUsersByName() {
         users.sort { $0.name < $1.name }
+        UserDefaults.standard.setValue(SortType.name.rawValue, forKey: sortTypeKey)
     }
     
     func sortUsersByRating() {
         users.sort {  Int($0.rating) ?? 0 < Int($1.rating) ?? 0 }
+        UserDefaults.standard.setValue(SortType.rating.rawValue, forKey: sortTypeKey)
+    }
+    
+    private func loadPreviousSortingState() {
+        guard let sortTypeValue = UserDefaults.standard.value(forKey: sortTypeKey) as? String else { return }
+        
+        let sortType = SortType(rawValue: sortTypeValue) ?? .none
+        
+        switch sortType {
+        case .name:
+            sortUsersByName()
+        case .rating:
+            sortUsersByRating()
+        case .none:
+            break
+        }
     }
 }
