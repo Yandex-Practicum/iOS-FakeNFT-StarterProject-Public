@@ -10,24 +10,33 @@ final class StatisticsViewController: UIViewController {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(StatisticsCell.self, forCellReuseIdentifier: StatisticsCell.identifier)
+        tableView.register(
+            StatisticsCell.self,
+            forCellReuseIdentifier: StatisticsCell.identifier
+        )
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .nftWhite
         tableView.separatorStyle = .none
         return tableView
     }()
     
-    private var users: [UserCard] = [
-        UserCard(rating: 3, image: UIImage(systemName: "person.crop.circle.fill"), name: "Sara", userCollection: 112),
-        UserCard(rating: 2, image: UIImage(systemName: "person.crop.circle.fill"), name: "Will", userCollection: 10),
-        UserCard(rating: 1, image: UIImage(systemName: "person.crop.circle.fill"), name: "Lion", userCollection: 32),
-        UserCard(rating: 4, image: UIImage(systemName: "person.crop.circle.fill"), name: "Alex", userCollection: 54)
-    ]
+    private var viewModel: StatisticsViewModelProtocol
     
+    init(viewModel: StatisticsViewModelProtocol = StatisticsViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+// MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupNavigationBar()
+        bind()
+        viewModel.loadData()
     }
 // MARK: - Action
     @objc
@@ -38,13 +47,11 @@ final class StatisticsViewController: UIViewController {
             preferredStyle: .actionSheet
         )
         let sortByNameButton = UIAlertAction(title: "По имени", style: .default) { [weak self] _ in
-            self?.users.sort { $0.name < $1.name }
-            self?.tableView.reloadData()
+            self?.viewModel.sortUsersByName()
         }
         
         let sortByRatingButton = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
-            self?.users.sort { $0.userCollection > $1.userCollection }
-            self?.tableView.reloadData()
+            self?.viewModel.sortUsersByRating()
         }
         
         let closeButton = UIAlertAction(title: "Закрыть", style: .default)
@@ -77,6 +84,12 @@ final class StatisticsViewController: UIViewController {
         filterButton.tintColor = UIColor.nftBlack
         navigationItem.rightBarButtonItem = filterButton
     }
+    
+    private func bind() {
+        viewModel.dataChanged = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
 // MARK: - UITableViewDataSource
 extension StatisticsViewController: UITableViewDataSource {
@@ -84,7 +97,7 @@ extension StatisticsViewController: UITableViewDataSource {
         return 80
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return viewModel.usersCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,7 +106,7 @@ extension StatisticsViewController: UITableViewDataSource {
             for: indexPath
         ) as? StatisticsCell else { return UITableViewCell() }
 
-        let user = users[indexPath.row]
+        let user = viewModel.users[indexPath.row]
         cell.configure(model: user)
         return cell
     }
