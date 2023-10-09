@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class StatisticsCell: UITableViewCell {
     static let identifier = "StatisticsCell"
@@ -27,6 +28,8 @@ final class StatisticsCell: UITableViewCell {
     private lazy var userImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "person.crop.circle.fill"))
         image.tintColor = .nftGrayUniversal
+        image.layer.cornerRadius = 14
+        image.clipsToBounds = true
         return image
     }()
     
@@ -89,10 +92,14 @@ final class StatisticsCell: UITableViewCell {
         ])
     }
 // MARK: - Configure
-    func configure(model: UserCard) {
-        ratingLabel.text = String(model.rating)
-        userImage.image = model.image
+    func configure(model: User) {
+        ratingLabel.text = model.rating
+        userImage.kf.indicatorType = .activity
+        if let url = URL(string: model.avatar) {
+            userImage.kf.setImage(with: url,
+                                  placeholder: UIImage(named: "person.crop.circle.fill"))
+        }
         nameLabel.text = model.name
-        collectionLabel.text = String(model.userCollection)
+        collectionLabel.text = String(model.nfts.count)
     }
 }
