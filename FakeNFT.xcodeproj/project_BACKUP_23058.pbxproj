@@ -47,6 +47,7 @@
 		CA9C1B012A9F79ED005FBA8D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */; };
 		CA9C1B032A9F7A2F005FBA8D /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */; };
 		CA9C1B052A9F7A4E005FBA8D /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */; };
+<<<<<<< HEAD
 		CE27B4992AB2104D00FF4E5D /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27B4982AB2104D00FF4E5D /* UIBlockingProgressHUD.swift */; };
 		CE2E5D202AAB5C88003FECAE /* CartRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E5D1F2AAB5C88003FECAE /* CartRouter.swift */; };
 		CE4C5ECA2AAB794D00245B10 /* NFTInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4C5EC92AAB794D00245B10 /* NFTInfoModel.swift */; };
@@ -95,6 +96,14 @@
 		CEFF4DFB2AAA005800785AB0 /* profileDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */; };
 		CEFF4DFE2AAA483D00785AB0 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */; };
 		CEFF4E002AAA64E100785AB0 /* UploadProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFF4DFF2AAA64E100785AB0 /* UploadProfileModel.swift */; };
+=======
+		CA9C1B082A9FAC9B005FBA8D /* CatalogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B072A9FAC9B005FBA8D /* CatalogViewModel.swift */; };
+		CA9C1B0C2A9FAD0E005FBA8D /* CatalogTabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9C1B0B2A9FAD0E005FBA8D /* CatalogTabelViewCell.swift */; };
+		CAA169282AC17C880079E950 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA169272AC17C880079E950 /* WebView.swift */; };
+		CAA1C2892ABDE72900CD51FB /* NetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1C2882ABDE72900CD51FB /* NetworkRequests.swift */; };
+		CAA1C28B2ABDEC0F00CD51FB /* OrderUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1C28A2ABDEC0F00CD51FB /* OrderUpdateRequest.swift */; };
+		CAA822122ABD658B0005D4AE /* ProfileUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA822112ABD658B0005D4AE /* ProfileUpdateRequest.swift */; };
+>>>>>>> epic_catalog
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +166,7 @@
 		CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		CE27B4982AB2104D00FF4E5D /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		CE2E5D1F2AAB5C88003FECAE /* CartRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRouter.swift; sourceTree = "<group>"; };
 		CE32D8C02AC4A48D00B36F22 /* Декомпозиция эпика Корзина.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Декомпозиция эпика Корзина.md"; sourceTree = "<group>"; };
@@ -207,6 +217,14 @@
 		CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Декомпозиция ред. профиля.md"; sourceTree = "<group>"; };
 		CEFF4DFD2AAA483D00785AB0 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		CEFF4DFF2AAA64E100785AB0 /* UploadProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProfileModel.swift; sourceTree = "<group>"; };
+=======
+		CA9C1B072A9FAC9B005FBA8D /* CatalogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewModel.swift; sourceTree = "<group>"; };
+		CA9C1B0B2A9FAD0E005FBA8D /* CatalogTabelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTabelViewCell.swift; sourceTree = "<group>"; };
+		CAA169272AC17C880079E950 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		CAA1C2882ABDE72900CD51FB /* NetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequests.swift; sourceTree = "<group>"; };
+		CAA1C28A2ABDEC0F00CD51FB /* OrderUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderUpdateRequest.swift; sourceTree = "<group>"; };
+		CAA822112ABD658B0005D4AE /* ProfileUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateRequest.swift; sourceTree = "<group>"; };
+>>>>>>> epic_catalog
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,7 +266,13 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				CEFF4DFA2AAA005800785AB0 /* profileDecomposition.md */,
+				CEFF4DFC2AAA022500785AB0 /* Декомпозиция ред. профиля.md */,
+				CE32D8C02AC4A48D00B36F22 /* Декомпозиция эпика Корзина.md */,
+=======
 				CA3D56AE2AB94E610004FE93 /* epic_catalog_plan.md */,
+>>>>>>> epic_catalog
 				CA9C1AFA2A9F60D9005FBA8D /* .swiftlint.yml */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
@@ -281,9 +305,12 @@
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
+<<<<<<< HEAD
 				CA9C1AFC2A9F62B4005FBA8D /* TabBarViewController.swift */,
 				CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */,
 				CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */,
+=======
+>>>>>>> epic_catalog
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -318,9 +345,17 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				CE6B0EFD2AAB782D007117FF /* WebView */,
 				CE742A4B2AA5C754008E7AE9 /* Profile */,
 				CE68BA892A9F9B6600488E47 /* Cart */,
+=======
+				CA9C1AFC2A9F62B4005FBA8D /* TabBatViewController.swift */,
+				CA9C1B042A9F7A4E005FBA8D /* StatisticViewController.swift */,
+				CA9C1B022A9F7A2F005FBA8D /* CartViewController.swift */,
+				CA9C1AFE2A9F79CC005FBA8D /* ProfileViewController.swift */,
+				CA9C1B062A9FAC66005FBA8D /* Catalog */,
+>>>>>>> epic_catalog
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 			);
 			path = "Scenes ";
@@ -391,6 +426,7 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		CE652EBF2ABDCECC003F25B4 /* Developers */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,10 +484,33 @@
 				CE4C5ECB2AAB8E5100245B10 /* Extension String.swift */,
 				CE68BA962A9FDACE00488E47 /* Observable.swift */,
 				CE27B4982AB2104D00FF4E5D /* UIBlockingProgressHUD.swift */,
+=======
+		CA43D11C2AA4F93C0044D88C /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				CA43D11D2AA4F98F0044D88C /* CollectionViewController.swift */,
+				CA70EFD42AA6F79200E45A8C /* CollectionViewModel.swift */,
+				CA70EFC32AA5A33500E45A8C /* CollectionModel.swift */,
+				CA70EFDD2AA9FDC300E45A8C /* CollectionNFTSection.swift */,
+				CA43D11F2AA4FBB70044D88C /* ImageCollectionViewCell.swift */,
+				CA70EFDF2AB083CD00E45A8C /* DescriptionCollectionViewCell.swift */,
+				CA70EFE12AB157F200E45A8C /* NFTCollectionViewCell.swift */,
+				CAA169272AC17C880079E950 /* WebView.swift */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		CA70EFE72AB3143200E45A8C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CA70EFE82AB3145F00E45A8C /* String+Extension.swift */,
+				CA70EFEA2AB3779700E45A8C /* Float+Extension.swift */,
+>>>>>>> epic_catalog
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		CE68BAA22AA0E5D900488E47 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,6 +654,18 @@
 				CE68BA982AA0B48B00488E47 /* PaymentChoiceViewController.swift */,
 			);
 			path = View;
+=======
+		CA9C1B062A9FAC66005FBA8D /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				CA9C1B072A9FAC9B005FBA8D /* CatalogViewModel.swift */,
+				CA9C1B002A9F79ED005FBA8D /* CatalogViewController.swift */,
+				CA9C1B0B2A9FAD0E005FBA8D /* CatalogTabelViewCell.swift */,
+				CA3D56B02AB9C2170004FE93 /* SortNFTsCollections.swift */,
+				CA43D11C2AA4F93C0044D88C /* Collection */,
+			);
+			path = Catalog;
+>>>>>>> epic_catalog
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -781,6 +852,7 @@
 				CE68BA912A9F9C4E00488E47 /* Extension View.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+<<<<<<< HEAD
 				CEFF4E002AAA64E100785AB0 /* UploadProfileModel.swift in Sources */,
 				CE652EC52ABDFD5D003F25B4 /* DevelopersView.swift in Sources */,
 				CEFF4DF52AA9F61F00785AB0 /* Profile.swift in Sources */,
@@ -789,9 +861,16 @@
 				CE742A572AA608AC008E7AE9 /* RatingView.swift in Sources */,
 				CE7E263A2AA7490C00D8623E /* FavoritesNFTViewController.swift in Sources */,
 				CE6522142AB0661200738BAD /* FavouritesNftViewModel.swift in Sources */,
+=======
+				CA3D56B12AB9C2170004FE93 /* SortNFTsCollections.swift in Sources */,
+				CA70EFE92AB3145F00E45A8C /* String+Extension.swift in Sources */,
+				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				CA70EFC82AA5A9D200E45A8C /* UserNetworkModel.swift in Sources */,
+>>>>>>> epic_catalog
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				CE4C5ECE2AAF42F100245B10 /* PaymentViewModel.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+<<<<<<< HEAD
 				CE68BA9F2AA0E05200488E47 /* OrderModel.swift in Sources */,
 				CE68BAA42AA0E5EB00488E47 /* PaymentMethod.swift in Sources */,
 				CE68BA9B2AA0B6B400488E47 /* PaymentChoiceCell.swift in Sources */,
@@ -814,12 +893,27 @@
 				CE68BA932A9FA28F00488E47 /* NFTModel.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				CE2E5D202AAB5C88003FECAE /* CartRouter.swift in Sources */,
+=======
+				CAA169282AC17C880079E950 /* WebView.swift in Sources */,
+				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				CA70EFE02AB083CD00E45A8C /* DescriptionCollectionViewCell.swift in Sources */,
+				CA9C1AFD2A9F62B4005FBA8D /* TabBatViewController.swift in Sources */,
+				CA70EFC62AA5A45B00E45A8C /* NFTsCollectionNetworkModel.swift in Sources */,
+				CA70EFE22AB157F200E45A8C /* NFTCollectionViewCell.swift in Sources */,
+				CAA1C2892ABDE72900CD51FB /* NetworkRequests.swift in Sources */,
+				CA3D56AF2AB94E610004FE93 /* epic_catalog_plan.md in Sources */,
+				CA70EFD52AA6F79200E45A8C /* CollectionViewModel.swift in Sources */,
+				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				CA70EFCA2AA5AE2B00E45A8C /* OrderNetworkModel.swift in Sources */,
+				CA70EFC42AA5A33500E45A8C /* CollectionModel.swift in Sources */,
+>>>>>>> epic_catalog
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				CA9C1B032A9F7A2F005FBA8D /* CartViewController.swift in Sources */,
 				CE7E263C2AA74FAD00D8623E /* FavoritesNFTCollectionViewCell.swift in Sources */,
 				CE68BAA12AA0E0BD00488E47 /* CartLoadService.swift in Sources */,
 				CA9C1AFF2A9F79CC005FBA8D /* ProfileViewController.swift in Sources */,
 				CA9C1B052A9F7A4E005FBA8D /* StatisticViewController.swift in Sources */,
+<<<<<<< HEAD
 				CE27B4992AB2104D00FF4E5D /* UIBlockingProgressHUD.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				CEDF7A6A2AB0B8B5009FD8DA /* PaymentCurrencyModel.swift in Sources */,
@@ -829,6 +923,16 @@
 				CE4C5ECC2AAB8E5100245B10 /* Extension String.swift in Sources */,
 				CE68BA8E2A9F9C1700488E47 /* CartCell.swift in Sources */,
 				CE68BA972A9FDACE00488E47 /* Observable.swift in Sources */,
+=======
+				CA70EFDE2AA9FDC300E45A8C /* CollectionNFTSection.swift in Sources */,
+				CAA1C28B2ABDEC0F00CD51FB /* OrderUpdateRequest.swift in Sources */,
+				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				CA43D11E2AA4F98F0044D88C /* CollectionViewController.swift in Sources */,
+				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
+				CA70EFEB2AB3779700E45A8C /* Float+Extension.swift in Sources */,
+				CA9C1B0C2A9FAD0E005FBA8D /* CatalogTabelViewCell.swift in Sources */,
+				CA70EFED2AB37F8700E45A8C /* ProfileNetworkModel.swift in Sources */,
+>>>>>>> epic_catalog
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

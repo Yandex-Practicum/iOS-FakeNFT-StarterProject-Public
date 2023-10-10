@@ -1,22 +1,21 @@
 {
   "images" : [
     {
+      "filename" : "dislike.pdf",
 <<<<<<< HEAD
-      "filename" : "like.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "like@2x.png",
+      "filename" : "No Active@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "like@3x.png",
+      "filename" : "No Active@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
 =======
-      "filename" : "like.pdf",
       "idiom" : "universal"
 >>>>>>> epic_catalog
     }
