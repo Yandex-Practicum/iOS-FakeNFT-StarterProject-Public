@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06F519982AD5B3A200E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519902AD5B3A200E3B217 /* UserCardViewController.swift */; };
-		06F519992AD5B3A200E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519922AD5B3A200E3B217 /* StatisticsCell.swift */; };
-		06F5199A2AD5B3A200E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519932AD5B3A200E3B217 /* StatisticsViewModel.swift */; };
-		06F5199B2AD5B3A200E3B217 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519942AD5B3A200E3B217 /* StatisticsViewController.swift */; };
-		06F5199C2AD5B3A200E3B217 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519952AD5B3A200E3B217 /* User.swift */; };
-		06F5199D2AD5B3A200E3B217 /* UsersCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519972AD5B3A200E3B217 /* UsersCollectionViewController.swift */; };
 		06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */; };
 		06F519AA2AD5BAD400E3B217 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */; };
 		06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */; };
@@ -68,12 +62,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06F519902AD5B3A200E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
-		06F519922AD5B3A200E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
-		06F519932AD5B3A200E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
-		06F519942AD5B3A200E3B217 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
-		06F519952AD5B3A200E3B217 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		06F519972AD5B3A200E3B217 /* UsersCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCollectionViewController.swift; sourceTree = "<group>"; };
 		06F519A12AD5BAD400E3B217 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		06F519A32AD5BAD400E3B217 /* StatisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		06F519A42AD5BAD400E3B217 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
@@ -141,19 +129,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06F5199E2AD5BAA700E3B217 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				06F519922AD5B3A200E3B217 /* StatisticsCell.swift */,
-				06F519952AD5B3A200E3B217 /* User.swift */,
-				06F519902AD5B3A200E3B217 /* UserCardViewController.swift */,
-				06F519932AD5B3A200E3B217 /* StatisticsViewModel.swift */,
-				06F519942AD5B3A200E3B217 /* StatisticsViewController.swift */,
-				06F519972AD5B3A200E3B217 /* UsersCollectionViewController.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		06F5199F2AD5BAD400E3B217 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +195,6 @@
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
 				3F68069429CBBAF100B4F915 /* Products */,
-				06F5199E2AD5BAA700E3B217 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -541,10 +515,8 @@
 			files = (
 				71E3D1FC2AD2F20C0019EBCC /* Observable.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
-				06F519992AD5B3A200E3B217 /* StatisticsCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
-				06F5199C2AD5B3A200E3B217 /* User.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				06F519AD2AD5BAD400E3B217 /* User.swift in Sources */,
@@ -561,12 +533,8 @@
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				06F519A92AD5BAD400E3B217 /* UserCardViewController.swift in Sources */,
 				715D0F252AD1570000300497 /* BasketViewController.swift in Sources */,
-				06F519982AD5B3A200E3B217 /* UserCardViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
-				06F5199A2AD5B3A200E3B217 /* StatisticsViewModel.swift in Sources */,
 				715D0F262AD1570000300497 /* CatalogViewController.swift in Sources */,
-				06F5199B2AD5B3A200E3B217 /* StatisticsViewController.swift in Sources */,
-				06F5199D2AD5B3A200E3B217 /* UsersCollectionViewController.swift in Sources */,
 				06F519AB2AD5BAD400E3B217 /* StatisticsViewModel.swift in Sources */,
 				06F519AC2AD5BAD400E3B217 /* StatisticsViewController.swift in Sources */,
 			);

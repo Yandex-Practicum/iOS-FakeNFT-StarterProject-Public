@@ -17,7 +17,7 @@ final class UserCardViewController: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline3
+        label.font = .headline2
         label.textColor = .nftBlack
         label.text = "Joaquin Phoenix"
         return label

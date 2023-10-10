@@ -35,20 +35,21 @@ final class StatisticsCell: UITableViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.headline3
+        label.font = UIFont.headline2
         label.textColor = .nftBlack
         return label
     }()
     
     private lazy var collectionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.headline3
+        label.font = UIFont.headline2
         label.textColor = .nftBlack
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupCell()
     }
     
