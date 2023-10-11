@@ -60,6 +60,8 @@ final class UserCardViewController: UIViewController {
         image.tintColor = .nftBlack
         return image
     }()
+    
+    var users: User?
 // MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
