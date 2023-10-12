@@ -13,7 +13,7 @@
 		06F519AC2AD5BAD400E3B217 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A52AD5BAD400E3B217 /* StatisticsViewController.swift */; };
 		06F519AD2AD5BAD400E3B217 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A62AD5BAD400E3B217 /* User.swift */; };
 		06F519AE2AD5BAD400E3B217 /* UsersCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F519A82AD5BAD400E3B217 /* UsersCollectionViewController.swift */; };
-		06F519B02AD5C4AF00E3B217 /* StatisticsFlowDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = 06F519AF2AD5C4AF00E3B217 /* StatisticsFlowDecomposition.md */; };
+		06F519BA2AD84E1400E3B217 /* StatisticsFlowDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = 06F519B92AD84E1400E3B217 /* StatisticsFlowDecomposition.md */; };
 		224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */; };
 		224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */; };
 		224B633E2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */; };
@@ -69,7 +69,7 @@
 		06F519A52AD5BAD400E3B217 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		06F519A62AD5BAD400E3B217 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		06F519A82AD5BAD400E3B217 /* UsersCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCollectionViewController.swift; sourceTree = "<group>"; };
-		06F519AF2AD5C4AF00E3B217 /* StatisticsFlowDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = StatisticsFlowDecomposition.md; path = ../../Downloads/StatisticsFlowDecomposition.md; sourceTree = "<group>"; };
+		06F519B92AD84E1400E3B217 /* StatisticsFlowDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = StatisticsFlowDecomposition.md; sourceTree = "<group>"; };
 		224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		715D0F182AD156EF00300497 /* Doc */ = {
 			isa = PBXGroup;
 			children = (
-				06F519AF2AD5C4AF00E3B217 /* StatisticsFlowDecomposition.md */,
+				06F519B92AD84E1400E3B217 /* StatisticsFlowDecomposition.md */,
 				715D0F192AD156EF00300497 /* Catalog.md */,
 			);
 			path = Doc;
@@ -469,7 +469,7 @@
 				224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */,
 				715D0F322AD1691D00300497 /* Localizable.strings in Resources */,
 				715D0F352AD1693200300497 /* LaunchScreen.storyboard in Resources */,
-				06F519B02AD5C4AF00E3B217 /* StatisticsFlowDecomposition.md in Resources */,
+				06F519BA2AD84E1400E3B217 /* StatisticsFlowDecomposition.md in Resources */,
 				224B633E2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
