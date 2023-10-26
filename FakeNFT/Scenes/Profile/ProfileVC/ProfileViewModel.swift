@@ -2,7 +2,7 @@ import UIKit
 
 final class ProfileViewModel: ProfileViewModelProtocol {
 
-    private var dataProvider: DataProviderProtocol?
+    private var dataProvider: ProfileDataProviderProtocol?
 
     var profileObservable: Observable<Profile?> {
         $profile
@@ -12,7 +12,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     private(set) var profile: Profile?
     var showErrorAlert: ((String) -> Void)?
 
-    init(dataProvider: DataProviderProtocol?) {
+    init(dataProvider: ProfileDataProviderProtocol?) {
         self.dataProvider = dataProvider
         fetchProfile()
     }

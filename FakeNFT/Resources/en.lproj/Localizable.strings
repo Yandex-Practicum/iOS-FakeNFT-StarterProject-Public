@@ -6,6 +6,37 @@
   
 */
 
-
+// MARK: - General
+"general.OK" = "OK";
+"general.cancel" = "Cancel";
+"general.close" = "Close";
+"general.price" = "Price";
+"genreal.error" = "Error";
 
 "application.title" = "Fake NFT";
+
+// MARK: - Profile
+// MainScreen
+"profile.mainScreen.myNFT" = "My NFT";
+"profile.mainScreen.favouritesNFT" = "Favourite NFT";
+"profile.mainScreen.aboutDeveloper" = "About developer";
+
+// EditScreen
+"profile.editScreen.changePhoto" = "Change photo";
+"profile.editScreen.name" = "Name";
+"profile.editScreen.description" = "Description";
+"profile.editScreen.site" = "Site";
+"profile.editScreen.addPicture" = "Add picture";
+"profile.editScreen.pointLink" = "Type in link for photo";
+"profile.editScreen.enterLink" = "Type in link";
+
+//MyNFTScreen
+"profile.myNFT.title" = "My NFT";
+
+// MARK: - Sorting
+"sorting.title" = "Sorting";
+"sorting.byName" = "By name";
+"sorting.byTitle" = "By title";
+"sorting.byPrice" = "By price";
+"sorting.byNFTCount" = "By quantity";
+"sorting.byRating" = "By rating";

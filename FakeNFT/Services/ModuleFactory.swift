@@ -64,7 +64,7 @@ struct ModuleFactory {
     }
     
     static func createProfileViewController() -> UIViewController {
-        let profileViewModel = ProfileViewModel(dataProvider: DataProvider())
+        let profileViewModel = ProfileViewModel(dataProvider: ProfileDataProvider())
         return YPNavigationController(rootViewController: ProfileViewController(viewModel: profileViewModel))
     }
     

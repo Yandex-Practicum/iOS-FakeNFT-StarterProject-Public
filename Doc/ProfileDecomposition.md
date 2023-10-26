@@ -29,37 +29,37 @@
 
 #2nd Iteration
 
-## Экран Profile Editing (est 48 hr; fact x).
+## Экран Profile Editing (est 48 hr; fact 12 hr).
 
 #### Верстка
-- imageView с крестиком (est: 15 min; fact: x min).
-- аватар пользователя (est: 30 min; fact: x min).
-- label загрузить изображение (est: 30 min; fact: x min).
-- label плюс textfield с именем пользователя (est: 30 min; fact: x min).
-- label плюс textfield с описанием (est: 30 min; fact: x min).
-- label плюс textfield с гиперссылкой (est: 30 min; fact: x min).
+- imageView с крестиком (est: 15 min; fact: 10 min).
+- аватар пользователя (est: 30 min; fact: 20 min).
+- label загрузить изображение (est: 30 min; fact: 15 min).
+- label плюс textfield с именем пользователя (est: 30 min; fact: 30 min).
+- label плюс textfield с описанием (est: 30 min; fact: 15 min).
+- label плюс textfield с гиперссылкой (est: 30 min; fact: 15 min).
 
-`Total:` est: 165 min; fact: x min).
+`Total:` est: 165 min; fact: 105 min).
 
-## Экран My NFT (est 72 hr; fact x).
+## Экран My NFT (est 72 hr; fact 32 hr).
 
 #### Верстка
-- верстка навбара (est: 60 min; fact: x min).
-- ячейка таблицы (est: 60 min; fact: x min).
-- создание tableview (est: 60 min; fact: x min).
-- создание алерта типа actionsheet (est: 15 min; fact: x min).
-- label "у вас еще нет нфт" (est: 15 min; fact: x min).
+- верстка навбара (est: 60 min; fact: 10 min).
+- ячейка таблицы (est: 60 min; fact: 45 min).
+- создание tableview (est: 60 min; fact: 40 min).
+- создание алерта типа actionsheet (est: 15 min; fact: 20 min).
+- label "у вас еще нет нфт" (est: 15 min; fact: 10 min).
 
-`Total:` est: 210 min; fact: x min.
+`Total:` est: 210 min; fact: 125 min.
 
 #### Логика
-- Скрытие/показ лейбла/таблицы и элементов навбара в зависимости от наличия нфт у пользователя (est: 30 min; fact: x min).
-- Сортировка (est: 60 min; fact: x min).
-- Сохранить способ сортировки (est: 60 min; fact: x min).
-- Логика сетевого слоя для загрузки нфт пользователя (est: 120 min; fact: x min).
-- Индикатор загрузки (est: 30 min; fact: x min).
+- Скрытие/показ лейбла/таблицы и элементов навбара в зависимости от наличия нфт у пользователя (est: 30 min; fact: 30 min).
+- Сортировка (est: 60 min; fact: 60 min).
+- Сохранить способ сортировки (est: 60 min; fact: 20 min).
+- Логика сетевого слоя для загрузки нфт пользователя (est: 120 min; fact: 60 min).
+- Индикатор загрузки (est: 30 min; fact: 20 min).
 
-`Total:` est: 270 min; fact: x min.
+`Total:` est: 270 min; fact: 190 min.
 
 # 3rd Iteration
 

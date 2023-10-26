@@ -5,7 +5,37 @@
   Created by Vitaly on 06.10.2023.
   
 */
-
-
+// MARK: - General
+"general.OK" = "OK";
+"general.cancel" = "Отменить";
+"general.close" = "Закрыть";
+"general.price" = "Цена";
+"genreal.error" = "Ошибка";
 
 "application.title" = "Фейк NFT";
+
+// MARK: - Profile
+// MainScreen
+"profile.mainScreen.myNFT" = "Мои NFT";
+"profile.mainScreen.favouritesNFT" = "Избранные NFT";
+"profile.mainScreen.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"profile.editScreen.changePhoto" = "Сменить фото";
+"profile.editScreen.name" = "Имя";
+"profile.editScreen.description" = "Описание";
+"profile.editScreen.site" = "Cайт";
+"profile.editScreen.addPicture" = "Добавить изображение";
+"profile.editScreen.pointLink" = "Укажите ссылку на фото";
+"profile.editScreen.enterLink" = "Введите ссылку";
+
+//MyNFTScreen
+"profile.myNFT.title" = "Мои NFT";
+
+// MARK: - Sorting
+"sorting.title" = "Сортировка";
+"sorting.byName" = "По имени";
+"sorting.byTitle" = "По названию";
+"sorting.byPrice" = "По цене";
+"sorting.byNFTCount" = "По количеству NFT";
+"sorting.byRating" = "По рейтингу";

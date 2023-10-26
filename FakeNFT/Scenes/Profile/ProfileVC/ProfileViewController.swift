@@ -119,7 +119,7 @@ final class ProfileViewController: UIViewController {
             
             profileNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImage.trailingAnchor, constant: 16),
             profileNameLabel.centerYAnchor.constraint(equalTo: profileAvatarImage.centerYAnchor),
-            profileNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             profileDescriptionLabel.topAnchor.constraint(equalTo: profileAvatarImage.bottomAnchor, constant: 20),
             profileDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -169,7 +169,8 @@ final class ProfileViewController: UIViewController {
     
     @objc func presentEditVC() {
         let editProfileViewController = EditProfileViewController()
-        //TODO: set up EditProfileVC
+        editProfileViewController.profile = viewModel?.profileObservable.wrappedValue
+        editProfileViewController.delegate = self
         present(editProfileViewController, animated: true)
     }
 }
@@ -192,13 +193,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let profile = viewModel?.profileObservable.wrappedValue
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "Мои NFT" + " (\(profile?.nfts.count ?? 0))"
+            cell.textLabel?.text = NSLocalizedString("profile.mainScreen.myNFT", tableName: "Localizable", comment: "My NFT") + " (\(profile?.nfts.count ?? 0))"
         case 1:
-            cell.textLabel?.text = "Избранные NFT" + " (\(profile?.likes.count ?? 0))"
+            cell.textLabel?.text = NSLocalizedString("profile.mainScreen.favouritesNFT", tableName: "Localizable", comment: "Favourite NFT") + " (\(profile?.likes.count ?? 0))"
         case 2:
-            cell.textLabel?.text = "О разработчике"
+            cell.textLabel?.text = NSLocalizedString("profile.mainScreen.aboutDeveloper", tableName: "Localizable", comment: "About Developer")
         default:
-            cell.textLabel?.text =  ""
+            cell.textLabel?.text = ""
         }
         return cell
     }
@@ -206,8 +207,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            //TODO: set up MYnftsVC
-            let myNftsVC = MyNftsViewController()
+            let myNFTViewModel = MyNFTViewModel(dataProvider: ProfileDataProvider())
+            let myNftsVC = MyNftsViewController(viewModel: myNFTViewModel)
             myNftsVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(myNftsVC, animated: true)
         case 1:
