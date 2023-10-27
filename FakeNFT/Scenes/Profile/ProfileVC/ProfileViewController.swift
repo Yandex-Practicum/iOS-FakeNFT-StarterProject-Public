@@ -212,8 +212,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             myNftsVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(myNftsVC, animated: true)
         case 1:
-           //TODO: set up favoureite Nfts VC
-            let favouriteNftsVC = FavouriteNftsViewController()
+            let favouriteNftsViewModel = FavouriteNftsViewModel(dataProvider: ProfileDataProvider())
+            let favouriteNftsVC = FavouriteNftsViewController(viewModel: favouriteNftsViewModel)
             favouriteNftsVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(favouriteNftsVC, animated: true)
         case 2:
