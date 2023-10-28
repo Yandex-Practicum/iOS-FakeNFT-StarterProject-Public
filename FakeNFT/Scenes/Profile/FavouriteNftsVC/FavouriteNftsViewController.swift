@@ -13,22 +13,7 @@ final class FavouriteNftsViewController: UIViewController {
         setupUI()
         setupViews()
         setupConstraints()
-        
-        viewModel?.nftCardsObservable.bind { [weak self] _ in
-            guard let self else { return }
-            self.resumeMethodOnMainThread(self.collectionView.reloadData, with: ())
-        }
-        
-        viewModel?.profileObservable.bind { [weak self] profile in
-            guard let self else { return }
-            self.likesIds = profile?.likes ?? []
-            self.viewModel?.fetchNtfCards(likes: self.likesIds)
-        }
-        
-        viewModel?.showErrorAlert = { [weak self] message in
-            guard let self else { return }
-            self.resumeMethodOnMainThread(self.showNotificationBanner, with: message)
-        }
+        setUpBindings()
     }
 
     // MARK: - Init
@@ -71,6 +56,25 @@ final class FavouriteNftsViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    // MARK: - SetupUI
+    
+    private func setUpBindings() {
+        viewModel?.nftCardsObservable.bind { [weak self] _ in
+            guard let self else { return }
+            self.resumeMethodOnMainThread(self.collectionView.reloadData, with: ())
+        }
+        
+        viewModel?.profileObservable.bind { [weak self] profile in
+            guard let self else { return }
+            self.likesIds = profile?.likes ?? []
+            self.viewModel?.fetchNtfCards(likes: self.likesIds)
+        }
+        
+        viewModel?.showErrorAlert = { [weak self] message in
+            guard let self else { return }
+            self.resumeMethodOnMainThread(self.showNotificationBanner, with: message)
+        }
     }
 }
 

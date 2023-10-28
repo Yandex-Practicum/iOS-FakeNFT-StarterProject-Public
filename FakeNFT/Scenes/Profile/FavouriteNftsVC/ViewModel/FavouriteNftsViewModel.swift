@@ -59,6 +59,7 @@ final class FavouriteNftsViewModel: FavouriteNftsViewModelProtocol {
                                  nfts: profile.nfts,
                                  likes: likesIds,
                                  id: profile.id)
+        
         dataProvider?.changeProfile(profile: newProfile, completion: { [weak self] result in
             guard let self else { return }
             switch result {
