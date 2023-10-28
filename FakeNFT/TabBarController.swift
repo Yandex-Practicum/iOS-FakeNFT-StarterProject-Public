@@ -12,6 +12,12 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBar.backgroundColor = .background
+        tabBar.barTintColor = .background
+        tabBar.tintColor = .ypBlue
+        tabBar.unselectedItemTintColor = .ypLightGrey
+        tabBar.isTranslucent = false
+        
         //Профиль
         let profileViewController = ProfileViewController()
         
@@ -29,12 +35,15 @@ final class TabBarController: UITabBarController {
         catalogViewController.tabBarItem = UITabBarItem(title: "Каталог", image: UIImage(systemName: "square.stack.3d.up.fill"), selectedImage: nil)
         
         //Корзина
-        let shoppingCartViewController = ShoppingCartViewController()
+        let cartModel: ShoppingCartContentLoader = ShoppingCartContentLoader(networkClient: DefaultNetworkClient())
+        let cartViewModel: ShoppingCartViewModel = ShoppingCartViewModel(model: cartModel)
         
-        let shoppingCartViewModel = ShoppingCartViewModel()
-        shoppingCartViewController.shoppingCartViewModel = shoppingCartViewModel
-        
-        shoppingCartViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "trash"), selectedImage: nil)
+        let cartVC = UINavigationController(rootViewController: ShoppingCartViewController(viewModel: cartViewModel))
+       
+        cartVC.tabBarItem = UITabBarItem(
+            title: "Корзина",
+            image: UIImage(named: "cartTabBarImageNoActive"),
+            selectedImage: UIImage(named: "cartTabBarImageActive"))
         
         //Статистика
         let statisticsViewController = StatisticsViewController()
@@ -44,6 +53,6 @@ final class TabBarController: UITabBarController {
         
         statisticsViewController.tabBarItem = UITabBarItem(title: "Статистика", image: UIImage(systemName: "flag.2.crossed.fill"), selectedImage: nil)
         
-        self.viewControllers = [profileViewController, catalogViewController, shoppingCartViewController, statisticsViewController]
+        self.viewControllers = [profileViewController, catalogViewController, cartVC, statisticsViewController]
     }
 }

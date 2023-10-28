@@ -29,11 +29,17 @@ extension UIColor {
     static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
 
     // Background Colors
-    static let background = UIColor.white
-
+    static let background = UIColor(named: "background")
+    static let ypGreen = UIColor(named: "ypGreen")
+    static let ypLightGrey = UIColor(named: "ypLightGrey")
+    static let ypBlack = UIColor(named: "ypBlack")
+    static let ypBlue = UIColor(named: "ypBlue")
+    static let ypRed = UIColor(named: "ypRed")
+    static let ypWhite = UIColor(named: "ypWhite")
+    
     // Text Colors
-    static let textPrimary = UIColor.black
+    static let textPrimary = UIColor(named: "ypBlack") ?? UIColor.black
     static let textSecondary = UIColor.gray
     static let textOnPrimary = UIColor.white
-    static let textOnSecondary = UIColor.black
+    static let textOnSecondary = UIColor(named: "ypBlack") ?? UIColor.black
 }
