@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "5579602C-DACA-4296-85DB-175219B0BA8E"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "642D084C-D0E3-4C3F-98D0-67913CBAD480"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Scenes /Statistics/StatisticsRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "goToProfile(userID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "642D084C-D0E3-4C3F-98D0-67913CBAD480 - d4218d5698be6149"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.StatisticsRouter.goToProfile(userID: Swift.String) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/konstantinzuykov/Desktop/untitled%20folder/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Statistics/StatisticsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "642D084C-D0E3-4C3F-98D0-67913CBAD480 - 709d20aa77ec01fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.StatisticsNavigation.goToProfile(userID: Swift.String) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/konstantinzuykov/Desktop/untitled%20folder/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Statistics/StatisticsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "642D084C-D0E3-4C3F-98D0-67913CBAD480 - 709d20aa77ec01fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeNFT.StatisticsNavigation.goToProfile(userID: Swift.String) -&gt; ()"
+                  moduleName = "FakeNFT"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/konstantinzuykov/Desktop/untitled%20folder/iOS-FakeNFT-StarterProject-Public/FakeNFT/Scenes%20/Statistics/StatisticsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF03720C-8AE9-4228-B1DD-40DFF27C2651"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Scenes /Statistics/StatUserView/StatisticsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "348B447B-DB25-4ABA-B26E-005B15FE59C1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Scenes /Statistics/StatUserView/ViewModel/StatisticsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "didSelectItem(indexPath:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D97BA3B-DF92-4ED1-A898-5A460BAAF7C8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Scenes /Statistics/StatUserView/ViewModel/StatisticsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "init(model:router:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3A368D81-CAB5-4356-890A-32D4DEA3075E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeNFT/Scenes /Statistics/StatisticsRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "assembleUserCardModule(userID:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
