@@ -50,7 +50,7 @@ final class StatisticsUserNFTCollectionViewController:
         let backImage = UIImage(systemName: "chevron.backward")?
             .withTintColor(.ypBlack ?? .black)
             .withRenderingMode(.alwaysOriginal)
-        navigationItem.title = "nftCollection"
+        navigationItem.title = "Коллекция NFT"
 
         if self !== navigationController?.viewControllers.first {
             navigationItem.leftBarButtonItem = UIBarButtonItem(

@@ -52,7 +52,7 @@ final class StatisticsUserProfileViewModel {
         guard let profile else {
             return
         }
-
-       // router.goToUserNFTCollection(nftIDs: profile.nfts, likes: profile.rating)
+        router.goToUserNFTCollection(nftIDs: profile.nfts)
+        //print(profile)
     }
 }

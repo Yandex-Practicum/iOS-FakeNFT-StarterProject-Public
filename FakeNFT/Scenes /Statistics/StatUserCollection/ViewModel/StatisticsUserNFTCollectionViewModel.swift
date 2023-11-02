@@ -10,13 +10,12 @@ final class StatisticsUserNFTCollectionViewModel {
     private let model: StatisticsUserNFTCollectionModel
     private let router: StatisticsNavigation
     private let nftIDs: Set<String>
-    private let likes: Set<String>
 
-    init(model: StatisticsUserNFTCollectionModel, router: StatisticsNavigation, nftIDs: [String], likes: [String]) {
+    init(model: StatisticsUserNFTCollectionModel, router: StatisticsNavigation, nftIDs: [String]) {
         self.model = model
         self.router = router
         self.nftIDs = Set(nftIDs)
-        self.likes = Set(likes)
+
     }
 
     func loadData() {
@@ -36,8 +35,7 @@ final class StatisticsUserNFTCollectionViewModel {
                 switch result {
                 case .success(let nftModel):
                     loadedDictionary[id] = StatisticsUserNFTCollectionCellModel(
-                        nftModel: nftModel,
-                        isLiked: self.likes.contains(id)
+                        nftModel: nftModel
                     )
                 case .failure(let error):
                     print(error)

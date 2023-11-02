@@ -129,6 +129,5 @@ extension StatisticsViewController {
 extension StatisticsViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelectItem(indexPath: indexPath)
-        //print(indexPath)
     }
 }

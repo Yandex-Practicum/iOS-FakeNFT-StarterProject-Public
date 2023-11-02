@@ -28,7 +28,7 @@ final class StatisticsUserProfileViewController: UIViewController {
         let usersWebsite = UIButton()
         usersWebsite.layer.cornerRadius = 16
         usersWebsite.layer.borderWidth = 1
-        usersWebsite.setTitle("goWebsite", for: .normal)
+        usersWebsite.setTitle("Перейти на сайт пользователя", for: .normal)
         usersWebsite.layer.borderColor = UIColor.ypBlack?.cgColor
         usersWebsite.titleLabel?.font = .caption1
         usersWebsite.setTitleColor(.ypBlack, for: .normal)
@@ -71,7 +71,7 @@ final class StatisticsUserProfileViewController: UIViewController {
             self.usersAvatar.kf.setImage(with: profile.avatar)
             self.userName.text = profile.name
             self.userDescription.text = profile.description
-            self.usersCollectionButton.setTitle("nftCollection"   + " (\(profile.nfts.count))", for: .normal)
+            self.usersCollectionButton.setTitle("Коллекция NFT"   + " (\(profile.nfts.count))", for: .normal)
         }
     }
 

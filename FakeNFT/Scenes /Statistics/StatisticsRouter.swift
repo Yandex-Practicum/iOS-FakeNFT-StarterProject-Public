@@ -5,7 +5,7 @@ protocol StatisticsNavigationProtocol {
     func goBack()
     func goToProfile(userID: String)
     func goToUserWebsite(url: URL)
-    func goToUserNFTCollection(nftIDs: [String], likes: [String])
+    func goToUserNFTCollection(nftIDs: [String])
 }
 
 final class StatisticsNavigation: StatisticsNavigationProtocol {
@@ -21,15 +21,14 @@ final class StatisticsNavigation: StatisticsNavigationProtocol {
         let profileViewController = assembleUserCardModule(userID: userID)
         navigationController?.pushViewController(profileViewController, animated: true)
     }
-        
 
     func goToUserWebsite(url: URL) {
         let webKitViewController = assembleWKWebView(url: url)
         navigationController?.pushViewController(webKitViewController, animated: true)
     }
 
-    func goToUserNFTCollection(nftIDs: [String], likes: [String]) {
-        let collectionViewController = assembleUserCollectionModule(nftIDs: nftIDs, likes: likes)
+    func goToUserNFTCollection(nftIDs: [String]) {
+        let collectionViewController = assembleUserCollectionModule(nftIDs: nftIDs)
         navigationController?.pushViewController(collectionViewController, animated: true)
     }
 }
@@ -51,13 +50,12 @@ extension StatisticsNavigation {
         return view
     }
 
-    private func assembleUserCollectionModule(nftIDs: [String], likes: [String]) -> UIViewController {
+    private func assembleUserCollectionModule(nftIDs: [String]) -> UIViewController {
         let model = StatisticsUserNFTCollectionModel(networkClient: networkClient)
         let viewModel = StatisticsUserNFTCollectionViewModel(
             model: model,
             router: self,
-            nftIDs: nftIDs,
-            likes: likes
+            nftIDs: nftIDs
         )
         let view = StatisticsUserNFTCollectionViewController(viewModel: viewModel)
 

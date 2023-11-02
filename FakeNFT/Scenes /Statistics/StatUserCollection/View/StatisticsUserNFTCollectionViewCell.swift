@@ -46,7 +46,7 @@ final class StatisticsUserNFTCollectionViewCell: UICollectionViewCell, ReuseIden
 
     private let usersCollectionItemFavoriteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.setImage(UIImage(named: "Like"), for: .normal)
         return button
     }()
 
@@ -77,8 +77,8 @@ final class StatisticsUserNFTCollectionViewCell: UICollectionViewCell, ReuseIden
             usersCollectionItemImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             usersCollectionItemImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
 
-            usersCollectionItemFavoriteButton.topAnchor.constraint(equalTo: usersCollectionItemImage.topAnchor, constant: 10),
-            usersCollectionItemFavoriteButton.trailingAnchor.constraint(equalTo: usersCollectionItemImage.trailingAnchor, constant: -10),
+            usersCollectionItemFavoriteButton.topAnchor.constraint(equalTo: usersCollectionItemImage.topAnchor, constant: 5),
+            usersCollectionItemFavoriteButton.trailingAnchor.constraint(equalTo: usersCollectionItemImage.trailingAnchor, constant: -5),
 
             usersCollectionItemRating.topAnchor.constraint(equalTo: usersCollectionItemImage.bottomAnchor, constant: 8),
             usersCollectionItemRating.heightAnchor.constraint(equalToConstant: 12),
@@ -110,7 +110,6 @@ final class StatisticsUserNFTCollectionViewCell: UICollectionViewCell, ReuseIden
 
     func configure(with model: StatisticsUserNFTCollectionCellModel) {
         usersCollectionItemImage.kf.setImage(with: model.icon)
-        usersCollectionItemFavoriteButton.tintColor = model.isLiked ? .red : .white
         setRating(rating: model.rating)
         usersCollectionItemName.text = model.name
         usersCollectionItemPrice.text = model.price
