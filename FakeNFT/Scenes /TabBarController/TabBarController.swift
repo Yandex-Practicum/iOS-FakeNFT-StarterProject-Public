@@ -3,23 +3,32 @@ import UIKit
 final class TabBarController: UITabBarController {
 
     var servicesAssembly: ServicesAssembly!
-
-    private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
-        tag: 0
-    )
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        
+        let servicesAssembly = ServicesAssembly(
+            networkClient: DefaultNetworkClient(),
+            nftStorage: NftStorageImpl()
         )
-        catalogController.tabBarItem = catalogTabBarItem
+        
+        let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
+        
+        catalogController.tabBarItem = UITabBarItem(
+            title: Constants.catalogueTabBarTitle,
+            image: UIImage(named: Constants.tabBarCatalogue),
+            selectedImage: nil)
 
         viewControllers = [catalogController]
-
-        view.backgroundColor = .systemBackground
+        tabBar.unselectedItemTintColor = .black
     }
 }

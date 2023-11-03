@@ -3,13 +3,20 @@ import UIKit
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    let servicesAssembly = ServicesAssembly(
-        networkClient: DefaultNetworkClient(),
-        nftStorage: NftStorageImpl()
-    )
+    
 
-    func scene(_: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-        let tabBarController = window?.rootViewController as? TabBarController
-        tabBarController?.servicesAssembly = servicesAssembly
+    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
+        
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            window.backgroundColor = .systemBackground
+            
+            let tabBarController = TabBarController()
+            
+            window.rootViewController = tabBarController
+            
+            self.window = window
+            window.makeKeyAndVisible()
+        }
     }
 }
