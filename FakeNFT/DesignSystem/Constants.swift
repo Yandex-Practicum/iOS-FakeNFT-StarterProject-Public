@@ -33,4 +33,7 @@ struct Constants {
     static let addToBasketPicTitle = "basket_add"
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
+    
+    //MARK: - Catalog constants
+    static let catalogTableViewCellIdentifier = "catalogTableViewCell"
 }
