@@ -10,11 +10,11 @@ import Foundation
 struct Constants {
     static let openNftTitle = NSLocalizedString("Catalog.openNft", comment: "")
     static let testNftId = "22"
-    
-    //MARK: - tabbar titles
+
+    // MARK: - tabbar titles
     static let catalogueTabBarTitle = "Каталог"
-    
-    //MARK: - assets names
+
+    // MARK: - assets names
     static let tabBarStatistics = "tabbar_statistics"
     static let tabBarProfile = "tabbar_profile"
     static let tabBarCatalogue = "tabbar_catalogue"
