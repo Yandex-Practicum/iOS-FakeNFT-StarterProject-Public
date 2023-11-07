@@ -36,4 +36,9 @@ struct Constants {
     
     //MARK: - Catalog constants
     static let catalogTableViewCellIdentifier = "catalogTableViewCell"
+    static let filterKey = "catalogFilter"
+    static let filterAlertTitle = "Сортировка"
+    static let filetNameButtonTitle = "По названию"
+    static let filterQuantityButtonTitle = "По количеству NFT"
+    static let closeAlertButtonTitle = "Отменить"
 }

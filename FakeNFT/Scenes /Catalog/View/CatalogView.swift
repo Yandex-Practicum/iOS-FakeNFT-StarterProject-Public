@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol CatalogViewDelegate: UIViewController {
+    func selectedCategory(_ model: Catalog)
+}
+
 final class CatalogView: UIView {
     
     var viewModel: CatalogViewModelProtocol!
@@ -23,9 +27,11 @@ final class CatalogView: UIView {
         return tableView
     }()
     private var subscribes = [AnyCancellable]()
+    weak var delegate: CatalogViewDelegate?
     
-    init(frame: CGRect, viewModel: CatalogViewModelProtocol) {
+    init(frame: CGRect, viewModel: CatalogViewModelProtocol, delegate: CatalogViewDelegate) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(frame: frame)
         setupUI()
         bind()
@@ -34,11 +40,6 @@ final class CatalogView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    func update() {
-//        tableView.reloadData()
-//    }
-//    
     
     private func setupUI() {
         backgroundColor = .systemBackground
@@ -97,5 +98,14 @@ extension CatalogView: UITableViewDataSource {
 extension CatalogView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 187
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
+        
+        let model = viewModel.catalog[indexPath.row]
+        delegate?.selectedCategory(model)
     }
 }
