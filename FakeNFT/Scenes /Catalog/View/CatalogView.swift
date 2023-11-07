@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 final class CatalogView: UIView {
     
+    var viewModel: CatalogViewModelProtocol!
     private let reuseIdentifier = Constants.catalogTableViewCellIdentifier
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -20,15 +22,23 @@ final class CatalogView: UIView {
         
         return tableView
     }()
+    private var subscribes = [AnyCancellable]()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, viewModel: CatalogViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    func update() {
+//        tableView.reloadData()
+//    }
+//    
     
     private func setupUI() {
         backgroundColor = .systemBackground
@@ -39,6 +49,16 @@ final class CatalogView: UIView {
         
         addSubviews()
         applyConstraints()
+    }
+    
+    private func bind() {
+        viewModel.catalogPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+            guard let self = self else { return }
+
+            tableView.reloadData()
+                
+            }.store(in: &subscribes)
     }
     
     private func addSubviews() {
@@ -57,7 +77,7 @@ final class CatalogView: UIView {
 
 extension CatalogView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel.catalog.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,10 +85,10 @@ extension CatalogView: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
-        let text = "Pictures"
-        let counter = 10
         
-        cell.configureCell(text: text, counter: counter)
+        let model = viewModel.catalog[indexPath.row]
+        
+        cell.configureCell(model: model)
         
         return cell
     }

@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CatalogTableViewCell: UITableViewCell {
     
     private let NFTImageView: UIImageView = {
         let imageView = UIImageView()
         
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "cell_stub")
         
         return imageView
     }()
@@ -38,12 +40,22 @@ final class CatalogTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(text: String, counter: Int) {
-        descriptionLabel.text = "\(text) (\(counter))"
+    func configureCell(model: Catalog) {
+        descriptionLabel.text = "\(model.name) (\(model.nfts.count))"
+//        let url = URL(string: model.coverURL)!
+        
+        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+//        let processor = RoundCornerImageProcessor(cornerRadius: 40)
+        
+        NFTImageView.kf.setImage(
+            with: model.coverURL,
+            options: [.processor(processor)]
+        )
     }
     
     private func setupUI() {
         contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 12
     
         addSubviews()
         applyConstraints()

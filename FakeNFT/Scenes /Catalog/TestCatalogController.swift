@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class TestCatalogViewController: UIViewController {
 
