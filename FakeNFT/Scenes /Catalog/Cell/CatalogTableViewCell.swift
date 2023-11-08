@@ -10,6 +10,7 @@ import Kingfisher
 
 final class CatalogTableViewCell: UITableViewCell {
     
+    //MARK: - Private properties
     private let NFTImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -25,7 +26,6 @@ final class CatalogTableViewCell: UITableViewCell {
         
         label.textColor = UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.text = "Hello"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -43,9 +43,14 @@ final class CatalogTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        NFTImageView.kf.cancelDownloadTask()
+    }
+    
+    //MARK: - Public methods
     func configureCell(model: Catalog) {
-        gradient.isHidden = false
-        gradient.startAnimating()
+        startAnimation()
         
         descriptionLabel.text = "\(model.name) (\(model.nfts.count))"
         
@@ -57,11 +62,11 @@ final class CatalogTableViewCell: UITableViewCell {
             options: [.processor(processor)],
             completionHandler: { [weak self] _ in
                 guard let self = self else { return }
-                self.gradient.stopAnimating()
-                self.gradient.isHidden = true
+                self.stopAnimation()
             })
     }
     
+    //MARK: - Private methods
     private func setupUI() {
         contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 12
@@ -96,5 +101,15 @@ final class CatalogTableViewCell: UITableViewCell {
             descriptionLabel.trailingAnchor.constraint(equalTo: NFTImageView.trailingAnchor),
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1),
         ])
+    }
+    
+    private func startAnimation() {
+        gradient.isHidden = false
+        gradient.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        gradient.stopAnimating()
+        gradient.isHidden = true
     }
 }

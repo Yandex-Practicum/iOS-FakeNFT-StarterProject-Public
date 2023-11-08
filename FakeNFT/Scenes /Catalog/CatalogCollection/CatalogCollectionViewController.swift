@@ -9,12 +9,13 @@ import UIKit
 
 final class CatalogCollectionViewController: UIViewController {
     
-    
+    private var catalogCollectionView: CatalogCollectionView!
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .gray
         
+        catalogCollectionView = CatalogCollectionView()
+        self.view = catalogCollectionView
     }
     
     required init?(coder: NSCoder) {

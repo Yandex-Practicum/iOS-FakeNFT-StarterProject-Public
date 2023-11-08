@@ -14,7 +14,11 @@ protocol CatalogViewDelegate: UIViewController {
 
 final class CatalogView: UIView {
     
+    //MARK: - Public properties
     var viewModel: CatalogViewModelProtocol!
+    weak var delegate: CatalogViewDelegate?
+    
+    //MARK: - Private properties
     private let reuseIdentifier = Constants.catalogTableViewCellIdentifier
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -27,7 +31,6 @@ final class CatalogView: UIView {
         return tableView
     }()
     private var subscribes = [AnyCancellable]()
-    weak var delegate: CatalogViewDelegate?
     
     init(frame: CGRect, viewModel: CatalogViewModelProtocol, delegate: CatalogViewDelegate) {
         self.viewModel = viewModel
@@ -41,6 +44,7 @@ final class CatalogView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private methods
     private func setupUI() {
         backgroundColor = .systemBackground
         
@@ -76,6 +80,7 @@ final class CatalogView: UIView {
     }
 }
 
+//MARK: - UITableViewDataSource
 extension CatalogView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.catalog.count
@@ -95,6 +100,7 @@ extension CatalogView: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension CatalogView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 187

@@ -6,10 +6,10 @@
 //
 
 import UIKit
-import Combine
 
 final class CatalogViewController: UIViewController {
     
+    //MARK: - Private properties
     private var viewModel: CatalogViewModelProtocol!
     private var catalogView: CatalogView!
     private lazy var sortButton: UIBarButtonItem = {
@@ -24,15 +24,12 @@ final class CatalogViewController: UIViewController {
         
         return button
     }()
-    private var subscribes = [AnyCancellable]()
     
     init() {
         super.init(nibName: nil, bundle: nil)
         setupUI()
         
-        let network = DefaultNetworkClient()
-        let service = CatalogService(networkClient: network)
-        viewModel = CatalogViewModel(catalogService: service)
+        viewModel = CatalogAssembly.shared.buildCatalogViewModel()
         
         catalogView = CatalogView(frame: .zero, viewModel: viewModel, delegate: self)
         self.view = catalogView
@@ -42,12 +39,7 @@ final class CatalogViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupCatalogView() {
-        let network = DefaultNetworkClient()
-        let service = CatalogService(networkClient: network)
-        viewModel = CatalogViewModel(catalogService: service)
-    }
-    
+    //MARK: - Private mathods
     private func setupUI() {
         configureNavBar()
     }
@@ -71,11 +63,9 @@ final class CatalogViewController: UIViewController {
             quantitySortText: Constants.filterQuantityButtonTitle,
             cancelButtonText: Constants.closeAlertButtonTitle) { [weak self] in
                 guard let self = self else { return }
-                print("name")
                 viewModel.sortCatalogByName()
             } sortQuantityCompletion: { [weak self] in
                 guard let self = self else { return }
-                print("qnt")
                 viewModel.sortCatalogByQuantity()
             }
 
@@ -83,6 +73,7 @@ final class CatalogViewController: UIViewController {
     }
 }
 
+//MARK: - CatalogViewControllerDelegate
 extension CatalogViewController: CatalogViewDelegate {
     func selectedCategory(_ model: Catalog) {
         let vc = CatalogCollectionViewController()

@@ -10,15 +10,17 @@ import Combine
 
 protocol CatalogServiceProtocol {
     var catalogServicePublisher: Published<Array<Catalog>>.Publisher { get }
-//    var catalogVM: CatalogViewModelProtocol! { get set }
     var catalog: [Catalog] { get }
     func fetchCatalog()
 }
 
 final class CatalogService: CatalogServiceProtocol {
-//    var catalogVM: CatalogViewModelProtocol!
+    
+    //MARK: - Public properties
     @Published var catalog: [Catalog] = []
     var catalogServicePublisher: Published<Array<Catalog>>.Publisher { $catalog }
+    
+    //MARK: - Private properties
     private let request = CatalogRequest()
     private let networkClient: NetworkClient
     private var task: NetworkTask?
@@ -27,6 +29,7 @@ final class CatalogService: CatalogServiceProtocol {
         self.networkClient = DefaultNetworkClient()
     }
     
+    //MARK: - Public methods
     func fetchCatalog() {
         
         let _ = networkClient
@@ -44,11 +47,8 @@ final class CatalogService: CatalogServiceProtocol {
                                 authorID: $0.author,
                                 id: $0.id)
                         }
-                        print(catalog.count)
-//                        catalogVM.catalog = catalog
                     case .failure(_):
                         print("error")
-                        //                        task?.cancel()
                     }
                 }
             })

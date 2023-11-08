@@ -9,6 +9,7 @@ import UIKit
 
 final class GradientView: UIView {
     
+    //MARK: - Private properties
     private let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
@@ -17,11 +18,32 @@ final class GradientView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupGradient()
+        fatalError("init(coder:) has not been implemented")
     }
     
-    func setupGradient() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+    
+    //MARK: - Public methods
+    func startAnimating() {
+        let animation = CABasicAnimation(keyPath: "locations")
+        
+        animation.fromValue = [-0.1, 0, 0.1, 0.2, 0.3]
+        animation.toValue = [1, 1.1, 1.2, 1.3, 1.4]
+        animation.duration = 1.25
+        animation.repeatCount = .infinity
+        
+        gradientLayer.add(animation, forKey: "locations")
+    }
+    
+    func stopAnimating() {
+        gradientLayer.removeAnimation(forKey: "locations")
+    }
+    
+    //MARK: - Private methods
+    private func setupGradient() {
         gradientLayer.colors = [
             UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1).cgColor,
             UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor,
@@ -37,24 +59,7 @@ final class GradientView: UIView {
         gradientLayer.frame = bounds
         gradientLayer.cornerRadius = 12
         gradientLayer.masksToBounds = true
+        
         layer.addSublayer(gradientLayer)
-    }
-
-    func startAnimating() {
-        let animation = CABasicAnimation(keyPath: "locations")
-        animation.fromValue = [-0.1, 0, 0.1, 0.2, 0.3]
-        animation.toValue = [1, 1.1, 1.2, 1.3, 1.4]
-        animation.duration = 1.25
-        animation.repeatCount = .infinity
-        gradientLayer.add(animation, forKey: "locations")
-    }
-    
-    func stopAnimating() {
-        gradientLayer.removeAnimation(forKey: "locations")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradientLayer.frame = bounds
     }
 }

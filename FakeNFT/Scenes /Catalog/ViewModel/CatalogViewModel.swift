@@ -17,21 +17,27 @@ protocol CatalogViewModelProtocol: AnyObject {
 }
 
 final class CatalogViewModel: CatalogViewModelProtocol {
+    
+    //MARK: - Public properties
     @Published var catalog: [Catalog] = []
     var catalogPublisher: Published<Array<Catalog>>.Publisher { $catalog }
+    
+    //MARK: - Private properties
     private var filter: CatalogFilter?
     private var catalogService: CatalogServiceProtocol
     private var subscribes = [AnyCancellable]()
     
     init(catalogService: CatalogServiceProtocol) {
         self.catalogService = catalogService
-        self.catalogService.fetchCatalog()
-        catalog = catalogService.catalog
+        
         subscribe()
+        fetchCatalog()
+        
         self.filter = CatalogFilter(rawValue: CatalogFilterStorage.shared.filterDescriptor ?? "name")
         sortCatalog()
     }
     
+    //MARK: - Public methods
     func sortCatalog() {
         switch filter {
         case .name:
@@ -53,12 +59,17 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.quantity.rawValue
     }
     
+    //MARK: - Private mathods
     private func subscribe() {
         catalogService.catalogServicePublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] catalogUpdate in
                 guard let self = self else { return }
-                catalog = catalogService.catalog
+                catalog = catalogUpdate
                 sortCatalog()
             }.store(in: &subscribes)
+    }
+    
+    private func fetchCatalog() {
+        catalogService.fetchCatalog()
     }
 }
