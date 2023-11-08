@@ -8,7 +8,8 @@
 import UIKit
 
 final class CatalogCollectionViewController: UIViewController {
-    
+    //stub to check screen presentation from Catalog screen
+    //TODO implement the rest of the logic in the next third of epic after the first review
     private var catalogCollectionView: CatalogCollectionView!
     
     init() {

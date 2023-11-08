@@ -49,6 +49,7 @@
 		440DD61D2AF66B1A00B27450 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DD61C2AF66B1A00B27450 /* AlertModel.swift */; };
 		446AA3AB2AF52452008F4B9D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446AA3AA2AF52452008F4B9D /* Constants.swift */; };
 		44C8AA802AFB82DC00635019 /* CatalogAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C8AA7F2AFB82DC00635019 /* CatalogAssembly.swift */; };
+		44C8AA822AFB958B00635019 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C8AA812AFB958B00635019 /* UIBlockingProgressHUD.swift */; };
 		44FA956B2AFA4E810085DBA7 /* CatalogResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956A2AFA4E810085DBA7 /* CatalogResult.swift */; };
 		44FA956D2AFA4EE20085DBA7 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956C2AFA4EE20085DBA7 /* Catalog.swift */; };
 		44FA95702AFA4FFA0085DBA7 /* CatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956F2AFA4FFA0085DBA7 /* CatalogService.swift */; };
@@ -125,6 +126,7 @@
 		440DD61C2AF66B1A00B27450 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		446AA3AA2AF52452008F4B9D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		44C8AA7F2AFB82DC00635019 /* CatalogAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogAssembly.swift; sourceTree = "<group>"; };
+		44C8AA812AFB958B00635019 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		44FA956A2AFA4E810085DBA7 /* CatalogResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogResult.swift; sourceTree = "<group>"; };
 		44FA956C2AFA4EE20085DBA7 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		44FA956F2AFA4FFA0085DBA7 /* CatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogService.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				44FA95712AFA57F70085DBA7 /* CatalogRequest.swift */,
 				44FA95732AFAA8C30085DBA7 /* CatalogFilterStorage.swift */,
 				44C8AA7F2AFB82DC00635019 /* CatalogAssembly.swift */,
+				44C8AA812AFB958B00635019 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
+				44C8AA822AFB958B00635019 /* UIBlockingProgressHUD.swift in Sources */,
 				44FA956B2AFA4E810085DBA7 /* CatalogResult.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				44FA95742AFAA8C30085DBA7 /* CatalogFilterStorage.swift in Sources */,

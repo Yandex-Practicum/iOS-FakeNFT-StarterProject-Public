@@ -50,6 +50,7 @@ final class CatalogTableViewCell: UITableViewCell {
     
     //MARK: - Public methods
     func configureCell(model: Catalog) {
+        UIBlockingProgressHUD.dismiss()
         startAnimation()
         
         descriptionLabel.text = "\(model.name) (\(model.nfts.count))"

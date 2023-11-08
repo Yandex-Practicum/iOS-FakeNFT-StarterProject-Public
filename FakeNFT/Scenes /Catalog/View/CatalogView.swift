@@ -107,7 +107,7 @@ extension CatalogView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else {
+        guard let _ = tableView.cellForRow(at: indexPath) else {
             return
         }
         
