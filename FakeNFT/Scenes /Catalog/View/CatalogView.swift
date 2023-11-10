@@ -10,6 +10,9 @@ import Combine
 
 protocol CatalogViewDelegate: UIViewController {
     func selectedCategory(_ model: Catalog)
+    func showErrorAlert()
+    func startAnimatingActivityIndicator()
+    func stopAnimatingActivityIndicator()
 }
 
 final class CatalogView: UIView {
@@ -44,6 +47,10 @@ final class CatalogView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func reloadData() {
+        viewModel.fetchCatalog()
+    }
+    
     //MARK: - Private methods
     private func setupUI() {
         backgroundColor = .systemBackground
@@ -63,6 +70,22 @@ final class CatalogView: UIView {
 
             tableView.reloadData()
                 
+            }.store(in: &subscribes)
+        
+        viewModel.loadingDataPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                guard let self = self else { return }
+                
+                isLoading ?
+                delegate?.startAnimatingActivityIndicator() : delegate?.stopAnimatingActivityIndicator()
+                
+            }.store(in: &subscribes)
+        viewModel.errorPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                if let error = error {
+                    delegate?.showErrorAlert()
+                }
             }.store(in: &subscribes)
     }
     

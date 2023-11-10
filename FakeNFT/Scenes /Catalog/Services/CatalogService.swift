@@ -6,19 +6,15 @@
 //
 
 import Foundation
-import Combine
 
 protocol CatalogServiceProtocol {
-    var catalogServicePublisher: Published<Array<Catalog>>.Publisher { get }
-    var catalog: [Catalog] { get }
-    func fetchCatalog()
+    func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void)
 }
 
 final class CatalogService: CatalogServiceProtocol {
     
     //MARK: - Public properties
-    @Published var catalog: [Catalog] = []
-    var catalogServicePublisher: Published<Array<Catalog>>.Publisher { $catalog }
+    private var catalog: [Catalog] = []
     
     //MARK: - Private properties
     private let request = CatalogRequest()
@@ -30,7 +26,7 @@ final class CatalogService: CatalogServiceProtocol {
     }
     
     //MARK: - Public methods
-    func fetchCatalog() {
+    func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void) {
         
         networkClient.send(
             request: request,
@@ -49,8 +45,9 @@ final class CatalogService: CatalogServiceProtocol {
                                 authorID: $0.author,
                                 id: $0.id)
                         }
-                    case .failure(_):
-                        print("error")
+                        completion(.success((catalog)))
+                    case .failure(let error):
+                        completion(.failure((error)))
                     }
                 }
             })

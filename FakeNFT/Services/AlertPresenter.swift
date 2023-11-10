@@ -35,4 +35,14 @@ final class AlertPresenter {
         
         vc.present(alert, animated: true)
     }
+    
+    static func showError(in vc: UIViewController, completion: @escaping () -> ()) {
+        let alert = UIAlertController(title: "Network error", message: "Try again?", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK", style: .default) { _ in
+            completion()
+        }
+        alert.addAction(action)
+        vc.present(alert, animated: true)
+    }
 }

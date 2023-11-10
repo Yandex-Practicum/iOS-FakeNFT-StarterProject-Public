@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgressHUD
 
 final class CatalogViewController: UIViewController {
     
@@ -75,9 +74,23 @@ final class CatalogViewController: UIViewController {
 
 //MARK: - CatalogViewControllerDelegate
 extension CatalogViewController: CatalogViewDelegate {
+    func showErrorAlert() {
+        AlertPresenter.showError(in: self) { [weak self] in
+            guard let self = self else { return }
+            catalogView.reloadData()
+        }
+    }
     
     func selectedCategory(_ model: Catalog) {
         let vc = CatalogCollectionViewController()
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func startAnimatingActivityIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func stopAnimatingActivityIndicator() {
+        UIBlockingProgressHUD.dismiss()
     }
 }

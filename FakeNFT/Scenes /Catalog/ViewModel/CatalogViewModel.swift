@@ -11,16 +11,25 @@ import Combine
 protocol CatalogViewModelProtocol: AnyObject {
     var catalog: [Catalog] { get set }
     var catalogPublisher: Published<Array<Catalog>>.Publisher { get }
+    var isLoadingData: Bool { get }
+    var loadingDataPublisher: Published<Bool>.Publisher { get }
+    var networkError: Error? { get }
+    var errorPublisher: Published<Error?>.Publisher { get }
     func sortCatalogByName()
     func sortCatalogByQuantity()
     func sortCatalog()
+    func fetchCatalog()
 }
 
 final class CatalogViewModel: CatalogViewModelProtocol {
     
     //MARK: - Public properties
+    @Published var isLoadingData: Bool = true
     @Published var catalog: [Catalog] = []
+    @Published var networkError: Error?
     var catalogPublisher: Published<Array<Catalog>>.Publisher { $catalog }
+    var loadingDataPublisher: Published<Bool>.Publisher { $isLoadingData }
+    var errorPublisher: Published<Error?>.Publisher { $networkError }
     
     //MARK: - Private properties
     private var filter: CatalogFilter?
@@ -30,10 +39,9 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     init(catalogService: CatalogServiceProtocol) {
         self.catalogService = catalogService
         
-        subscribe()
         fetchCatalog()
         
-        self.filter = CatalogFilter(rawValue: CatalogFilterStorage.shared.filterDescriptor ?? "name")
+        self.filter = CatalogFilter(rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.quantity.rawValue)
         sortCatalog()
     }
     
@@ -45,7 +53,7 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         case .quantity:
             sortCatalogByQuantity()
         default:
-            sortCatalogByName()
+            sortCatalogByQuantity()
         }
     }
     
@@ -60,16 +68,19 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     }
     
     //MARK: - Private mathods
-    private func subscribe() {
-        catalogService.catalogServicePublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] catalogUpdate in
-                guard let self = self else { return }
-                catalog = catalogUpdate
+    func fetchCatalog() {
+        isLoadingData = true
+        catalogService.fetchCatalog { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let catalogRes):
+                isLoadingData = false
+                catalog = catalogRes
                 sortCatalog()
-            }.store(in: &subscribes)
-    }
-    
-    private func fetchCatalog() {
-        catalogService.fetchCatalog()
+            case .failure(let error):
+                isLoadingData = false
+                networkError = error
+            }
+        }
     }
 }
