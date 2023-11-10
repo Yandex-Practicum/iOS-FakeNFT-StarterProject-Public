@@ -46,6 +46,7 @@
 		8441AC412AFBDB8700A34F4C /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441AC402AFBDB8700A34F4C /* Observable.swift */; };
 		84CAEA532AF805D800EC9877 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CAEA522AF805D800EC9877 /* CartViewController.swift */; };
 		84CAEA552AF809D100EC9877 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CAEA542AF809D100EC9877 /* CartTableViewCell.swift */; };
+		84D523202AFE658300A1C791 /* Cart.md in Resources */ = {isa = PBXBuildFile; fileRef = 84D5231F2AFE658300A1C791 /* Cart.md */; };
 		84D9C5EE2AFCE2010063CED7 /* CartByldRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9C5ED2AFCE2010063CED7 /* CartByldRequest.swift */; };
 		84D9C5F22AFD0B870063CED7 /* CartStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9C5F12AFD0B870063CED7 /* CartStorage.swift */; };
 		84D9C5F52AFD0C370063CED7 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9C5F42AFD0C370063CED7 /* Cart.swift */; };
@@ -114,6 +115,7 @@
 		8441AC402AFBDB8700A34F4C /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		84CAEA522AF805D800EC9877 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		84CAEA542AF809D100EC9877 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
+		84D5231F2AFE658300A1C791 /* Cart.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Cart.md; sourceTree = "<group>"; };
 		84D9C5ED2AFCE2010063CED7 /* CartByldRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartByldRequest.swift; sourceTree = "<group>"; };
 		84D9C5F12AFD0B870063CED7 /* CartStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartStorage.swift; sourceTree = "<group>"; };
 		84D9C5F42AFD0C370063CED7 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				84D523212AFE660D00A1C791 /* Docs */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
@@ -376,6 +379,14 @@
 				8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84D523212AFE660D00A1C791 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				84D5231F2AFE658300A1C791 /* Cart.md */,
+			);
+			path = Docs;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -519,6 +530,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D523202AFE658300A1C791 /* Cart.md in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
