@@ -28,7 +28,15 @@ final class TabBarController: UITabBarController {
             image: UIImage(named: Constants.tabBarCatalogue),
             selectedImage: nil)
 
-        viewControllers = [catalogController]
+        let cartController = CartViewController(service: CartServiceImpl(networkClient: DefaultNetworkClient(), storage: CartStorageImpl()))
+        cartController.tabBarItem = UITabBarItem(
+            title: Constants.cartTabBarTitle,
+            image: UIImage(named: Constants.tabBarBasket),
+            selectedImage: nil)
+
+        let cartNavigationController = UINavigationController(rootViewController: cartController)
+
+        viewControllers = [catalogController, cartNavigationController]
         tabBar.unselectedItemTintColor = .black
     }
 }
