@@ -9,7 +9,7 @@ import Foundation
 
 struct Catalog {
     let name: String
-    let coverURL: URL
+    let coverURL: URL?
     let nfts: [String]
     let desription: String
     let authorID: String

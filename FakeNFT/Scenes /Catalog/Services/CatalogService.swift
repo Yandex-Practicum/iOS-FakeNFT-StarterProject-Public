@@ -41,7 +41,7 @@ final class CatalogService: CatalogServiceProtocol {
                         catalog += catalogRes.map {
                             Catalog(
                                 name: $0.name,
-                                coverURL: URL(string: $0.cover)!,
+                                coverURL: URL(string: $0.cover),
                                 nfts: $0.nfts,
                                 desription: $0.description,
                                 authorID: $0.author,
