@@ -32,8 +32,10 @@ final class CatalogService: CatalogServiceProtocol {
     //MARK: - Public methods
     func fetchCatalog() {
         
-        let _ = networkClient
-            .send(request: request, type: [CatalogResult].self, onResponse: { [weak self] (result: Result<[CatalogResult], Error>)  in
+        networkClient.send(
+            request: request,
+            type: [CatalogResult].self,
+            onResponse: { [weak self] (result: Result<[CatalogResult], Error>)  in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     switch result {
