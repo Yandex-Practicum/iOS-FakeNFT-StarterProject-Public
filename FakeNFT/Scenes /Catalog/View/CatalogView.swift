@@ -83,7 +83,7 @@ final class CatalogView: UIView {
         viewModel.errorPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 guard let self = self else { return }
-                if let error = error {
+                if let _ = error {
                     delegate?.showErrorAlert()
                 }
             }.store(in: &subscribes)
