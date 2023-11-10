@@ -1,7 +1,7 @@
 import Foundation
 
-typealias NftsCompletion = (Result<[Nft], Error>) -> Void
 typealias CartCompletion = (Result<CartModel, Error>) -> Void
+typealias NftsCompletion = (Result<[Nft], Error>) -> Void
 
 protocol CartService {
     func loadNFTs(completion: @escaping NftsCompletion)
@@ -27,25 +27,29 @@ final class CartServiceImpl: CartService {
     }
 
     func loadNFTs(completion: @escaping NftsCompletion) {
+        let group = DispatchGroup()
+        var nfts: [Nft] = []
         loadCart { result in
             switch result {
-            case .success(let cartModel):
-                var nfts: [Nft] = []
-                cartModel.nfts.forEach {
-                    self.loadNft(id: $0) { result in
+            case .success(let cart):
+                for nftId in cart.nfts {
+                    group.enter()
+                    self.loadNft(id: nftId) { result in
+                        defer { group.leave() }
                         switch result {
                         case .success(let nft):
                             nfts.append(nft)
-                            if nfts.count == cartModel.nfts.count {
-                                completion(.success(nfts))
-                            }
                         case .failure(let error):
                             completion(.failure(error))
+                            return
                         }
                     }
                 }
             case .failure(let error):
                 completion(.failure(error))
+            }
+            group.notify(queue: .main) {
+                completion(.success(nfts))
             }
         }
     }

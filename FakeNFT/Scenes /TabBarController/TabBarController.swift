@@ -18,7 +18,8 @@ final class TabBarController: UITabBarController {
 
         let servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
-            nftStorage: NftStorageImpl()
+            nftStorage: NftStorageImpl(),
+            cartStorage: CartStorageImpl()
         )
 
         let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
@@ -28,7 +29,7 @@ final class TabBarController: UITabBarController {
             image: UIImage(named: Constants.tabBarCatalogue),
             selectedImage: nil)
 
-        let cartController = CartViewController(service: CartServiceImpl(networkClient: DefaultNetworkClient(), storage: CartStorageImpl()))
+        let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
         cartController.tabBarItem = UITabBarItem(
             title: Constants.cartTabBarTitle,
             image: UIImage(named: Constants.tabBarBasket),

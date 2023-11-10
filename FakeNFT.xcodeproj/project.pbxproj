@@ -355,11 +355,27 @@
 		84CAEA512AF804E000EC9877 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
-				84CAEA522AF805D800EC9877 /* CartViewController.swift */,
-				84CAEA542AF809D100EC9877 /* CartTableViewCell.swift */,
-				8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */,
+				84D5231D2AFE429A00A1C791 /* View */,
+				84D5231E2AFE42A400A1C791 /* ViewModel */,
 			);
 			path = Cart;
+			sourceTree = "<group>";
+		};
+		84D5231D2AFE429A00A1C791 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84CAEA522AF805D800EC9877 /* CartViewController.swift */,
+				84CAEA542AF809D100EC9877 /* CartTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84D5231E2AFE42A400A1C791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {

@@ -5,7 +5,7 @@ final class CartTableViewCell: UITableViewCell {
     static let reuseIdentifier = "cartNFTTableViewCell"
 
     private lazy var imageViewNFT: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -13,7 +13,7 @@ final class CartTableViewCell: UITableViewCell {
     }()
 
     private lazy var titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -21,7 +21,7 @@ final class CartTableViewCell: UITableViewCell {
     }()
 
     private lazy var ratingStarStackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 3
@@ -39,7 +39,7 @@ final class CartTableViewCell: UITableViewCell {
     }()
 
     private lazy var priceLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ final class CartTableViewCell: UITableViewCell {
     }()
 
     private lazy var infoNFTView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -81,13 +81,13 @@ final class CartTableViewCell: UITableViewCell {
     }
 
     private func addImageViewNFT() {
-       contentView.addSubview(imageViewNFT)
+        contentView.addSubview(imageViewNFT)
         NSLayoutConstraint.activate([
             imageViewNFT.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             imageViewNFT.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             imageViewNFT.widthAnchor.constraint(equalToConstant: 108),
             imageViewNFT.heightAnchor.constraint(equalToConstant: 108)
-            ])
+        ])
     }
 
     private func addInfoNFTView() {
