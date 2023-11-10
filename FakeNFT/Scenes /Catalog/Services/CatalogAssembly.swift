@@ -8,9 +8,10 @@
 import Foundation
 
 final class CatalogAssembly {
-    static let shared = CatalogAssembly()
     
-    func buildCatalogViewModel() -> CatalogViewModelProtocol {
+    private init() {}
+    
+    static func buildCatalogViewModel() -> CatalogViewModelProtocol {
         let network = DefaultNetworkClient()
         let service = CatalogService(networkClient: network)
         let viewModel = CatalogViewModel(catalogService: service)

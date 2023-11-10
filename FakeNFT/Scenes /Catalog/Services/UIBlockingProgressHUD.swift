@@ -11,7 +11,7 @@ import ProgressHUD
 final class UIBlockingProgressHUD {
     static var shared = UIBlockingProgressHUD()
     
-    private init() { }
+    private init() {}
     
     private static var window: UIWindow? {
         UIApplication.shared.windows.first

@@ -50,17 +50,13 @@ final class CatalogTableViewCell: UITableViewCell {
     
     //MARK: - Public methods
     func configureCell(model: Catalog) {
-        UIBlockingProgressHUD.dismiss()
         startAnimation()
         
         descriptionLabel.text = "\(model.name) (\(model.nfts.count))"
         
-        let processor = RoundCornerImageProcessor(cornerRadius: 12)
-        
         NFTImageView.kf.setImage(
             with: model.coverURL,
             placeholder: nil,
-            options: [.processor(processor)],
             completionHandler: { [weak self] _ in
                 guard let self = self else { return }
                 self.stopAnimation()

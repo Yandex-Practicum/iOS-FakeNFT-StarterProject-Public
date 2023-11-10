@@ -30,7 +30,7 @@ final class CatalogViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         setupUI()
         
-        viewModel = CatalogAssembly.shared.buildCatalogViewModel()
+        viewModel = CatalogAssembly.buildCatalogViewModel()
         
         catalogView = CatalogView(frame: .zero, viewModel: viewModel, delegate: self)
         self.view = catalogView
@@ -38,11 +38,6 @@ final class CatalogViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIBlockingProgressHUD.show()
     }
     
     //MARK: - Private mathods
@@ -62,7 +57,6 @@ final class CatalogViewController: UIViewController {
     
     @objc
     private func sortButtonTapped() {
-        let alertPresenter = AlertPresenter()
         let model = AlertModel(
             message: Constants.filterAlertTitle,
             nameSortText: Constants.filetNameButtonTitle,
@@ -75,12 +69,13 @@ final class CatalogViewController: UIViewController {
                 viewModel.sortCatalogByQuantity()
             }
 
-        alertPresenter.show(in: self, model: model)
+        AlertPresenter.show(in: self, model: model)
     }
 }
 
 //MARK: - CatalogViewControllerDelegate
 extension CatalogViewController: CatalogViewDelegate {
+    
     func selectedCategory(_ model: Catalog) {
         let vc = CatalogCollectionViewController()
         navigationController?.pushViewController(vc, animated: true)

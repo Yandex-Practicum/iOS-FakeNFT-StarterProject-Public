@@ -21,6 +21,8 @@ final class CatalogFilterStorage {
     }
     
     private var userDefaults = UserDefaults.standard
+    
+    private init() {}
 }
 
 enum CatalogFilter: String {
