@@ -48,8 +48,8 @@ class CartViewModel {
     }
 
     private func observeChanges() {
-            $nfts.bind { [weak self] _ in
-                self?.delegate?.getLoadData()
-            }
+        $nfts.bind { [weak self] _ in
+            self?.delegate?.getLoadData()
         }
+    }
 }
