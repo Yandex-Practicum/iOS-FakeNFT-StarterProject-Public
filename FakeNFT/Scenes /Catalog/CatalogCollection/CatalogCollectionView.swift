@@ -7,9 +7,44 @@
 
 import UIKit
 
+protocol CatalogCollectionViewDelegate: UIViewController {
+    func dismissView()
+}
+
 final class CatalogCollectionView: UIView {
     //stub to check screen presentation from Catalog screen
     //TODO implement the rest of the logic in the next third of epic after the first review
+    weak var delegate: CatalogCollectionViewDelegate?
+    
+    private let reuseIdentifier = "CatalogCollectionCell"
+    private let viewModel: CatalogCollectionViewModelProtocol
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage(named: Constants.backwardPicTitle)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.alwaysBounceVertical = true
+        scrollView.isScrollEnabled = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return scrollView
+    }()
+    private let contentView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
     private let collectionCoverImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -20,9 +55,60 @@ final class CatalogCollectionView: UIView {
         
         return imageView
     }()
+    private let catalogNameLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    private let authorNameLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "author"
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    private lazy var authorPageLinkButton: UIButton = {
+        let button = UIButton()
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    private let catalogDescriptionLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 9
+        layout.itemSize = CGSize(width: 108, height: 192)
+        
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.isScrollEnabled = false
+        collection.allowsMultipleSelection = true
+        
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collection
+    }()
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, viewModel: CatalogCollectionViewModelProtocol, delegate: CatalogCollectionViewDelegate) {
+        self.viewModel = viewModel
+        self.delegate = delegate
         super.init(frame: frame)
+        backgroundColor = .systemBackground
         setupUI()
     }
     
@@ -33,18 +119,105 @@ final class CatalogCollectionView: UIView {
     private func setupUI() {
         addSubviews()
         applyConstraints()
+        
+        collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        catalogNameLabel.text = viewModel.catalogCollection.name
+        catalogDescriptionLabel.text = viewModel.catalogCollection.desription
+        
     }
     
     private func addSubviews() {
-        addSubview(collectionCoverImageView)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(collectionCoverImageView)
+        contentView.addSubview(catalogNameLabel)
+        contentView.addSubview(authorNameLabel)
+        contentView.addSubview(catalogDescriptionLabel)
+        contentView.addSubview(collectionView)
+        
+        addSubview(backButton)
     }
     
     private func applyConstraints() {
+//        contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor, multiplier: 1).priority = UILayoutPriority(250)
+//        contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor, multiplier: 1).isActive = true
+        
+//        scrollView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1).priority = UILayoutPriority(250)
+//        scrollView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1).isActive = true
+        
+//        contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor).priority = UILayoutPriority(250)
+//        contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor).isActive = true
+
+        
         NSLayoutConstraint.activate([
-            collectionCoverImageView.topAnchor.constraint(equalTo: topAnchor),
-            collectionCoverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionCoverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionCoverImageView.heightAnchor.constraint(equalToConstant: 310)
+            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            backButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.widthAnchor.constraint(equalTo: widthAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1),
+            
+            
+            collectionCoverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            collectionCoverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionCoverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            collectionCoverImageView.heightAnchor.constraint(equalToConstant: 310),
+            
+//            collectionCoverImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            catalogNameLabel.topAnchor.constraint(equalTo: collectionCoverImageView.bottomAnchor, constant: 16),
+            catalogNameLabel.leadingAnchor.constraint(equalTo: collectionCoverImageView.leadingAnchor, constant: 16),
+            
+            authorNameLabel.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 13),
+            authorNameLabel.leadingAnchor.constraint(equalTo: catalogNameLabel.leadingAnchor),
+            
+            catalogDescriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
+            catalogDescriptionLabel.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
+            catalogDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            catalogDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
+//            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+//            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+//            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            
+//            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+//            contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor, multiplier: 1)
         ])
     }
+    
+    @objc
+    private func backButtonTapped() {
+        delegate?.dismissView()
+    }
+}
+
+extension CatalogCollectionView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.catalogCollection.nfts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CatalogCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        return cell
+    }
+}
+
+extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
+    
 }

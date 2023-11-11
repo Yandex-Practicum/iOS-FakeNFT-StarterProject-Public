@@ -82,8 +82,10 @@ extension CatalogViewController: CatalogViewDelegate {
     }
     
     func selectedCategory(_ model: Catalog) {
-        let vc = CatalogCollectionViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        let vc = CatalogCollectionViewController(catalog: model)
+//        navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func startAnimatingActivityIndicator() {

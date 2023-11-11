@@ -17,4 +17,11 @@ final class CatalogAssembly {
         let viewModel = CatalogViewModel(catalogService: service)
         return viewModel
     }
+    
+    static func buildCatalogCollectionViewModel(catalog: Catalog) -> CatalogCollectionViewModelProtocol {
+        let network = DefaultNetworkClient()
+        let service = CatalogService(networkClient: network)
+        let viewModel = CatalogCollectionViewModel(catalogCollection: catalog)
+        return viewModel
+    }
 }
