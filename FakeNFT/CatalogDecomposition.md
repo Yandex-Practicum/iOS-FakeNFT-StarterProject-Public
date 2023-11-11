@@ -14,6 +14,11 @@
 - Обработка взаимодействий пользователя с экраном:
     - сортировка (расчет: 2 часа, факт: 1 час);
     - тап по ячейке с коллекцией (переход на экран выбранной коллекции NFT) (расчет: 1 час, факт: 1 час);
+    
+#### Issues:
+- [CatalogUI](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/1)
+- [Catalog data processing](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/2)
+- [Catalog user interaction](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/4)
      
 ### Экран коллекции NFT (расчет: 14 часов)
 - Верстка UI (4 часа);
