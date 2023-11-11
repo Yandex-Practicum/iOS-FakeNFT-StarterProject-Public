@@ -115,10 +115,14 @@ extension CatalogView: UITableViewDataSource {
         }
         cell.selectionStyle = .none
         
+        cell.isUserInteractionEnabled = false
+        
         let model = viewModel.catalog[indexPath.row]
         
         cell.configureCell(model: model)
-        
+        cell.onState = {
+            cell.isUserInteractionEnabled = true
+        }
         return cell
     }
 }

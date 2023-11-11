@@ -10,6 +10,9 @@ import Kingfisher
 
 final class CatalogTableViewCell: UITableViewCell {
     
+    //MARK: - Public properties
+    var onState: (() -> ())?
+    
     //MARK: - Private properties
     private let NFTImageView: UIImageView = {
         let imageView = UIImageView()
@@ -60,6 +63,7 @@ final class CatalogTableViewCell: UITableViewCell {
             completionHandler: { [weak self] _ in
                 guard let self = self else { return }
                 self.stopAnimation()
+                onState?()
             })
     }
     
