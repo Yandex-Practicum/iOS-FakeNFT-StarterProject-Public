@@ -36,6 +36,9 @@
 		27B715362B01577A007C5B39 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715352B01577A007C5B39 /* StatisticsViewController.swift */; };
 		27B715382B015943007C5B39 /* UIView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715372B015943007C5B39 /* UIView + Extensions.swift */; };
 		27B7153A2B0159C2007C5B39 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715392B0159C2007C5B39 /* UIColor+Extensions.swift */; };
+		27B7153F2B015B4D007C5B39 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27B7153C2B015B4D007C5B39 /* SF-Pro-Text-Regular.otf */; };
+		27B715402B015B4D007C5B39 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27B7153D2B015B4D007C5B39 /* SF-Pro-Text-Bold.otf */; };
+		27B715412B015B4D007C5B39 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27B7153E2B015B4D007C5B39 /* SF-Pro-Text-Medium.otf */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -103,6 +106,9 @@
 		27B715352B01577A007C5B39 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		27B715372B015943007C5B39 /* UIView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extensions.swift"; sourceTree = "<group>"; };
 		27B715392B0159C2007C5B39 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		27B7153C2B015B4D007C5B39 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		27B7153D2B015B4D007C5B39 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		27B7153E2B015B4D007C5B39 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,6 +300,16 @@
 			path = Statistics;
 			sourceTree = "<group>";
 		};
+		27B7153B2B015B4D007C5B39 /* FontsResources */ = {
+			isa = PBXGroup;
+			children = (
+				27B7153C2B015B4D007C5B39 /* SF-Pro-Text-Regular.otf */,
+				27B7153D2B015B4D007C5B39 /* SF-Pro-Text-Bold.otf */,
+				27B7153E2B015B4D007C5B39 /* SF-Pro-Text-Medium.otf */,
+			);
+			path = FontsResources;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +317,7 @@
 				27B715392B0159C2007C5B39 /* UIColor+Extensions.swift */,
 				3F478ECE29DB474E00F6D39E /* Colors.swift */,
 				3F478ED029DB476500F6D39E /* Fonts.swift */,
+				27B7153B2B015B4D007C5B39 /* FontsResources */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -568,6 +585,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B715402B015B4D007C5B39 /* SF-Pro-Text-Bold.otf in Resources */,
+				27B7153F2B015B4D007C5B39 /* SF-Pro-Text-Regular.otf in Resources */,
+				27B715412B015B4D007C5B39 /* SF-Pro-Text-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
