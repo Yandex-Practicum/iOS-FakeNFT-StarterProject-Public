@@ -41,4 +41,7 @@ struct Constants {
     static let filetNameButtonTitle = "По названию"
     static let filterQuantityButtonTitle = "По количеству NFT"
     static let closeAlertButtonTitle = "Отменить"
+    
+    //MARK: - Catalog collection constants
+    static let authorLabelText = "Автор коллекции:"
 }

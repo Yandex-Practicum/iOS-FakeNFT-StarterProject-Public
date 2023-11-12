@@ -66,7 +66,7 @@ final class CatalogCollectionView: UIView {
     private let authorNameLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "author"
+        label.text = Constants.authorLabelText
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -75,6 +75,9 @@ final class CatalogCollectionView: UIView {
     private lazy var authorPageLinkButton: UIButton = {
         let button = UIButton()
         
+        button.setTitle("author", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -88,17 +91,16 @@ final class CatalogCollectionView: UIView {
         
         return label
     }()
-    private let collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 9
         layout.minimumInteritemSpacing = 9
         layout.itemSize = CGSize(width: 108, height: 192)
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
         collection.allowsMultipleSelection = true
-        
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         return collection
@@ -117,12 +119,12 @@ final class CatalogCollectionView: UIView {
     }
     
     private func setupUI() {
-        addSubviews()
-        applyConstraints()
-        
         collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        addSubviews()
+        applyConstraints()
         
         catalogNameLabel.text = viewModel.catalogCollection.name
         catalogDescriptionLabel.text = viewModel.catalogCollection.desription
@@ -131,11 +133,13 @@ final class CatalogCollectionView: UIView {
     
     private func addSubviews() {
         addSubview(scrollView)
+        
         scrollView.addSubview(contentView)
         
         contentView.addSubview(collectionCoverImageView)
         contentView.addSubview(catalogNameLabel)
         contentView.addSubview(authorNameLabel)
+        contentView.addSubview(authorPageLinkButton)
         contentView.addSubview(catalogDescriptionLabel)
         contentView.addSubview(collectionView)
         
@@ -161,7 +165,7 @@ final class CatalogCollectionView: UIView {
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.widthAnchor.constraint(equalTo: widthAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             
             contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
@@ -183,11 +187,21 @@ final class CatalogCollectionView: UIView {
             authorNameLabel.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 13),
             authorNameLabel.leadingAnchor.constraint(equalTo: catalogNameLabel.leadingAnchor),
             
+            authorPageLinkButton.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 6),
+            authorPageLinkButton.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
+            authorPageLinkButton.heightAnchor.constraint(equalToConstant: 28),
+            
             catalogDescriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             catalogDescriptionLabel.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
             catalogDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            catalogDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+//            catalogDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            collectionView.topAnchor.constraint(equalTo: catalogDescriptionLabel.bottomAnchor, constant: 24),
+            collectionView.leadingAnchor.constraint(equalTo: catalogDescriptionLabel.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: catalogDescriptionLabel.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: viewModel.calculateCollectionViewHeight())
             
 //            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
 //            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -205,6 +219,10 @@ final class CatalogCollectionView: UIView {
 }
 
 extension CatalogCollectionView: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.catalogCollection.nfts.count
     }
@@ -213,11 +231,34 @@ extension CatalogCollectionView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CatalogCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.configureCell(with: viewModel.catalogCollection)
         
         return cell
     }
 }
 
 extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: 108, height: 192)
+    }
     
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return 9
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
+        return 8
+    }
 }
