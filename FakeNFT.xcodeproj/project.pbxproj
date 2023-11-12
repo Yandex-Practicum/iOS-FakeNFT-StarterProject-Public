@@ -17,6 +17,7 @@
 		276F3AFD2B0161D9005E4379 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F3AFC2B0161D9005E4379 /* ViewControllerFactory.swift */; };
 		276F3AFF2B0162F6005E4379 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F3AFE2B0162F6005E4379 /* AlertService.swift */; };
 		276F3B012B016362005E4379 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F3B002B016362005E4379 /* ViewFactory.swift */; };
+		276F3B032B016424005E4379 /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276F3B022B016424005E4379 /* ImageValidator.swift */; };
 		27B715142B014D90007C5B39 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715132B014D90007C5B39 /* TabBarController.swift */; };
 		27B715172B014FE5007C5B39 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715162B014FE5007C5B39 /* WebViewViewController.swift */; };
 		27B715192B015058007C5B39 /* ProfileRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B715182B015058007C5B39 /* ProfileRouting.swift */; };
@@ -79,6 +80,7 @@
 		276F3AFC2B0161D9005E4379 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		276F3AFE2B0162F6005E4379 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		276F3B002B016362005E4379 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		276F3B022B016424005E4379 /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
 		27B715122B01483E007C5B39 /* Profile Vadim.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Profile Vadim.md"; sourceTree = "<group>"; };
 		27B715132B014D90007C5B39 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		27B715162B014FE5007C5B39 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				276F3AFC2B0161D9005E4379 /* ViewControllerFactory.swift */,
 				276F3AFE2B0162F6005E4379 /* AlertService.swift */,
 				276F3B002B016362005E4379 /* ViewFactory.swift */,
+				276F3B022B016424005E4379 /* ImageValidator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				27B715192B015058007C5B39 /* ProfileRouting.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				276F3B032B016424005E4379 /* ImageValidator.swift in Sources */,
 				27B7151D2B01515A007C5B39 /* ProfileViewModel.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				27B715382B015943007C5B39 /* UIView + Extensions.swift in Sources */,
