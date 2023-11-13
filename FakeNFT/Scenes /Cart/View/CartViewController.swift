@@ -2,7 +2,7 @@ import UIKit
 
 final class CartViewController: UIViewController, LoadingView {
     var activityIndicator = UIActivityIndicatorView()
-    private var viewModel: CartViewModel!
+    private let viewModel: CartViewModel
 
     private lazy var filterButton: UIButton = {
         let button = UIButton()
@@ -106,12 +106,16 @@ final class CartViewController: UIViewController, LoadingView {
     }
 
     private func observeViewModelChanges() {
-        viewModel.$nfts.bind { [weak self] _ in
-            self?.cartTableView.reloadData()
-            self?.countNFTLabel.text = "\(self?.viewModel.countNftInCart() ?? 0) NFT"
-            self?.totalPriceLabel.text = "\(self?.viewModel.getTotalPrice() ?? "") ETH"
-            self?.hideLoading()
+        viewModel.$nfts.bind { [weak self] nfts in
+            self?.updateUI(with: nfts)
         }
+    }
+
+    private func updateUI(with nfts: [Nft]) {
+        cartTableView.reloadData()
+        countNFTLabel.text = "\(viewModel.countNftInCart()) NFT"
+        totalPriceLabel.text = "\(viewModel.getTotalPrice()) ETH"
+        hideLoading()
     }
 
     private func checkPlaceholder() {
@@ -124,8 +128,27 @@ final class CartViewController: UIViewController, LoadingView {
         }
     }
 
+    private func showFiltersAlert() {
+        let alertController = UIAlertController(title: nil,
+                                                message: Constants.sortTitle,
+                                                preferredStyle: .actionSheet)
+        let filterPriceAction = UIAlertAction(title: Constants.sortByPrice, style: .default) { _ in
+            self.viewModel.sortByPrice()
+        }
+        let filteRatingAction = UIAlertAction(title: Constants.sortByRating, style: .default) { _ in
+            self.viewModel.sortByRating()
+        }
+        let filterNameAction = UIAlertAction(title: Constants.sortByName, style: .default) { _ in
+            self.viewModel.sortByName()
+        }
+        let cancelAction = UIAlertAction(title: Constants.closeButtonText, style: .cancel)
+        [filterPriceAction, filteRatingAction, filterNameAction, cancelAction].forEach { alertController.addAction($0) }
+        present(alertController, animated: true)
+    }
+
     @objc
     private func tapFilterButton() {
+        showFiltersAlert()
     }
 
     @objc

@@ -39,4 +39,11 @@ struct Constants {
     static let paymentButtonText = "К оплате"
     static let emptyCart = "Корзина пуста"
     static let priceLabel = "Цена"
+    static let sortTitle = "Сортировка"
+    static let sortByPrice = "По цене"
+    static let sortByRating = "По рейтингу"
+    static let sortByName = "По названию"
+    static let closeButtonText = "Закрыть"
+    static let deleteButtonText = "Удалить"
+    static let backButtonText = "Вернуться"
 }

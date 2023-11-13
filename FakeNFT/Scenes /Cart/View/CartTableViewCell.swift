@@ -163,7 +163,8 @@ final class CartTableViewCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
         imageViewNFT.kf.setImage(with: model.images.first)
         self.titleLabel.text = model.name
-        self.priceLabel.text = "\(model.price) ETH"
+        let formattedPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
+        self.priceLabel.text = "\(formattedPrice) ETH"
         getRating(from: model.rating)
     }
 
