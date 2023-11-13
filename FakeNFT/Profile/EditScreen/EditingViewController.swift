@@ -215,4 +215,3 @@ extension EditingViewController: UITextViewDelegate {
         return true
     }
 }
-
