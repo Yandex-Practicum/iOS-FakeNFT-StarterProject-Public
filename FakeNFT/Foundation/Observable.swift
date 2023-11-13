@@ -25,4 +25,3 @@ final class Observable<Value> {
         observer(wrappedValue)
     }
 }
-

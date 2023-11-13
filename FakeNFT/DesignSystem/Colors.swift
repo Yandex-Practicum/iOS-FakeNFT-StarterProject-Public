@@ -37,4 +37,3 @@ extension UIColor {
     static let textOnPrimary = UIColor.white
     static let textOnSecondary = UIColor.black
 }
-

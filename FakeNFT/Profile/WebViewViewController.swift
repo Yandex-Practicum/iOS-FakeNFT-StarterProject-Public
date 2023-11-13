@@ -58,4 +58,3 @@ extension WebViewViewController: WKNavigationDelegate {
         // ToDo: - показать пользователю сообщение об ошибке, если это необходимо
     }
 }
-
