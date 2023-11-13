@@ -13,6 +13,7 @@ struct Constants {
 
     // MARK: - tabbar titles
     static let catalogueTabBarTitle = "Каталог"
+    static let cartTabBarTitle = "Корзина"
 
     // MARK: - assets names
     static let tabBarStatistics = "tabbar_statistics"
@@ -33,4 +34,9 @@ struct Constants {
     static let addToBasketPicTitle = "basket_add"
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
+
+    // MARK: - Cart constants
+    static let paymentButtonText = "К оплате"
+    static let emptyCart = "Корзина пуста"
+    static let priceLabel = "Цена"
 }
