@@ -20,7 +20,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-    
+
     private func configureProgressHUD() {
         ProgressHUD.animationType = .systemActivityIndicator
         ProgressHUD.colorHUD = .black

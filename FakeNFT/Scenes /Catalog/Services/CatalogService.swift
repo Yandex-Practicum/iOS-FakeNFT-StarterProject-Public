@@ -12,22 +12,22 @@ protocol CatalogServiceProtocol {
 }
 
 final class CatalogService: CatalogServiceProtocol {
-    
-    //MARK: - Public properties
+
+    // MARK: - Public properties
     private var catalog: [Catalog] = []
-    
-    //MARK: - Private properties
+
+    // MARK: - Private properties
     private let request = CatalogRequest()
     private let networkClient: NetworkClient
     private var task: NetworkTask?
-    
+
     init(networkClient: NetworkClient) {
         self.networkClient = DefaultNetworkClient()
     }
-    
-    //MARK: - Public methods
+
+    // MARK: - Public methods
     func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void) {
-        
+
         networkClient.send(
             request: request,
             type: [CatalogResult].self,

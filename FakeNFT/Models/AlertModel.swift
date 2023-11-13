@@ -12,8 +12,6 @@ struct AlertModel {
     let nameSortText: String
     let quantitySortText: String
     let cancelButtonText: String
-    let sortNameCompletion: () -> ()
-    let sortQuantityCompletion: () -> ()
+    let sortNameCompletion: () -> Void
+    let sortQuantityCompletion: () -> Void
 }
-
-

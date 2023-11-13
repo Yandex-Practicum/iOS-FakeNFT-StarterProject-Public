@@ -9,19 +9,17 @@ import Foundation
 import Combine
 
 protocol CatalogCollectionViewModelProtocol: AnyObject {
-    //TODO implement in next third of epic after the first review
     var catalogCollection: Catalog { get }
     func calculateCollectionViewHeight() -> CGFloat
 }
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
-    //TODO implement in next third of epic after the first review
     var catalogCollection: Catalog
-    
+
     init(catalogCollection: Catalog) {
         self.catalogCollection = catalogCollection
     }
-    
+
     func calculateCollectionViewHeight() -> CGFloat {
         let numberOfCells = catalogCollection.nfts.count
         let height = 192

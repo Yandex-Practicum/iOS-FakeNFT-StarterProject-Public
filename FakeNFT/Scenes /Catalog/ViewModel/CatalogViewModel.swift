@@ -22,52 +22,54 @@ protocol CatalogViewModelProtocol: AnyObject {
 }
 
 final class CatalogViewModel: CatalogViewModelProtocol {
-    
-    //MARK: - Public properties
+
+    // MARK: - Public properties
     @Published var isLoadingData: Bool = true
     @Published var catalog: [Catalog] = []
     @Published var networkError: Error?
     var catalogPublisher: Published<Array<Catalog>>.Publisher { $catalog }
     var loadingDataPublisher: Published<Bool>.Publisher { $isLoadingData }
     var errorPublisher: Published<Error?>.Publisher { $networkError }
-    
-    //MARK: - Private properties
+
+    // MARK: - Private properties
     private var filter: CatalogFilter?
     private var catalogService: CatalogServiceProtocol
     private var subscribes = [AnyCancellable]()
-    
+
     init(catalogService: CatalogServiceProtocol) {
         self.catalogService = catalogService
-        
+
         fetchCatalog()
-        
-        self.filter = CatalogFilter(rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.quantity.rawValue)
+
+        self.filter = CatalogFilter(
+            rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.filterQuantity.rawValue
+        )
         sortCatalog()
     }
-    
-    //MARK: - Public methods
+
+    // MARK: - Public methods
     func sortCatalog() {
         switch filter {
-        case .name:
+        case .filterName:
             sortCatalogByName()
-        case .quantity:
+        case .filterQuantity:
             sortCatalogByQuantity()
         default:
             sortCatalogByQuantity()
         }
     }
-    
+
     func sortCatalogByName() {
         catalog.sort { $0.name < $1.name }
-        CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.name.rawValue
+        CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.filterName.rawValue
     }
-    
+
     func sortCatalogByQuantity() {
         catalog.sort { $0.nfts.count > $1.nfts.count }
-        CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.quantity.rawValue
+        CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.filterQuantity.rawValue
     }
-    
-    //MARK: - Private mathods
+
+    // MARK: - Private mathods
     func fetchCatalog() {
         isLoadingData = true
         catalogService.fetchCatalog { [weak self] result in
