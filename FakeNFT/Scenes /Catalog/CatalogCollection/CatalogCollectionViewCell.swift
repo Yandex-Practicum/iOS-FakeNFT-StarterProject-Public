@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CatalogCollectionViewCell: UICollectionViewCell {
 
@@ -79,6 +80,9 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     func configureCell(with cardModel: Catalog) { // create new model
         nftCardNameLabel.text = "Some"
         nftPriceLabel.text = "1 ETH"
+
+        let url = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")
+        nftImageView.kf.setImage(with: url)
     }
 
     private func addSubviews() {

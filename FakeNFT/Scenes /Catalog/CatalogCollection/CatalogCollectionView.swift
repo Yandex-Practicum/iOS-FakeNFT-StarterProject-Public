@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol CatalogCollectionViewDelegate: AnyObject {
     func dismissView()
@@ -46,7 +47,7 @@ final class CatalogCollectionView: UIView {
     private let collectionCoverImageView: UIImageView = {
         let imageView = UIImageView()
 
-        imageView.image = UIImage(named: "cell_stub")
+//        imageView.image = UIImage(named: "cell_stub")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,6 +75,7 @@ final class CatalogCollectionView: UIView {
         let button = UIButton()
 
         button.setTitle("author", for: .normal)
+        button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(.systemBlue, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -110,10 +112,19 @@ final class CatalogCollectionView: UIView {
         super.init(frame: frame)
         backgroundColor = .systemBackground
         setupUI()
+        setupCollectionCoverImageView()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        collectionCoverImageView.kf.cancelDownloadTask()
+    }
+
+    private func setupCollectionCoverImageView() {
+        collectionCoverImageView.kf.setImage(with: viewModel.catalogCollection.coverURL)
     }
 
     private func setupUI() {
@@ -223,7 +234,9 @@ extension CatalogCollectionView: UICollectionViewDataSource {
             for: indexPath) as? CatalogCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configureCell(with: viewModel.catalogCollection)
+            let nft = viewModel.nft?[indexPath.row]
+
+            cell.configureCell(with: viewModel.catalogCollection)
 
         return cell
     }
