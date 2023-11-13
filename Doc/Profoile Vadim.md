@@ -1,6 +1,6 @@
 Нуретдинов Вадим
 Архитектура MVVM
-<br /> Ссылка на доску:https://github.com/users/Kolesnikov-Eugene/projects/2/views/1
+<br /> Ссылка на доску:https://github.com/users/Kolesnikov-Eugene/projects/2/views/1 д
 ## Эпик 1/3
 
 ### Экран профиля
