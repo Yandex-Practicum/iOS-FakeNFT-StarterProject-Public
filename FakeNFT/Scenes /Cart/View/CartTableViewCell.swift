@@ -1,8 +1,14 @@
 import UIKit
 import Kingfisher
 
+protocol CartCellDelegate: AnyObject {
+    func didTapDeleteNft(at index: Int)
+}
+
 final class CartTableViewCell: UITableViewCell {
     static let reuseIdentifier = "cartNFTTableViewCell"
+    weak var delegate: CartCellDelegate?
+    var cellIndex: Int?
 
     private lazy var imageViewNFT: UIImageView = {
         let imageView = UIImageView()
@@ -163,11 +169,12 @@ final class CartTableViewCell: UITableViewCell {
         contentView.backgroundColor = .systemBackground
         imageViewNFT.kf.setImage(with: model.images.first)
         self.titleLabel.text = model.name
-        let formattedPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
-        self.priceLabel.text = "\(formattedPrice) ETH"
+        let formatPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
+        self.priceLabel.text = "\(formatPrice) ETH"
         getRating(from: model.rating)
     }
 
     @objc private func tapDeleteButton() {
+        delegate?.didTapDeleteNft(at: cellIndex ?? 0)
     }
 }

@@ -2,6 +2,7 @@ import UIKit
 
 final class CartViewController: UIViewController, LoadingView {
     var activityIndicator = UIActivityIndicatorView()
+    private var deleteNftIndex: Int?
     private let viewModel: CartViewModel
 
     private lazy var filterButton: UIButton = {
@@ -84,6 +85,71 @@ final class CartViewController: UIViewController, LoadingView {
         return label
     }()
 
+    private lazy var nftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    private lazy var confirmDeleteLabel: UILabel = {
+        let label = UILabel()
+        label.text = Constants.deleteConfirmText
+        label.textColor = .textPrimary
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var deleteNftButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 16
+        button.setTitle(Constants.deleteButtonText, for: .normal)
+        button.setTitleColor(.yaRed, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        button.backgroundColor = .segmentActive
+        button.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 16
+        button.setTitle(Constants.backButtonText, for: .normal)
+        button.setTitleColor(.textOnPrimary, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        button.backgroundColor = .segmentActive
+        button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var buttonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        stackView.addArrangedSubview(deleteNftButton)
+        stackView.addArrangedSubview(cancelButton)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    private lazy var backgroundBlurView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.effect = UIBlurEffect(style: .light)
+        view.frame = UIScreen.main.bounds
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     init(viewModel: CartViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -153,6 +219,18 @@ final class CartViewController: UIViewController, LoadingView {
 
     @objc
     private func tapPayButton() {
+    }
+
+    @objc
+    private func tapDeleteButton() {
+
+    }
+
+    @objc
+    private func tapBackButton() {
+        backgroundBlurView.removeFromSuperview()
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
     }
 }
 
@@ -228,6 +306,67 @@ extension CartViewController: CartViewModelDelegate {
     }
 }
 
+extension CartViewController: CartCellDelegate {
+    func didTapDeleteNft(at index: Int) {
+        backgroundBlurView.isHidden = false
+        nftImageView.kf.setImage(with: viewModel.getNft(at: index).images.first)
+        nftImageView.layer.cornerRadius = 12
+        nftImageView.layer.masksToBounds = true
+        deleteNftIndex = index
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        createDeleteView()
+    }
+
+    private func createDeleteView() {
+        addBackgroundBlurView()
+        addNftImageView()
+        addConfirmDeleteLabel()
+        addButtonsStackView()
+    }
+
+    private func addBackgroundBlurView() {
+        view.addSubview(backgroundBlurView)
+        NSLayoutConstraint.activate([
+            backgroundBlurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundBlurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundBlurView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundBlurView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+    }
+
+    private func addNftImageView() {
+        backgroundBlurView.contentView.addSubview(nftImageView)
+        NSLayoutConstraint.activate([
+            nftImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 244),
+            nftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nftImageView.widthAnchor.constraint(equalToConstant: 108),
+            nftImageView.heightAnchor.constraint(equalToConstant: 108)
+            ])
+    }
+
+    private func addConfirmDeleteLabel() {
+        backgroundBlurView.contentView.addSubview(confirmDeleteLabel)
+        NSLayoutConstraint.activate([
+            confirmDeleteLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 12),
+            confirmDeleteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            confirmDeleteLabel.widthAnchor.constraint(equalToConstant: 180),
+            confirmDeleteLabel.heightAnchor.constraint(equalToConstant: 36)
+            ])
+    }
+
+    private func addButtonsStackView() {
+        backgroundBlurView.contentView.addSubview(buttonsStackView)
+        NSLayoutConstraint.activate([
+            buttonsStackView.topAnchor.constraint(equalTo: confirmDeleteLabel.bottomAnchor, constant: 20),
+            buttonsStackView.leadingAnchor.constraint(equalTo: backgroundBlurView.leadingAnchor, constant: 56),
+            buttonsStackView.trailingAnchor.constraint(equalTo: backgroundBlurView.trailingAnchor, constant: -56),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 44)
+            ])
+    }
+
+}
+
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
@@ -242,6 +381,8 @@ extension CartViewController: UITableViewDataSource {
         }
         let nft = viewModel.getNft(at: indexPath.row)
         cell.configure(with: nft)
+        cell.delegate = self
+        cell.cellIndex = indexPath.row
         return cell
     }
 

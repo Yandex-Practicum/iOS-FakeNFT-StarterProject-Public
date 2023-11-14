@@ -44,6 +44,7 @@ struct Constants {
     static let sortByRating = "По рейтингу"
     static let sortByName = "По названию"
     static let closeButtonText = "Закрыть"
+    static let deleteConfirmText = "Вы уверены, что хотите удалить объект из корзины?"
     static let deleteButtonText = "Удалить"
     static let backButtonText = "Вернуться"
 }

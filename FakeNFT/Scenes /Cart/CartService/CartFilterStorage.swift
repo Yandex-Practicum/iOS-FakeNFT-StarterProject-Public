@@ -8,12 +8,6 @@ enum CartSortType: String {
 
 final class CartFilterStorage {
     static let shared = CartFilterStorage()
-    private var userDefaults: UserDefaults
-    private let sortTypeKey = "SortTypeKey"
-
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-    }
 
     var cartSortType: CartSortType {
         get {
@@ -26,5 +20,12 @@ final class CartFilterStorage {
         set {
             userDefaults.set(newValue.rawValue, forKey: sortTypeKey)
         }
+    }
+
+    private var userDefaults: UserDefaults
+    private let sortTypeKey = "SortTypeKey"
+
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
     }
 }
