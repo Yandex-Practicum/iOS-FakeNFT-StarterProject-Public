@@ -13,7 +13,7 @@ final class ViewFactory {
         textView.font = .bodyRegular
         textView.backgroundColor = .nftLightgrey
         textView.layer.cornerRadius = 12
-        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
         return textView
     }
 }
