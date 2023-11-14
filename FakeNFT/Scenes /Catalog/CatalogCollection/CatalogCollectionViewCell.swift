@@ -17,7 +17,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .yellow
+        view.backgroundColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -62,6 +62,9 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         return button
     }()
+    private lazy var gradient: GradientView = {
+        return GradientView(frame: self.bounds)
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,11 +81,27 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     func configureCell(with cardModel: Catalog) { // create new model
-        nftCardNameLabel.text = "Some"
-        nftPriceLabel.text = "1 ETH"
+//        nftCardNameLabel.text = "Some"
+//        nftPriceLabel.text = "1 ETH"
+        nftImageView.flash()
 
-        let url = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")
-        nftImageView.kf.setImage(with: url)
+//        let url = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")
+//        nftImageView.kf.setImage(with: url)
+    }
+
+    func setImage(_ nft: NftModel) {
+        let url = nft.images[0]
+
+        nftImageView.kf.setImage(
+            with: url,
+            placeholder: nil,
+            completionHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.stopAnimation()
+            })
+
+        nftCardNameLabel.text = nft.name
+        nftPriceLabel.text = "\(String(nft.price)) ETH"
     }
 
     private func addSubviews() {
@@ -173,5 +192,15 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             }
             starImageView.isHighlighted = starImageView.tag <= rate
         }
+    }
+
+    func startAnimation() {
+        gradient.isHidden = false
+        gradient.startAnimating()
+    }
+
+    func stopAnimation() {
+        gradient.stopAnimating()
+        gradient.isHidden = true
     }
 }

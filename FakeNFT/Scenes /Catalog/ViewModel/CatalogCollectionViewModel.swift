@@ -9,14 +9,16 @@ import Foundation
 import Combine
 
 protocol CatalogCollectionViewModelProtocol: AnyObject {
-    var nft: [Nft]? { get }
+    var nfts: [NftModel] { get }
+    var nftPublisher: Published<Array<NftModel>>.Publisher { get }
     var catalogCollection: Catalog { get }
     func calculateCollectionViewHeight() -> CGFloat
 }
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
-    var nft: [Nft]?
+    @Published var nfts: [NftModel] = []
+    var nftPublisher: Published<Array<NftModel>>.Publisher { $nfts }
     var catalogCollection: Catalog
     var networkError: Error?
 
@@ -25,17 +27,20 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     init(catalogCollection: Catalog, service: NftService) {
         self.catalogCollection = catalogCollection
         self.nftService = service
+        fetchNft()
+//        fetchNft1()
     }
 
     func fetchNft() {
 //        isLoadingData = true
-        var nftId = 1
-        catalogCollection.nfts.forEach { _ in
-            nftService.loadNft(id: String(nftId)) { [weak self] result in
+
+        catalogCollection.nfts.forEach { id in
+            nftService.loadNftForCollection(id: String(id)) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let nft):
-                    self.nft?.append(nft)
+                    print("ok")
+                    self.nfts.append(nft)
     //                isLoadingData = false
     //                catalog = catalogRes
     //                sortCatalog()
@@ -45,7 +50,29 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                     networkError = error
                 }
             }
-            nftId += 1
+        }
+
+    }
+
+    func fetchNft1() {
+//        isLoadingData = true
+
+        catalogCollection.nfts.forEach { id in
+            nftService.loadNft(id: String(id)) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    print("hello")
+//                    self.nfts.append(nft)
+    //                isLoadingData = false
+    //                catalog = catalogRes
+    //                sortCatalog()
+                case .failure(let error):
+
+    //                isLoadingData = false
+                    networkError = error
+                }
+            }
         }
 
     }

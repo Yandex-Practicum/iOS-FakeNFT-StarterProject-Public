@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import Combine
 
 protocol CatalogCollectionViewDelegate: AnyObject {
     func dismissView()
@@ -100,11 +101,14 @@ final class CatalogCollectionView: UIView {
 
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
-        collection.allowsMultipleSelection = true
+        collection.allowsMultipleSelection = false
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.allowsSelection = false
 
         return collection
     }()
+    private var subscribes = [AnyCancellable]()
+    private var nft: [NftModel]?
 
     init(frame: CGRect, viewModel: CatalogCollectionViewModelProtocol, delegate: CatalogCollectionViewDelegate) {
         self.viewModel = viewModel
@@ -113,6 +117,7 @@ final class CatalogCollectionView: UIView {
         backgroundColor = .systemBackground
         setupUI()
         setupCollectionCoverImageView()
+        bind()
     }
 
     required init?(coder: NSCoder) {
@@ -121,6 +126,21 @@ final class CatalogCollectionView: UIView {
 
     deinit {
         collectionCoverImageView.kf.cancelDownloadTask()
+    }
+
+    private func bind() {
+        viewModel.nftPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] nfts in
+            guard let self = self else { return }
+
+                if nfts.count == viewModel.catalogCollection.nfts.count {
+//                    configureCollectionView()
+                    nft = nfts
+                    collectionView.reloadData()
+
+                }
+
+            }.store(in: &subscribes)
     }
 
     private func setupCollectionCoverImageView() {
@@ -234,9 +254,15 @@ extension CatalogCollectionView: UICollectionViewDataSource {
             for: indexPath) as? CatalogCollectionViewCell else {
             return UICollectionViewCell()
         }
-            let nft = viewModel.nft?[indexPath.row]
+//            let nft = viewModel.nft?[indexPath.row]
 
             cell.configureCell(with: viewModel.catalogCollection)
+//            cell.startAnimation()
+
+            if nft != nil {
+                let nft = viewModel.nfts[indexPath.row]
+                cell.setImage(nft)
+            }
 
         return cell
     }
