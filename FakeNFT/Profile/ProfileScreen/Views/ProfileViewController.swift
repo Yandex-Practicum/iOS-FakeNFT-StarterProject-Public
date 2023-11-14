@@ -117,7 +117,12 @@ final class ProfileViewController: UIViewController {
                         self.userNameLabel.text = model.name
                         self.userDescriptionLabel.text = model.description
                         self.userWebSiteTextView.text = model.website
-                        [self.editButton, self.profileImageView, self.userNameLabel, self.userDescriptionLabel, self.userWebSiteTextView, self.profileTableView].forEach { $0.isHidden = false }
+
+                        let uiElements = [self.editButton, self.profileImageView,
+                                          self.userNameLabel, self.userDescriptionLabel,
+                                          self.userWebSiteTextView, self.profileTableView]
+                        uiElements.forEach { $0.isHidden = false }
+
                         self.tabBarController?.tabBar.isHidden = false
                         self.profileTableView.reloadData()
                     }
@@ -128,6 +133,7 @@ final class ProfileViewController: UIViewController {
             }
         }
     }
+
 
 
     // MARK: - Layout methods
