@@ -7,15 +7,15 @@ extension UIFont {
     static let nftFontBoldName = "SFProText-Bold"
 
     // Headline Fonts
-    static var headline1 = UIFont(name: nftFontBoldName, size: 34)
-    static var headline2 = UIFont(name: nftFontBoldName, size: 22)
+    static let headline1 = UIFont(name: nftFontBoldName, size: 34)
+    static let headline2 = UIFont(name: nftFontBoldName, size: 22)
 
     // Body Fonts
-    static var bodyRegular = UIFont(name: nftFontRegularName, size: 17)
-    static var bodyBold = UIFont(name: nftFontBoldName, size: 17)
+    static let bodyRegular = UIFont(name: nftFontRegularName, size: 17)
+    static let bodyBold = UIFont(name: nftFontBoldName, size: 17)
 
     // Caption Fonts
-    static var caption1 = UIFont(name: nftFontRegularName, size: 15)
-    static var caption2 = UIFont(name: nftFontRegularName, size: 13)
-    static var caption3 = UIFont(name: nftFontMediumName, size: 10)
+    static let caption1 = UIFont(name: nftFontRegularName, size: 15)
+    static let caption2 = UIFont(name: nftFontRegularName, size: 13)
+    static let caption3 = UIFont(name: nftFontMediumName, size: 10)
 }
