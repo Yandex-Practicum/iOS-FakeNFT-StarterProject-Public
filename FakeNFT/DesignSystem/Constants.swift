@@ -33,4 +33,12 @@ struct Constants {
     static let addToBasketPicTitle = "basket_add"
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
+    
+    //MARK: - Catalog constants
+    static let catalogTableViewCellIdentifier = "catalogTableViewCell"
+    static let filterKey = "catalogFilter"
+    static let filterAlertTitle = "Сортировка"
+    static let filetNameButtonTitle = "По названию"
+    static let filterQuantityButtonTitle = "По количеству NFT"
+    static let closeAlertButtonTitle = "Отменить"
 }
