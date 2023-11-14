@@ -215,7 +215,7 @@
 				44FA956E2AFA4FEC0085DBA7 /* Services */,
 				44FA95692AFA4E1E0085DBA7 /* CatalogModels */,
 				440DD6172AF655D500B27450 /* ViewModel */,
-				440DD6162AF655C600B27450 /* View */,
+				440DD6162AF655C600B27450 /* CatalogView */,
 				440DD6152AF655BA00B27450 /* Cell */,
 				0CFCB7482A7808900009A829 /* TestCatalogController.swift */,
 			);
@@ -243,6 +243,7 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
+				44A2B6E82AFE612200D3A63D /* CatalogDecomposition.md */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -272,7 +273,6 @@
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
-				44A2B6E82AFE612200D3A63D /* CatalogDecomposition.md */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -383,13 +383,13 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		440DD6162AF655C600B27450 /* View */ = {
+		440DD6162AF655C600B27450 /* CatalogView */ = {
 			isa = PBXGroup;
 			children = (
 				440DD6112AF6554C00B27450 /* CatalogView.swift */,
 				440DD60F2AF6550A00B27450 /* CatalogViewController.swift */,
 			);
-			path = View;
+			path = CatalogView;
 			sourceTree = "<group>";
 		};
 		440DD6172AF655D500B27450 /* ViewModel */ = {
