@@ -6,32 +6,19 @@ protocol CartViewModelDelegate: AnyObject {
 
 class CartViewModel {
 
-    enum SortType: Int {
-          case price
-          case rating
-          case name
-      }
-
     weak var delegate: CartViewModelDelegate?
     let servicesAssembly: ServicesAssembly
     var isEmpty: Bool {
-        return nfts.isEmpty
-    }
-    private let sortTypeKey = "SortTypeKey"
-    private var currentSortType: SortType {
-        didSet {
-            UserDefaults.standard.set(currentSortType.rawValue, forKey: sortTypeKey)
-            print("Current sort type set to: \(currentSortType)")
-        }
+        nfts.isEmpty
     }
 
     @Observable
     private (set) var nfts: [Nft] = []
 
+    private lazy var cartFilterStorage = CartFilterStorage.shared
+
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
-        self.currentSortType = SortType(rawValue: UserDefaults.standard.integer(forKey: sortTypeKey)) ?? .name
-        print("Current sort type set to: \(currentSortType)")
     }
 
     func loadData() {
@@ -40,8 +27,8 @@ class CartViewModel {
             switch result {
             case .success(let nfts):
                 self.nfts = nfts
-                self.sort(by: currentSortType)
                 self.delegate?.getLoadData()
+                self.sort(by: cartFilterStorage.cartSortType)
             case .failure(let error):
                 assertionFailure(error.localizedDescription)
             }
@@ -49,11 +36,11 @@ class CartViewModel {
     }
 
     func countNftInCart() -> Int {
-        return nfts.count
+        nfts.count
     }
 
     func getNft(at index: Int) -> Nft {
-        return nfts[index]
+        nfts[index]
     }
 
     func getTotalPrice() -> String {
@@ -62,36 +49,20 @@ class CartViewModel {
         return formattedTotal
     }
 
-    private func sort(by type: SortType) {
+    func sort(by type: CartSortType) {
         switch type {
         case .price:
-            sortByPrice()
+            nfts.sort { $0.price < $1.price }
         case .rating:
-            sortByRating()
+            nfts.sort { $0.rating > $1.rating }
         case .name:
-            sortByName()
+            nfts.sort { $0.name < $1.name }
         }
-        UserDefaults.standard.set(type.rawValue, forKey: sortTypeKey)
-        print("Current sort type after set: \(currentSortType)")
-    }
-
-    func sortByPrice() {
-        nfts.sort { $0.price < $1.price }
-        currentSortType = .price
-    }
-
-    func sortByRating() {
-        nfts.sort { $0.rating > $1.rating }
-        currentSortType = .rating
-    }
-
-    func sortByName() {
-        nfts.sort { $0.name < $1.name }
-        currentSortType = .name
+        cartFilterStorage.cartSortType = type
     }
 
     private func totalPriceCount() -> Float {
-        return nfts.reduce(0) { $0 + $1.price }
+        nfts.reduce(0) { $0 + $1.price }
     }
 
     private func observeChanges() {

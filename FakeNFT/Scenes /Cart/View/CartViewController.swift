@@ -133,13 +133,13 @@ final class CartViewController: UIViewController, LoadingView {
                                                 message: Constants.sortTitle,
                                                 preferredStyle: .actionSheet)
         let filterPriceAction = UIAlertAction(title: Constants.sortByPrice, style: .default) { _ in
-            self.viewModel.sortByPrice()
+            self.viewModel.sort(by: CartSortType.price)
         }
         let filteRatingAction = UIAlertAction(title: Constants.sortByRating, style: .default) { _ in
-            self.viewModel.sortByRating()
+            self.viewModel.sort(by: CartSortType.rating)
         }
         let filterNameAction = UIAlertAction(title: Constants.sortByName, style: .default) { _ in
-            self.viewModel.sortByName()
+            self.viewModel.sort(by: CartSortType.name)
         }
         let cancelAction = UIAlertAction(title: Constants.closeButtonText, style: .cancel)
         [filterPriceAction, filteRatingAction, filterNameAction, cancelAction].forEach { alertController.addAction($0) }
