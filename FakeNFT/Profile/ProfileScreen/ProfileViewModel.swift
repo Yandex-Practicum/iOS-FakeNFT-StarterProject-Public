@@ -34,17 +34,21 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
 
         model.fetchProfile { [weak self] result in
-            guard let self = self else { return }
-            ProgressHUD.dismiss()
-            switch result {
-            case .success(let userProfile):
-                self.userProfile = userProfile
-            case .failure(let error):
-                // ToDo: - Уведомление об ошибке
-                print(error)
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                ProgressHUD.dismiss()
+                
+                switch result {
+                case .success(let userProfile):
+                    self.userProfile = userProfile
+                case .failure(let error):
+                    // ToDo: - Уведомление об ошибке
+                    print(error)
+                }
             }
         }
     }
+
 
     func updateName(_ name: String) {
         if let currentProfile = userProfile {
