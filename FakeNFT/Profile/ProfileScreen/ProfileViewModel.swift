@@ -115,12 +115,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let updatedProfile):
-                self.userProfile = updatedProfile
-            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.userProfile = updatedProfile
+                }
+            case .failure(_): break
+                
+            }
+
                 // ToDo: - Уведомление об ошибке
-                print(error)
+        
             }
         }
     }
-}
 
