@@ -1,17 +1,17 @@
 //
-//  CatalogService.swift
+//  CatalogCollectionService.swift
 //  FakeNFT
 //
-//  Created by Eugene Kolesnikov on 07.11.2023.
+//  Created by Eugene Kolesnikov on 13.11.2023.
 //
 
 import Foundation
 
-protocol CatalogServiceProtocol {
+protocol CatalogCollectionServiceProtocol {
     func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void)
 }
 
-final class CatalogService: CatalogServiceProtocol {
+final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
     // MARK: - Public properties
     private var catalog: [Catalog] = []
