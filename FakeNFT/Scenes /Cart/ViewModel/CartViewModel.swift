@@ -18,12 +18,14 @@ class CartViewModel {
     func loadData() {
         servicesAssembly.cartService.loadNFTs { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let nfts):
-                self.nfts = nfts
-                self.sort(by: cartFilterStorage.cartSortType)
-            case .failure(let error):
-                assertionFailure(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let nfts):
+                    self.nfts = nfts
+                    self.sort(by: self.cartFilterStorage.cartSortType)
+                case .failure(let error):
+                    assertionFailure(error.localizedDescription)
+                }
             }
         }
     }
@@ -57,11 +59,13 @@ class CartViewModel {
     func deleteNftFromCart(at index: Int) {
         nfts.remove(at: index)
         servicesAssembly.cartService.deleteNftFromCart(cartId: "1", nfts: nfts.map { $0.id }) { result in
-            switch result {
-            case .success:
-                self.loadData()
-            case .failure(let error):
-                assertionFailure(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.loadData()
+                case .failure(let error):
+                    assertionFailure(error.localizedDescription)
+                }
             }
         }
     }

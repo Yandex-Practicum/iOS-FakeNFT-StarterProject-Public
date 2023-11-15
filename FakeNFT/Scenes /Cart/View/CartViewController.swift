@@ -1,8 +1,8 @@
 import UIKit
 
 final class CartViewController: UIViewController, LoadingView {
-    private var deleteNftIndex: Int = 0
     private let viewModel: CartViewModel
+    private var deleteNftIndex: Int = 0
 
     private lazy var filterButton: UIButton = {
         let button = UIButton()
@@ -198,20 +198,17 @@ final class CartViewController: UIViewController, LoadingView {
     }
 
     private func showFiltersAlert() {
-        let alertController = UIAlertController(title: nil,
-                                                message: Constants.sortTitle,
-                                                preferredStyle: .actionSheet)
-        let filterPriceAction = UIAlertAction(title: Constants.sortByPrice, style: .default) { _ in
-            self.viewModel.sort(by: CartSortType.price)
+        let alertController = UIAlertController(title: nil, message: Constants.sortTitle, preferredStyle: .actionSheet)
+        let addAction: (String, CartSortType) -> UIAlertAction = { title, sortType in
+            return UIAlertAction(title: title, style: .default) { _ in
+                self.viewModel.sort(by: sortType)
+            }
         }
-        let filteRatingAction = UIAlertAction(title: Constants.sortByRating, style: .default) { _ in
-            self.viewModel.sort(by: CartSortType.rating)
-        }
-        let filterNameAction = UIAlertAction(title: Constants.sortByName, style: .default) { _ in
-            self.viewModel.sort(by: CartSortType.name)
-        }
+        alertController.addAction(addAction(Constants.sortByPrice, .price))
+        alertController.addAction(addAction(Constants.sortByRating, .rating))
+        alertController.addAction(addAction(Constants.sortByName, .name))
         let cancelAction = UIAlertAction(title: Constants.closeButtonText, style: .cancel)
-        [filterPriceAction, filteRatingAction, filterNameAction, cancelAction].forEach { alertController.addAction($0) }
+        alertController.addAction(cancelAction)
         present(alertController, animated: true)
     }
 
