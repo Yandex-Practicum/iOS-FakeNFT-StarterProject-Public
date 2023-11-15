@@ -1,8 +1,7 @@
 import UIKit
 
 final class CartViewController: UIViewController, LoadingView {
-    var activityIndicator = UIActivityIndicatorView()
-    private var deleteNftIndex: Int?
+    private var deleteNftIndex: Int = 0
     private let viewModel: CartViewModel
 
     private lazy var filterButton: UIButton = {
@@ -153,7 +152,6 @@ final class CartViewController: UIViewController, LoadingView {
     init(viewModel: CartViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.delegate = self
         observeViewModelChanges()
     }
 
@@ -168,12 +166,12 @@ final class CartViewController: UIViewController, LoadingView {
         createSubviews()
         viewModel.loadData()
         showLoading()
-        checkPlaceholder()
     }
 
     private func observeViewModelChanges() {
         viewModel.$nfts.bind { [weak self] nfts in
-            self?.updateUI(with: nfts)
+            guard let self else { return }
+            self.updateUI(with: nfts)
         }
     }
 
@@ -182,15 +180,20 @@ final class CartViewController: UIViewController, LoadingView {
         countNFTLabel.text = "\(viewModel.countNftInCart()) NFT"
         totalPriceLabel.text = "\(viewModel.getTotalPrice()) ETH"
         hideLoading()
+        checkPlaceholder()
     }
 
     private func checkPlaceholder() {
-        if !viewModel.isEmpty {
+        if viewModel.nfts.isEmpty {
             paymentContainView.isHidden = true
             filterButton.isHidden = true
             cartTableView.isHidden = true
-            paymentButton.isHidden = true
             emptyCartLabel.isHidden = false
+        } else {
+            paymentContainView.isHidden = false
+            filterButton.isHidden = false
+            cartTableView.isHidden = false
+            emptyCartLabel.isHidden = true
         }
     }
 
@@ -223,14 +226,13 @@ final class CartViewController: UIViewController, LoadingView {
 
     @objc
     private func tapDeleteButton() {
-
+        viewModel.deleteNftFromCart(at: deleteNftIndex)
+        hideBackroundBlurView()
     }
 
     @objc
     private func tapBackButton() {
-        backgroundBlurView.removeFromSuperview()
-        navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = false
+        hideBackroundBlurView()
     }
 }
 
@@ -241,16 +243,6 @@ extension CartViewController {
         addPaymentInfoStackView()
         addPayButton()
         addEmptyCartLabel()
-        addActivityIndicator()
-    }
-
-    private func addActivityIndicator() {
-        view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
-        ])
     }
 
     private func addCartTableView() {
@@ -300,21 +292,13 @@ extension CartViewController {
     }
 }
 
-extension CartViewController: CartViewModelDelegate {
-    func getLoadData() {
-        hideLoading()
-    }
-}
-
 extension CartViewController: CartCellDelegate {
     func didTapDeleteNft(at index: Int) {
         backgroundBlurView.isHidden = false
         nftImageView.kf.setImage(with: viewModel.getNft(at: index).images.first)
-        nftImageView.layer.cornerRadius = 12
-        nftImageView.layer.masksToBounds = true
-        deleteNftIndex = index
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = true
+        deleteNftIndex = index
         createDeleteView()
     }
 
@@ -323,6 +307,12 @@ extension CartViewController: CartCellDelegate {
         addNftImageView()
         addConfirmDeleteLabel()
         addButtonsStackView()
+    }
+
+    private func hideBackroundBlurView() {
+        backgroundBlurView.removeFromSuperview()
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
     }
 
     private func addBackgroundBlurView() {
@@ -364,7 +354,6 @@ extension CartViewController: CartCellDelegate {
             buttonsStackView.heightAnchor.constraint(equalToConstant: 44)
             ])
     }
-
 }
 
 extension CartViewController: UITableViewDelegate {

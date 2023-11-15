@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -6,6 +7,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        ProgressHUD.animationType = .systemActivityIndicator
+        ProgressHUD.colorHUD = .segmentInactive
+        ProgressHUD.colorAnimation = .segmentActive
         return true
     }
 

@@ -1,12 +1,6 @@
 import Foundation
 
-protocol CartViewModelDelegate: AnyObject {
-    func getLoadData()
-}
-
 class CartViewModel {
-
-    weak var delegate: CartViewModelDelegate?
     let servicesAssembly: ServicesAssembly
     var isEmpty: Bool {
         nfts.isEmpty
@@ -27,7 +21,6 @@ class CartViewModel {
             switch result {
             case .success(let nfts):
                 self.nfts = nfts
-                self.delegate?.getLoadData()
                 self.sort(by: cartFilterStorage.cartSortType)
             case .failure(let error):
                 assertionFailure(error.localizedDescription)
@@ -61,13 +54,19 @@ class CartViewModel {
         cartFilterStorage.cartSortType = type
     }
 
-    private func totalPriceCount() -> Float {
-        nfts.reduce(0) { $0 + $1.price }
+    func deleteNftFromCart(at index: Int) {
+        nfts.remove(at: index)
+        servicesAssembly.cartService.deleteNftFromCart(cartId: "1", nfts: nfts.map { $0.id }) { result in
+            switch result {
+            case .success:
+                self.loadData()
+            case .failure(let error):
+                assertionFailure(error.localizedDescription)
+            }
+        }
     }
 
-    private func observeChanges() {
-        $nfts.bind { [weak self] _ in
-            self?.delegate?.getLoadData()
-        }
+    private func totalPriceCount() -> Float {
+        nfts.reduce(0) { $0 + $1.price }
     }
 }
