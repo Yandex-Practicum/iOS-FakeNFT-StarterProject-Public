@@ -48,7 +48,6 @@ final class CatalogCollectionView: UIView {
     private let collectionCoverImageView: UIImageView = {
         let imageView = UIImageView()
 
-//        imageView.image = UIImage(named: "cell_stub")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +74,8 @@ final class CatalogCollectionView: UIView {
     private lazy var authorPageLinkButton: UIButton = {
         let button = UIButton()
 
-        button.setTitle("author", for: .normal)
+//        button.setTitle("author", for: .normal)
+        button.isHidden = true
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -107,8 +107,16 @@ final class CatalogCollectionView: UIView {
 
         return collection
     }()
+    private lazy var authorLinkAnimationView: UIView = {
+        let view = UIView()
+
+        view.isHidden = false
+        view.backgroundColor = .lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
     private var subscribes = [AnyCancellable]()
-    private var nft: [NftModel]?
 
     init(frame: CGRect, viewModel: CatalogCollectionViewModelProtocol, delegate: CatalogCollectionViewDelegate) {
         self.viewModel = viewModel
@@ -117,6 +125,7 @@ final class CatalogCollectionView: UIView {
         backgroundColor = .systemBackground
         setupUI()
         setupCollectionCoverImageView()
+        startAnimation()
         bind()
     }
 
@@ -129,18 +138,29 @@ final class CatalogCollectionView: UIView {
     }
 
     private func bind() {
-        viewModel.nftPublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] nfts in
-            guard let self = self else { return }
+        viewModel.nftsLoaderPuublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
 
-                if nfts.count == viewModel.catalogCollection.nfts.count {
-//                    configureCollectionView()
-                    nft = nfts
-                    collectionView.reloadData()
+                collectionView.reloadData()
 
+            }.store(in: &subscribes)
+
+        viewModel.authorPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] author in
+                guard let self = self else { return }
+
+                if author != nil {
+                    configureAuthor(author)
                 }
 
             }.store(in: &subscribes)
+    }
+
+    private func configureAuthor(_ author: Author?) {
+        stopAnimation()
+        authorPageLinkButton.setTitle(author?.name, for: .normal)
+        layoutSubviews()
     }
 
     private func setupCollectionCoverImageView() {
@@ -168,6 +188,7 @@ final class CatalogCollectionView: UIView {
         contentView.addSubview(collectionCoverImageView)
         contentView.addSubview(catalogNameLabel)
         contentView.addSubview(authorNameLabel)
+        contentView.addSubview(authorLinkAnimationView)
         contentView.addSubview(authorPageLinkButton)
         contentView.addSubview(catalogDescriptionLabel)
         contentView.addSubview(collectionView)
@@ -210,6 +231,11 @@ final class CatalogCollectionView: UIView {
             authorPageLinkButton.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
             authorPageLinkButton.heightAnchor.constraint(equalToConstant: 28),
 
+            authorLinkAnimationView.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 6),
+            authorLinkAnimationView.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
+            authorLinkAnimationView.heightAnchor.constraint(equalToConstant: 28),
+            authorLinkAnimationView.widthAnchor.constraint(equalToConstant: 100),
+
             catalogDescriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             catalogDescriptionLabel.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
             catalogDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
@@ -235,6 +261,16 @@ final class CatalogCollectionView: UIView {
     private func backButtonTapped() {
         delegate?.dismissView()
     }
+
+    private func startAnimation() {
+        authorLinkAnimationView.isHidden = false
+        authorLinkAnimationView.flash()
+    }
+
+    private func stopAnimation() {
+        authorLinkAnimationView.isHidden = true
+        authorPageLinkButton.isHidden = false
+    }
 }
 
 extension CatalogCollectionView: UICollectionViewDataSource {
@@ -249,23 +285,21 @@ extension CatalogCollectionView: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: reuseIdentifier,
-            for: indexPath) as? CatalogCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-//            let nft = viewModel.nft?[indexPath.row]
-
-            cell.configureCell(with: viewModel.catalogCollection)
-//            cell.startAnimation()
-
-            if nft != nil {
-                let nft = viewModel.nfts[indexPath.row]
-                cell.setImage(nft)
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: reuseIdentifier,
+                for: indexPath) as? CatalogCollectionViewCell else {
+                return UICollectionViewCell()
             }
 
-        return cell
-    }
+            if viewModel.nftsLoadingIsCompleted {
+                let model = viewModel.nfts[indexPath.row]
+                cell.setImage(model)
+            } else {
+                cell.configureCell()
+            }
+
+            return cell
+        }
 }
 
 extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {

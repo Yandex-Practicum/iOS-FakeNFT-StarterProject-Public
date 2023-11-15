@@ -17,7 +17,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -62,13 +62,20 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         return button
     }()
-    private lazy var gradient: GradientView = {
-        return GradientView(frame: self.bounds)
+    private lazy var animationView: UIView = {
+        let view = UIView()
+
+        view.isHidden = true
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createStars()
 
         addSubviews()
         applyConstraints()
@@ -80,13 +87,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell(with cardModel: Catalog) { // create new model
-//        nftCardNameLabel.text = "Some"
-//        nftPriceLabel.text = "1 ETH"
-        nftImageView.flash()
-
-//        let url = URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")
-//        nftImageView.kf.setImage(with: url)
+    func configureCell() {
+        startAnimation()
     }
 
     func setImage(_ nft: NftModel) {
@@ -102,6 +104,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
+        selectedRate = nft.rating
+        createStars()
     }
 
     private func addSubviews() {
@@ -110,6 +114,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(nftCardNameLabel)
         contentView.addSubview(nftPriceLabel)
         contentView.addSubview(addToBasketButton)
+        contentView.addSubview(animationView)
     }
 
     private func applyConstraints() {
@@ -120,6 +125,13 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
+
+            // animationView constraints
+            animationView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            animationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            animationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            animationView.heightAnchor.constraint(equalToConstant: 108),
+            animationView.widthAnchor.constraint(equalToConstant: 108),
 
             // starsContainerConstraints
             starsContainer.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8),
@@ -139,7 +151,6 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
             // addToBasketButton constraints
             addToBasketButton.topAnchor.constraint(equalTo: nftCardNameLabel.topAnchor),
-//            addToBasketButton.leadingAnchor.constraint(equalTo: nftCardNameLabel.trailingAnchor, constant: 10),
             addToBasketButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             addToBasketButton.heightAnchor.constraint(equalToConstant: 40),
             addToBasketButton.widthAnchor.constraint(equalToConstant: 40)
@@ -151,6 +162,9 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         for index in 1...5 {
             let star = makeStarIcon()
             star.tag = index
+            if index <= selectedRate {
+                star.isHighlighted = true
+            }
             starsContainer.addArrangedSubview(star)
         }
     }
@@ -195,12 +209,11 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     func startAnimation() {
-        gradient.isHidden = false
-        gradient.startAnimating()
+        animationView.isHidden = false
+        animationView.flash()
     }
 
     func stopAnimation() {
-        gradient.stopAnimating()
-        gradient.isHidden = true
+        animationView.isHidden = true
     }
 }

@@ -138,10 +138,6 @@ extension CatalogView: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let _ = tableView.cellForRow(at: indexPath) else {
-//            return
-//        }
-
         let model = viewModel.catalog[indexPath.row]
         delegate?.selectedCategory(model)
     }
