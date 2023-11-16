@@ -1,18 +1,15 @@
 import Foundation
 
-protocol CartViewModelDelegate: AnyObject {
-    func getLoadData()
-}
-
 class CartViewModel {
-    weak var delegate: CartViewModelDelegate?
     let servicesAssembly: ServicesAssembly
     var isEmpty: Bool {
-            return nfts.isEmpty
-        }
+        nfts.isEmpty
+    }
 
     @Observable
     private (set) var nfts: [Nft] = []
+
+    private lazy var cartFilterStorage = CartFilterStorage.shared
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -21,35 +18,59 @@ class CartViewModel {
     func loadData() {
         servicesAssembly.cartService.loadNFTs { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let nfts):
-                self.nfts = nfts
-                self.delegate?.getLoadData()
-            case .failure(let error):
-                assertionFailure(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let nfts):
+                    self.nfts = nfts
+                    self.sort(by: self.cartFilterStorage.cartSortType)
+                case .failure(let error):
+                    assertionFailure(error.localizedDescription)
+                }
             }
         }
     }
 
     func countNftInCart() -> Int {
-        return nfts.count
+        nfts.count
     }
 
     func getNft(at index: Int) -> Nft {
-        return nfts[index]
+        nfts[index]
     }
 
     func getTotalPrice() -> String {
-        return "\(totalPriceCount())"
+        let total = totalPriceCount()
+        let formattedTotal = NumberFormatter.priceFormatter.string(from: NSNumber(value: total)) ?? "\(total)"
+        return formattedTotal
+    }
+
+    func sort(by type: CartSortType) {
+        switch type {
+        case .price:
+            nfts.sort { $0.price < $1.price }
+        case .rating:
+            nfts.sort { $0.rating > $1.rating }
+        case .name:
+            nfts.sort { $0.name < $1.name }
+        }
+        cartFilterStorage.cartSortType = type
+    }
+
+    func deleteNftFromCart(at index: Int) {
+        nfts.remove(at: index)
+        servicesAssembly.cartService.deleteNftFromCart(cartId: "1", nfts: nfts.map { $0.id }) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.loadData()
+                case .failure(let error):
+                    assertionFailure(error.localizedDescription)
+                }
+            }
+        }
     }
 
     private func totalPriceCount() -> Float {
-        return nfts.reduce(0) { $0 + $1.price }
-    }
-
-    private func observeChanges() {
-        $nfts.bind { [weak self] _ in
-            self?.delegate?.getLoadData()
-        }
+        nfts.reduce(0) { $0 + $1.price }
     }
 }

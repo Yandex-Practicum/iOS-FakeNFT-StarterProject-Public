@@ -5,6 +5,7 @@ typealias NftsCompletion = (Result<[Nft], Error>) -> Void
 
 protocol CartService {
     func loadNFTs(completion: @escaping NftsCompletion)
+    func deleteNftFromCart(cartId: String, nfts: [String], completion: @escaping CartCompletion)
 }
 
 final class CartServiceImpl: CartService {
@@ -52,5 +53,12 @@ final class CartServiceImpl: CartService {
                 completion(.success(nfts))
             }
         }
+    }
+
+    func deleteNftFromCart(cartId: String = "1", nfts: [String], completion: @escaping CartCompletion) {
+        let request =  NFTNetworkRequest(endpoint: CartRequest().endpoint,
+                                         httpMethod: .put,
+                                         dto: CartModel(id: cartId, nfts: nfts))
+        networkClient.send(request: request, type: CartModel.self, onResponse: completion)
     }
 }
