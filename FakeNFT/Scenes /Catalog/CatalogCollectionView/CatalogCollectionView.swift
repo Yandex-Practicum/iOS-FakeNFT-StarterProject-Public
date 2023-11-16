@@ -111,6 +111,8 @@ final class CatalogCollectionView: UIView {
         let view = UIView()
 
         view.isHidden = false
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
         view.backgroundColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -125,7 +127,8 @@ final class CatalogCollectionView: UIView {
         backgroundColor = .systemBackground
         setupUI()
         setupCollectionCoverImageView()
-        startAnimation()
+//        startAnimation()
+//        authorPageLinkButton.flash()
         bind()
     }
 
@@ -149,6 +152,8 @@ final class CatalogCollectionView: UIView {
         viewModel.authorPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] author in
                 guard let self = self else { return }
+
+                startAnimation()
 
                 if author != nil {
                     configureAuthor(author)
@@ -231,10 +236,10 @@ final class CatalogCollectionView: UIView {
             authorPageLinkButton.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
             authorPageLinkButton.heightAnchor.constraint(equalToConstant: 28),
 
-            authorLinkAnimationView.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 6),
+            authorLinkAnimationView.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 8),
             authorLinkAnimationView.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
-            authorLinkAnimationView.heightAnchor.constraint(equalToConstant: 28),
-            authorLinkAnimationView.widthAnchor.constraint(equalToConstant: 100),
+            authorLinkAnimationView.heightAnchor.constraint(equalToConstant: 24),
+            authorLinkAnimationView.widthAnchor.constraint(equalToConstant: 200),
 
             catalogDescriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             catalogDescriptionLabel.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
