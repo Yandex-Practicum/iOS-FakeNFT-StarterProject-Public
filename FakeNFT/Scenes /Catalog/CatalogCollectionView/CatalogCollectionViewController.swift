@@ -32,11 +32,9 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     }
 
     func showErrorAlert() {
-        if self.presentedViewController == nil {
-            AlertPresenter.showError(in: self) { [weak self] in
-                guard let self = self else { return }
-                catalogCollectionView.reloadData()
-            }
+        AlertPresenter.showError(in: self) { [weak self] in
+            guard let self = self else { return }
+            catalogCollectionView.reloadData()
         }
     }
 }

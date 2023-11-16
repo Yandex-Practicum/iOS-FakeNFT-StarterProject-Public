@@ -41,8 +41,13 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     }
 
     func fetchData() {
-        fetchNfts()
-        fetchAuthorProfile()
+        networkError = nil
+        if !nftsLoadingIsCompleted {
+            fetchNfts()
+        }
+        if author == nil {
+            fetchAuthorProfile()
+        }
     }
 
     func calculateCollectionViewHeight() -> CGFloat {
@@ -69,7 +74,9 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                         nftsLoadingIsCompleted = true
                     }
                 case .failure(let error):
-                    print(error)
+                    if networkError == nil && !nftsLoadingIsCompleted {
+                        networkError = error
+                    }
                 }
             }
         }
@@ -79,10 +86,12 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         collectionService.fetchAuthorProfile(id: catalogCollection.authorID) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let author):
-                self.author = author
+            case .success(let authorLink):
+                self.author = authorLink
             case .failure(let error):
-                networkError = error
+                if networkError == nil && author == nil {
+                    networkError = error
+                }
             }
         }
     }
