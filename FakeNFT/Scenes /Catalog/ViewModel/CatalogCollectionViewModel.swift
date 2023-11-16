@@ -11,29 +11,37 @@ import Combine
 protocol CatalogCollectionViewModelProtocol: AnyObject {
     var nftsLoadingIsCompleted: Bool { get }
     var nftsLoaderPuublisher: Published<Bool>.Publisher { get }
-    var nfts: [NftModel] { get }
+    var nfts: [Nft] { get }
     var catalogCollection: Catalog { get }
     var author: Author? { get }
     var authorPublisher: Published<Author?>.Publisher { get }
+    var networkError: Error? { get }
+    var networkErrorPublisher: Published<Error?>.Publisher { get }
     func calculateCollectionViewHeight() -> CGFloat
+    func fetchData()
 }
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
     @Published var nftsLoadingIsCompleted: Bool = false
     @Published var author: Author?
+    @Published var networkError: Error?
     var nftsLoaderPuublisher: Published<Bool>.Publisher { $nftsLoadingIsCompleted }
     var authorPublisher: Published<Author?>.Publisher { $author }
-    var nfts: [NftModel] = []
+    var networkErrorPublisher: Published<Error?>.Publisher { $networkError }
+    var nfts: [Nft] = []
     var catalogCollection: Catalog
-    var networkError: Error?
 
     private let collectionService: CatalogCollectionService
 
     init(catalogCollection: Catalog, service: CatalogCollectionService) {
         self.catalogCollection = catalogCollection
         self.collectionService = service
-        fetchNft()
+        fetchData()
+    }
+
+    func fetchData() {
+        fetchNfts()
         fetchAuthorProfile()
     }
 
@@ -50,7 +58,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         return CGFloat(result)
     }
 
-    private func fetchNft() {
+    private func fetchNfts() {
         catalogCollection.nfts.forEach { id in
             collectionService.loadNftForCollection(id: String(id)) { [weak self] result in
                 guard let self = self else { return }
@@ -61,7 +69,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                         nftsLoadingIsCompleted = true
                     }
                 case .failure(let error):
-                    networkError = error
+                    print(error)
                 }
             }
         }

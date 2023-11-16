@@ -8,8 +8,7 @@
 import Foundation
 
 protocol CatalogCollectionServiceProtocol {
-//    func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void)
-    func loadNftForCollection(id: String, completion: @escaping (Result<NftModel, Error>) -> Void)
+    func loadNftForCollection(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void)
 }
 
@@ -20,19 +19,18 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
     // MARK: - Private properties
     private let networkClient: NetworkClient
-    private let storage: NftStorage
+    private let storage: NftStorage = NftStorageImpl.shared
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
-        self.storage = storage
+    init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
 
     // MARK: - Public methods
-    func loadNftForCollection(id: String, completion: @escaping (Result<NftModel, Error>) -> Void) {
-//        if let nft = storage.getNft(with: id) {
-//            completion(.success(nft))
-//            return
-//        }
+    func loadNftForCollection(id: String, completion: @escaping (Result<Nft, Error>) -> Void) {
+        if let nft = storage.getNft(with: id) {
+            completion(.success(nft))
+            return
+        }
 
         let request = NFTRequest(id: id)
         let queue = DispatchQueue.global(qos: .userInitiated)
@@ -41,18 +39,13 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
             guard let self = self else { return }
             networkClient.send(
                 request: request,
-                type: NftResult.self,
-                onResponse: { (result: Result<NftResult, Error>) in
-                    DispatchQueue.main.async {
+                type: Nft.self,
+                onResponse: { (result: Result<Nft, Error>) in
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
                         switch result {
-                        case .success(let nftRes):
-                            let nft = NftModel(
-                                id: nftRes.id,
-                                images: nftRes.images,
-                                rating: nftRes.rating,
-                                name: nftRes.name,
-                                price: nftRes.price
-                            )
+                        case .success(let nft):
+                            storage.saveNft(nft)
                             completion(.success((nft)))
                         case .failure(let error):
                             completion(.failure((error)))

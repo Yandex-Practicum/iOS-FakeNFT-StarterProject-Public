@@ -10,6 +10,8 @@ import Kingfisher
 
 final class CatalogCollectionViewCell: UICollectionViewCell {
 
+    private var nftIsLiked = false
+    private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let nftImageView: UIImageView = {
@@ -21,6 +23,14 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
+    }()
+    private lazy var likeButton: UIButton = {
+        let button = UIButton()
+
+        button.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
     }()
     private lazy var starsContainer: UIStackView = {
         let stackView = UIStackView()
@@ -56,7 +66,6 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     private lazy var addToBasketButton: UIButton = {
         let button = UIButton()
 
-        button.setImage(UIImage(named: Constants.addToBasketPicTitle)?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(basketButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
@@ -87,11 +96,11 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell() {
+    func createAnimationView() {
         startAnimation()
     }
 
-    func setImage(_ nft: NftModel) {
+    func configureCell(_ nft: Nft) {
         let url = nft.images[0]
 
         nftImageView.kf.setImage(
@@ -102,6 +111,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
                 self.stopAnimation()
             })
 
+        changeLike()
+        switchBasketImage()
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
         selectedRate = nft.rating
@@ -110,6 +121,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
     private func addSubviews() {
         contentView.addSubview(nftImageView)
+        contentView.addSubview(likeButton)
         contentView.addSubview(starsContainer)
         contentView.addSubview(nftCardNameLabel)
         contentView.addSubview(nftPriceLabel)
@@ -125,6 +137,12 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
+
+            // likeButton constraints
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
+            likeButton.widthAnchor.constraint(equalToConstant: 42),
+            likeButton.heightAnchor.constraint(equalToConstant: 42),
 
             // animationView constraints
             animationView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -158,7 +176,6 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     private func createStars() {
-        // loop through the number of our stars and add them to the stackView (starsContainer)
         for index in 1...5 {
             let star = makeStarIcon()
             star.tag = index
@@ -170,7 +187,6 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     private func makeStarIcon() -> UIImageView {
-        // declare default icon and highlightedImage
         let imageView = UIImageView(
             image: UIImage(named: Constants.starInactivePicTitle),
             highlightedImage: UIImage(named: Constants.starActivePicTitle)
@@ -181,8 +197,15 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     @objc
+    private func didTapLikeButton() {
+        nftIsLiked = !nftIsLiked
+        changeLike()
+    }
+
+    @objc
     private func basketButtonTapped() {
-        addToBasketButton.setImage(UIImage(named: Constants.deleteFromBasketPicTitle), for: .normal)
+        nftIsAddedToBasket = !nftIsAddedToBasket
+        switchBasketImage()
     }
 
     @objc
@@ -191,15 +214,11 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         let starWidth = starsContainer.bounds.width / CGFloat(5)
         let rate = Int(location.x / starWidth) + 1
 
-        // if current star doesn't match selectedRate then we change our rating
         if rate != self.selectedRate {
             feedbackGenerator.selectionChanged()
             self.selectedRate = rate
         }
 
-        // loop through starsContainer arrangedSubviews and
-        // look for all Subviews of type UIImageView and change
-        // their isHighlighted state (icons depend on it)
         starsContainer.arrangedSubviews.forEach { subview in
             guard let starImageView = subview as? UIImageView else {
                 return
@@ -208,12 +227,24 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func startAnimation() {
+    private func changeLike() {
+        let image = nftIsLiked ?
+        UIImage(named: Constants.likeActivePicTitle) : UIImage(named: Constants.likeInactivePicTitle)
+        likeButton.setImage(image, for: .normal)
+    }
+
+    private func switchBasketImage() {
+        let image = nftIsAddedToBasket ?
+        UIImage(named: Constants.deleteFromBasketPicTitle) : UIImage(named: Constants.addToBasketPicTitle)
+        addToBasketButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+    }
+
+    private func startAnimation() {
         animationView.isHidden = false
         animationView.flash()
     }
 
-    func stopAnimation() {
+    private func stopAnimation() {
         animationView.isHidden = true
     }
 }

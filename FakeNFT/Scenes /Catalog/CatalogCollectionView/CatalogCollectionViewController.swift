@@ -30,4 +30,15 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     func dismissView() {
         dismiss(animated: true)
     }
+
+    func showErrorAlert() {
+        if self.presentedViewController == nil {
+            AlertPresenter.showError(in: self) { [weak self] in
+                guard let self = self else { return }
+                catalogCollectionView.reloadData()
+            }
+        } else {
+            self.presentedViewController?.dismiss(animated: true)
+        }
+    }
 }

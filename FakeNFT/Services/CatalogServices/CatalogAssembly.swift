@@ -20,7 +20,7 @@ final class CatalogAssembly {
 
     static func buildCatalogCollectionViewModel(catalog: Catalog) -> CatalogCollectionViewModelProtocol {
         let network = DefaultNetworkClient()
-        let service = CatalogCollectionService(networkClient: network, storage: NftStorageImpl())
+        let service = CatalogCollectionService(networkClient: network)
         let viewModel = CatalogCollectionViewModel(catalogCollection: catalog, service: service)
         return viewModel
     }

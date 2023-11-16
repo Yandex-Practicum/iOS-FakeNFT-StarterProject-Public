@@ -11,6 +11,7 @@ import Combine
 
 protocol CatalogCollectionViewDelegate: AnyObject {
     func dismissView()
+    func showErrorAlert()
 }
 
 final class CatalogCollectionView: UIView {
@@ -74,7 +75,6 @@ final class CatalogCollectionView: UIView {
     private lazy var authorPageLinkButton: UIButton = {
         let button = UIButton()
 
-//        button.setTitle("author", for: .normal)
         button.isHidden = true
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -127,8 +127,6 @@ final class CatalogCollectionView: UIView {
         backgroundColor = .systemBackground
         setupUI()
         setupCollectionCoverImageView()
-//        startAnimation()
-//        authorPageLinkButton.flash()
         bind()
     }
 
@@ -138,6 +136,10 @@ final class CatalogCollectionView: UIView {
 
     deinit {
         collectionCoverImageView.kf.cancelDownloadTask()
+    }
+
+    func reloadData() {
+        viewModel.fetchData()
     }
 
     private func bind() {
@@ -159,6 +161,13 @@ final class CatalogCollectionView: UIView {
                     configureAuthor(author)
                 }
 
+            }.store(in: &subscribes)
+        viewModel.networkErrorPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let self = self else { return }
+                if error != nil {
+                    delegate?.showErrorAlert()
+                }
             }.store(in: &subscribes)
     }
 
@@ -204,61 +213,60 @@ final class CatalogCollectionView: UIView {
     private func applyConstraints() {
 
         NSLayoutConstraint.activate([
+            // backButton constraints
             backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             backButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
 
+            // scrollView constraints
             scrollView.topAnchor.constraint(equalTo: topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.widthAnchor.constraint(equalTo: widthAnchor),
             scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
 
+            // contentView constraints
             contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1),
 
+            // collectionCoverImageView contraints
             collectionCoverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             collectionCoverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionCoverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionCoverImageView.heightAnchor.constraint(equalToConstant: 310),
 
-//            collectionCoverImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
+            // catalogNameLabel constraints
             catalogNameLabel.topAnchor.constraint(equalTo: collectionCoverImageView.bottomAnchor, constant: 16),
             catalogNameLabel.leadingAnchor.constraint(equalTo: collectionCoverImageView.leadingAnchor, constant: 16),
 
+            // authorNameLabel constraints
             authorNameLabel.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 13),
             authorNameLabel.leadingAnchor.constraint(equalTo: catalogNameLabel.leadingAnchor),
 
+            // authorPageLinkButton constraints
             authorPageLinkButton.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 6),
             authorPageLinkButton.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
             authorPageLinkButton.heightAnchor.constraint(equalToConstant: 28),
 
+            // authorLinkAnimationView constraints
             authorLinkAnimationView.topAnchor.constraint(equalTo: catalogNameLabel.bottomAnchor, constant: 8),
             authorLinkAnimationView.leadingAnchor.constraint(equalTo: authorNameLabel.trailingAnchor, constant: 4),
             authorLinkAnimationView.heightAnchor.constraint(equalToConstant: 24),
             authorLinkAnimationView.widthAnchor.constraint(equalToConstant: 200),
 
+            // catalogDescriptionLabel constraints
             catalogDescriptionLabel.topAnchor.constraint(equalTo: authorNameLabel.bottomAnchor, constant: 5),
             catalogDescriptionLabel.leadingAnchor.constraint(equalTo: authorNameLabel.leadingAnchor),
             catalogDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
-//            catalogDescriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
+            // collectionView constraits
             collectionView.topAnchor.constraint(equalTo: catalogDescriptionLabel.bottomAnchor, constant: 24),
             collectionView.leadingAnchor.constraint(equalTo: catalogDescriptionLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: catalogDescriptionLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: viewModel.calculateCollectionViewHeight())
-
-//            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-
-//            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-//            contentView.heightAnchor.constraint(equalTo: collectionCoverImageView.heightAnchor, multiplier: 1)
         ])
     }
 
@@ -298,9 +306,9 @@ extension CatalogCollectionView: UICollectionViewDataSource {
 
             if viewModel.nftsLoadingIsCompleted {
                 let model = viewModel.nfts[indexPath.row]
-                cell.setImage(model)
+                cell.configureCell(model)
             } else {
-                cell.configureCell()
+                cell.createAnimationView()
             }
 
             return cell
