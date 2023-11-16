@@ -198,18 +198,7 @@ final class CartViewController: UIViewController, LoadingView {
     }
 
     private func showFiltersAlert() {
-        let alertController = UIAlertController(title: nil, message: Constants.sortTitle, preferredStyle: .actionSheet)
-        let addAction: (String, CartSortType) -> UIAlertAction = { title, sortType in
-            return UIAlertAction(title: title, style: .default) { _ in
-                self.viewModel.sort(by: sortType)
-            }
-        }
-        alertController.addAction(addAction(Constants.sortByPrice, .price))
-        alertController.addAction(addAction(Constants.sortByRating, .rating))
-        alertController.addAction(addAction(Constants.sortByName, .name))
-        let cancelAction = UIAlertAction(title: Constants.closeButtonText, style: .cancel)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true)
+        AlertPresenter.showCartFiltersAlert(on: self, viewModel: viewModel)
     }
 
     @objc

@@ -25,7 +25,7 @@ final class CartFilterStorage {
     private let sortTypeKey = "SortTypeKey"
     private var userDefaults: UserDefaults
 
-    init(userDefaults: UserDefaults = .standard) {
+    private init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
 }
