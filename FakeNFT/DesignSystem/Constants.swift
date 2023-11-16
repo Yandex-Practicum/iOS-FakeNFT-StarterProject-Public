@@ -47,4 +47,11 @@ struct Constants {
     static let deleteConfirmText = "Вы уверены, что хотите удалить объект из корзины?"
     static let deleteButtonText = "Удалить"
     static let backButtonText = "Вернуться"
+
+    // MARK: - Currency constants
+    static let paimentTypeText = "Выберите способ оплаты"
+    static let paimentConfirmButtonText = "Оплатить"
+    static let cartUserAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
+    static let cartUserAgreementLinkText = "Пользовательского соглашения"
+    static let cartUserAgreementLink = "https://yandex.ru/legal/practicum_termsofuse/"
 }
