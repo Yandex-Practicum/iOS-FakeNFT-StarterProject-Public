@@ -162,6 +162,7 @@ final class CatalogCollectionView: UIView {
                 }
 
             }.store(in: &subscribes)
+
         viewModel.networkErrorPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 guard let self = self else { return }

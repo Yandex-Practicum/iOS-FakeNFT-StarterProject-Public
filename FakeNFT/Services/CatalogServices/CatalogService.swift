@@ -19,7 +19,6 @@ final class CatalogService: CatalogServiceProtocol {
     // MARK: - Private properties
     private let request = CatalogRequest()
     private let networkClient: NetworkClient
-    private var task: NetworkTask?
 
     init(networkClient: NetworkClient) {
         self.networkClient = DefaultNetworkClient()

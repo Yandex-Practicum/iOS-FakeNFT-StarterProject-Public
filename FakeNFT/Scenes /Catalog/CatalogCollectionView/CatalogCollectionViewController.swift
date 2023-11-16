@@ -37,8 +37,6 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
                 guard let self = self else { return }
                 catalogCollectionView.reloadData()
             }
-        } else {
-            self.presentedViewController?.dismiss(animated: true)
         }
     }
 }

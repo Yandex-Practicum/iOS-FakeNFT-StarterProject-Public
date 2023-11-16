@@ -45,11 +45,11 @@ final class GradientView: UIView {
     // MARK: - Private methods
     private func setupGradient() {
         gradientLayer.colors = [
-            UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.5).cgColor,
-            UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.5).cgColor,
-            UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.5).cgColor,
-            UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.5).cgColor,
-            UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.5).cgColor
+            UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.2).cgColor,
+            UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.2).cgColor,
+            UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.2).cgColor,
+            UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.2).cgColor,
+            UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.2).cgColor
         ]
 
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.3)
