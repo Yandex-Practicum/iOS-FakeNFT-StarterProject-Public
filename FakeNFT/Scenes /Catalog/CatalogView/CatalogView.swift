@@ -22,7 +22,7 @@ final class CatalogView: UIView {
     weak var delegate: CatalogViewDelegate?
 
     // MARK: - Private properties
-    private let reuseIdentifier = Constants.catalogTableViewCellIdentifier
+    private let reuseIdentifier = L10n.CatalogCell.reuseIdentifier
     private let tableView: UITableView = {
         let tableView = UITableView()
 

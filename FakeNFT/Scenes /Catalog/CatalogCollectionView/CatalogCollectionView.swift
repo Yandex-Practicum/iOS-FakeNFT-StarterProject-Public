@@ -17,12 +17,12 @@ protocol CatalogCollectionViewDelegate: AnyObject {
 final class CatalogCollectionView: UIView {
     weak var delegate: CatalogCollectionViewDelegate?
 
-    private let reuseIdentifier = "CatalogCollectionCell"
+    private let reuseIdentifier = L10n.CatalogCollectionCell.reuseIdentifier
     private let viewModel: CatalogCollectionViewModelProtocol
     private lazy var backButton: UIButton = {
         let button = UIButton()
 
-        button.setImage(UIImage(named: Constants.backwardPicTitle)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(UIImage(resource: .backward).withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ final class CatalogCollectionView: UIView {
     private let authorNameLabel: UILabel = {
         let label = UILabel()
 
-        label.text = Constants.authorLabelText
+        label.text = L10n.CatalogCollection.authorLabel
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
 

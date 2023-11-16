@@ -11,11 +11,11 @@ final class CatalogFilterStorage {
     static let shared = CatalogFilterStorage()
     var filterDescriptor: String? {
         get {
-            userDefaults.string(forKey: Constants.filterKey)
+            userDefaults.string(forKey: L10n.CatalogFilterStorage.key)
         }
         set {
             if let newValue = newValue {
-                userDefaults.set(newValue, forKey: Constants.filterKey)
+                userDefaults.set(newValue, forKey: L10n.CatalogFilterStorage.key)
             }
         }
     }

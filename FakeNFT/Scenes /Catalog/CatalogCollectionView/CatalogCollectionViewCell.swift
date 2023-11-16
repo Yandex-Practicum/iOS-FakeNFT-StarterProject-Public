@@ -188,8 +188,8 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
     private func makeStarIcon() -> UIImageView {
         let imageView = UIImageView(
-            image: UIImage(named: Constants.starInactivePicTitle),
-            highlightedImage: UIImage(named: Constants.starActivePicTitle)
+            image: UIImage(resource: .starInactive),
+            highlightedImage: UIImage(resource: .starActive)
         )
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
@@ -229,14 +229,14 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
     private func changeLike() {
         let image = nftIsLiked ?
-        UIImage(named: Constants.likeActivePicTitle) : UIImage(named: Constants.likeInactivePicTitle)
+        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
         likeButton.setImage(image, for: .normal)
     }
 
     private func switchBasketImage() {
         let image = nftIsAddedToBasket ?
-        UIImage(named: Constants.deleteFromBasketPicTitle) : UIImage(named: Constants.addToBasketPicTitle)
-        addToBasketButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
+        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
     }
 
     private func startAnimation() {

@@ -16,18 +16,11 @@ final class TabBarController: UITabBarController {
     private func setupView() {
         view.backgroundColor = .systemBackground
 
-//        let servicesAssembly = ServicesAssembly(
-//            networkClient: DefaultNetworkClient(),
-//            nftStorage: NftStorageImpl()
-//        )
-
-//        let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
-//        
         let catalogController = CatalogViewController()
 
         catalogController.tabBarItem = UITabBarItem(
-            title: Constants.catalogueTabBarTitle,
-            image: UIImage(named: Constants.tabBarCatalogue),
+            title: L10n.Tabbar.catalogTitle,
+            image: UIImage(resource: .tabbarCatalogue),
             selectedImage: nil)
 
         let catalogNavigationController = UINavigationController(rootViewController: catalogController)

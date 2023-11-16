@@ -15,7 +15,7 @@ final class CatalogViewController: UIViewController {
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
 
-        button.image = UIImage(named: Constants.sortButtonPicTitle)?.withRenderingMode(.alwaysTemplate)
+        button.image = UIImage(resource: .sortButton).withRenderingMode(.alwaysTemplate)
         button.style = .plain
         button.target = self
         button.action = #selector(sortButtonTapped)
@@ -57,10 +57,10 @@ final class CatalogViewController: UIViewController {
     @objc
     private func sortButtonTapped() {
         let model = AlertModel(
-            message: Constants.filterAlertTitle,
-            nameSortText: Constants.filetNameButtonTitle,
-            quantitySortText: Constants.filterQuantityButtonTitle,
-            cancelButtonText: Constants.closeAlertButtonTitle) { [weak self] in
+            message: L10n.FilterAlert.title,
+            nameSortText: L10n.FilterAlert.nameSortTitle,
+            quantitySortText: L10n.FilterAlert.quantitySortTitle,
+            cancelButtonText: L10n.FilterAlert.cancelButtonTitle) { [weak self] in
                 guard let self = self else { return }
                 viewModel.sortCatalogByName()
             } sortQuantityCompletion: { [weak self] in

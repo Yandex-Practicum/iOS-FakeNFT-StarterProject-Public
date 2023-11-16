@@ -40,6 +40,8 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		440CC8F62B06A07500E0689B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CC8F52B06A07500E0689B /* Strings.swift */; };
+		440CC8F72B06A0CE00E0689B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440CC8F92B06A0CE00E0689B /* Localizable.strings */; };
 		440DD6102AF6550A00B27450 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DD60F2AF6550A00B27450 /* CatalogViewController.swift */; };
 		440DD6122AF6554C00B27450 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DD6112AF6554C00B27450 /* CatalogView.swift */; };
 		440DD6142AF6558B00B27450 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440DD6132AF6558B00B27450 /* CatalogTableViewCell.swift */; };
@@ -67,7 +69,6 @@
 		44FA957D2AFAB43B0085DBA7 /* GradientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA957C2AFAB43B0085DBA7 /* GradientCell.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
-		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,9 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		440CC8F52B06A07500E0689B /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		440CC8F82B06A0CE00E0689B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		440CC8FA2B06A0FB00E0689B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440DD60F2AF6550A00B27450 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		440DD6112AF6554C00B27450 /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		440DD6132AF6558B00B27450 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
@@ -151,8 +155,6 @@
 		44FA957C2AFAB43B0085DBA7 /* GradientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCell.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +276,7 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				440CC8F42B06A06500E0689B /* Generated */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
 				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
@@ -387,6 +390,14 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		440CC8F42B06A06500E0689B /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				440CC8F52B06A07500E0689B /* Strings.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		440DD6152AF655BA00B27450 /* CatalogViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,7 +482,7 @@
 			children = (
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
-				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
+				440CC8F92B06A0CE00E0689B /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -591,7 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
-				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
+				440CC8F72B06A0CE00E0689B /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -651,6 +662,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				44AE69042B03FFAD00C39DAD /* NftModel.swift in Sources */,
 				440DD6122AF6554C00B27450 /* CatalogView.swift in Sources */,
+				440CC8F62B06A07500E0689B /* Strings.swift in Sources */,
 				44C8AA802AFB82DC00635019 /* CatalogAssembly.swift in Sources */,
 				44FA957B2AFAB06C0085DBA7 /* CatalogCollectionViewModel.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
@@ -732,9 +744,17 @@
 			isa = PBXVariantGroup;
 			children = (
 				3F6806A229CBBAF200B4F915 /* Base */,
-				E1CD40D92A96BE7D00BE7FE8 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		440CC8F92B06A0CE00E0689B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				440CC8F82B06A0CE00E0689B /* ru */,
+				440CC8FA2B06A0FB00E0689B /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
