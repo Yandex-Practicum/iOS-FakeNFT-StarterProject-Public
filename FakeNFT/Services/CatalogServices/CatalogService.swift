@@ -48,12 +48,13 @@ final class CatalogService: CatalogServiceProtocol {
                                     authorID: $0.author,
                                     id: $0.id)
                             }
-                            completion(.success((catalog)))
+                            completion(.success(catalog))
                         case .failure(let error):
-                            completion(.failure((error)))
+                            completion(.failure(error))
                         }
                     }
-                })
+                }
+            )
         }
     }
 }

@@ -20,6 +20,11 @@
 "FilterAlert.quantitySortTitle" = "По количеству NFT";
 "FilterAlert.cancelButtonTitle" = "Отменить";
 
+//CatalogCollection network error alert
+"NetworkErrorAlert.title" = "Упс(";
+"NetworkErrorAlert.message" = "Попробуйте еще раз";
+"NetworkErrorAlert.okButton" = "OK";
+
 //Catalog collection screen
 "CatalogCollection.authorLabel" = "Автор коллекции:";
 

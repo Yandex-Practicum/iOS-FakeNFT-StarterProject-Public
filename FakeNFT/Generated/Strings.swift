@@ -50,6 +50,14 @@ internal enum L10n {
     /// Сортировка
     internal static let title = L10n.tr("Localizable", "FilterAlert.title", fallback: "Сортировка")
   }
+  internal enum NetworkErrorAlert {
+    /// Попробуйте еще раз
+    internal static let message = L10n.tr("Localizable", "NetworkErrorAlert.message", fallback: "Попробуйте еще раз")
+    /// OK
+    internal static let okButton = L10n.tr("Localizable", "NetworkErrorAlert.okButton", fallback: "OK")
+    /// Упс(
+    internal static let title = L10n.tr("Localizable", "NetworkErrorAlert.title", fallback: "Упс(")
+  }
   internal enum Tab {
     /// Каталог
     internal static let catalog = L10n.tr("Localizable", "Tab.catalog", fallback: "Каталог")

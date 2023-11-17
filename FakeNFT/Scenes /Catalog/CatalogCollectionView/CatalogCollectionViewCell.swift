@@ -39,7 +39,6 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
-        // Adding a UITapGestureRecognizer to our stack of stars to handle clicking on a star
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didSelectRate))
         stackView.addGestureRecognizer(tapGesture)
 
@@ -136,7 +135,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
-            nftImageView.widthAnchor.constraint(equalToConstant: 108),
+            nftImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
 
             // likeButton constraints
             likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
@@ -149,7 +148,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             animationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             animationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             animationView.heightAnchor.constraint(equalToConstant: 108),
-            animationView.widthAnchor.constraint(equalToConstant: 108),
+            animationView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
 
             // starsContainerConstraints
             starsContainer.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8),

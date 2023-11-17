@@ -95,9 +95,6 @@ final class CatalogCollectionView: UIView {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 9
-        layout.minimumInteritemSpacing = 9
-        layout.itemSize = CGSize(width: 108, height: 192)
 
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
@@ -321,20 +318,25 @@ extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 108, height: 192)
+            let geometricParams = GeometricParams(cellCount: 3, leftInset: 20, rightInset: 20, cellSpacing: 9)
+
+            let availableWidth = frame.width - geometricParams.paddingWidth
+            let cellWidth =  availableWidth / CGFloat(geometricParams.cellCount)
+
+            return CGSize(width: cellWidth, height: 192)
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 9
+        return 8
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 9
     }
 }

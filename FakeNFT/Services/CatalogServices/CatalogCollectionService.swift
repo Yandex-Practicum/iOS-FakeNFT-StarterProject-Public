@@ -46,12 +46,13 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
                         switch result {
                         case .success(let nft):
                             storage.saveNft(nft)
-                            completion(.success((nft)))
+                            completion(.success(nft))
                         case .failure(let error):
-                            completion(.failure((error)))
+                            completion(.failure(error))
                         }
                     }
-                })
+                }
+            )
         }
     }
 
@@ -68,12 +69,13 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let author):
-                            completion(.success((author)))
+                            completion(.success(author))
                         case .failure(let error):
-                            completion(.failure((error)))
+                            completion(.failure(error))
                         }
                     }
-                })
+                }
+            )
         }
     }
 }
