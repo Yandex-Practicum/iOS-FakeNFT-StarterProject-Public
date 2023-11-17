@@ -30,11 +30,12 @@
 - [CatalogCollection UI](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/6)
 - [CatalogCollection data processing](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/7)
 
-### 3 часть эпика (заключительная) (расчет: 6 часов, факт: )
+### 3 часть эпика (заключительная) (расчет: 7 часов, факт: )
 - Взаимодействие пользователя с экраном коллекции NFT:
     - Переход на страницу профиля владельца коллекции (2 часа);
     - Обработка лайка (2 часа);
     - Обработка добавления NFT в корзину (2 часа);
+    - Unit-tests (1 час);
 
-### Итого: 25 часов
+### Итого: 26 часов
 

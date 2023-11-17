@@ -8,6 +8,8 @@
 import Foundation
 
 final class CatalogFilterStorage {
+    
+    //MARK: - public properties
     static let shared = CatalogFilterStorage()
     var filterDescriptor: String? {
         get {
@@ -20,6 +22,7 @@ final class CatalogFilterStorage {
         }
     }
 
+    //MARK: - private properties
     private var userDefaults = UserDefaults.standard
 
     private init() {}

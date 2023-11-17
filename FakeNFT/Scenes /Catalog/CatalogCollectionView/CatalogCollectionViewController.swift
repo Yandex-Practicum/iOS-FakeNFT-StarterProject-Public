@@ -8,6 +8,8 @@
 import UIKit
 
 final class CatalogCollectionViewController: UIViewController {
+    
+    //MARK: - Private properties
     private let catalog: Catalog
     private var catalogCollectionView: CatalogCollectionView!
 
@@ -26,6 +28,7 @@ final class CatalogCollectionViewController: UIViewController {
     }
 }
 
+//MARK: - CatalogCollectionViewDelegate
 extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     func dismissView() {
         dismiss(animated: true)

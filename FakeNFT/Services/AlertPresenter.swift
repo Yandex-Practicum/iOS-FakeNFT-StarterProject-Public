@@ -37,7 +37,11 @@ final class AlertPresenter {
     }
 
     static func showError(in viewController: UIViewController, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: L10n.NetworkErrorAlert.title, message: L10n.NetworkErrorAlert.message, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: L10n.NetworkErrorAlert.title,
+            message: L10n.NetworkErrorAlert.message,
+            preferredStyle: .alert
+        )
 
         let action = UIAlertAction(title: L10n.NetworkErrorAlert.okButton, style: .default) { _ in
             completion()

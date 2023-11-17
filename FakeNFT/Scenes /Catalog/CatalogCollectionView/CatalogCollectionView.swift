@@ -15,8 +15,10 @@ protocol CatalogCollectionViewDelegate: AnyObject {
 }
 
 final class CatalogCollectionView: UIView {
+    //MARK: - public properties
     weak var delegate: CatalogCollectionViewDelegate?
 
+    //MARK: - Private properties
     private let reuseIdentifier = L10n.CatalogCollectionCell.reuseIdentifier
     private let viewModel: CatalogCollectionViewModelProtocol
     private lazy var backButton: UIButton = {
@@ -135,10 +137,12 @@ final class CatalogCollectionView: UIView {
         collectionCoverImageView.kf.cancelDownloadTask()
     }
 
+    //MARK: - public methods
     func reloadData() {
         viewModel.fetchData()
     }
 
+    //MARK: - private methods
     private func bind() {
         viewModel.nftsLoaderPuublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -284,6 +288,7 @@ final class CatalogCollectionView: UIView {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension CatalogCollectionView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -313,6 +318,7 @@ extension CatalogCollectionView: UICollectionViewDataSource {
         }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
 extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

@@ -23,6 +23,7 @@ protocol CatalogCollectionViewModelProtocol: AnyObject {
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
+    //MARK: - public properties
     @Published var nftsLoadingIsCompleted: Bool = false
     @Published var author: Author?
     @Published var networkError: Error?
@@ -32,6 +33,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     var nfts: [Nft] = []
     var catalogCollection: Catalog
 
+    //MARK: - private properties
     private let collectionService: CatalogCollectionService
 
     init(catalogCollection: Catalog, service: CatalogCollectionService) {
@@ -40,6 +42,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         fetchData()
     }
 
+    //MARK: - public methods
     func fetchData() {
         networkError = nil
         if !nftsLoadingIsCompleted {
@@ -63,6 +66,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         return CGFloat(result)
     }
 
+    //MARK: - private methods
     private func fetchNfts() {
         catalogCollection.nfts.forEach { id in
             collectionService.loadNftForCollection(id: String(id)) { [weak self] result in
