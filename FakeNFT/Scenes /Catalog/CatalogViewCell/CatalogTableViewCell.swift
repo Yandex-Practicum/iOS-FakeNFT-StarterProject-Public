@@ -14,7 +14,7 @@ final class CatalogTableViewCell: UITableViewCell {
     var onState: (() -> Void)?
 
     // MARK: - Private properties
-    private let NFTImageView: UIImageView = {
+    private let nftImageView: UIImageView = {
         let imageView = UIImageView()
 
         imageView.contentMode = .scaleAspectFill
@@ -48,7 +48,7 @@ final class CatalogTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        NFTImageView.kf.cancelDownloadTask()
+        nftImageView.kf.cancelDownloadTask()
     }
 
     // MARK: - Public methods
@@ -57,7 +57,7 @@ final class CatalogTableViewCell: UITableViewCell {
 
         descriptionLabel.text = "\(model.name) (\(model.nfts.count))"
 
-        NFTImageView.kf.setImage(
+        nftImageView.kf.setImage(
             with: model.coverURL,
             placeholder: nil,
             completionHandler: { [weak self] _ in
@@ -80,26 +80,26 @@ final class CatalogTableViewCell: UITableViewCell {
     }
 
     private func addSubviews() {
-        contentView.addSubview(NFTImageView)
+        contentView.addSubview(nftImageView)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(gradient)
     }
 
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            NFTImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            NFTImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            NFTImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            NFTImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -27),
+            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -27),
 
-            gradient.topAnchor.constraint(equalTo: NFTImageView.topAnchor),
-            gradient.leadingAnchor.constraint(equalTo: NFTImageView.leadingAnchor),
-            gradient.trailingAnchor.constraint(equalTo: NFTImageView.trailingAnchor),
-            gradient.bottomAnchor.constraint(equalTo: NFTImageView.bottomAnchor),
+            gradient.topAnchor.constraint(equalTo: nftImageView.topAnchor),
+            gradient.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
+            gradient.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
+            gradient.bottomAnchor.constraint(equalTo: nftImageView.bottomAnchor),
 
-            descriptionLabel.topAnchor.constraint(equalTo: NFTImageView.bottomAnchor, constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: NFTImageView.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: NFTImageView.trailingAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 4),
+            descriptionLabel.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1)
         ])
     }
