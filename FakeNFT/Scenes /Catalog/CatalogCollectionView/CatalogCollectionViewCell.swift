@@ -10,7 +10,7 @@ import Kingfisher
 
 final class CatalogCollectionViewCell: UICollectionViewCell {
 
-    //MARK: - private properties
+    // MARK: - private properties
     private var nftIsLiked = false
     private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
@@ -96,7 +96,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - public methods
+    // MARK: - public methods
     func createAnimationView() {
         startAnimation()
     }
@@ -120,7 +120,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         createStars()
     }
 
-    //MARK: - private methods
+    // MARK: - private methods
     private func addSubviews() {
         contentView.addSubview(nftImageView)
         contentView.addSubview(likeButton)
