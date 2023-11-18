@@ -1,6 +1,7 @@
 import UIKit
 
 final class CurrencyScreenViewController: UIViewController {
+    private let viewModel: CurrencyViewModel
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -13,6 +14,12 @@ final class CurrencyScreenViewController: UIViewController {
     private lazy var currencyCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         collectionView.backgroundColor = .systemBackground
+        collectionView.allowsMultipleSelection = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(CurrencyCollectionViewCell.self,
+                                forCellWithReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -79,6 +86,15 @@ final class CurrencyScreenViewController: UIViewController {
         return view
     }()
 
+    init(viewModel: CurrencyViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -141,5 +157,48 @@ extension CurrencyScreenViewController {
             paymentStackView.bottomAnchor.constraint(equalTo: paymentContainView.bottomAnchor, constant: -16),
             paymentButton.heightAnchor.constraint(equalToConstant: 60)
             ])
+    }
+}
+
+extension CurrencyScreenViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+}
+
+extension CurrencyScreenViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.currencies.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
+                                                      for: indexPath)
+        guard let currencyCell = cell as? CurrencyCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        let currency = viewModel.currencies[indexPath.row]
+        currencyCell.configure(with: currency)
+        return currencyCell
+    }
+}
+
+extension CurrencyScreenViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        7
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        7
     }
 }

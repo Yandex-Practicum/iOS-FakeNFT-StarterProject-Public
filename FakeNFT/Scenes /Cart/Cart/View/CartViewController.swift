@@ -208,6 +208,12 @@ final class CartViewController: UIViewController, LoadingView {
 
     @objc
     private func tapPayButton() {
+        let currencyViewModel = CurrencyViewModel()
+        let currencyViewController = CurrencyScreenViewController(viewModel: currencyViewModel)
+        let navigationController = UINavigationController(rootViewController: currencyViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.hidesBottomBarWhenPushed = true
+        present(navigationController, animated: true)
     }
 
     @objc

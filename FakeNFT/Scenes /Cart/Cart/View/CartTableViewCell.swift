@@ -76,6 +76,15 @@ final class CartTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configure(with model: Nft) {
+        contentView.backgroundColor = .systemBackground
+        imageViewNFT.kf.setImage(with: model.images.first)
+        self.titleLabel.text = model.name
+        let formatPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
+        self.priceLabel.text = "\(formatPrice) ETH"
+        getRating(from: model.rating)
+    }
+
     private func createSubviews() {
         addImageViewNFT()
         addInfoNFTView()
@@ -163,15 +172,6 @@ final class CartTableViewCell: UITableViewCell {
         : UIImage(named: Constants.starInactivePicTitle)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }
-
-    func configure(with model: Nft) {
-        contentView.backgroundColor = .systemBackground
-        imageViewNFT.kf.setImage(with: model.images.first)
-        self.titleLabel.text = model.name
-        let formatPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
-        self.priceLabel.text = "\(formatPrice) ETH"
-        getRating(from: model.rating)
     }
 
     @objc private func tapDeleteButton() {
