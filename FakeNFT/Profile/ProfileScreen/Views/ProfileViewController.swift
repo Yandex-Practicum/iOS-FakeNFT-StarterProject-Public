@@ -97,43 +97,49 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Methods
 
+    // MARK: - Methods
+
     private func bind() {
-        viewModel.observeUserProfileChanges { [weak self] profileModel in
-            guard
-                let self = self,
-                let model = profileModel
-            else { return }
-            self.updateUI(with: model)
-        }
+       viewModel.observeUserProfileChanges { [weak self] profileModel in
+           guard
+               let self = self,
+               let model = profileModel
+           else { return }
+           self.updateUI(with: model)
+       }
     }
 
     private func updateUI(with model: UserProfileModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { [weak self] result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        guard let self = self else { return }
-                        self.userNameLabel.text = model.name
-                        self.userDescriptionLabel.text = model.description
-                        self.userWebSiteTextView.text = model.website
+       DispatchQueue.main.async { [weak self] in
+           self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { [weak self] result in
+               switch result {
+               case .success:
+                   DispatchQueue.main.async {
+                      guard let self = self else { return }
+                      self.userNameLabel.text = model.name
+                      self.userDescriptionLabel.text = model.description
+                      self.userWebSiteTextView.text = model.website
 
-                        let uiElements = [self.editButton, self.profileImageView,
-                                          self.userNameLabel, self.userDescriptionLabel,
-                                          self.userWebSiteTextView, self.profileTableView]
-                        uiElements.forEach { $0.isHidden = false }
+                      let uiElements = [self.editButton, self.profileImageView,
+                                       self.userNameLabel, self.userDescriptionLabel,
+                                       self.userWebSiteTextView, self.profileTableView]
+                      uiElements.forEach { $0.isHidden = false }
 
-                        self.tabBarController?.tabBar.isHidden = false
-                        self.profileTableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                    // ToDo: Аллерт для пользователя
-                }
-            }
-        }
+                      self.tabBarController?.tabBar.isHidden = false
+                      self.profileTableView.reloadData()
+                   }
+               case .failure(let error):
+                   print(error)
+                   // Показать пользователю алерт
+                   let alert = UIAlertController(title: "Ошибка", message: "Не удалось загрузить изображение", preferredStyle: .alert)
+                   alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
+                      self?.updateUI(with: model)
+                   }))
+                   self?.present(alert, animated: true, completion: nil)
+               }
+           }
+       }
     }
-
 
 
     // MARK: - Layout methods
