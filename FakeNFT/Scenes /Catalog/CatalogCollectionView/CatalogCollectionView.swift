@@ -112,7 +112,7 @@ final class CatalogCollectionView: UIView {
         view.isHidden = false
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -220,11 +220,11 @@ final class CatalogCollectionView: UIView {
             backButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
 
             // scrollView constraints
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.widthAnchor.constraint(equalTo: widthAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
 
             // contentView constraints
             contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),

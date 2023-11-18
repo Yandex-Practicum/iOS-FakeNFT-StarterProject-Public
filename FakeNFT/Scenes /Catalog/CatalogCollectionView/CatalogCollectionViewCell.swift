@@ -77,7 +77,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         view.isHidden = true
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
