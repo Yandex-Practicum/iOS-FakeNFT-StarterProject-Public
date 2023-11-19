@@ -8,24 +8,27 @@
 import Foundation
 
 final class CatalogFilterStorage {
+
+    // MARK: - public properties
     static let shared = CatalogFilterStorage()
     var filterDescriptor: String? {
         get {
-            userDefaults.string(forKey: Constants.filterKey)
+            userDefaults.string(forKey: L10n.CatalogFilterStorage.key)
         }
         set {
             if let newValue = newValue {
-                userDefaults.set(newValue, forKey: Constants.filterKey)
+                userDefaults.set(newValue, forKey: L10n.CatalogFilterStorage.key)
             }
         }
     }
-    
+
+    // MARK: - private properties
     private var userDefaults = UserDefaults.standard
-    
+
     private init() {}
 }
 
 enum CatalogFilter: String {
-    case name = "name"
-    case quantity = "quantity"
+    case filterName = "name"
+    case filterQuantity = "quantity"
 }

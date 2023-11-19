@@ -1,0 +1,8 @@
+excluded:
+  - Generated/Strings.swift
+  
+disabled_rules: # rule identifiers to exclude from running
+  - colon
+  - comma
+  - control_statement
+  - blanket_disable_command

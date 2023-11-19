@@ -8,7 +8,8 @@
 
 ## Экран Catalogue 
 
-### Экран каталога (расчет: 10 часов, факт: 9 часов)
+### 1 часть эпика (расчет: 10 часов, факт: 9 часов)
+### Экран каталога 
 - Верстка UI (расчет: 4 часа, факт: 2 часа);
 - Получение и обработка данных с сервера (расчет: 3 часа, факт: 5 часов);
 - Обработка взаимодействий пользователя с экраном:
@@ -19,18 +20,22 @@
 - [CatalogUI](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/1)
 - [Catalog data processing](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/2)
 - [Catalog user interaction](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/4)
-     
-### Экран коллекции NFT (расчет: 14 часов)
-- Верстка UI (4 часа);
-- Получение и обработка данных с сервера (3 часа);
-- Взаимодействие пользователя с экраном:
+
+### 2 часть эпика (расчет: 14 часов, факт: 13 часов)
+### Экран коллекции NFT (UI и получение данных с сервера) 
+- Верстка UI (4 часа, факт: 5 часов);
+- Получение и обработка данных с сервера (3 часа, факт: 8 часов);
+
+#### Issues:
+- [CatalogCollection UI](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/6)
+- [CatalogCollection data processing](https://github.com/Kolesnikov-Eugene/iOS-FakeNFT-StarterProject-Public/issues/7)
+
+### 3 часть эпика (заключительная) (расчет: 7 часов, факт: )
+- Взаимодействие пользователя с экраном коллекции NFT:
     - Переход на страницу профиля владельца коллекции (2 часа);
     - Обработка лайка (2 часа);
     - Обработка добавления NFT в корзину (2 часа);
-    - Обработка нажатия на ячейку NFT (переход на экран NFT) (1 час);
-       
-### Экран профиля WebView (расчет: 1 час)
-- Обработка взаимодействия с экраном профиля (1 час);
+    - Unit-tests (1 час);
 
-### Итого: 25 часов
+### Итого: 26 часов
 
