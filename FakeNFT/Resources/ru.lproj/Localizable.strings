@@ -8,12 +8,6 @@
 //Tabbar titles
 "Tabbar.catalogTitle" = "Каталог";
 
-//Catalog screen tableView cell
-"CatalogCell.reuseIdentifier" = "CatalogTableViewCell";
-
-//CatalogCollection cell
-"CatalogCollectionCell.reuseIdentifier" = "CatalogCollectionCell";
-
 //Catalog filter alert
 "FilterAlert.title" = "Сортировка";
 "FilterAlert.nameSortTitle" = "По названию";

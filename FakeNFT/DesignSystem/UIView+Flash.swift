@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func flash() {
+    func addFlashLayer() {
         let flash = CABasicAnimation(keyPath: "opacity")
         flash.duration = 0.5
         flash.fromValue = 0.4

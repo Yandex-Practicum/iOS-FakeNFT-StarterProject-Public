@@ -11,6 +11,7 @@ import Kingfisher
 final class CatalogCollectionViewCell: UICollectionViewCell {
 
     // MARK: - private properties
+    private let starsQuantity = 5
     private var nftIsLiked = false
     private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
@@ -178,7 +179,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     }
 
     private func createStars() {
-        for index in 1...5 {
+        for index in 1...starsQuantity {
             let star = makeStarIcon()
             star.tag = index
             if index <= selectedRate {
@@ -213,7 +214,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     @objc
     private func didSelectRate(gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: starsContainer)
-        let starWidth = starsContainer.bounds.width / CGFloat(5)
+        let starWidth = starsContainer.bounds.width / CGFloat(starsQuantity)
         let rate = Int(location.x / starWidth) + 1
 
         if rate != self.selectedRate {
@@ -243,7 +244,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
     private func startAnimation() {
         animationView.isHidden = false
-        animationView.flash()
+        animationView.addFlashLayer()
     }
 
     private func stopAnimation() {

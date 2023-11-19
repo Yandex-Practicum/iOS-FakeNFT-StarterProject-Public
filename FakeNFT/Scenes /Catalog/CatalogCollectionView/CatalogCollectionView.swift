@@ -19,7 +19,7 @@ final class CatalogCollectionView: UIView {
     weak var delegate: CatalogCollectionViewDelegate?
 
     // MARK: - Private properties
-    private let reuseIdentifier = L10n.CatalogCollectionCell.reuseIdentifier
+    private let reuseIdentifier = "CatalogCollectionCell"
     private let viewModel: CatalogCollectionViewModelProtocol
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -31,7 +31,7 @@ final class CatalogCollectionView: UIView {
 
         return button
     }()
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
 
         scrollView.contentInsetAdjustmentBehavior = .never
@@ -41,14 +41,14 @@ final class CatalogCollectionView: UIView {
 
         return scrollView
     }()
-    private let contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
 
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
-    private let collectionCoverImageView: UIImageView = {
+    private lazy var collectionCoverImageView: UIImageView = {
         let imageView = UIImageView()
 
         imageView.clipsToBounds = true
@@ -57,7 +57,7 @@ final class CatalogCollectionView: UIView {
 
         return imageView
     }()
-    private let catalogNameLabel: UILabel = {
+    private lazy var catalogNameLabel: UILabel = {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
@@ -65,7 +65,7 @@ final class CatalogCollectionView: UIView {
 
         return label
     }()
-    private let authorNameLabel: UILabel = {
+    private lazy var authorNameLabel: UILabel = {
         let label = UILabel()
 
         label.text = L10n.CatalogCollection.authorLabel
@@ -85,7 +85,7 @@ final class CatalogCollectionView: UIView {
 
         return button
     }()
-    private let catalogDescriptionLabel: UILabel = {
+    private lazy var catalogDescriptionLabel: UILabel = {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -279,7 +279,7 @@ final class CatalogCollectionView: UIView {
 
     private func startAnimation() {
         authorLinkAnimationView.isHidden = false
-        authorLinkAnimationView.flash()
+        authorLinkAnimationView.addFlashLayer()
     }
 
     private func stopAnimation() {

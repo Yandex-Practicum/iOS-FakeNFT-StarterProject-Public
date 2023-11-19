@@ -89,7 +89,7 @@ final class CatalogTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
             nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -27),
 
             gradient.topAnchor.constraint(equalTo: nftImageView.topAnchor),

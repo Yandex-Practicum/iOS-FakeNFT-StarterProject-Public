@@ -22,10 +22,11 @@ final class CatalogView: UIView {
     weak var delegate: CatalogViewDelegate?
 
     // MARK: - Private properties
-    private let reuseIdentifier = L10n.CatalogCell.reuseIdentifier
+    private let reuseIdentifier = "CatalogTableViewCell"
     private let tableView: UITableView = {
         let tableView = UITableView()
 
+        tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = false
@@ -99,7 +100,7 @@ final class CatalogView: UIView {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 40),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
