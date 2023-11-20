@@ -9,6 +9,7 @@ import Foundation
 
 protocol CatalogServiceProtocol {
     func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void)
+    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void)
 }
 
 final class CatalogService: CatalogServiceProtocol {
@@ -19,6 +20,7 @@ final class CatalogService: CatalogServiceProtocol {
     // MARK: - Private properties
     private let request = CatalogRequest()
     private let networkClient: NetworkClient
+    private lazy var queue = DispatchQueue.global(qos: .userInitiated)
 
     init(networkClient: NetworkClient) {
         self.networkClient = DefaultNetworkClient()
@@ -55,6 +57,26 @@ final class CatalogService: CatalogServiceProtocol {
                     }
                 }
             )
+        }
+    }
+
+    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void) {
+        let request = ProfileRequest(httpMethod: .get)
+
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            networkClient.send(
+                request: request,
+                type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let profile):
+                            completion(.success(profile))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                }
         }
     }
 }

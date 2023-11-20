@@ -17,8 +17,11 @@ protocol CatalogCollectionViewModelProtocol: AnyObject {
     var authorPublisher: Published<Author?>.Publisher { get }
     var networkError: Error? { get }
     var networkErrorPublisher: Published<Error?>.Publisher { get }
+    var profileLikes: [String] { get set }
     func calculateCollectionViewHeight() -> CGFloat
     func fetchData()
+    func changeLikeForNft(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func nftIsLiked(_ id: String) -> Bool
 }
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
@@ -32,9 +35,11 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     var networkErrorPublisher: Published<Error?>.Publisher { $networkError }
     var nfts: [Nft] = []
     var catalogCollection: Catalog
+    var profileLikes: [String] = LikesStorage.shared.likes
 
     // MARK: - private properties
     private let collectionService: CatalogCollectionService
+    private var likesLoadingIsCompleted = false
 
     init(catalogCollection: Catalog, service: CatalogCollectionService) {
         self.catalogCollection = catalogCollection
@@ -53,6 +58,10 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         }
     }
 
+    func nftIsLiked(_ id: String) -> Bool {
+        profileLikes.contains(id)
+    }
+
     func calculateCollectionViewHeight() -> CGFloat {
         let numberOfCells = catalogCollection.nfts.count
         let height = 192
@@ -64,6 +73,29 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
             result = (numberOfCells / 3 + 1) * height + ((numberOfCells / 3) * spacing)
         }
         return CGFloat(result)
+    }
+
+    func changeLikeForNft(with id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        if profileLikes.contains(id) {
+            profileLikes.removeAll { like in
+                like == id
+            }
+        } else {
+            profileLikes.append(id)
+        }
+
+        let profile = ProfileLike(likes: profileLikes)
+
+        collectionService.putProfileLikes(profile: profile) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let profile):
+                LikesStorage.shared.likes = profile.likes
+                print("like put \(profile)")
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     // MARK: - private methods
@@ -99,4 +131,18 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
             }
         }
     }
+
+//    private func fetchProfileLikes() {
+//        collectionService.fetchProfileLikes { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let profile):
+//                profileLikes = profile.likes
+//                print(profile)
+//                print(profileLikes)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
 }

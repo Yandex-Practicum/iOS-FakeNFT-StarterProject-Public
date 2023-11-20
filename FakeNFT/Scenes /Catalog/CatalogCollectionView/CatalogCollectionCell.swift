@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-final class CatalogCollectionViewCell: UICollectionViewCell {
+final class CatalogCollectionCell: UICollectionViewCell {
 
     // MARK: - private properties
     private let starsQuantity = 5
-    private var nftIsLiked = false
+    var nftIsLiked = false
     private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
     private let feedbackGenerator = UISelectionFeedbackGenerator()
@@ -83,6 +83,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
 
         return view
     }()
+    weak var delegate: CatalogCollectionCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,6 +92,11 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         applyConstraints()
 
         contentView.backgroundColor = .clear
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nftIsLiked = false
     }
 
     required init?(coder: NSCoder) {
@@ -114,6 +120,11 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             })
 
         changeLike()
+
+        let image = nftIsLiked ?
+        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
+        likeButton.setImage(image, for: .normal)
+
         switchBasketImage()
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
@@ -203,6 +214,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
     private func didTapLikeButton() {
         nftIsLiked = !nftIsLiked
         changeLike()
+        delegate?.didChangeLike(self)
     }
 
     @objc

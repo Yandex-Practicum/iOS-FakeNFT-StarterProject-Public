@@ -41,6 +41,8 @@ final class CatalogViewModel: CatalogViewModelProtocol {
 
         fetchCatalog()
 
+        fetchProfileLikes()
+
         self.filter = CatalogFilter(
             rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.filterQuantity.rawValue
         )
@@ -82,6 +84,19 @@ final class CatalogViewModel: CatalogViewModelProtocol {
             case .failure(let error):
                 isLoadingData = false
                 networkError = error
+            }
+        }
+    }
+
+    private func fetchProfileLikes() {
+        catalogService.fetchProfileLikes { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let profile):
+                LikesStorage.shared.likes = profile.likes
+                print(profile)
+            case .failure(let error):
+                print(error)
             }
         }
     }

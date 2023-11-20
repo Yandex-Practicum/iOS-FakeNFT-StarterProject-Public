@@ -10,6 +10,8 @@ import Foundation
 protocol CatalogCollectionServiceProtocol {
     func loadNftForCollection(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void)
+//    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void)
+    func putProfileLikes(profile: ProfileLike, completion: @escaping (Result<ProfileLike, Error>) -> Void)
 }
 
 final class CatalogCollectionService: CatalogCollectionServiceProtocol {
@@ -20,6 +22,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
     // MARK: - Private properties
     private let networkClient: NetworkClient
     private let storage: NftStorage = NftStorageImpl.shared
+    private lazy var queue = DispatchQueue.global(qos: .userInitiated)
 
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
@@ -33,7 +36,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
         }
 
         let request = NFTRequest(id: id)
-        let queue = DispatchQueue.global(qos: .userInitiated)
+//        let queue = DispatchQueue.global(qos: .userInitiated)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -58,7 +61,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void) {
         let request = AuthorRequest(id: id)
-        let queue = DispatchQueue.global(qos: .userInteractive)
+//        let queue = DispatchQueue.global(qos: .userInteractive)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -76,6 +79,46 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
                     }
                 }
             )
+        }
+    }
+
+//    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void) {
+//        let request = ProfileRequest(httpMethod: .get)
+//
+//        queue.async { [weak self] in
+//            guard let self = self else { return }
+//            networkClient.send(
+//                request: request,
+//                type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
+//                    DispatchQueue.main.async {
+//                        switch result {
+//                        case .success(let profile):
+//                            completion(.success(profile))
+//                        case .failure(let error):
+//                            completion(.failure(error))
+//                        }
+//                    }
+//                }
+//        }
+//    }
+
+    func putProfileLikes(profile: ProfileLike, completion: @escaping (Result<ProfileLike, Error>) -> Void) {
+        let request = ProfileRequest(httpMethod: .put, dto: profile)
+
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            networkClient.send(
+                request: request,
+                type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let profile):
+                            completion(.success(profile))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                }
         }
     }
 }

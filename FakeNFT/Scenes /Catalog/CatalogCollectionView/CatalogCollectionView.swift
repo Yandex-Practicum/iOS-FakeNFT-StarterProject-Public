@@ -14,6 +14,10 @@ protocol CatalogCollectionViewDelegate: AnyObject {
     func showErrorAlert()
 }
 
+protocol CatalogCollectionCellDelegate: AnyObject {
+    func didChangeLike(_ cell: CatalogCollectionCell)
+}
+
 final class CatalogCollectionView: UIView {
     // MARK: - public properties
     weak var delegate: CatalogCollectionViewDelegate?
@@ -184,7 +188,7 @@ final class CatalogCollectionView: UIView {
     }
 
     private func setupUI() {
-        collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(CatalogCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
 
@@ -303,17 +307,19 @@ extension CatalogCollectionView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: reuseIdentifier,
-                for: indexPath) as? CatalogCollectionViewCell else {
+                for: indexPath) as? CatalogCollectionCell else {
                 return UICollectionViewCell()
             }
 
             if viewModel.nftsLoadingIsCompleted {
                 let model = viewModel.nfts[indexPath.row]
+                cell.delegate = self
+                let cellIsLiked = viewModel.nftIsLiked(model.id)
+                cell.nftIsLiked = cellIsLiked
                 cell.configureCell(model)
             } else {
                 cell.createAnimationView()
             }
-
             return cell
         }
 }
@@ -344,5 +350,23 @@ extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 9
+    }
+}
+
+extension CatalogCollectionView: CatalogCollectionCellDelegate {
+    func didChangeLike(_ cell: CatalogCollectionCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        let id = viewModel.nfts[indexPath.row].id
+        viewModel.changeLikeForNft(with: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                print("OK")
+            case .failure:
+                print("error")
+            }
+        }
     }
 }
