@@ -4,6 +4,7 @@
 //
 //  Created by Eugene Kolesnikov on 07.11.2023.
 //
+// swiftlint:disable file_length
 
 import UIKit
 import Kingfisher
@@ -15,6 +16,7 @@ protocol CatalogCollectionViewDelegate: AnyObject {
     func showLikeAlert()
     func startAnimatingActivityIndicator()
     func stopAnimatingActivityIndicator()
+    func presentAuthorPage(_ url: URL?)
 }
 
 protocol CatalogCollectionCellDelegate: AnyObject {
@@ -89,6 +91,7 @@ final class CatalogCollectionView: UIView {
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(authorButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -283,6 +286,11 @@ final class CatalogCollectionView: UIView {
     @objc
     private func backButtonTapped() {
         delegate?.dismissView()
+    }
+
+    @objc
+    private func authorButtonTapped() {
+        delegate?.presentAuthorPage(viewModel.author?.website)
     }
 
     private func startAnimation() {

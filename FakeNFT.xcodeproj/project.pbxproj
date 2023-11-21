@@ -66,6 +66,8 @@
 		44F299172B0D2A5B0052FB7F /* PurchaseCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F299162B0D2A5B0052FB7F /* PurchaseCart.swift */; };
 		44F299192B0D2AD10052FB7F /* PurchaseCartStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F299182B0D2AD10052FB7F /* PurchaseCartStorage.swift */; };
 		44F2991B2B0D2C1A0052FB7F /* OrdersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F2991A2B0D2C1A0052FB7F /* OrdersRequest.swift */; };
+		44F2991D2B0D369F0052FB7F /* ProfileWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F2991C2B0D369F0052FB7F /* ProfileWebView.swift */; };
+		44F2991F2B0D38E60052FB7F /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F2991E2B0D38E60052FB7F /* UserRequest.swift */; };
 		44FA956B2AFA4E810085DBA7 /* CatalogResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956A2AFA4E810085DBA7 /* CatalogResult.swift */; };
 		44FA956D2AFA4EE20085DBA7 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956C2AFA4EE20085DBA7 /* Catalog.swift */; };
 		44FA95702AFA4FFA0085DBA7 /* CatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FA956F2AFA4FFA0085DBA7 /* CatalogService.swift */; };
@@ -160,6 +162,8 @@
 		44F299162B0D2A5B0052FB7F /* PurchaseCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseCart.swift; sourceTree = "<group>"; };
 		44F299182B0D2AD10052FB7F /* PurchaseCartStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseCartStorage.swift; sourceTree = "<group>"; };
 		44F2991A2B0D2C1A0052FB7F /* OrdersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRequest.swift; sourceTree = "<group>"; };
+		44F2991C2B0D369F0052FB7F /* ProfileWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWebView.swift; sourceTree = "<group>"; };
+		44F2991E2B0D38E60052FB7F /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		44FA956A2AFA4E810085DBA7 /* CatalogResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogResult.swift; sourceTree = "<group>"; };
 		44FA956C2AFA4EE20085DBA7 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		44FA956F2AFA4FFA0085DBA7 /* CatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogService.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 				44FA95752AFAAFE40085DBA7 /* CatalogCollectionView */,
 				440DD6152AF655BA00B27450 /* CatalogViewCell */,
 				440DD6172AF655D500B27450 /* ViewModel */,
+				44F2991C2B0D369F0052FB7F /* ProfileWebView.swift */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -402,12 +407,14 @@
 		3FC8C38F29D245250081F015 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				447057812B055DEA000F4C6C /* AuthorRequest.swift */,
 				44FA95712AFA57F70085DBA7 /* CatalogRequest.swift */,
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
 				4474E09F2B07E38100E236C5 /* ProfileRequest.swift */,
 				44F2991A2B0D2C1A0052FB7F /* OrdersRequest.swift */,
+				44F2991E2B0D38E60052FB7F /* UserRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -477,7 +484,6 @@
 				44FA95732AFAA8C30085DBA7 /* CatalogFilterStorage.swift */,
 				44C8AA7F2AFB82DC00635019 /* CatalogAssembly.swift */,
 				44C8AA812AFB958B00635019 /* UIBlockingProgressHUD.swift */,
-				447057812B055DEA000F4C6C /* AuthorRequest.swift */,
 			);
 			path = CatalogServices;
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 				446AA3AB2AF52452008F4B9D /* Constants.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				440DD6192AF655FD00B27450 /* CatalogViewModel.swift in Sources */,
+				44F2991F2B0D38E60052FB7F /* UserRequest.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				44B59CAC2B02B50B00306CE1 /* CatalogCollectionService.swift in Sources */,
 				4433E90E2B0BE43300867245 /* ProfileLike.swift in Sources */,
@@ -739,6 +746,7 @@
 				44AE69062B0414AC00C39DAD /* UIView+Flash.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				4474E0A02B07E38100E236C5 /* ProfileRequest.swift in Sources */,
+				44F2991D2B0D369F0052FB7F /* ProfileWebView.swift in Sources */,
 				44FA95772AFAAFFA0085DBA7 /* CatalogCollectionViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
