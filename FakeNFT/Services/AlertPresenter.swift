@@ -49,4 +49,14 @@ final class AlertPresenter {
         alert.addAction(action)
         viewController.present(alert, animated: true)
     }
+
+    static func showLikeError(in viewController: UIViewController) {
+        let alert = UIAlertController(
+            title: "Like error", message: "Try again", preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        viewController.present(alert, animated: true)
+    }
 }

@@ -40,4 +40,16 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
             catalogCollectionView.reloadData()
         }
     }
+
+    func startAnimatingActivityIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func stopAnimatingActivityIndicator() {
+        UIBlockingProgressHUD.dismiss()
+    }
+
+    func showLikeAlert() {
+        AlertPresenter.showLikeError(in: self)
+    }
 }

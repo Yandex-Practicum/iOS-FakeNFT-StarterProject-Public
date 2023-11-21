@@ -12,6 +12,7 @@ protocol CatalogCollectionServiceProtocol {
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void)
 //    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void)
     func putProfileLikes(profile: ProfileLike, completion: @escaping (Result<ProfileLike, Error>) -> Void)
+    func putNftsToCart(cart: PurchaseCart, completion: @escaping (Result<PurchaseCart, Error>) -> Void)
 }
 
 final class CatalogCollectionService: CatalogCollectionServiceProtocol {
@@ -36,7 +37,6 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
         }
 
         let request = NFTRequest(id: id)
-//        let queue = DispatchQueue.global(qos: .userInitiated)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -61,7 +61,6 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void) {
         let request = AuthorRequest(id: id)
-//        let queue = DispatchQueue.global(qos: .userInteractive)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -82,26 +81,6 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
         }
     }
 
-//    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void) {
-//        let request = ProfileRequest(httpMethod: .get)
-//
-//        queue.async { [weak self] in
-//            guard let self = self else { return }
-//            networkClient.send(
-//                request: request,
-//                type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
-//                    DispatchQueue.main.async {
-//                        switch result {
-//                        case .success(let profile):
-//                            completion(.success(profile))
-//                        case .failure(let error):
-//                            completion(.failure(error))
-//                        }
-//                    }
-//                }
-//        }
-//    }
-
     func putProfileLikes(profile: ProfileLike, completion: @escaping (Result<ProfileLike, Error>) -> Void) {
         let request = ProfileRequest(httpMethod: .put, dto: profile)
 
@@ -114,6 +93,26 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
                         switch result {
                         case .success(let profile):
                             completion(.success(profile))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                }
+        }
+    }
+
+    func putNftsToCart(cart: PurchaseCart, completion: @escaping (Result<PurchaseCart, Error>) -> Void) {
+        let request = OrdersRequest(httpMethod: .put, dto: cart)
+
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            networkClient.send(
+                request: request,
+                type: PurchaseCart.self) { (result: Result<PurchaseCart, Error>) in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let cart):
+                            completion(.success(cart))
                         case .failure(let error):
                             completion(.failure(error))
                         }

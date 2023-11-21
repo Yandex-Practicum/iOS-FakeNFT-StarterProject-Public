@@ -22,6 +22,8 @@ protocol CatalogCollectionViewModelProtocol: AnyObject {
     func fetchData()
     func changeLikeForNft(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
     func nftIsLiked(_ id: String) -> Bool
+    func nftsIsAddedToCart(_ id: String) -> Bool
+    func switchNftBasketState(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
@@ -40,6 +42,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     // MARK: - private properties
     private let collectionService: CatalogCollectionService
     private var likesLoadingIsCompleted = false
+    private var addedToCartNfts = PurchaseCartStorage.shared.nfts
 
     init(catalogCollection: Catalog, service: CatalogCollectionService) {
         self.catalogCollection = catalogCollection
@@ -60,6 +63,10 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
     func nftIsLiked(_ id: String) -> Bool {
         profileLikes.contains(id)
+    }
+
+    func nftsIsAddedToCart(_ id: String) -> Bool {
+        addedToCartNfts.contains(id)
     }
 
     func calculateCollectionViewHeight() -> CGFloat {
@@ -92,8 +99,34 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
             case .success(let profile):
                 LikesStorage.shared.likes = profile.likes
                 print("like put \(profile)")
+                completion(.success(()))
             case .failure(let error):
                 print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func switchNftBasketState(with id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        if addedToCartNfts.contains(id) {
+            addedToCartNfts.removeAll { nftId in
+                nftId == id
+            }
+        } else {
+            addedToCartNfts.append(id)
+        }
+        let cart = PurchaseCart(nfts: addedToCartNfts)
+
+        collectionService.putNftsToCart(cart: cart) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let cart):
+                PurchaseCartStorage.shared.nfts = cart.nfts
+                print("cart put \(cart)")
+                completion(.success(()))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
             }
         }
     }
@@ -131,18 +164,4 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
             }
         }
     }
-
-//    private func fetchProfileLikes() {
-//        collectionService.fetchProfileLikes { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success(let profile):
-//                profileLikes = profile.likes
-//                print(profile)
-//                print(profileLikes)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
 }

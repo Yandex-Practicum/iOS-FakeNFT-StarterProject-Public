@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ProfileLike: Decodable, Encodable {
+struct ProfileLike: Codable {
     let likes: [String]
 }

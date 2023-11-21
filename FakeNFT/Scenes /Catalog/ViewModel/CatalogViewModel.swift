@@ -40,8 +40,8 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         self.catalogService = catalogService
 
         fetchCatalog()
-
         fetchProfileLikes()
+        fetchAddedToBasketNfts()
 
         self.filter = CatalogFilter(
             rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.filterQuantity.rawValue
@@ -95,6 +95,19 @@ final class CatalogViewModel: CatalogViewModelProtocol {
             case .success(let profile):
                 LikesStorage.shared.likes = profile.likes
                 print(profile)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    private func fetchAddedToBasketNfts() {
+        catalogService.fetchAddedToBasketNfts { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let order):
+                PurchaseCartStorage.shared.nfts = order.nfts
+                print(order)
             case .failure(let error):
                 print(error)
             }

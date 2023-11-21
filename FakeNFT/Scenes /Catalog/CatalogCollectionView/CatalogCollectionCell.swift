@@ -10,10 +10,13 @@ import Kingfisher
 
 final class CatalogCollectionCell: UICollectionViewCell {
 
+    // MARK: - Public properties
+    var nftIsLiked = false
+    var nftIsAddedToBasket = false
+//    var nftIsAddedToCart = false
+
     // MARK: - private properties
     private let starsQuantity = 5
-    var nftIsLiked = false
-    private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let nftImageView: UIImageView = {
@@ -119,13 +122,17 @@ final class CatalogCollectionCell: UICollectionViewCell {
                 self.stopAnimation()
             })
 
-        changeLike()
+//        changeLike()
 
         let image = nftIsLiked ?
         UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
         likeButton.setImage(image, for: .normal)
 
-        switchBasketImage()
+//        switchBasketImage()
+        let basketImage = nftIsAddedToBasket ?
+        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
+        addToBasketButton.setImage(basketImage.withRenderingMode(.alwaysOriginal), for: .normal)
+
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
         selectedRate = nft.rating
@@ -212,15 +219,14 @@ final class CatalogCollectionCell: UICollectionViewCell {
 
     @objc
     private func didTapLikeButton() {
-        nftIsLiked = !nftIsLiked
-        changeLike()
+//        nftIsLiked = !nftIsLiked
+//        changeLike()
         delegate?.didChangeLike(self)
     }
 
     @objc
     private func basketButtonTapped() {
-        nftIsAddedToBasket = !nftIsAddedToBasket
-        switchBasketImage()
+        delegate?.switchNftBasketState(self)
     }
 
     @objc
@@ -242,13 +248,16 @@ final class CatalogCollectionCell: UICollectionViewCell {
         }
     }
 
-    private func changeLike() {
+    func changeLike() {
+        nftIsLiked = !nftIsLiked
         let image = nftIsLiked ?
         UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
         likeButton.setImage(image, for: .normal)
     }
 
-    private func switchBasketImage() {
+    func switchBasketImage() {
+        nftIsAddedToBasket = !nftIsAddedToBasket
+
         let image = nftIsAddedToBasket ?
         UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
         addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)

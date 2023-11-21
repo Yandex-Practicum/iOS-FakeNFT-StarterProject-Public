@@ -12,10 +12,14 @@ import Combine
 protocol CatalogCollectionViewDelegate: AnyObject {
     func dismissView()
     func showErrorAlert()
+    func showLikeAlert()
+    func startAnimatingActivityIndicator()
+    func stopAnimatingActivityIndicator()
 }
 
 protocol CatalogCollectionCellDelegate: AnyObject {
     func didChangeLike(_ cell: CatalogCollectionCell)
+    func switchNftBasketState(_ cell: CatalogCollectionCell)
 }
 
 final class CatalogCollectionView: UIView {
@@ -312,10 +316,12 @@ extension CatalogCollectionView: UICollectionViewDataSource {
             }
 
             if viewModel.nftsLoadingIsCompleted {
-                let model = viewModel.nfts[indexPath.row]
                 cell.delegate = self
+                let model = viewModel.nfts[indexPath.row]
                 let cellIsLiked = viewModel.nftIsLiked(model.id)
+                let nftIsAddedToBasket = viewModel.nftsIsAddedToCart(model.id)
                 cell.nftIsLiked = cellIsLiked
+                cell.nftIsAddedToBasket = nftIsAddedToBasket
                 cell.configureCell(model)
             } else {
                 cell.createAnimationView()
@@ -354,7 +360,28 @@ extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
 }
 
 extension CatalogCollectionView: CatalogCollectionCellDelegate {
+    func switchNftBasketState(_ cell: CatalogCollectionCell) {
+        delegate?.startAnimatingActivityIndicator()
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        let id = viewModel.nfts[indexPath.row].id
+
+        viewModel.switchNftBasketState(with: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                delegate?.stopAnimatingActivityIndicator()
+                cell.switchBasketImage()
+            case .failure:
+                delegate?.stopAnimatingActivityIndicator()
+                delegate?.showLikeAlert()
+            }
+        }
+    }
+
     func didChangeLike(_ cell: CatalogCollectionCell) {
+        delegate?.startAnimatingActivityIndicator()
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
@@ -363,9 +390,11 @@ extension CatalogCollectionView: CatalogCollectionCellDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                print("OK")
+                delegate?.stopAnimatingActivityIndicator()
+                cell.changeLike()
             case .failure:
-                print("error")
+                delegate?.stopAnimatingActivityIndicator()
+                delegate?.showLikeAlert()
             }
         }
     }

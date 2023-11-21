@@ -10,6 +10,7 @@ import Foundation
 protocol CatalogServiceProtocol {
     func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void)
     func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void)
+    func fetchAddedToBasketNfts(completion: @escaping (Result<PurchaseCart, Error>) -> Void)
 }
 
 final class CatalogService: CatalogServiceProtocol {
@@ -28,8 +29,6 @@ final class CatalogService: CatalogServiceProtocol {
 
     // MARK: - Public methods
     func fetchCatalog(completion: @escaping (Result<[Catalog], Error>) -> Void) {
-
-        let queue = DispatchQueue.global(qos: .userInitiated)
 
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -72,6 +71,26 @@ final class CatalogService: CatalogServiceProtocol {
                         switch result {
                         case .success(let profile):
                             completion(.success(profile))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                }
+        }
+    }
+
+    func fetchAddedToBasketNfts(completion: @escaping (Result<PurchaseCart, Error>) -> Void) {
+        let request = OrdersRequest(httpMethod: .get)
+
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            networkClient.send(
+                request: request,
+                type: PurchaseCart.self) { (result: Result<PurchaseCart, Error>) in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let order):
+                            completion(.success(order))
                         case .failure(let error):
                             completion(.failure(error))
                         }
