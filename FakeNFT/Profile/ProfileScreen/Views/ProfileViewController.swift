@@ -95,7 +95,6 @@ final class ProfileViewController: UIViewController {
         router.routeToEditingViewController(viewModel: viewModel)
     }
 
-    // MARK: - Methods
 
     // MARK: - Methods
 

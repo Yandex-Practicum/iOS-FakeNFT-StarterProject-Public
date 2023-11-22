@@ -36,10 +36,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         model.fetchProfile { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                ProgressHUD.dismiss()
-                
                 switch result {
                 case .success(let userProfile):
+                    ProgressHUD.dismiss()
                     self.userProfile = userProfile
                 case .failure(let error):
                     print(error)
