@@ -42,7 +42,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 case .success(let userProfile):
                     self.userProfile = userProfile
                 case .failure(let error):
-                    // ToDo: - Уведомление об ошибке
+                    print(error)
+                    ProgressHUD.showError("Ошибка загрузки профиля")
                     print(error)
                 }
             }
@@ -122,12 +123,10 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 DispatchQueue.main.async {
                     self.userProfile = updatedProfile
                 }
-            case .failure(_): break
-                
-            }
+            case .failure(let error):
+                print(error)
 
-                // ToDo: - Уведомление об ошибке
-        
+            }
             }
         }
     }
