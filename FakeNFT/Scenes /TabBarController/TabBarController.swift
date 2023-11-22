@@ -19,7 +19,8 @@ final class TabBarController: UITabBarController {
         let servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl(),
-            cartStorage: CartStorageImpl()
+            cartStorage: CartStorageImpl(),
+            currencyStorage: CurrencyStorageImpl()
         )
 
         let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)

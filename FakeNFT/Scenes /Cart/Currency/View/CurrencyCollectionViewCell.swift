@@ -3,6 +3,14 @@ import UIKit
 final class CurrencyCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "currencyCollectionViewCell"
 
+    override var isSelected: Bool {
+        didSet {
+            layer.cornerRadius = 12
+            layer.borderWidth = isSelected ? 1 : 0
+            layer.borderColor = isSelected ? UIColor.textPrimary.cgColor : nil
+         }
+    }
+
     private lazy var currencyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -42,12 +50,19 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     private lazy var currencyStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 5
+        stackView.spacing = 7
         stackView.addArrangedSubview(currencyImageView)
         stackView.addArrangedSubview(currencyNameStackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+
+    private lazy var currencyContainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .segmentInactive
+        view.layer.cornerRadius = 12
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
 
     override init(frame: CGRect) {
@@ -67,12 +82,18 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
 
     private func createSubviews() {
         backgroundColor = .clear
-        contentView.addSubview(currencyStackView)
+        contentView.addSubview(currencyContainView)
+        currencyContainView.addSubview(currencyStackView)
         NSLayoutConstraint.activate([
-            currencyStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            currencyStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            currencyStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            currencyStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            currencyContainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            currencyContainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            currencyContainView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            currencyContainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            currencyContainView.heightAnchor.constraint(equalToConstant: 46),
+            currencyStackView.leadingAnchor.constraint(equalTo: currencyContainView.leadingAnchor, constant: 16),
+            currencyStackView.trailingAnchor.constraint(equalTo: currencyContainView.trailingAnchor, constant: -16),
+            currencyStackView.topAnchor.constraint(equalTo: currencyContainView.topAnchor, constant: 5),
+            currencyStackView.bottomAnchor.constraint(equalTo: currencyContainView.bottomAnchor, constant: -5),
             currencyImageView.heightAnchor.constraint(equalToConstant: 36),
             currencyImageView.widthAnchor.constraint(equalToConstant: 36)
             ])

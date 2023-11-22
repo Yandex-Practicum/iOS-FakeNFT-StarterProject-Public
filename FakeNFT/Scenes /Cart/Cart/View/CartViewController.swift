@@ -208,7 +208,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     @objc
     private func tapPayButton() {
-        let currencyViewModel = CurrencyViewModel()
+        let currencyViewModel = CurrencyViewModel(servicesAssembly: viewModel.servicesAssembly)
         let currencyViewController = CurrencyScreenViewController(viewModel: currencyViewModel)
         let navigationController = UINavigationController(rootViewController: currencyViewController)
         navigationController.modalPresentationStyle = .fullScreen

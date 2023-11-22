@@ -2,6 +2,7 @@ import UIKit
 
 final class CurrencyScreenViewController: UIViewController {
     private let viewModel: CurrencyViewModel
+    private var selectedCurrencyIndex: IndexPath?
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -12,7 +13,7 @@ final class CurrencyScreenViewController: UIViewController {
     }()
 
     private lazy var currencyCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .systemBackground
         collectionView.allowsMultipleSelection = false
         collectionView.showsVerticalScrollIndicator = false
@@ -99,6 +100,12 @@ final class CurrencyScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         createSubviews()
+        viewModel.onDataUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.currencyCollectionView.reloadData()
+            }
+        }
+        viewModel.loadData()
     }
 
     @objc
@@ -132,9 +139,9 @@ extension CurrencyScreenViewController {
     private func addCurrencyCollectionView() {
         view.addSubview(currencyCollectionView)
         NSLayoutConstraint.activate([
-            currencyCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            currencyCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            currencyCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
+            currencyCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            currencyCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            currencyCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
             ])
     }
 
@@ -172,14 +179,14 @@ extension CurrencyScreenViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
-                                                      for: indexPath)
-        guard let currencyCell = cell as? CurrencyCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? CurrencyCollectionViewCell else {
             return UICollectionViewCell()
         }
         let currency = viewModel.currencies[indexPath.row]
-        currencyCell.configure(with: currency)
-        return currencyCell
+        cell.configure(with: currency)
+        return cell
     }
 }
 
@@ -187,7 +194,8 @@ extension CurrencyScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        let width = (collectionView.bounds.width - 7) / 2
+        return CGSize(width: width, height: 46)
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -200,5 +208,17 @@ extension CurrencyScreenViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         7
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? CurrencyCollectionViewCell else { return }
+        cell.isSelected = true
+        if let selectedCurrencyIndex, selectedCurrencyIndex != indexPath {
+            let cell = collectionView.cellForItem(at: selectedCurrencyIndex) as? CurrencyCollectionViewCell
+            cell?.isSelected = false
+        }
+        selectedCurrencyIndex = indexPath
     }
 }
