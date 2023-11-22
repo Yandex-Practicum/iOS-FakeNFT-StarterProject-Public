@@ -10,7 +10,6 @@ import Foundation
 protocol CatalogCollectionServiceProtocol {
     func loadNftForCollection(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
     func fetchAuthorProfile(id: String, completion: @escaping (Result<Author, Error>) -> Void)
-//    func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void)
     func putProfileLikes(profile: ProfileLike, completion: @escaping (Result<ProfileLike, Error>) -> Void)
     func putNftsToCart(cart: PurchaseCart, completion: @escaping (Result<PurchaseCart, Error>) -> Void)
 }

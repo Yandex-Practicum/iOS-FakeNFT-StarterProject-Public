@@ -13,7 +13,6 @@ final class CatalogCollectionCell: UICollectionViewCell {
     // MARK: - Public properties
     var nftIsLiked = false
     var nftIsAddedToBasket = false
-//    var nftIsAddedToCart = false
 
     // MARK: - private properties
     private let starsQuantity = 5

@@ -358,11 +358,11 @@ extension CatalogCollectionView: CatalogCollectionCellDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.stopAnimatingActivityIndicator()
                 cell.switchBasketImage()
             case .failure:
-                delegate?.stopAnimatingActivityIndicator()
-                delegate?.showLikeAlert()
+                self.delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.showLikeAlert()
             }
         }
     }
@@ -377,11 +377,11 @@ extension CatalogCollectionView: CatalogCollectionCellDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.stopAnimatingActivityIndicator()
                 cell.changeLike()
             case .failure:
-                delegate?.stopAnimatingActivityIndicator()
-                delegate?.showLikeAlert()
+                self.delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.showLikeAlert()
             }
         }
     }

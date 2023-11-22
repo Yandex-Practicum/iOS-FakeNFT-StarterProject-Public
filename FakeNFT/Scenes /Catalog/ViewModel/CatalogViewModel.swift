@@ -8,19 +8,6 @@
 import Foundation
 import Combine
 
-protocol CatalogViewModelProtocol: AnyObject {
-    var catalog: [Catalog] { get set }
-    var catalogPublisher: Published<Array<Catalog>>.Publisher { get }
-    var isLoadingData: Bool { get }
-    var loadingDataPublisher: Published<Bool>.Publisher { get }
-    var networkError: Error? { get }
-    var errorPublisher: Published<Error?>.Publisher { get }
-    func sortCatalogByName()
-    func sortCatalogByQuantity()
-    func sortCatalog()
-    func fetchCatalog()
-}
-
 final class CatalogViewModel: CatalogViewModelProtocol {
 
     // MARK: - Public properties
@@ -89,12 +76,10 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     }
 
     private func fetchProfileLikes() {
-        catalogService.fetchProfileLikes { [weak self] result in
-            guard let self = self else { return }
+        catalogService.fetchProfileLikes { result in
             switch result {
             case .success(let profile):
                 LikesStorage.shared.likes = profile.likes
-                print(profile)
             case .failure(let error):
                 print(error)
             }
@@ -102,12 +87,10 @@ final class CatalogViewModel: CatalogViewModelProtocol {
     }
 
     private func fetchAddedToBasketNfts() {
-        catalogService.fetchAddedToBasketNfts { [weak self] result in
-            guard let self = self else { return }
+        catalogService.fetchAddedToBasketNfts { result in
             switch result {
             case .success(let order):
                 PurchaseCartStorage.shared.nfts = order.nfts
-                print(order)
             case .failure(let error):
                 print(error)
             }

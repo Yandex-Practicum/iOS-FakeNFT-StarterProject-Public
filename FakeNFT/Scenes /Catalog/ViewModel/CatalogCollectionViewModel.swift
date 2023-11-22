@@ -8,24 +8,6 @@
 import Foundation
 import Combine
 
-protocol CatalogCollectionViewModelProtocol: AnyObject {
-    var nftsLoadingIsCompleted: Bool { get }
-    var nftsLoaderPuublisher: Published<Bool>.Publisher { get }
-    var nfts: [Nft] { get }
-    var catalogCollection: Catalog { get }
-    var author: Author? { get }
-    var authorPublisher: Published<Author?>.Publisher { get }
-    var networkError: Error? { get }
-    var networkErrorPublisher: Published<Error?>.Publisher { get }
-    var profileLikes: [String] { get set }
-    func calculateCollectionViewHeight() -> CGFloat
-    func fetchData()
-    func changeLikeForNft(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func nftIsLiked(_ id: String) -> Bool
-    func nftsIsAddedToCart(_ id: String) -> Bool
-    func switchNftBasketState(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
-}
-
 final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
     // MARK: - public properties
@@ -93,15 +75,12 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
         let profile = ProfileLike(likes: profileLikes)
 
-        collectionService.putProfileLikes(profile: profile) { [weak self] result in
-            guard let self = self else { return }
+        collectionService.putProfileLikes(profile: profile) { result in
             switch result {
             case .success(let profile):
                 LikesStorage.shared.likes = profile.likes
-                print("like put \(profile)")
                 completion(.success(()))
             case .failure(let error):
-                print(error)
                 completion(.failure(error))
             }
         }
@@ -117,15 +96,12 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         }
         let cart = PurchaseCart(nfts: addedToCartNfts)
 
-        collectionService.putNftsToCart(cart: cart) { [weak self] result in
-            guard let self = self else { return }
+        collectionService.putNftsToCart(cart: cart) { result in
             switch result {
             case .success(let cart):
                 PurchaseCartStorage.shared.nfts = cart.nfts
-                print("cart put \(cart)")
                 completion(.success(()))
             case .failure(let error):
-                print(error)
                 completion(.failure(error))
             }
         }
@@ -140,6 +116,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                 case .success(let nft):
                     self.nfts.append(nft)
                     if nfts.count == catalogCollection.nfts.count {
+                        sortNfts()
                         nftsLoadingIsCompleted = true
                     }
                 case .failure(let error):
@@ -163,5 +140,9 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                 }
             }
         }
+    }
+
+    private func sortNfts() {
+        nfts.sort { $0.name < $1.name }
     }
 }
