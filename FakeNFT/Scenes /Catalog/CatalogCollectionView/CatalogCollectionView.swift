@@ -3,8 +3,6 @@
 //  FakeNFT
 //
 //  Created by Eugene Kolesnikov on 07.11.2023.
-//
-// swiftlint:disable file_length
 
 import UIKit
 import Kingfisher
@@ -31,16 +29,6 @@ final class CatalogCollectionView: UIView {
     // MARK: - Private properties
     private let reuseIdentifier = "CatalogCollectionCell"
     private let viewModel: CatalogCollectionViewModelProtocol
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-
-        button.setImage(UIImage(resource: .backward).withRenderingMode(.alwaysTemplate), for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
 
@@ -219,16 +207,11 @@ final class CatalogCollectionView: UIView {
         contentView.addSubview(authorPageLinkButton)
         contentView.addSubview(catalogDescriptionLabel)
         contentView.addSubview(collectionView)
-
-        addSubview(backButton)
     }
 
     private func applyConstraints() {
 
         NSLayoutConstraint.activate([
-            // backButton constraints
-            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            backButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
 
             // scrollView constraints
             scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: topAnchor),
@@ -281,11 +264,6 @@ final class CatalogCollectionView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: viewModel.calculateCollectionViewHeight())
         ])
-    }
-
-    @objc
-    private func backButtonTapped() {
-        delegate?.dismissView()
     }
 
     @objc
@@ -367,6 +345,7 @@ extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CatalogCollectionCellDelegate
 extension CatalogCollectionView: CatalogCollectionCellDelegate {
     func switchNftBasketState(_ cell: CatalogCollectionCell) {
         delegate?.startAnimatingActivityIndicator()

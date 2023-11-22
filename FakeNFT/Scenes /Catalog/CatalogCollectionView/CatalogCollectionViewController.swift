@@ -12,6 +12,18 @@ final class CatalogCollectionViewController: UIViewController {
     // MARK: - Private properties
     private let catalog: Catalog
     private var catalogCollectionView: CatalogCollectionView!
+    private lazy var backButton: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+
+        button.image = UIImage(resource: .backward).withRenderingMode(.alwaysTemplate)
+        button.style = .plain
+        button.target = self
+        button.action = #selector(backButtonTapped)
+        button.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        button.tintColor = .black
+
+        return button
+    }()
 
     init(catalog: Catalog) {
         self.catalog = catalog
@@ -22,33 +34,34 @@ final class CatalogCollectionViewController: UIViewController {
         catalogCollectionView = CatalogCollectionView(frame: .zero, viewModel: viewModel, delegate: self)
         self.view = catalogCollectionView
 
-        navigationItem.hidesBackButton = true
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .clear
-
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationController?.navigationBar.isTranslucent = true
+        configureNavBar()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configureNavBar() {
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButton
+    }
+
+    @objc
+    private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
 // MARK: - CatalogCollectionViewDelegate
 extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     func presentAuthorPage(_ url: URL?) {
-        let view = ProfileWebView(url: url)
-//        view.modalPresentationStyle = .fullScreen
-//        present(view, animated: true)
+        let viewModel = AuthorWebViewViewModel()
+        let view = AuthorWebViewController(viewModel: viewModel ,url: url)
         navigationController?.pushViewController(view, animated: true)
     }
 
     func dismissView() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 
     func showErrorAlert() {

@@ -25,6 +25,10 @@ final class TabBarController: UITabBarController {
 
         let catalogNavigationController = UINavigationController(rootViewController: catalogController)
 
+        catalogNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        catalogNavigationController.navigationBar.shadowImage = UIImage()
+        catalogNavigationController.navigationBar.isTranslucent = true
+
         viewControllers = [catalogNavigationController]
         tabBar.unselectedItemTintColor = .black
 
