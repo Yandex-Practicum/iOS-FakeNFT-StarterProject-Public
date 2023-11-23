@@ -53,5 +53,4 @@ struct Constants {
     static let paimentConfirmButtonText = "Оплатить"
     static let cartUserAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
     static let cartUserAgreementLinkText = "Пользовательского соглашения"
-    static let cartUserAgreementLink = "https://yandex.ru/legal/practicum_termsofuse/"
 }

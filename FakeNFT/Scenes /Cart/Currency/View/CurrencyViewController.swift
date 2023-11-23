@@ -8,7 +8,6 @@ final class CurrencyScreenViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: Constants.backwardPicTitle), for: .normal)
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -115,6 +114,9 @@ final class CurrencyScreenViewController: UIViewController {
 
     @objc
     private func tapUserAgreementLink() {
+        let webView = CartUserAgreementWebView()
+        webView.urlString = RequestConstants.cartUserAgreementLink
+        navigationController?.pushViewController(webView, animated: true)
     }
 
     @objc
@@ -169,6 +171,15 @@ extension CurrencyScreenViewController {
 
 extension CurrencyScreenViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? CurrencyCollectionViewCell else { return }
+        cell.isSelected = true
+        if let selectedCurrencyIndex, selectedCurrencyIndex != indexPath {
+            let cell = collectionView.cellForItem(at: selectedCurrencyIndex) as? CurrencyCollectionViewCell
+            cell?.isSelected = false
+        }
+        selectedCurrencyIndex = indexPath
     }
 }
 
@@ -208,17 +219,5 @@ extension CurrencyScreenViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         7
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CurrencyCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? CurrencyCollectionViewCell else { return }
-        cell.isSelected = true
-        if let selectedCurrencyIndex, selectedCurrencyIndex != indexPath {
-            let cell = collectionView.cellForItem(at: selectedCurrencyIndex) as? CurrencyCollectionViewCell
-            cell?.isSelected = false
-        }
-        selectedCurrencyIndex = indexPath
     }
 }

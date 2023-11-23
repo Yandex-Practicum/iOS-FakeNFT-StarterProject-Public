@@ -8,7 +8,6 @@ final class CartViewController: UIViewController, LoadingView {
         let button = UIButton()
         button.setImage(UIImage(named: Constants.sortButtonPicTitle), for: .normal)
         button.addTarget(self, action: #selector(tapFilterButton), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
