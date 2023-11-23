@@ -23,7 +23,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
 
     private lazy var currencyFullNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
 
     private lazy var currencyShortNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textColor = .yaGreen
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

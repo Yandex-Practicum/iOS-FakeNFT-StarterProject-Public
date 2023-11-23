@@ -26,7 +26,7 @@ final class CurrencyScreenViewController: UIViewController {
 
     private lazy var agreementLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textColor = .textOnSecondary
         label.text = Constants.cartUserAgreementText
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ final class CurrencyScreenViewController: UIViewController {
     private lazy var agreementLinkButton: UIButton = {
        let button = UIButton()
         button.setTitle(Constants.cartUserAgreementLinkText, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        button.titleLabel?.font = .caption1
         button.setTitleColor(.yaBlue, for: .normal)
         button.addTarget(self, action: #selector(tapUserAgreementLink), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +59,7 @@ final class CurrencyScreenViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.setTitle(Constants.paimentConfirmButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black
         button.addTarget(self, action: #selector(tapPayButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +107,20 @@ final class CurrencyScreenViewController: UIViewController {
         viewModel.loadData()
     }
 
+    private func showErrorResult() {
+        AlertPresenter.showPaymentError(on: self) {
+            
+        }
+    }
+    
+    private func showSuccessResult() {
+        let paymentViewController = PaymentSuccessViewController()
+        let navigationController = UINavigationController(rootViewController: paymentViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.hidesBottomBarWhenPushed = true
+        present(navigationController, animated: true)
+    }
+
     @objc
     private func tapBackButton() {
         dismiss(animated: true)
@@ -121,6 +135,7 @@ final class CurrencyScreenViewController: UIViewController {
 
     @objc
     private func tapPayButton() {
+        
     }
 }
 
@@ -130,7 +145,7 @@ extension CurrencyScreenViewController {
         navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: backButton)]
         navigationItem.title = Constants.paimentTypeText
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 17, weight: .bold),
+            .font: UIFont.bodyBold,
             .foregroundColor: UIColor.textPrimary
         ]
         addCurrencyCollectionView()
@@ -163,7 +178,7 @@ extension CurrencyScreenViewController {
             paymentStackView.leadingAnchor.constraint(equalTo: paymentContainView.leadingAnchor, constant: 16),
             paymentStackView.trailingAnchor.constraint(equalTo: paymentContainView.trailingAnchor, constant: -16),
             paymentStackView.topAnchor.constraint(equalTo: paymentContainView.topAnchor, constant: 16),
-            paymentStackView.bottomAnchor.constraint(equalTo: paymentContainView.bottomAnchor, constant: -16),
+            paymentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             paymentButton.heightAnchor.constraint(equalToConstant: 60)
             ])
     }

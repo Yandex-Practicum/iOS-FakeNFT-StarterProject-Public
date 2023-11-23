@@ -26,7 +26,7 @@ final class CartViewController: UIViewController, LoadingView {
         let label = UILabel()
         label.text = "0 NFT"
         label.textColor = .textPrimary
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,7 +35,7 @@ final class CartViewController: UIViewController, LoadingView {
         let label = UILabel()
         label.text = "0 ETH"
         label.textColor = .yaGreen
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -56,7 +56,7 @@ final class CartViewController: UIViewController, LoadingView {
         button.layer.cornerRadius = 16
         button.setTitle(Constants.paymentButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black
         button.addTarget(self, action: #selector(tapPayButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +76,7 @@ final class CartViewController: UIViewController, LoadingView {
         let label = UILabel()
         label.text = Constants.emptyCart
         label.textColor = .textPrimary
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.textAlignment = .center
         label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +96,7 @@ final class CartViewController: UIViewController, LoadingView {
         let label = UILabel()
         label.text = Constants.deleteConfirmText
         label.textColor = .textPrimary
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textAlignment = .center
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -108,7 +108,7 @@ final class CartViewController: UIViewController, LoadingView {
         button.layer.cornerRadius = 16
         button.setTitle(Constants.deleteButtonText, for: .normal)
         button.setTitleColor(.yaRed, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        button.titleLabel?.font = .bodyRegular
         button.backgroundColor = .segmentActive
         button.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +120,7 @@ final class CartViewController: UIViewController, LoadingView {
         button.layer.cornerRadius = 16
         button.setTitle(Constants.backButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        button.titleLabel?.font = .bodyRegular
         button.backgroundColor = .segmentActive
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

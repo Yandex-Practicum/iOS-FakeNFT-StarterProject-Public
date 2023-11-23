@@ -20,7 +20,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,7 +37,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textColor = .textPrimary
         label.text = Constants.priceLabel
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
