@@ -14,7 +14,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     @Published var nftsLoadingIsCompleted: Bool = false
     @Published var author: Author?
     @Published var networkError: Error?
-    var nftsLoaderPuublisher: Published<Bool>.Publisher { $nftsLoadingIsCompleted }
+    var nftsLoaderPublisher: Published<Bool>.Publisher { $nftsLoadingIsCompleted }
     var authorPublisher: Published<Author?>.Publisher { $author }
     var networkErrorPublisher: Published<Error?>.Publisher { $networkError }
     var nfts: [Nft] = []
@@ -51,15 +51,17 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         addedToCartNfts.contains(id)
     }
 
-    func calculateCollectionViewHeight() -> CGFloat {
+    func calculateCollectionViewHeight(numberOfCellsInRow: Int) -> CGFloat {
         let numberOfCells = catalogCollection.nfts.count
         let height = 192
         let spacing = 9
         var result: Int = 0
         if numberOfCells % 3 == 0 {
-            result = ((numberOfCells / 3)) * height + ((numberOfCells / 3) * spacing)
+            result = (numberOfCells / numberOfCellsInRow) * height +
+            ((numberOfCells / numberOfCellsInRow) * spacing)
         } else {
-            result = (numberOfCells / 3 + 1) * height + ((numberOfCells / 3) * spacing)
+            result = (numberOfCells / numberOfCellsInRow + 1) * height +
+            ((numberOfCells / numberOfCellsInRow) * spacing)
         }
         return CGFloat(result)
     }

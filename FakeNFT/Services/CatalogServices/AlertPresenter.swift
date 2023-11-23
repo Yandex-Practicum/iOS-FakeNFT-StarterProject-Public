@@ -50,12 +50,12 @@ final class AlertPresenter {
         viewController.present(alert, animated: true)
     }
 
-    static func showLikeError(in viewController: UIViewController) {
+    static func showNftInteractionError(in viewController: UIViewController) {
         let alert = UIAlertController(
-            title: "Like error", message: "Try again", preferredStyle: .alert
+            title: L10n.NftErrorAlert.title, message: L10n.NftErrorAlert.message, preferredStyle: .alert
         )
 
-        let okAction = UIAlertAction(title: "OK", style: .default)
+        let okAction = UIAlertAction(title: L10n.NftErrorAlert.okButton, style: .default)
         alert.addAction(okAction)
         viewController.present(alert, animated: true)
     }

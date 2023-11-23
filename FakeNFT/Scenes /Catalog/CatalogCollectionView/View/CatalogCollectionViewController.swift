@@ -79,7 +79,7 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
         UIBlockingProgressHUD.dismiss()
     }
 
-    func showLikeAlert() {
-        AlertPresenter.showLikeError(in: self)
+    func showNftInteractionErrorAlert() {
+        AlertPresenter.showNftInteractionError(in: self)
     }
 }

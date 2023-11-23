@@ -13,6 +13,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
     // MARK: - Public properties
     var nftIsLiked = false
     var nftIsAddedToBasket = false
+    weak var delegate: CatalogCollectionCellDelegate?
 
     // MARK: - private properties
     private let starsQuantity = 5
@@ -80,12 +81,11 @@ final class CatalogCollectionCell: UICollectionViewCell {
         view.isHidden = true
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
+        view.backgroundColor = .lightGray.withAlphaComponent(0.6)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
-    weak var delegate: CatalogCollectionCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,21 +121,23 @@ final class CatalogCollectionCell: UICollectionViewCell {
                 self.stopAnimation()
             })
 
-//        changeLike()
-
-        let image = nftIsLiked ?
-        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
-        likeButton.setImage(image, for: .normal)
-
-//        switchBasketImage()
-        let basketImage = nftIsAddedToBasket ?
-        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
-        addToBasketButton.setImage(basketImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        switchLikeImage()
+        switchBasketImage()
 
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
         selectedRate = nft.rating
         createStars()
+    }
+
+    func changeLikeState() {
+        nftIsLiked = !nftIsLiked
+        switchLikeImage()
+    }
+
+    func switchBasketState() {
+        nftIsAddedToBasket = !nftIsAddedToBasket
+        switchBasketImage()
     }
 
     // MARK: - private methods
@@ -216,10 +218,29 @@ final class CatalogCollectionCell: UICollectionViewCell {
         return imageView
     }
 
+    private func startAnimation() {
+        animationView.isHidden = false
+        animationView.addFlashLayer()
+    }
+
+    private func stopAnimation() {
+        animationView.isHidden = true
+    }
+
+    private func switchLikeImage() {
+        let image = nftIsLiked ?
+        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
+        likeButton.setImage(image, for: .normal)
+    }
+
+    private func switchBasketImage() {
+        let image = nftIsAddedToBasket ?
+        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
+        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+    }
+
     @objc
     private func didTapLikeButton() {
-//        nftIsLiked = !nftIsLiked
-//        changeLike()
         delegate?.didChangeLike(self)
     }
 
@@ -245,29 +266,5 @@ final class CatalogCollectionCell: UICollectionViewCell {
             }
             starImageView.isHighlighted = starImageView.tag <= rate
         }
-    }
-
-    func changeLike() {
-        nftIsLiked = !nftIsLiked
-        let image = nftIsLiked ?
-        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
-        likeButton.setImage(image, for: .normal)
-    }
-
-    func switchBasketImage() {
-        nftIsAddedToBasket = !nftIsAddedToBasket
-
-        let image = nftIsAddedToBasket ?
-        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
-        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
-    }
-
-    private func startAnimation() {
-        animationView.isHidden = false
-        animationView.addFlashLayer()
-    }
-
-    private func stopAnimation() {
-        animationView.isHidden = true
     }
 }

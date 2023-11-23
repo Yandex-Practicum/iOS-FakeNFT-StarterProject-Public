@@ -64,7 +64,8 @@ final class CatalogTableViewCell: UITableViewCell {
                 guard let self = self else { return }
                 self.stopAnimation()
                 onState?()
-            })
+            }
+        )
     }
 
     // MARK: - Private methods

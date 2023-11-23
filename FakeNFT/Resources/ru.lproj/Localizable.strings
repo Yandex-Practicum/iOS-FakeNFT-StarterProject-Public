@@ -19,6 +19,11 @@
 "NetworkErrorAlert.message" = "Попробуйте еще раз";
 "NetworkErrorAlert.okButton" = "OK";
 
+//NftInteractionError alert
+"NftErrorAlert.title" = "Что-то пошло не так(";
+"NftErrorAlert.message" = "Попробуйте еще раз";
+"NftErrorAlert.okButton" = "OK";
+
 //Catalog collection screen
 "CatalogCollection.authorLabel" = "Автор коллекции:";
 

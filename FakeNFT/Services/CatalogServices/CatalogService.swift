@@ -59,6 +59,9 @@ final class CatalogService: CatalogServiceProtocol {
         }
     }
 
+    // methods implemented for temporary use in catalog epic to handle likes and addToBasket interaction
+    // when the full project is merged - these two methods will be removed
+    // both methods should be implemented in Profile epic
     func fetchProfileLikes(completion: @escaping (Result<ProfileLike, Error>) -> Void) {
         let request = ProfileRequest(httpMethod: .get)
 

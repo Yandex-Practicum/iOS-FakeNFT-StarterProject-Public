@@ -9,7 +9,7 @@ import Foundation
 
 protocol CatalogCollectionViewModelProtocol: AnyObject {
     var nftsLoadingIsCompleted: Bool { get }
-    var nftsLoaderPuublisher: Published<Bool>.Publisher { get }
+    var nftsLoaderPublisher: Published<Bool>.Publisher { get }
     var nfts: [Nft] { get }
     var catalogCollection: Catalog { get }
     var author: Author? { get }
@@ -17,7 +17,7 @@ protocol CatalogCollectionViewModelProtocol: AnyObject {
     var networkError: Error? { get }
     var networkErrorPublisher: Published<Error?>.Publisher { get }
     var profileLikes: [String] { get set }
-    func calculateCollectionViewHeight() -> CGFloat
+    func calculateCollectionViewHeight(numberOfCellsInRow: Int) -> CGFloat
     func fetchData()
     func changeLikeForNft(with id: String, completion: @escaping (Result<Void, Error>) -> Void)
     func nftIsLiked(_ id: String) -> Bool

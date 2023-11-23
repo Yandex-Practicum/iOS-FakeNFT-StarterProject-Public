@@ -9,14 +9,16 @@ import Foundation
 import Combine
 
 final class AuthorWebViewViewModel: AuthorWebViewViewModelProtocol {
+
+    // MARK: - Public properties
     @Published var progressValue: Float = 0
     @Published var shouldHideProgress: Bool = false
     var progressPublisher: Published<Float>.Publisher { $progressValue }
     var progressStatePublisher: Published<Bool>.Publisher { $shouldHideProgress }
 
-    init() {
-    }
+    init() {}
 
+    // MARK: - Public methods
     func viewDidLoad() {
         didUpdateProgressValue(0)
     }
@@ -27,7 +29,8 @@ final class AuthorWebViewViewModel: AuthorWebViewViewModelProtocol {
         shouldHideProgress = shouldHideProgress(for: Float(newValue))
     }
 
-    func shouldHideProgress(for value: Float) -> Bool {
+    // MARK: - Private methods
+    private func shouldHideProgress(for value: Float) -> Bool {
         abs(value - 1.0) <= 0.0001
     }
 }

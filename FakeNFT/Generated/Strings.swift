@@ -14,17 +14,9 @@ internal enum L10n {
     /// Открыть Nft
     internal static let openNft = L10n.tr("Localizable", "Catalog.openNft", fallback: "Открыть Nft")
   }
-  internal enum CatalogCell {
-    /// CatalogTableViewCell
-    internal static let reuseIdentifier = L10n.tr("Localizable", "CatalogCell.reuseIdentifier", fallback: "CatalogTableViewCell")
-  }
   internal enum CatalogCollection {
     /// Автор коллекции:
     internal static let authorLabel = L10n.tr("Localizable", "CatalogCollection.authorLabel", fallback: "Автор коллекции:")
-  }
-  internal enum CatalogCollectionCell {
-    /// CatalogCollectionCell
-    internal static let reuseIdentifier = L10n.tr("Localizable", "CatalogCollectionCell.reuseIdentifier", fallback: "CatalogCollectionCell")
   }
   internal enum CatalogFilterStorage {
     /// catalogFilter
@@ -57,6 +49,14 @@ internal enum L10n {
     internal static let okButton = L10n.tr("Localizable", "NetworkErrorAlert.okButton", fallback: "OK")
     /// Упс(
     internal static let title = L10n.tr("Localizable", "NetworkErrorAlert.title", fallback: "Упс(")
+  }
+  internal enum NftErrorAlert {
+    /// Попробуйте еще раз
+    internal static let message = L10n.tr("Localizable", "NftErrorAlert.message", fallback: "Попробуйте еще раз")
+    /// OK
+    internal static let okButton = L10n.tr("Localizable", "NftErrorAlert.okButton", fallback: "OK")
+    /// Что-то пошло не так(
+    internal static let title = L10n.tr("Localizable", "NftErrorAlert.title", fallback: "Что-то пошло не так(")
   }
   internal enum Tab {
     /// Каталог

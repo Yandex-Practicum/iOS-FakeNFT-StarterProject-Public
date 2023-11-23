@@ -8,17 +8,10 @@
 import UIKit
 import Combine
 
-protocol CatalogViewDelegate: AnyObject {
-    func selectedCategory(_ model: Catalog)
-    func showErrorAlert()
-    func startAnimatingActivityIndicator()
-    func stopAnimatingActivityIndicator()
-}
-
 final class CatalogView: UIView {
 
     // MARK: - Public properties
-    var viewModel: CatalogViewModelProtocol!
+    var viewModel: CatalogViewModelProtocol
     weak var delegate: CatalogViewDelegate?
 
     // MARK: - Private properties
@@ -48,6 +41,7 @@ final class CatalogView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public methods
     func reloadData() {
         viewModel.fetchCatalog()
     }
@@ -83,6 +77,7 @@ final class CatalogView: UIView {
                     delegate?.stopAnimatingActivityIndicator()
                 }
             }.store(in: &subscribes)
+
         viewModel.errorPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 guard let self = self else { return }
@@ -125,8 +120,7 @@ extension CatalogView: UITableViewDataSource {
         let model = viewModel.catalog[indexPath.row]
 
         cell.configureCell(model: model)
-        cell.onState = { [weak self] in
-            guard let self = self else { return }
+        cell.onState = {
             cell.isUserInteractionEnabled = true
         }
         return cell

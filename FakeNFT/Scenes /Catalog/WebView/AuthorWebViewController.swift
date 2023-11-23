@@ -10,6 +10,8 @@ import WebKit
 import Combine
 
 final class AuthorWebViewController: UIViewController {
+
+    // MARK: - Private properties
     private lazy var backButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
 
@@ -44,6 +46,7 @@ final class AuthorWebViewController: UIViewController {
     init(viewModel: AuthorWebViewViewModelProtocol ,url: URL?) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
         setupUI()
         viewModel.viewDidLoad()
         loadWebView(with: url)
@@ -55,6 +58,7 @@ final class AuthorWebViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private methods
     private func setupUI() {
         configureNavBar()
         addSubviews()
