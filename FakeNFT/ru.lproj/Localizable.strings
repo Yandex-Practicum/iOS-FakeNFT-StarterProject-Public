@@ -1,0 +1,20 @@
+"TabBarController.Profile" = "Профиль";
+"TabBarController.Catalog" = "Каталог";
+"TabBarController.Basket" = "Корзина";
+"TabBarController.Statistics" = "Статистика";
+
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "Мои NFT";
+"ProfileViewController.favouritesNFT" = "Избранные NFT";
+"ProfileViewController.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"EditingViewController.changePhoto" = "Сменить фото";
+"EditingViewController.name" = "Имя";
+"EditingViewController.description" = "Описание";
+"EditingViewController.site" = "Cайт";
+
+//ProgressHUD
+"ProgressHUD.loading" = "Загрузка ...";
