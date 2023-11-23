@@ -1,9 +1,11 @@
 import Foundation
 
 typealias CurrencyCompletion = (Result<[CurrencyModel], Error>) -> Void
+typealias PaymentCompletion = (Result<PaymentModel, Error>) -> Void
 
 protocol CurrencyService {
     func loadCurrencies(completion: @escaping CurrencyCompletion)
+    func getPaymentResult(id: String, completion: @escaping PaymentCompletion)
 }
 
 final class CurrencyServiceImpl: CurrencyService {
@@ -18,5 +20,10 @@ final class CurrencyServiceImpl: CurrencyService {
     func loadCurrencies(completion: @escaping CurrencyCompletion) {
         let request = CurrencyRequest()
         networkClient.send(request: request, type: [CurrencyModel].self, onResponse: completion)
+    }
+
+    func getPaymentResult(id: String, completion: @escaping PaymentCompletion) {
+        let request = PaymentRequest(id: id)
+        networkClient.send(request: request, type: PaymentModel.self, onResponse: completion)
     }
 }

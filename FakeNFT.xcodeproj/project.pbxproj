@@ -59,6 +59,8 @@
 		84ED1F912B0219340018820A /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1F902B0219340018820A /* NumberFormatter.swift */; };
 		84F44B442B0F3FA100F667A3 /* CartUserAgreementWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F44B432B0F3FA100F667A3 /* CartUserAgreementWebView.swift */; };
 		84F44B462B0F664000F667A3 /* PaymentSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F44B452B0F664000F667A3 /* PaymentSuccessViewController.swift */; };
+		84F44B482B0F905E00F667A3 /* PaymentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F44B472B0F905E00F667A3 /* PaymentRequest.swift */; };
+		84F44B4A2B0F90D700F667A3 /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F44B492B0F90D700F667A3 /* Payment.swift */; };
 		84FC56C42B087AB60008515D /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC56C32B087AB60008515D /* CurrencyViewModel.swift */; };
 		84FC56C62B087E7C0008515D /* CurrencyByldRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC56C52B087E7C0008515D /* CurrencyByldRequest.swift */; };
 		84FC56C82B087EDD0008515D /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC56C72B087EDD0008515D /* CurrencyService.swift */; };
@@ -140,6 +142,8 @@
 		84ED1F902B0219340018820A /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		84F44B432B0F3FA100F667A3 /* CartUserAgreementWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartUserAgreementWebView.swift; sourceTree = "<group>"; };
 		84F44B452B0F664000F667A3 /* PaymentSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessViewController.swift; sourceTree = "<group>"; };
+		84F44B472B0F905E00F667A3 /* PaymentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRequest.swift; sourceTree = "<group>"; };
+		84F44B492B0F90D700F667A3 /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		84FC56C32B087AB60008515D /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
 		84FC56C52B087E7C0008515D /* CurrencyByldRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyByldRequest.swift; sourceTree = "<group>"; };
 		84FC56C72B087EDD0008515D /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
 				84D9C5F42AFD0C370063CED7 /* Cart.swift */,
 				84BA4D822B07AB3C00284C04 /* Currency.swift */,
+				84F44B492B0F90D700F667A3 /* Payment.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
 				84D9C5ED2AFCE2010063CED7 /* CartByldRequest.swift */,
 				84FC56C52B087E7C0008515D /* CurrencyByldRequest.swift */,
+				84F44B472B0F905E00F667A3 /* PaymentRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -663,6 +669,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F44B4A2B0F90D700F667A3 /* Payment.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
@@ -697,6 +704,7 @@
 				84D9C5F22AFD0B870063CED7 /* CartStorage.swift in Sources */,
 				84D9C5F52AFD0C370063CED7 /* Cart.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				84F44B482B0F905E00F667A3 /* PaymentRequest.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				84F44B462B0F664000F667A3 /* PaymentSuccessViewController.swift in Sources */,
 				84FC56C42B087AB60008515D /* CurrencyViewModel.swift in Sources */,

@@ -9,6 +9,9 @@ final class CurrencyViewModel {
         }
     }
 
+    var onErrorResult: (() -> Void)?
+    var onSuccessResult: (() -> Void)?
+
     private (set) var currencies: [CurrencyModel] = []
 
     init(servicesAssembly: ServicesAssembly) {
@@ -26,6 +29,22 @@ final class CurrencyViewModel {
                 case .failure(let error):
                     assertionFailure(error.localizedDescription)
                 }
+            }
+        }
+    }
+
+    func getPaymentResult(with id: String) {
+        servicesAssembly.currencyService.getPaymentResult(id: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let payment):
+                if payment.success {
+                    self.onSuccessResult?()
+                } else {
+                    self.onErrorResult?()
+                }
+            case .failure(let error):
+                assertionFailure(error.localizedDescription)
             }
         }
     }

@@ -2,6 +2,7 @@ import UIKit
 
 final class CurrencyScreenViewController: UIViewController {
     private let viewModel: CurrencyViewModel
+    private var selectedCurrencyID: String?
     private var selectedCurrencyIndex: IndexPath?
 
     private lazy var backButton: UIButton = {
@@ -57,7 +58,7 @@ final class CurrencyScreenViewController: UIViewController {
     private lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.paimentConfirmButtonText, for: .normal)
+        button.setTitle(Constants.paymentConfirmButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
         button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black
@@ -104,16 +105,26 @@ final class CurrencyScreenViewController: UIViewController {
                 self?.currencyCollectionView.reloadData()
             }
         }
+        viewModel.onSuccessResult = { [weak self] in
+            DispatchQueue.main.async {
+                self?.showSuccessResult()
+            }
+        }
+        viewModel.onErrorResult = { [weak self] in
+            DispatchQueue.main.async {
+                self?.showErrorResult()
+            }
+        }
         viewModel.loadData()
     }
 
-    private func showErrorResult() {
-        AlertPresenter.showPaymentError(on: self) {
-            
+    func showErrorResult() {
+        AlertPresenter.showPaymentError(on: self) { [weak self] in
+            self?.viewModel.getPaymentResult(with: self?.selectedCurrencyID ?? "")
         }
     }
-    
-    private func showSuccessResult() {
+
+    func showSuccessResult() {
         let paymentViewController = PaymentSuccessViewController()
         let navigationController = UINavigationController(rootViewController: paymentViewController)
         navigationController.modalPresentationStyle = .fullScreen
@@ -135,7 +146,11 @@ final class CurrencyScreenViewController: UIViewController {
 
     @objc
     private func tapPayButton() {
-        
+        guard let selectedCurrencyID = selectedCurrencyID else {
+            AlertPresenter.showError(on: self)
+            return
+        }
+        viewModel.getPaymentResult(with: selectedCurrencyID)
     }
 }
 
@@ -143,7 +158,7 @@ extension CurrencyScreenViewController {
     private func createSubviews() {
         view.backgroundColor = .systemBackground
         navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: backButton)]
-        navigationItem.title = Constants.paimentTypeText
+        navigationItem.title = Constants.paymentTypeText
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.bodyBold,
             .foregroundColor: UIColor.textPrimary
@@ -194,7 +209,8 @@ extension CurrencyScreenViewController: UICollectionViewDelegate {
             let cell = collectionView.cellForItem(at: selectedCurrencyIndex) as? CurrencyCollectionViewCell
             cell?.isSelected = false
         }
-        selectedCurrencyIndex = indexPath
+        selectedCurrencyID = viewModel.currencies[indexPath.row].id
+     //   let currencyID = viewModel.currencies[indexPath.row].id
     }
 }
 

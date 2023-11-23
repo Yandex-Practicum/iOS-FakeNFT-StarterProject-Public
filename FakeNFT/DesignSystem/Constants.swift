@@ -50,8 +50,8 @@ struct Constants {
     static let backButtonText = "Вернуться"
 
     // MARK: - Currency constants
-    static let paimentTypeText = "Выберите способ оплаты"
-    static let paimentConfirmButtonText = "Оплатить"
+    static let paymentTypeText = "Выберите способ оплаты"
+    static let paymentConfirmButtonText = "Оплатить"
     static let cartUserAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
     static let cartUserAgreementLinkText = "Пользовательского соглашения"
 
@@ -61,4 +61,5 @@ struct Constants {
     static let paymentErrorText = "Не удалось произвести оплату"
     static let paymentCancelText = "Отмена"
     static let paymentRetryText = "Повторить"
+    static let paymentOkText = "ОК"
 }

@@ -21,7 +21,7 @@ final class PaymentSuccessViewController: UIViewController {
     }()
 
     private lazy var paymentStackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -61,11 +61,14 @@ final class PaymentSuccessViewController: UIViewController {
             backToCatalogButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             backToCatalogButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             backToCatalogButton.heightAnchor.constraint(equalToConstant: 60)
-            ])
+        ])
     }
 
     @objc
     private func tapBackToCatalogButton() {
-
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        tabBarController.selectedIndex = 0
+        present(tabBarController, animated: true)
     }
 }
