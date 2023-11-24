@@ -36,6 +36,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
     func fetchData() {
         networkError = nil
         if !nftsLoadingIsCompleted {
+            clearNfts()
             fetchNfts()
         }
         if author == nil {
@@ -56,7 +57,7 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
         let height = 192
         let spacing = 9
         var result: Int = 0
-        if numberOfCells % 3 == 0 {
+        if numberOfCells % numberOfCellsInRow == 0 {
             result = (numberOfCells / numberOfCellsInRow) * height +
             ((numberOfCells / numberOfCellsInRow) * spacing)
         } else {
@@ -116,12 +117,13 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                 guard let self = self else { return }
                 switch result {
                 case .success(let nft):
-                    self.nfts.append(nft)
+                    nfts.append(nft)
                     if nfts.count == catalogCollection.nfts.count {
                         sortNfts()
                         nftsLoadingIsCompleted = true
                     }
                 case .failure(let error):
+                    clearNfts()
                     if networkError == nil && !nftsLoadingIsCompleted {
                         networkError = error
                     }
@@ -146,5 +148,9 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
 
     private func sortNfts() {
         nfts.sort { $0.name < $1.name }
+    }
+
+    private func clearNfts() {
+        nfts.removeAll()
     }
 }

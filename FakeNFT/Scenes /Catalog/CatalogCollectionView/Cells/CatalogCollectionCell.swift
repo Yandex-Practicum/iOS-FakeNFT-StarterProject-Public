@@ -99,6 +99,10 @@ final class CatalogCollectionCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         nftIsLiked = false
+        nftIsAddedToBasket = false
+        nftImageView.kf.cancelDownloadTask()
+        starsContainer.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        nftImageView.image = nil
     }
 
     required init?(coder: NSCoder) {

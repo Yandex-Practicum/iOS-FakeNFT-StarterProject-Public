@@ -94,8 +94,8 @@ final class AuthorWebViewController: UIViewController {
             .sink { [weak self] newValue in
                 guard let self = self else { return }
 
-                viewModel.didUpdateProgressValue(webView.estimatedProgress)
                 setProgressValue(newValue)
+                viewModel.didUpdateProgressValue(webView.estimatedProgress)
 
             }.store(in: &subscribes)
 
