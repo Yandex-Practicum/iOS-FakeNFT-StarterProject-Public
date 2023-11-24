@@ -1,6 +1,6 @@
 import UIKit
 
-final class CurrencyScreenViewController: UIViewController {
+final class CurrencyScreenViewController: UIViewController, LoadingView {
     private let viewModel: CurrencyViewModel
     private var selectedCurrencyID: String?
     private var selectedCurrencyIndex: IndexPath?
@@ -11,7 +11,7 @@ final class CurrencyScreenViewController: UIViewController {
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var currencyCollectionViewLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 7
@@ -109,6 +109,7 @@ final class CurrencyScreenViewController: UIViewController {
         createSubviews()
         viewModel.onDataUpdate = { [weak self] in
             DispatchQueue.main.async {
+                self?.hideLoading()
                 self?.currencyCollectionView.reloadData()
             }
         }
@@ -122,6 +123,7 @@ final class CurrencyScreenViewController: UIViewController {
                 self?.showErrorResult()
             }
         }
+        showLoading()
         viewModel.loadData()
     }
 
