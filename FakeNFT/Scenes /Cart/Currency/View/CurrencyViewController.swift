@@ -11,9 +11,16 @@ final class CurrencyScreenViewController: UIViewController {
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var currencyCollectionViewLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 7
+        layout.minimumInteritemSpacing = 7
+        return layout
+    }()
 
     private lazy var currencyCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: currencyCollectionViewLayout)
         collectionView.backgroundColor = .systemBackground
         collectionView.allowsMultipleSelection = false
         collectionView.showsVerticalScrollIndicator = false
@@ -118,13 +125,13 @@ final class CurrencyScreenViewController: UIViewController {
         viewModel.loadData()
     }
 
-    func showErrorResult() {
+    private func showErrorResult() {
         AlertPresenter.showPaymentError(on: self) { [weak self] in
             self?.viewModel.getPaymentResult(with: self?.selectedCurrencyID ?? "")
         }
     }
 
-    func showSuccessResult() {
+    private func showSuccessResult() {
         let paymentViewController = PaymentSuccessViewController()
         let navigationController = UINavigationController(rootViewController: paymentViewController)
         navigationController.modalPresentationStyle = .fullScreen
@@ -210,7 +217,6 @@ extension CurrencyScreenViewController: UICollectionViewDelegate {
             cell?.isSelected = false
         }
         selectedCurrencyID = viewModel.currencies[indexPath.row].id
-     //   let currencyID = viewModel.currencies[indexPath.row].id
     }
 }
 
@@ -238,17 +244,5 @@ extension CurrencyScreenViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.bounds.width - 7) / 2
         return CGSize(width: width, height: 46)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        7
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        7
     }
 }

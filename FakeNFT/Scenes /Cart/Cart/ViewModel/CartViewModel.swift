@@ -5,6 +5,7 @@ class CartViewModel {
     var isEmpty: Bool {
         nfts.isEmpty
     }
+    var onDataErrorResult: (() -> Void)?
 
     @Observable
     private (set) var nfts: [Nft] = []
@@ -23,8 +24,8 @@ class CartViewModel {
                 case .success(let nfts):
                     self.nfts = nfts
                     self.sort(by: self.cartFilterStorage.cartSortType)
-                case .failure(let error):
-                    assertionFailure(error.localizedDescription)
+                case .failure:
+                    self.onDataErrorResult?()
                 }
             }
         }

@@ -34,18 +34,36 @@ final class CurrencyViewModel {
     }
 
     func getPaymentResult(with id: String) {
-        servicesAssembly.currencyService.getPaymentResult(id: id) { [weak self] result in
+        servicesAssembly.currencyService.getPaymentResult(currencyId: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let payment):
-                if payment.success {
-                    self.onSuccessResult?()
-                } else {
-                    self.onErrorResult?()
-                }
+                self.handlePaymentResult(payment)
             case .failure(let error):
                 assertionFailure(error.localizedDescription)
             }
         }
+    }
+
+    private func clearCart() {
+        servicesAssembly.cartService.deleteNftFromCart(cartId: "1", nfts: []) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    return
+                case .failure(let error):
+                    assertionFailure(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    private func handlePaymentResult(_ payment: PaymentModel) {
+        guard payment.success else {
+            self.onErrorResult?()
+            return
+        }
+        self.onSuccessResult?()
+        self.clearCart()
     }
 }

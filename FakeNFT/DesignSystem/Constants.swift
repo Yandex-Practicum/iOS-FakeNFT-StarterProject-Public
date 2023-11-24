@@ -48,6 +48,7 @@ struct Constants {
     static let deleteConfirmText = "Вы уверены, что хотите удалить объект из корзины?"
     static let deleteButtonText = "Удалить"
     static let backButtonText = "Вернуться"
+    static let loadDataErrorText = "Ошибка загрузки, попробуйте еще раз"
 
     // MARK: - Currency constants
     static let paymentTypeText = "Выберите способ оплаты"

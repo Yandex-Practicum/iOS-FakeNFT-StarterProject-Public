@@ -165,6 +165,9 @@ final class CartViewController: UIViewController, LoadingView {
         createSubviews()
         viewModel.loadData()
         showLoading()
+        viewModel.onDataErrorResult = { [weak self] in
+            self?.showLoadDataError()
+        }
     }
 
     private func observeViewModelChanges() {
@@ -198,6 +201,13 @@ final class CartViewController: UIViewController, LoadingView {
 
     private func showFiltersAlert() {
         AlertPresenter.showCartFiltersAlert(on: self, viewModel: viewModel)
+    }
+
+    private func showLoadDataError() {
+        AlertPresenter.showDataError(on: self) { [weak self] in
+            self?.showLoading()
+            self?.viewModel.loadData()
+        }
     }
 
     @objc
