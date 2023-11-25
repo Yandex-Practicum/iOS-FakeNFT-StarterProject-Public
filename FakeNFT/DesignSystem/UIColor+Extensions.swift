@@ -13,3 +13,4 @@ extension UIColor {
     static var nftWhite: UIColor { UIColor(named: "White") ?? clear }
     static var nftYellowUniversal: UIColor { UIColor(named: "Yellow Universal") ?? clear }
 }
+
