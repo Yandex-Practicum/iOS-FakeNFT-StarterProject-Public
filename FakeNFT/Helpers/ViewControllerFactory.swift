@@ -3,12 +3,14 @@ import UIKit
 final class ViewControllerFactory {
     func makeWebView(url: URL) -> WebViewViewController {
         let controller = WebViewViewController(url: url)
-        // TODO: - индикатор загрузки
+        
         return controller
     }
 
-    func makeUserNFTViewController() -> UserNFTViewController {
-        return UserNFTViewController()
+    func makeUserNFTViewController(nftList: [String]) -> UserNFTViewController {
+        let userNFTViewController = UserNFTViewController(nftList: nftList,
+                                                          viewModel: UserNFTViewModel(model: UserNFTModel()))
+        return userNFTViewController
     }
 
     func makeFavoritesNFTViewController() -> FavoritesNFTViewController {
