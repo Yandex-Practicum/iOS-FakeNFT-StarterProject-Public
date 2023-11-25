@@ -20,7 +20,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,7 +37,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.font = .caption1
         label.textColor = .textPrimary
         label.text = Constants.priceLabel
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -74,6 +74,15 @@ final class CartTableViewCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(with model: Nft) {
+        contentView.backgroundColor = .systemBackground
+        let placeholder: UIImage = UIImage(named: Constants.placeholderImage) ?? UIImage()
+        imageViewNFT.kf.setImage(with: model.images.first, placeholder: placeholder)
+        self.titleLabel.text = model.name
+        self.priceLabel.text = getPrice(with: model.price)
+        getRating(from: model.rating)
     }
 
     private func createSubviews() {
@@ -145,6 +154,12 @@ final class CartTableViewCell: UITableViewCell {
         ])
     }
 
+    private func getPrice(with price: Float) -> String {
+        let formatedPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: price)) ?? "\(price)"
+        let priceString = formatedPrice + " ETH"
+        return priceString
+    }
+
     private func getRating(from rating: Int) {
         ratingStarStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         (0..<rating).forEach { _ in
@@ -163,15 +178,6 @@ final class CartTableViewCell: UITableViewCell {
         : UIImage(named: Constants.starInactivePicTitle)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }
-
-    func configure(with model: Nft) {
-        contentView.backgroundColor = .systemBackground
-        imageViewNFT.kf.setImage(with: model.images.first)
-        self.titleLabel.text = model.name
-        let formatPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
-        self.priceLabel.text = "\(formatPrice) ETH"
-        getRating(from: model.rating)
     }
 
     @objc private func tapDeleteButton() {

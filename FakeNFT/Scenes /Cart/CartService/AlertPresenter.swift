@@ -15,4 +15,31 @@ final class AlertPresenter {
         alertController.addAction(cancelAction)
         viewController.present(alertController, animated: true)
     }
+
+    static func showDataError(on viewController: UIViewController, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: Constants.loadDataErrorText, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: Constants.paymentOkText, style: .default) { _ in
+            completion()
+        }
+        alert.addAction(okAction)
+        viewController.present(alert, animated: true)
+    }
+
+    static func showError(on viewController: UIViewController) {
+        let alert = UIAlertController(title: nil, message: Constants.paymentTypeText, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: Constants.paymentOkText, style: .default)
+        alert.addAction(okAction)
+        viewController.present(alert, animated: true)
+    }
+
+    static func showPaymentError(on viewController: UIViewController, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: Constants.paymentErrorText, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: Constants.paymentCancelText, style: .default)
+        alert.addAction(cancelAction)
+        let retryAction = UIAlertAction(title: Constants.paymentRetryText, style: .default) { _ in
+            completion()
+        }
+        alert.addAction(retryAction)
+        viewController.present(alert, animated: true)
+    }
 }

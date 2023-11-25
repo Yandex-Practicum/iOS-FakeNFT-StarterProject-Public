@@ -34,6 +34,8 @@ struct Constants {
     static let addToBasketPicTitle = "basket_add"
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
+    static let paymentSuccess = "payment_success"
+    static let placeholderImage = "placeholder_image"
 
     // MARK: - Cart constants
     static let paymentButtonText = "К оплате"
@@ -47,4 +49,19 @@ struct Constants {
     static let deleteConfirmText = "Вы уверены, что хотите удалить объект из корзины?"
     static let deleteButtonText = "Удалить"
     static let backButtonText = "Вернуться"
+    static let loadDataErrorText = "Ошибка загрузки, попробуйте еще раз"
+
+    // MARK: - Currency constants
+    static let paymentTypeText = "Выберите способ оплаты"
+    static let paymentConfirmButtonText = "Оплатить"
+    static let cartUserAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
+    static let cartUserAgreementLinkText = "Пользовательского соглашения"
+
+    // MARK: - Payment constants
+    static let paymentSuccessText = "Успех! Оплата прошла, поздравляем с покупкой!"
+    static let backToCatalogueText = "Вернуться в каталог"
+    static let paymentErrorText = "Не удалось произвести оплату"
+    static let paymentCancelText = "Отмена"
+    static let paymentRetryText = "Повторить"
+    static let paymentOkText = "ОК"
 }
