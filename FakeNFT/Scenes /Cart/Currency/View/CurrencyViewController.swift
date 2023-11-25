@@ -1,8 +1,7 @@
 import UIKit
 
 final class CurrencyScreenViewController: UIViewController, LoadingView {
-    private let viewModel: CurrencyViewModel
-    private var selectedCurrencyID: String?
+    private var viewModel: CurrencyViewModelProtocol
     private var selectedCurrencyIndex: IndexPath?
 
     private lazy var backButton: UIButton = {
@@ -94,7 +93,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
         return view
     }()
 
-    init(viewModel: CurrencyViewModel) {
+    init(viewModel: CurrencyViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -123,13 +122,16 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
                 self?.showErrorResult()
             }
         }
+        viewModel.onDataErrorResult = { [weak self] in
+            self?.showLoadDataError()
+        }
         showLoading()
         viewModel.loadData()
     }
 
     private func showErrorResult() {
         AlertPresenter.showPaymentError(on: self) { [weak self] in
-            self?.viewModel.getPaymentResult(with: self?.selectedCurrencyID ?? "")
+            self?.viewModel.getPaymentResult(with: self?.viewModel.selectedCurrencyID ?? "")
         }
     }
 
@@ -139,6 +141,12 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.hidesBottomBarWhenPushed = true
         present(navigationController, animated: true)
+    }
+
+    private func showLoadDataError() {
+        AlertPresenter.showDataError(on: self) { [weak self] in
+            self?.viewModel.loadData()
+        }
     }
 
     @objc
@@ -155,7 +163,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     @objc
     private func tapPayButton() {
-        guard let selectedCurrencyID = selectedCurrencyID else {
+        guard let selectedCurrencyID = viewModel.selectedCurrencyID else {
             AlertPresenter.showError(on: self)
             return
         }
@@ -182,7 +190,7 @@ extension CurrencyScreenViewController {
         NSLayoutConstraint.activate([
             currencyCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             currencyCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            currencyCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
+            currencyCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
             ])
     }
 
@@ -218,7 +226,7 @@ extension CurrencyScreenViewController: UICollectionViewDelegate {
             let cell = collectionView.cellForItem(at: selectedCurrencyIndex) as? CurrencyCollectionViewCell
             cell?.isSelected = false
         }
-        selectedCurrencyID = viewModel.currencies[indexPath.row].id
+        viewModel.selectCurrency(at: indexPath)
     }
 }
 

@@ -78,10 +78,10 @@ final class CartTableViewCell: UITableViewCell {
 
     func configure(with model: Nft) {
         contentView.backgroundColor = .systemBackground
-        imageViewNFT.kf.setImage(with: model.images.first)
+        let placeholder: UIImage = UIImage(named: Constants.placeholderImage) ?? UIImage()
+        imageViewNFT.kf.setImage(with: model.images.first, placeholder: placeholder)
         self.titleLabel.text = model.name
-        let formatPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: model.price)) ?? "\(model.price)"
-        self.priceLabel.text = "\(formatPrice) ETH"
+        self.priceLabel.text = getPrice(with: model.price)
         getRating(from: model.rating)
     }
 
@@ -152,6 +152,12 @@ final class CartTableViewCell: UITableViewCell {
             deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             deleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
+    }
+
+    private func getPrice(with price: Float) -> String {
+        let formatedPrice = NumberFormatter.priceFormatter.string(from: NSNumber(value: price)) ?? "\(price)"
+        let priceString = formatedPrice + " ETH"
+        return priceString
     }
 
     private func getRating(from rating: Int) {

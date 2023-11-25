@@ -35,6 +35,7 @@ struct Constants {
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
     static let paymentSuccess = "payment_success"
+    static let placeholderImage = "placeholder_image"
 
     // MARK: - Cart constants
     static let paymentButtonText = "К оплате"

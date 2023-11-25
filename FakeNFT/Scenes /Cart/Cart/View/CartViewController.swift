@@ -217,12 +217,9 @@ final class CartViewController: UIViewController, LoadingView {
 
     @objc
     private func tapPayButton() {
-        let currencyViewModel = CurrencyViewModel(servicesAssembly: viewModel.servicesAssembly)
-        let currencyViewController = CurrencyScreenViewController(viewModel: currencyViewModel)
-        let navigationController = UINavigationController(rootViewController: currencyViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.hidesBottomBarWhenPushed = true
-        present(navigationController, animated: true)
+        let moduleFactory = ModuleFactory(servicesAssembly: viewModel.servicesAssembly)
+        let currencyModule = moduleFactory.makeCurrencyModule()
+        present(currencyModule, animated: true)
     }
 
     @objc

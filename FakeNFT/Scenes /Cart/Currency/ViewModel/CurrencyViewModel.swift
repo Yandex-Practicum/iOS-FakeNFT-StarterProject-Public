@@ -1,6 +1,20 @@
 import Foundation
 
-final class CurrencyViewModel {
+protocol CurrencyViewModelProtocol {
+    var onDataUpdate: (() -> Void)? { get set }
+    var onErrorResult: (() -> Void)? { get set }
+    var onSuccessResult: (() -> Void)? { get set }
+    var onDataErrorResult: (() -> Void)? { get set }
+
+    var currencies: [CurrencyModel] { get }
+    var selectedCurrencyID: String? { get }
+
+    func loadData()
+    func getPaymentResult(with id: String)
+    func selectCurrency(at indexPath: IndexPath)
+}
+
+final class CurrencyViewModel: CurrencyViewModelProtocol {
     let servicesAssembly: ServicesAssembly
 
     var onDataUpdate: (() -> Void)? {
@@ -11,8 +25,10 @@ final class CurrencyViewModel {
 
     var onErrorResult: (() -> Void)?
     var onSuccessResult: (() -> Void)?
+    var onDataErrorResult: (() -> Void)?
 
     private (set) var currencies: [CurrencyModel] = []
+    private (set) var selectedCurrencyID: String?
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -26,8 +42,8 @@ final class CurrencyViewModel {
                 case .success(let currencies):
                     self.currencies = currencies
                     self.onDataUpdate?()
-                case .failure(let error):
-                    assertionFailure(error.localizedDescription)
+                case .failure:
+                    self.onDataErrorResult?()
                 }
             }
         }
@@ -39,10 +55,14 @@ final class CurrencyViewModel {
             switch result {
             case .success(let payment):
                 self.handlePaymentResult(payment)
-            case .failure(let error):
-                assertionFailure(error.localizedDescription)
+            case .failure:
+                self.onErrorResult?()
             }
         }
+    }
+
+    func selectCurrency(at indexPath: IndexPath) {
+        selectedCurrencyID = currencies[indexPath.row].id
     }
 
     private func clearCart() {
@@ -51,8 +71,8 @@ final class CurrencyViewModel {
                 switch result {
                 case .success:
                     return
-                case .failure(let error):
-                    assertionFailure(error.localizedDescription)
+                case .failure:
+                    self.onDataErrorResult?()
                 }
             }
         }
