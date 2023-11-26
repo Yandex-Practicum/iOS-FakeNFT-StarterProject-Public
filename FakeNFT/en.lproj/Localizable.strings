@@ -19,4 +19,29 @@
 //ProgressHUD
 "ProgressHUD.loading" = "Loading ...";
 
+//NFTCell
+"NFTCell.from" = "from";
+"NFTCell.price" = "Price";
+
+//UserNFTViewController
+"UserNFTViewController.nonft" = "You don't have an NFT yet";
+
+//AlertAction
+"AlertAction.close" = "Close";
+"AlertAction.sort" = "Sorting";
+"AlertAction.ok" = "OK";
+"AlertAction.error" = "Error";
+"AlertAction.incorrURL" = "Incorrect URL entered";
+"AlertAction.cancel" = "Cancel";
+"AlertAction.enterURL" = "Enter URL";
+"AlertAction.imageURL" = "Image URL";
+
+//SortOptions
+"SortOptions.price" = "By price";
+"SortOptions.rate" = "By rating";
+"SortOptions.name" = "By name";
+
+
+
+
 

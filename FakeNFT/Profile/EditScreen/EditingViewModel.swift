@@ -1,42 +1,34 @@
 import Foundation
 import ProgressHUD
 
-protocol ProfileViewModelProtocol {
+protocol EditingViewModelProtocol {
     var userProfile: UserProfile? { get }
     func observeUserProfileChanges(_ handler: @escaping (UserProfile?) -> Void)
-
+    
     func viewDidLoad()
-    func userWillcloseViewController()
-
+    func viewWillDisappear()
+    
     func updateName(_ name: String)
     func updateDescription(_ description: String)
     func updateWebSite(_ website: String)
+    
     func photoURLdidChanged(with url: URL)
 }
 
-final class ProfileViewModel: ProfileViewModelProtocol {
+final class EditingViewModel: EditingViewModelProtocol {
     @Observable
     private(set) var userProfile: UserProfile?
-
-    private let model: ProfileService
+    private let profileService: ProfileService
+    
     private let imageValidator: ImageValidatorProtocol
-
-    init(model: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
-        self.model = model
+    
+    init(profileService: ProfileService,
+         imageValidator: ImageValidatorProtocol = ImageValidator()
+    ) {
+        self.profileService = profileService
         self.imageValidator = imageValidator
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(profileUpdated),
-            name: NSNotification.Name("profileUpdated"),
-            object: nil
-        )
     }
     
-    @objc
-    private func profileUpdated() {
-        fetchUserProfile()
-    }
-
     func observeUserProfileChanges(_ handler: @escaping (UserProfile?) -> Void) {
         $userProfile.observe(handler)
     }
@@ -44,7 +36,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func viewDidLoad() {
         fetchUserProfile()
     }
-
+    
     func updateName(_ name: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -57,7 +49,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             id: currentProfile.id
         )
     }
-
+    
     func updateDescription(_ description: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -70,7 +62,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             id: currentProfile.id
         )
     }
-
+    
     func updateWebSite(_ website: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -84,9 +76,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         )
     }
     
-    func userWillcloseViewController() {
+    func viewWillDisappear() {
         guard let userProfile = userProfile else { return }
-        model.updateProfile(with: userProfile) { [weak self] result in
+        profileService.updateProfile(with: userProfile) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let updatedProfile):
@@ -97,7 +89,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-
+    
     func photoURLdidChanged(with url: URL) {
         imageValidator.isValidImageURL(url) { [weak self] isValid in
             guard let self = self else { return }
@@ -117,24 +109,10 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-
-    func saveUserProfile() {
-        guard let userProfile = userProfile else { return }
-        model.updateProfile(with: userProfile) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let updatedProfile):
-                self.userProfile = updatedProfile
-            case .failure(let error):
-                // ToDo: - Уведомление об ошибке
-                print(error)
-            }
-        }
-    }
     
     private func fetchUserProfile() {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
-        model.fetchProfile { [weak self] result in
+        profileService.fetchProfile { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let userProfile):
@@ -146,3 +124,4 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         }
     }
 }
+
