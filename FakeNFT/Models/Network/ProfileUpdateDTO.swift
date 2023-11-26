@@ -6,7 +6,7 @@ struct ProfileUpdateDTO: Encodable {
     let website: String
     let likes: [String]
 
-    init(from userProfile: UserProfileModel) {
+    init(from userProfile: UserProfile) {
         self.name = userProfile.name
         self.description = userProfile.description
         self.website = userProfile.website

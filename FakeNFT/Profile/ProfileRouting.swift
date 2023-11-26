@@ -26,7 +26,7 @@ class ProfileRouter: ProfileRouting {
     }
 
     func routeToEditingViewController() {
-        let editingViewController = factory.makeEditingViewController(viewModel: <#ProfileViewModelProtocol#>)
+        let editingViewController = factory.makeEditingViewController()
         presentController(editingViewController)
     }
 

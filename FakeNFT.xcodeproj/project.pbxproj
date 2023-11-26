@@ -10,6 +10,7 @@
 		224B63392AD3340800084AC9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */; };
 		224B633C2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */; };
 		224B633E2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */; };
+		277CC3FE2B1348CE00CF78B2 /* NFTNetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277CC3FD2B1348CE00CF78B2 /* NFTNetworkRequests.swift */; };
 		27B209182B125259002CFDB5 /* UserNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209162B125259002CFDB5 /* UserNFTViewController.swift */; };
 		27B209192B125259002CFDB5 /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209172B125259002CFDB5 /* NFTCell.swift */; };
 		27B2091B2B1252AF002CFDB5 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B2091A2B1252AF002CFDB5 /* Author.swift */; };
@@ -19,7 +20,6 @@
 		27B209232B125CDE002CFDB5 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209222B125CDE002CFDB5 /* UIColor+Extensions.swift */; };
 		27B209252B125D95002CFDB5 /* UIView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209242B125D95002CFDB5 /* UIView + Extensions.swift */; };
 		27B209272B1261EA002CFDB5 /* NumberFormatter+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209262B1261EA002CFDB5 /* NumberFormatter+Presets.swift */; };
-		27B209292B1262B3002CFDB5 /* NFTNetworkRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B209282B1262B3002CFDB5 /* NFTNetworkRequests.swift */; };
 		27B2092B2B126751002CFDB5 /* SortOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B2092A2B126751002CFDB5 /* SortOptions.swift */; };
 		27B2092D2B1337E1002CFDB5 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B2092C2B1337E1002CFDB5 /* ProfileService.swift */; };
 		27B2092F2B133820002CFDB5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B2092E2B133820002CFDB5 /* UserProfile.swift */; };
@@ -84,6 +84,7 @@
 		224B63382AD3340800084AC9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		224B633B2AD335AB00084AC9 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		224B633D2AD3383A00084AC9 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		277CC3FD2B1348CE00CF78B2 /* NFTNetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTNetworkRequests.swift; sourceTree = "<group>"; };
 		27B209162B125259002CFDB5 /* UserNFTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNFTViewController.swift; sourceTree = "<group>"; };
 		27B209172B125259002CFDB5 /* NFTCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 		27B2091A2B1252AF002CFDB5 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 		27B209222B125CDE002CFDB5 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		27B209242B125D95002CFDB5 /* UIView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extensions.swift"; sourceTree = "<group>"; };
 		27B209262B1261EA002CFDB5 /* NumberFormatter+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Presets.swift"; sourceTree = "<group>"; };
-		27B209282B1262B3002CFDB5 /* NFTNetworkRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTNetworkRequests.swift; sourceTree = "<group>"; };
 		27B2092A2B126751002CFDB5 /* SortOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOptions.swift; sourceTree = "<group>"; };
 		27B2092C2B1337E1002CFDB5 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		27B2092E2B133820002CFDB5 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -381,7 +381,7 @@
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
 				37E7D70E2AD82C4800107140 /* ProfileNetworkRequest.swift */,
 				37BFE3512AD85A4E00C553BA /* ProfileUpdateDTO.swift */,
-				27B209282B1262B3002CFDB5 /* NFTNetworkRequests.swift */,
+				277CC3FD2B1348CE00CF78B2 /* NFTNetworkRequests.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -618,6 +618,7 @@
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				277CC3FE2B1348CE00CF78B2 /* NFTNetworkRequests.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				37E7D6FE2AD81B6200107140 /* EditingViewController.swift in Sources */,
 				37E7D6F02AD8144600107140 /* UIViewController + Extensions.swift in Sources */,
@@ -647,7 +648,6 @@
 				37E7D6FB2AD819DE00107140 /* WebViewViewController.swift in Sources */,
 				37BFE3472AD8338B00C553BA /* FavoritesNFTViewController.swift in Sources */,
 				37BFE3502AD859DE00C553BA /* ImageValidator.swift in Sources */,
-				27B209292B1262B3002CFDB5 /* NFTNetworkRequests.swift in Sources */,
 				27B209272B1261EA002CFDB5 /* NumberFormatter+Presets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

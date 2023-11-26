@@ -18,6 +18,6 @@ final class ViewControllerFactory {
     }
 
     func makeEditingViewController(viewModel: ProfileViewModelProtocol) -> EditingViewController {
-        return EditingViewController(viewModel: viewModel)
+        return EditingViewController(viewModel: viewModel as! EditingViewModelProtocol)
     }
 }

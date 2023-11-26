@@ -27,3 +27,4 @@ struct FetchAuthorNetworkRequest: NetworkRequest {
         return .get
     }
 }
+
