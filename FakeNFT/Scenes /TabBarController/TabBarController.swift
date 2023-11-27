@@ -25,9 +25,19 @@ final class TabBarController: UITabBarController {
 
         let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
 
+        configureTabBar()
+
+        let catalogNavigationController = setupCatalogNavController()
+
+        viewControllers = [catalogNavigationController]
+    }
+
+    private func setupCatalogNavController() -> UINavigationController {
+        let catalogController = CatalogViewController()
+
         catalogController.tabBarItem = UITabBarItem(
-            title: Constants.catalogueTabBarTitle,
-            image: UIImage(named: Constants.tabBarCatalogue),
+            title: L10n.Tabbar.catalogTitle,
+            image: UIImage(resource: .tabbarCatalogue),
             selectedImage: nil)
 
         let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
@@ -39,6 +49,24 @@ final class TabBarController: UITabBarController {
         let cartNavigationController = UINavigationController(rootViewController: cartController)
 
         viewControllers = [catalogController, cartNavigationController]
+        let catalogNavigationController = UINavigationController(rootViewController: catalogController)
+
+        catalogNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        catalogNavigationController.navigationBar.shadowImage = UIImage()
+        catalogNavigationController.navigationBar.isTranslucent = true
+
+        return catalogNavigationController
+    }
+
+    private func configureTabBar() {
         tabBar.unselectedItemTintColor = .black
+
+        let appearance = tabBar.standardAppearance
+        appearance.shadowImage = nil
+        appearance.shadowColor = nil
+        appearance.backgroundEffect = nil
+        appearance.backgroundColor = .systemBackground
+
+        tabBar.standardAppearance = appearance
     }
 }
