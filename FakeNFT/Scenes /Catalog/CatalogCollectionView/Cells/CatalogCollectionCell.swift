@@ -8,12 +8,15 @@
 import UIKit
 import Kingfisher
 
-final class CatalogCollectionViewCell: UICollectionViewCell {
+final class CatalogCollectionCell: UICollectionViewCell {
+
+    // MARK: - Public properties
+    var nftIsLiked = false
+    var nftIsAddedToBasket = false
+    weak var delegate: CatalogCollectionCellDelegate?
 
     // MARK: - private properties
     private let starsQuantity = 5
-    private var nftIsLiked = false
-    private var nftIsAddedToBasket = false
     private var selectedRate: Int = 0
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let nftImageView: UIImageView = {
@@ -78,7 +81,7 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         view.isHidden = true
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
-        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
+        view.backgroundColor = .lightGray.withAlphaComponent(0.6)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -91,6 +94,15 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         applyConstraints()
 
         contentView.backgroundColor = .clear
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nftIsLiked = false
+        nftIsAddedToBasket = false
+        nftImageView.kf.cancelDownloadTask()
+        starsContainer.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        nftImageView.image = nil
     }
 
     required init?(coder: NSCoder) {
@@ -113,12 +125,23 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
                 self.stopAnimation()
             })
 
-        changeLike()
+        switchLikeImage()
         switchBasketImage()
+
         nftCardNameLabel.text = nft.name
         nftPriceLabel.text = "\(String(nft.price)) ETH"
         selectedRate = nft.rating
         createStars()
+    }
+
+    func changeLikeState() {
+        nftIsLiked = !nftIsLiked
+        switchLikeImage()
+    }
+
+    func switchBasketState() {
+        nftIsAddedToBasket = !nftIsAddedToBasket
+        switchBasketImage()
     }
 
     // MARK: - private methods
@@ -199,16 +222,35 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
         return imageView
     }
 
+    private func startAnimation() {
+        animationView.isHidden = false
+        animationView.addFlashLayer()
+    }
+
+    private func stopAnimation() {
+        animationView.isHidden = true
+    }
+
+    private func switchLikeImage() {
+        let image = nftIsLiked ?
+        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
+        likeButton.setImage(image, for: .normal)
+    }
+
+    private func switchBasketImage() {
+        let image = nftIsAddedToBasket ?
+        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
+        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+    }
+
     @objc
     private func didTapLikeButton() {
-        nftIsLiked = !nftIsLiked
-        changeLike()
+        delegate?.didChangeLike(self)
     }
 
     @objc
     private func basketButtonTapped() {
-        nftIsAddedToBasket = !nftIsAddedToBasket
-        switchBasketImage()
+        delegate?.switchNftBasketState(self)
     }
 
     @objc
@@ -228,26 +270,5 @@ final class CatalogCollectionViewCell: UICollectionViewCell {
             }
             starImageView.isHighlighted = starImageView.tag <= rate
         }
-    }
-
-    private func changeLike() {
-        let image = nftIsLiked ?
-        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
-        likeButton.setImage(image, for: .normal)
-    }
-
-    private func switchBasketImage() {
-        let image = nftIsAddedToBasket ?
-        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
-        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
-    }
-
-    private func startAnimation() {
-        animationView.isHidden = false
-        animationView.addFlashLayer()
-    }
-
-    private func stopAnimation() {
-        animationView.isHidden = true
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CatalogResult: Decodable {
+struct CatalogResult: Codable {
     let createdAt: String
     let name: String
     let cover: String

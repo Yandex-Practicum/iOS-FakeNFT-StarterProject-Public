@@ -2,8 +2,6 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    var servicesAssembly: ServicesAssembly!
-
     init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
@@ -15,7 +13,14 @@ final class TabBarController: UITabBarController {
 
     private func setupView() {
         view.backgroundColor = .systemBackground
+        configureTabBar()
 
+        let catalogNavigationController = setupCatalogNavController()
+
+        viewControllers = [catalogNavigationController]
+    }
+
+    private func setupCatalogNavController() -> UINavigationController {
         let catalogController = CatalogViewController()
 
         catalogController.tabBarItem = UITabBarItem(
@@ -25,7 +30,14 @@ final class TabBarController: UITabBarController {
 
         let catalogNavigationController = UINavigationController(rootViewController: catalogController)
 
-        viewControllers = [catalogNavigationController]
+        catalogNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        catalogNavigationController.navigationBar.shadowImage = UIImage()
+        catalogNavigationController.navigationBar.isTranslucent = true
+
+        return catalogNavigationController
+    }
+
+    private func configureTabBar() {
         tabBar.unselectedItemTintColor = .black
 
         let appearance = tabBar.standardAppearance

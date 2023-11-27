@@ -8,19 +8,6 @@
 import Foundation
 import Combine
 
-protocol CatalogViewModelProtocol: AnyObject {
-    var catalog: [Catalog] { get set }
-    var catalogPublisher: Published<Array<Catalog>>.Publisher { get }
-    var isLoadingData: Bool { get }
-    var loadingDataPublisher: Published<Bool>.Publisher { get }
-    var networkError: Error? { get }
-    var errorPublisher: Published<Error?>.Publisher { get }
-    func sortCatalogByName()
-    func sortCatalogByQuantity()
-    func sortCatalog()
-    func fetchCatalog()
-}
-
 final class CatalogViewModel: CatalogViewModelProtocol {
 
     // MARK: - Public properties
@@ -40,6 +27,8 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         self.catalogService = catalogService
 
         fetchCatalog()
+        fetchProfileLikes()
+        fetchAddedToBasketNfts()
 
         self.filter = CatalogFilter(
             rawValue: CatalogFilterStorage.shared.filterDescriptor ?? CatalogFilter.filterQuantity.rawValue
@@ -82,6 +71,31 @@ final class CatalogViewModel: CatalogViewModelProtocol {
             case .failure(let error):
                 isLoadingData = false
                 networkError = error
+            }
+        }
+    }
+
+    // methods implemented for temporary use in catalog epic to handle likes and addToBasket interaction
+    // when the full project is merged - these two methods will be removed
+    // both methods should be implemented in Profile epic
+    private func fetchProfileLikes() {
+        catalogService.fetchProfileLikes { result in
+            switch result {
+            case .success(let profile):
+                LikesStorage.shared.likes = profile.likes
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    private func fetchAddedToBasketNfts() {
+        catalogService.fetchAddedToBasketNfts { result in
+            switch result {
+            case .success(let order):
+                PurchaseCartStorage.shared.nfts = order.nfts
+            case .failure(let error):
+                print(error)
             }
         }
     }

@@ -49,4 +49,14 @@ final class AlertPresenter {
         alert.addAction(action)
         viewController.present(alert, animated: true)
     }
+
+    static func showNftInteractionError(in viewController: UIViewController) {
+        let alert = UIAlertController(
+            title: L10n.NftErrorAlert.title, message: L10n.NftErrorAlert.message, preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: L10n.NftErrorAlert.okButton, style: .default)
+        alert.addAction(okAction)
+        viewController.present(alert, animated: true)
+    }
 }

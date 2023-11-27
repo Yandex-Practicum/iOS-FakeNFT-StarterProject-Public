@@ -3,16 +3,10 @@
 //  FakeNFT
 //
 //  Created by Eugene Kolesnikov on 07.11.2023.
-//
 
 import UIKit
 import Kingfisher
 import Combine
-
-protocol CatalogCollectionViewDelegate: AnyObject {
-    func dismissView()
-    func showErrorAlert()
-}
 
 final class CatalogCollectionView: UIView {
     // MARK: - public properties
@@ -21,16 +15,6 @@ final class CatalogCollectionView: UIView {
     // MARK: - Private properties
     private let reuseIdentifier = "CatalogCollectionCell"
     private let viewModel: CatalogCollectionViewModelProtocol
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-
-        button.setImage(UIImage(resource: .backward).withRenderingMode(.alwaysTemplate), for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
 
@@ -81,6 +65,7 @@ final class CatalogCollectionView: UIView {
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(authorButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -117,6 +102,9 @@ final class CatalogCollectionView: UIView {
 
         return view
     }()
+    private lazy var numberOfCellsInRow: CGFloat = {
+        viewModel.calculateCollectionViewHeight(numberOfCellsInRow: 3)
+    }()
     private var subscribes = [AnyCancellable]()
 
     init(frame: CGRect, viewModel: CatalogCollectionViewModelProtocol, delegate: CatalogCollectionViewDelegate) {
@@ -144,24 +132,24 @@ final class CatalogCollectionView: UIView {
 
     // MARK: - private methods
     private func bind() {
-        viewModel.nftsLoaderPuublisher.receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+        viewModel.nftsLoaderPublisher.receive(on: DispatchQueue.main)
+            .sink { [weak self] isCompleted in
                 guard let self = self else { return }
 
-                collectionView.reloadData()
-
+                if isCompleted {
+                    collectionView.reloadData()
+                }
             }.store(in: &subscribes)
 
         viewModel.authorPublisher.receive(on: DispatchQueue.main)
             .sink { [weak self] author in
                 guard let self = self else { return }
 
-                startAnimation()
+                startAuthorPageLinkAnimation()
 
                 if author != nil {
                     configureAuthor(author)
                 }
-
             }.store(in: &subscribes)
 
         viewModel.networkErrorPublisher.receive(on: DispatchQueue.main)
@@ -174,7 +162,7 @@ final class CatalogCollectionView: UIView {
     }
 
     private func configureAuthor(_ author: Author?) {
-        stopAnimation()
+        stopAuthorPageLinkAnimation()
         authorPageLinkButton.setTitle(author?.name, for: .normal)
         layoutSubviews()
     }
@@ -184,7 +172,7 @@ final class CatalogCollectionView: UIView {
     }
 
     private func setupUI() {
-        collectionView.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(CatalogCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
 
@@ -193,7 +181,6 @@ final class CatalogCollectionView: UIView {
 
         catalogNameLabel.text = viewModel.catalogCollection.name
         catalogDescriptionLabel.text = viewModel.catalogCollection.desription
-
     }
 
     private func addSubviews() {
@@ -208,16 +195,11 @@ final class CatalogCollectionView: UIView {
         contentView.addSubview(authorPageLinkButton)
         contentView.addSubview(catalogDescriptionLabel)
         contentView.addSubview(collectionView)
-
-        addSubview(backButton)
     }
 
     private func applyConstraints() {
 
         NSLayoutConstraint.activate([
-            // backButton constraints
-            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            backButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
 
             // scrollView constraints
             scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: topAnchor),
@@ -268,21 +250,21 @@ final class CatalogCollectionView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: catalogDescriptionLabel.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: catalogDescriptionLabel.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: viewModel.calculateCollectionViewHeight())
+            collectionView.heightAnchor.constraint(equalToConstant: numberOfCellsInRow)
         ])
     }
 
     @objc
-    private func backButtonTapped() {
-        delegate?.dismissView()
+    private func authorButtonTapped() {
+        delegate?.presentAuthorPage(viewModel.author?.website)
     }
 
-    private func startAnimation() {
+    private func startAuthorPageLinkAnimation() {
         authorLinkAnimationView.isHidden = false
         authorLinkAnimationView.addFlashLayer()
     }
 
-    private func stopAnimation() {
+    private func stopAuthorPageLinkAnimation() {
         authorLinkAnimationView.isHidden = true
         authorPageLinkButton.isHidden = false
     }
@@ -303,17 +285,21 @@ extension CatalogCollectionView: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: reuseIdentifier,
-                for: indexPath) as? CatalogCollectionViewCell else {
+                for: indexPath) as? CatalogCollectionCell else {
                 return UICollectionViewCell()
             }
 
             if viewModel.nftsLoadingIsCompleted {
+                cell.delegate = self
+
                 let model = viewModel.nfts[indexPath.row]
+
+                cell.nftIsLiked = viewModel.nftIsLiked(model.id)
+                cell.nftIsAddedToBasket = viewModel.nftsIsAddedToCart(model.id)
                 cell.configureCell(model)
             } else {
                 cell.createAnimationView()
             }
-
             return cell
         }
 }
@@ -344,5 +330,49 @@ extension CatalogCollectionView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 9
+    }
+}
+
+// MARK: - CatalogCollectionCellDelegate
+extension CatalogCollectionView: CatalogCollectionCellDelegate {
+    func switchNftBasketState(_ cell: CatalogCollectionCell) {
+        delegate?.startAnimatingActivityIndicator()
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        let id = viewModel.nfts[indexPath.row].id
+
+        viewModel.switchNftBasketState(with: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.delegate?.stopAnimatingActivityIndicator()
+                cell.switchBasketState()
+            case .failure:
+                self.delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.showNftInteractionErrorAlert()
+            }
+        }
+    }
+
+    func didChangeLike(_ cell: CatalogCollectionCell) {
+        delegate?.startAnimatingActivityIndicator()
+
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+
+        let id = viewModel.nfts[indexPath.row].id
+        viewModel.changeLikeForNft(with: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.delegate?.stopAnimatingActivityIndicator()
+                cell.changeLikeState()
+            case .failure:
+                self.delegate?.stopAnimatingActivityIndicator()
+                self.delegate?.showNftInteractionErrorAlert()
+            }
+        }
     }
 }

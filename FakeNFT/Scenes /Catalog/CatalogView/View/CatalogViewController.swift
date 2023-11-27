@@ -46,12 +46,6 @@ final class CatalogViewController: UIViewController {
 
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = sortButton
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.shadowColor = .clear
-        navBarAppearance.shadowImage = UIImage()
-        navigationController?.navigationBar.standardAppearance = navBarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
 
     @objc
@@ -83,8 +77,8 @@ extension CatalogViewController: CatalogViewDelegate {
 
     func selectedCategory(_ model: Catalog) {
         let viewController = CatalogCollectionViewController(catalog: model)
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     func startAnimatingActivityIndicator() {

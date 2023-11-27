@@ -1,6 +1,7 @@
 excluded:
   - Generated/Strings.swift
-  
+
+
 disabled_rules: # rule identifiers to exclude from running
   - colon
   - comma
