@@ -50,7 +50,7 @@ final class TabBarController: UITabBarController {
 
     private func setupCartViewController() -> UINavigationController {
         let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
-        
+
         cartController.tabBarItem = UITabBarItem(
             title: Constants.cartTabBarTitle,
             image: UIImage(named: Constants.tabBarBasket),
