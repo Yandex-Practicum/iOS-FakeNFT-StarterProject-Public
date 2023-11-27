@@ -65,7 +65,7 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     }
 
     func showErrorAlert() {
-        AlertPresenter.showError(in: self) { [weak self] in
+        AlertPresenter2.showError(in: self) { [weak self] in
             guard let self = self else { return }
             catalogCollectionView.reloadData()
         }
@@ -80,6 +80,6 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     }
 
     func showNftInteractionErrorAlert() {
-        AlertPresenter.showNftInteractionError(in: self)
+        AlertPresenter2.showNftInteractionError(in: self)
     }
 }

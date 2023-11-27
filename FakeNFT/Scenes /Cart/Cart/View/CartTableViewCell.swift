@@ -166,9 +166,11 @@ final class CartTableViewCell: UITableViewCell {
             let imageView = createStarImageView(active: true)
             ratingStarStackView.addArrangedSubview(imageView)
         }
-        ((rating + 1)...5).forEach { _ in
-            let imageView = createStarImageView(active: false)
-            ratingStarStackView.addArrangedSubview(imageView)
+        if rating < 5 {
+            ((rating + 1)...5).forEach { _ in
+                let imageView = createStarImageView(active: false)
+                ratingStarStackView.addArrangedSubview(imageView)
+            }
         }
     }
 

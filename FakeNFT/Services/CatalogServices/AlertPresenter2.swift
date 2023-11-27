@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlertPresenter {
+final class AlertPresenter2 {
 
     private init() {}
 

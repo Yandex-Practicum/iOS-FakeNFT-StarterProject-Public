@@ -13,7 +13,7 @@ final class NftStorageImpl: NftStorage {
 
     static let shared = NftStorageImpl()
 
-    private init() {}
+    init() {}
 
     func saveNft(_ nft: Nft) {
         syncQueue.async { [weak self] in

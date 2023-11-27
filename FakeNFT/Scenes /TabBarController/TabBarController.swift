@@ -16,20 +16,19 @@ final class TabBarController: UITabBarController {
     private func setupView() {
         view.backgroundColor = .systemBackground
 
-        let servicesAssembly = ServicesAssembly(
+        servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl(),
             cartStorage: CartStorageImpl(),
             currencyStorage: CurrencyStorageImpl()
         )
 
-        let catalogController = TestCatalogViewController(servicesAssembly: servicesAssembly)
-
         configureTabBar()
 
         let catalogNavigationController = setupCatalogNavController()
+        let cartViewController = setupCartViewController()
 
-        viewControllers = [catalogNavigationController]
+        viewControllers = [catalogNavigationController, cartViewController]
     }
 
     private func setupCatalogNavController() -> UINavigationController {
@@ -40,15 +39,6 @@ final class TabBarController: UITabBarController {
             image: UIImage(resource: .tabbarCatalogue),
             selectedImage: nil)
 
-        let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
-        cartController.tabBarItem = UITabBarItem(
-            title: Constants.cartTabBarTitle,
-            image: UIImage(named: Constants.tabBarBasket),
-            selectedImage: nil)
-
-        let cartNavigationController = UINavigationController(rootViewController: cartController)
-
-        viewControllers = [catalogController, cartNavigationController]
         let catalogNavigationController = UINavigationController(rootViewController: catalogController)
 
         catalogNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -58,14 +48,26 @@ final class TabBarController: UITabBarController {
         return catalogNavigationController
     }
 
-    private func configureTabBar() {
-        tabBar.unselectedItemTintColor = .black
+    private func setupCartViewController() -> UINavigationController {
+        let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
+        
+        cartController.tabBarItem = UITabBarItem(
+            title: Constants.cartTabBarTitle,
+            image: UIImage(named: Constants.tabBarBasket),
+            selectedImage: nil)
 
+        let cartNavigationController = UINavigationController(rootViewController: cartController)
+
+        return cartNavigationController
+    }
+
+    private func configureTabBar() {
         let appearance = tabBar.standardAppearance
         appearance.shadowImage = nil
         appearance.shadowColor = nil
         appearance.backgroundEffect = nil
         appearance.backgroundColor = .systemBackground
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.black
 
         tabBar.standardAppearance = appearance
     }

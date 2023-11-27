@@ -62,14 +62,14 @@ final class CatalogViewController: UIViewController {
                 viewModel.sortCatalogByQuantity()
             }
 
-        AlertPresenter.show(in: self, model: model)
+        AlertPresenter2.show(in: self, model: model)
     }
 }
 
 // MARK: - CatalogViewControllerDelegate
 extension CatalogViewController: CatalogViewDelegate {
     func showErrorAlert() {
-        AlertPresenter.showError(in: self) { [weak self] in
+        AlertPresenter2.showError(in: self) { [weak self] in
             guard let self = self else { return }
             catalogView.reloadData()
         }
