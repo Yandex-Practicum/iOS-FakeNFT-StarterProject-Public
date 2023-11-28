@@ -156,9 +156,20 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     @objc
     private func tapUserAgreementLink() {
-        let webView = CartUserAgreementWebView()
-        webView.urlString = RequestConstants.cartUserAgreementLink
-        navigationController?.pushViewController(webView, animated: true)
+        let viewModel = AuthorWebViewViewModel()
+        let url = URL(string: RequestConstants.cartUserAgreementLink)
+        let view = AuthorWebViewController(viewModel: viewModel ,url: url)
+        navigationController?.pushViewController(view, animated: true)
+//        if let url = URL(string: RequestConstants.cartUserAgreementLink) {
+//            // Создание URLRequest
+//            let request = URLRequest(url: url)
+//
+//            // Загрузка запроса в WKWebView
+//            webView.load(request)
+            // }
+//        let webView = CartUserAgreementWebView()
+//        webView.urlString = RequestConstants.cartUserAgreementLink
+//        navigationController?.pushViewController(webView, animated: true)
     }
 
     @objc

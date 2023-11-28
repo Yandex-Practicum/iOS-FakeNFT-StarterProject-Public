@@ -50,8 +50,7 @@ import Foundation
             case .price:
                 nfts.sort { $0.price < $1.price }
             case .rating:
-                break
-//                nfts.sort { $0.rating > $1.rating }
+                nfts.sort { $0.rating > $1.rating }
             case .name:
                 nfts.sort { $0.name < $1.name }
             }
