@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 import Combine
 
-final class AuthorWebViewController: UIViewController {
+final class WebViewController: UIViewController {
 
     // MARK: - Private properties
     private lazy var backButton: UIBarButtonItem = {
@@ -40,10 +40,10 @@ final class AuthorWebViewController: UIViewController {
 
         return view
     }()
-    private var viewModel: AuthorWebViewViewModelProtocol
+    private var viewModel: WebViewViewModelProtocol
     private var subscribes = [AnyCancellable]()
 
-    init(viewModel: AuthorWebViewViewModelProtocol ,url: URL?) {
+    init(viewModel: WebViewViewModelProtocol ,url: URL?) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 

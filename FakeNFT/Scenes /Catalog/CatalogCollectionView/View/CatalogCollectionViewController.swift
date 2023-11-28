@@ -55,8 +55,8 @@ final class CatalogCollectionViewController: UIViewController {
 // MARK: - CatalogCollectionViewDelegate
 extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     func presentAuthorPage(_ url: URL?) {
-        let viewModel = AuthorWebViewViewModel()
-        let view = AuthorWebViewController(viewModel: viewModel ,url: url)
+        let viewModel = WebViewViewModel()
+        let view = WebViewController(viewModel: viewModel ,url: url)
         navigationController?.pushViewController(view, animated: true)
     }
 

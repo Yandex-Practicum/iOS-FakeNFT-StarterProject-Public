@@ -156,9 +156,9 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     @objc
     private func tapUserAgreementLink() {
-        let viewModel = AuthorWebViewViewModel()
+        let viewModel = WebViewViewModel()
         let url = URL(string: RequestConstants.cartUserAgreementLink)
-        let view = AuthorWebViewController(viewModel: viewModel ,url: url)
+        let view = WebViewController(viewModel: viewModel ,url: url)
         navigationController?.pushViewController(view, animated: true)
     }
 

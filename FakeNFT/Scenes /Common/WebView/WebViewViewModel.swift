@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class AuthorWebViewViewModel: AuthorWebViewViewModelProtocol {
+final class WebViewViewModel: WebViewViewModelProtocol {
 
     // MARK: - Public properties
     @Published var progressValue: Float = 0

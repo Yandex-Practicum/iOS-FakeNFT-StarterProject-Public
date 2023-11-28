@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AuthorWebViewViewModelProtocol {
+protocol WebViewViewModelProtocol {
     var progressValue: Float { get set }
     var progressPublisher: Published<Float>.Publisher { get }
     var shouldHideProgress: Bool { get set }
