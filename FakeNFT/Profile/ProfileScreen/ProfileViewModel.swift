@@ -17,10 +17,10 @@ protocol ProfileViewModelProtocol {
 final class ProfileViewModel: ProfileViewModelProtocol {
     @Observable
     private(set) var userProfile: UserProfile?
-
+    
     private let model: ProfileService
     private let imageValidator: ImageValidatorProtocol
-
+    
     init(model: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
         self.model = model
         self.imageValidator = imageValidator
@@ -36,7 +36,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     private func profileUpdated() {
         fetchUserProfile()
     }
-
+    
     func observeUserProfileChanges(_ handler: @escaping (UserProfile?) -> Void) {
         $userProfile.observe(handler)
     }
@@ -44,7 +44,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func viewDidLoad() {
         fetchUserProfile()
     }
-
+    
     func updateName(_ name: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -57,7 +57,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             id: currentProfile.id
         )
     }
-
+    
     func updateDescription(_ description: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -70,7 +70,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             id: currentProfile.id
         )
     }
-
+    
     func updateWebSite(_ website: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -97,7 +97,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-
+    
     func photoURLdidChanged(with url: URL) {
         imageValidator.isValidImageURL(url) { [weak self] isValid in
             guard let self = self else { return }
@@ -117,31 +117,37 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-
+    
     func saveUserProfile() {
         guard let userProfile = userProfile else { return }
         model.updateProfile(with: userProfile) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let updatedProfile):
-                self.userProfile = updatedProfile
+                DispatchQueue.main.async {
+                    self.userProfile = updatedProfile
+                }
             case .failure(let error):
-                // ToDo: - Уведомление об ошибке
                 print(error)
             }
         }
     }
     
-    private func fetchUserProfile() {
+    func fetchUserProfile() {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+        
         model.fetchProfile { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let userProfile):
-                self.userProfile = userProfile
-            case .failure(let error):
-                //ToDo: - Уведомление об ошибке
-                print(error)
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let userProfile):
+                    ProgressHUD.dismiss()
+                    self.userProfile = userProfile
+                case .failure(let error):
+                    print(error)
+                    ProgressHUD.showError("Ошибка загрузки профиля")
+                    print(error)
+                }
             }
         }
     }
