@@ -347,7 +347,6 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
-				44A2B6E82AFE612200D3A63D /* CatalogDecomposition.md */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -714,6 +713,7 @@
 		84D523212AFE660D00A1C791 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				44A2B6E82AFE612200D3A63D /* CatalogDecomposition.md */,
 				84D5231F2AFE658300A1C791 /* Cart.md */,
 			);
 			path = Docs;

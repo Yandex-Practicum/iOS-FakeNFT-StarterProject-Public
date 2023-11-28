@@ -46,6 +46,10 @@ final class CatalogView: UIView {
         viewModel.fetchCatalog()
     }
 
+    func updateStorages() {
+        viewModel.updateStorages()
+    }
+
     // MARK: - Private methods
     private func setupUI() {
         backgroundColor = .systemBackground

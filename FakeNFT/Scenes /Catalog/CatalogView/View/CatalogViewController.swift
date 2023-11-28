@@ -39,6 +39,11 @@ final class CatalogViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        catalogView.updateStorages()
+    }
+
     // MARK: - Private mathods
     private func setupUI() {
         configureNavBar()

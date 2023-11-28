@@ -170,6 +170,18 @@ final class CartViewController: UIViewController, LoadingView {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if PurchaseCartStorage.shared.nfts.count != viewModel.nfts.count {
+            viewModel.loadData()
+            showLoading()
+            viewModel.onDataErrorResult = { [weak self] in
+                self?.showLoadDataError()
+            }
+        }
+    }
+
     private func observeViewModelChanges() {
         viewModel.$nfts.bind { [weak self] nfts in
             guard let self else { return }

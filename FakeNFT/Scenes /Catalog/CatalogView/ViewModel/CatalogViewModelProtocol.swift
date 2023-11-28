@@ -18,4 +18,5 @@ protocol CatalogViewModelProtocol: AnyObject {
     func sortCatalogByQuantity()
     func sortCatalog()
     func fetchCatalog()
+    func updateStorages()
 }

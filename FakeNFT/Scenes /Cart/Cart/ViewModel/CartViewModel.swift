@@ -62,7 +62,8 @@ import Foundation
             servicesAssembly.cartService.deleteNftFromCart(cartId: "1", nfts: nfts.map { $0.id }) { result in
                 DispatchQueue.main.async {
                     switch result {
-                    case .success:
+                    case .success(let cart):
+                        PurchaseCartStorage.shared.nfts = cart.nfts
                         self.loadData()
                     case .failure:
                         self.onDataErrorResult?()

@@ -58,6 +58,11 @@ final class CatalogViewModel: CatalogViewModelProtocol {
         CatalogFilterStorage.shared.filterDescriptor = CatalogFilter.filterQuantity.rawValue
     }
 
+    func updateStorages() {
+        fetchProfileLikes()
+        fetchProfileLikes()
+    }
+
     // MARK: - Private mathods
     func fetchCatalog() {
         isLoadingData = true
