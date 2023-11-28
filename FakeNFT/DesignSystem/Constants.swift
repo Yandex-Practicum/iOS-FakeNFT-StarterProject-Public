@@ -30,12 +30,15 @@ struct Constants {
     static let editButtonPicTitle = "edit"
     static let doneButtonPicTitle = "done_button"
     static let closeButtonPicTitle = "close"
+    static let closeButtonWhitePicTitle = "closeWhite"
     static let deleteFromBasketPicTitle = "basket_delete"
     static let addToBasketPicTitle = "basket_add"
     static let backwardPicTitle = "backward"
     static let addPlusButtonPicTitle = "add_plus_button"
     static let paymentSuccess = "payment_success"
-    static let placeholderImage = "placeholder_image"
+    static let onboardingImageFirst = "onboarding1"
+    static let onboardingImageSecond = "onboarding2"
+    static let onboardingImageThird = "onboarding3"
 
     // MARK: - Cart constants
     static let paymentButtonText = "К оплате"
@@ -64,4 +67,13 @@ struct Constants {
     static let paymentCancelText = "Отмена"
     static let paymentRetryText = "Повторить"
     static let paymentOkText = "ОК"
+
+    // MARK: - Onboarding constants
+    static let onboardingTitleFirst = "Исследуйте"
+    static let onboardingTitleSecond = "Коллекционируйте"
+    static let onboardingTitleThird = "Состязайтесь"
+    static let onboardingInfoFirst = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров"
+    static let onboardingInfoSecond = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!"
+    static let onboardingInfoThird = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция"
+    static let onboardingButtonText = "Что внутри?"
 }
