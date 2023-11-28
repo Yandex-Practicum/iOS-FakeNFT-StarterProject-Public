@@ -9,6 +9,7 @@ final class CartTableViewCell: UITableViewCell {
     static let reuseIdentifier = "cartNFTTableViewCell"
     weak var delegate: CartCellDelegate?
     var cellIndex: Int?
+    var onState: (() -> Void)?
 
     private lazy var imageViewNFT: UIImageView = {
         let imageView = UIImageView()
@@ -67,6 +68,10 @@ final class CartTableViewCell: UITableViewCell {
         return button
     }()
 
+    private lazy var gradient: GradientView = {
+        return GradientView(frame: self.bounds)
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         createSubviews()
@@ -76,10 +81,23 @@ final class CartTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageViewNFT.kf.cancelDownloadTask()
+    }
+
     func configure(with model: Nft) {
         contentView.backgroundColor = .systemBackground
-        let placeholder: UIImage = UIImage(named: Constants.placeholderImage) ?? UIImage()
-        imageViewNFT.kf.setImage(with: model.images.first, placeholder: placeholder)
+        startAnimation()
+        imageViewNFT.kf.setImage(
+            with: model.images.first,
+            placeholder: nil,
+            completionHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.stopAnimation()
+                onState?()
+            }
+        )
         self.titleLabel.text = model.name
         self.priceLabel.text = getPrice(with: model.price)
         getRating(from: model.rating)
@@ -93,6 +111,9 @@ final class CartTableViewCell: UITableViewCell {
         addPriceTitleLabel()
         addPriceLabel()
         addDeleteButton()
+        addGradientLayer()
+        gradient.translatesAutoresizingMaskIntoConstraints = false
+        gradient.isHidden = true
     }
 
     private func addImageViewNFT() {
@@ -102,6 +123,16 @@ final class CartTableViewCell: UITableViewCell {
             imageViewNFT.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             imageViewNFT.widthAnchor.constraint(equalToConstant: 108),
             imageViewNFT.heightAnchor.constraint(equalToConstant: 108)
+        ])
+    }
+
+    private func addGradientLayer() {
+        contentView.addSubview(gradient)
+        NSLayoutConstraint.activate([
+            gradient.topAnchor.constraint(equalTo: imageViewNFT.topAnchor),
+            gradient.leadingAnchor.constraint(equalTo: imageViewNFT.leadingAnchor),
+            gradient.trailingAnchor.constraint(equalTo: imageViewNFT.trailingAnchor),
+            gradient.bottomAnchor.constraint(equalTo: imageViewNFT.bottomAnchor)
         ])
     }
 
@@ -180,6 +211,16 @@ final class CartTableViewCell: UITableViewCell {
         : UIImage(named: Constants.starInactivePicTitle)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }
+
+    private func startAnimation() {
+        gradient.isHidden = false
+        gradient.startAnimating()
+    }
+
+    private func stopAnimation() {
+        gradient.stopAnimating()
+        gradient.isHidden = true
     }
 
     @objc private func tapDeleteButton() {
