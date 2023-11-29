@@ -37,7 +37,12 @@ strings:
 #       params:
 #         forceProvidesNamespaces: true
 #       output: XCAssets+Generated.swift
-
+xcassets:
+   inputs:
+     - Resources/Assets.xcassets
+   outputs:
+     - templateName: swift5
+       output: Generated/Colours.swift
 
 ## Generate constants for your storyboards and XIBs.
 ##   This one generates 2 output files, one containing the storyboard scenes, and another for the segues.
