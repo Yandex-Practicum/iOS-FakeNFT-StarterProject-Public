@@ -34,13 +34,13 @@ final class UserNFTViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let nftList: [String]
-    private let viewModel: UserNFTViewModelProtocol
+    //  private let nftList: [String]
+private let viewModel: UserNFTViewModelProtocol
     
     // MARK: - Lifecycle
     
-    init(nftList: [String], viewModel: UserNFTViewModelProtocol) {
-        self.nftList = nftList
+    init(viewModel: UserNFTViewModelProtocol) {
+   //     self.nftList = nftList
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bind()
@@ -53,7 +53,7 @@ final class UserNFTViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchNFT(nftList: nftList)
+        viewModel.fetchNFT(nftList: viewModel.nftList)
         setupViews()
         configNavigationBar()
     }

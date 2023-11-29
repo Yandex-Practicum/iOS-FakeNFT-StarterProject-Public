@@ -7,8 +7,8 @@ final class ViewControllerFactory {
     }
     
     func makeUserNFTViewController(nftList: [String]) -> UserNFTViewController {
-        let userNFTViewController = UserNFTViewController(nftList: nftList,
-                                                          viewModel: UserNFTViewModel(model: UserNFTModel()))
+        let viewModel = UserNFTViewModel(model: UserNFTModel(), nftList: nftList)
+        let userNFTViewController = UserNFTViewController(viewModel: viewModel)
         return userNFTViewController
     }
     

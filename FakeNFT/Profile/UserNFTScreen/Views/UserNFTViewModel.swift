@@ -12,6 +12,7 @@ protocol UserNFTViewModelProtocol {
     var userNFT: [NFT]? { get }
     var authors: [String: Author] { get }
     var state: LoadingState { get }
+    var nftList: [String] { get }
     
     func observeUserNFT(_ handler: @escaping ([NFT]?) -> Void)
     func observeState(_ handler: @escaping (LoadingState) -> Void)
@@ -31,9 +32,11 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     
     private (set) var authors: [String: Author] = [:]
     private let model: UserNFTModel
+    private (set) var nftList: [String] = []
     
-    init(model: UserNFTModel) {
+    init(model: UserNFTModel, nftList: [String]) {
         self.model = model
+        self.nftList = nftList
     }
     
     func observeUserNFT(_ handler: @escaping ([NFT]?) -> Void) {
@@ -120,3 +123,4 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         ProgressHUD.dismiss()
     }
 }
+
