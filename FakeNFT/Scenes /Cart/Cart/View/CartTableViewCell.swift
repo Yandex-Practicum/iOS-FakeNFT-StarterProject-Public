@@ -40,7 +40,7 @@ final class CartTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = .caption1
         label.textColor = .textPrimary
-        label.text = Constants.priceLabel
+        label.text = L10n.Cart.priceLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -61,7 +61,7 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: Constants.deleteFromBasketPicTitle), for: .normal)
+        button.setImage(UIImage(resource: .basketDelete), for: .normal)
         button.tintColor = .textPrimary
         button.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -207,8 +207,8 @@ final class CartTableViewCell: UITableViewCell {
 
     private func createStarImageView(active: Bool) -> UIImageView {
         let imageView = UIImageView()
-        imageView.image = active ? UIImage(named: Constants.starActivePicTitle)
-        : UIImage(named: Constants.starInactivePicTitle)
+        imageView.image = active ? UIImage(resource: .starActive)
+        : UIImage(resource: .starInactive)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }

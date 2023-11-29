@@ -6,7 +6,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     private lazy var filterButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: Constants.sortButtonPicTitle), for: .normal)
+        button.setImage(UIImage(resource: .sortButton), for: .normal)
         button.addTarget(self, action: #selector(tapFilterButton), for: .touchUpInside)
         return button
     }()
@@ -54,7 +54,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var paymentButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.paymentButtonText, for: .normal)
+        button.setTitle(L10n.Cart.buttonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
         button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black
@@ -74,7 +74,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     private lazy var emptyCartLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.emptyCart
+        label.text = L10n.Cart.emptyCart
         label.textColor = .textPrimary
         label.font = .bodyBold
         label.textAlignment = .center
@@ -94,11 +94,11 @@ final class CartViewController: UIViewController, LoadingView {
 
     private lazy var confirmDeleteLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.deleteConfirmText
+        label.text = L10n.Cart.deleteConfirmText
         label.textColor = .textPrimary
-        label.font = .caption1
+        label.font = .caption2
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -106,7 +106,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var deleteNftButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.deleteButtonText, for: .normal)
+        button.setTitle(L10n.Cart.deleteButtonText, for: .normal)
         button.setTitleColor(.yaRed, for: .normal)
         button.titleLabel?.font = .bodyRegular
         button.backgroundColor = .segmentActive
@@ -118,7 +118,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.backButtonText, for: .normal)
+        button.setTitle(L10n.Cart.backButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
         button.titleLabel?.font = .bodyRegular
         button.backgroundColor = .segmentActive
@@ -350,8 +350,7 @@ extension CartViewController: CartCellDelegate {
         NSLayoutConstraint.activate([
             confirmDeleteLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 12),
             confirmDeleteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            confirmDeleteLabel.widthAnchor.constraint(equalToConstant: 180),
-            confirmDeleteLabel.heightAnchor.constraint(equalToConstant: 36)
+            confirmDeleteLabel.widthAnchor.constraint(equalToConstant: 180)
             ])
     }
 

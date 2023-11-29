@@ -4,18 +4,18 @@ final class PaymentSuccessViewController: UIViewController {
 
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: Constants.paymentSuccess)
+        imageView.image = UIImage(resource: .paymentSuccess)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
     private lazy var paymentResultLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.paymentSuccessText
+        label.text = L10n.Payment.successText
         label.textColor = .textPrimary
         label.font = .headline3
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,7 +35,7 @@ final class PaymentSuccessViewController: UIViewController {
     private lazy var backToCatalogButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.backToCatalogueText, for: .normal)
+        button.setTitle(L10n.Payment.backToCatalogueText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
         button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black

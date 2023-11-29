@@ -52,8 +52,8 @@ final class TabBarController: UITabBarController {
         let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
 
         cartController.tabBarItem = UITabBarItem(
-            title: Constants.cartTabBarTitle,
-            image: UIImage(named: Constants.tabBarBasket),
+            title: L10n.Tabbar.cartTitle,
+            image: UIImage(resource: .tabbarBasket),
             selectedImage: nil)
 
         let cartNavigationController = UINavigationController(rootViewController: cartController)

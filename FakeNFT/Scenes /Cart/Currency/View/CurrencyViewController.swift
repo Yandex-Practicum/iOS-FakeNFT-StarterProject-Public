@@ -6,7 +6,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: Constants.backwardPicTitle), for: .normal)
+        button.setImage(UIImage(resource: .backward), for: .normal)
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         return button
     }()
@@ -33,17 +33,18 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     private lazy var agreementLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption1
+        label.font = .caption2
         label.textColor = .textOnSecondary
-        label.text = Constants.cartUserAgreementText
+        label.numberOfLines = 0
+        label.text = L10n.Currency.cartUserAgreementText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var agreementLinkButton: UIButton = {
        let button = UIButton()
-        button.setTitle(Constants.cartUserAgreementLinkText, for: .normal)
-        button.titleLabel?.font = .caption1
+        button.setTitle(L10n.Currency.cartUserAgreementLinkText, for: .normal)
+        button.titleLabel?.font = .caption2
         button.setTitleColor(.yaBlue, for: .normal)
         button.addTarget(self, action: #selector(tapUserAgreementLink), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +65,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
     private lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle(Constants.paymentConfirmButtonText, for: .normal)
+        button.setTitle(L10n.Currency.paymentConfirmButtonText, for: .normal)
         button.setTitleColor(.textOnPrimary, for: .normal)
         button.titleLabel?.font = .bodyBold
         button.backgroundColor = .black
@@ -176,7 +177,7 @@ extension CurrencyScreenViewController {
     private func createSubviews() {
         view.backgroundColor = .systemBackground
         navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: backButton)]
-        navigationItem.title = Constants.paymentTypeText
+        navigationItem.title = L10n.Currency.paymentTypeText
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.bodyBold,
             .foregroundColor: UIColor.textPrimary

@@ -3,26 +3,26 @@ import UIKit
 final class OnboardingPageViewController: UIPageViewController {
     private lazy var pages: [UIViewController] = {
         let firstPage = OnboardingViewController(
-            pageImageView: UIImage(named: Constants.onboardingImageFirst) ?? UIImage(),
-            title: Constants.onboardingTitleFirst,
-            text: Constants.onboardingInfoFirst
+            pageImageView: UIImage(resource: .onboarding1),
+            title: L10n.Onboarding.titleFirst,
+            text: L10n.Onboarding.infoFirst
         )
         let secondPage = OnboardingViewController(
-            pageImageView: UIImage(named: Constants.onboardingImageSecond) ?? UIImage(),
-            title: Constants.onboardingTitleSecond,
-            text: Constants.onboardingInfoSecond
+            pageImageView: UIImage(resource: .onboarding2),
+            title: L10n.Onboarding.titleSecond,
+            text: L10n.Onboarding.infoSecond
         )
         let thirdPage = OnboardingViewController(
-            pageImageView: UIImage(named: Constants.onboardingImageThird) ?? UIImage(),
-            title: Constants.onboardingTitleThird,
-            text: Constants.onboardingInfoThird
+            pageImageView: UIImage(resource: .onboarding3),
+            title: L10n.Onboarding.titleThird,
+            text: L10n.Onboarding.infoThird
         )
         return [firstPage, secondPage, thirdPage]
     }()
 
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: Constants.closeButtonWhitePicTitle), for: .normal)
+        button.setImage(UIImage(resource: .closeWhite), for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button
@@ -33,7 +33,7 @@ final class OnboardingPageViewController: UIPageViewController {
         button.layer.cornerRadius = 16
         button.backgroundColor = .black
         button.titleLabel?.font = .bodyBold
-        button.setTitle(Constants.onboardingButtonText, for: .normal)
+        button.setTitle(L10n.Onboarding.buttonText, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button

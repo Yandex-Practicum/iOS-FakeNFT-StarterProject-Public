@@ -61,23 +61,24 @@ final class AlertPresenter {
     }
 
     static func showCartFiltersAlert(on viewController: UIViewController, viewModel: CartViewModel) {
-        let alertController = UIAlertController(title: nil, message: Constants.sortTitle, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: L10n.CartFilterAlert.title,
+                                                preferredStyle: .actionSheet)
         let addAction: (String, CartSortType) -> UIAlertAction = { title, sortType in
             return UIAlertAction(title: title, style: .default) { _ in
                 viewModel.sort(by: sortType)
             }
         }
-        alertController.addAction(addAction(Constants.sortByPrice, .price))
-        alertController.addAction(addAction(Constants.sortByRating, .rating))
-        alertController.addAction(addAction(Constants.sortByName, .name))
-        let cancelAction = UIAlertAction(title: Constants.closeButtonText, style: .cancel)
+        alertController.addAction(addAction(L10n.CartFilterAlert.price, .price))
+        alertController.addAction(addAction(L10n.CartFilterAlert.rating, .rating))
+        alertController.addAction(addAction(L10n.CartFilterAlert.name, .name))
+        let cancelAction = UIAlertAction(title: L10n.Cart.closeButtonText, style: .cancel)
         alertController.addAction(cancelAction)
         viewController.present(alertController, animated: true)
     }
 
     static func showDataError(on viewController: UIViewController, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: Constants.loadDataErrorText, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: Constants.paymentOkText, style: .default) { _ in
+        let alert = UIAlertController(title: nil, message: L10n.Cart.loadDataErrorText, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: L10n.Payment.okText, style: .default) { _ in
             completion()
         }
         alert.addAction(okAction)
@@ -85,17 +86,17 @@ final class AlertPresenter {
     }
 
     static func showError(on viewController: UIViewController) {
-        let alert = UIAlertController(title: nil, message: Constants.paymentTypeText, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: Constants.paymentOkText, style: .default)
+        let alert = UIAlertController(title: nil, message: L10n.Currency.paymentTypeText, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: L10n.Payment.okText, style: .default)
         alert.addAction(okAction)
         viewController.present(alert, animated: true)
     }
 
     static func showPaymentError(on viewController: UIViewController, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: Constants.paymentErrorText, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: Constants.paymentCancelText, style: .default)
+        let alert = UIAlertController(title: nil, message: L10n.Payment.errorText, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: L10n.Payment.cancelText, style: .default)
         alert.addAction(cancelAction)
-        let retryAction = UIAlertAction(title: Constants.paymentRetryText, style: .default) { _ in
+        let retryAction = UIAlertAction(title: L10n.Payment.retryText, style: .default) { _ in
             completion()
         }
         alert.addAction(retryAction)
