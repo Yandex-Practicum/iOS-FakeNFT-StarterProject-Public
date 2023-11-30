@@ -94,6 +94,7 @@ final class AlertPresenter {
 
     static func showPaymentError(on viewController: UIViewController, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: L10n.Payment.errorText, preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle = .light
         let cancelAction = UIAlertAction(title: L10n.Payment.cancelText, style: .default)
         alert.addAction(cancelAction)
         let retryAction = UIAlertAction(title: L10n.Payment.retryText, style: .default) { _ in

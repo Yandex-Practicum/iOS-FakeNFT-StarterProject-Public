@@ -27,7 +27,7 @@ final class CatalogTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
 
-        label.textColor = UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1)
+        label.textColor = UIColor(resource: .blackDayNight) // UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
 

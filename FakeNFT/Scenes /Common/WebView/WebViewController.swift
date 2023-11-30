@@ -20,7 +20,7 @@ final class WebViewController: UIViewController {
         button.target = self
         button.action = #selector(backButtonTapped)
         button.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        button.tintColor = .black
+        button.tintColor = UIColor(resource: .blackDayNight)
 
         return button
     }()
@@ -34,8 +34,8 @@ final class WebViewController: UIViewController {
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
 
-        view.progressTintColor = .black
-        view.trackTintColor = .lightGray
+        view.progressTintColor = UIColor(resource: .blackDayNight)
+        view.trackTintColor = UIColor(resource: .lightDayNight)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view

@@ -20,7 +20,7 @@ final class CatalogViewController: UIViewController {
         button.target = self
         button.action = #selector(sortButtonTapped)
         button.imageInsets = UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 9)
-        button.tintColor = .black
+        button.tintColor = UIColor(resource: .blackDayNight)
 
         return button
     }()

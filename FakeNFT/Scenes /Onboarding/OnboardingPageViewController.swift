@@ -23,7 +23,7 @@ final class OnboardingPageViewController: UIPageViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(resource: .closeWhite), for: .normal)
-        button.tintColor = .white
+        button.tintColor = UIColor(resource: .white)
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button
     }()
@@ -31,10 +31,10 @@ final class OnboardingPageViewController: UIPageViewController {
     private lazy var onButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(resource: .black)
         button.titleLabel?.font = .bodyBold
         button.setTitle(L10n.Onboarding.buttonText, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(UIColor(resource: .white), for: .normal)
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button
     }()

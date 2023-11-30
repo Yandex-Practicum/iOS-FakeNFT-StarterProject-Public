@@ -64,7 +64,7 @@ final class CatalogCollectionView: UIView {
         button.isHidden = true
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(UIColor(resource: .blue), for: .normal)
         button.addTarget(self, action: #selector(authorButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
@@ -86,6 +86,7 @@ final class CatalogCollectionView: UIView {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
         collection.allowsMultipleSelection = false
+        collection.backgroundColor = UIColor(resource: .whiteDayNight)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.allowsSelection = false
 
@@ -111,7 +112,7 @@ final class CatalogCollectionView: UIView {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(frame: frame)
-        backgroundColor = .systemBackground
+        backgroundColor = UIColor(resource: .whiteDayNight)
         setupUI()
         setupCollectionCoverImageView()
         bind()

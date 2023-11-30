@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func setupView() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(resource: .whiteDayNight)
 
         servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
@@ -66,8 +66,11 @@ final class TabBarController: UITabBarController {
         appearance.shadowImage = nil
         appearance.shadowColor = nil
         appearance.backgroundEffect = nil
-        appearance.backgroundColor = .systemBackground
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.black
+        appearance.backgroundColor = UIColor(resource: .whiteDayNight)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(resource: .blackDayNight)
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor(resource: .blackDayNight)
+            ]
 
         tabBar.standardAppearance = appearance
     }

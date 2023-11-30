@@ -6,7 +6,9 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .backward), for: .normal)
+        let image = UIImage(resource: .backward).withTintColor(UIColor(resource: .blackDayNight))
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor(resource: .blackDayNight)
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         return button
     }()
@@ -20,7 +22,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     private lazy var currencyCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: currencyCollectionViewLayout)
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(CurrencyCollectionViewCell.self,
@@ -34,7 +36,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
     private lazy var agreementLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.textColor = .textOnSecondary
+        label.textColor = UIColor(resource: .blackDayNight)
         label.numberOfLines = 0
         label.text = L10n.Currency.cartUserAgreementText
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +47,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
        let button = UIButton()
         button.setTitle(L10n.Currency.cartUserAgreementLinkText, for: .normal)
         button.titleLabel?.font = .caption2
-        button.setTitleColor(.yaBlue, for: .normal)
+        button.setTitleColor(UIColor(resource: .blue), for: .normal)
         button.addTarget(self, action: #selector(tapUserAgreementLink), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -66,9 +68,9 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
        let button = UIButton()
         button.layer.cornerRadius = 16
         button.setTitle(L10n.Currency.paymentConfirmButtonText, for: .normal)
-        button.setTitleColor(.textOnPrimary, for: .normal)
+        button.setTitleColor(UIColor(resource: .whiteDayNight), for: .normal)
         button.titleLabel?.font = .bodyBold
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(resource: .blackDayNight)
         button.addTarget(self, action: #selector(tapPayButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -87,7 +89,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     private lazy var paymentContainView: UIView = {
        let view = UIView()
-        view.backgroundColor = .segmentInactive
+        view.backgroundColor = UIColor(resource: .lightDayNight)
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +107,7 @@ final class CurrencyScreenViewController: UIViewController, LoadingView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(resource: .whiteDayNight)
         createSubviews()
         viewModel.onDataUpdate = { [weak self] in
             DispatchQueue.main.async {
@@ -180,7 +182,7 @@ extension CurrencyScreenViewController {
         navigationItem.title = L10n.Currency.paymentTypeText
         navigationController?.navigationBar.titleTextAttributes = [
             .font: UIFont.bodyBold,
-            .foregroundColor: UIColor.textPrimary
+            .foregroundColor: UIColor(resource: .blackDayNight)
         ]
         addCurrencyCollectionView()
         addPaymentContainView()

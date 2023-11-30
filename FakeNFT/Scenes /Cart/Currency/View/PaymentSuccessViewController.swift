@@ -12,7 +12,7 @@ final class PaymentSuccessViewController: UIViewController {
     private lazy var paymentResultLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Payment.successText
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .blackDayNight)
         label.font = .headline3
         label.textAlignment = .center
         label.numberOfLines = 3
@@ -36,9 +36,9 @@ final class PaymentSuccessViewController: UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.setTitle(L10n.Payment.backToCatalogueText, for: .normal)
-        button.setTitleColor(.textOnPrimary, for: .normal)
+        button.setTitleColor(UIColor(resource: .whiteDayNight), for: .normal)
         button.titleLabel?.font = .bodyBold
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(resource: .blackDayNight)
         button.addTarget(self, action: #selector(tapBackToCatalogButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -46,7 +46,7 @@ final class PaymentSuccessViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(resource: .whiteDayNight)
         createSubviews()
     }
 

@@ -53,7 +53,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .black
+        label.textColor = UIColor(resource: .blackDayNight)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -62,7 +62,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        label.textColor = .black
+        label.textColor = UIColor(resource: .blackDayNight)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -71,6 +71,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let button = UIButton()
 
         button.addTarget(self, action: #selector(basketButtonTapped), for: .touchUpInside)
+        button.setTitleColor(UIColor(resource: .blackDayNight), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -214,7 +215,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
 
     private func makeStarIcon() -> UIImageView {
         let imageView = UIImageView(
-            image: UIImage(resource: .starInactive),
+            image: UIImage(resource: .starInactive).withTintColor(UIColor(resource: .lightDayNight)),
             highlightedImage: UIImage(resource: .starActive)
         )
         imageView.contentMode = .scaleAspectFit
@@ -239,8 +240,9 @@ final class CatalogCollectionCell: UICollectionViewCell {
 
     private func switchBasketImage() {
         let image = nftIsAddedToBasket ?
-        UIImage(resource: .basketDelete) : UIImage(resource: .basketAdd)
-        addToBasketButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        UIImage(resource: .basketDelete).withTintColor(UIColor(resource: .blackDayNight))
+        : UIImage(resource: .basketAdd).withTintColor(UIColor(resource: .blackDayNight))
+        addToBasketButton.setImage(image.withRenderingMode(.automatic), for: .normal)
     }
 
     @objc

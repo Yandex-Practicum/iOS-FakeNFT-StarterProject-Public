@@ -22,7 +22,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .blackDayNight)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,7 +39,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .blackDayNight)
         label.text = L10n.Cart.priceLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,7 +48,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.textColor = .textPrimary
+        label.textColor = UIColor(resource: .blackDayNight)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -61,8 +61,8 @@ final class CartTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .basketDelete), for: .normal)
-        button.tintColor = .textPrimary
+        let image = UIImage(resource: .basketDelete).withTintColor(UIColor(resource: .blackDayNight))
+        button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -87,7 +87,7 @@ final class CartTableViewCell: UITableViewCell {
     }
 
     func configure(with model: Nft) {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = UIColor(resource: .whiteDayNight)
         startAnimation()
         imageViewNFT.kf.setImage(
             with: model.images.first,
@@ -208,7 +208,7 @@ final class CartTableViewCell: UITableViewCell {
     private func createStarImageView(active: Bool) -> UIImageView {
         let imageView = UIImageView()
         imageView.image = active ? UIImage(resource: .starActive)
-        : UIImage(resource: .starInactive)
+        : UIImage(resource: .starInactive).withTintColor(UIColor(resource: .lightDayNight))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
