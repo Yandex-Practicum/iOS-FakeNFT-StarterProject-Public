@@ -124,9 +124,6 @@ extension CatalogView: UITableViewDataSource {
         let model = viewModel.catalog[indexPath.row]
 
         cell.configureCell(model: model)
-        cell.onState = {
-            cell.isUserInteractionEnabled = true
-        }
         return cell
     }
 }
