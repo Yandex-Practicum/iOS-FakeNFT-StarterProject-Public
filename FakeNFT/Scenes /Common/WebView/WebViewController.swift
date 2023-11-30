@@ -60,6 +60,7 @@ final class WebViewController: UIViewController {
 
     // MARK: - Private methods
     private func setupUI() {
+        view.backgroundColor = UIColor(resource: .whiteDayNight)
         configureNavBar()
         addSubviews()
         applyConstraints()
