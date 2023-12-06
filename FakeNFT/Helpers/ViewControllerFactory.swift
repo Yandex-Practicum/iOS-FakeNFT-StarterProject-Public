@@ -16,7 +16,23 @@ final class ViewControllerFactory {
         return FavoritesNFTViewController()
     }
     
+    }
+// Создаем `EditingViewModel` с передачей зависимостей
+func makeEditingViewModel() -> EditingViewModel {
+    let profileService = ProfileService(networkClient: DefaultNetworkClient())
+    return EditingViewModel(profileService: profileService)
+}
+
+// Создаем `EditingViewController` и передаем в него уже созданный `EditingViewModel`
+func makeEditingViewController(with viewModel: EditingViewModel) -> EditingViewController {
+    return EditingViewController(viewModel: viewModel)
+}
+
+let editingViewModel = makeEditingViewModel()
+let editingViewController = makeEditingViewController(with: editingViewModel)
+extension ViewControllerFactory {
     func makeEditingViewController() -> EditingViewController {
-        return EditingViewController(viewModel: EditingViewModel(profileService: ProfileService(networkClient: DefaultNetworkClient())))
+        let viewModel = EditingViewModel(profileService: ProfileService(networkClient: DefaultNetworkClient()))
+        return EditingViewController(viewModel: viewModel)
     }
 }
