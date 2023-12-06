@@ -106,8 +106,6 @@ private let viewModel: UserNFTViewModelProtocol
             guard let self = self else { return }
             
             switch state {
-            case .loading:
-                print("Загрузка")
             case .loaded:
                 if self.viewModel.userNFT == nil {
                     self.noNFTLabel.isHidden = false
@@ -164,7 +162,6 @@ extension UserNFTViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         guard let nft = viewModel.userNFT?[indexPath.row] else {
-            print("error to get NFT")
             return cell
         }
         
