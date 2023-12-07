@@ -25,6 +25,7 @@
 
 //UserNFTViewController
 "UserNFTViewController.nonft" = "You don't have an NFT yet";
+"unknownAuthorKey" = "Unknown author";
 
 //AlertAction
 "AlertAction.close" = "Close";
