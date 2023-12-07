@@ -21,3 +21,25 @@
 
 //UserNFTViewController
 "unknownAuthorKey" = "Неизвестный автор";
+
+// NFTCell
+"NFTCell.from" = "от";
+"NFTCell.price" = "Цена";
+
+// UserNFTViewController
+"UserNFTViewController.nonft" = "У вас пока нет NFT";
+
+// AlertAction
+"AlertAction.close" = "Закрыть";
+"AlertAction.sort" = "Сортировка";
+"AlertAction.ok" = "ОК";
+"AlertAction.error" = "Ошибка";
+"AlertAction.incorrURL" = "Введен некорректный URL";
+"AlertAction.cancel" = "Отмена";
+"AlertAction.enterURL" = "Введите URL";
+"AlertAction.imageURL" = "URL изображения";
+
+// SortOptions
+"SortOptions.price" = "По цене";
+"SortOptions.rate" = "По рейтингу";
+"SortOptions.name" = "По названию";
