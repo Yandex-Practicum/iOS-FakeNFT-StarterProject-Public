@@ -1,6 +1,6 @@
 import UIKit
 
-final class UserNFTViewController: UIViewController {
+final class UserNFTViewController: UIViewController, UITableViewDelegate {
     
     // MARK: - UI properties
     
@@ -174,8 +174,3 @@ extension UserNFTViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension UserNFTViewController: UITableViewDelegate {
-    
-}
