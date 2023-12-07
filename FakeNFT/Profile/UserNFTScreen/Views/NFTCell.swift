@@ -104,15 +104,19 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
     }
     
     func configure(nft: NFT, authorName: String) {
-        self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
-                                      placeholder: UIImage(named: "nullImage"))
-        self.name.text = nft.name
-        self.setStarsState(nft.rating)
-        self.author.text = authorName
-        
-        if let formattedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: nft.price)) {
-            self.currentPriceLabel.text = "\(formattedPrice) ETH"
+            self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
+                                          placeholder: UIImage(named: "nullImage"))
+            self.name.text = nft.name
+            self.setStarsState(nft.rating)
+            self.author.text = authorName
+            self.currentPriceLabel.text = formatPrice(nft.price)
         }
+
+        
+    func formatPrice(_ price: Float) -> String? {
+            let formatedPrice = NumberFormatter.defaultPriceFormatter.string(from: NSNumber(value: price)) ?? ""
+            let priceString = formatedPrice + " ETH"
+            return priceString
     }
     
     private func setupViews() {
