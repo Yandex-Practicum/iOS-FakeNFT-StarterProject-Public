@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class UserNFTViewController: UIViewController, UITableViewDelegate {
     
@@ -105,21 +106,26 @@ private let viewModel: UserNFTViewModelProtocol
         viewModel.observeState { [weak self] state in
             guard let self = self else { return }
             
-            switch state {
-            case .loaded:
-                if self.viewModel.userNFT == nil {
-                    self.noNFTLabel.isHidden = false
-                } else {
+            DispatchQueue.main.async {
+                switch state {
+                case .loading:
+                    ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+                case .loaded:
+                    ProgressHUD.dismiss()
                     self.updateUIBasedOnNFTData()
+                case .error(let error):
+                    ProgressHUD.dismiss()
+                    print("Ошибка: \(error)")
+                    // ToDo: - Показать пользовательский алерт об ошибке
+                default:
+                    ProgressHUD.dismiss()
                 }
-            case .error(_):
-                print("Ошибка")
-                // ToDo: - Error Alert
-            default:
-                break
             }
         }
     }
+
+    
+
     
     private func updateUIBasedOnNFTData() {
         let barButtonItem = UIBarButtonItem(customView: sortButton)
