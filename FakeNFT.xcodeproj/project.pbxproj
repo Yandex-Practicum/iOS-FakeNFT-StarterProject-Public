@@ -44,6 +44,7 @@
 		96922D922B25B4CF00509E2F /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922D912B25B4CF00509E2F /* CartViewController.swift */; };
 		96922D942B25B4E000509E2F /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922D932B25B4E000509E2F /* CartViewModel.swift */; };
 		96922D962B25D31300509E2F /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922D952B25D31300509E2F /* ObservableValue.swift */; };
+		96922D992B26025A00509E2F /* CartFlowDecomposition.md in Resources */ = {isa = PBXBuildFile; fileRef = 96922D982B26025A00509E2F /* CartFlowDecomposition.md */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -106,6 +107,7 @@
 		96922D912B25B4CF00509E2F /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		96922D932B25B4E000509E2F /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		96922D952B25D31300509E2F /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		96922D982B26025A00509E2F /* CartFlowDecomposition.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CartFlowDecomposition.md; path = ../../../../Downloads/CartFlowDecomposition.md; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -344,6 +346,14 @@
 			path = Cart;
 			sourceTree = "<group>";
 		};
+		96922D972B26024900509E2F /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				96922D982B26025A00509E2F /* CartFlowDecomposition.md */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +374,7 @@
 		E1CD40DA2A96BE9B00BE7FE8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96922D972B26024900509E2F /* docs */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
 				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
@@ -487,6 +498,7 @@
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
+				96922D992B26025A00509E2F /* CartFlowDecomposition.md in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
