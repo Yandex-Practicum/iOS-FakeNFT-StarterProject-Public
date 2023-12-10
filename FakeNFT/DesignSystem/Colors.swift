@@ -25,13 +25,21 @@ extension UIColor {
         )
     }
 
-    // Ниже приведены примеры цветов, настоящие цвета надо взять из фигмы
-
-    // Primary Colors
-    static let primary = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1.0)
-
-    // Secondary Colors
-    static let secondary = UIColor(red: 255 / 255, green: 193 / 255, blue: 7 / 255, alpha: 1.0)
+    // Цвета из Figma
+    
+    static var NFTBlack = UIImage(named: "NFTBlack")
+    static var NFTWhite = UIImage(named: "NFTWhite")
+    static var NFTLightGray = UIImage(named: "NFTLightGray")
+    
+    static var NFTGrayUniversal = UIImage(named: "NFTGrayUniversal")
+    static var NFTRedUniversal = UIImage(named: "NFTRedUniversal")
+    static var NFTBackgroundUniversal = UIImage(named: "NFTBackgroundUniversal")
+    static var NFTGreenUniversal = UIImage(named: "NFTGreenUniversal")
+    static var NFTBlueUniversal = UIImage(named: "NFTBlueUniversal")
+    static var NFTBlackUniversal = UIImage(named: "NFTBlackUniversal")
+    static var NFTWhiteUniversal = UIImage(named: "NFTWhiteUniversal")
+    static var NFTYellowUniversal = UIImage(named: "NFTYellowUniversal")
+    
 
     // Background Colors
     static let background = UIColor.white
