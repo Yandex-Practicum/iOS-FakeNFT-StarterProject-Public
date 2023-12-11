@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CartViewControllerDelegate: AnyObject {
+    func removingNFTsFromCart(id: String)
+}
+
 final class CartViewController: UIViewController {
     private var viewModel: CartViewModel?
 
@@ -59,7 +63,7 @@ final class CartViewController: UIViewController {
         return label
     }()
 
-    private lazy var placeholderView: UIView = {
+    private lazy var placeholderPaymentView: UIView = {
         let view = UIView()
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.cornerRadius = 12
@@ -79,6 +83,18 @@ final class CartViewController: UIViewController {
             paymentButton.widthAnchor.constraint(equalToConstant: 240)
         ])
         return view
+    }()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(CartCell.self, forCellReuseIdentifier: "CartCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
 
     // MARK: Initialisation
@@ -126,11 +142,12 @@ final class CartViewController: UIViewController {
     }
 
     private func configViews() {
-        placeholderView.backgroundColor = UIColor(named: "YPLightGrey")
+        placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
         view.addSubview(placeholderLabel)
         view.addSubview(sortButton)
-        view.addSubview(placeholderView)
+        view.addSubview(tableView)
+        view.addSubview(placeholderPaymentView)
     }
 
     private func configConstraints() {
@@ -141,16 +158,53 @@ final class CartViewController: UIViewController {
             sortButton.heightAnchor.constraint(equalToConstant: 42),
             placeholderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            placeholderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            placeholderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            placeholderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            placeholderView.heightAnchor.constraint(equalToConstant: 76)
+            tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: placeholderPaymentView.topAnchor),
+            placeholderPaymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            placeholderPaymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholderPaymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeholderPaymentView.heightAnchor.constraint(equalToConstant: 76)
         ])
     }
 
     private func cartIsEmpty(empty: Bool) {
         placeholderLabel.isHidden = !empty
-        placeholderView.isHidden = empty
+        placeholderPaymentView.isHidden = empty
         sortButton.isHidden = empty
+        tableView.isHidden = empty
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension CartViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let count = viewModel?.nfts.count else { return 0 }
+                return count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as? CartCell
+                else { return UITableViewCell() }
+        guard let nft = viewModel?.nfts[indexPath.row] else {
+            return UITableViewCell()
+        }
+        cell.delegate = self
+        cell.configureCell()
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension CartViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
+}
+
+// MARK: - CartViewControllerDelegate
+extension CartViewController: CartViewControllerDelegate {
+    func removingNFTsFromCart(id: String) {
     }
 }
