@@ -26,11 +26,11 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
     }()
     
     private lazy var noNFTLabel: UILabel = {
-        let label = UILabel()
-        label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
-        label.font = .bodyBold
-        label.isHidden = true
-        return label
+       let label = UILabel()
+       label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
+       label.font = .bodyBold
+       label.isHidden = true
+       return label
     }()
     
     // MARK: - Properties
