@@ -39,25 +39,25 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
 private let viewModel: UserNFTViewModelProtocol
     
     // MARK: - Lifecycle
-    
+
     init(viewModel: UserNFTViewModelProtocol) {
-   //     self.nftList = nftList
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        self.bind()
+      self.viewModel = viewModel
+      super.init(nibName: nil, bundle: nil)
+      self.bind()
     }
-    
+
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+       fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        viewModel.fetchNFT(nftList: viewModel.nftList)
-        setupViews()
-        configNavigationBar()
+       super.viewDidLoad()
+       
+       viewModel.fetchNFT(nftList: viewModel.nftList)
+       setupViews()
+       configNavigationBar()
     }
+
     
     // MARK: - Actions
     
