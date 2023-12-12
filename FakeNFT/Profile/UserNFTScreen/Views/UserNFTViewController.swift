@@ -6,56 +6,55 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
     // MARK: - UI properties
     
     private lazy var alertService: AlertServiceProtocol = {
-        return AlertService(viewController: self)
+       return AlertService(viewController: self)
     }()
-    
+
     private lazy var nftTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(NFTCell.self)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        return tableView
+       let tableView = UITableView()
+       tableView.register(NFTCell.self)
+       tableView.delegate = self
+       tableView.dataSource = self
+       tableView.separatorStyle = .none
+       return tableView
     }()
-    
+
     private lazy var sortButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "sort"), for: .normal)
-        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-        return button
+       let button = UIButton(type: .custom)
+       button.setImage(UIImage(named: "sort"), for: .normal)
+       button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+       return button
     }()
-    
+
     private lazy var noNFTLabel: UILabel = {
-       let label = UILabel()
-       label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
-       label.font = .bodyBold
-       label.isHidden = true
-       return label
+      let label = UILabel()
+      label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
+      label.font = .bodyBold
+      label.isHidden = true
+      return label
     }()
-    
+
     // MARK: - Properties
-    
-    //  private let nftList: [String]
-private let viewModel: UserNFTViewModelProtocol
-    
+
+    private let viewModel: UserNFTViewModelProtocol
+
     // MARK: - Lifecycle
 
     init(viewModel: UserNFTViewModelProtocol) {
-      self.viewModel = viewModel
-      super.init(nibName: nil, bundle: nil)
-      self.bind()
+     self.viewModel = viewModel
+     super.init(nibName: nil, bundle: nil)
+     self.bind()
     }
 
     required init?(coder: NSCoder) {
-       fatalError("init(coder:) has not been implemented")
+      fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
-       super.viewDidLoad()
-       
-       viewModel.fetchNFT(nftList: viewModel.nftList)
-       setupViews()
-       configNavigationBar()
+      super.viewDidLoad()
+      
+      viewModel.fetchNFT(nftList: viewModel.nftList)
+      setupViews()
+      configNavigationBar()
     }
 
     
