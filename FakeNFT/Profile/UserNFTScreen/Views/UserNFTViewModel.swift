@@ -1,6 +1,5 @@
 import Foundation
 
-
 enum LoadingState {
     case idle
     case loading
@@ -48,7 +47,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     }
     
     func fetchNFT(nftList: [String]) {
-     //   ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         state = .loading
 
         var fetchedNFTs: [NFT] = []
@@ -120,7 +118,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
             self.userNFT = nfts
             self.state = .loaded
         }
-      
     }
 }
+
 
