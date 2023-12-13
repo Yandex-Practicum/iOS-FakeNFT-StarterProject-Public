@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CartCell: UITableViewCell {
     weak var delegate: CartViewControllerDelegate?
@@ -74,13 +75,15 @@ final class CartCell: UITableViewCell {
     }
 
     // MARK: - Methods
-    func configureCell() {
-        // mock для проверки функционала
-        nftID = "test"
-        nameLabel.text = "April"
-        priceLabel.text = "150,12 ETH"
-        imageNFTView.image = UIImage(named: "mock")
-        ratingView.rating = 2
+    func configureCell(with nft: Nft) {
+        nftID = nft.id
+        nameLabel.text = nft.name
+        priceLabel.text = "\(nft.price) ETH"
+        ratingView.rating = nft.rating
+        imageNFTView.kf.indicator?.startAnimatingView()
+        imageNFTView.kf.setImage(with: nft.images.first, completionHandler: {_ in
+            self.imageNFTView.kf.indicator?.stopAnimatingView()
+        })
     }
 
     // MARK: - Private methods
