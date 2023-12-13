@@ -34,7 +34,7 @@ final class TabBarController: UITabBarController {
         catalogController.tabBarItem = catalogTabBarItem
 
         let statisticsController = StatisticsVIewController(
-//            servicesAssembly: servicesAssembly
+            servicesAssembly: servicesAssembly
         )
         statisticsController.tabBarItem = statisticsTabBarItem
 
