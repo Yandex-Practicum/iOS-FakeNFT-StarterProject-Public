@@ -172,12 +172,14 @@ extension UserNFTViewController: UITableViewDataSource {
             return cell
         }
         
-        if viewModel.authors[nft.author] != nil {
-            let authorName = NSLocalizedString("unknownAuthorKey",
-                                              comment: "Default author name when the actual name is unavailable")
-            cell.configure(nft: nft, authorName: authorName)
+        if let author = viewModel.authors[nft.author] {
+            cell.configure(nft: nft, authorName: author.name)
+        } else {
+            let unknownAuthorName = NSLocalizedString("unknownAuthorKey",
+                                                      comment: "Default author name when the actual name is unavailable")
+            cell.configure(nft: nft, authorName: unknownAuthorName)
         }
-        
+
         
         return cell
     }
