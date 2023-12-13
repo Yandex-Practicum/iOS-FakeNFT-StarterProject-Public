@@ -130,6 +130,8 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
         let barButtonItem = UIBarButtonItem(customView: sortButton)
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.title = NSLocalizedString("ProfileViewController.myNFT", comment: "")
+
+        noNFTLabel.isHidden = !(viewModel.userNFT?.isEmpty ?? true)
     }
     
     private func configNavigationBar() {
