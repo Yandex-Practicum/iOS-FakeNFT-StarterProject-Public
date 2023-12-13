@@ -45,6 +45,9 @@
 		C9A42DA12B27AD39004D85B2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42DA02B27AD39004D85B2 /* ProfileViewController.swift */; };
 		C9A42DA42B27ADBC004D85B2 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */; };
 		C9A42DA72B27AE75004D85B2 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42DA62B27AE75004D85B2 /* StatisticsViewController.swift */; };
+		C9CA12B22B28E3A500E8161C /* CartNFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */; };
+		C9CA12B42B28EA1900E8161C /* CartMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CA12B32B28EA1900E8161C /* CartMockData.swift */; };
+		C9CA12B62B28F66E00E8161C /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -108,6 +111,9 @@
 		C9A42DA02B27AD39004D85B2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		C9A42DA62B27AE75004D85B2 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNFTModel.swift; sourceTree = "<group>"; };
+		C9CA12B32B28EA1900E8161C /* CartMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartMockData.swift; sourceTree = "<group>"; };
+		C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -351,6 +357,9 @@
 			isa = PBXGroup;
 			children = (
 				C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */,
+				C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */,
+				C9CA12B32B28EA1900E8161C /* CartMockData.swift */,
+				C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -553,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				C9CA12B42B28EA1900E8161C /* CartMockData.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
@@ -571,6 +581,8 @@
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				C9CA12B62B28F66E00E8161C /* CartTableViewCell.swift in Sources */,
+				C9CA12B22B28E3A500E8161C /* CartNFTModel.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
