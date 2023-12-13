@@ -92,6 +92,9 @@ final class CartViewController: UIViewController {
         
         view.backgroundColor = .NFTWhite
         
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.layer.zPosition = 50
+        
         addSubviews()
         constraintsSetup()
         navBarSetup()
@@ -102,6 +105,7 @@ final class CartViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(emptyLabel)
+        view.addSubview(activityIndicator)
         view.addSubview(tableView)
         view.addSubview(paymentLayerView)
         
@@ -116,6 +120,9 @@ final class CartViewController: UIViewController {
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             emptyLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             emptyLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
