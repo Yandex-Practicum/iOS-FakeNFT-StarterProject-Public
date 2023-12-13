@@ -19,6 +19,12 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
 
+    private let statisticsTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.Statistics", comment: ""),
+        image: UIImage(named: "tab.noActive"),
+        selectedImage: UIImage(named: "tab.active")
+    )
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +33,12 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        let statisticsController = StatisticsVIewController(
+//            servicesAssembly: servicesAssembly
+        )
+        statisticsController.tabBarItem = statisticsTabBarItem
+
+        viewControllers = [catalogController, statisticsController]
 
         view.backgroundColor = .systemBackground
     }
