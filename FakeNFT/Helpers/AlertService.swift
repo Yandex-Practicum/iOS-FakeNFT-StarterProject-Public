@@ -1,53 +1,56 @@
 import UIKit
 
-protocol AlertServiceProtocol {
-    func showChangePhotoURLAlert(with title: String?,
-                                 message: String?,
-                                 textFieldPlaceholder: String?,
-                                 confirmAction: @escaping (String?) -> Void)
+struct AlertActionModel {
+    let title: String
+    let style: UIAlertAction.Style
+    let handler: ((String?) -> Void)?
+}
 
-    func showAvatarChangeError()
+struct AlertModel {
+    let title: String?
+    let message: String?
+    let style: UIAlertController.Style
+    let actions: [AlertActionModel]
+    let textFieldPlaceholder: String?
+}
+
+protocol AlertServiceProtocol {
+    func showAlert(model: AlertModel)
 }
 
 class AlertService: AlertServiceProtocol {
     private weak var viewController: UIViewController?
-
+    
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-
-    func showChangePhotoURLAlert(with title: String?,
-                                 message: String?,
-                                 textFieldPlaceholder: String?,
-                                 confirmAction: @escaping (String?) -> Void) {
-
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.placeholder = textFieldPlaceholder
+    
+    func showAlert(model: AlertModel) {
+        let alertController = UIAlertController(
+            title: model.title,
+            message: model.message,
+            preferredStyle: model.style
+        )
+        
+        if let placeholder = model.textFieldPlaceholder {
+            alertController.addTextField { textField in
+                textField.placeholder = placeholder
+            }
         }
-
-        let confirmAction = UIAlertAction(title: "Подтвердить", style: .default) { _ in
-            let text = alertController.textFields?.first?.text
-            confirmAction(text)
+        
+        model.actions.forEach { actionModel in
+            let action = UIAlertAction(title: actionModel.title, style: actionModel.style) { _ in
+                if let textField = alertController.textFields?.first {
+                    actionModel.handler?(textField.text)
+                } else {
+                    actionModel.handler?(nil)
+                }
+            }
+            alertController.addAction(action)
         }
-
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-
-        viewController?.present(alertController, animated: true, completion: nil)
-    }
-
-    func showAvatarChangeError() {
-        let alertController = UIAlertController(title: "Введен не корретный URL адрес",
-                                                message: "Адрес должен быть формата https://example.com/photo.img",
-                                                preferredStyle: .alert)
-
-        let confirm = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
-
-        alertController.addAction(confirm)
+        
         viewController?.present(alertController, animated: true, completion: nil)
     }
 }
+
+

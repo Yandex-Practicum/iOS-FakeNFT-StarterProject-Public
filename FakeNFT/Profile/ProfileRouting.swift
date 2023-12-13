@@ -1,9 +1,9 @@
 import UIKit
 
 protocol ProfileRouting {
-    func routeToEditingViewController(viewModel: ProfileViewModelProtocol)
+    func routeToEditingViewController()
     func routeToWebView(url: URL)
-    func routeToUserNFT()
+    func routeToUserNFT(nftList: [String])
     func routeToFavoritesNFT()
 }
 
@@ -14,9 +14,9 @@ class ProfileRouter: ProfileRouting {
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-
-    func routeToUserNFT() {
-        let destinationVC = factory.makeUserNFTViewController()
+    
+    func routeToUserNFT(nftList: [String]) {
+        let destinationVC = factory.makeUserNFTViewController(nftList: nftList)
         pushController(destinationVC)
     }
 
@@ -25,8 +25,8 @@ class ProfileRouter: ProfileRouting {
         pushController(destinationVC)
     }
 
-    func routeToEditingViewController(viewModel: ProfileViewModelProtocol) {
-        let editingViewController = factory.makeEditingViewController(viewModel: viewModel)
+    func routeToEditingViewController() {
+        let editingViewController = factory.makeEditingViewController()
         presentController(editingViewController)
     }
 

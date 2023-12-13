@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -8,6 +9,7 @@ final class ProfileViewController: UIViewController {
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
+        label.numberOfLines = 2
         return label
     }()
 
@@ -24,7 +26,6 @@ final class ProfileViewController: UIViewController {
         let attributedString = NSMutableAttributedString(string: text)
         let linkRange = NSRange(location: 0, length: text.count)
         attributedString.addAttribute(.link, value: text, range: linkRange)
-
         textView.attributedText = attributedString
         textView.isEditable = false
         textView.isSelectable = true
@@ -76,81 +77,72 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.navigationController?.delegate = self
-
-        self.tabBarController?.tabBar.isHidden = true
-
-        viewModel.fetchUserProfile()
-
-        setupViews()
-    }
 
     // MARK: - Actions
 
     @objc
     private func editButtonTapped() {
-        router.routeToEditingViewController(viewModel: viewModel)
+        router.routeToEditingViewController()
     }
 
-
-    // MARK: - Methods
-
+    
     private func bind() {
-       viewModel.observeUserProfileChanges { [weak self] profileModel in
-           guard
-               let self = self,
-               let model = profileModel
-           else { return }
-           self.updateUI(with: model)
-       }
+        viewModel.observeUserProfileChanges { [weak self] profileModel in
+            guard let self = self else { return }
+
+            if profileModel == nil {
+                // Показываем индикатор загрузки, если данные еще не загружены
+                ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+            } else {
+                // Обновление UI и скрытие индикатора загрузки
+                self.updateUI(with: profileModel)
+            }
+        }
     }
 
-    private func updateUI(with model: UserProfileModel) {
-       DispatchQueue.main.async { [weak self] in
-           self?.profileImageView.kf.setImage(with: URL(string: model.avatar)) { [weak self] result in
-               switch result {
-               case .success:
-                   DispatchQueue.main.async {
-                      guard let self = self else { return }
-                      self.userNameLabel.text = model.name
-                      self.userDescriptionLabel.text = model.description
-                      self.userWebSiteTextView.text = model.website
+    private func updateUI(with model: UserProfile?) {
+        guard let model = model else {
+            // Обработка ошибки или отсутствия данных
+            ProgressHUD.showError(NSLocalizedString("ProfileViewController.errorLoadingProfile", comment: ""))
+            return
+        }
 
-                      let uiElements = [self.editButton, self.profileImageView,
-                                       self.userNameLabel, self.userDescriptionLabel,
-                                       self.userWebSiteTextView, self.profileTableView]
-                      uiElements.forEach { $0.isHidden = false }
+        DispatchQueue.main.async { [weak self] in
+            self?.profileImageView.kf.setImage(with: URL(string: model.avatar))
+            self?.userNameLabel.text = model.name
+            self?.userDescriptionLabel.text = model.description
+            self?.userWebSiteTextView.text = model.website
+            self?.tabBarController?.tabBar.isHidden = false
+            self?.profileTableView.reloadData()
+            [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
 
-                      self.tabBarController?.tabBar.isHidden = false
-                      self.profileTableView.reloadData()
-                   }
-               case .failure(let error):
-                   print(error)
-                   // Показать пользователю алерт
-                   let alert = UIAlertController(title: "Ошибка", message: "Не удалось загрузить изображение", preferredStyle: .alert)
-                   alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
-                      self?.updateUI(with: model)
-                   }))
-                   self?.present(alert, animated: true, completion: nil)
-               }
-           }
-       }
+            // Скрываем индикатор загрузки
+            ProgressHUD.dismiss()
+        }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
+        self.navigationController?.delegate = self
+        self.tabBarController?.tabBar.isHidden = true
+
+        setupViews()
+        bind() // Устанавливаем привязку данных
+
+        viewModel.viewDidLoad() // Запускаем процесс загрузки данных
+    }
+    
     // MARK: - Layout methods
 
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .nftWhite
 
         [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach {
             view.addViewWithNoTAMIC($0)
             $0.isHidden = true
         }
-        [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach { $0.isHidden = true }
+        
         NSLayoutConstraint.activate([
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
@@ -192,12 +184,11 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileCell = tableView.dequeueReusableCell()
         var cellTitle = ""
-        // ToDo: -  Доработать интерполяцию строк в 0 и 1 кейсах, после внедрения логики работы с сетью
         switch indexPath.row {
         case 0:
-            cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + " (112)"
+            cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + "(\(viewModel.userProfile?.nfts.count ?? 0))"
         case 1:
-            cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + " (11)"
+            cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + "(\(viewModel.userProfile?.likes.count ?? 0))"
         case 2:
             cellTitle = NSLocalizedString("ProfileViewController.aboutDeveloper", comment: "")
         default:
@@ -220,7 +211,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            router.routeToUserNFT()
+            router.routeToUserNFT(nftList: viewModel.userProfile?.nfts ?? [])
         case 1:
             router.routeToFavoritesNFT()
         case 2:
@@ -241,9 +232,6 @@ extension ProfileViewController: UINavigationControllerDelegate {
             navigationController.setNavigationBarHidden(true, animated: animated)
         } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
-
-            let backItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-            self.navigationItem.backBarButtonItem = backItem
         }
     }
 }

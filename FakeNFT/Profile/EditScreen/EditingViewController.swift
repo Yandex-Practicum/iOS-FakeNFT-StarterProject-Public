@@ -1,9 +1,57 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class EditingViewController: UIViewController {
 
     // MARK: - UI properties
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var nameTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
+    
+    private lazy var webSiteLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline2
+        return label
+    }()
+    
+    private lazy var webSiteTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.font = .bodyRegular
+        textView.backgroundColor = .nftLightgrey
+        textView.layer.cornerRadius = 12
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
+        return textView
+    }()
 
     private let userPhotoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,8 +70,7 @@ final class EditingViewController: UIViewController {
 
     private lazy var exitButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(named: "plus")?.withRenderingMode(.alwaysTemplate)
-        button.setImage(image, for: .normal)
+        button.setImage(UIImage(named: "plus"), for: .normal)
         button.tintColor = .nftBlack
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button
@@ -46,19 +93,11 @@ final class EditingViewController: UIViewController {
         return AlertService(viewController: self)
     }()
 
-    private let viewModel: ProfileViewModelProtocol
-    private let viewFactory = ViewFactory()
-
-    private lazy var nameLabel = viewFactory.createTextLabel()
-    private lazy var nameTextView = viewFactory.createTextView()
-    private lazy var descriptionLabel = viewFactory.createTextLabel()
-    private lazy var descriptionTextView = viewFactory.createTextView()
-    private lazy var webSiteLabel = viewFactory.createTextLabel()
-    private lazy var webSiteTextView = viewFactory.createTextView()
+    private let viewModel: EditingViewModelProtocol
 
     // MARK: - Lifecycle
 
-    init(viewModel: ProfileViewModelProtocol) {
+    init(viewModel: EditingViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.bind()
@@ -70,6 +109,7 @@ final class EditingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewDidLoad()
 
         setupViews()
         setupDelegates()
@@ -77,7 +117,7 @@ final class EditingViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.saveUserProfile()
+        viewModel.viewWillDisappear()
     }
 
     // MARK: - Actions
@@ -87,29 +127,48 @@ final class EditingViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    @objc func changePhotoTapped() {
-        alertService.showChangePhotoURLAlert(with: "Введите URL",
-                                             message: nil,
-                                             textFieldPlaceholder: "URL изображения") { [weak self] urlText in
+    @objc
+    private func changePhotoTapped() {
+        let confirmAction = AlertActionModel(title: NSLocalizedString("AlertAction.ok", comment: ""),
+                                             style: .default) { [weak self] urlText in
             guard let self = self else { return }
             if let urlText = urlText,
                let url = URL(string: urlText) {
-                self.viewModel.updateImageURL(with: url)
+                self.viewModel.photoURLdidChanged(with: url)
             } else {
-                self.alertService.showAvatarChangeError()
+                let errorModel = AlertModel(title: NSLocalizedString("AlertAction.error", comment: ""),
+                                            message: NSLocalizedString("AlertAction.incorrURL", comment: ""),
+                                            style: .alert,
+                                            actions: [AlertActionModel(title: "OK",
+                                                                       style: .cancel,
+                                                                       handler: nil)],
+                                            textFieldPlaceholder: nil)
+                self.alertService.showAlert(model: errorModel)
             }
         }
+        
+        let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.cancel", comment: ""),
+                                            style: .cancel,
+                                            handler: nil)
+        
+        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
+                                    message: nil,
+                                    style: .alert,
+                                    actions: [confirmAction, cancelAction],
+                                    textFieldPlaceholder: NSLocalizedString("AlertAction.imageURL", comment: ""))
+        
+        alertService.showAlert(model: alertModel)
     }
 
     // MARK: - Methods
 
     private func bind() {
-        viewModel.observeUserProfileChanges { [weak self] (profile: UserProfileModel?) in
+        viewModel.observeUserProfileChanges { [weak self] (profile: UserProfile?) in
             guard
                 let self = self,
                 let profile = profile
             else { return }
-            self.configureUIElements(with: profile)
+            self.updateUIElements(with: profile)
         }
     }
 
@@ -117,7 +176,7 @@ final class EditingViewController: UIViewController {
         [nameTextView, descriptionTextView, webSiteTextView].forEach { $0.delegate = self }
     }
 
-    private func configureUIElements(with profile: UserProfileModel) {
+    private func updateUIElements(with profile: UserProfile) {
         DispatchQueue.main.async { [weak self] in
             self?.userPhotoImageView.kf.setImage(with: URL(string: profile.avatar))
             self?.nameLabel.text = NSLocalizedString("EditingViewController.name", comment: "")
@@ -127,6 +186,7 @@ final class EditingViewController: UIViewController {
             self?.webSiteLabel.text = NSLocalizedString("EditingViewController.site", comment: "")
             self?.webSiteTextView.text = profile.website
         }
+        ProgressHUD.dismiss()
     }
 
     // MARK: - Layout methods
@@ -215,3 +275,4 @@ extension EditingViewController: UITextViewDelegate {
         return true
     }
 }
+

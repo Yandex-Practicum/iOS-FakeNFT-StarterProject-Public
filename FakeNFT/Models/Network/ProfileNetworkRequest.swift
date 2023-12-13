@@ -25,7 +25,8 @@ struct UpdateProfileNetworkRequest: NetworkRequest {
 
     let profileDTO: ProfileUpdateDTO
 
-    init(userProfile: UserProfileModel) {
+    init(userProfile: UserProfile) {
         profileDTO = ProfileUpdateDTO(from: userProfile)
     }
 }
+
