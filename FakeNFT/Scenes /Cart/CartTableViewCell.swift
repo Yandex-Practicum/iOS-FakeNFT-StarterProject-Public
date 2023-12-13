@@ -162,6 +162,5 @@ final class CartTableViewCell: UITableViewCell {
     
     @objc func deleteFromCartButtonDidTap() {
         //TODO: add code to delete item from cart
-        contentView.backgroundColor = .systemOrange
     }
 }
