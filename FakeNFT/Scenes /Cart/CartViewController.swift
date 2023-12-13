@@ -14,7 +14,7 @@ protocol CartViewControllerDelegate: AnyObject {
 final class CartViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView()
     private var viewModel: CartViewModel?
-    
+
     // MARK: - UiElements
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
@@ -25,7 +25,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "YPSort"), for: .normal)
@@ -35,7 +35,7 @@ final class CartViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     private lazy var paymentButton: UIButton = {
         let button = UIButton()
         button.setTitle(NSLocalizedString("To pay", comment: ""), for: .normal)
@@ -47,7 +47,7 @@ final class CartViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     private lazy var quantityNFTLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption1
@@ -56,7 +56,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var totalAmountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
@@ -65,7 +65,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var placeholderPaymentView: UIView = {
         let view = UIView()
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -88,7 +88,7 @@ final class CartViewController: UIViewController {
         ])
         return view
     }()
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CartCell.self, forCellReuseIdentifier: "CartCell")
@@ -100,18 +100,18 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
+
     // MARK: Initialisation
     init(viewModel: CartViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         self.bind()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,11 +120,11 @@ final class CartViewController: UIViewController {
         configConstraints()
         bind()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         viewModel?.viewDidLoad()
     }
-    
+
     // MARK: Binding
     private func bind() {
         viewModel?.$nfts.bind(observer: { [weak self] _ in
@@ -133,24 +133,24 @@ final class CartViewController: UIViewController {
             self.tableView.reloadData()
         })
     }
-    
+
     // MARK: - Actions
     @objc private func paymentButtonActions() {
     }
-    
+
     @objc private func sortButtonActions() {
     }
-    
+
     // MARK: - Private methods
-    
+
     private func showLoading() {
         activityIndicator.startAnimating()
     }
-    
+
     private func hideLoading() {
         activityIndicator.stopAnimating()
     }
-    
+
     private func screenRenderingLogic() {
         guard let nfts = viewModel?.nfts else { return }
         if nfts.isEmpty {
@@ -161,21 +161,21 @@ final class CartViewController: UIViewController {
         }
         hideLoading()
     }
-    
+
     private func cartIsEmpty(empty: Bool) {
         placeholderLabel.isHidden = !empty
         placeholderPaymentView.isHidden = empty
         sortButton.isHidden = empty
         tableView.isHidden = empty
     }
-    
+
     private func setTotalInfo() {
         guard let count = viewModel?.nfts.count else { return }
         let total = viewModel?.countingTheTotalAmount() ?? 0.0
         quantityNFTLabel.text = "\(count) NFT"
         totalAmountLabel.text = "\(total) ETH"
     }
-    
+
     private func configViews() {
         placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
@@ -184,7 +184,7 @@ final class CartViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(placeholderPaymentView)
     }
-    
+
     private func configConstraints() {
         NSLayoutConstraint.activate([
             sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
@@ -211,7 +211,7 @@ extension CartViewController: UITableViewDataSource {
         guard let count = viewModel?.nfts.count else { return 0 }
         return count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as? CartCell
         else { return UITableViewCell() }
@@ -234,5 +234,6 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
     func removingNFTsFromCart(id: String) {
+        viewModel?.removeItemFromCart(idNFT: id)
     }
 }
