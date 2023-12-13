@@ -6,13 +6,13 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol CartViewControllerDelegate: AnyObject {
     func removingNFTsFromCart(id: String)
 }
 
 final class CartViewController: UIViewController {
-    private var activityIndicator = UIActivityIndicatorView()
     private var viewModel: CartViewModel?
 
     // MARK: - UiElements
@@ -115,7 +115,6 @@ final class CartViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        showLoading()
         configViews()
         configConstraints()
         bind()
@@ -142,15 +141,6 @@ final class CartViewController: UIViewController {
     }
 
     // MARK: - Private methods
-
-    private func showLoading() {
-        activityIndicator.startAnimating()
-    }
-
-    private func hideLoading() {
-        activityIndicator.stopAnimating()
-    }
-
     private func screenRenderingLogic() {
         guard let nfts = viewModel?.nfts else { return }
         if nfts.isEmpty {
@@ -159,7 +149,7 @@ final class CartViewController: UIViewController {
             cartIsEmpty(empty: false)
             setTotalInfo()
         }
-        hideLoading()
+        ProgressHUD.dismiss()
     }
 
     private func cartIsEmpty(empty: Bool) {
@@ -177,6 +167,7 @@ final class CartViewController: UIViewController {
     }
 
     private func configViews() {
+        ProgressHUD.show(interaction: false)
         placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
         view.addSubview(placeholderLabel)
