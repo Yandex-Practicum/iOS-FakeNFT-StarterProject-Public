@@ -15,8 +15,7 @@
   - Реализовать функционал навигационного меню (est: 20 min; fact: x min)
 
 - Карточка с информацией о пользователе
-  - Сверстать CollectionView (est: 60 min; fact: x min)
-  - Сверстать CollectionViewCell (est: 120 min; fact: x min)
+  - Сверстать View (est: 180 min; fact: x min)
   - Реализовать функционал загрузки информации в карточку пользователя (est: 60 min; fact: x min)
 
 - Меню
