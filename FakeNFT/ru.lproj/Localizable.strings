@@ -19,32 +19,30 @@
 //ProgressHUD
 "ProgressHUD.loading" = "Загрузка ...";
 
-//UserNFTViewController
-"unknownAuthorKey" = "Неизвестный автор";
-
-// NFTCell
+//NFTCell
 "NFTCell.from" = "от";
 "NFTCell.price" = "Цена";
 
-// UserNFTViewController
-"UserNFTViewController.nonft" = "У вас пока нет NFT";
+//UserNFTViewController
+"UserNFTViewController.nonft" = "У вас еще нет NFT";
 
-// AlertAction
+//AlertAction
 "AlertAction.close" = "Закрыть";
 "AlertAction.sort" = "Сортировка";
-"AlertAction.ok" = "ОК";
+"AlertAction.ok" = "Подтвердить";
 "AlertAction.error" = "Ошибка";
-"AlertAction.incorrURL" = "Введен некорректный URL";
+"AlertAction.incorrURL" = "Введен не корректный URL адрес";
 "AlertAction.cancel" = "Отмена";
 "AlertAction.enterURL" = "Введите URL";
 "AlertAction.imageURL" = "URL изображения";
-"AlertAction.UpdateError" = "Ошибка обновления профиля"
+"AlertAction.UpdateError" = "Ошибка обновления профиля";
 
-// SortOptions
+//SortOptions
 "SortOptions.price" = "По цене";
 "SortOptions.rate" = "По рейтингу";
 "SortOptions.name" = "По названию";
 
 //FavoritesNFTViewController
 "FavoritesNFTViewController.nonft" = "У вас еще нет избранных NFT";
+
 

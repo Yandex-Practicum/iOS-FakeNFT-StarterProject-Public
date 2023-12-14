@@ -25,7 +25,6 @@
 
 //UserNFTViewController
 "UserNFTViewController.nonft" = "You don't have an NFT yet";
-"unknownAuthorKey" = "Unknown author";
 
 //AlertAction
 "AlertAction.close" = "Close";
@@ -43,8 +42,10 @@
 "SortOptions.rate" = "By rating";
 "SortOptions.name" = "By name";
 
-/FavoritesNFTViewController
-"FavoritesNFTViewController.nonft" = "You don't have any favorite 
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "You don't have any favorite NFTs yet";
+
+
 
 
 

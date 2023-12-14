@@ -5,7 +5,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let profileViewController = ProfileViewController(viewModel: ProfileViewModel(model: ProfileService.shared))
+        let profileViewController = ProfileViewController(viewModel: ProfileViewModel(service: ProfileService.shared))
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         profileNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Profile", comment: ""),

@@ -1,6 +1,5 @@
 import UIKit
 import Kingfisher
-import ProgressHUD
 
 final class ProfileViewController: UIViewController {
 
@@ -54,6 +53,7 @@ final class ProfileViewController: UIViewController {
     private lazy var profileTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileCell.self)
+        tableView.isScrollEnabled = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -77,6 +77,15 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.viewDidLoad()
+
+        self.navigationController?.delegate = self
+        self.tabBarController?.tabBar.isHidden = true
+
+        setupViews()
+    }
 
     // MARK: - Actions
 
@@ -85,28 +94,19 @@ final class ProfileViewController: UIViewController {
         router.routeToEditingViewController()
     }
 
-    
+    // MARK: - Methods
+
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] profileModel in
-            guard let self = self else { return }
-
-            if profileModel == nil {
-                // Показываем индикатор загрузки, если данные еще не загружены
-                ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
-            } else {
-                // Обновление UI и скрытие индикатора загрузки
-                self.updateUI(with: profileModel)
-            }
+            guard
+                let self = self,
+                let model = profileModel
+            else { return }
+            self.updateUI(with: model)
         }
     }
 
-    private func updateUI(with model: UserProfile?) {
-        guard let model = model else {
-            // Обработка ошибки или отсутствия данных
-            ProgressHUD.showError(NSLocalizedString("ProfileViewController.errorLoadingProfile", comment: ""))
-            return
-        }
-
+    private func updateUI(with model: UserProfile) {
         DispatchQueue.main.async { [weak self] in
             self?.profileImageView.kf.setImage(with: URL(string: model.avatar))
             self?.userNameLabel.text = model.name
@@ -115,22 +115,7 @@ final class ProfileViewController: UIViewController {
             self?.tabBarController?.tabBar.isHidden = false
             self?.profileTableView.reloadData()
             [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
-
-            // Скрываем индикатор загрузки
-            ProgressHUD.dismiss()
         }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.navigationController?.delegate = self
-        self.tabBarController?.tabBar.isHidden = true
-
-        setupViews()
-        bind() // Устанавливаем привязку данных
-
-        viewModel.viewDidLoad() // Запускаем процесс загрузки данных
     }
     
     // MARK: - Layout methods
@@ -213,7 +198,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             router.routeToUserNFT(nftList: viewModel.userProfile?.nfts ?? [])
         case 1:
-            router.routeToFavoritesNFT()
+            router.routeToFavoritesNFT(nftList: viewModel.userProfile?.likes ?? [])
         case 2:
             if let url = URL(string: userWebSiteTextView.text) {
                 router.routeToWebView(url: url)
@@ -235,3 +220,4 @@ extension ProfileViewController: UINavigationControllerDelegate {
         }
     }
 }
+

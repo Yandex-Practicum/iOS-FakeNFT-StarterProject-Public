@@ -1,62 +1,68 @@
 import UIKit
-import ProgressHUD
 
-final class UserNFTViewController: UIViewController, UITableViewDelegate {
+final class UserNFTViewController: UIViewController {
     
     // MARK: - UI properties
     
     private lazy var alertService: AlertServiceProtocol = {
-       return AlertService(viewController: self)
+        return AlertService(viewController: self)
     }()
-
+    
     private lazy var nftTableView: UITableView = {
-       let tableView = UITableView()
-       tableView.register(NFTCell.self)
-       tableView.delegate = self
-       tableView.dataSource = self
-       tableView.separatorStyle = .none
-       return tableView
+        let tableView = UITableView()
+        tableView.register(NFTCell.self)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        return tableView
     }()
-
+    
     private lazy var sortButton: UIButton = {
-       let button = UIButton(type: .custom)
-       button.setImage(UIImage(named: "sort"), for: .normal)
-       button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-       return button
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "sort"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        return button
     }()
-
+    
     private lazy var noNFTLabel: UILabel = {
-      let label = UILabel()
-      label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
-      label.font = .bodyBold
-      label.isHidden = true
-      return label
+        let label = UILabel()
+        label.text = NSLocalizedString("UserNFTViewController.nonft", comment: "")
+        label.font = .bodyBold
+        label.isHidden = true
+        return label
     }()
-
+    
     // MARK: - Properties
-
+    
+    private let nftList: [String]
     private let viewModel: UserNFTViewModelProtocol
-
+    
     // MARK: - Lifecycle
-
-    init(viewModel: UserNFTViewModelProtocol) {
-     self.viewModel = viewModel
-     super.init(nibName: nil, bundle: nil)
-     self.bind()
+    
+    init(nftList: [String], viewModel: UserNFTViewModelProtocol) {
+        self.nftList = nftList
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.bind()
     }
-
+    
     required init?(coder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
-      super.viewDidLoad()
-      
-      viewModel.fetchNFT(nftList: viewModel.nftList)
-      setupViews()
-      configNavigationBar()
+        super.viewDidLoad()
+        
+        viewModel.viewDidLoad(nftList: self.nftList)
+        setupViews()
+        configNavigationBar()
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.viewWillDisappear()
+    }
+    
     
     // MARK: - Actions
     
@@ -105,40 +111,35 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
         viewModel.observeState { [weak self] state in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                switch state {
-                case .loading:
-                    ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
-                case .loaded:
-                    ProgressHUD.dismiss()
+            switch state {
+            case .loading:
+                self.setUIInteraction(false)
+            case .loaded(let hasData):
+                if hasData {
                     self.updateUIBasedOnNFTData()
-                case .error(let error):
-                    ProgressHUD.dismiss()
-                    print("Ошибка: \(error)")
-                    // ToDo: - Показать пользовательский алерт об ошибке
-                default:
-                    ProgressHUD.dismiss()
+                } else {
+                    self.noNFTLabel.isHidden = false
                 }
+            case .error(_):
+                print("Ошибка")
+            default:
+                break
             }
         }
     }
-
-    
-
     
     private func updateUIBasedOnNFTData() {
         let barButtonItem = UIBarButtonItem(customView: sortButton)
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.title = NSLocalizedString("ProfileViewController.myNFT", comment: "")
-
-        noNFTLabel.isHidden = !(viewModel.userNFT?.isEmpty ?? true)
+        setUIInteraction(true)
     }
     
-    private func configNavigationBar() {
-        setupCustomBackButton()
+    private func setUIInteraction(_ enabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = enabled
+        }
     }
-    
-    // MARK: - Layout methods
     
     private func setupViews() {
         view.backgroundColor = .nftWhite
@@ -154,6 +155,10 @@ final class UserNFTViewController: UIViewController, UITableViewDelegate {
             noNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func configNavigationBar() {
+        setupCustomBackButton()
     }
 }
 
@@ -175,13 +180,16 @@ extension UserNFTViewController: UITableViewDataSource {
         if let author = viewModel.authors[nft.author] {
             cell.configure(nft: nft, authorName: author.name)
         } else {
-            let unknownAuthorName = NSLocalizedString("unknownAuthorKey",
-                                                      comment: "Default author name when the actual name is unavailable")
-            cell.configure(nft: nft, authorName: unknownAuthorName)
+            cell.configure(nft: nft, authorName: "Unknown author")
         }
-
         
         return cell
     }
+}
+
+// MARK: - UITableViewDelegate
+
+extension UserNFTViewController: UITableViewDelegate {
+    
 }
 

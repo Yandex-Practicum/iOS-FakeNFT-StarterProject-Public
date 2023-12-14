@@ -46,7 +46,7 @@ final class NetworkServiceHelper {
                 }
             }
         }
-        
+
         guard let unwrappedTask = task else {
             completion(.failure(NetworkClientError.taskCreationFailed))
             return
