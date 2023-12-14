@@ -5,9 +5,7 @@
 import UIKit
 import Kingfisher
 
-final class StatisticsCell: UITableViewCell {
-    static let reuseIdentifier = "StatisticsCell"
-
+final class StatisticsCell: UITableViewCell, ReuseIdentifying {
     private static var photoPlaceholder: UIImage = {
         let systemName = "person.crop.circle.fill"
         if #available(iOS 15.0, *) {
