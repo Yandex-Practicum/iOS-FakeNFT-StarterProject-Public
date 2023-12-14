@@ -5,7 +5,7 @@
 import UIKit
 import Kingfisher
 
-final class StatisticsCell: UITableViewCell, ReuseIdentifying {
+final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
     private static var photoPlaceholder: UIImage = {
         let systemName = "person.crop.circle.fill"
         if #available(iOS 15.0, *) {
@@ -76,7 +76,7 @@ final class StatisticsCell: UITableViewCell, ReuseIdentifying {
         photoView.kf.indicatorType = .none
         photoView.kf.setImage(
                 with: model.photoURL,
-                placeholder: StatisticsCell.photoPlaceholder,
+                placeholder: StatisticsViewCell.photoPlaceholder,
                 options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
     }
 
@@ -130,7 +130,7 @@ final class StatisticsCell: UITableViewCell, ReuseIdentifying {
 
 }
 
-extension StatisticsCell {
+extension StatisticsViewCell {
     private enum Constants {
         static let bottomMargin: CGFloat = 8
     }

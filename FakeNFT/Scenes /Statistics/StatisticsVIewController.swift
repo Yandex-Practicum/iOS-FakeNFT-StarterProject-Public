@@ -18,7 +18,7 @@ final class StatisticsVIewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(StatisticsCell.self)
+        tableView.register(StatisticsViewCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .clear
@@ -93,7 +93,7 @@ extension StatisticsVIewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: StatisticsCell = tableView.dequeueReusableCell()
+        let cell: StatisticsViewCell = tableView.dequeueReusableCell()
         let cellViewModel = viewModel.cellViewModel(for: indexPath)
         cell.configure(with: cellViewModel)
         return cell
