@@ -1,18 +1,26 @@
 import UIKit
 
+protocol NftCatalogView: AnyObject {
+    
+}
+
 final class CatalogViewController: UIViewController {
 
+    
+    // MARK: - Properties
+    
     let servicesAssembly: ServicesAssembly
     let testNftButton = UIButton()
     private var presenter: CatalogPresenterProtocol?
     private let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .clear
+        table.showsVerticalScrollIndicator = false
         table.layer.masksToBounds = true
         return table
     }()
-
-    // MARK: - Init
+    
+    // MARK: - Initialization
     
     convenience init(servicesAssembly: ServicesAssembly){
         self.init(servicesAssembly: servicesAssembly, presenter: CatalogPresenter())
@@ -35,11 +43,21 @@ final class CatalogViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
+        navBar()
         configUI()
     }
     
     
     // MARK: - Functions
+    
+    func navBar(){
+        if let navigationBar = navigationController?.navigationBar {
+            let item = UIBarButtonItem(image: UIImage(named: "Light"), style: .plain, target: self, action: #selector(addSorting))
+            navigationBar.topItem?.setRightBarButton(item, animated: false)
+        }
+        navigationItem.backButtonTitle = ""
+      
+    }
     
     func configUI(){
         
@@ -50,11 +68,10 @@ final class CatalogViewController: UIViewController {
         testNftButton.setTitleColor(.systemBlue, for: .normal)
         
         view.addSubview(tableView)
-        tableView.backgroundColor = .red
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.register(<#T##cellClass: AnyClass?##AnyClass?#>, forCellReuseIdentifier: <#T##String#>)
+        tableView.register(CatalogNFTCell.self)
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -64,6 +81,11 @@ final class CatalogViewController: UIViewController {
         ])
         
     }
+    
+   func showNFTCollection() {
+       let vc = CollectionNFTViewController(servicesAssembly: servicesAssembly)
+       navigationController?.pushViewController(vc, animated: true)
+    }
 
     @objc
     func showNft() {
@@ -71,6 +93,11 @@ final class CatalogViewController: UIViewController {
         let nftInput = NftDetailInput(id: Constants.testNftId)
         let nftViewController = assembly.build(with: nftInput)
         present(nftViewController, animated: true)
+    }
+    
+    @objc
+    func addSorting(){
+        
     }
 }
 
@@ -83,20 +110,29 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell: CatalogNFTCell = tableView.dequeueReusableCell()
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 179
+        return 187
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //Переход на экран коллекции NFT
+        showNFTCollection()
     }
     
 }
 
 
-
-
+extension CatalogViewController: NftCatalogView {
+    
+}
+ 
 private enum Constants {
     static let openNftTitle = NSLocalizedString("Catalog.openNft", comment: "")
     static let testNftId = "22"
 }
+

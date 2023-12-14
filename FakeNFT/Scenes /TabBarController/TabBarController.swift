@@ -22,13 +22,23 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let servicesAssembly else { return }
+        
         let catalogController = CatalogViewController(
             servicesAssembly: servicesAssembly
         )
+        let navController = UINavigationController(rootViewController: catalogController)
+        setNavigationController(controller: navController)
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
-
+        viewControllers = [ navController ]
         view.backgroundColor = .systemBackground
     }
+    
+    func setNavigationController(controller: UINavigationController){
+        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        controller.navigationBar.shadowImage = UIImage()
+        controller.navigationBar.isTranslucent = true
+        controller.view.backgroundColor = .clear
+    }
+    
 }

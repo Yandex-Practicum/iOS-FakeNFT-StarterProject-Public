@@ -15,14 +15,12 @@ final class CatalogPresenter: CatalogPresenterProtocol {
     
     
     // MARK: - Properties
-    weak var view: NftDetailView?
+    weak var view: NftCatalogView?
     
     
     // MARK: - Init
 
     init() {
     }
-    
-    
     
 }
