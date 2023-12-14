@@ -29,6 +29,7 @@
 		27C91CE12B2AFB09005392E4 /* FavoritesNFTCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C91CE02B2AFB09005392E4 /* FavoritesNFTCellViewModel.swift */; };
 		27C91CE32B2B0224005392E4 /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C91CE22B2B0224005392E4 /* GeometricParams.swift */; };
 		27C91CE52B2B0310005392E4 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C91CE42B2B0310005392E4 /* LoadingState.swift */; };
+		27C91CE72B2B03E3005392E4 /* NetworkServiceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C91CE62B2B03E3005392E4 /* NetworkServiceHelper.swift */; };
 		37BFE3472AD8338B00C553BA /* FavoritesNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE3462AD8338B00C553BA /* FavoritesNFTViewController.swift */; };
 		37BFE34A2AD8366300C553BA /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE3492AD8366300C553BA /* ViewControllerFactory.swift */; };
 		37BFE34C2AD8437700C553BA /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BFE34B2AD8437700C553BA /* AlertService.swift */; };
@@ -109,6 +110,7 @@
 		27C91CE02B2AFB09005392E4 /* FavoritesNFTCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTCellViewModel.swift; sourceTree = "<group>"; };
 		27C91CE22B2B0224005392E4 /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
 		27C91CE42B2B0310005392E4 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		27C91CE62B2B03E3005392E4 /* NetworkServiceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceHelper.swift; sourceTree = "<group>"; };
 		37BFE3462AD8338B00C553BA /* FavoritesNFTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTViewController.swift; sourceTree = "<group>"; };
 		37BFE3492AD8366300C553BA /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		37BFE34B2AD8437700C553BA /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				27B2092A2B126751002CFDB5 /* SortOptions.swift */,
 				27C91CE22B2B0224005392E4 /* GeometricParams.swift */,
 				27C91CE42B2B0310005392E4 /* LoadingState.swift */,
+				27C91CE62B2B03E3005392E4 /* NetworkServiceHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				27B2092B2B126751002CFDB5 /* SortOptions.swift in Sources */,
 				37E7D7022AD81D8000107140 /* ProfileViewModel.swift in Sources */,
+				27C91CE72B2B03E3005392E4 /* NetworkServiceHelper.swift in Sources */,
 				37E7D6F22AD8163900107140 /* ProfileCell.swift in Sources */,
 				27B209192B125259002CFDB5 /* NFTCell.swift in Sources */,
 				37BFE34C2AD8437700C553BA /* AlertService.swift in Sources */,
