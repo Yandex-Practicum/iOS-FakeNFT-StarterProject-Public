@@ -56,6 +56,7 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .textPrimary
         label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.textAlignment = .right
         return label
     }()
 
@@ -100,17 +101,17 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    contentView.heightAnchor.constraint(equalToConstant: 80 + Constants.bottomMargin),
-
                     ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                    ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                    ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                     ratingTitle.widthAnchor.constraint(equalToConstant: 20),
 
                     coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
                     coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
                     coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    coloredView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                                        constant: -Constants.bottomMargin),
+                    coloredView.heightAnchor.constraint(equalToConstant: 80),
+
+                    contentView.heightAnchor.constraint(equalTo: coloredView.heightAnchor,
+                                                        constant: Constants.bottomMargin),
 
                     photoView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
                     photoView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 16),
