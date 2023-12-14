@@ -5,11 +5,7 @@ final class CartViewController: UIViewController {
     // MARK: - Stored Properties
     
     private let mockNFTArray: [CartNFTModel] = CartMockData.mockNFT
-    private var visibleNFT: [CartNFTModel]? {
-        didSet {
-            tableViewAndLabelsUpdate()
-        }
-    }
+    private var visibleNFT = [CartNFTModel]()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var deleteIndex: Int?
     
@@ -100,6 +96,7 @@ final class CartViewController: UIViewController {
         constraintsSetup()
         navBarSetup()
         tableViewAndLabelsUpdate()
+        elementsSetup()
     }
     
     // MARK: - Private methods
@@ -163,7 +160,6 @@ final class CartViewController: UIViewController {
     }
     
     private func tableViewAndLabelsUpdate() {
-        guard let visibleNFT else { return }
         nftCountLabel.text = "\(visibleNFT.count)" + " NFT"
         
         var totalPrice: Float = 0
@@ -174,6 +170,23 @@ final class CartViewController: UIViewController {
         self.totalPriceLabel.text = formattedPrice + " ETH"
         
         tableView.reloadData()
+    }
+    
+    private func elementsSetup() {
+        if visibleNFT.isEmpty {
+            emptyLabel.isHidden = false
+            tableView.isHidden = true
+            paymentLayerView.isHidden = true
+            
+            navigationController?.navigationBar.isHidden = true
+        } else {
+            emptyLabel.isHidden = true
+            tableView.isHidden = false
+            paymentLayerView.isHidden = false
+            
+            navigationController?.navigationBar.isHidden = false
+        }
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - Obj-C methods
@@ -191,13 +204,11 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let visibleNFT else { return .zero }
         return visibleNFT.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartTableViewCell.reuseIndentifier) as? CartTableViewCell,
-              let visibleNFT = visibleNFT
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartTableViewCell.reuseIndentifier) as? CartTableViewCell
         else { return UITableViewCell() }
         
         let nft = visibleNFT[indexPath.row]
