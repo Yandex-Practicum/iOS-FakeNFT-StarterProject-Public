@@ -95,7 +95,9 @@ final class CartTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        //TODO: add code for reusing the cell
+        super.prepareForReuse()
+        
+        pictureImageView.kf.cancelDownloadTask()
     }
     
     // MARK: - Private methods
