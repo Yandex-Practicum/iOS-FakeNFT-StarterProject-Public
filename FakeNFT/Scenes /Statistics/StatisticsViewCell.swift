@@ -103,7 +103,7 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
                 [
                     ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
                     ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    ratingTitle.widthAnchor.constraint(equalToConstant: 20),
+                    ratingTitle.widthAnchor.constraint(equalToConstant: 27),
 
                     coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
                     coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
