@@ -5,7 +5,7 @@
 import UIKit
 
 final class StatisticsVIewController: UIViewController {
-    private let servicesAssembly: ServicesAssembly
+    private let viewModel: StatisticsViewModelProtocol
 
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
@@ -15,8 +15,19 @@ final class StatisticsVIewController: UIViewController {
         return sortButton
     }()
 
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(StatisticsCell.self, forCellReuseIdentifier: StatisticsCell.reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+
+    init(viewModel: StatisticsViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -25,6 +36,7 @@ final class StatisticsVIewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        view.backgroundColor = .background
         addSubviews()
         setupConstraints()
     }
@@ -58,11 +70,40 @@ final class StatisticsVIewController: UIViewController {
         NSLayoutConstraint.activate(
                 [
                     sortButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44 + 2),
-                    sortButton.trailingAnchor
-                              .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
+                    sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                         constant: -9),
                     sortButton.heightAnchor.constraint(equalToConstant: 42),
-                    sortButton.widthAnchor.constraint(equalToConstant: 42)
+                    sortButton.widthAnchor.constraint(equalToConstant: 42),
+
+                    tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+                    tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                       constant: 16),
+                    tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                        constant: -16),
+                    tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
                 ]
         )
+    }
+}
+
+extension StatisticsVIewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRows
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StatisticsCell.reuseIdentifier,
+                                                       for: indexPath) as? StatisticsCell else {
+            return StatisticsCell()
+        }
+        let cellViewModel = viewModel.cellViewModel(for: indexPath)
+        cell.configure(with: cellViewModel)
+        return cell
+    }
+}
+
+extension StatisticsVIewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
     }
 }
