@@ -93,10 +93,8 @@ extension StatisticsVIewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StatisticsCell.reuseIdentifier,
-                                                       for: indexPath) as? StatisticsCell else {
-            return StatisticsCell()
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: StatisticsCell.reuseIdentifier,
+                                                       for: indexPath) as? StatisticsCell ?? StatisticsCell()
         let cellViewModel = viewModel.cellViewModel(for: indexPath)
         cell.configure(with: cellViewModel)
         return cell
