@@ -3,7 +3,11 @@ import Kingfisher
 
 final class CartTableViewCell: UITableViewCell {
     
+    // MARK: - Stored Properties
+    
     static let reuseIndentifier = "cartTableViewCell"
+    weak var delegate: CartTableViewCellDelegate?
+    var cellIndex: Int?
     
     // MARK: - Computed Properties
     
@@ -161,6 +165,7 @@ final class CartTableViewCell: UITableViewCell {
     // MARK: - Obj-C methods
     
     @objc func deleteFromCartButtonDidTap() {
-        //TODO: add code to delete item from cart
+        guard let cellIndex else { return }
+        delegate?.showDeleteViewController(for: cellIndex, with: pictureImageView.image ?? UIImage())
     }
 }

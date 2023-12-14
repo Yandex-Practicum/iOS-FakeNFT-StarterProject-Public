@@ -11,6 +11,7 @@ final class CartViewController: UIViewController {
         }
     }
     private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private var deleteIndex: Int?
     
     // MARK: - Computed Properties
     
@@ -201,6 +202,8 @@ extension CartViewController: UITableViewDataSource {
         
         let nft = visibleNFT[indexPath.row]
         cell.configureCell(with: nft)
+        cell.cellIndex = indexPath.row
+        cell.delegate = self
         
         return cell
     }
@@ -211,5 +214,26 @@ extension CartViewController: UITableViewDataSource {
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
+    }
+}
+
+    // MARK: - CartTableViewCellDelegate
+
+extension CartViewController: CartTableViewCellDelegate {
+    func showDeleteViewController(for index: Int, with image: UIImage) {
+        let viewController = DeleteFromCartViewController(itemImage: image, itemIndex: index)
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.delegate = self
+        present(viewController, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
+}
+
+    // MARK: - DeleteFromCartViewControllerDelegate
+
+extension CartViewController: DeleteFromCartViewControllerDelegate {
+    func showTabBar() {
+        tabBarController?.tabBar.isHidden = false
     }
 }
