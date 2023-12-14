@@ -79,7 +79,7 @@ final class StatisticsCell: UITableViewCell {
         photoView.kf.setImage(
                 with: model.photoURL,
                 placeholder: StatisticsCell.photoPlaceholder,
-                options: [.cacheSerializer(FormatIndicatedCacheSerializer.png), .cacheMemoryOnly])  // TODO: assert png
+                options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
     }
 
     private func setupView() {
