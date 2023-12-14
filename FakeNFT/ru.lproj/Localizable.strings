@@ -38,8 +38,13 @@
 "AlertAction.cancel" = "Отмена";
 "AlertAction.enterURL" = "Введите URL";
 "AlertAction.imageURL" = "URL изображения";
+"AlertAction.UpdateError" = "Ошибка обновления профиля"
 
 // SortOptions
 "SortOptions.price" = "По цене";
 "SortOptions.rate" = "По рейтингу";
 "SortOptions.name" = "По названию";
+
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "У вас еще нет избранных NFT";
+
