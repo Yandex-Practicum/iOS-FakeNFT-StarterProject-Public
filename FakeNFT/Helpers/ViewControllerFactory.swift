@@ -7,32 +7,18 @@ final class ViewControllerFactory {
     }
     
     func makeUserNFTViewController(nftList: [String]) -> UserNFTViewController {
-        let viewModel = UserNFTViewModel(model: UserNFTModel(), nftList: nftList)
-        let userNFTViewController = UserNFTViewController(viewModel: viewModel)
-        return userNFTViewController
+        return UserNFTViewController(nftList: nftList,
+                                     viewModel: UserNFTViewModel(nftService: NFTService.shared))
     }
     
-    func makeFavoritesNFTViewController() -> FavoritesNFTViewController {
-        return FavoritesNFTViewController()
+    func makeFavoritesNFTViewController(nftList: [String]) -> FavoritesNFTViewController {
+        return FavoritesNFTViewController(nftList: nftList,
+                                          viewModel: FavoritesNFTViewModel(nftService: NFTService.shared,
+                                                                           profileService: ProfileService.shared))
     }
     
-    }
-// Создаем `EditingViewModel` с передачей зависимостей
-func makeEditingViewModel() -> EditingViewModel {
-    let profileService = ProfileService(networkClient: DefaultNetworkClient())
-    return EditingViewModel(profileService: profileService)
-}
-
-// Создаем `EditingViewController` и передаем в него уже созданный `EditingViewModel`
-func makeEditingViewController(with viewModel: EditingViewModel) -> EditingViewController {
-    return EditingViewController(viewModel: viewModel)
-}
-
-let editingViewModel = makeEditingViewModel()
-let editingViewController = makeEditingViewController(with: editingViewModel)
-extension ViewControllerFactory {
     func makeEditingViewController() -> EditingViewController {
-        let viewModel = EditingViewModel(profileService: ProfileService(networkClient: DefaultNetworkClient()))
-        return EditingViewController(viewModel: viewModel)
+        return EditingViewController(viewModel: EditingViewModel(profileService: ProfileService.shared))
     }
 }
+
