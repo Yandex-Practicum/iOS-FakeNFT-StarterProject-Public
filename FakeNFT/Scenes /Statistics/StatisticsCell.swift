@@ -8,7 +8,15 @@ import Kingfisher
 final class StatisticsCell: UITableViewCell {
     static let reuseIdentifier = "StatisticsCell"
 
-    private static var photoPlaceholder = UIImage(systemName: "person.crop.circle.fill")
+    private static var photoPlaceholder: UIImage = {
+        let systemName = "person.crop.circle.fill"
+        if #available(iOS 15.0, *) {
+            let config = UIImage.SymbolConfiguration(paletteColors: [.segmentInactive, .segmentActive])
+            return UIImage(systemName: systemName, withConfiguration: config)!
+        } else {
+            return UIImage(systemName: systemName)!
+        }
+    }()
 
     private lazy var ratingTitle: UILabel = {
         let label = UILabel()
@@ -31,7 +39,7 @@ final class StatisticsCell: UITableViewCell {
     private lazy var photoView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 28
+        imageView.layer.cornerRadius = 14
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -67,7 +75,7 @@ final class StatisticsCell: UITableViewCell {
         ratingTitle.text = model.rating
         nameView.text = model.name
         nftCountTitle.text = model.nftCount
-        photoView.kf.indicatorType = .activity
+        photoView.kf.indicatorType = .none
         photoView.kf.setImage(
                 with: model.photoURL,
                 placeholder: StatisticsCell.photoPlaceholder,
@@ -94,16 +102,17 @@ final class StatisticsCell: UITableViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    contentView.heightAnchor.constraint(equalToConstant: 80),
+                    contentView.heightAnchor.constraint(equalToConstant: 80 + Constants.bottomMargin),
 
-                    ratingTitle.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                    ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
                     ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                     ratingTitle.widthAnchor.constraint(equalToConstant: 20),
 
                     coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
                     coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
                     coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    coloredView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                    coloredView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                        constant: -Constants.bottomMargin),
 
                     photoView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
                     photoView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 16),
@@ -121,13 +130,10 @@ final class StatisticsCell: UITableViewCell {
         )
     }
 
-//    private static func getPersonImage() -> UIImage {
-//        let systemName = "person.crop.circle.fill"
-//        if #available(iOS 15.0, *) {
-//            let config = UIImage.SymbolConfiguration(paletteColors: [.ypWhite, .ypGrey])
-//            return UIImage(systemName: systemName, withConfiguration: config)!
-//        } else {
-//            return UIImage(systemName: systemName)!
-//        }
-//    }
+}
+
+extension StatisticsCell {
+    private enum Constants {
+        static let bottomMargin: CGFloat = 8
+    }
 }

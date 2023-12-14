@@ -64,6 +64,7 @@ final class StatisticsVIewController: UIViewController {
 
     private func addSubviews() {
         view.addSubview(sortButton)
+        view.addSubview(tableView)
     }
 
     private func setupConstraints() {
@@ -72,10 +73,10 @@ final class StatisticsVIewController: UIViewController {
                     sortButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44 + 2),
                     sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                                                          constant: -9),
-                    sortButton.heightAnchor.constraint(equalToConstant: 42),
                     sortButton.widthAnchor.constraint(equalToConstant: 42),
+                    sortButton.heightAnchor.constraint(equalToConstant: 42),
 
-                    tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+                    tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20 - 8),
                     tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                                                        constant: 16),
                     tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
