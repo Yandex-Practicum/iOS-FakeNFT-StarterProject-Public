@@ -9,9 +9,10 @@
 ## Module 1:
 ### Экран статистики
 #### Верстка
-- Таблица  (est: 60 min; fact: x min).
-- Ячейки (est: 60 min; fact: x min).
-- Конопка фильтрации (est: 30 min; fact: x min).
+
+- Таблица  (est: 60 min; fact: 120 min).
+- Ячейки (est: 60 min; fact: 90 min).
+- Конопка фильтрации (est: 30 min; fact: 20 min).
 
 #### Логика
 - Загрузка данных (est: 120 min; fact: x min).
