@@ -43,7 +43,7 @@ final class CartViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
         button.backgroundColor = UIColor(named: "YPBlack")
-        button.addTarget(CartViewController.self, action: #selector(paymentButtonActions), for: .valueChanged)
+        button.addTarget(self, action: #selector(paymentButtonActions), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -135,6 +135,10 @@ final class CartViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func paymentButtonActions() {
+        let paymentViewModel = PaymentViewModel()
+        let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
+        paymentViewController.modalPresentationStyle = .fullScreen
+        present(paymentViewController, animated: true)
     }
 
     @objc private func sortButtonActions() {
