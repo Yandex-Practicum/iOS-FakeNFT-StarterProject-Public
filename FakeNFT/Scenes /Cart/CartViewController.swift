@@ -13,16 +13,15 @@ protocol CartViewControllerDelegate: AnyObject {
 }
 
 final class CartViewController: UIViewController {
-    private var viewModel: CartViewModel?
+    private let viewModel: CartViewModel
 
     // MARK: - UiElements
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
-        label.text = NSLocalizedString("Сart is empty", comment: "")
+        label.text = NSLocalizedString("Сart.is.empty", comment: "")
         label.textColor = UIColor(named: "YPBlack")
         label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -32,13 +31,12 @@ final class CartViewController: UIViewController {
         button.backgroundColor = .clear
         button.isHidden = true
         button.addTarget(CartViewController.self, action: #selector(sortButtonActions), for: .valueChanged)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     private lazy var paymentButton: UIButton = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("To pay", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("To.pay", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.bodyBold
         button.layer.cornerRadius = 16
         button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
@@ -75,7 +73,6 @@ final class CartViewController: UIViewController {
         view.addSubview(totalAmountLabel)
         view.addSubview(quantityNFTLabel)
         view.addSubview(paymentButton)
-        view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             quantityNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             quantityNFTLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
@@ -97,14 +94,13 @@ final class CartViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
     // MARK: Initialisation
     init(viewModel: CartViewModel) {
-        super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
         self.bind()
     }
 
@@ -121,12 +117,12 @@ final class CartViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        viewModel?.viewDidLoad()
+        viewModel.viewWillAppear()
     }
 
     // MARK: Binding
     private func bind() {
-        viewModel?.$nfts.bind(observer: { [weak self] _ in
+        viewModel.$nfts.bind(observer: { [weak self] _ in
             guard let self else { return }
             self.screenRenderingLogic()
             self.tableView.reloadData()
@@ -135,14 +131,16 @@ final class CartViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func paymentButtonActions() {
+        // TODO: реализовать переход на экран оплаты
     }
 
     @objc private func sortButtonActions() {
+        // TODO: реализовать view для сортировки
     }
 
     // MARK: - Private methods
     private func screenRenderingLogic() {
-        guard let nfts = viewModel?.nfts else { return }
+        let nfts = viewModel.nfts
         if nfts.isEmpty {
             cartIsEmpty(empty: true)
         } else {
@@ -160,8 +158,8 @@ final class CartViewController: UIViewController {
     }
 
     private func setTotalInfo() {
-        guard let count = viewModel?.nfts.count else { return }
-        let total = viewModel?.countingTheTotalAmount() ?? 0.0
+        let count = viewModel.nfts.count
+        let total = viewModel.countingTheTotalAmount()
         quantityNFTLabel.text = "\(count) NFT"
         totalAmountLabel.text = "\(total) ETH"
     }
@@ -170,10 +168,10 @@ final class CartViewController: UIViewController {
         ProgressHUD.show(interaction: false)
         placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
-        view.addSubview(placeholderLabel)
-        view.addSubview(sortButton)
-        view.addSubview(tableView)
-        view.addSubview(placeholderPaymentView)
+        [placeholderLabel, sortButton, tableView, placeholderPaymentView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
     }
 
     private func configConstraints() {
@@ -199,16 +197,14 @@ final class CartViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = viewModel?.nfts.count else { return 0 }
+        let count = viewModel.nfts.count
         return count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as? CartCell
         else { return UITableViewCell() }
-        guard let nft = viewModel?.nfts[indexPath.row] else {
-            return UITableViewCell()
-        }
+        let nft = viewModel.nfts[indexPath.row]
         cell.delegate = self
         cell.configureCell(with: nft)
         return cell
@@ -225,6 +221,6 @@ extension CartViewController: UITableViewDelegate {
 // MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
     func removingNFTsFromCart(id: String) {
-        viewModel?.removeItemFromCart(idNFT: id)
+        viewModel.removeItemFromCart(idNFT: id)
     }
 }
