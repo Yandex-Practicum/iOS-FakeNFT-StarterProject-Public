@@ -79,7 +79,7 @@ final class CartCell: UITableViewCell {
         nftID = nft.id
         nameLabel.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
-        ratingView.rating = nft.rating
+        ratingView.update(rating: nft.rating)
         imageNFTView.kf.indicator?.startAnimatingView()
         imageNFTView.kf.setImage(with: nft.images.first, completionHandler: {_ in
             self.imageNFTView.kf.indicator?.stopAnimatingView()

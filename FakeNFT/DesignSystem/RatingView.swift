@@ -9,12 +9,6 @@
 import UIKit
 
 final class RatingView: UIStackView {
-    var rating: Int = 0 {
-        didSet {
-            updateRating()
-        }
-    }
-
     // MARK: Initialisation
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +18,11 @@ final class RatingView: UIStackView {
     required init(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+    }
+
+    // MARK: - Methods
+    func update(rating: Int) {
+        updateRating(rating: rating)
     }
 
     // MARK: - Private methods
@@ -43,7 +42,7 @@ final class RatingView: UIStackView {
         }
     }
 
-    private func updateRating() {
+    private func updateRating(rating: Int) {
         for (index, subview) in arrangedSubviews.enumerated() {
             guard let starImageView = subview as? UIImageView else {
                 continue
