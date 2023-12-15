@@ -5,7 +5,7 @@
 import UIKit
 
 enum StatisticsSortType: String {
-    case name, rating
+    case none, name, rating
 }
 
 protocol StatisticsViewModel {
@@ -23,6 +23,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
 
     @Observable
     private var users: [User] = []
+    private var currentSortType: StatisticsSortType = .none
 
     var usersObservable: Observable<[User]> {
         $users
@@ -60,12 +61,18 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     }
 
     func sortBy(_ sortType: StatisticsSortType) {
+        if currentSortType == sortType {
+            return
+        }
         switch sortType {
         case .name:
             users = users.sorted(by: Self.ascNamePredicate(lhs:rhs:))
         case .rating:
             users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+        default:
+            break
         }
+        currentSortType = sortType
         print(users)
     }
 
