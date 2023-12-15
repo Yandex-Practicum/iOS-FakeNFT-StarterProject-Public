@@ -4,7 +4,7 @@
 //
 //  Created by Alexandr Seva on 11.12.2023.
 //  Подсчет и отображениее райтинга с помощью UIStackView
-//  При передачи кол-во райтинга в переменную rating
+//  При передачи кол-во райтинга в метод update(rating: Int)
 
 import UIKit
 
