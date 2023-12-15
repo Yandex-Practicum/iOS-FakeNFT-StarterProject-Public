@@ -23,7 +23,14 @@ final class StatisticsVIewController: UIViewController {
         tableView.delegate = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.refreshControl = refreshControl
         return tableView
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
+        return refreshControl
     }()
 
     init(viewModel: StatisticsViewModel) {
@@ -47,6 +54,7 @@ final class StatisticsVIewController: UIViewController {
         viewModel.usersObservable.bind { [weak self] _ in
             self?.tableView.reloadData()
             UIBlockingProgressHUD.dismiss()
+            self?.refreshControl.endRefreshing()
         }
         setupView()
     }
@@ -100,6 +108,11 @@ final class StatisticsVIewController: UIViewController {
                     tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
                 ]
         )
+    }
+
+    @objc
+    private func refreshControlPulled() {
+        viewModel.refreshControlPulled()
     }
 }
 

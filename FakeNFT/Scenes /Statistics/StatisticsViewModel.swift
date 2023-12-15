@@ -16,6 +16,7 @@ protocol StatisticsViewModel {
     func didSelectRow(at indexPath: IndexPath)
     func viewWillAppear()
     func sortBy(_ sortType: StatisticsSortType)
+    func refreshControlPulled()
 }
 
 final class StatisticsViewModelImpl: StatisticsViewModel {
@@ -50,10 +51,16 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     }
 
     func viewWillAppear() {
+        loadUsers()
+    }
+
+    private func loadUsers() {
         userService.loadUsers { [weak self] result in
             switch result {
             case .success(let users):
-                self?.users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+                guard let self else { return }
+                self.users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+                self.sortUsers(self.currentSortType)
             case .failure(let error):
                 print(error)
             }
@@ -64,6 +71,11 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         if currentSortType == sortType {
             return
         }
+        sortUsers(sortType)
+        currentSortType = sortType
+    }
+
+    private func sortUsers(_ sortType: StatisticsSortType) {
         switch sortType {
         case .name:
             users = users.sorted(by: Self.ascNamePredicate(lhs:rhs:))
@@ -72,7 +84,6 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         default:
             break
         }
-        currentSortType = sortType
         print(users)
     }
 
@@ -86,5 +97,9 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
 
     private static func ascNamePredicate(lhs: User, rhs: User) -> Bool {
         lhs.name < rhs.name
+    }
+
+    func refreshControlPulled() {
+        loadUsers()
     }
 }
