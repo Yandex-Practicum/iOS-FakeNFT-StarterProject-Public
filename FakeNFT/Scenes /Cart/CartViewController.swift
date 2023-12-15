@@ -146,7 +146,7 @@ final class CartViewController: UIViewController {
     }
     
     private func navBarSetup() {
-        if let navBar = navigationController?.navigationBar {
+        if (navigationController?.navigationBar) != nil {
             let sortButton = UIButton(type: .custom)
             sortButton.setImage(UIImage(named: "sortButton"), for: .normal)
             sortButton.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
@@ -273,6 +273,12 @@ extension CartViewController: CartTableViewCellDelegate {
     // MARK: - DeleteFromCartViewControllerDelegate
 
 extension CartViewController: DeleteFromCartViewControllerDelegate {
+    func deleteItemFromCart(for index: Int) {
+        presenter.deleteItemFormCart(for: index)
+        tableViewAndLabelsUpdate()
+        elementsSetup()
+    }
+    
     func showTabBar() {
         tabBarController?.tabBar.isHidden = false
     }

@@ -30,10 +30,10 @@ final class CartPresenter {
     }
     
     func deleteItemFormCart(for index: Int) {
-        //TODO: add code to delete item
+        visibleNFT.remove(at: index)
     }
     
     func addItemToCart(_ nft: CartNFTModel) {
-        //TODO: add code to add item
+        visibleNFT.append(nft)
     }
 }

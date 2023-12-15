@@ -155,7 +155,9 @@ final class DeleteFromCartViewController: UIViewController {
     // MARK: - Obj-C methods
     
     @objc func deleteButtonDidTap() {
-        //TODO: add code to delete NFT from cart
+        dismiss(animated: true)
+        delegate?.deleteItemFromCart(for: itemIndex)
+        delegate?.showTabBar()
     }
     
     @objc func cancelButtonDidTap() {
