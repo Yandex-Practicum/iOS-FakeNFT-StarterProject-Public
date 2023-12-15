@@ -132,14 +132,10 @@ final class CartViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func paymentButtonActions() {
-<<<<<<< HEAD:FakeNFT/Scenes /Cart/MainCart/CartViewController.swift
         let paymentViewModel = PaymentViewModel()
         let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
         paymentViewController.modalPresentationStyle = .fullScreen
         present(paymentViewController, animated: true)
-=======
-        // TODO: реализовать переход на экран оплаты
->>>>>>> 18466c7fc0d7614b8ea9541471e4c98c46afce74:FakeNFT/Scenes /Cart/CartViewController.swift
     }
 
     @objc private func sortButtonActions() {
