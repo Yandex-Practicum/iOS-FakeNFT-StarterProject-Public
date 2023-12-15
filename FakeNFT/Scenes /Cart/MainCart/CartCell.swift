@@ -18,7 +18,6 @@ final class CartCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.textColor = UIColor(named: "YPBlack")
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -26,7 +25,6 @@ final class CartCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.textColor = UIColor(named: "YPBlack")
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -35,7 +33,6 @@ final class CartCell: UITableViewCell {
         label.font = UIFont.caption2
         label.text = NSLocalizedString("Price", comment: "")
         label.textColor = UIColor(named: "YPBlack")
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -43,7 +40,6 @@ final class CartCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
@@ -79,7 +75,7 @@ final class CartCell: UITableViewCell {
         nftID = nft.id
         nameLabel.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
-        ratingView.rating = nft.rating
+        ratingView.update(rating: nft.rating)
         imageNFTView.kf.indicator?.startAnimatingView()
         imageNFTView.kf.setImage(with: nft.images.first, completionHandler: {_ in
             self.imageNFTView.kf.indicator?.stopAnimatingView()
@@ -88,11 +84,10 @@ final class CartCell: UITableViewCell {
 
     // MARK: - Private methods
     private func configViews() {
-        addSubview(nameLabel)
-        addSubview(priceLabel)
-        addSubview(priceTitleLabel)
-        addSubview(imageNFTView)
-        addSubview(ratingView)
+        [nameLabel, priceLabel, priceTitleLabel, imageNFTView, ratingView].forEach {
+                    $0.translatesAutoresizingMaskIntoConstraints = false
+                    addSubview($0)
+                }
         contentView.addSubview(deleteButton)
     }
 
