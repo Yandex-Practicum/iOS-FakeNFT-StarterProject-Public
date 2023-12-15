@@ -59,7 +59,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
             switch result {
             case .success(let users):
                 guard let self else { return }
-                self.users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+                self.users = users
                 self.sortUsers(self.currentSortType)
             case .failure(let error):
                 print(error)
