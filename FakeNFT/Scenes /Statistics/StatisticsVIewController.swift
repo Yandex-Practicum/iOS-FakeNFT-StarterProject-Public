@@ -42,11 +42,6 @@ final class StatisticsVIewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,6 +52,7 @@ final class StatisticsVIewController: UIViewController {
             self?.refreshControl.endRefreshing()
         }
         setupView()
+        viewModel.viewDidLoad()
     }
 
     private func setupView() {

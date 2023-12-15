@@ -14,7 +14,7 @@ protocol StatisticsViewModel {
 
     func cellViewModel(for indexPath: IndexPath) -> StatisticsCellModel
     func didSelectRow(at indexPath: IndexPath)
-    func viewWillAppear()
+    func viewDidLoad()
     func sortBy(_ sortType: StatisticsSortType)
     func refreshControlPulled()
 }
@@ -50,7 +50,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         print("didSelectRow")
     }
 
-    func viewWillAppear() {
+    func viewDidLoad() {
         loadUsers()
     }
 
