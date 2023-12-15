@@ -19,7 +19,7 @@ final class PaymentViewController: UIViewController {
     )
 
     // MARK: - UiElements
-    private let navigationBar = UINavigationBar()
+    private lazy var navigationBar = UINavigationBar()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -49,6 +49,58 @@ final class PaymentViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
+    }()
+
+    private lazy var userAgreementLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.caption2
+        label.textColor = UIColor(named: "YPBlack")
+        label.text = NSLocalizedString("User.agreement.info", comment: "")
+        return label
+    }()
+
+    private lazy var linkLabel: UILabel = {
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(linkAction))
+        let label = UILabel()
+        label.addGestureRecognizer(tapped)
+        label.isUserInteractionEnabled = true
+        label.font = UIFont.caption2
+        label.text = NSLocalizedString("User.agreement", comment: "")
+        label.textColor = UIColor(named: "YPBlue")
+        return label
+    }()
+
+    private lazy var payButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 16
+        button.titleLabel?.font = UIFont.bodyBold
+        button.setTitle(NSLocalizedString("Pay", comment: ""), for: .normal)
+        button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
+        button.backgroundColor = UIColor(named: "YPBlack")
+        button.addTarget(self, action: #selector(payAction), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var placeholderPaymentView: UIView = {
+        let view = UIView()
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.layer.cornerRadius = 12
+        view.backgroundColor = UIColor(named: "YPLightGrey")
+        [userAgreementLabel, linkLabel, payButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        NSLayoutConstraint.activate([
+            userAgreementLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            userAgreementLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            linkLabel.topAnchor.constraint(equalTo: userAgreementLabel.bottomAnchor),
+            linkLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            payButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            payButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            payButton.topAnchor.constraint(equalTo: linkLabel.bottomAnchor, constant: 16),
+            payButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        return view
     }()
 
     // MARK: Initialisation
@@ -83,6 +135,14 @@ final class PaymentViewController: UIViewController {
         dismiss(animated: true)
     }
 
+    @objc private func linkAction() {
+        // TODO: назначить действие при нажатие на ссылку
+    }
+
+    @objc private func payAction() {
+        // TODO: настроить логику оплаты
+    }
+
     // MARK: - Private methods
     private func configNavigationBar() {
         let backButtonItem = UIBarButtonItem(customView: backButton)
@@ -96,7 +156,7 @@ final class PaymentViewController: UIViewController {
 
     private func configViews() {
         view.backgroundColor = UIColor(named: "YPWhite")
-        [navigationBar, collectionView].forEach {
+        [navigationBar, collectionView, placeholderPaymentView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -110,7 +170,11 @@ final class PaymentViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 499)
+            collectionView.bottomAnchor.constraint(equalTo: placeholderPaymentView.topAnchor),
+            placeholderPaymentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            placeholderPaymentView.heightAnchor.constraint(equalToConstant: 186),
+            placeholderPaymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholderPaymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
