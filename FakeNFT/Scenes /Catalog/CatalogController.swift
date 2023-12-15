@@ -54,9 +54,9 @@ final class CatalogViewController: UIViewController {
         if let navigationBar = navigationController?.navigationBar {
             let item = UIBarButtonItem(image: UIImage(named: "Light"), style: .plain, target: self, action: #selector(addSorting))
             navigationBar.topItem?.setRightBarButton(item, animated: false)
+            navigationBar.tintColor = .ypBlack
         }
         navigationItem.backButtonTitle = ""
-      
     }
     
     func configUI(){
@@ -106,11 +106,13 @@ final class CatalogViewController: UIViewController {
 extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       6
+        presenter?.collectionsNFT.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CatalogNFTCell = tableView.dequeueReusableCell()
+        guard let model = presenter?.collectionsNFT[indexPath.row] else { return cell }
+        cell.config(with: model)
         cell.selectionStyle = .none
         return cell
     }

@@ -55,7 +55,7 @@ final class CatalogNFTCell: UITableViewCell, ReuseIdentifying {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        config()
+        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -69,7 +69,7 @@ final class CatalogNFTCell: UITableViewCell, ReuseIdentifying {
     
     // MARK: - Functions
     
-    func config(){
+    func configUI(){
         [imagePreview,stackViewLabel].forEach{
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -92,11 +92,17 @@ final class CatalogNFTCell: UITableViewCell, ReuseIdentifying {
             stackViewLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             stackViewLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0)
         ])
-        
     }
     
-    func setImage(image: UIImage){
-        imagePreview.image = image
+    func config(with model: CatalogNFTCellViewModel){
+       //Загрузка из сети setImage(imageURL: model.url)
+        imagePreview.image =  UIImage(named: "Cover Collection")
+        nameNFT.text = model.nameNFT
+        countNFT.text = String(model.countNFT)
+    }
+    
+    func setImage(imageURL:URL){
+        imagePreview.kf.setImage(with: imageURL)
     }
    
 }

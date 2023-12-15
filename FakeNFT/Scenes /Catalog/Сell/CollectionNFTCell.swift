@@ -59,7 +59,7 @@ final class CollectionNFTCell: UICollectionViewCell, ReuseIdentifying {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        config()
+        configUI()
     }
     
     required init?(coder: NSCoder) {
@@ -68,7 +68,7 @@ final class CollectionNFTCell: UICollectionViewCell, ReuseIdentifying {
     
     // MARK: - Functions
     
-    func config(){
+    func configUI(){
         [imageView, likeButton, stackViewDescription, basketButton].forEach{
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +100,22 @@ final class CollectionNFTCell: UICollectionViewCell, ReuseIdentifying {
             basketButton.heightAnchor.constraint(equalToConstant: 40),
             basketButton.widthAnchor.constraint(equalToConstant: 40)
         ])
-        
+    }
+    
+    func config(with model: CollectionNFTCellViewModel){
+        nameNFTLabel.text = model.nameNFT
+        priceLabel.text = model.price + " ETH"
+        //
+        basketButton.setImage(setBasket(isInTheBasket: model.isInTheBasket), for: .normal)
+        likeButton.setImage(setLike(isLiked: model.isLiked), for: .normal)
+    }
+    
+    func setLike(isLiked: Bool) -> UIImage? {
+        isLiked ? UIImage(named: "Favourites icons") : UIImage(named: "Favourites icons")
+    }
+    
+    func setBasket(isInTheBasket: Bool) -> UIImage? {
+        isInTheBasket ? UIImage(named: "Cart") : UIImage(named: "Cart")
     }
     
 }

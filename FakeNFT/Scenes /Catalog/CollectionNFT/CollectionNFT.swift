@@ -13,13 +13,14 @@ final class CollectionNFTViewController: UIViewController {
     
     let servicesAssembly: ServicesAssembly
     
-    private var presenter: CatalogPresenterProtocol?
+    private var presenter: CollectionPresenterProtocol?
     
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
-        scroll.frame = view.bounds
-        scroll.backgroundColor = .yellow
         scroll.alwaysBounceHorizontal = false
+        scroll.isScrollEnabled = true
+        scroll.showsVerticalScrollIndicator = true
+        scroll.showsHorizontalScrollIndicator = false
         scroll.contentSize = CGSize(width: view.frame.width, height: 1500)
         return scroll
     }()
@@ -27,8 +28,6 @@ final class CollectionNFTViewController: UIViewController {
     private lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .ypWhite
-//        view.frame = self.view.bounds
-//        view.frame.size =  CGSize(width: self.view.frame.width, height: 1000)
         return view
     }()
     
@@ -95,10 +94,10 @@ final class CollectionNFTViewController: UIViewController {
     // MARK: - Init
     
     convenience init(servicesAssembly: ServicesAssembly){
-        self.init(servicesAssembly: servicesAssembly, presenter: CatalogPresenter())
+        self.init(servicesAssembly: servicesAssembly, presenter: CollectionNFTPresenter())
     }
     
-    init(servicesAssembly: ServicesAssembly, presenter: CatalogPresenterProtocol) {
+    init(servicesAssembly: ServicesAssembly, presenter: CollectionPresenterProtocol) {
         self.servicesAssembly = servicesAssembly
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -121,11 +120,11 @@ final class CollectionNFTViewController: UIViewController {
     // MARK: - Functions
     
     func configUI() {
-        view.backgroundColor = .systemBackground
-      
         
+        view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
         //Обложка Коллекции
@@ -153,10 +152,13 @@ final class CollectionNFTViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -103),
             contentView.heightAnchor.constraint(equalToConstant: 1500),
-           // contentView.widthAnchor.constraint(equalToConstant: view.frame.width),
-            contentView.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
+            contentView.widthAnchor.constraint(equalToConstant: view.frame.width),
             
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -188,12 +190,13 @@ extension CollectionNFTViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        presenter?.collectionCells.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: CollectionNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-
+        guard let model = presenter?.collectionCells[indexPath.row] else { return cell }
+        cell.config(with: model)
         return cell
     }
     
