@@ -39,6 +39,5 @@ final class TabBarController: UITabBarController {
         viewControllers = [catalogController, statisticsController]
 
         view.backgroundColor = .systemBackground
-        selectedIndex = 1   // TODO: Remove before review
     }
 }
