@@ -4,8 +4,7 @@ final class CartViewController: UIViewController {
     
     // MARK: - Stored Properties
     
-    private let mockNFTArray: [CartNFTModel] = CartMockData.mockNFT
-    private var visibleNFT = [CartNFTModel]()
+    private var presenter = CartPresenter()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var deleteIndex: Int?
     
@@ -85,8 +84,6 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        visibleNFT = mockNFTArray
-        
         view.backgroundColor = .NFTWhite
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +94,7 @@ final class CartViewController: UIViewController {
         navBarSetup()
         tableViewAndLabelsUpdate()
         elementsSetup()
+        updateSorting()
     }
     
     // MARK: - Private methods
@@ -152,18 +150,18 @@ final class CartViewController: UIViewController {
             let sortButton = UIButton(type: .custom)
             sortButton.setImage(UIImage(named: "sortButton"), for: .normal)
             sortButton.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
-            sortButton.addTarget(nil, action: #selector(sortButtonDidTap), for: .touchUpInside)
+            sortButton.addTarget(self, action: #selector(sortButtonDidTap), for: .touchUpInside)
             
             let imageBarButtonItem = UIBarButtonItem(customView: sortButton)
-            navBar.topItem?.setRightBarButton(imageBarButtonItem, animated: false)
+            self.navigationItem.rightBarButtonItem = imageBarButtonItem
         }
     }
     
     private func tableViewAndLabelsUpdate() {
-        nftCountLabel.text = "\(visibleNFT.count)" + " NFT"
+        nftCountLabel.text = "\(presenter.visibleNFT.count)" + " NFT"
         
         var totalPrice: Float = 0
-        for nft in visibleNFT {
+        for nft in presenter.visibleNFT {
             totalPrice += nft.price
         }
         let formattedPrice = String(format: "%.2f", totalPrice)
@@ -173,7 +171,7 @@ final class CartViewController: UIViewController {
     }
     
     private func elementsSetup() {
-        if visibleNFT.isEmpty {
+        if presenter.visibleNFT.isEmpty {
             emptyLabel.isHidden = false
             tableView.isHidden = true
             paymentLayerView.isHidden = true
@@ -189,10 +187,41 @@ final class CartViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    private func updateSorting() {
+        if UserDefaults.standard.value(forKey: "sortByPrice") != nil {
+            presenter.sortByPrice()
+        } else if UserDefaults.standard.value(forKey: "sortByRating") != nil {
+            presenter.sortByRating()
+        } else if UserDefaults.standard.value(forKey: "sortByName") != nil {
+            presenter.sortByName()
+        }
+    }
+    
     // MARK: - Obj-C methods
     
     @objc func sortButtonDidTap() {
-        //TODO: add code to sort items in cart
+        let alert = UIAlertController(title: nil, message: "Сортировка", preferredStyle: .actionSheet)
+        
+        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.presenter.sortByPrice()
+            self.tableView.reloadData()
+        }
+        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            self.presenter.sortByRating()
+            self.tableView.reloadData()
+        }
+        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { _ in
+            self.presenter.sortByName()
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
+        
+        alert.addAction(sortByPriceAction)
+        alert.addAction(sortByRatingAction)
+        alert.addAction(sortByNameAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func paymentButtonDidTap() {
@@ -204,14 +233,14 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return visibleNFT.count
+        return presenter.visibleNFT.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CartTableViewCell.reuseIndentifier) as? CartTableViewCell
         else { return UITableViewCell() }
         
-        let nft = visibleNFT[indexPath.row]
+        let nft = presenter.visibleNFT[indexPath.row]
         cell.configureCell(with: nft)
         cell.cellIndex = indexPath.row
         cell.delegate = self
