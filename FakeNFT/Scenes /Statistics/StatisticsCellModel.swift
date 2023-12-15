@@ -5,8 +5,8 @@
 import Foundation
 
 struct StatisticsCellModel {
-    let rating: String
+    let rating: Int
     let name: String
-    let nftCount: String
+    let nftCount: Int
     let photoURL: URL
 }

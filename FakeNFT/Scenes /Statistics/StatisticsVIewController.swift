@@ -5,7 +5,7 @@
 import UIKit
 
 final class StatisticsVIewController: UIViewController {
-    private let viewModel: StatisticsViewModelProtocol
+    private let viewModel: StatisticsViewModal
 
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
@@ -26,7 +26,7 @@ final class StatisticsVIewController: UIViewController {
         return tableView
     }()
 
-    init(viewModel: StatisticsViewModelProtocol) {
+    init(viewModel: StatisticsViewModal) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,7 +35,21 @@ final class StatisticsVIewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
+    }
+
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        viewModel.usersObservable.bind { [weak self] _ in
+            self?.tableView.reloadData()
+        }
+        setupView()
+    }
+
+    private func setupView() {
         view.backgroundColor = .background
         addSubviews()
         setupConstraints()

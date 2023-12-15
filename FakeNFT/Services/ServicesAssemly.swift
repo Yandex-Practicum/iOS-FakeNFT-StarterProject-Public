@@ -18,7 +18,16 @@ final class ServicesAssembly {
         )
     }
 
-    var statisticsViewModel: StatisticsViewModel {
-        StatisticsViewModel()
+    var userService: UserService {
+        UserServiceImpl(
+                networkClient: networkClient,
+                storage: nftStorage
+        )
+    }
+
+    var statisticsViewModel: StatisticsViewModalImpl {
+        StatisticsViewModalImpl(
+                userService: userService
+        )
     }
 }

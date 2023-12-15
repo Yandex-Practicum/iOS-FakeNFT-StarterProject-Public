@@ -71,9 +71,9 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     func configure(with model: StatisticsCellModel) {
-        ratingTitle.text = model.rating
+        ratingTitle.text = String(model.rating)
         nameView.text = model.name
-        nftCountTitle.text = model.nftCount
+        nftCountTitle.text = String(model.nftCount)
         photoView.kf.indicatorType = .none
         photoView.kf.setImage(
                 with: model.photoURL,
