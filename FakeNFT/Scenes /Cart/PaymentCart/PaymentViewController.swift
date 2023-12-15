@@ -54,7 +54,7 @@ final class PaymentViewController: UIViewController {
 
     // MARK: Binding
     private func bind() {
-        viewModel?.$order.bind(observer: { [weak self] _ in
+        viewModel?.$currencies.bind(observer: { [weak self] _ in
             guard let self else { return }
         })
     }

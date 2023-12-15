@@ -8,5 +8,5 @@
 import Foundation
 
 final class PaymentViewModel {
-    @Observable var order = ""
+    @Observable var currencies: [CurrencyModel] = []
 }
