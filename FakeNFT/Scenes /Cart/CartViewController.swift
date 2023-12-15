@@ -14,6 +14,7 @@ protocol CartViewControllerDelegate: AnyObject {
 
 final class CartViewController: UIViewController {
     private let viewModel: CartViewModel
+    private var refreshControl = UIRefreshControl()
 
     // MARK: - UiElements
     private lazy var placeholderLabel: UILabel = {
@@ -117,7 +118,7 @@ final class CartViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.viewWillAppear()
+        viewModel.updateCart()
     }
 
     // MARK: Binding
@@ -136,6 +137,13 @@ final class CartViewController: UIViewController {
 
     @objc private func sortButtonActions() {
         // TODO: реализовать view для сортировки
+    }
+
+    @objc private func refreshData(_ sender: Any) {
+        viewModel.updateCart()
+        DispatchQueue.main.async {
+              self.refreshControl.endRefreshing()
+          }
     }
 
     // MARK: - Private methods
@@ -166,6 +174,8 @@ final class CartViewController: UIViewController {
 
     private func configViews() {
         ProgressHUD.show(interaction: false)
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
         placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
         [placeholderLabel, sortButton, tableView, placeholderPaymentView].forEach {

@@ -19,7 +19,7 @@ final class CartViewModel {
     }
 
     // MARK: - Methods 
-    func viewWillAppear() {
+    func updateCart() {
         loadNfts()
     }
 
