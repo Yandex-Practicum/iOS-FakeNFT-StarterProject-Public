@@ -29,7 +29,7 @@ Cart# Cart
  - Сверстать Nav Bar экрана "Способ оплаты" (est: 60 min; fact: 40 min)
  - Сверстать UICollectionCell выбора оплаты (est: 180 min; fact: 120 min)
  - Сверстать StackView с инфо текстом и кнопкой оплаты (est: 60 min; fact: 60 min)
- - Сверстать экран "Успех" (est: 60 min; fact: x min)
+ - Сверстать экран "Успех" (est: 60 min; fact: 40 min)
 
 #### Логика
  - Настроить логику оплаты (est: 120 min; fact: x min)

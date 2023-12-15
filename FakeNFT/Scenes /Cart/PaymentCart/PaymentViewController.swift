@@ -140,7 +140,9 @@ final class PaymentViewController: UIViewController {
     }
 
     @objc private func payAction() {
-        // TODO: настроить логику оплаты
+        let confirmationViewController = ConfirmationViewController()
+        confirmationViewController.modalPresentationStyle = .fullScreen
+        present(confirmationViewController, animated: true)
     }
 
     // MARK: - Private methods

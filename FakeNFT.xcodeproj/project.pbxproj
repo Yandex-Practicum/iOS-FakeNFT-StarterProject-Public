@@ -55,6 +55,7 @@
 		96922DB52B2B650700509E2F /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922DB42B2B650700509E2F /* CurrencyModel.swift */; };
 		96922DC32B2C7A7D00509E2F /* PaymentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922DC22B2C7A7D00509E2F /* PaymentCell.swift */; };
 		96922DC52B2C7C2C00509E2F /* CollectionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96922DC42B2C7C2C00509E2F /* CollectionSettings.swift */; };
+		96FA70012B2CB7CB0072C4A4 /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FA70002B2CB7CB0072C4A4 /* ConfirmationViewController.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -129,6 +130,7 @@
 		96922DB42B2B650700509E2F /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		96922DC22B2C7A7D00509E2F /* PaymentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCell.swift; sourceTree = "<group>"; };
 		96922DC42B2C7C2C00509E2F /* CollectionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSettings.swift; sourceTree = "<group>"; };
+		96FA70002B2CB7CB0072C4A4 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 			children = (
 				96922DAE2B2B48AF00509E2F /* MainCart */,
 				96922DAF2B2B493400509E2F /* PaymentCart */,
+				96FA6FFF2B2CB79D0072C4A4 /* ConfirmationCart */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -409,6 +412,14 @@
 				96922DC22B2C7A7D00509E2F /* PaymentCell.swift */,
 			);
 			path = PaymentCart;
+			sourceTree = "<group>";
+		};
+		96FA6FFF2B2CB79D0072C4A4 /* ConfirmationCart */ = {
+			isa = PBXGroup;
+			children = (
+				96FA70002B2CB7CB0072C4A4 /* ConfirmationViewController.swift */,
+			);
+			path = ConfirmationCart;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -627,6 +638,7 @@
 				96922DA62B2753F900509E2F /* CartRequestGet.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				96922D962B25D31300509E2F /* ObservableValue.swift in Sources */,
+				96FA70012B2CB7CB0072C4A4 /* ConfirmationViewController.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				96922DAC2B29D4FE00509E2F /* CartRequestPut.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
