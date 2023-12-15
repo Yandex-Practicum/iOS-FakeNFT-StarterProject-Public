@@ -15,10 +15,10 @@
 - Конопка фильтрации (est: 30 min; fact: 20 min).
 
 #### Логика
-- Загрузка данных (est: 120 min; fact: x min).
-- Сортировка (est: 60 min; fact: x min).
+- Загрузка данных (est: 120 min; fact: 90 min).
+- Сортировка (est: 60 min; fact: 20 min).
 
-`Total:` est: 330 min; fact: x min.
+`Total:` est: 330 min; fact: 340 min.
 
 ---
 
