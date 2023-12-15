@@ -4,7 +4,7 @@
 
 import UIKit
 
-protocol StatisticsViewModal {
+protocol StatisticsViewModel {
     var numberOfRows: Int { get }
     func cellViewModel(for indexPath: IndexPath) -> StatisticsCellModel
     func didSelectRow(at indexPath: IndexPath)
@@ -13,7 +13,7 @@ protocol StatisticsViewModal {
     var usersObservable: Observable<[User]> { get }
 }
 
-final class StatisticsViewModalImpl: StatisticsViewModal {
+final class StatisticsViewModelImpl: StatisticsViewModel {
     private let userService: UserService
 
     @Observable

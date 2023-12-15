@@ -25,8 +25,8 @@ final class ServicesAssembly {
         )
     }
 
-    var statisticsViewModel: StatisticsViewModalImpl {
-        StatisticsViewModalImpl(
+    var statisticsViewModel: StatisticsViewModelImpl {
+        StatisticsViewModelImpl(
                 userService: userService
         )
     }

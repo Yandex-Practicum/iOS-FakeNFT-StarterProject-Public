@@ -5,7 +5,7 @@
 import UIKit
 
 final class StatisticsVIewController: UIViewController {
-    private let viewModel: StatisticsViewModal
+    private let viewModel: StatisticsViewModel
 
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
@@ -26,7 +26,7 @@ final class StatisticsVIewController: UIViewController {
         return tableView
     }()
 
-    init(viewModel: StatisticsViewModal) {
+    init(viewModel: StatisticsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
