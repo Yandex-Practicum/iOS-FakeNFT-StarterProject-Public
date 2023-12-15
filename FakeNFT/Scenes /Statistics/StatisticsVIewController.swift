@@ -43,8 +43,10 @@ final class StatisticsVIewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        UIBlockingProgressHUD.show()
         viewModel.usersObservable.bind { [weak self] _ in
             self?.tableView.reloadData()
+            UIBlockingProgressHUD.dismiss()
         }
         setupView()
     }
