@@ -59,8 +59,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
             switch result {
             case .success(let users):
                 guard let self else { return }
-                self.users = users
-                self.sortUsers(self.currentSortType)
+                self.users = self.sortUsers(users, sortType: self.currentSortType)
             case .failure(let error):
                 print(error)
             }
@@ -71,20 +70,22 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         if currentSortType == sortType {
             return
         }
-        sortUsers(sortType)
+        users = sortUsers(users, sortType: sortType)
         currentSortType = sortType
     }
 
-    private func sortUsers(_ sortType: StatisticsSortType) {
+    private func sortUsers(_ users: [User], sortType: StatisticsSortType) -> [User] {
+        let result: [User]
         switch sortType {
         case .name:
-            users = users.sorted(by: Self.ascNamePredicate(lhs:rhs:))
+            result = users.sorted(by: Self.ascNamePredicate(lhs:rhs:))
         case .rating:
-            users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
-        default:
-            break
+            result = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+        case .none:
+            result = users
         }
-        print(users)
+        print(result)
+        return result
     }
 
     private static func descRatingPredicate(lhs: User, rhs: User) -> Bool {
