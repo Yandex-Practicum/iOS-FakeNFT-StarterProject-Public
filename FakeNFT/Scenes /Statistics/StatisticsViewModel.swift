@@ -4,13 +4,18 @@
 
 import UIKit
 
+enum StatisticsSortType: String {
+    case name, rating
+}
+
 protocol StatisticsViewModel {
     var numberOfRows: Int { get }
+    var usersObservable: Observable<[User]> { get }
+
     func cellViewModel(for indexPath: IndexPath) -> StatisticsCellModel
     func didSelectRow(at indexPath: IndexPath)
     func viewWillAppear()
-
-    var usersObservable: Observable<[User]> { get }
+    func sortBy(_ sortType: StatisticsSortType)
 }
 
 final class StatisticsViewModelImpl: StatisticsViewModel {
@@ -48,11 +53,20 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
             switch result {
             case .success(let users):
                 self?.users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
-                print(self?.users)
             case .failure(let error):
                 print(error)
             }
         }
+    }
+
+    func sortBy(_ sortType: StatisticsSortType) {
+        switch sortType {
+        case .name:
+            users = users.sorted(by: Self.ascNamePredicate(lhs:rhs:))
+        case .rating:
+            users = users.sorted(by: Self.descRatingPredicate(lhs:rhs:))
+        }
+        print(users)
     }
 
     private static func descRatingPredicate(lhs: User, rhs: User) -> Bool {
@@ -61,5 +75,9 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         } else {
             return true // not sorted
         }
+    }
+
+    private static func ascNamePredicate(lhs: User, rhs: User) -> Bool {
+        lhs.name < rhs.name
     }
 }

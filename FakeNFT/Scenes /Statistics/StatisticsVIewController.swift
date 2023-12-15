@@ -62,13 +62,13 @@ final class StatisticsVIewController: UIViewController {
                                       preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.ByName", comment: ""),
                                       style: .default,
-                                      handler: { _ in
-                                          print("Sort by name")
+                                      handler: { [weak self] _ in
+                                          self?.viewModel.sortBy(.name)
                                       }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.ByRating", comment: ""),
                                       style: .default,
-                                      handler: { _ in
-                                          print("Sort by rating")
+                                      handler: { [weak self] _ in
+                                          self?.viewModel.sortBy(.rating)
                                       }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.Close", comment: ""),
                                       style: .cancel,
