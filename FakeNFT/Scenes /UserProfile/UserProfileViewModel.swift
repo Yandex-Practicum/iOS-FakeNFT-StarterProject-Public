@@ -8,9 +8,9 @@ protocol UserProfileViewModel {
 }
 
 final class UserProfileViewModelImpl: UserProfileViewModel {
-    private let userService: UserService
+    private let user: User
 
-    init(userService: UserService) {
-        self.userService = userService
+    init (user: User) {
+        self.user = user
     }
 }

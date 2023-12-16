@@ -5,15 +5,15 @@
 import UIKit
 
 public final class StatisticsAssembly {
-    private let servicesAssembler: ServicesAssembly
+    private let servicesAssembly: ServicesAssembly
 
     init(servicesAssembler: ServicesAssembly) {
-        self.servicesAssembler = servicesAssembler
+        self.servicesAssembly = servicesAssembler
     }
 
     public func build() -> UIViewController {
-        let viewModel = StatisticsViewModelImpl(userService: servicesAssembler.userService,
+        let viewModel = StatisticsViewModelImpl(userService: servicesAssembly.userService,
                                                 userDefaultsStore: servicesAssembler.userDefaultsStore)
-        return StatisticsViewController(viewModel: viewModel)
+        return StatisticsViewController(viewModel: viewModel, servicesAssembler: servicesAssembly)
     }
 }

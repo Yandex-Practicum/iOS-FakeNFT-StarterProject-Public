@@ -5,7 +5,8 @@
 import UIKit
 
 final class StatisticsViewController: UIViewController {
-    private let viewModel: StatisticsViewModel
+    private var viewModel: StatisticsViewModel
+    private let servicesAssembler: ServicesAssembly
 
     private lazy var sortButton: UIButton = {
         let sortButton = UIButton()
@@ -33,8 +34,9 @@ final class StatisticsViewController: UIViewController {
         return refreshControl
     }()
 
-    init(viewModel: StatisticsViewModel) {
+    init(viewModel: StatisticsViewModel, servicesAssembler: ServicesAssembly) {
         self.viewModel = viewModel
+        self.servicesAssembler = servicesAssembler
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -66,6 +68,9 @@ final class StatisticsViewController: UIViewController {
             if !isRefreshing {
                 self?.refreshControl.endRefreshing()
             }
+        }
+        viewModel.didSelectCell = { [weak self] user in
+            self?.showUserProfile(user: user)
         }
     }
 
@@ -120,6 +125,12 @@ final class StatisticsViewController: UIViewController {
     @objc
     private func refreshControlPulled() {
         viewModel.didTriggerRefreshAction()
+    }
+
+    private func showUserProfile(user: User) {
+        let userProfileVC = UserProfileAssembly(servicesAssembler: servicesAssembler).build(user: user)
+        userProfileVC.modalPresentationStyle = .fullScreen
+        present(userProfileVC, animated: true)
     }
 }
 

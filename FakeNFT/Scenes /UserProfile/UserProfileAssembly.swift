@@ -11,8 +11,8 @@ public final class UserProfileAssembly {
         self.servicesAssembler = servicesAssembler
     }
 
-    public func build() -> UIViewController {
-        let viewModel = UserProfileViewModelImpl(userService: servicesAssembler.userService)
+    public func build(user: User) -> UIViewController {
+        let viewModel = UserProfileViewModelImpl(user: user)
         return UserProfileViewController(viewModel: viewModel)
     }
 }
