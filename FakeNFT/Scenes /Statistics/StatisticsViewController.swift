@@ -77,7 +77,7 @@ final class StatisticsViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .background
         addSubviews()
-        makeConstraints()
+        setupConstraints()
     }
 
     @objc
@@ -106,7 +106,7 @@ final class StatisticsViewController: UIViewController {
         view.addSubview(tableView)
     }
 
-    private func makeConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate(
             [
                 sortButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44 + 2),
