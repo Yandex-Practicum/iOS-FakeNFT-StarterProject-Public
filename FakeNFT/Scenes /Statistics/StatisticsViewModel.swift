@@ -4,10 +4,6 @@
 
 import UIKit
 
-enum StatisticsSortType: String {
-    case none, name, rating
-}
-
 protocol StatisticsViewModel {
     var numberOfRows: Int { get }
     var usersObservable: Observable<[User]> { get }
