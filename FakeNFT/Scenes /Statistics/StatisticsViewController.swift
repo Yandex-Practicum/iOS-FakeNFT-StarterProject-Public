@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class StatisticsVIewController: UIViewController {
+final class StatisticsViewController: UIViewController {
     private let viewModel: StatisticsViewModel
 
     private lazy var sortButton: UIButton = {
@@ -123,7 +123,7 @@ final class StatisticsVIewController: UIViewController {
     }
 }
 
-extension StatisticsVIewController: UITableViewDataSource {
+extension StatisticsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRows
     }
@@ -136,7 +136,7 @@ extension StatisticsVIewController: UITableViewDataSource {
     }
 }
 
-extension StatisticsVIewController: UITableViewDelegate {
+extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didSelectModel(at: indexPath)
     }

@@ -14,6 +14,6 @@ public final class StatisticsAssembly {
     public func build() -> UIViewController {
         let viewModel = StatisticsViewModelImpl(userService: servicesAssembler.userService,
                                                 userDefaultsStore: servicesAssembler.userDefaultsStore)
-        return StatisticsVIewController(viewModel: viewModel)
+        return StatisticsViewController(viewModel: viewModel)
     }
 }
