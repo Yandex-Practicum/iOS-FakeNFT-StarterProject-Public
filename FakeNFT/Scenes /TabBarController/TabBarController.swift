@@ -33,11 +33,15 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        let statisticsController = StatisticsAssembly(servicesAssembler: servicesAssembly).build()
+        let statisticsController = createStatisticsVC()
         statisticsController.tabBarItem = statisticsTabBarItem
 
         viewControllers = [catalogController, statisticsController]
 
         view.backgroundColor = .systemBackground
+    }
+
+    private func createStatisticsVC() -> UIViewController {
+        StatisticsAssembly(servicesAssembler: servicesAssembly).build()
     }
 }
