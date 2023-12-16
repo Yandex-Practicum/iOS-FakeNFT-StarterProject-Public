@@ -17,4 +17,5 @@ protocol NetworkRequest {
 extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
+    var authToken: String? { RequestConstants.authToken }
 }
