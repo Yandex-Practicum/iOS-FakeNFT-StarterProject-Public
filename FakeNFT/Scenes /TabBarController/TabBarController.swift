@@ -33,8 +33,7 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        let statisticsAssembly = StatisticsAssembly(servicesAssembler: servicesAssembly)
-        let statisticsController = statisticsAssembly.build()
+        let statisticsController = StatisticsAssembly(servicesAssembler: servicesAssembly).build()
         statisticsController.tabBarItem = statisticsTabBarItem
 
         viewControllers = [catalogController, statisticsController]
