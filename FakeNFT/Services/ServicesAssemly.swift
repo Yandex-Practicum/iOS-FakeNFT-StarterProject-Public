@@ -24,10 +24,4 @@ final class ServicesAssembly {
                 storage: nftStorage
         )
     }
-
-    var statisticsViewModel: StatisticsViewModelImpl {
-        StatisticsViewModelImpl(
-                userService: userService
-        )
-    }
 }
