@@ -9,7 +9,7 @@ protocol StatisticsViewModel {
     var usersObservable: Observable<[User]> { get }
     var isLoadingObservable: Observable<Bool> { get }
     var isRefreshingObservable: Observable<Bool> { get }
-    var didSelectCell: ((User) -> Void)? { get set }
+    var didSelectUser: ((User) -> Void)? { get set }
 
     func itemModel(for indexPath: IndexPath) -> StatisticsCellModel
     func didSelectModel(at indexPath: IndexPath)
@@ -44,7 +44,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         $users
     }
 
-    var didSelectCell: ((User) -> Void)?
+    var didSelectUser: ((User) -> Void)?
 
     init(userService: UserService, userDefaultsStore: UserDefaultsStore) {
         self.userService = userService
@@ -73,7 +73,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     }
 
     func didSelectModel(at indexPath: IndexPath) {
-        didSelectCell?(users[indexPath.row])
+        didSelectUser?(users[indexPath.row])
     }
 
     func viewDidLoad() {

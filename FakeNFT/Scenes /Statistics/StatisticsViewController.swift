@@ -69,7 +69,7 @@ final class StatisticsViewController: UIViewController {
                 self?.refreshControl.endRefreshing()
             }
         }
-        viewModel.didSelectCell = { [weak self] user in
+        viewModel.didSelectUser = { [weak self] user in
             self?.showUserProfile(user: user)
         }
     }
