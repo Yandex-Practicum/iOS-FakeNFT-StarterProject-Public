@@ -10,11 +10,15 @@ protocol WebViewViewModel {
     func didUpdateProgressValue(_ progress: Double)
 
     var progressObservable: Observable<Float> { get }
+    var progressBarHiddenObservable: Observable<Bool> { get }
 }
 
 final class WebViewViewModelImpl: WebViewViewModel {
     @Observable
     private var progress: Float = 0
+
+    @Observable
+    private var progressBarHidden: Bool = false
 
     private let url: URL
 
@@ -24,6 +28,10 @@ final class WebViewViewModelImpl: WebViewViewModel {
 
     var progressObservable: Observable<Float> {
         $progress
+    }
+
+    var progressBarHiddenObservable: Observable<Bool> {
+        $progressBarHidden
     }
 
     var urlRequest: URLRequest {
@@ -46,5 +54,6 @@ final class WebViewViewModelImpl: WebViewViewModel {
 
     func didUpdateProgressValue(_ progress: Double) {
         self.progress = Float(progress)
+        progressBarHidden = progress == 1
     }
 }

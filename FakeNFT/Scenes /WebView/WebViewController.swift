@@ -69,13 +69,14 @@ final class WebViewViewController: UIViewController {
                 \.estimatedProgress,
                 options: [.new],
                 changeHandler: { [weak self] _, change in
-                    guard let self else { return }
-                    self.progressView.isHidden = false
-                    self.viewModel.didUpdateProgressValue(change.newValue!)
+                    self?.viewModel.didUpdateProgressValue(change.newValue!)
                 }
         )
         viewModel.progressObservable.bind { [weak self] progress in
             self?.progressView.progress = progress
+        }
+        viewModel.progressBarHiddenObservable.bind { [weak self] isHidden in
+            self?.progressView.isHidden = isHidden
         }
     }
 
@@ -126,6 +127,5 @@ final class WebViewViewController: UIViewController {
 extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         viewModel.didUpdateProgressValue(1)
-        progressView.isHidden = true
     }
 }
