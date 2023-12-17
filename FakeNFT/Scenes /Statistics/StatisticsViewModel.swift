@@ -7,6 +7,8 @@ import Foundation
 protocol StatisticsViewModel {
     var numberOfRows: Int { get }
     var usersObservable: Observable<[User]> { get }
+    var isLoadingObservable: Observable<Bool> { get }
+    var isRefreshingObservable: Observable<Bool> { get }
 
     func itemModel(for indexPath: IndexPath) -> StatisticsCellModel
     func didSelectModel(at indexPath: IndexPath)
@@ -20,7 +22,13 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
 
     @Observable
     private var users: [User] = []
+
     private var currentSortType: StatisticsSortType = .none
+
+    @Observable
+    private var isLoading: Bool = false
+    @Observable
+    private var isRefreshing: Bool = false
 
     var usersObservable: Observable<[User]> {
         $users
@@ -32,6 +40,14 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
 
     var numberOfRows: Int {
         users.count
+    }
+
+    var isLoadingObservable: Observable<Bool> {
+        $isLoading
+    }
+
+    var isRefreshingObservable: Observable<Bool> {
+        $isRefreshing
     }
 
     func itemModel(for indexPath: IndexPath) -> StatisticsCellModel {
@@ -47,17 +63,24 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     }
 
     func viewDidLoad() {
+        isLoading = true
         loadUsers()
     }
 
     private func loadUsers() {
         userService.loadUsers { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let users):
-                guard let self else { return }
                 self.users = self.sortUsers(users, sortType: self.currentSortType)
             case .failure(let error):
                 print(error)
+            }
+            if self.isLoading {
+                self.isLoading = false
+            }
+            if self.isRefreshing {
+                self.isRefreshing = false
             }
         }
     }
@@ -97,6 +120,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     }
 
     func didTriggerRefreshAction() {
+        isRefreshing = true
         loadUsers()
     }
 }

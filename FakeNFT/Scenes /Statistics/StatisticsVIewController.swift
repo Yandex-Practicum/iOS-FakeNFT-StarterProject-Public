@@ -45,14 +45,28 @@ final class StatisticsVIewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UIBlockingProgressHUD.show()
-        viewModel.usersObservable.bind { [weak self] _ in
-            self?.tableView.reloadData()
-            UIBlockingProgressHUD.dismiss()
-            self?.refreshControl.endRefreshing()
-        }
+        setupBindings()
         setupView()
         viewModel.viewDidLoad()
+    }
+
+    private func setupBindings() {
+        viewModel.usersObservable.bind { [weak self] _ in
+            self?.tableView.reloadData()
+            self?.refreshControl.endRefreshing()
+        }
+        viewModel.isLoadingObservable.bind { [weak self] isLoading in
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+        viewModel.isRefreshingObservable.bind { [weak self] isRefreshing in
+            if !isRefreshing {
+                self?.refreshControl.endRefreshing()
+            }
+        }
     }
 
     private func setupView() {
