@@ -116,8 +116,8 @@ extension StatisticsVIewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: StatisticsViewCell = tableView.dequeueReusableCell()
-        let cellViewModel = viewModel.itemModel(for: indexPath)
-        cell.configure(with: cellViewModel)
+        let cellModel = viewModel.itemModel(for: indexPath)
+        cell.configure(with: cellModel)
         return cell
     }
 }
