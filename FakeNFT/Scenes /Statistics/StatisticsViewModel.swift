@@ -25,7 +25,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
     @Observable
     private var users: [User] = []
 
-    private var currentSortType: StatisticsSortType {
+    private var currentSortType: StatisticsSortType = .rating {
         didSet {
             userDefaultsStore.setStatisticsSortType(currentSortType)
         }
