@@ -48,22 +48,23 @@ final class TabBarController: UITabBarController {
         setNavigationController(controller: navController)
         catalogController.tabBarItem = catalogTabBarItem
         
-        let profileController = TestCatalogViewController(
+        let profileController = CatalogViewController(
             servicesAssembly: servicesAssembly
         )
         profileController.tabBarItem = profileTabBarItem
         
-        let statisticsController = TestCatalogViewController(
+        let statisticsController = CatalogViewController(
             servicesAssembly: servicesAssembly
         )
         statisticsController.tabBarItem = statisticsTabBarItem
         
-        let basketController = TestCatalogViewController(
+        let basketController = CatalogViewController(
             servicesAssembly: servicesAssembly
         )
         basketController.tabBarItem = basketTabBarItem
 
         viewControllers = [profileController, navController, basketController, statisticsController]
+        tabBar.isTranslucent = false
         view.backgroundColor = .ypWhite
         tabBar.unselectedItemTintColor = .ypBlack
     }
