@@ -25,14 +25,14 @@
 ## Module 2:
 ### Экран профиля
 #### Верстка
-- Экран профиля (est: 120 min; fact: x min).
+- Экран профиля (est: 120 min; fact: 120 min).
 
 #### Логика
-- Переход на экран профиля (est: 30 min; fact: x min).
-- Загрузка информации о профиле (est: 60 min; fact: x min).
-- Открытие webView со старницей из профиля (est: 30 min; fact: x min).
+- Переход на экран профиля (est: 30 min; fact: 30 min).
+- Загрузка информации о профиле (est: 60 min; fact: 5 min).
+- Открытие webView со старницей из профиля (est: 30 min; fact: 60 min).
 
-`Total:` est: 240 min; fact: x min.
+`Total:` est: 240 min; fact: 215 min.
 
 ---
 
