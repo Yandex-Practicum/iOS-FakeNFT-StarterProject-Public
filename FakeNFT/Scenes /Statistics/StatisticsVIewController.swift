@@ -91,16 +91,13 @@ final class StatisticsVIewController: UIViewController {
         NSLayoutConstraint.activate(
             [
                 sortButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44 + 2),
-                sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                     constant: -9),
+                sortButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
                 sortButton.widthAnchor.constraint(equalToConstant: 42),
                 sortButton.heightAnchor.constraint(equalToConstant: 42),
 
                 tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
-                tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                   constant: 16),
-                tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                    constant: -16),
+                tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
                 tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ]
         )
