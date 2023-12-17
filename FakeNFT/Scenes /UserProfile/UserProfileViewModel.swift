@@ -9,6 +9,10 @@ protocol UserProfileViewModel {
     var userDescription: String { get }
     var userAvatar: URL { get }
     var userCollectionSize: Int { get }
+
+    func goToSiteButtonTapped()
+
+    var openSite: ((URL) -> Void)? { get set }
 }
 
 final class UserProfileViewModelImpl: UserProfileViewModel {
@@ -33,4 +37,10 @@ final class UserProfileViewModelImpl: UserProfileViewModel {
     var userCollectionSize: Int {
         user.nfts.count
     }
+
+    func goToSiteButtonTapped() {
+        openSite?(user.website)
+    }
+
+    var openSite: ((URL) -> Void)?
 }

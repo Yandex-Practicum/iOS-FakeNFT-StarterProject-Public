@@ -6,7 +6,7 @@ import UIKit
 import Kingfisher
 
 final class UserProfileViewController: UIViewController {
-    private let viewModel: UserProfileViewModel
+    private var viewModel: UserProfileViewModel
 
     private lazy var backwardButton: UIButton = {
         let button = UIButton()
@@ -100,7 +100,14 @@ final class UserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupBindings()
         setupView()
+    }
+
+    private func setupBindings() {
+        viewModel.openSite = { [weak self] url in
+            self?.openSite(url)
+        }
     }
 
     private func setupView() {
@@ -187,12 +194,19 @@ final class UserProfileViewController: UIViewController {
 
     @objc
     private func goToSiteButtonTapped() {
-        print("goToSiteButtonTapped")
+        viewModel.goToSiteButtonTapped()
     }
 
     @objc
     private func collectionButtonTapped() {
         print("collectionButtonTapped")
+    }
+
+    private func openSite(_ url: URL) {
+        guard UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        UIApplication.shared.open(url)
     }
 }
 
