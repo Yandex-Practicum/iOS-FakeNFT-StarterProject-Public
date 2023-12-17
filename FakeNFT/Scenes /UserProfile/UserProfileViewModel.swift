@@ -12,7 +12,7 @@ protocol UserProfileViewModel {
 
     func goToSiteButtonTapped()
 
-    var openSite: ((URL) -> Void)? { get set }
+    var openSite: ((URLRequest) -> Void)? { get set }
 }
 
 final class UserProfileViewModelImpl: UserProfileViewModel {
@@ -39,8 +39,9 @@ final class UserProfileViewModelImpl: UserProfileViewModel {
     }
 
     func goToSiteButtonTapped() {
-        openSite?(user.website)
+        let url = user.website
+        openSite?(URLRequest(url: url))
     }
 
-    var openSite: ((URL) -> Void)?
+    var openSite: ((URLRequest) -> Void)?
 }

@@ -108,8 +108,8 @@ final class UserProfileViewController: UIViewController {
     }
 
     private func setupBindings() {
-        viewModel.openSite = { [weak self] url in
-            self?.openSite(url)
+        viewModel.openSite = { [weak self] request in
+            self?.openSite(request)
         }
     }
 
@@ -205,8 +205,8 @@ final class UserProfileViewController: UIViewController {
         print("collectionButtonTapped")
     }
 
-    private func openSite(_ url: URL) {
-        let vc = WebViewAssembly(servicesAssembler: servicesAssembler).build(url: url)
+    private func openSite(_ request: URLRequest) {
+        let vc = WebViewAssembly(servicesAssembler: servicesAssembler).build(request: request)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

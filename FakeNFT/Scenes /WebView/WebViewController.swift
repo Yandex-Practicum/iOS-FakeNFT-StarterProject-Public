@@ -97,7 +97,7 @@ final class WebViewViewController: UIViewController {
                     progressView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 7),
                     progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
                     progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-                    progressView.heightAnchor.constraint(equalToConstant: 2),
+                    progressView.heightAnchor.constraint(equalToConstant: 200),
 
                     webView.topAnchor.constraint(equalTo: progressView.bottomAnchor),
                     webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -120,7 +120,7 @@ final class WebViewViewController: UIViewController {
     }
 
     func loadPage() {
-        webView.load(viewModel.urlRequest)
+        webView.load(viewModel.request)
     }
 }
 

@@ -11,8 +11,8 @@ public final class WebViewAssembly {
         self.servicesAssembler = servicesAssembler
     }
 
-    public func build(url: URL) -> UIViewController {
-        let viewModel = WebViewViewModelImpl(url: url)
+    public func build(request: URLRequest) -> UIViewController {
+        let viewModel = WebViewViewModelImpl(request: request)
         return WebViewViewController(viewModel: viewModel)
     }
 }

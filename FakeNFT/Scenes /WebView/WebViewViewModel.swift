@@ -5,7 +5,7 @@
 import WebKit
 
 protocol WebViewViewModel {
-    var urlRequest: URLRequest { get }
+    var request: URLRequest { get }
     var progressObservable: Observable<Float> { get }
     var progressBarHiddenObservable: Observable<Bool> { get }
 
@@ -14,7 +14,7 @@ protocol WebViewViewModel {
 }
 
 final class WebViewViewModelImpl: WebViewViewModel {
-    private let url: URL
+    let request: URLRequest
 
     @Observable
     private var progress: Float = 0
@@ -22,8 +22,8 @@ final class WebViewViewModelImpl: WebViewViewModel {
     @Observable
     private var progressBarHidden: Bool = false
 
-    init(url: URL) {
-        self.url = url
+    init(request: URLRequest) {
+        self.request = request
     }
 
     var progressObservable: Observable<Float> {
@@ -32,10 +32,6 @@ final class WebViewViewModelImpl: WebViewViewModel {
 
     var progressBarHiddenObservable: Observable<Bool> {
         $progressBarHidden
-    }
-
-    var urlRequest: URLRequest {
-        URLRequest(url: url)
     }
 
     func viewDidLoad() {
