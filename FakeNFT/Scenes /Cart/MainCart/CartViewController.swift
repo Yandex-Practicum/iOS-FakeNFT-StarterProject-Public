@@ -132,7 +132,9 @@ final class CartViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func paymentButtonActions() {
-        let paymentViewModel = PaymentViewModel()
+        let serviceCurrency = CurrencyServiceImpl(networkClient: DefaultNetworkClient())
+        let serviceOrder = OrderServiceImpl(networkClient: DefaultNetworkClient())
+        let paymentViewModel = PaymentViewModel(serviceCurrency: serviceCurrency, serviceOrder: serviceOrder)
         let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
         paymentViewController.modalPresentationStyle = .fullScreen
         present(paymentViewController, animated: true)

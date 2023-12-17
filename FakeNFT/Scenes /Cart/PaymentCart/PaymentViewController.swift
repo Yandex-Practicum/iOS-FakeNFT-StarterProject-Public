@@ -9,6 +9,7 @@ import UIKit
 
 final class PaymentViewController: UIViewController {
     private var viewModel: PaymentViewModel
+    private var currencyId: String?
     private let collectionSettings = CollectionSettings(
         cellCount: 2,
         topDistance: 20,
@@ -121,12 +122,14 @@ final class PaymentViewController: UIViewController {
         configConstraints()
         configNavigationBar()
         bind()
+        viewModel.loadCurrencies()
     }
 
     // MARK: Binding
     private func bind() {
         viewModel.$currencies.bind(observer: { [weak self] _ in
             guard let self else { return }
+            self.collectionView.reloadData()
         })
     }
 
@@ -140,6 +143,8 @@ final class PaymentViewController: UIViewController {
     }
 
     @objc private func payAction() {
+        guard let id = currencyId else { return }
+        viewModel.cartPayment(currencyId: id)
         let confirmationViewController = ConfirmationViewController()
         confirmationViewController.modalPresentationStyle = .fullScreen
         present(confirmationViewController, animated: true)
@@ -193,6 +198,8 @@ extension PaymentViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? PaymentCell
+        let selectedItem = viewModel.currencies[indexPath.item]
+        currencyId = selectedItem.id
         cell?.selectedItem(isSelected: true)
     }
 

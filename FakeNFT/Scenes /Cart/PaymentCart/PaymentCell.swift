@@ -45,10 +45,14 @@ final class PaymentCell: UICollectionViewCell {
     }
 
     // MARK: - Methods
-    func configureCell(with currency: CurrencyModel) {
+    func configureCell(with currency: CurrencyModelElement) {
         nameLabel.text = currency.title
-        abbreviationLabel.text = currency.id
-        currencyImageView.image = UIImage(named: currency.image)
+        abbreviationLabel.text = currency.name
+        guard let url = URL(string: currency.image) else { return }
+        currencyImageView.kf.indicator?.startAnimatingView()
+        currencyImageView.kf.setImage(with: url, completionHandler: {_ in
+            self.currencyImageView.kf.indicator?.stopAnimatingView()
+        })
     }
 
     func selectedItem(isSelected: Bool) {

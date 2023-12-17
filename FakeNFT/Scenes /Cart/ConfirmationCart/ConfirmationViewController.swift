@@ -15,7 +15,7 @@ final class ConfirmationViewController: UIViewController {
         imageView.image = UIImage(named: "YPPaymentSuccess")
         return imageView
     }()
-    
+
     private lazy var successLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -25,7 +25,7 @@ final class ConfirmationViewController: UIViewController {
         label.text = NSLocalizedString("Success.payment", comment: "")
         return label
     }()
-    
+
     private lazy var completedButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
@@ -36,21 +36,21 @@ final class ConfirmationViewController: UIViewController {
         button.addTarget(self, action: #selector(completedAction), for: .touchUpInside)
         return button
     }()
-    
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configViews()
         configConstraints()
     }
-    
+
     // MARK: - Actions
     @objc private func completedAction() {
         let tabBarContoller = TabBarController()
         tabBarContoller.modalPresentationStyle = .fullScreen
         present(tabBarContoller, animated: true)
     }
-    
+
     // MARK: - Private methods
     private func configViews() {
         view.backgroundColor = UIColor(named: "YPWhite")
@@ -59,7 +59,7 @@ final class ConfirmationViewController: UIViewController {
             view.addSubview($0)
         }
     }
-    
+
     private func configConstraints() {
         NSLayoutConstraint.activate([
             successImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
