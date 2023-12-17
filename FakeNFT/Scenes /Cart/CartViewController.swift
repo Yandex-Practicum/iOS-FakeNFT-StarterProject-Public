@@ -1,12 +1,11 @@
 import UIKit
 
-final class CartViewController: UIViewController {
+final class CartViewController: UIViewController, CartViewControllerProtocol {
     
     // MARK: - Stored Properties
     
-    private var presenter = CartPresenter()
+    private var presenter: CartPresenterProtocol?
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    private var deleteIndex: Int?
     
     // MARK: - Computed Properties
     
@@ -16,7 +15,6 @@ final class CartViewController: UIViewController {
         label.textColor = .NFTBlack
         label.textAlignment = .center
         label.text = "Корзина пуста"
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -30,7 +28,6 @@ final class CartViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
     }()
@@ -40,7 +37,6 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .NFTLightGray
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
@@ -51,7 +47,6 @@ final class CartViewController: UIViewController {
         label.font = .systemFont(ofSize: 15, weight: .regular)
         label.textColor = .NFTBlack
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -61,7 +56,6 @@ final class CartViewController: UIViewController {
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textColor = .NFTGreenUniversal
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -74,7 +68,6 @@ final class CartViewController: UIViewController {
         button.backgroundColor = .NFTBlack
         button.layer.cornerRadius = 16
         button.addTarget(nil, action: #selector(paymentButtonDidTap), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -86,13 +79,14 @@ final class CartViewController: UIViewController {
         
         view.backgroundColor = .NFTWhite
         
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.layer.zPosition = 50
+        
+        presenter = CartPresenter(viewController: self)
         
         addSubviews()
         constraintsSetup()
         navBarSetup()
-        tableViewAndLabelsUpdate()
+        labelsUpdate()
         elementsSetup()
         updateSorting()
     }
@@ -100,14 +94,21 @@ final class CartViewController: UIViewController {
     // MARK: - Private methods
     
     private func addSubviews() {
-        view.addSubview(emptyLabel)
-        view.addSubview(activityIndicator)
-        view.addSubview(tableView)
-        view.addSubview(paymentLayerView)
-        
-        paymentLayerView.addSubview(nftCountLabel)
-        paymentLayerView.addSubview(totalPriceLabel)
-        paymentLayerView.addSubview(paymentButton)
+        [emptyLabel,
+         activityIndicator,
+         tableView,
+         paymentLayerView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        [nftCountLabel,
+         totalPriceLabel,
+         paymentButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            paymentLayerView.addSubview($0)
+        }
     }
     
     private func constraintsSetup() {
@@ -157,7 +158,8 @@ final class CartViewController: UIViewController {
         }
     }
     
-    private func tableViewAndLabelsUpdate() {
+    private func labelsUpdate() {
+        guard let presenter else { return }
         nftCountLabel.text = "\(presenter.visibleNFT.count)" + " NFT"
         
         var totalPrice: Float = 0
@@ -166,28 +168,22 @@ final class CartViewController: UIViewController {
         }
         let formattedPrice = String(format: "%.2f", totalPrice)
         self.totalPriceLabel.text = formattedPrice + " ETH"
-        
-        tableView.reloadData()
     }
     
     private func elementsSetup() {
-        if presenter.visibleNFT.isEmpty {
-            emptyLabel.isHidden = false
-            tableView.isHidden = true
-            paymentLayerView.isHidden = true
-            
-            navigationController?.navigationBar.isHidden = true
-        } else {
-            emptyLabel.isHidden = true
-            tableView.isHidden = false
-            paymentLayerView.isHidden = false
-            
-            navigationController?.navigationBar.isHidden = false
-        }
+        guard let presenter else { return }
+        let nftIsEmpty = presenter.visibleNFT.isEmpty
+        
+        emptyLabel.isHidden = !nftIsEmpty
+        tableView.isHidden = nftIsEmpty
+        paymentLayerView.isHidden = nftIsEmpty
+        navigationController?.navigationBar.isHidden = nftIsEmpty
         tabBarController?.tabBar.isHidden = false
     }
     
     private func updateSorting() {
+        guard let presenter else { return }
+        
         if UserDefaults.standard.value(forKey: "sortByPrice") != nil {
             presenter.sortByPrice()
         } else if UserDefaults.standard.value(forKey: "sortByRating") != nil {
@@ -197,22 +193,26 @@ final class CartViewController: UIViewController {
         }
     }
     
-    // MARK: - Obj-C methods
+    // MARK: - Public methods
+
+    func tableViewUpdate() {
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - Handlers
     
     @objc func sortButtonDidTap() {
+        guard let presenter else { return }
         let alert = UIAlertController(title: nil, message: "Сортировка", preferredStyle: .actionSheet)
         
         let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { _ in
-            self.presenter.sortByPrice()
-            self.tableView.reloadData()
+            presenter.sortByPrice()
         }
         let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
-            self.presenter.sortByRating()
-            self.tableView.reloadData()
+            presenter.sortByRating()
         }
         let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { _ in
-            self.presenter.sortByName()
-            self.tableView.reloadData()
+            presenter.sortByName()
         }
         let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
         
@@ -233,11 +233,13 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let presenter else { return .zero }
         return presenter.visibleNFT.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartTableViewCell.reuseIndentifier) as? CartTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartTableViewCell.reuseIndentifier) as? CartTableViewCell,
+              let presenter = presenter
         else { return UITableViewCell() }
         
         let nft = presenter.visibleNFT[indexPath.row]
@@ -274,8 +276,9 @@ extension CartViewController: CartTableViewCellDelegate {
 
 extension CartViewController: DeleteFromCartViewControllerDelegate {
     func deleteItemFromCart(for index: Int) {
+        guard let presenter else { return }
         presenter.deleteItemFormCart(for: index)
-        tableViewAndLabelsUpdate()
+        labelsUpdate()
         elementsSetup()
     }
     

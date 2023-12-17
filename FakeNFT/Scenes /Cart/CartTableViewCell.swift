@@ -24,7 +24,6 @@ final class CartTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -34,7 +33,6 @@ final class CartTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textColor = .NFTBlack
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -43,7 +41,6 @@ final class CartTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 2
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
@@ -54,7 +51,6 @@ final class CartTableViewCell: UITableViewCell {
         label.textColor = .NFTBlack
         label.textAlignment = .left
         label.text = "Цена"
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -64,7 +60,6 @@ final class CartTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.textColor = .NFTBlack
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -73,7 +68,6 @@ final class CartTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setImage(UIImage(named: "deleteFromBasket"), for: .normal)
         button.addTarget(nil, action: #selector(deleteFromCartButtonDidTap), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -103,12 +97,16 @@ final class CartTableViewCell: UITableViewCell {
     // MARK: - Private methods
     
     private func addSubviews() {
-        self.contentView.addSubview(pictureImageView)
-        self.contentView.addSubview(nameLabel)
-        self.contentView.addSubview(ratingStackView)
-        self.contentView.addSubview(priceNameLabel)
-        self.contentView.addSubview(priceLabel)
-        self.contentView.addSubview(deleteFromCartButton)
+        [pictureImageView,
+         nameLabel,
+         ratingStackView,
+         priceNameLabel,
+         priceLabel,
+         deleteFromCartButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.contentView.addSubview($0)
+        }
     }
     
     private func constraintsSetup() {
@@ -164,7 +162,7 @@ final class CartTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: - Obj-C methods
+    // MARK: - Handlers
     
     @objc func deleteFromCartButtonDidTap() {
         guard let cellIndex else { return }

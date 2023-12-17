@@ -46,6 +46,8 @@
 		C936BEB22B2B45A5005A687C /* CustomVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */; };
 		C936BEB72B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEB62B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift */; };
 		C936BEB92B2C72B5005A687C /* CartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEB82B2C72B5005A687C /* CartPresenter.swift */; };
+		C954FEA22B2F55DB00B05CB7 /* CartPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C954FEA12B2F55DB00B05CB7 /* CartPresenterProtocol.swift */; };
+		C954FEA42B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C954FEA32B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift */; };
 		C9A42D9E2B27ABBC004D85B2 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42D9D2B27ABBC004D85B2 /* CatalogViewController.swift */; };
 		C9A42DA12B27AD39004D85B2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42DA02B27AD39004D85B2 /* ProfileViewController.swift */; };
 		C9A42DA42B27ADBC004D85B2 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */; };
@@ -118,6 +120,8 @@
 		C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVisualEffectView.swift; sourceTree = "<group>"; };
 		C936BEB62B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFromCartViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C936BEB82B2C72B5005A687C /* CartPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPresenter.swift; sourceTree = "<group>"; };
+		C954FEA12B2F55DB00B05CB7 /* CartPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPresenterProtocol.swift; sourceTree = "<group>"; };
+		C954FEA32B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewControllerProtocol.swift; sourceTree = "<group>"; };
 		C9A42D9D2B27ABBC004D85B2 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		C9A42DA02B27AD39004D85B2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -372,7 +376,9 @@
 				C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */,
 				C9CA12B32B28EA1900E8161C /* CartMockData.swift */,
 				C936BEB82B2C72B5005A687C /* CartPresenter.swift */,
+				C954FEA12B2F55DB00B05CB7 /* CartPresenterProtocol.swift */,
 				C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */,
+				C954FEA32B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift */,
 				C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */,
 				C936BEAD2B2A591C005A687C /* CartTableViewCellDelegate.swift */,
 				C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */,
@@ -580,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C954FEA42B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				C9CA12B42B28EA1900E8161C /* CartMockData.swift in Sources */,
 				C936BEAE2B2A591D005A687C /* CartTableViewCellDelegate.swift in Sources */,
@@ -616,6 +623,7 @@
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				C936BEB72B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift in Sources */,
+				C954FEA22B2F55DB00B05CB7 /* CartPresenterProtocol.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
 				C9A42D9E2B27ABBC004D85B2 /* CatalogViewController.swift in Sources */,

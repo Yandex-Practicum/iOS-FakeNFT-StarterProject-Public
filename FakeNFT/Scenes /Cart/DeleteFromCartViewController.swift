@@ -37,7 +37,6 @@ final class DeleteFromCartViewController: UIViewController {
         imageView.image = itemImage
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -49,7 +48,6 @@ final class DeleteFromCartViewController: UIViewController {
         label.text = "Вы уверены, что хотите\nудалить объект из корзины?"
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
@@ -59,7 +57,6 @@ final class DeleteFromCartViewController: UIViewController {
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
     }()
@@ -72,7 +69,6 @@ final class DeleteFromCartViewController: UIViewController {
         button.backgroundColor = .NFTBlack
         button.layer.cornerRadius = 12
         button.addTarget(nil, action: #selector(deleteButtonDidTap), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -85,7 +81,6 @@ final class DeleteFromCartViewController: UIViewController {
         button.backgroundColor = .NFTBlack
         button.layer.cornerRadius = 12
         button.addTarget(nil, action: #selector(cancelButtonDidTap), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
@@ -114,15 +109,22 @@ final class DeleteFromCartViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(blurView)
         view.sendSubviewToBack(blurView)
-        
         view.addSubview(layerView)
         
-        layerView.addSubview(deleteImageView)
-        layerView.addSubview(deleteLabel)
-        layerView.addSubview(stackView)
+        [deleteImageView,
+         deleteLabel,
+         stackView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            layerView.addSubview($0)
+        }
         
-        stackView.addArrangedSubview(deleteButton)
-        stackView.addArrangedSubview(cancelButton)
+        [deleteButton,
+         cancelButton
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            stackView.addArrangedSubview($0)
+        }
     }
     
     private func constraintsSetup() {
@@ -152,7 +154,7 @@ final class DeleteFromCartViewController: UIViewController {
         ])
     }
     
-    // MARK: - Obj-C methods
+    // MARK: - Handlers
     
     @objc func deleteButtonDidTap() {
         dismiss(animated: true)
