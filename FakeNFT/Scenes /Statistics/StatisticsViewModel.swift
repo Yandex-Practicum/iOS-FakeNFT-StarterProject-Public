@@ -2,7 +2,7 @@
 // Created by Андрей Парамонов on 14.12.2023.
 //
 
-import UIKit
+import Foundation
 
 protocol StatisticsViewModel {
     var numberOfRows: Int { get }
