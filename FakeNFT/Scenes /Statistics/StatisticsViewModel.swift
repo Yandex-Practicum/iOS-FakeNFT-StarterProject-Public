@@ -8,8 +8,8 @@ protocol StatisticsViewModel {
     var numberOfRows: Int { get }
     var usersObservable: Observable<[User]> { get }
 
-    func cellViewModel(for indexPath: IndexPath) -> StatisticsCellModel
-    func didSelectRow(at indexPath: IndexPath)
+    func itemModel(for indexPath: IndexPath) -> StatisticsCellModel
+    func didSelectModel(at indexPath: IndexPath)
     func viewDidLoad()
     func sortBy(_ sortType: StatisticsSortType)
     func refreshControlPulled()
@@ -34,7 +34,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         users.count
     }
 
-    func cellViewModel(for indexPath: IndexPath) -> StatisticsCellModel {
+    func itemModel(for indexPath: IndexPath) -> StatisticsCellModel {
         let user = users[indexPath.row]
         return StatisticsCellModel(rating: indexPath.row + 1,
                                    name: user.name,
@@ -42,7 +42,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
                                    photoURL: user.avatar)
     }
 
-    func didSelectRow(at indexPath: IndexPath) {
+    func didSelectModel(at indexPath: IndexPath) {
         print("didSelectRow")
     }
 

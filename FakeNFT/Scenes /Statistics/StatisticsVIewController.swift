@@ -116,7 +116,7 @@ extension StatisticsVIewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: StatisticsViewCell = tableView.dequeueReusableCell()
-        let cellViewModel = viewModel.cellViewModel(for: indexPath)
+        let cellViewModel = viewModel.itemModel(for: indexPath)
         cell.configure(with: cellViewModel)
         return cell
     }
@@ -124,6 +124,6 @@ extension StatisticsVIewController: UITableViewDataSource {
 
 extension StatisticsVIewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath)
+        viewModel.didSelectModel(at: indexPath)
     }
 }
