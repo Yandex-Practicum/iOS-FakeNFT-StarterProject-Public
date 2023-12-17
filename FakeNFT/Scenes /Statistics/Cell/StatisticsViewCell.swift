@@ -72,7 +72,6 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
     }
 
