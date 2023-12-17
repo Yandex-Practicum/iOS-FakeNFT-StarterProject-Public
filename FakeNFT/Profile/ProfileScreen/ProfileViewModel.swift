@@ -1,5 +1,5 @@
 import Foundation
-import ProgressHUD
+
 
 protocol ProfileViewModelProtocol {
     var userProfile: UserProfile? { get }
@@ -33,7 +33,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     
     private func fetchUserProfile() {
-        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         profileService.fetchProfile { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -42,7 +41,6 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             case .failure(let error):
                 print(error)
             }
-            ProgressHUD.dismiss()
         }
     }
 }
