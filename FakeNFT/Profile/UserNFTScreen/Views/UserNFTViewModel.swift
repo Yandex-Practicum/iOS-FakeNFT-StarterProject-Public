@@ -1,5 +1,4 @@
 import Foundation
-import ProgressHUD
 
 protocol UserNFTViewModelProtocol {
     var userNFT: [NFT]? { get }
@@ -38,7 +37,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     }
     
     func viewDidLoad(nftList: [String]) {
-        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         state = .loading
         
         var fetchedNFTs: [NFT] = []
@@ -65,7 +63,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     
     func viewWillDisappear() {
         service.stopAllTasks()
-        ProgressHUD.dismiss()
     }
     
     func userSelectedSorting(by option: SortOption) {
@@ -102,7 +99,6 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         authorGroup.notify(queue: .main) {
             self.userNFT = nfts
             self.state = .loaded(hasData: !nfts.isEmpty)
-            ProgressHUD.dismiss()
         }
     }
     

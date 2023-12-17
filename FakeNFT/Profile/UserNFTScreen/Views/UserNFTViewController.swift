@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class UserNFTViewController: UIViewController {
     
@@ -113,8 +114,10 @@ final class UserNFTViewController: UIViewController {
          
          switch state {
          case .loading:
+             ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
              self.setUIInteraction(false)
          case .loaded(let hasData):
+             ProgressHUD.dismiss()
              if hasData {
                  self.updateUIBasedOnNFTData()
              } else {
