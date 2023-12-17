@@ -130,7 +130,7 @@ final class StatisticsViewController: UIViewController {
     private func showUserProfile(user: User) {
         let userProfileVC = UserProfileAssembly(servicesAssembler: servicesAssembler).build(user: user)
         userProfileVC.modalPresentationStyle = .fullScreen
-        present(userProfileVC, animated: true)
+        present(userProfileVC, animated: false)
     }
 }
 

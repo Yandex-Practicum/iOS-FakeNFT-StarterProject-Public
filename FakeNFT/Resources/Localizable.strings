@@ -9,3 +9,5 @@
 "Statistics.Sort.ByName" = "По имени";
 "Statistics.Sort.ByRating" = "По рейтингу";
 "Statistics.Sort.Close" = "Закрыть";
+"UserProfile.GoToSite" = "Перейти на сайт пользователя";
+"UserProfile.CollectionSize" = "Коллекция NFT (%d)";

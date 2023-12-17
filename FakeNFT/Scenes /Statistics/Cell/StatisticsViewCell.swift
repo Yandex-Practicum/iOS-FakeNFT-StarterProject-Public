@@ -6,16 +6,6 @@ import UIKit
 import Kingfisher
 
 final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
-    private static var photoPlaceholder: UIImage = {
-        let systemName = "person.crop.circle.fill"
-        if #available(iOS 15.0, *) {
-            let config = UIImage.SymbolConfiguration(paletteColors: [.segmentInactive, .segmentActive])
-            return UIImage(systemName: systemName, withConfiguration: config)!
-        } else {
-            return UIImage(systemName: systemName)!
-        }
-    }()
-
     private lazy var ratingTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +80,7 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         photoView.kf.indicatorType = .none
         photoView.kf.setImage(
             with: model.photoURL,
-            placeholder: StatisticsViewCell.photoPlaceholder,
+            placeholder: UIImage.userPhotoPlaceholder,
             options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
     }
 
