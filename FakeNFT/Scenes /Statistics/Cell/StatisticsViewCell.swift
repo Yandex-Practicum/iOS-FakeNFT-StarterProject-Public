@@ -70,6 +70,20 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         setupView()
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        if let hitView = hitView, hitView.isDescendant(of: coloredView) {
+            return hitView
+        }
+        return nil
+    }
+
     func configure(with model: StatisticsCellModel) {
         ratingTitle.text = String(model.rating)
         nameView.text = model.name
@@ -102,12 +116,12 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         NSLayoutConstraint.activate(
             [
                 ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                ratingTitle.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
                 ratingTitle.widthAnchor.constraint(equalToConstant: 27),
 
-                coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                coloredView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
                 coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
-                coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                coloredView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
                 coloredView.heightAnchor.constraint(equalToConstant: 80),
 
                 contentView.heightAnchor.constraint(equalTo: coloredView.heightAnchor,
