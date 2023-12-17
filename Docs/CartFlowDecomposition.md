@@ -32,9 +32,9 @@ Cart# Cart
  - Сверстать экран "Успех" (est: 60 min; fact: 40 min)
 
 #### Логика
- - Настроить логику оплаты (est: 120 min; fact: x min)
+ - Настроить логику оплаты (est: 120 min; fact: 180 min)
 
-`Total:` est: 480 min; fact: x min.
+`Total:` est: 480 min; fact: 440 min.
 
 ## Module 3:
 #### Верстка

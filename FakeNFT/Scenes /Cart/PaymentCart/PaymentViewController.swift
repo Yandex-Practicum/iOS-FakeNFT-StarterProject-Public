@@ -131,6 +131,11 @@ final class PaymentViewController: UIViewController {
             guard let self else { return }
             self.collectionView.reloadData()
         })
+
+        viewModel.$successfulPayment.bind(observer: { [weak self] _ in
+            guard let self else { return }
+            self.cartPayment()
+        })
     }
 
     // MARK: - Actions
@@ -145,12 +150,20 @@ final class PaymentViewController: UIViewController {
     @objc private func payAction() {
         guard let id = currencyId else { return }
         viewModel.cartPayment(currencyId: id)
-        let confirmationViewController = ConfirmationViewController()
-        confirmationViewController.modalPresentationStyle = .fullScreen
-        present(confirmationViewController, animated: true)
     }
 
     // MARK: - Private methods
+    private func cartPayment() {
+        guard let success = viewModel.successfulPayment?.success else { return }
+        if success {
+            let confirmationViewController = ConfirmationViewController()
+            confirmationViewController.modalPresentationStyle = .fullScreen
+            present(confirmationViewController, animated: true)
+        } else {
+        // TODO: Показать алерт с ошибкой оплаты
+        }
+    }
+
     private func configNavigationBar() {
         let backButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backButtonItem

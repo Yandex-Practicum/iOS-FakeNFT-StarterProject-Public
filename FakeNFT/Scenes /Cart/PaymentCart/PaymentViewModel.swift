@@ -9,6 +9,7 @@ import Foundation
 
 final class PaymentViewModel {
     @Observable var currencies: [CurrencyModelElement] = []
+    @Observable var successfulPayment: OrderModel?
     private let serviceCurrency: CurrencyService
     private let serviceOrder: OrderService
 
@@ -20,7 +21,7 @@ final class PaymentViewModel {
 
     // MARK: - Methods
     func cartPayment(currencyId: String) {
-        print(currencyId)
+        didPayButtonTapped(currencyId: currencyId)
     }
 
     func loadCurrencies() {
@@ -35,4 +36,15 @@ final class PaymentViewModel {
     }
 
     // MARK: - Private methods
+    private func didPayButtonTapped(currencyId: String) {
+        serviceOrder.checkPaymentResult(with: currencyId) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let paymentResult):
+                    successfulPayment = paymentResult
+                case .failure(let error):
+                    print("Payment error: \(error)")
+                }
+        }
+    }
 }
