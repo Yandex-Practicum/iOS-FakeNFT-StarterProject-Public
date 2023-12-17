@@ -76,9 +76,9 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         nftCountTitle.text = String(model.nftCount)
         photoView.kf.indicatorType = .none
         photoView.kf.setImage(
-                with: model.photoURL,
-                placeholder: StatisticsViewCell.photoPlaceholder,
-                options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
+            with: model.photoURL,
+            placeholder: StatisticsViewCell.photoPlaceholder,
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
     }
 
     private func setupView() {
@@ -100,32 +100,32 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate(
-                [
-                    ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                    ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    ratingTitle.widthAnchor.constraint(equalToConstant: 27),
+            [
+                ratingTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
+                ratingTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                ratingTitle.widthAnchor.constraint(equalToConstant: 27),
 
-                    coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
-                    coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    coloredView.heightAnchor.constraint(equalToConstant: 80),
+                coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
+                coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                coloredView.heightAnchor.constraint(equalToConstant: 80),
 
-                    contentView.heightAnchor.constraint(equalTo: coloredView.heightAnchor,
-                                                        constant: Constants.bottomMargin),
+                contentView.heightAnchor.constraint(equalTo: coloredView.heightAnchor,
+                                                    constant: Constants.bottomMargin),
 
-                    photoView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                    photoView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 16),
-                    photoView.widthAnchor.constraint(equalToConstant: 28),
-                    photoView.heightAnchor.constraint(equalToConstant: 28),
+                photoView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
+                photoView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 16),
+                photoView.widthAnchor.constraint(equalToConstant: 28),
+                photoView.heightAnchor.constraint(equalToConstant: 28),
 
-                    nameView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                    nameView.leadingAnchor.constraint(equalTo: photoView.trailingAnchor, constant: 8),
-                    nameView.widthAnchor.constraint(greaterThanOrEqualToConstant: 186),
+                nameView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
+                nameView.leadingAnchor.constraint(equalTo: photoView.trailingAnchor, constant: 8),
+                nameView.widthAnchor.constraint(greaterThanOrEqualToConstant: 186),
 
-                    nftCountTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
-                    nftCountTitle.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -16),
-                    nftCountTitle.leadingAnchor.constraint(greaterThanOrEqualTo: nameView.trailingAnchor, constant: 27)
-                ]
+                nftCountTitle.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
+                nftCountTitle.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -16),
+                nftCountTitle.leadingAnchor.constraint(greaterThanOrEqualTo: nameView.trailingAnchor, constant: 27)
+            ]
         )
     }
 
