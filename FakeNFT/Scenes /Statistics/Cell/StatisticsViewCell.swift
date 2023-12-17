@@ -73,7 +73,7 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -119,13 +119,11 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
                 ratingTitle.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
                 ratingTitle.widthAnchor.constraint(equalToConstant: 27),
 
-                coloredView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+                coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
                 coloredView.leadingAnchor.constraint(equalTo: ratingTitle.trailingAnchor, constant: 8),
                 coloredView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+                coloredView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
                 coloredView.heightAnchor.constraint(equalToConstant: 80),
-
-                contentView.heightAnchor.constraint(equalTo: coloredView.heightAnchor,
-                                                    constant: Constants.bottomMargin),
 
                 photoView.centerYAnchor.constraint(equalTo: coloredView.centerYAnchor),
                 photoView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 16),
@@ -143,10 +141,4 @@ final class StatisticsViewCell: UITableViewCell, ReuseIdentifying {
         )
     }
 
-}
-
-extension StatisticsViewCell {
-    private enum Constants {
-        static let bottomMargin: CGFloat = 8
-    }
 }
