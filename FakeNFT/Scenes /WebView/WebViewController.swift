@@ -66,11 +66,11 @@ final class WebViewViewController: UIViewController {
 
     private func setupBindings() {
         estimateProgressObserver = webView.observe(
-                \.estimatedProgress,
-                options: [.new],
-                changeHandler: { [weak self] _, change in
-                    self?.viewModel.didUpdateProgressValue(change.newValue!)
-                }
+            \.estimatedProgress,
+            options: [.new],
+            changeHandler: { [weak self] _, change in
+                self?.viewModel.didUpdateProgressValue(change.newValue!)
+            }
         )
         viewModel.progressObservable.bind { [weak self] progress in
             self?.progressView.progress = progress
@@ -88,22 +88,22 @@ final class WebViewViewController: UIViewController {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate(
-                [
-                    backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
-                    backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9),
-                    backButton.widthAnchor.constraint(equalToConstant: 24),
-                    backButton.heightAnchor.constraint(equalToConstant: 24),
+            [
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
+                backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9),
+                backButton.widthAnchor.constraint(equalToConstant: 24),
+                backButton.heightAnchor.constraint(equalToConstant: 24),
 
-                    progressView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 7),
-                    progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
-                    progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-                    progressView.heightAnchor.constraint(equalToConstant: 2),
+                progressView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 7),
+                progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+                progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+                progressView.heightAnchor.constraint(equalToConstant: 2),
 
-                    webView.topAnchor.constraint(equalTo: progressView.bottomAnchor),
-                    webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-                ]
+                webView.topAnchor.constraint(equalTo: progressView.bottomAnchor),
+                webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
         )
     }
 

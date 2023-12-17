@@ -13,7 +13,7 @@ public final class StatisticsAssembly {
 
     public func build() -> UIViewController {
         let viewModel = StatisticsViewModelImpl(userService: servicesAssembly.userService,
-                                                userDefaultsStore: servicesAssembler.userDefaultsStore)
+                                                userDefaultsStore: servicesAssembly.userDefaultsStore)
         return StatisticsViewController(viewModel: viewModel, servicesAssembler: servicesAssembly)
     }
 }

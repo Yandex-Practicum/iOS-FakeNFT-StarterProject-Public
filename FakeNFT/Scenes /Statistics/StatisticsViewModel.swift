@@ -52,10 +52,6 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         currentSortType = userDefaultsStore.getStatisticsSortType()
     }
 
-    var numberOfRows: Int {
-        users.count
-    }
-
     var isLoadingObservable: Observable<Bool> {
         $isLoading
     }

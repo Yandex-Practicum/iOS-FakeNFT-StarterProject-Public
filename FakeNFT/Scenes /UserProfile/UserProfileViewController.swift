@@ -120,9 +120,9 @@ final class UserProfileViewController: UIViewController {
         setupConstraints()
         userImageView.kf.indicatorType = .none
         userImageView.kf.setImage(
-                with: viewModel.userAvatar,
-                placeholder: UIImage.userPhotoPlaceholder,
-                options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
+            with: viewModel.userAvatar,
+            placeholder: UIImage.userPhotoPlaceholder,
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
 
     }
 
@@ -139,54 +139,53 @@ final class UserProfileViewController: UIViewController {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate(
-                [
-                    backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
-                    backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                            constant: 9),
-                    backButton.heightAnchor.constraint(equalToConstant: 24),
-                    backButton.widthAnchor.constraint(equalToConstant: 24),
+            [
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
+                backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 9),
+                backButton.heightAnchor.constraint(equalToConstant: 24),
+                backButton.widthAnchor.constraint(equalToConstant: 24),
 
-                    userImageView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 29),
-                    userImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                           constant: Constants.leadingOffset),
-                    userImageView.heightAnchor.constraint(equalToConstant: 70),
-                    userImageView.widthAnchor.constraint(equalToConstant: 70),
+                userImageView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 29),
+                userImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                       constant: Constants.leadingOffset),
+                userImageView.heightAnchor.constraint(equalToConstant: 70),
+                userImageView.widthAnchor.constraint(equalToConstant: 70),
 
-                    userNameLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
-                    userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor,
-                                                           constant: Constants.leadingOffset),
-                    userNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                            constant: Constants.trailingOffset),
+                userNameLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
+                userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor,
+                                                       constant: Constants.leadingOffset),
+                userNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                        constant: Constants.trailingOffset),
 
-                    userDescriptionLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
-                    userDescriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                                  constant: Constants.leadingOffset),
-                    userDescriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                                   constant: Constants.trailingOffset),
+                userDescriptionLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
+                userDescriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                              constant: Constants.leadingOffset),
+                userDescriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                               constant: Constants.trailingOffset),
 
-                    goToSiteButton.topAnchor.constraint(equalTo: userDescriptionLabel.bottomAnchor, constant: 28),
-                    goToSiteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                            constant: Constants.leadingOffset),
-                    goToSiteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                             constant: Constants.trailingOffset),
-                    goToSiteButton.heightAnchor.constraint(equalToConstant: 40),
+                goToSiteButton.topAnchor.constraint(equalTo: userDescriptionLabel.bottomAnchor, constant: 28),
+                goToSiteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                                                        constant: Constants.leadingOffset),
+                goToSiteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                         constant: Constants.trailingOffset),
+                goToSiteButton.heightAnchor.constraint(equalToConstant: 40),
 
-                    collectionButton.topAnchor.constraint(equalTo: goToSiteButton.bottomAnchor, constant: 40),
-                    collectionButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                    collectionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                collectionButton.topAnchor.constraint(equalTo: goToSiteButton.bottomAnchor, constant: 40),
+                collectionButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                collectionButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
 
-                    collectionLabel.centerYAnchor.constraint(equalTo: collectionButton.centerYAnchor),
-                    collectionLabel.leadingAnchor.constraint(equalTo: collectionButton.leadingAnchor,
-                                                             constant: Constants.leadingOffset),
-                    collectionLabel.trailingAnchor.constraint(greaterThanOrEqualTo: collectionForwardImage.leadingAnchor,
-                                                              constant: Constants.trailingOffset),
+                collectionLabel.centerYAnchor.constraint(equalTo: collectionButton.centerYAnchor),
+                collectionLabel.leadingAnchor.constraint(equalTo: collectionButton.leadingAnchor,
+                                                         constant: Constants.leadingOffset),
+                collectionLabel.trailingAnchor.constraint(greaterThanOrEqualTo: collectionForwardImage.leadingAnchor,
+                                                          constant: Constants.trailingOffset),
 
-                    collectionForwardImage.centerYAnchor.constraint(equalTo: collectionButton.centerYAnchor),
-                    collectionForwardImage.trailingAnchor.constraint(equalTo: collectionButton.trailingAnchor,
-                                                                   constant: Constants.trailingOffset),
-                    collectionForwardImage.heightAnchor.constraint(equalTo: collectionLabel.heightAnchor),
-                    collectionForwardImage.widthAnchor.constraint(equalTo: collectionLabel.heightAnchor)
-                ]
+                collectionForwardImage.centerYAnchor.constraint(equalTo: collectionButton.centerYAnchor),
+                collectionForwardImage.trailingAnchor.constraint(equalTo: collectionButton.trailingAnchor,
+                                                                 constant: Constants.trailingOffset),
+                collectionForwardImage.heightAnchor.constraint(equalTo: collectionLabel.heightAnchor),
+                collectionForwardImage.widthAnchor.constraint(equalTo: collectionLabel.heightAnchor)
+            ]
         )
     }
 
@@ -206,9 +205,9 @@ final class UserProfileViewController: UIViewController {
     }
 
     private func openSite(_ request: URLRequest) {
-        let vc = WebViewAssembly(servicesAssembler: servicesAssembler).build(request: request)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        let webViewViewController = WebViewAssembly(servicesAssembler: servicesAssembler).build(request: request)
+        webViewViewController.modalPresentationStyle = .fullScreen
+        present(webViewViewController, animated: true)
     }
 }
 
