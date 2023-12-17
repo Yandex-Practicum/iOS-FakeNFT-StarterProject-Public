@@ -205,9 +205,9 @@ final class UserProfileViewController: UIViewController {
     }
 
     private func openSite(_ request: URLRequest) {
-        let webViewViewController = WebViewAssembly(servicesAssembler: servicesAssembler).build(request: request)
-        webViewViewController.modalPresentationStyle = .fullScreen
-        present(webViewViewController, animated: true)
+        let webViewVC = WebViewAssembly(servicesAssembler: servicesAssembler).build(request: request)
+        webViewVC.modalPresentationStyle = .fullScreen
+        present(webViewVC, animated: true)
     }
 }
 
