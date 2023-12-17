@@ -7,12 +7,14 @@ import Kingfisher
 
 final class UserProfileViewController: UIViewController {
     private var viewModel: UserProfileViewModel
+    private let servicesAssembler: ServicesAssembly
 
-    private lazy var backwardButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "backward")?.withTintColor(.textPrimary), for: .normal)
-        button.addTarget(self, action: #selector(goBackButtonTapped), for: .touchUpInside)
+        button.setImage(UIImage(named: "backward"), for: .normal)
+        button.tintColor = .textPrimary
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
         return button
     }()
 
@@ -88,8 +90,9 @@ final class UserProfileViewController: UIViewController {
         return imageView
     }()
 
-    init(viewModel: UserProfileViewModel) {
+    init(viewModel: UserProfileViewModel, servicesAssembler: ServicesAssembly) {
         self.viewModel = viewModel
+        self.servicesAssembler = servicesAssembler
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -124,7 +127,7 @@ final class UserProfileViewController: UIViewController {
     }
 
     private func addSubviews() {
-        view.addSubview(backwardButton)
+        view.addSubview(backButton)
         view.addSubview(userImageView)
         view.addSubview(userNameLabel)
         view.addSubview(userDescriptionLabel)
@@ -137,13 +140,13 @@ final class UserProfileViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    backwardButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
-                    backwardButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                    backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9),
+                    backButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                                                             constant: 9),
-                    backwardButton.heightAnchor.constraint(equalToConstant: 24),
-                    backwardButton.widthAnchor.constraint(equalToConstant: 24),
+                    backButton.heightAnchor.constraint(equalToConstant: 24),
+                    backButton.widthAnchor.constraint(equalToConstant: 24),
 
-                    userImageView.topAnchor.constraint(equalTo: backwardButton.bottomAnchor, constant: 29),
+                    userImageView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 29),
                     userImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                                                            constant: Constants.leadingOffset),
                     userImageView.heightAnchor.constraint(equalToConstant: 70),
@@ -188,7 +191,7 @@ final class UserProfileViewController: UIViewController {
     }
 
     @objc
-    private func goBackButtonTapped() {
+    private func didTapBackButton() {
         dismiss(animated: false)
     }
 
@@ -203,10 +206,9 @@ final class UserProfileViewController: UIViewController {
     }
 
     private func openSite(_ url: URL) {
-        guard UIApplication.shared.canOpenURL(url) else {
-            return
-        }
-        UIApplication.shared.open(url)
+        let vc = WebViewAssembly(servicesAssembler: servicesAssembler).build(url: url)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }
 

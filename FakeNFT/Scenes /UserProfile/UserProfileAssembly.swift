@@ -13,6 +13,6 @@ public final class UserProfileAssembly {
 
     public func build(user: User) -> UIViewController {
         let viewModel = UserProfileViewModelImpl(user: user)
-        return UserProfileViewController(viewModel: viewModel)
+        return UserProfileViewController(viewModel: viewModel, servicesAssembler: servicesAssembler)
     }
 }
