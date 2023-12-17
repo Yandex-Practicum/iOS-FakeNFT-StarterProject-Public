@@ -6,21 +6,21 @@ import WebKit
 
 protocol WebViewViewModel {
     var urlRequest: URLRequest { get }
-    func viewDidLoad()
-    func didUpdateProgressValue(_ progress: Double)
-
     var progressObservable: Observable<Float> { get }
     var progressBarHiddenObservable: Observable<Bool> { get }
+
+    func viewDidLoad()
+    func didUpdateProgressValue(_ progress: Double)
 }
 
 final class WebViewViewModelImpl: WebViewViewModel {
+    private let url: URL
+
     @Observable
     private var progress: Float = 0
 
     @Observable
     private var progressBarHidden: Bool = false
-
-    private let url: URL
 
     init(url: URL) {
         self.url = url
@@ -42,6 +42,11 @@ final class WebViewViewModelImpl: WebViewViewModel {
         cleanWebData()
     }
 
+    func didUpdateProgressValue(_ progress: Double) {
+        self.progress = Float(progress)
+        progressBarHidden = progress == 1
+    }
+
     private func cleanWebData() {
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         let dataStore = WKWebsiteDataStore.default()
@@ -50,10 +55,5 @@ final class WebViewViewModelImpl: WebViewViewModel {
                 dataStore.removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
             }
         }
-    }
-
-    func didUpdateProgressValue(_ progress: Double) {
-        self.progress = Float(progress)
-        progressBarHidden = progress == 1
     }
 }
