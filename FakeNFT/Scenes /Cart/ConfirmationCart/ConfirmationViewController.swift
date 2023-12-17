@@ -46,7 +46,11 @@ final class ConfirmationViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func completedAction() {
-        let tabBarContoller = TabBarController()
+        let servicesAssembly = ServicesAssembly(
+            networkClient: DefaultNetworkClient(),
+            nftStorage: NftStorageImpl()
+        )
+        let tabBarContoller = TabBarController(servicesAssembly: servicesAssembly)
         tabBarContoller.modalPresentationStyle = .fullScreen
         present(tabBarContoller, animated: true)
     }
