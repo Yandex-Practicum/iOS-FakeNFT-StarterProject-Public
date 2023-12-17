@@ -18,7 +18,7 @@ protocol UserProfileViewModel {
 final class UserProfileViewModelImpl: UserProfileViewModel {
     private let user: User
 
-    init (user: User) {
+    init(user: User) {
         self.user = user
     }
 
