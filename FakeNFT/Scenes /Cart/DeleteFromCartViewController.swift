@@ -64,7 +64,7 @@ final class DeleteFromCartViewController: UIViewController {
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.setTitle("Удалить", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         button.setTitleColor(.NFTRedUniversal, for: .normal)
         button.backgroundColor = .NFTBlack
         button.layer.cornerRadius = 12
@@ -76,7 +76,7 @@ final class DeleteFromCartViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("Вернуться", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         button.setTitleColor(.NFTWhite, for: .normal)
         button.backgroundColor = .NFTBlack
         button.layer.cornerRadius = 12
