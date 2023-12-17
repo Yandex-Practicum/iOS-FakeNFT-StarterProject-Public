@@ -46,6 +46,7 @@
 		AE09A3BE6ACB77000875B145 /* StatisticsCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AC423ED7A7B1D619F17D /* StatisticsCellModel.swift */; };
 		AE09A51266E65CBDAA8BFB37 /* StatisticsSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A4B1144276B7B94D843F /* StatisticsSortType.swift */; };
 		AE09A5A57F2FBD0724BAEE73 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AF65DC6956A992EE0899 /* StatisticsAssembly.swift */; };
+		AE09A7FFDB0927DD795DC7D0 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ACBBF9CF5F50B0A67F30 /* UserDefaultsStore.swift */; };
 		AE09A9104EB0B77329E541A9 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ABE52801E37BE41D6C8B /* UIBlockingProgressHUD.swift */; };
 		AE09A912136DFA6E9F11EDEC /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A25229E4DB72BE714C62 /* StatisticsViewModel.swift */; };
 		AE09AAE55342DDC4C74A0D20 /* StatisticsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A094CEB4D035398A98AC /* StatisticsViewCell.swift */; };
@@ -122,6 +123,7 @@
 		AE09AB2EE745ADB8F004344A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AE09ABE52801E37BE41D6C8B /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		AE09AC423ED7A7B1D619F17D /* StatisticsCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsCellModel.swift; sourceTree = "<group>"; };
+		AE09ACBBF9CF5F50B0A67F30 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
 		AE09AF65DC6956A992EE0899 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
 		AE09AFB26F577E2C93EC8F36 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				0C79EE6B2A76DE2E00EE90EA /* ServicesAssemly.swift */,
 				0CFCB73F2A78002A0009A829 /* NftService.swift */,
 				AE09A5404D22390F1A82C978 /* UserService.swift */,
+				AE09ACBBF9CF5F50B0A67F30 /* UserDefaultsStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				AE09A3BE6ACB77000875B145 /* StatisticsCellModel.swift in Sources */,
 				AE09A5A57F2FBD0724BAEE73 /* StatisticsAssembly.swift in Sources */,
 				AE09A51266E65CBDAA8BFB37 /* StatisticsSortType.swift in Sources */,
+				AE09A7FFDB0927DD795DC7D0 /* UserDefaultsStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,8 +20,12 @@ final class ServicesAssembly {
 
     var userService: UserService {
         UserServiceImpl(
-                networkClient: networkClient,
-                storage: nftStorage
+            networkClient: networkClient,
+            storage: nftStorage
         )
+    }
+
+    var userDefaultsStore: UserDefaultsStore {
+        UserDefaultsStore.shared
     }
 }

@@ -55,7 +55,7 @@ final class StatisticsVIewController: UIViewController {
             self?.tableView.reloadData()
             self?.refreshControl.endRefreshing()
         }
-        viewModel.isLoadingObservable.bind { [weak self] isLoading in
+        viewModel.isLoadingObservable.bind { isLoading in
             if isLoading {
                 UIBlockingProgressHUD.show()
             } else {

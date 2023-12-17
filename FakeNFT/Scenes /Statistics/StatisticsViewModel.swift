@@ -19,11 +19,16 @@ protocol StatisticsViewModel {
 
 final class StatisticsViewModelImpl: StatisticsViewModel {
     private let userService: UserService
+    private let userDefaultsStore: UserDefaultsStore
 
     @Observable
     private var users: [User] = []
 
-    private var currentSortType: StatisticsSortType = .none
+    private var currentSortType: StatisticsSortType {
+        didSet {
+            userDefaultsStore.setStatisticsSortType(currentSortType)
+        }
+    }
 
     @Observable
     private var isLoading: Bool = false
@@ -34,8 +39,10 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         $users
     }
 
-    init(userService: UserService) {
+    init(userService: UserService, userDefaultsStore: UserDefaultsStore) {
         self.userService = userService
+        self.userDefaultsStore = userDefaultsStore
+        currentSortType = userDefaultsStore.getStatisticsSortType()
     }
 
     var numberOfRows: Int {

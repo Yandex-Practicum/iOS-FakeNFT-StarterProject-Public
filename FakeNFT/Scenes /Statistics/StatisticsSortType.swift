@@ -4,6 +4,6 @@
 
 import Foundation
 
-enum StatisticsSortType: String {
+enum StatisticsSortType: Int {
     case none, name, rating
 }
