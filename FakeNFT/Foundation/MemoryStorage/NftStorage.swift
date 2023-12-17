@@ -11,7 +11,7 @@ protocol NftStorage: AnyObject {
 // Пример простого класса, который сохраняет данные из сети
 final class NftStorageImpl: NftStorage {
     private var storage: [String: Nft] = [:]
-    private var users: [String: User] = [:]
+    private var users: [User] = []
 
     private let syncQueue = DispatchQueue(label: "sync-nft-queue")
 
@@ -29,21 +29,24 @@ final class NftStorageImpl: NftStorage {
 
     func saveUsers(_ users: [User]) {
         syncQueue.async { [weak self] in
-            users.forEach { user in
-                self?.users[user.id] = user
-            }
+            self?.users = users
         }
     }
 
     func getUser(with id: String) -> User? {
         syncQueue.sync {
-            users[id]
+            users.first { $0.id == id }
         }
     }
 
     func saveUser(_ user: User) {
         syncQueue.async { [weak self] in
-            self?.users[user.id] = user
+            guard let self else { return }
+            if let index = self.users.firstIndex(where: { $0.id == user.id }) {
+                self.users[index] = user
+            } else {
+                self.users.append(user)
+            }
         }
     }
 }
