@@ -39,6 +39,8 @@
 `Total:` est: 310 min; fact: 310 min
 ## Эпик 3/3
 
+### Module 3: Экран избранные NFT
+
 - Реализация NavigationBar (est: 30 min; fact: 30 min) 
 - Создание UICollectionView (est: 60 min; fact: 60 min) 
 - Верстка кастомной ячейки (est: 90 min; fact: 90 min) 
