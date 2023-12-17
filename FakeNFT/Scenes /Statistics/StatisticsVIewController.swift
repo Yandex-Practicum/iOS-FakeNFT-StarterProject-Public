@@ -105,7 +105,7 @@ final class StatisticsVIewController: UIViewController {
 
     @objc
     private func refreshControlPulled() {
-        viewModel.refreshControlPulled()
+        viewModel.didTriggerRefreshAction()
     }
 }
 

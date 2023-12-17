@@ -12,7 +12,7 @@ protocol StatisticsViewModel {
     func didSelectModel(at indexPath: IndexPath)
     func viewDidLoad()
     func sortBy(_ sortType: StatisticsSortType)
-    func refreshControlPulled()
+    func didTriggerRefreshAction()
 }
 
 final class StatisticsViewModelImpl: StatisticsViewModel {
@@ -96,7 +96,7 @@ final class StatisticsViewModelImpl: StatisticsViewModel {
         lhs.name < rhs.name
     }
 
-    func refreshControlPulled() {
+    func didTriggerRefreshAction() {
         loadUsers()
     }
 }
