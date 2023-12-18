@@ -69,7 +69,8 @@ final class WebViewViewController: UIViewController {
             \.estimatedProgress,
             options: [.new],
             changeHandler: { [weak self] _, change in
-                self?.viewModel.didUpdateProgressValue(change.newValue!)
+                guard let self, let newValue = change.newValue else { return }
+                self.viewModel.didUpdateProgressValue(newValue)
             }
         )
         viewModel.progressObservable.bind { [weak self] progress in
