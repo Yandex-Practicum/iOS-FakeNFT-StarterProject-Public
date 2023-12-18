@@ -97,7 +97,7 @@ struct DefaultNetworkClient: NetworkClient {
         completionQueue: DispatchQueue,
         onResponse: @escaping (Result<T, Error>) -> Void
     ) -> NetworkTask? {
-        return send(request: request, completionQueue: completionQueue) { result in
+        send(request: request, completionQueue: completionQueue) { result in
             switch result {
             case let .success(data):
                 self.parse(data: data, type: type, onResponse: onResponse)
@@ -117,6 +117,7 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.setValue(request.authToken, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
@@ -132,6 +133,7 @@ struct DefaultNetworkClient: NetworkClient {
             let response = try decoder.decode(T.self, from: data)
             onResponse(.success(response))
         } catch {
+            print(error)
             onResponse(.failure(NetworkClientError.parsingError))
         }
     }

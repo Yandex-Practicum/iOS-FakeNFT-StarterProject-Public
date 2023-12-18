@@ -11,10 +11,12 @@ protocol NetworkRequest {
     var endpoint: URL? { get }
     var httpMethod: HttpMethod { get }
     var dto: Encodable? { get }
+    var authToken: String? { get }
 }
 
 // default values
 extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
+    var authToken: String? { "1495849e-0f8a-4900-8542-6e3756a04b45" }
 }
