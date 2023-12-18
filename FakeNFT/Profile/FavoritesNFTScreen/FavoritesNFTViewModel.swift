@@ -1,5 +1,5 @@
 import Foundation
-import ProgressHUD
+
 
 protocol FavoritesNFTViewModelProtocol {
     var favoritesNFT: [NFT] { get }
@@ -44,7 +44,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     func viewWillDisappear() {
         nftService.stopAllTasks()
         NotificationCenter.default.post(name: NSNotification.Name("profileUpdated"), object: nil)
-        ProgressHUD.dismiss()
+        
     }
     
     func dislike(for nft: NFT) {
@@ -79,7 +79,6 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     }
 
     func fetchNFT(nftList: [String]) {
-        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         state = .loading
 
         var fetchedNFTs: [NFT] = []
@@ -102,7 +101,6 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
         group.notify(queue: .main) {
             self.favoritesNFT = fetchedNFTs
             self.state = .loaded(hasData: !fetchedNFTs.isEmpty)
-            ProgressHUD.dismiss()
         }
     }
 }

@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class FavoritesNFTViewController: UIViewController {
     
@@ -62,25 +63,26 @@ final class FavoritesNFTViewController: UIViewController {
     // MARK: - Methods
     
     private func bind() {
+        viewModel.observeFavoritesNFT { [weak self] _ in
+            guard let self = self else { return }
+            self.nftCollectionView.reloadData()
+        }
+        
         viewModel.observeState { [weak self] state in
-          guard let self = self else { return }
-          
-          switch state {
-          case .loading:
-              self.setUIInteraction(false)
-          case .loaded(let hasData):
-              self.updateUI(isNoNFT: !hasData)
-              self.nftCollectionView.reloadData()
-          case .error(let error):
-              DispatchQueue.main.async {
-                  let alertController = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
-                  let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                  alertController.addAction(okAction)
-                  self.present(alertController, animated: true, completion: nil)
-              }
-          default:
-              break
-          }
+            guard let self = self else { return }
+            
+            switch state {
+            case .loading:
+                self.showProgressHUD()
+                self.setUIInteraction(false)
+            case .loaded(let hasData):
+                self.hideProgressHUD()
+                self.updateUI(isNoNFT: !hasData)
+                self.nftCollectionView.reloadData()
+            case .error(_):
+                print("Ошибка")
+            default:
+                break          }
         }
     }
     
@@ -101,7 +103,13 @@ final class FavoritesNFTViewController: UIViewController {
     private func configNavigationBar() {
         setupCustomBackButton()
     }
-    
+    private func showProgressHUD() {
+        ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
+    }
+
+    private func hideProgressHUD() {
+        ProgressHUD.dismiss()
+    }
     // MARK: - Layout methods
     
     private func setupViews() {
