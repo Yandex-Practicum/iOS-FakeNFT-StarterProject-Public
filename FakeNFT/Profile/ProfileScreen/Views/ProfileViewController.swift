@@ -78,16 +78,6 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-   // override func viewDidLoad() {
-    //    super.viewDidLoad()
-     //   viewModel.viewDidLoad()
-
-      //  self.navigationController?.delegate = self
-      //  self.tabBarController?.tabBar.isHidden = true
-
-    //    setupViews()
-  //  }
-
     // MARK: - Actions
 
     @objc
