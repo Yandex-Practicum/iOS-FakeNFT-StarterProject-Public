@@ -102,7 +102,6 @@ final class UserProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupBindings()
         setupView()
     }
@@ -123,7 +122,6 @@ final class UserProfileViewController: UIViewController {
             with: viewModel.userAvatar,
             placeholder: UIImage.userPhotoPlaceholder,
             options: [.cacheSerializer(FormatIndicatedCacheSerializer.jpeg), .cacheMemoryOnly])
-
     }
 
     private func addSubviews() {
