@@ -5,6 +5,8 @@ enum NetworkClientError: Error {
     case urlRequestError(Error)
     case urlSessionError
     case parsingError
+    case taskCreationFailed
+
 }
 
 protocol NetworkClient {

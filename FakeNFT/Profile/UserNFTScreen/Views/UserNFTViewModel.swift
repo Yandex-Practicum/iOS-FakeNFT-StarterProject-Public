@@ -1,23 +1,15 @@
 import Foundation
 
-enum LoadingState {
-    case idle
-    case loading
-    case loaded
-    case error(Error)
-}
-
 protocol UserNFTViewModelProtocol {
     var userNFT: [NFT]? { get }
     var authors: [String: Author] { get }
     var state: LoadingState { get }
-    var nftList: [String] { get }
     
     func observeUserNFT(_ handler: @escaping ([NFT]?) -> Void)
     func observeState(_ handler: @escaping (LoadingState) -> Void)
     
-    func fetchNFT(nftList: [String])
-    func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void)
+    func viewDidLoad(nftList: [String])
+    func viewWillDisappear()
     
     func userSelectedSorting(by option: SortOption)
 }
@@ -30,12 +22,10 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     private (set) var state: LoadingState = .idle
     
     private (set) var authors: [String: Author] = [:]
-    private let model: UserNFTModel
-    private (set) var nftList: [String] = []
+    private let service: NFTService
     
-    init(model: UserNFTModel, nftList: [String]) {
-        self.model = model
-        self.nftList = nftList
+    init(nftService: NFTService) {
+        self.service = nftService
     }
     
     func observeUserNFT(_ handler: @escaping ([NFT]?) -> Void) {
@@ -46,16 +36,16 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         $state.observe(handler)
     }
     
-    func fetchNFT(nftList: [String]) {
+    func viewDidLoad(nftList: [String]) {
         state = .loading
-
+        
         var fetchedNFTs: [NFT] = []
         let group = DispatchGroup()
         
         for element in nftList {
             group.enter()
             
-            model.fetchNFT(nftID: element) { (result) in
+            service.fetchNFT(nftID: element) { (result) in
                 switch result {
                 case .success(let nft):
                     fetchedNFTs.append(nft)
@@ -67,27 +57,19 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         }
         
         group.notify(queue: .main) {
-            self.fetchAuthor(nfts: fetchedNFTs)
+            self.fetchAuthorList(nfts: fetchedNFTs)
         }
     }
     
-    func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
-        model.fetchAuthor(authorID: authorID) { result in
-            switch result {
-            case .success(let author):
-                completion(.success(author))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func viewWillDisappear() {
+        service.stopAllTasks()
     }
     
     func userSelectedSorting(by option: SortOption) {
         guard var nfts = userNFT else {
-            print("No NFTs available to sort")
             return
         }
-
+        
         switch option {
         case .price:
             nfts.sort(by: { $0.price > $1.price })
@@ -99,7 +81,7 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         self.userNFT = nfts
     }
     
-    private func fetchAuthor(nfts: [NFT]) {
+    private func fetchAuthorList(nfts: [NFT]) {
         let authorGroup = DispatchGroup()
         
         for nft in nfts {
@@ -116,9 +98,18 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
         }
         authorGroup.notify(queue: .main) {
             self.userNFT = nfts
-            self.state = .loaded
+            self.state = .loaded(hasData: !nfts.isEmpty)
+        }
+    }
+    
+    private func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
+        service.fetchAuthor(authorID: authorID) { result in
+            switch result {
+            case .success(let author):
+                completion(.success(author))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 }
-
-

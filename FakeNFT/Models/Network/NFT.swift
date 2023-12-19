@@ -10,4 +10,3 @@ struct NFT: Codable {
     let author: String
     let id: String
 }
-

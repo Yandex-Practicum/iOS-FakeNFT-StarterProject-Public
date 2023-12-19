@@ -115,27 +115,24 @@ final class EditingViewController: UIViewController {
         setupDelegates()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.viewWillDisappear()
-    }
-
-    // MARK: - Actions
+    // MARK: - Действия
 
     @objc
     private func exitButtonTapped() {
+        viewModel.exitButtonTapped()
         dismiss(animated: true)
     }
 
     @objc
     private func changePhotoTapped() {
+        // Определяем действие подтверждения для оповещения
         let confirmAction = AlertActionModel(title: NSLocalizedString("AlertAction.ok", comment: ""),
                                              style: .default) { [weak self] urlText in
-            guard let self = self else { return }
-            if let urlText = urlText,
-               let url = URL(string: urlText) {
-                self.viewModel.photoURLdidChanged(with: url)
+            guard let strongSelf = self else { return }
+            if let urlText = urlText, let url = URL(string: urlText) {
+                strongSelf.viewModel.photoURLdidChanged(with: url)
             } else {
+                // Создаем модель оповещения об ошибке
                 let errorModel = AlertModel(title: NSLocalizedString("AlertAction.error", comment: ""),
                                             message: NSLocalizedString("AlertAction.incorrURL", comment: ""),
                                             style: .alert,
@@ -143,22 +140,27 @@ final class EditingViewController: UIViewController {
                                                                        style: .cancel,
                                                                        handler: nil)],
                                             textFieldPlaceholder: nil)
-                self.alertService.showAlert(model: errorModel)
+                // Используем 'strongSelf' для доступа к 'alertService'
+                strongSelf.alertService.showAlert(model: errorModel)
             }
         }
         
+        // Определяем действие отмены для оповещения
         let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.cancel", comment: ""),
                                             style: .cancel,
                                             handler: nil)
         
+        // Создаем основную модель оповещения
         let alertModel = AlertModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
                                     message: nil,
                                     style: .alert,
                                     actions: [confirmAction, cancelAction],
                                     textFieldPlaceholder: NSLocalizedString("AlertAction.imageURL", comment: ""))
         
+        // Показываем оповещение
         alertService.showAlert(model: alertModel)
     }
+
 
     // MARK: - Methods
 

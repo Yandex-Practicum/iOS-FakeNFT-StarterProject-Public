@@ -54,6 +54,7 @@ final class ProfileViewController: UIViewController {
     private lazy var profileTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileCell.self)
+        tableView.isScrollEnabled = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -77,7 +78,6 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     // MARK: - Actions
 
     @objc
@@ -85,6 +85,7 @@ final class ProfileViewController: UIViewController {
         router.routeToEditingViewController()
     }
 
+    // MARK: - Methods
     
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] profileModel in
@@ -106,7 +107,6 @@ final class ProfileViewController: UIViewController {
             ProgressHUD.showError(NSLocalizedString("ProfileViewController.errorLoadingProfile", comment: ""))
             return
         }
-
         DispatchQueue.main.async { [weak self] in
             self?.profileImageView.kf.setImage(with: URL(string: model.avatar))
             self?.userNameLabel.text = model.name
@@ -115,7 +115,7 @@ final class ProfileViewController: UIViewController {
             self?.tabBarController?.tabBar.isHidden = false
             self?.profileTableView.reloadData()
             [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
-
+       
             // Скрываем индикатор загрузки
             ProgressHUD.dismiss()
         }
@@ -132,6 +132,7 @@ final class ProfileViewController: UIViewController {
 
         viewModel.viewDidLoad() // Запускаем процесс загрузки данных
     }
+
     
     // MARK: - Layout methods
 
@@ -213,7 +214,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             router.routeToUserNFT(nftList: viewModel.userProfile?.nfts ?? [])
         case 1:
-            router.routeToFavoritesNFT()
+            router.routeToFavoritesNFT(nftList: viewModel.userProfile?.likes ?? [])
         case 2:
             if let url = URL(string: userWebSiteTextView.text) {
                 router.routeToWebView(url: url)
@@ -235,3 +236,4 @@ extension ProfileViewController: UINavigationControllerDelegate {
         }
     }
 }
+
