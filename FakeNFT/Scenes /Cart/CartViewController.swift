@@ -6,6 +6,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     
     private var presenter: CartPresenterProtocol?
     private let activityIndicator = UIActivityIndicatorView(style: .large)
+    private let refreshControl = UIRefreshControl()
     
     // MARK: - Computed Properties
     
@@ -28,6 +29,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
+        tableView.refreshControl = self.refreshControl
         
         return tableView
     }()
@@ -80,6 +82,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         view.backgroundColor = .NFTWhite
         
         activityIndicator.layer.zPosition = 50
+        refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         
         presenter = CartPresenter(viewController: self)
         
@@ -226,6 +229,11 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     
     @objc func paymentButtonDidTap() {
         //TODO: add code to jump to PaymentViewController
+    }
+    
+    @objc func refreshTableView() {
+        tableViewUpdate()
+        refreshControl.endRefreshing()
     }
 }
 
