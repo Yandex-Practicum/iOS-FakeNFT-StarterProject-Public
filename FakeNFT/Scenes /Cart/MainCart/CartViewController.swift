@@ -20,7 +20,7 @@ final class CartViewController: UIViewController {
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
-        label.text = NSLocalizedString("Сart.is.empty", comment: "")
+        label.text = NSLocalizedString("Сart.isEmpty", comment: "")
         label.textColor = UIColor(named: "YPBlack")
         label.isHidden = true
         return label

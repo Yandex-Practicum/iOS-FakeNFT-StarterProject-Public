@@ -44,6 +44,7 @@ final class PaymentViewModel {
                     successfulPayment = paymentResult
                 case .failure(let error):
                     print("Payment error: \(error)")
+                // TODO: Добавить Alert для обработки ошибки и отображение пользователяю
                 }
         }
     }

@@ -26,7 +26,7 @@ final class PaymentViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.bodyBold
-        label.text = NSLocalizedString("Select.a.Payment.Method", comment: "")
+        label.text = NSLocalizedString("Select.Payment.Method", comment: "")
         label.textColor = UIColor(named: "YPBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -201,12 +201,13 @@ final class PaymentViewController: UIViewController {
 
 extension PaymentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        collectionView.indexPathsForSelectedItems?.filter({ $0.section == indexPath.section }).forEach({
-            collectionView.deselectItem(at: $0, animated: false)
-            let cell = collectionView.cellForItem(at: $0) as? PaymentCell
-            cell?.selectedItem(isSelected: false)
-        })
-        return true
+        let items = collectionView.indexPathsForSelectedItems?.filter { $0.section == indexPath.section }
+                items?.forEach {
+                    collectionView.deselectItem(at: $0, animated: false)
+                    let cell = collectionView.cellForItem(at: $0) as? PaymentCell
+                    cell?.selectedItem(isSelected: false)
+                }
+                return true
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

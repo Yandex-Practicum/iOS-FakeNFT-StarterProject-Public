@@ -32,7 +32,7 @@ final class ConfirmationViewController: UIViewController {
         button.titleLabel?.font = UIFont.bodyBold
         button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
         button.backgroundColor = UIColor(named: "YPBlack")
-        button.setTitle(NSLocalizedString("Return.to.catalog", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("Return.toCatalog", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(completedAction), for: .touchUpInside)
         return button
     }()

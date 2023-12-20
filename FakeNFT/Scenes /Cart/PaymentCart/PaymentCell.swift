@@ -50,9 +50,9 @@ final class PaymentCell: UICollectionViewCell {
         abbreviationLabel.text = currency.name
         guard let url = URL(string: currency.image) else { return }
         currencyImageView.kf.indicator?.startAnimatingView()
-        currencyImageView.kf.setImage(with: url, completionHandler: {_ in
-            self.currencyImageView.kf.indicator?.stopAnimatingView()
-        })
+        currencyImageView.kf.setImage(with: url) { _ in
+                    self.currencyImageView.kf.indicator?.stopAnimatingView()
+                }
     }
 
     func selectedItem(isSelected: Bool) {

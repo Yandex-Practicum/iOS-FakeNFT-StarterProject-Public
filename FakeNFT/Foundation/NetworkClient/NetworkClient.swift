@@ -134,7 +134,6 @@ struct DefaultNetworkClient: NetworkClient {
             let response = try decoder.decode(T.self, from: data)
             onResponse(.success(response))
         } catch {
-            print("Error decoding data: \(error)")
             onResponse(.failure(NetworkClientError.parsingError))
         }
     }
