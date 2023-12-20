@@ -165,7 +165,9 @@ final class CartTableViewCell: UITableViewCell {
     // MARK: - Handlers
     
     @objc func deleteFromCartButtonDidTap() {
-        guard let cellIndex else { return }
-        delegate?.showDeleteViewController(for: cellIndex, with: pictureImageView.image ?? UIImage())
+        guard let cellIndex,
+              let cellImage = pictureImageView.image
+        else { return }
+        delegate?.showDeleteViewController(for: cellIndex, with: cellImage)
     }
 }
