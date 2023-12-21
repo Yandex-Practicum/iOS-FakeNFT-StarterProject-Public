@@ -13,7 +13,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     private lazy var emptyLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .NFTBlack
+        label.textColor = .nftBlack
         label.textAlignment = .center
         label.text = "Корзина пуста"
         
@@ -25,7 +25,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.reuseIndentifier)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .NFTWhite
+        tableView.backgroundColor = .nftWhite
         tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
@@ -36,7 +36,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     
     private lazy var paymentLayerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .NFTLightGray
+        view.backgroundColor = .nftLightGray
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
@@ -47,7 +47,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         let label = UILabel()
         label.text = "0 NFT"
         label.font = .systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .NFTBlack
+        label.textColor = .nftBlack
         label.textAlignment = .left
         
         return label
@@ -56,7 +56,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     private lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .NFTGreenUniversal
+        label.textColor = .nftGreenUniversal
         label.textAlignment = .left
         
         return label
@@ -66,8 +66,8 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         let button = UIButton()
         button.setTitle("К оплате", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-        button.setTitleColor(.NFTWhite, for: .normal)
-        button.backgroundColor = .NFTBlack
+        button.setTitleColor(.nftWhite, for: .normal)
+        button.backgroundColor = .nftBlack
         button.layer.cornerRadius = 16
         button.addTarget(nil, action: #selector(paymentButtonDidTap), for: .touchUpInside)
         

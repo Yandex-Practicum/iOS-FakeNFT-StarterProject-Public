@@ -31,7 +31,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .NFTBlack
+        label.textColor = .nftBlack
         label.textAlignment = .left
         
         return label
@@ -48,7 +48,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var priceNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13, weight: .regular)
-        label.textColor = .NFTBlack
+        label.textColor = .nftBlack
         label.textAlignment = .left
         label.text = "Цена"
         
@@ -58,7 +58,7 @@ final class CartTableViewCell: UITableViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.textColor = .NFTBlack
+        label.textColor = .nftBlack
         label.textAlignment = .left
         
         return label
@@ -77,7 +77,7 @@ final class CartTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = .NFTWhite
+        self.backgroundColor = .nftWhite
         self.selectionStyle = .none
         
         addSubviews()
