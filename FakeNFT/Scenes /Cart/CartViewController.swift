@@ -79,7 +79,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .NFTWhite
+        view.backgroundColor = .nftWhite
         
         activityIndicator.layer.zPosition = 50
         refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
