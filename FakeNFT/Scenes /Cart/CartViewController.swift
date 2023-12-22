@@ -228,7 +228,11 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     }
     
     @objc func paymentButtonDidTap() {
-        //TODO: add code to jump to PaymentViewController
+        let viewController = PaymentTypeViewController()
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func refreshTableView() {
