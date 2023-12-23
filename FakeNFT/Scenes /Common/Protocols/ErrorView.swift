@@ -13,13 +13,13 @@ protocol ErrorView {
 extension ErrorView where Self: UIViewController {
 
     func showError(_ model: ErrorModel) {
-        let title = NSLocalizedString("Error.title", comment: "")
+        let title = L10n.Error.title
         let alert = UIAlertController(
             title: title,
             message: model.message,
             preferredStyle: .alert
         )
-        let action = UIAlertAction(title: model.actionText, style: UIAlertAction.Style.default) {_ in
+        let action = UIAlertAction(title: model.actionText, style: UIAlertAction.Style.default) { _ in
             model.action()
         }
         alert.addAction(action)

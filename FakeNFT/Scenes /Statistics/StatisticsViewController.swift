@@ -83,19 +83,19 @@ final class StatisticsViewController: UIViewController {
     @objc
     private func sortButtonTapped() {
         let alert = UIAlertController(title: nil,
-                                      message: NSLocalizedString("Statistics.Sort.Message", comment: ""),
+                                      message: L10n.Statistics.Sort.message,
                                       preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.ByName", comment: ""),
+        alert.addAction(UIAlertAction(title: L10n.Statistics.Sort.byName,
                                       style: .default,
                                       handler: { [weak self] _ in
                                           self?.viewModel.sortBy(.name)
                                       }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.ByRating", comment: ""),
+        alert.addAction(UIAlertAction(title: L10n.Statistics.Sort.byRating,
                                       style: .default,
                                       handler: { [weak self] _ in
                                           self?.viewModel.sortBy(.rating)
                                       }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Statistics.Sort.Close", comment: ""),
+        alert.addAction(UIAlertAction(title: L10n.Statistics.Sort.close,
                                       style: .cancel,
                                       handler: nil))
         present(alert, animated: true)

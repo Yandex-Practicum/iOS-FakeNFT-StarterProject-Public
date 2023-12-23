@@ -14,13 +14,13 @@ final class TabBarController: UITabBarController {
     }
 
     private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
+        title: L10n.Tab.catalog,
         image: UIImage(systemName: "square.stack.3d.up.fill"),
         tag: 0
     )
 
     private let statisticsTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.Statistics", comment: ""),
+        title: L10n.Tab.statistics,
         image: UIImage(named: "tab.noActive"),
         selectedImage: UIImage(named: "tab.active")
     )

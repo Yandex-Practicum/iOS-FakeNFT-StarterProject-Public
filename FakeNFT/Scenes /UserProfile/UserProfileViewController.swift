@@ -52,7 +52,7 @@ final class UserProfileViewController: UIViewController {
     private lazy var goToSiteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("UserProfile.GoToSite", comment: ""), for: .normal)
+        button.setTitle(L10n.UserProfile.goToSite, for: .normal)
         button.setTitleColor(.textPrimary, for: .normal)
         button.addTarget(self, action: #selector(goToSiteButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 16
@@ -72,8 +72,7 @@ final class UserProfileViewController: UIViewController {
     private lazy var collectionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = String(format: NSLocalizedString("UserProfile.CollectionSize", comment: ""),
-                            viewModel.userCollectionSize)
+        label.text = String(format: L10n.UserProfile.collectionSize(viewModel.userCollectionSize))
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textAlignment = .left
         label.textColor = .textPrimary
