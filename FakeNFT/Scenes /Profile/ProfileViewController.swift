@@ -175,7 +175,16 @@ extension ProfileViewController: UITextViewDelegate {
 }
 
 extension ProfileViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        switch index {
+        case 0: print(0) // TODO: Переход в мои NFT
+        case 1: print(1) // TODO: Переход в Избранные NFT
+        case 2: print(2) // TODO: Переход на сраницу разработчика
+        default:
+            break
+        }
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -199,6 +208,4 @@ extension ProfileViewController: UITableViewDataSource {
         cell.configureCell(name: name)
         return cell
     }
-    
-    
 }
