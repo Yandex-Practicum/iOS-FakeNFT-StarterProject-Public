@@ -4,3 +4,12 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"Tab.profil" = "Профиль";
+"labelChangePhoto" = "Сменить фото";
+"alertChangePhoto.title" = "Введите ссылку на фото";
+"alertChangePhoto.placeholder" = "Текст";
+"done" = "Готово";
+"cancel" = "Отмена";
+"name" = "Имя";
+"description" = "Описание";
+"site" = "Сайт";

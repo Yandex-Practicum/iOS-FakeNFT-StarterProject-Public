@@ -1,8 +1,7 @@
-//
-//  ProfileGetRequest.swift
-//  FakeNFT
-//
-//  Created by Эдуард Бухмиллер on 17.12.2023.
-//
-
 import Foundation
+
+struct ProfileGetRequest: NetworkRequest {
+    var endpoint: URL? {
+        URL(string: "\(RequestConstants.baseURL)/api/v1/profile/1")
+    }
+}

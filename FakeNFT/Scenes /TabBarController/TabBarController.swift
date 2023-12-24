@@ -9,6 +9,12 @@ final class TabBarController: UITabBarController {
         image: UIImage(systemName: "square.stack.3d.up.fill"),
         tag: 0
     )
+    
+    private let profileTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.profil", comment: ""),
+        image: UIImage(systemName: "person.circle.fill"),
+        tag: 0
+    )
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -25,9 +31,15 @@ final class TabBarController: UITabBarController {
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
+        let profileController = ProfileViewController(
+            servicesAssembly: servicesAssembly
+        )
+        let navigationController1 = UINavigationController(rootViewController: profileController)
+        
+        profileController.tabBarItem = profileTabBarItem
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        viewControllers = [navigationController1, catalogController]
 
         view.backgroundColor = .systemBackground
     }

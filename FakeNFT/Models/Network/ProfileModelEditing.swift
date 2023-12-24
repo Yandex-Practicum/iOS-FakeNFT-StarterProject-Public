@@ -1,8 +1,9 @@
-//
-//  ProfileModelEditing.swift
-//  FakeNFT
-//
-//  Created by Эдуард Бухмиллер on 24.12.2023.
-//
 
 import Foundation
+
+struct ProfileModelEditing {
+    let name: String?
+    let avatar: String?
+    let description: String?
+    let website: String?
+}

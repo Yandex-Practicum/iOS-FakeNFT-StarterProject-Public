@@ -39,7 +39,7 @@ extension UIColor {
     static let ypGreenUniversal = UIColor(hexString: "1C9F00")
     static let ypBlueUniversal = UIColor(hexString: "0A84FF")
     static let ypBlackUniversal = UIColor(hexString: "1A1B22")
-    static let yowhiteUniversal = UIColor(hexString: "FFFFFF")
+    static let ypwhiteUniversal = UIColor(hexString: "FFFFFF")
     static let ypYellowUniversal = UIColor(hexString: "FEEF0D")
     
     static let ypWhite = UIColor { traits in
