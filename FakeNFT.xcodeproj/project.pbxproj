@@ -375,6 +375,64 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		C974EA8E2B38D235006485F8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */,
+				C9B8DD8D2B35D12100483AFE /* Currency.swift */,
+				C974EA8C2B38CDAB006485F8 /* GeometricParams.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C974EA912B38D29C006485F8 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C936BEB82B2C72B5005A687C /* CartPresenter.swift */,
+				C954FEA12B2F55DB00B05CB7 /* CartPresenterProtocol.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C974EA922B38D2D9006485F8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C974EA932B38D2E3006485F8 /* CartViewController */,
+				C974EA942B38D345006485F8 /* DeleteFromCartViewController */,
+				C974EA952B38D371006485F8 /* PaymentTypeViewController */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C974EA932B38D2E3006485F8 /* CartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */,
+				C954FEA32B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift */,
+				C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */,
+				C936BEAD2B2A591C005A687C /* CartTableViewCellDelegate.swift */,
+			);
+			path = CartViewController;
+			sourceTree = "<group>";
+		};
+		C974EA942B38D345006485F8 /* DeleteFromCartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C936BEAF2B2A5E27005A687C /* DeleteFromCartViewController.swift */,
+				C936BEB62B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift */,
+			);
+			path = DeleteFromCartViewController;
+			sourceTree = "<group>";
+		};
+		C974EA952B38D371006485F8 /* PaymentTypeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C9B8DD892B35ADBF00483AFE /* PaymentTypeViewController.swift */,
+				C974EA8A2B387E7C006485F8 /* PaymentTypeCollectionViewCell.swift */,
+			);
+			path = PaymentTypeViewController;
+			sourceTree = "<group>";
+		};
 		C9A42D9F2B27AD10004D85B2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,21 +445,11 @@
 			isa = PBXGroup;
 			children = (
 				C9A77A9E2B2D919900DE3DED /* Cart decomposition.md */,
+				C974EA8E2B38D235006485F8 /* Models */,
+				C974EA912B38D29C006485F8 /* Presenter */,
+				C974EA922B38D2D9006485F8 /* View */,
 				C9CA12B32B28EA1900E8161C /* CartMockData.swift */,
-				C9CA12B12B28E3A500E8161C /* CartNFTModel.swift */,
-				C936BEB82B2C72B5005A687C /* CartPresenter.swift */,
-				C954FEA12B2F55DB00B05CB7 /* CartPresenterProtocol.swift */,
-				C9CA12B52B28F66E00E8161C /* CartTableViewCell.swift */,
-				C936BEAD2B2A591C005A687C /* CartTableViewCellDelegate.swift */,
-				C9A42DA32B27ADBC004D85B2 /* CartViewController.swift */,
-				C954FEA32B2F6F6E00B05CB7 /* CartViewControllerProtocol.swift */,
-				C9B8DD8D2B35D12100483AFE /* Currency.swift */,
 				C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */,
-				C936BEAF2B2A5E27005A687C /* DeleteFromCartViewController.swift */,
-				C936BEB62B2B6ADB005A687C /* DeleteFromCartViewControllerDelegate.swift */,
-				C974EA8C2B38CDAB006485F8 /* GeometricParams.swift */,
-				C974EA8A2B387E7C006485F8 /* PaymentTypeCollectionViewCell.swift */,
-				C9B8DD892B35ADBF00483AFE /* PaymentTypeViewController.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
