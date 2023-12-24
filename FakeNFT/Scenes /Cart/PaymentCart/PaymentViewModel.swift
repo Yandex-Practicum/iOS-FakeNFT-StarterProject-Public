@@ -12,11 +12,13 @@ final class PaymentViewModel {
     @Observable var successfulPayment: OrderModel?
     private let serviceCurrency: CurrencyService
     private let serviceOrder: OrderService
+    private let serviceCart: CartService
 
     // MARK: Initialisation
-    init(serviceCurrency: CurrencyService, serviceOrder: OrderService) {
+    init(serviceCurrency: CurrencyService, serviceOrder: OrderService, serviceCart: CartService) {
         self.serviceCurrency = serviceCurrency
         self.serviceOrder = serviceOrder
+        self.serviceCart = serviceCart
     }
 
     // MARK: - Methods
@@ -38,14 +40,21 @@ final class PaymentViewModel {
     // MARK: - Private methods
     private func didPayButtonTapped(currencyId: String) {
         serviceOrder.checkPaymentResult(with: currencyId) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let paymentResult):
-                    successfulPayment = paymentResult
-                case .failure(let error):
-                    print("Payment error: \(error)")
+            guard let self = self else { return }
+            switch result {
+            case .success(let paymentResult):
+                removeCart()
+                successfulPayment = paymentResult
+            case .failure(let error):
+                print("Payment error: \(error)")
                 // TODO: Добавить Alert для обработки ошибки и отображение пользователяю
-                }
+            }
         }
+    }
+
+    private func removeCart() {
+        let id = "1"
+        let nftsID: [String] = []
+        serviceCart.updateFromCart(id: id, nftsID: nftsID) {_ in }
     }
 }

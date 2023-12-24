@@ -17,6 +17,14 @@ struct CartRequestPut: NetworkRequest {
         .put
     }
     var dto: Encodable? {
-        CartModel(nfts: nfts, id: id)
+        var components = URLComponents()
+        components.queryItems = []
+        for nft in nfts {
+            let nftQueryItem = URLQueryItem(name: "nfts", value: nft)
+            components.queryItems?.append(nftQueryItem)
+        }
+        let idQueryItem = URLQueryItem(name: "id", value: id)
+        components.queryItems?.append(idQueryItem)
+        return components.query
     }
 }
