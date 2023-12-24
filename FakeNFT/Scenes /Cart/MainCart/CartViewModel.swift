@@ -36,7 +36,7 @@ final class CartViewModel {
             $0.id == idNFT
         })
         let nftsID = nfts.map { $0.id }
-        service.removingFromCart(id: id, nftsID: nftsID) {_ in }
+        service.updateFromCart(id: id, nftsID: nftsID) {_ in }
     }
 
     // MARK: - Private methods

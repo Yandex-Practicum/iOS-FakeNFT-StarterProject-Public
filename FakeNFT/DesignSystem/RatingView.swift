@@ -3,8 +3,7 @@
 //  FakeNFT
 //
 //  Created by Alexandr Seva on 11.12.2023.
-//  Подсчет и отображениее райтинга с помощью UIStackView
-//  При передачи кол-во райтинга в переменную rating 
+//
 
 import UIKit
 
@@ -20,7 +19,8 @@ final class RatingView: UIStackView {
         setupUI()
     }
 
-    // MARK: - Methods
+    // MARK: - Public Methods
+    /// Подсчет и отображениее райтинга с помощью UIStackView, при передачи кол-во райтинга в метод update(rating: Int)
     func update(rating: Int) {
         updateRating(rating: rating)
     }

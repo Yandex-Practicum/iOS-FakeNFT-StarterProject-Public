@@ -20,7 +20,7 @@ final class CartViewController: UIViewController {
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
-        label.text = NSLocalizedString("Сart.is.empty", comment: "")
+        label.text = NSLocalizedString("Сart.isEmpty", comment: "")
         label.textColor = UIColor(named: "YPBlack")
         label.isHidden = true
         return label
@@ -42,7 +42,7 @@ final class CartViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
         button.backgroundColor = UIColor(named: "YPBlack")
-        button.addTarget(CartViewController.self, action: #selector(paymentButtonActions), for: .valueChanged)
+        button.addTarget(self, action: #selector(paymentButtonActions), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -132,7 +132,18 @@ final class CartViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func paymentButtonActions() {
-        // TODO: реализовать переход на экран оплаты
+        let defaultNetworkClient = DefaultNetworkClient()
+        let serviceCurrency = CurrencyServiceImpl(networkClient: defaultNetworkClient)
+        let serviceOrder = OrderServiceImpl(networkClient: defaultNetworkClient)
+        let serviceCart = CartServiceImpl(networkClient: defaultNetworkClient)
+        let paymentViewModel = PaymentViewModel(
+            serviceCurrency: serviceCurrency,
+            serviceOrder: serviceOrder,
+            serviceCart: serviceCart
+        )
+        let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
+        paymentViewController.modalPresentationStyle = .fullScreen
+        present(paymentViewController, animated: true)
     }
 
     @objc private func sortButtonActions() {

@@ -26,15 +26,15 @@ Cart# Cart
 
 ## Module 2:
 #### Верстка
- - Сверстать Nav Bar экрана "Способ оплаты" (est: 60 min; fact: x min)
- - Сверстать UICollectionCell выбора оплаты (est: 180 min; fact: x min)
- - Сверстать StackView с инфо текстом и кнопкой оплаты (est: 60 min; fact: x min)
- - Сверстать экран "Успех" (est: 60 min; fact: x min)
+ - Сверстать Nav Bar экрана "Способ оплаты" (est: 60 min; fact: 40 min)
+ - Сверстать UICollectionCell выбора оплаты (est: 180 min; fact: 120 min)
+ - Сверстать StackView с инфо текстом и кнопкой оплаты (est: 60 min; fact: 60 min)
+ - Сверстать экран "Успех" (est: 60 min; fact: 40 min)
 
 #### Логика
- - Настроить логику оплаты (est: 120 min; fact: x min)
+ - Настроить логику оплаты (est: 120 min; fact: 180 min)
 
-`Total:` est: 480 min; fact: x min.
+`Total:` est: 480 min; fact: 440 min.
 
 ## Module 3:
 #### Верстка
@@ -49,3 +49,4 @@ Cart# Cart
  - Настроить лоудер при загрузки данных (est: 60 min; fact: x min)
 
 `Total:` est: 600 min; fact: x min.
+
