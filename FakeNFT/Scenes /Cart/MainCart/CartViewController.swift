@@ -9,12 +9,13 @@ import UIKit
 import ProgressHUD
 
 protocol CartViewControllerDelegate: AnyObject {
-    func removingNFTsFromCart(id: String)
+    func removingNFTsFromCart(id: String, image: UIImage)
 }
 
 final class CartViewController: UIViewController {
     private let viewModel: CartViewModel
     private var refreshControl = UIRefreshControl()
+    private var idNFT: String?
 
     // MARK: - UiElements
     private lazy var placeholderLabel: UILabel = {
@@ -43,7 +44,6 @@ final class CartViewController: UIViewController {
         button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
         button.backgroundColor = UIColor(named: "YPBlack")
         button.addTarget(self, action: #selector(paymentButtonActions), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -52,7 +52,6 @@ final class CartViewController: UIViewController {
         label.font = UIFont.caption1
         label.textColor = UIColor(named: "YPBlack")
         label.text = "0 NFT"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -61,7 +60,6 @@ final class CartViewController: UIViewController {
         label.font = UIFont.bodyBold
         label.text = "0 ETH"
         label.textColor = UIColor(named: "YPGreen")
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -71,9 +69,10 @@ final class CartViewController: UIViewController {
         view.layer.cornerRadius = 12
         view.isHidden = true
         view.backgroundColor = UIColor(named: "YPLightGrey")
-        view.addSubview(totalAmountLabel)
-        view.addSubview(quantityNFTLabel)
-        view.addSubview(paymentButton)
+        [totalAmountLabel, quantityNFTLabel, paymentButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         NSLayoutConstraint.activate([
             quantityNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             quantityNFTLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
@@ -96,6 +95,87 @@ final class CartViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         return tableView
+    }()
+
+    private lazy var blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.isHidden = true
+                blurView.translatesAutoresizingMaskIntoConstraints = false
+        return blurView
+    }()
+
+    private lazy var nftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = UIFont.caption1
+        label.text = NSLocalizedString("Remove.trash", comment: "")
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "YPBlack")
+        return label
+    }()
+
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 12
+        button.titleLabel?.font = UIFont.bodyRegular
+        button.setTitle(NSLocalizedString("Delete", comment: ""), for: .normal)
+        button.setTitleColor(UIColor(named: "YPRed"), for: .normal)
+        button.backgroundColor = UIColor(named: "YPBlack")
+        button.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 12
+        button.titleLabel?.font = UIFont.bodyRegular
+        button.setTitle(NSLocalizedString("Return", comment: ""), for: .normal)
+        button.setTitleColor(UIColor(named: "YPWhite"), for: .normal)
+        button.backgroundColor = UIColor(named: "YPBlack")
+        button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var buttonsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [deleteButton, cancelButton])
+        stackView.spacing = 8
+//        stackView.isHidden = true
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+
+    private lazy var deleteFromCartView: UIView = {
+        let view = UIView()
+        // view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        [nftImageView, descriptionLabel, buttonsStackView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
+        NSLayoutConstraint.activate([
+            nftImageView.heightAnchor.constraint(equalToConstant: 108),
+            nftImageView.widthAnchor.constraint(equalToConstant: 108),
+            nftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nftImageView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -12),
+            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -1),
+            descriptionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            buttonsStackView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+            buttonsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonsStackView.widthAnchor.constraint(equalToConstant: 262),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        return view
     }()
 
     // MARK: Initialisation
@@ -157,7 +237,22 @@ final class CartViewController: UIViewController {
           }
     }
 
+    @objc private func deleteButtonAction() {
+        blurView.isHidden = true
+        guard let id = idNFT else { return }
+        viewModel.removeItemFromCart(idNFT: id)
+    }
+
+    @objc private func cancelButtonAction() {
+        blurView.isHidden = true
+    }
+
     // MARK: - Private methods
+    private func removingNFT(image: UIImage) {
+        blurView.isHidden = false
+        nftImageView.image = image
+    }
+
     private func screenRenderingLogic() {
         let nfts = viewModel.nfts
         if nfts.isEmpty {
@@ -189,7 +284,8 @@ final class CartViewController: UIViewController {
         tableView.addSubview(refreshControl)
         placeholderPaymentView.backgroundColor = UIColor(named: "YPLightGrey")
         view.backgroundColor = UIColor(named: "YPWhite")
-        [placeholderLabel, sortButton, tableView, placeholderPaymentView].forEach {
+        blurView.contentView.addSubview(deleteFromCartView)
+        [placeholderLabel, sortButton, tableView, placeholderPaymentView, blurView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -210,7 +306,15 @@ final class CartViewController: UIViewController {
             placeholderPaymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             placeholderPaymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             placeholderPaymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            placeholderPaymentView.heightAnchor.constraint(equalToConstant: 76)
+            placeholderPaymentView.heightAnchor.constraint(equalToConstant: 76),
+            deleteFromCartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            deleteFromCartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            deleteFromCartView.topAnchor.constraint(equalTo: view.topAnchor),
+            deleteFromCartView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
@@ -241,7 +345,8 @@ extension CartViewController: UITableViewDelegate {
 
 // MARK: - CartViewControllerDelegate
 extension CartViewController: CartViewControllerDelegate {
-    func removingNFTsFromCart(id: String) {
-        viewModel.removeItemFromCart(idNFT: id)
+    func removingNFTsFromCart(id: String, image: UIImage) {
+        idNFT = id
+        removingNFT(image: image)
     }
 }

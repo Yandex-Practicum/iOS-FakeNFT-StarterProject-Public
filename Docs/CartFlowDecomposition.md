@@ -38,7 +38,7 @@ Cart# Cart
 
 ## Module 3:
 #### Верстка
- - Сверстать окно удаления (est: 120 min; fact: x min)
+ - Сверстать окно удаления (est: 120 min; fact: 80 min)
  - Сверстать WebView (est: 120 min; fact: x min) 
  - Реализовать уведомление об ошибке оплаты (est: 60 min; fact: x min)
  - Сверстать сортировку NFT картинок (est: 120 min; fact: x min)

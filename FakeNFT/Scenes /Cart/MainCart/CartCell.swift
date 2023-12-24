@@ -66,8 +66,8 @@ final class CartCell: UITableViewCell {
 
     // MARK: - Actions
     @objc private func didDeleteButtonAction() {
-        guard let id = nftID else { return }
-        delegate?.removingNFTsFromCart(id: id)
+        guard let id = nftID, let image = imageNFTView.image else { return }
+        delegate?.removingNFTsFromCart(id: id, image: image)
     }
 
     // MARK: - Methods
