@@ -136,7 +136,11 @@ final class CartViewController: UIViewController {
         let serviceCurrency = CurrencyServiceImpl(networkClient: defaultNetworkClient)
         let serviceOrder = OrderServiceImpl(networkClient: defaultNetworkClient)
         let serviceCart = CartServiceImpl(networkClient: defaultNetworkClient)
-        let paymentViewModel = PaymentViewModel(serviceCurrency: serviceCurrency, serviceOrder: serviceOrder, serviceCart: serviceCart)
+        let paymentViewModel = PaymentViewModel(
+            serviceCurrency: serviceCurrency,
+            serviceOrder: serviceOrder,
+            serviceCart: serviceCart
+        )
         let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
         paymentViewController.modalPresentationStyle = .fullScreen
         present(paymentViewController, animated: true)
