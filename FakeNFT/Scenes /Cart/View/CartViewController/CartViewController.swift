@@ -97,7 +97,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        elementsSetup()
     }
     
     // MARK: - Private methods
@@ -186,7 +186,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         emptyLabel.isHidden = !nftIsEmpty
         tableView.isHidden = nftIsEmpty
         paymentLayerView.isHidden = nftIsEmpty
-        navigationController?.navigationBar.isHidden = nftIsEmpty
+        navigationController?.setNavigationBarHidden(nftIsEmpty, animated: false)
         tabBarController?.tabBar.isHidden = false
     }
     

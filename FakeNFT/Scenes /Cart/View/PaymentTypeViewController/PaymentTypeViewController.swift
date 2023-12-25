@@ -170,7 +170,10 @@ final class PaymentTypeViewController: UIViewController {
     }
     
     @objc func webViewLabelTapped() {
-        //TODO: add code to show webViewController
+        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
+        
+        let viewController = WebViewController(url: url)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
