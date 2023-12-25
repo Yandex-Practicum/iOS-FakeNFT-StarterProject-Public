@@ -236,6 +236,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     @objc func paymentButtonDidTap() {
         let viewController = PaymentTypeViewController()
         viewController.hidesBottomBarWhenPushed = true
+        viewController.delegate = self
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -311,5 +312,15 @@ extension CartViewController: DeleteFromCartViewControllerDelegate {
     
     func showTabBar() {
         tabBarController?.tabBar.isHidden = false
+    }
+}
+
+// MARK: - DeleteFromCartViewControllerDelegate
+
+extension CartViewController: PaymentTypeViewControllerDelegate {
+    func cleanCart() {
+        presenter?.cleanCart()
+        labelsUpdate()
+        elementsSetup()
     }
 }

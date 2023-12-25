@@ -7,4 +7,5 @@ protocol CartPresenterProtocol: AnyObject {
     func sortByRating()
     func sortByName()
     func deleteItemFormCart(for index: Int)
+    func cleanCart()
 }

@@ -6,6 +6,7 @@ final class PaymentTypeViewController: UIViewController {
     
     private let params = GeometricParams(cellCount: 2, cellHeight: 46, cellSpacing: 7, lineSpacing: 7)
     private var selectedCell: String? = nil
+    weak var delegate: PaymentTypeViewControllerDelegate?
     
     // MARK: - Computed Properties
     
@@ -150,8 +151,10 @@ final class PaymentTypeViewController: UIViewController {
     
     @objc func paymentButtonDidTap() {
         if selectedCell != nil {
+            delegate?.cleanCart()
             let viewController = SuccessPaymentViewController()
             self.navigationController?.pushViewController(viewController, animated: true)
+            tabBarController?.tabBar.isHidden = true
         } else {
             let alert = UIAlertController(title: nil, message: "Не удалось произвести оплату", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)

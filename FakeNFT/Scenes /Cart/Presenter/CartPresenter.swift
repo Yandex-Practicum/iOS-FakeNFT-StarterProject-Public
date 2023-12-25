@@ -45,4 +45,8 @@ final class CartPresenter: CartPresenterProtocol {
     func addItemToCart(_ nft: CartNFTModel) {
         visibleNFT.append(nft)
     }
+    
+    func cleanCart() {
+        visibleNFT.removeAll()
+    }
 }
