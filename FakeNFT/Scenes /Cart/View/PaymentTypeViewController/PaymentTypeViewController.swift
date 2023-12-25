@@ -149,7 +149,21 @@ final class PaymentTypeViewController: UIViewController {
     }
     
     @objc func paymentButtonDidTap() {
-        //TODO: add code to proceed payment
+        if selectedCell != nil {
+            let viewController = SuccessPaymentViewController()
+            self.navigationController?.pushViewController(viewController, animated: true)
+        } else {
+            let alert = UIAlertController(title: nil, message: "Не удалось произвести оплату", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+            let retryAction = UIAlertAction(title: "Повторить", style: .default) { _ in
+                self.dismiss(animated: true)
+            }
+            
+            alert.addAction(cancelAction)
+            alert.addAction(retryAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc func webViewLabelTapped() {

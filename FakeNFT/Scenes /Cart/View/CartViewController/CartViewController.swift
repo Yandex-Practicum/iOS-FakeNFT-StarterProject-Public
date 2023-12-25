@@ -94,6 +94,12 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         updateSorting()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     // MARK: - Private methods
     
     private func addSubviews() {
@@ -229,8 +235,6 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     
     @objc func paymentButtonDidTap() {
         let viewController = PaymentTypeViewController()
-        viewController.modalPresentationStyle = .overCurrentContext
-        viewController.modalTransitionStyle = .crossDissolve
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(viewController, animated: true)
     }

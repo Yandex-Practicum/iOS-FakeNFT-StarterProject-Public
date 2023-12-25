@@ -41,6 +41,7 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		C92CAED42B39A63B00332FB5 /* SuccessPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92CAED32B39A63B00332FB5 /* SuccessPaymentViewController.swift */; };
 		C936BEAE2B2A591D005A687C /* CartTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEAD2B2A591C005A687C /* CartTableViewCellDelegate.swift */; };
 		C936BEB02B2A5E27005A687C /* DeleteFromCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEAF2B2A5E27005A687C /* DeleteFromCartViewController.swift */; };
 		C936BEB22B2B45A5005A687C /* CustomVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */; };
@@ -121,6 +122,7 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		C92CAED32B39A63B00332FB5 /* SuccessPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPaymentViewController.swift; sourceTree = "<group>"; };
 		C936BEAD2B2A591C005A687C /* CartTableViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCellDelegate.swift; sourceTree = "<group>"; };
 		C936BEAF2B2A5E27005A687C /* DeleteFromCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFromCartViewController.swift; sourceTree = "<group>"; };
 		C936BEB12B2B45A5005A687C /* CustomVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVisualEffectView.swift; sourceTree = "<group>"; };
@@ -375,6 +377,14 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		C92CAED22B39A60000332FB5 /* SuccessPaymentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C92CAED32B39A63B00332FB5 /* SuccessPaymentViewController.swift */,
+			);
+			path = SuccessPaymentViewController;
+			sourceTree = "<group>";
+		};
 		C974EA8E2B38D235006485F8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +410,7 @@
 				C974EA932B38D2E3006485F8 /* CartViewController */,
 				C974EA942B38D345006485F8 /* DeleteFromCartViewController */,
 				C974EA952B38D371006485F8 /* PaymentTypeViewController */,
+				C92CAED22B39A60000332FB5 /* SuccessPaymentViewController */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -680,6 +691,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				C9CA12B62B28F66E00E8161C /* CartTableViewCell.swift in Sources */,
 				C936BEB22B2B45A5005A687C /* CustomVisualEffectView.swift in Sources */,
+				C92CAED42B39A63B00332FB5 /* SuccessPaymentViewController.swift in Sources */,
 				C9B8DD8A2B35ADBF00483AFE /* PaymentTypeViewController.swift in Sources */,
 				C9CA12B22B28E3A500E8161C /* CartNFTModel.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
