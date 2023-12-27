@@ -1,6 +1,10 @@
 
 import UIKit
 
+protocol EditingProfileViewControllerProtocol: AnyObject {
+    func updateUI(profile: ProfileModelUI)
+}
+
 final class EditingProfileViewController: UIViewController {
     
     private lazy var closeButton: UIButton = {
@@ -109,12 +113,9 @@ final class EditingProfileViewController: UIViewController {
     }()
     
     private var presenter: EditingProfilePresenterProtocol?
-    private var newLinkPhoto = ""
-    private var completionHandler: ProfileCompletion
-
-    init(profile: ProfileModelUI?, profileSevice: ProfileServiceProtocol, completion: @escaping ProfileCompletion) {
-        presenter = EditingProfilePresenter(profile: profile, profileService: profileSevice)
-        self.completionHandler = completion
+    
+    init(presenter: EditingProfilePresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -124,9 +125,10 @@ final class EditingProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.view = self
         view.backgroundColor = UIColor.ypWhite
         addSubviews()
-        setData()
+        presenter?.viewDidLoad()
     }
     
     private func addSubviews() {
@@ -195,24 +197,11 @@ final class EditingProfileViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        presenter?.saveProfile(newProfile: ProfileModelUI(
-            id: presenter?.profile?.id ?? "",
+        super.viewWillDisappear(animated)
+        presenter?.viewWillDisappear(
             name: nameTextField.text ?? "",
-            avatar: presenter?.profile?.avatar ?? Data(),
-            urlAvatar: newLinkPhoto,
             description: descriptionText.text,
-            website: siteTextField.text,
-            nfts: presenter?.profile?.nfts ?? [],
-            likes: presenter?.profile?.likes ?? []), completion: completionHandler)
-    }
-    
-    private func setData() {
-        guard let presenter else { return }
-        avatarImageView.image = UIImage(data: presenter.profile?.avatar ?? Data())
-        newLinkPhoto = presenter.profile?.urlAvatar ?? ""
-        nameTextField.text = presenter.profile?.name ?? ""
-        descriptionText.text = presenter.profile?.description ?? ""
-        siteTextField.text = presenter.profile?.website ?? ""
+            website: siteTextField.text ?? "")
     }
      
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -237,7 +226,7 @@ final class EditingProfileViewController: UIViewController {
             title: NSLocalizedString("done", comment: ""),
             style: .default) { [weak self] action in
             if let text = alertController.textFields?.first?.text {
-                self?.newLinkPhoto = text
+                self?.presenter?.newLinkPhoto = text
             }
         }
         alertController.addAction(doneAction)
@@ -249,5 +238,14 @@ final class EditingProfileViewController: UIViewController {
         alertController.addAction(cancelAction)
 
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension EditingProfileViewController: EditingProfileViewControllerProtocol {
+    func updateUI(profile: ProfileModelUI) {
+        avatarImageView.image = UIImage(data: profile.avatar ?? Data())
+        nameTextField.text = profile.name
+        descriptionText.text = profile.description
+        siteTextField.text = profile.website
     }
 }

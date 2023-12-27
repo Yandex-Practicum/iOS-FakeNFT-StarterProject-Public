@@ -3,19 +3,20 @@ import Foundation
   
 protocol ProfileViewControllerPresenterProtocol: AnyObject{
     var profileModelUI: ProfileModelUI? { get }
+    var delegate: ProfileViewContrillerDelegate? { get set }
+    var profileService: ProfileServiceProtocol { get }
     func fetchProfile()
     func convertInUIModel(profileNetworkModel: ProfileModelNetwork)
 }
 
 final class ProfileViewControllerPresenter: ProfileViewControllerPresenterProtocol {
     
-    private let profileService: ProfileServiceProtocol
-    private weak var delegate: ProfileViewContrillerDelegate?
+    let profileService: ProfileServiceProtocol
+    weak var delegate: ProfileViewContrillerDelegate?
     private(set) var profileModelUI: ProfileModelUI? = nil
     
-    init(profileService: ProfileServiceProtocol, delegate: ProfileViewContrillerDelegate) {
+    init(profileService: ProfileServiceProtocol) {
         self.profileService = profileService
-        self.delegate = delegate
     }
     
     func fetchProfile() {

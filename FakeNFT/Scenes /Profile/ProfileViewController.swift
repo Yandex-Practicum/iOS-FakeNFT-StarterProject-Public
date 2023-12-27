@@ -7,7 +7,6 @@ protocol ProfileViewContrillerDelegate: AnyObject, LoadingView {
 final class ProfileViewController: UIViewController {
     
     private var presenter: ProfileViewControllerPresenterProtocol? = nil
-    private let servicesAssembly: ServicesAssembly
     
     private lazy var backButton: UIBarButtonItem = {
         let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
@@ -63,6 +62,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 13)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -76,24 +76,20 @@ final class ProfileViewController: UIViewController {
         return table
     }()
     
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
+    init(presenter: ProfileViewControllerPresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.delegate = self
         navigationItem.rightBarButtonItem = backButton
         navigationItem.rightBarButtonItem?.tintColor = UIColor.ypBlack
         addSubviews()
-        presenter = ProfileViewControllerPresenter(
-            profileService: servicesAssembly.profileService,
-            delegate: self
-        )
         presenter?.fetchProfile()
         
         tableDetailInfo.register(ProfileDetailInfoCell.self, forCellReuseIdentifier: ProfileDetailInfoCell.cellID)
@@ -120,7 +116,6 @@ final class ProfileViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             descriptionLabel.topAnchor.constraint(equalTo: nameStack.bottomAnchor, constant: 20),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 72),
             
             linkTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             linkTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
@@ -139,17 +134,19 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func editButtonDidTapped() {
-        let editingVC = EditingProfileViewController(
+        let presenter = EditingProfilePresenter(
             profile: presenter?.profileModelUI,
-            profileSevice: servicesAssembly.profileService) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let profileNetworlModel):
-                    self.presenter?.convertInUIModel(profileNetworkModel: profileNetworlModel)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+            profileService: presenter?.profileService
+        ) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profileNetworlModel):
+                self.presenter?.convertInUIModel(profileNetworkModel: profileNetworlModel)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+        }
+        let editingVC = EditingProfileViewController(presenter: presenter)
         present(editingVC, animated: true)
     }
 }

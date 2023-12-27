@@ -5,7 +5,7 @@ typealias ProfileCompletion = (Result<ProfileModelNetwork, Error>) -> Void
 
 protocol ProfileServiceProtocol {
     func getProfile(completion: @escaping ProfileCompletion)
-    func saveProfile(profileEditing: ProfileModelEditing, completion: @escaping ProfileCompletion)
+    func saveProfile(profileEditing: ProfileModelEditing, completion: ProfileCompletion?)
 }
 
 final class ProfileNetworkService: ProfileServiceProtocol {
@@ -36,16 +36,16 @@ final class ProfileNetworkService: ProfileServiceProtocol {
         }
     }
     
-    func saveProfile(profileEditing: ProfileModelEditing, completion: @escaping ProfileCompletion) {
+    func saveProfile(profileEditing: ProfileModelEditing, completion: ProfileCompletion?) {
         let request = ProfilePutRequest(profileModelEditing: profileEditing)
         networkClient.send(request: request, type: ProfileModelNetwork.self) {
             [weak profileStorage] result in
             switch result {
             case .success(let profile):
                 profileStorage?.saveProfile(profile)
-                completion(.success(profile))
+                completion?(.success(profile))
             case .failure(let error):
-                completion(.failure(error))
+                completion?(.failure(error))
             }
         }
     }
