@@ -9,7 +9,7 @@ protocol ProfileViewModelProtocol {
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol {
-    @Observable
+    @Observ
     private(set) var userProfile: UserProfile?
     
     private let profileService: ProfileService

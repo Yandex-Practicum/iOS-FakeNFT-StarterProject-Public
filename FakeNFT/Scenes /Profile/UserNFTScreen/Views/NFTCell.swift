@@ -103,7 +103,7 @@ final class NFTCell: UITableViewCell, ReuseIdentifying {
         }
     }
     
-    func configure(nft: NFT, authorName: String) {
+    func configure(nft: NFTProfile, authorName: String) {
             self.nftImageView.kf.setImage(with: URL(string: nft.images[0]),
                                           placeholder: UIImage(named: "nullImage"))
             self.name.text = nft.name

@@ -9,9 +9,9 @@ final class NFTService {
         self.networkHelper = networkHelper
     }
     
-    func fetchNFT(nftID: String, completion: @escaping (Result<NFT, Error>) -> Void) {
+    func fetchNFT(nftID: String, completion: @escaping (Result<NFTProfile, Error>) -> Void) {
         let request = FetchNFTNetworkRequest(nftID: nftID)
-        networkHelper.fetchData(request: request, type: NFT.self, completion: completion)
+        networkHelper.fetchData(request: request, type: NFTProfile.self, completion: completion)
     }
     
     func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {

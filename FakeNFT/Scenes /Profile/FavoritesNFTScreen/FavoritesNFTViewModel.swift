@@ -2,23 +2,23 @@ import Foundation
 
 
 protocol FavoritesNFTViewModelProtocol {
-    var favoritesNFT: [NFT] { get }
+    var favoritesNFT: [NFTProfile] { get }
     var state: LoadingState { get }
     
-    func observeFavoritesNFT(_ handler: @escaping ([NFT]?) -> Void)
+    func observeFavoritesNFT(_ handler: @escaping ([NFTProfile]?) -> Void)
     func observeState(_ handler: @escaping (LoadingState) -> Void)
 
     func viewDidLoad(nftList: [String])
     func viewWillDisappear()
     func fetchNFT(nftList: [String])
-    func dislike(for: NFT)
+    func dislike(for: NFTProfile)
 }
 
 final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
-    @Observable
-    private (set) var favoritesNFT: [NFT] = []
+    @Observ
+    private (set) var favoritesNFT: [NFTProfile] = []
     
-    @Observable
+    @Observ
     private (set) var state: LoadingState = .idle
 
     private let nftService: NFTService
@@ -29,7 +29,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
         self.profileService = profileService
     }
     
-    func observeFavoritesNFT(_ handler: @escaping ([NFT]?) -> Void) {
+    func observeFavoritesNFT(_ handler: @escaping ([NFTProfile]?) -> Void) {
         $favoritesNFT.observe(handler)
     }
     
@@ -47,7 +47,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
         
     }
     
-    func dislike(for nft: NFT) {
+    func dislike(for nft: NFTProfile) {
         profileService.fetchProfile { [weak self] result in
             guard let self = self else { return }
             
@@ -81,7 +81,7 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     func fetchNFT(nftList: [String]) {
         state = .loading
 
-        var fetchedNFTs: [NFT] = []
+        var fetchedNFTs: [NFTProfile] = []
         let group = DispatchGroup()
         
         for element in nftList {

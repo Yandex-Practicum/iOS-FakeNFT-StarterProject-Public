@@ -16,7 +16,7 @@ protocol EditingViewModelProtocol {
 }
 
 final class EditingViewModel: EditingViewModelProtocol {
-    @Observable
+    @Observ
     private(set) var userProfile: UserProfile?
     
     private let profileService: ProfileService
