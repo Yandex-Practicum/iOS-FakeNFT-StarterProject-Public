@@ -3,17 +3,17 @@ import UIKit
 final class OnboardingPageViewController: UIPageViewController {
     private lazy var pages: [UIViewController] = {
         let firstPage = OnboardingViewController(
-            pageImageView: UIImage(resource: .onboarding1),
+            pageImageView: UIImage(named: "onboarding1") ?? UIImage(),
             title: L10n.Onboarding.titleFirst,
             text: L10n.Onboarding.infoFirst
         )
         let secondPage = OnboardingViewController(
-            pageImageView: UIImage(resource: .onboarding2),
+            pageImageView: UIImage(named: "onboarding2") ?? UIImage(),
             title: L10n.Onboarding.titleSecond,
             text: L10n.Onboarding.infoSecond
         )
         let thirdPage = OnboardingViewController(
-            pageImageView: UIImage(resource: .onboarding3),
+            pageImageView: UIImage(named: "onboarding3") ?? UIImage(),
             title: L10n.Onboarding.titleThird,
             text: L10n.Onboarding.infoThird
         )
@@ -22,8 +22,8 @@ final class OnboardingPageViewController: UIPageViewController {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(resource: .closeWhite), for: .normal)
-        button.tintColor = UIColor(resource: .white)
+        button.setImage(UIImage(named: "closeWhite"), for: .normal)
+        button.tintColor = UIColor.nftWhiteUniversal
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button
     }()
@@ -31,10 +31,10 @@ final class OnboardingPageViewController: UIPageViewController {
     private lazy var onButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.backgroundColor = UIColor(resource: .black)
+        button.backgroundColor = UIColor.nftBlueUniversal
         button.titleLabel?.font = .bodyBold
         button.setTitle(L10n.Onboarding.buttonText, for: .normal)
-        button.setTitleColor(UIColor(resource: .white), for: .normal)
+        button.setTitleColor(UIColor.nftWhiteUniversal, for: .normal)
         button.addTarget(self, action: #selector(tapOnButton), for: .touchUpInside)
         return button
     }()

@@ -64,7 +64,7 @@ final class CatalogCollectionView: UIView {
         button.isHidden = true
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        button.setTitleColor(UIColor(resource: .blue), for: .normal)
+        button.setTitleColor(UIColor.nftBlueUniversal, for: .normal)
         button.addTarget(self, action: #selector(authorButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
 
@@ -86,7 +86,7 @@ final class CatalogCollectionView: UIView {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
         collection.allowsMultipleSelection = false
-        collection.backgroundColor = UIColor(resource: .whiteDayNight)
+        collection.backgroundColor = UIColor.nftWhite
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.allowsSelection = false
 
@@ -112,7 +112,7 @@ final class CatalogCollectionView: UIView {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(frame: frame)
-        backgroundColor = UIColor(resource: .whiteDayNight)
+        backgroundColor = UIColor.nftWhite
         setupUI()
         setupCollectionCoverImageView()
         bind()
@@ -138,7 +138,7 @@ final class CatalogCollectionView: UIView {
                 guard let self = self else { return }
 
                 if isCompleted {
-                    collectionView.reloadData()
+                    self.collectionView.reloadData()
                 }
             }.store(in: &subscribes)
 
@@ -146,10 +146,10 @@ final class CatalogCollectionView: UIView {
             .sink { [weak self] author in
                 guard let self = self else { return }
 
-                startAuthorPageLinkAnimation()
+                self.startAuthorPageLinkAnimation()
 
                 if author != nil {
-                    configureAuthor(author)
+                    self.configureAuthor(author)
                 }
             }.store(in: &subscribes)
 
@@ -157,7 +157,7 @@ final class CatalogCollectionView: UIView {
             .sink { [weak self] error in
                 guard let self = self else { return }
                 if error != nil {
-                    delegate?.showErrorAlert()
+                    self.delegate?.showErrorAlert()
                 }
             }.store(in: &subscribes)
     }

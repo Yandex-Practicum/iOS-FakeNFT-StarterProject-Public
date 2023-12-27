@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func setupView() {
-        view.backgroundColor = UIColor(resource: .whiteDayNight)
+        view.backgroundColor = UIColor.nftWhite
 
         servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
@@ -36,7 +36,7 @@ final class TabBarController: UITabBarController {
 
         catalogController.tabBarItem = UITabBarItem(
             title: L10n.Tabbar.catalogTitle,
-            image: UIImage(resource: .tabbarCatalogue),
+            image: UIImage(named: "tabbar_catalogue"),
             selectedImage: nil)
 
         let catalogNavigationController = UINavigationController(rootViewController: catalogController)
@@ -53,7 +53,7 @@ final class TabBarController: UITabBarController {
 
         cartController.tabBarItem = UITabBarItem(
             title: L10n.Tabbar.cartTitle,
-            image: UIImage(resource: .tabbarBasket),
+            image: UIImage(named: "tabbar_basket"),
             selectedImage: nil)
 
         let cartNavigationController = UINavigationController(rootViewController: cartController)
@@ -66,10 +66,10 @@ final class TabBarController: UITabBarController {
         appearance.shadowImage = nil
         appearance.shadowColor = nil
         appearance.backgroundEffect = nil
-        appearance.backgroundColor = UIColor(resource: .whiteDayNight)
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(resource: .blackDayNight)
+        appearance.backgroundColor = UIColor.nftWhite
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.nftBlack
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: UIColor(resource: .blackDayNight)
+            NSAttributedString.Key.foregroundColor: UIColor.nftBlack
             ]
 
         tabBar.standardAppearance = appearance

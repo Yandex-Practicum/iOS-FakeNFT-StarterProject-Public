@@ -8,8 +8,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         ProgressHUD.animationType = .systemActivityIndicator
-        ProgressHUD.colorHUD = UIColor(resource: .blackDayNight)
-        ProgressHUD.colorAnimation = UIColor(resource: .lightDayNight)
+        ProgressHUD.colorHUD = UIColor.nftBlack
+        ProgressHUD.colorAnimation = UIColor.nftLightgrey
         return true
     }
 

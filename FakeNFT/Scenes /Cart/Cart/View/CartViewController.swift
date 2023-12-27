@@ -6,7 +6,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     private lazy var filterButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(resource: .sortButton).withTintColor(UIColor(resource: .blackDayNight))
+        let image = UIImage(named: "sort_button")?.withTintColor(UIColor.nftBlack)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(tapFilterButton), for: .touchUpInside)
         return button
@@ -26,7 +26,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var countNFTLabel: UILabel = {
         let label = UILabel()
         label.text = "0 NFT"
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,7 +35,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "0 ETH"
-        label.textColor = UIColor(resource: .green)
+        label.textColor = UIColor.nftGreenUniversal
         label.font = .bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -56,9 +56,9 @@ final class CartViewController: UIViewController, LoadingView {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.setTitle(L10n.Cart.buttonText, for: .normal)
-        button.setTitleColor(UIColor(resource: .whiteDayNight), for: .normal)
+        button.setTitleColor(UIColor.nftWhite, for: .normal)
         button.titleLabel?.font = .bodyBold
-        button.backgroundColor = UIColor(resource: .blackDayNight)
+        button.backgroundColor = UIColor.nftBlack
         button.addTarget(self, action: #selector(tapPayButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -66,7 +66,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     private lazy var paymentContainView: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor(resource: .lightDayNight)
+        view.backgroundColor = UIColor.nftLightgrey
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +76,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var emptyCartLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Cart.emptyCart
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.font = .bodyBold
         label.textAlignment = .center
         label.isHidden = true
@@ -96,7 +96,7 @@ final class CartViewController: UIViewController, LoadingView {
     private lazy var confirmDeleteLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Cart.deleteConfirmText
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.font = .caption2
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -108,9 +108,9 @@ final class CartViewController: UIViewController, LoadingView {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.setTitle(L10n.Cart.deleteButtonText, for: .normal)
-        button.setTitleColor(UIColor(resource: .red), for: .normal)
+        button.setTitleColor(UIColor.nftRedUniversal, for: .normal)
         button.titleLabel?.font = .bodyRegular
-        button.backgroundColor = UIColor(resource: .blackDayNight)
+        button.backgroundColor = UIColor.nftBlack
         button.addTarget(self, action: #selector(tapDeleteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -120,9 +120,9 @@ final class CartViewController: UIViewController, LoadingView {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.setTitle(L10n.Cart.backButtonText, for: .normal)
-        button.setTitleColor(UIColor(resource: .whiteDayNight), for: .normal)
+        button.setTitleColor(UIColor.nftWhite, for: .normal)
         button.titleLabel?.font = .bodyRegular
-        button.backgroundColor = UIColor(resource: .blackDayNight)
+        button.backgroundColor = UIColor.nftBlack
         button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -161,7 +161,7 @@ final class CartViewController: UIViewController, LoadingView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(resource: .whiteDayNight)
+        view.backgroundColor = UIColor.nftWhite
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: filterButton)
         createSubviews()
         viewModel.loadData()

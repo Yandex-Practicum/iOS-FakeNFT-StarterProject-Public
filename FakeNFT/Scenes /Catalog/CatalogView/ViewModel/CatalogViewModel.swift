@@ -70,12 +70,12 @@ final class CatalogViewModel: CatalogViewModelProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let catalogRes):
-                isLoadingData = false
-                catalog = catalogRes
-                sortCatalog()
+                self.isLoadingData = false
+                self.catalog = catalogRes
+                self.sortCatalog()
             case .failure(let error):
-                isLoadingData = false
-                networkError = error
+                self.isLoadingData = false
+                self.networkError = error
             }
         }
     }

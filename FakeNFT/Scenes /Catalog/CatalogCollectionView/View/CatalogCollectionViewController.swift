@@ -15,12 +15,12 @@ final class CatalogCollectionViewController: UIViewController {
     private lazy var backButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
 
-        button.image = UIImage(resource: .backward).withRenderingMode(.alwaysTemplate)
+        button.image = UIImage(named: "backward")?.withRenderingMode(.alwaysTemplate)
         button.style = .plain
         button.target = self
         button.action = #selector(backButtonTapped)
         button.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        button.tintColor = UIColor(resource: .blackDayNight)
+        button.tintColor = UIColor.nftBlack
 
         return button
     }()
@@ -67,7 +67,7 @@ extension CatalogCollectionViewController: CatalogCollectionViewDelegate {
     func showErrorAlert() {
         AlertPresenter.showError(in: self) { [weak self] in
             guard let self = self else { return }
-            catalogCollectionView.reloadData()
+            self.catalogCollectionView.reloadData()
         }
     }
 

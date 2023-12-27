@@ -117,15 +117,15 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
                 guard let self = self else { return }
                 switch result {
                 case .success(let nft):
-                    nfts.append(nft)
-                    if nfts.count == catalogCollection.nfts.count {
-                        sortNfts()
-                        nftsLoadingIsCompleted = true
+                    self.nfts.append(nft)
+                    if self.nfts.count == self.catalogCollection.nfts.count {
+                        self.sortNfts()
+                        self.nftsLoadingIsCompleted = true
                     }
                 case .failure(let error):
-                    clearNfts()
-                    if networkError == nil && !nftsLoadingIsCompleted {
-                        networkError = error
+                    self.clearNfts()
+                    if self.networkError == nil && !self.nftsLoadingIsCompleted {
+                        self.networkError = error
                     }
                 }
             }
@@ -139,8 +139,8 @@ final class CatalogCollectionViewModel: CatalogCollectionViewModelProtocol {
             case .success(let authorLink):
                 self.author = authorLink
             case .failure(let error):
-                if networkError == nil && author == nil {
-                    networkError = error
+                if self.networkError == nil && self.author == nil {
+                    self.networkError = error
                 }
             }
         }

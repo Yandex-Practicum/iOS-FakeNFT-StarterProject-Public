@@ -7,7 +7,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
         didSet {
             layer.cornerRadius = 12
             layer.borderWidth = isSelected ? 1 : 0
-            layer.borderColor = isSelected ? UIColor(resource: .blackDayNight).cgColor : nil
+            layer.borderColor = isSelected ? UIColor.nftBlack.cgColor : nil
          }
     }
 
@@ -24,7 +24,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     private lazy var currencyFullNameLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -32,7 +32,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
     private lazy var currencyShortNameLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.textColor = UIColor(resource: .green)
+        label.textColor = UIColor.nftGreenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -59,7 +59,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
 
     private lazy var currencyContainView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(resource: .lightDayNight)
+        view.backgroundColor = UIColor.nftLightgrey
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

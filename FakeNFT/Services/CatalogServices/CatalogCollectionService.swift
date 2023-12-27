@@ -39,7 +39,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: Nft.self,
                 onResponse: { (result: Result<Nft, Error>) in
@@ -47,7 +47,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
                         guard let self = self else { return }
                         switch result {
                         case .success(let nft):
-                            storage.saveNft(nft)
+                            self.storage.saveNft(nft)
                             completion(.success(nft))
                         case .failure(let error):
                             completion(.failure(error))
@@ -63,7 +63,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: Author.self,
                 onResponse: { (result: Result<Author, Error>) in
@@ -85,7 +85,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
                     DispatchQueue.main.async {
@@ -105,7 +105,7 @@ final class CatalogCollectionService: CatalogCollectionServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: PurchaseCart.self) { (result: Result<PurchaseCart, Error>) in
                     DispatchQueue.main.async {
