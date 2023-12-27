@@ -284,7 +284,6 @@
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
-				715D0F182AD156EF00300497 /* Doc */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -305,21 +304,16 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
+				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
+				715D0F182AD156EF00300497 /* Docs */,
 				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
-				715D0F162AD156E300300497 /* TabBarController.swift */,
-				715D0F222AD1570000300497 /* Profile */,
-				715D0F1E2AD1570000300497 /* Basket */,
-				715D0F202AD1570000300497 /* Catalog */,
-				715D0F1C2AD1570000300497 /* Statistics */,
+				717C51DA2B3C2732007AC951 /* Resources */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
-				37BFE3482AD8364C00C553BA /* Helpers */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
-				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
-				715D0F342AD1691D00300497 /* Localizable.strings */,
-				715D0F362AD1693200300497 /* LaunchScreen.storyboard */,
+				37BFE3482AD8364C00C553BA /* Helpers */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 			);
 			path = FakeNFT;
@@ -355,7 +349,12 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				717C51DB2B3C28E0007AC951 /* TabBarController */,
+				715D0F222AD1570000300497 /* Profile */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
+				715D0F1E2AD1570000300497 /* Basket */,
+				715D0F202AD1570000300497 /* Catalog */,
+				715D0F1C2AD1570000300497 /* Statistics */,
 			);
 			path = "Scenes ";
 			sourceTree = "<group>";
@@ -413,12 +412,12 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		715D0F182AD156EF00300497 /* Doc */ = {
+		715D0F182AD156EF00300497 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
 				27B715102B00A96F007C5B39 /* Profile Vadim.md */,
 			);
-			path = Doc;
+			path = Docs;
 			sourceTree = "<group>";
 		};
 		715D0F1C2AD1570000300497 /* Statistics */ = {
@@ -455,6 +454,23 @@
 				37E7D6F72AD818B500107140 /* FavoritesNFTScreen */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		717C51DA2B3C2732007AC951 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				715D0F362AD1693200300497 /* LaunchScreen.storyboard */,
+				715D0F342AD1691D00300497 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		717C51DB2B3C28E0007AC951 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				715D0F162AD156E300300497 /* TabBarController.swift */,
+			);
+			path = TabBarController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
