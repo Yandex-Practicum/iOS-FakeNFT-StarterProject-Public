@@ -2,47 +2,76 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var servicesAssembly: ServicesAssembly!
 
-        let profileViewController = ProfileViewController(viewModel: ProfileViewModel(service: ProfileService.shared))
-        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
-        profileNavigationController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("TabBarController.Profile", comment: ""),
-            image: UIImage(named: "TabBar.Profile"),
-            tag: 0
-        )
-
-        let catalogViewController = CatalogViewController()
-        let catalogNavigationController = UINavigationController(rootViewController: catalogViewController)
-        catalogNavigationController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("TabBarController.Catalog", comment: ""),
-            image: UIImage(named: "TabBar.Catalog"),
-            tag: 1
-        )
-
-        let basketViewController = BasketViewController()
-        let basketNavigationController = UINavigationController(rootViewController: basketViewController)
-        basketNavigationController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("TabBarController.Basket", comment: ""),
-            image: UIImage(named: "TabBar.Basket"),
-            tag: 2
-        )
-
-        let statisticsViewController = StatisticsViewController()
-        let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        statisticsNavigationController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("TabBarController.Statistics", comment: ""),
-            image: UIImage(named: "TabBar.Statistics"),
-            tag: 3
-        )
-
-        self.viewControllers = [profileNavigationController,
-                                catalogNavigationController,
-                                basketNavigationController,
-                                statisticsNavigationController]
-
-        tabBar.unselectedItemTintColor = UIColor.nftBlack
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        setupView()
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupView() {
+        view.backgroundColor = UIColor.nftWhite
+
+        servicesAssembly = ServicesAssembly(
+            networkClient: DefaultNetworkClient(),
+            nftStorage: NftStorageImpl(),
+            cartStorage: CartStorageImpl(),
+            currencyStorage: CurrencyStorageImpl()
+        )
+
+        configureTabBar()
+
+        let catalogNavigationController = setupCatalogNavController()
+        let cartViewController = setupCartViewController()
+
+        viewControllers = [catalogNavigationController, cartViewController]
+    }
+
+    private func setupCatalogNavController() -> UINavigationController {
+        let catalogController = CatalogViewController()
+
+        catalogController.tabBarItem = UITabBarItem(
+            title: L10n.Tabbar.catalogTitle,
+            image: UIImage(named: "tabbar_catalogue"),
+            selectedImage: nil)
+
+        let catalogNavigationController = UINavigationController(rootViewController: catalogController)
+
+        catalogNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        catalogNavigationController.navigationBar.shadowImage = UIImage()
+        catalogNavigationController.navigationBar.isTranslucent = true
+
+        return catalogNavigationController
+    }
+
+    private func setupCartViewController() -> UINavigationController {
+        let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
+
+        cartController.tabBarItem = UITabBarItem(
+            title: L10n.Tabbar.cartTitle,
+            image: UIImage(named: "tabbar_basket"),
+            selectedImage: nil)
+
+        let cartNavigationController = UINavigationController(rootViewController: cartController)
+
+        return cartNavigationController
+    }
+
+    private func configureTabBar() {
+        let appearance = tabBar.standardAppearance
+        appearance.shadowImage = nil
+        appearance.shadowColor = nil
+        appearance.backgroundEffect = nil
+        appearance.backgroundColor = UIColor.nftWhite
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.nftBlack
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.nftBlack
+            ]
+
+        tabBar.standardAppearance = appearance
+    }
 }

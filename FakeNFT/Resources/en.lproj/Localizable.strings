@@ -1,3 +1,74 @@
+"Tab.catalog" = "Catalog";
+"Catalog.openNft" = "Open Nft";
+"Error.network" = "A network error has occurred";
+"Error.unknown" = "An unknown error has occurred";
+"Error.repeat" = "Repeat";
+"Error.title" = "Error";
+
+//Tabbar titles
+"Tabbar.catalogTitle" = "Catalog";
+"Tabbar.cartTitle" = "Cart";
+
+//Catalog filter alert
+"FilterAlert.title" = "Sorting";
+"FilterAlert.nameSortTitle" = "By name";
+"FilterAlert.quantitySortTitle" = "By number of NFTs";
+"FilterAlert.cancelButtonTitle" = "Cancel";
+
+//CatalogCollection network error alert
+"NetworkErrorAlert.title" = "Oops(";
+"NetworkErrorAlert.message" = "Try again";
+"NetworkErrorAlert.okButton" = "OK";
+
+//NftInteractionError alert
+"NftErrorAlert.title" = "Something went wrong(";
+"NftErrorAlert.message" = "Try again";
+"NftErrorAlert.okButton" = "OK";
+
+//Catalog collection screen
+"CatalogCollection.authorLabel" = "Author of the collection:";
+
+//CatalogFilter storage
+"CatalogFilterStorage.key" = "catalogFilter";
+
+//Cart storage
+"cart.ButtonText" = "To pay";
+"cart.emptyCart" = "Cart is empty";
+"cart.priceLabel" = "Price";
+"cart.closeButtonText" = "Close";
+"cart.deleteConfirmText" = "Are you sure you want to remove the item from the cart?";
+"cart.deleteButtonText" = "Remove";
+"cart.backButtonText" = "Return";
+"cart.loadDataErrorText" = "Loading error, try again";
+
+//Cart filter alert
+"cartFilterAlert.title" = "Sorting";
+"cartFilterAlert.price" = "By price";
+"cartFilterAlert.rating" = "By rating";
+"cartFilterAlert.name" = "By name";
+
+//Currency storage
+"currency.paymentTypeText" = "Choose a payment method";
+"currency.paymentConfirmButtonText" = "Pay";
+"currency.cartUserAgreementText" = "By making a purchase, you agree to the terms and conditions of the";
+"currency.cartUserAgreementLinkText" = "User Agreement";
+
+//Payment storage
+"Payment.successText" = "Success! Payment has been processed, congratulations on your purchase!";
+"Payment.backToCatalogueText" = "Back to catalog";
+"Payment.errorText" = "Failed to make payment";
+"Payment.cancelText" = "Cancel";
+"Payment.retryText" = "Repeat";
+"Payment.okText" = "OK";
+
+//Onboarding storage
+"Onboarding.titleFirst" = "Explore";
+"Onboarding.titleSecond" = "Collect";
+"Onboarding.titleThird" = "Compete";
+"Onboarding.infoFirst" = "Join and discover a new world of unique NFTs for collectors";
+"Onboarding.infoSecond" = "Enhance your collection with exclusive pictures created by neural network!";
+"Onboarding.infoThird" = "See others' stats and show everyone that you have the most valuable collection";
+"Onboarding.buttonText" = "What's inside?";
 "TabBarController.Profile" = "Profile";
 "TabBarController.Catalog" = "Catalog";
 "TabBarController.Basket" = "Basket";

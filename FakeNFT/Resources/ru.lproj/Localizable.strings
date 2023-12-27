@@ -1,3 +1,74 @@
+"Tab.catalog" = "Каталог";
+"Catalog.openNft" = "Открыть Nft";
+"Error.network" = "Произошла ошибка сети";
+"Error.unknown" = "Произошла неизвестная ошибка";
+"Error.repeat" = "Повторить";
+"Error.title" = "Ошибка";
+
+//Tabbar titles
+"Tabbar.catalogTitle" = "Каталог";
+"Tabbar.cartTitle" = "Корзина";
+
+//Catalog filter alert
+"FilterAlert.title" = "Сортировка";
+"FilterAlert.nameSortTitle" = "По названию";
+"FilterAlert.quantitySortTitle" = "По количеству NFT";
+"FilterAlert.cancelButtonTitle" = "Отменить";
+
+//CatalogCollection network error alert
+"NetworkErrorAlert.title" = "Упс(";
+"NetworkErrorAlert.message" = "Попробуйте еще раз";
+"NetworkErrorAlert.okButton" = "OK";
+
+//NftInteractionError alert
+"NftErrorAlert.title" = "Что-то пошло не так(";
+"NftErrorAlert.message" = "Попробуйте еще раз";
+"NftErrorAlert.okButton" = "OK";
+
+//Catalog collection screen
+"CatalogCollection.authorLabel" = "Автор коллекции:";
+
+//CatalogFilter storage
+"CatalogFilterStorage.key" = "catalogFilter";
+
+//Cart storage
+"cart.ButtonText" = "К оплате";
+"cart.emptyCart" = "Корзина пуста";
+"cart.priceLabel" = "Цена";
+"cart.closeButtonText" = "Закрыть";
+"cart.deleteConfirmText" = "Вы уверены, что хотите удалить объект из корзины?";
+"cart.deleteButtonText" = "Удалить";
+"cart.backButtonText" = "Вернуться";
+"cart.loadDataErrorText" = "Ошибка загрузки, попробуйте еще раз";
+
+//Cart filter alert
+"cartFilterAlert.title" = "Сортировка";
+"cartFilterAlert.price" = "По цене";
+"cartFilterAlert.rating" = "По рейтингу";
+"cartFilterAlert.name" = "По названию";
+
+//Currency storage
+"currency.paymentTypeText" = "Выберите способ оплаты";
+"currency.paymentConfirmButtonText" = "Оплатить";
+"currency.cartUserAgreementText" = "Совершая покупку, вы соглашаетесь с условиями";
+"currency.cartUserAgreementLinkText" = "Пользовательского соглашения";
+
+//Payment storage
+"Payment.successText" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"Payment.backToCatalogueText" = "Вернуться в каталог";
+"Payment.errorText" = "Не удалось произвести оплату";
+"Payment.cancelText" = "Отмена";
+"Payment.retryText" = "Повторить";
+"Payment.okText" = "ОК";
+
+//Onboarding storage
+"Onboarding.titleFirst" = "Исследуйте";
+"Onboarding.titleSecond" = "Коллекционируйте";
+"Onboarding.titleThird" = "Состязайтесь";
+"Onboarding.infoFirst" = "Присоединяйтесь и откройте новый мир уникальных NFT для коллекционеров";
+"Onboarding.infoSecond" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
+"Onboarding.infoThird" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
+"Onboarding.buttonText" = "Что внутри?";
 "TabBarController.Profile" = "Профиль";
 "TabBarController.Catalog" = "Каталог";
 "TabBarController.Basket" = "Корзина";

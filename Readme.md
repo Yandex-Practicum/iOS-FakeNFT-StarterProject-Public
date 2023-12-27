@@ -2,6 +2,10 @@
 
 # Ссылки
 
+[Запись Catalog](https://www.veed.io/view/deb6963e-2c54-4e4d-b803-49a67d1121ec?panel=share)
+
+[Запись Cart](https://disk.yandex.com/i/et6WGMWac4sWUA)
+
 [Дизайн Figma](https://www.figma.com/file/k1LcgXHGTHIeiCv4XuPbND/FakeNFT-(YP)?node-id=96-5542&t=YdNbOI8EcqdYmDeg-0)
 
 # Назначение и цели приложения
