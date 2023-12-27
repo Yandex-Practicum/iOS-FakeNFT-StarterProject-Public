@@ -41,6 +41,7 @@ final class ProfileViewController: UIViewController {
         link.delegate = self
         link.font = UIFont(name: "SFProText-Regular", size: 15)
         link.textColor = UIColor.ypBlueUniversal
+        link.isScrollEnabled = false
         return link
     }()
     
