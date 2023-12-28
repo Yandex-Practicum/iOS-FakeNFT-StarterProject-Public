@@ -6,6 +6,8 @@
 
 [Запись Cart](https://disk.yandex.com/i/et6WGMWac4sWUA)
 
+[Запись Profile](https://disk.yandex.ru/i/UWM2EZcJ5Ytavg)
+
 [Дизайн Figma](https://www.figma.com/file/k1LcgXHGTHIeiCv4XuPbND/FakeNFT-(YP)?node-id=96-5542&t=YdNbOI8EcqdYmDeg-0)
 
 # Назначение и цели приложения
