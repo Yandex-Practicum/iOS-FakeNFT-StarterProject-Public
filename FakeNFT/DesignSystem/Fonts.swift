@@ -1,19 +1,23 @@
 import UIKit
 
 extension UIFont {
-    // Ниже приведены примеры шрифтов, настоящие шрифты надо взять из фигмы
+
+    static let nftFontRegularName = "SFProText-Regular"
+    static let nftFontMediumName = "SFProText-Medium"
+    static let nftFontBoldName = "SFProText-Bold"
 
     // Headline Fonts
-    static var headline1 = UIFont.systemFont(ofSize: 34, weight: .bold)
-    static var headline2 = UIFont.systemFont(ofSize: 28, weight: .bold)
+    static let headline1 = UIFont(name: nftFontBoldName, size: 34)
+    static let headline2 = UIFont(name: nftFontBoldName, size: 22)
     static var headline3 = UIFont.systemFont(ofSize: 22, weight: .bold)
     static var headline4 = UIFont.systemFont(ofSize: 20, weight: .bold)
 
     // Body Fonts
-    static var bodyRegular = UIFont.systemFont(ofSize: 17, weight: .regular)
-    static var bodyBold = UIFont.systemFont(ofSize: 17, weight: .bold)
+    static let bodyRegular = UIFont(name: nftFontRegularName, size: 17)
+    static let bodyBold = UIFont(name: nftFontBoldName, size: 17)
 
     // Caption Fonts
-    static var caption1 = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static var caption2 = UIFont.systemFont(ofSize: 13, weight: .regular)
+    static let caption1 = UIFont(name: nftFontRegularName, size: 15)
+    static let caption2 = UIFont(name: nftFontRegularName, size: 13)
+    static let caption3 = UIFont(name: nftFontMediumName, size: 10)
 }

@@ -5,35 +5,19 @@ enum NetworkClientError: Error {
     case urlRequestError(Error)
     case urlSessionError
     case parsingError
+    case taskCreationFailed
+
 }
 
 protocol NetworkClient {
     @discardableResult
     func send(request: NetworkRequest,
-              completionQueue: DispatchQueue,
               onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask?
 
     @discardableResult
     func send<T: Decodable>(request: NetworkRequest,
                             type: T.Type,
-                            completionQueue: DispatchQueue,
                             onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
-}
-
-extension NetworkClient {
-
-    @discardableResult
-    func send(request: NetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
-        send(request: request, completionQueue: .main, onResponse: onResponse)
-    }
-
-    @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
-        send(request: request, type: type, completionQueue: .main, onResponse: onResponse)
-    }
 }
 
 struct DefaultNetworkClient: NetworkClient {
@@ -50,16 +34,7 @@ struct DefaultNetworkClient: NetworkClient {
     }
 
     @discardableResult
-    func send(
-        request: NetworkRequest,
-        completionQueue: DispatchQueue,
-        onResponse: @escaping (Result<Data, Error>) -> Void
-    ) -> NetworkTask? {
-        let onResponse: (Result<Data, Error>) -> Void = { result in
-            completionQueue.async {
-                onResponse(result)
-            }
-        }
+    func send(request: NetworkRequest, onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
         guard let urlRequest = create(request: request) else { return nil }
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
@@ -91,13 +66,8 @@ struct DefaultNetworkClient: NetworkClient {
     }
 
     @discardableResult
-    func send<T: Decodable>(
-        request: NetworkRequest,
-        type: T.Type,
-        completionQueue: DispatchQueue,
-        onResponse: @escaping (Result<T, Error>) -> Void
-    ) -> NetworkTask? {
-        return send(request: request, completionQueue: completionQueue) { result in
+    func send<T: Decodable>(request: NetworkRequest, type: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
+        return send(request: request) { result in
             switch result {
             case let .success(data):
                 self.parse(data: data, type: type, onResponse: onResponse)

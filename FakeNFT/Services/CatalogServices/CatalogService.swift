@@ -41,7 +41,6 @@ final class CatalogService: CatalogServiceProtocol {
                         switch result {
                         case .success(let catalogRes):
                             self.catalog += catalogRes.map {
-                                print($0.cover)
                                 return Catalog(
                                     name: $0.name,
                                     coverURL: URL(string: $0.cover.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""),
