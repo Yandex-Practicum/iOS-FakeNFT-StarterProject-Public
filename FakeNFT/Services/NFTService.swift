@@ -1,25 +1,36 @@
 import Foundation
 
-final class NFTService {
-    static let shared = NFTService(networkHelper: NetworkServiceHelper(networkClient: DefaultNetworkClient()))
-    
-    private let networkHelper: NetworkServiceHelper
-    
-    init(networkHelper: NetworkServiceHelper) {
-        self.networkHelper = networkHelper
+typealias NftCompletion = (Result<Nft, Error>) -> Void
+
+protocol NftService {
+    func loadNft(id: String, completion: @escaping NftCompletion)
+}
+
+final class NftServiceImpl: NftService {
+
+    private let networkClient: NetworkClient
+    private let storage: NftStorage
+
+    init(networkClient: NetworkClient, storage: NftStorage) {
+        self.storage = storage
+        self.networkClient = networkClient
     }
-    
-    func fetchNFT(nftID: String, completion: @escaping (Result<NFTProfile, Error>) -> Void) {
-        let request = FetchNFTNetworkRequest(nftID: nftID)
-        networkHelper.fetchData(request: request, type: NFTProfile.self, completion: completion)
-    }
-    
-    func fetchAuthor(authorID: String, completion: @escaping (Result<Author, Error>) -> Void) {
-        let request = FetchAuthorNetworkRequest(authorID: authorID)
-        networkHelper.fetchData(request: request, type: Author.self, completion: completion)
-    }
-    
-    func stopAllTasks() {
-        networkHelper.stopAllTasks()
+
+    func loadNft(id: String, completion: @escaping NftCompletion) {
+        if let nft = storage.getNft(with: id) {
+            completion(.success(nft))
+            return
+        }
+        let request = NFTRequest(id: id)
+        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
+            switch result {
+            case .success(let nft):
+                storage?.saveNft(nft)
+                completion(.success(nft))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }
+
