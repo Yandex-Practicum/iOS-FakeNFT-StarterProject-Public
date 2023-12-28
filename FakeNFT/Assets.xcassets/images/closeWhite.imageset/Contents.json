@@ -1,29 +1,17 @@
 {
   "images" : [
     {
-<<<<<<<< HEAD:FakeNFT/Assets.xcassets/Profile/emptyStars.imageset/Contents.json
-      "filename" : "emptyStars.png",
-========
       "filename" : "Light.png",
->>>>>>>> develop:FakeNFT/Assets.xcassets/images/closeWhite.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-<<<<<<<< HEAD:FakeNFT/Assets.xcassets/Profile/emptyStars.imageset/Contents.json
-      "filename" : "emptyStars@2x.png",
-========
       "filename" : "Light@2x.png",
->>>>>>>> develop:FakeNFT/Assets.xcassets/images/closeWhite.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-<<<<<<<< HEAD:FakeNFT/Assets.xcassets/Profile/emptyStars.imageset/Contents.json
-      "filename" : "emptyStars@3x.png",
-========
       "filename" : "Light@3x.png",
->>>>>>>> develop:FakeNFT/Assets.xcassets/images/closeWhite.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "NFT card.png",
+      "filename" : "Active@1x.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "NFT card@2x.png",
+      "filename" : "Active@2x.pdf",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "NFT card@3x.png",
+      "filename" : "Active@3x.pdf",
       "idiom" : "universal",
       "scale" : "3x"
     }
