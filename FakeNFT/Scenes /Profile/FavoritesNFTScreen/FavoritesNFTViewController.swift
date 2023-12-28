@@ -5,8 +5,8 @@ final class FavoritesNFTViewController: UIViewController {
     
     // MARK: - UI properties
     
-    private let geometricParams: GeometricParams = {
-        GeometricParams(cellPerRowCount: 2,
+    private let geometricParams: GeometricProfileParams = {
+        GeometricProfileParams(cellPerRowCount: 2,
                         cellSpacing: 7,
                         cellLeftInset: 16,
                         cellRightInset: 16,

@@ -88,7 +88,7 @@ final class UserNFTViewController: UIViewController {
                                             style: .cancel,
                                             handler: nil)
         
-        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.sort", comment: ""),
+        let alertModel = AlertProfileModel(title: NSLocalizedString("AlertAction.sort", comment: ""),
                                     message: nil,
                                     style: .actionSheet,
                                     actions: [priceAction, ratingAction, titleAction, cancelAction],

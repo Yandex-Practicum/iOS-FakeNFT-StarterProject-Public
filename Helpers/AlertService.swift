@@ -6,7 +6,7 @@ struct AlertActionModel {
     let handler: ((String?) -> Void)?
 }
 
-struct AlertModel {
+struct AlertProfileModel {
     let title: String?
     let message: String?
     let style: UIAlertController.Style
@@ -15,7 +15,7 @@ struct AlertModel {
 }
 
 protocol AlertServiceProtocol {
-    func showAlert(model: AlertModel)
+    func showAlert(model: AlertProfileModel)
 }
 
 class AlertService: AlertServiceProtocol {
@@ -25,7 +25,7 @@ class AlertService: AlertServiceProtocol {
         self.viewController = viewController
     }
     
-    func showAlert(model: AlertModel) {
+    func showAlert(model: AlertProfileModel) {
         let alertController = UIAlertController(
             title: model.title,
             message: model.message,

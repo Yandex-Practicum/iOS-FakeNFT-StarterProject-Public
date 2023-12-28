@@ -9,6 +9,8 @@ extension UIFont {
     // Headline Fonts
     static let headline1 = UIFont(name: nftFontBoldName, size: 34)
     static let headline2 = UIFont(name: nftFontBoldName, size: 22)
+    static var headline3 = UIFont.systemFont(ofSize: 22, weight: .bold)
+    static var headline4 = UIFont.systemFont(ofSize: 20, weight: .bold)
 
     // Body Fonts
     static let bodyRegular = UIFont(name: nftFontRegularName, size: 17)

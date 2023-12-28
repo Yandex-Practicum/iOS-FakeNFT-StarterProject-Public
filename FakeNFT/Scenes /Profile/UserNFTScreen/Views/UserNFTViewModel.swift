@@ -22,9 +22,9 @@ final class UserNFTViewModel: UserNFTViewModelProtocol {
     private (set) var state: LoadingState = .idle
     
     private (set) var authors: [String: Author] = [:]
-    private let service: NFTService
+    private let service: NFTServiceProfile
     
-    init(nftService: NFTService) {
+    init(nftService: NFTServiceProfile) {
         self.service = nftService
     }
     

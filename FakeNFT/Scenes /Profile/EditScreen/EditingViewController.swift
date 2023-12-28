@@ -89,7 +89,8 @@ final class EditingViewController: UIViewController {
 
     // MARK: - Properties
 
-    private lazy var alertService: AlertServiceProtocol = {
+    private lazy var alertService: AlertServiceProtocol
+    = {
         return AlertService(viewController: self)
     }()
 
@@ -133,7 +134,7 @@ final class EditingViewController: UIViewController {
                 strongSelf.viewModel.photoURLdidChanged(with: url)
             } else {
                 // Создаем модель оповещения об ошибке
-                let errorModel = AlertModel(title: NSLocalizedString("AlertAction.error", comment: ""),
+                let errorModel = AlertProfileModel(title: NSLocalizedString("AlertAction.error", comment: ""),
                                             message: NSLocalizedString("AlertAction.incorrURL", comment: ""),
                                             style: .alert,
                                             actions: [AlertActionModel(title: "OK",
@@ -151,7 +152,7 @@ final class EditingViewController: UIViewController {
                                             handler: nil)
         
         // Создаем основную модель оповещения
-        let alertModel = AlertModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
+        let alertModel = AlertProfileModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
                                     message: nil,
                                     style: .alert,
                                     actions: [confirmAction, cancelAction],

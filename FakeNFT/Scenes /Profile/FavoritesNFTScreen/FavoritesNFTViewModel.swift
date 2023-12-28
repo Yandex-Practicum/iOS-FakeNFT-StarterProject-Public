@@ -21,10 +21,10 @@ final class FavoritesNFTViewModel: FavoritesNFTViewModelProtocol {
     @Observ
     private (set) var state: LoadingState = .idle
 
-    private let nftService: NFTService
+    private let nftService: NFTServiceProfile
     private let profileService: ProfileService
     
-    init(nftService: NFTService, profileService: ProfileService) {
+    init(nftService: NFTServiceProfile, profileService: ProfileService) {
         self.nftService = nftService
         self.profileService = profileService
     }

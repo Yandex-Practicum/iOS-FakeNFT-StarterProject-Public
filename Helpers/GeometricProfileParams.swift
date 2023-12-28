@@ -1,6 +1,6 @@
 import Foundation
 
-struct GeometricParams {
+struct GeometricProfileParams {
     let cellPerRowCount: CGFloat
     let cellSpacing: CGFloat
     let cellLeftInset: CGFloat
