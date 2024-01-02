@@ -56,7 +56,8 @@ final class EditingProfilePresenter: EditingProfilePresenterProtocol {
         let profileModelEditing = ProfileModelEditing(name: name,
                                                       avatar: avatar,
                                                       description: description,
-                                                      website: website)
+                                                      website: website,
+                                                      likes: [])
         
         profileService?.saveProfile(
             profileEditing: profileModelEditing,

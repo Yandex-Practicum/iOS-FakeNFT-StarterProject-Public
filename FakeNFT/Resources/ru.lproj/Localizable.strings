@@ -13,3 +13,11 @@
 "name" = "Имя";
 "description" = "Описание";
 "site" = "Сайт";
+"myNFT.navigationItem.title" = "Мои NFT";
+"myNFT.CapLabelText" = "У Вас ещё нет NFT";
+"price" = "Цена";
+"sort" = "Сортировка";
+"byPrice" = "По цене";
+"byRating" = "По рейтингу";
+"byName" = "По названию";
+"close" = "Закрыть";

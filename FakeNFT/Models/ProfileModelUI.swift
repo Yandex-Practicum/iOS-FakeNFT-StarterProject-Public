@@ -9,5 +9,5 @@ struct ProfileModelUI {
     let description: String?
     let website: String?
     let nfts: [String]
-    let likes: [String]
+    var likes: [String]
 }

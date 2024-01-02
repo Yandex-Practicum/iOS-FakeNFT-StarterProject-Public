@@ -28,15 +28,15 @@
 
 ## Module 2:
 #### Верстка экрана "Мои NFT"  
-- Nav Bar с кнопкой и тайтлом (est: 20 min, fact: x min)
-- Верстка таблицы и ячеек (est: 90 min; fact: x min).
-- Верстка экрана для кейса когда данных нет (est: 30 min, fact: x min)
+- Nav Bar с кнопкой и тайтлом (est: 20 min, fact: 30 min)
+- Верстка таблицы и ячеек (est: 90 min; fact: 180 min).
+- Верстка экрана для кейса когда данных нет (est: 30 min, fact: 30 min)
 
 #### Логика
-- Получение данных с бэка (est: 60 min; fact: x min).
-- Сортировка данных по кнопке (est: 60 min; fact: x min).
+- Получение данных с бэка (est: 60 min; fact: 180 min).
+- Сортировка данных по кнопке (est: 60 min; fact: 60 min).
 
-`Total:` est: 260 min; fact: x min.
+`Total:` est: 260 min; fact: 480 min.
 
 ## Module 3:
 #### Верстка экрана "Избранные NFT"   

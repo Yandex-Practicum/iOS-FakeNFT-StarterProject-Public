@@ -176,12 +176,28 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         switch index {
-        case 0: print(0) // TODO: Переход в мои NFT
+        case 0:
+            showMyNFT()
         case 1: print(1) // TODO: Переход в Избранные NFT
         case 2: print(2) // TODO: Переход на сраницу разработчика
         default:
             break
         }
+    }
+    
+    private func showMyNFT() {
+        guard let presenter else { return }
+        let myNFTPresenter = MyNFTPresenter(servicesAssembly: presenter.servicesAssembly,
+                                            nftsID: presenter.profileModelUI?.nfts ?? [],
+                                            likes: presenter.profileModelUI?.likes ?? [])
+        myNFTPresenter.completionHandler = {
+            [weak self] likedNfts in
+            guard let self else { return }
+            self.presenter?.profileModelUI?.likes = likedNfts
+        }
+        let myNFTViewController = MyNFTViewController(presenter: myNFTPresenter)
+        myNFTViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(myNFTViewController, animated: true)
     }
 }
 

@@ -22,6 +22,9 @@ struct ProfilePutRequest: NetworkRequest {
         if let website = profileModelEditing.website {
             components.append(URLQueryItem(name: "website", value: website))
         }
+        for idLikedNft in profileModelEditing.likes {
+            components.append(URLQueryItem(name: "likes", value: idLikedNft))
+        }
         urlComponents?.queryItems = components
 
         return urlComponents?.url
