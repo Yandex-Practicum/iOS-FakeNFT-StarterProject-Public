@@ -14,17 +14,17 @@ class ProfileRouter: ProfileRouting {
     init(viewController: UIViewController) {
         self.viewController = viewController
     }
-    
+
     func routeToUserNFT(nftList: [String]) {
         let destinationVC = factory.makeUserNFTViewController(nftList: nftList)
         pushController(destinationVC)
     }
-    
+
     func routeToFavoritesNFT(nftList: [String]) {
         let destinationVC = factory.makeFavoritesNFTViewController(nftList: nftList)
         pushController(destinationVC)
     }
-    
+
     func routeToEditingViewController() {
         let editingViewController = factory.makeEditingViewController()
         presentController(editingViewController)

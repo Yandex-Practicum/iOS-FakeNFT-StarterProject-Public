@@ -1,8 +1,8 @@
 import UIKit
 //import ProgressHUD
 
-//@main
-//final class AppDelegate: UIResponder, UIApplicationDelegate {
+// @main
+// final class AppDelegate: UIResponder, UIApplicationDelegate {
 //    func application(
 //        _: UIApplication,
 //        didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?

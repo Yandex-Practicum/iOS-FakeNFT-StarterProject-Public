@@ -1,6 +1,6 @@
 import UIKit
 
-//final class TabBarController: UITabBarController {
+// final class TabBarController: UITabBarController {
 //
 //    var servicesAssembly: ServicesAssembly!
 //
@@ -74,19 +74,18 @@ import UIKit
 //
 //        tabBar.standardAppearance = appearance
 //    }
-//}
-
+// }
 
 final class TabBarController: UITabBarController {
-    
+
     var servicesAssembly: ServicesAssembly!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.backgroundColor = UIColor.nftWhite
         self.tabBar.backgroundColor = .nftWhite
-        
+
         servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl(),
@@ -111,7 +110,7 @@ final class TabBarController: UITabBarController {
         )
 
         let cartController = CartViewController(viewModel: CartViewModel(servicesAssembly: servicesAssembly))
-    
+
         let basketNavigationController = UINavigationController(rootViewController: cartController)
         basketNavigationController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("TabBarController.Basket", comment: ""),

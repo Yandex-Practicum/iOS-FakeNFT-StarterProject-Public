@@ -7,7 +7,7 @@ struct GeometricProfileParams {
     let cellRightInset: CGFloat
     let cellHeight: CGFloat
     let paddingWight: CGFloat
-    
+
     init(
         cellPerRowCount: CGFloat,
         cellSpacing: CGFloat,
@@ -23,4 +23,3 @@ struct GeometricProfileParams {
         self.paddingWight = (cellPerRowCount - 1) * cellSpacing + cellLeftInset + cellRightInset
     }
 }
-

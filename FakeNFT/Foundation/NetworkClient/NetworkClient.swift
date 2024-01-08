@@ -65,8 +65,7 @@ struct DefaultNetworkClient: NetworkClient {
         return DefaultNetworkTask(dataTask: task)
     }
 
-    @discardableResult
-    func send<T: Decodable>(request: NetworkRequest, type: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
+    @discardableResult func send<T: Decodable>(request: NetworkRequest, type: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
         return send(request: request) { result in
             switch result {
             case let .success(data):

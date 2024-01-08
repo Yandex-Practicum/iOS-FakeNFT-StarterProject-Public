@@ -2,13 +2,13 @@ import Foundation
 
 final class ProfileService {
     static let shared = ProfileService(networkHelper: NetworkServiceHelper(networkClient: DefaultNetworkClient()))
-    
+
     private let networkHelper: NetworkServiceHelper
-    
+
     init(networkHelper: NetworkServiceHelper) {
         self.networkHelper = networkHelper
     }
-    
+
     func fetchProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
         let request = FetchProfileNetworkRequest()
         networkHelper.fetchData(request: request, type: UserProfile.self) { result in
@@ -20,7 +20,7 @@ final class ProfileService {
             }
         }
     }
-    
+
     func updateProfile(with userProfileModel: UserProfile,
                        completion: @escaping (Result<UserProfile, Error>) -> Void) {
         let request = UpdateProfileNetworkRequest(userProfile: userProfileModel)
@@ -33,7 +33,7 @@ final class ProfileService {
             }
         }
     }
-    
+
     func stopAllTasks() {
         networkHelper.stopAllTasks()
     }
