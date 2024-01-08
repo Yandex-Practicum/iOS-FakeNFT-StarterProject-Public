@@ -1,5 +1,5 @@
 import UIKit
-//import ProgressHUD
+// import ProgressHUD
 
 // @main
 // final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +22,7 @@ import UIKit
 //    ) -> UISceneConfiguration {
 //        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
 //    }
-//}
+//     }
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,8 +45,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-//if let windowScene = scene as? UIWindowScene {
-//    let window = UIWindow(windowScene: windowScene)
+// if let windowScene = scene as? UIWindowScene {
+//   let window = UIWindow(windowScene: windowScene)
 //    let shownOnboardingEarlier = UserDefaults.standard.bool(forKey: "shownOnboardingEarlier")
 //    if shownOnboardingEarlier {
 //        window.rootViewController = TabBarController()
@@ -56,4 +56,4 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
 //    window.makeKeyAndVisible()
 //    self.window = window
-//}
+// }
