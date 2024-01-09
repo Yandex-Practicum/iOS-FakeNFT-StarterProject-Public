@@ -30,12 +30,16 @@ extension UIView {
 extension UIViewController {
 
     func setupCustomBackButton() {
+        let backButtonImage = UIImage(named: "backward")?.withRenderingMode(.alwaysTemplate)
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "backward"),
+            image: backButtonImage,
             style: .plain,
             target: self,
             action: #selector(self.customBackAction)
         )
+
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
 
     @objc

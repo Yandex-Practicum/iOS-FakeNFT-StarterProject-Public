@@ -137,7 +137,8 @@ final class ProfileViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .nftWhite
-[editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach {
+
+        [editButton, profileImageView, userNameLabel, userDescriptionLabel, userWebSiteTextView, profileTableView].forEach {
             view.addViewWithNoTAMIC($0)
             $0.isHidden = true
         }
@@ -185,9 +186,9 @@ extension ProfileViewController: UITableViewDataSource {
         var cellTitle = ""
         switch indexPath.row {
         case 0:
-        cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + "(\(viewModel.userProfile?.nfts.count ?? 0))"
+            cellTitle = NSLocalizedString("ProfileViewController.myNFT", comment: "") + "(\(viewModel.userProfile?.nfts.count ?? 0))"
         case 1:
-        cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + "(\(viewModel.userProfile?.likes.count ?? 0))"
+            cellTitle = NSLocalizedString("ProfileViewController.favouritesNFT", comment: "") + "(\(viewModel.userProfile?.likes.count ?? 0))"
         case 2:
             cellTitle = NSLocalizedString("ProfileViewController.aboutDeveloper", comment: "")
         default:
@@ -226,10 +227,10 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - UINavigationControllerDelegate
 
 extension ProfileViewController: UINavigationControllerDelegate {
-func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-if viewController is ProfileViewController {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is ProfileViewController {
             navigationController.setNavigationBarHidden(true, animated: animated)
-} else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
+        } else if viewController is UserNFTViewController || viewController is FavoritesNFTViewController || viewController is WebViewViewController {
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
     }

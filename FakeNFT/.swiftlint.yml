@@ -1,5 +1,6 @@
 excluded:
   - Generated/Strings.swift
+  - FakeNFTUITests/
 
 
 disabled_rules: # rule identifiers to exclude from running
@@ -7,3 +8,4 @@ disabled_rules: # rule identifiers to exclude from running
   - comma
   - control_statement
   - blanket_disable_command
+  - line_length

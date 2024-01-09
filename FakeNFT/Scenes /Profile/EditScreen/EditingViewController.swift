@@ -70,7 +70,7 @@ final class EditingViewController: UIViewController {
 
     private lazy var exitButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "plus"), for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
         button.tintColor = .nftBlack
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button

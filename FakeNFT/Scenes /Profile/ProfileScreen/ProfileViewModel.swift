@@ -15,7 +15,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
 
     init(service: ProfileService) {
         self.profileService = service
-    NotificationCenter.default.addObserver(self, selector: #selector(profileUpdated), name: NSNotification.Name("profileUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(profileUpdated), name: NSNotification.Name("profileUpdated"), object: nil)
     }
 
     @objc

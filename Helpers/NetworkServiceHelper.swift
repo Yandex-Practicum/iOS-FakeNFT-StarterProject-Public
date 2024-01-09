@@ -7,7 +7,8 @@ final class NetworkServiceHelper {
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-func fetchData<T: Decodable>(request: NetworkRequest, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+
+    func fetchData<T: Decodable>(request: NetworkRequest, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         fetchData(request: request, type: T.self, retryCount: 0, delayInterval: 3.0, completion: completion)
     }
 

@@ -82,7 +82,9 @@ final class FavoritesNFTViewController: UIViewController {
             case .error:
                 print("Ошибка")
             default:
-                break          }
+                break
+
+            }
         }
     }
 
@@ -135,7 +137,8 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.favoritesNFT.count
     }
-func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FavoritesNFTCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let nft = viewModel.favoritesNFT[indexPath.row]
         let viewModel = FavoritesNFTCellViewModel(nft: nft)

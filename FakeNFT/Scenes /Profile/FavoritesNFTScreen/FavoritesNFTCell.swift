@@ -83,7 +83,7 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
     func setStarsState(_ state: Int) {
         starsImage.enumerated().forEach { position, star in
             let color = position < state ? UIColor.nftYellowUniversal : UIColor.nftLightgrey
-            star.image = UIImage(named: "stars")?.withTintColor(color, renderingMode: .alwaysOriginal)
+            star.image = UIImage(named: "star_inactive")?.withTintColor(color, renderingMode: .alwaysOriginal)
         }
     }
 

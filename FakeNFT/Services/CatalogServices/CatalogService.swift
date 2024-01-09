@@ -42,7 +42,8 @@ final class CatalogService: CatalogServiceProtocol {
                         case .success(let catalogRes):
                             self.catalog += catalogRes.map {
                                 return Catalog(
-                                    name: $0.name,coverURL: URL(string: $0.cover.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""),
+                                    name: $0.name,
+                                    coverURL: URL(string: $0.cover.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""),
                                     nfts: $0.nfts,
                                     desription: $0.description,
                                     authorID: $0.author,
