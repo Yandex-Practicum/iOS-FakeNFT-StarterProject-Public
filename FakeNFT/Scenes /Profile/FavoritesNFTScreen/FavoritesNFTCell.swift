@@ -60,7 +60,7 @@ final class FavoritesNFTCell: UICollectionViewCell, ReuseIdentifying {
 
     private lazy var likeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "filledHeartButtonImage"), for: .normal)
+        button.setImage(UIImage(named: "like_active"), for: .normal)
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return button
     }()
