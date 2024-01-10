@@ -273,7 +273,7 @@
 		71D1BDCE2B3CC9E200778C67 /* WebViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		71D1BDDC2B3CCA4D00778C67 /* NFTProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTProfile.swift; sourceTree = "<group>"; };
 		71D1BDDE2B3CCA8E00778C67 /* NumberFormatter+Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Presets.swift"; sourceTree = "<group>"; };
-		71D1BDE22B3CCB3800778C67 /* Profile Vadim.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "Profile Vadim.md"; path = "../../../iOS-FakeNFT-StarterProject-Public-profile/FakeNFT/Docs/Profile Vadim.md"; sourceTree = "<group>"; };
+		71D1BDE22B3CCB3800778C67 /* Profile Vadim.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Profile Vadim.md"; sourceTree = "<group>"; };
 		71DF65E12B3CBD8A0033E09F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71DF65E32B3CBE9F0033E09F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
