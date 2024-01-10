@@ -5,7 +5,7 @@ struct FavoritesNFTCellViewModel {
     let imageUrl: URL?
     let formattedRating: Int
     let formattedPrice: String
-    
+
     init(nft: NFTProfile) {
         self.title = nft.name
         self.imageUrl = URL(string: nft.images.first ?? "")

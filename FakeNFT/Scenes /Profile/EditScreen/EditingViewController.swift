@@ -10,7 +10,7 @@ final class EditingViewController: UIViewController {
         label.font = .headline2
         return label
     }()
-    
+
     private lazy var nameTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
@@ -20,13 +20,13 @@ final class EditingViewController: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
         return textView
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
         return label
     }()
-    
+
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
@@ -36,13 +36,13 @@ final class EditingViewController: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 10, bottom: 11, right: 10)
         return textView
     }()
-    
+
     private lazy var webSiteLabel: UILabel = {
         let label = UILabel()
         label.font = .headline2
         return label
     }()
-    
+
     private lazy var webSiteTextView: UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
@@ -70,7 +70,7 @@ final class EditingViewController: UIViewController {
 
     private lazy var exitButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "plus"), for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
         button.tintColor = .nftBlack
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button
@@ -145,23 +145,22 @@ final class EditingViewController: UIViewController {
                 strongSelf.alertService.showAlert(model: errorModel)
             }
         }
-        
+
         // Определяем действие отмены для оповещения
         let cancelAction = AlertActionModel(title: NSLocalizedString("AlertAction.cancel", comment: ""),
                                             style: .cancel,
                                             handler: nil)
-        
+
         // Создаем основную модель оповещения
         let alertModel = AlertProfileModel(title: NSLocalizedString("AlertAction.enterURL", comment: ""),
                                     message: nil,
                                     style: .alert,
                                     actions: [confirmAction, cancelAction],
                                     textFieldPlaceholder: NSLocalizedString("AlertAction.imageURL", comment: ""))
-        
+
         // Показываем оповещение
         alertService.showAlert(model: alertModel)
     }
-
 
     // MARK: - Methods
 
@@ -278,4 +277,3 @@ extension EditingViewController: UITextViewDelegate {
         return true
     }
 }
-

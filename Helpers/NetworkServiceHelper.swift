@@ -3,20 +3,20 @@ import Foundation
 final class NetworkServiceHelper {
     private let networkClient: NetworkClient
     private var currentTasks: [NetworkTask] = []
-    
+
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-    
+
     func fetchData<T: Decodable>(request: NetworkRequest, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         fetchData(request: request, type: T.self, retryCount: 0, delayInterval: 3.0, completion: completion)
     }
-    
+
     func stopAllTasks() {
         currentTasks.forEach { $0.cancel() }
         currentTasks.removeAll()
     }
-    
+
     private func fetchData<T: Decodable>(
         request: NetworkRequest,
         type: T.Type,
@@ -26,7 +26,7 @@ final class NetworkServiceHelper {
     ) {
         let task = networkClient.send(request: request, type: T.self) { [weak self] result in
             guard let self = self else { return }
-            
+
             switch result {
             case .success(let data):
                 completion(.success(data))
@@ -51,7 +51,7 @@ final class NetworkServiceHelper {
             completion(.failure(NetworkClientError.taskCreationFailed))
             return
         }
-        
+
         self.currentTasks.append(unwrappedTask)
     }
 }

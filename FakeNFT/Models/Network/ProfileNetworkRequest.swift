@@ -29,4 +29,3 @@ struct UpdateProfileNetworkRequest: NetworkRequest {
         profileDTO = ProfileUpdateDTO(from: userProfile)
     }
 }
-

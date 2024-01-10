@@ -4,39 +4,39 @@ import ProgressHUD
 protocol EditingViewModelProtocol {
     var userProfile: UserProfile? { get }
     func observeUserProfileChanges(_ handler: @escaping (UserProfile?) -> Void)
-    
+
     func viewDidLoad()
     func exitButtonTapped()
-    
+
     func updateName(_ name: String)
     func updateDescription(_ description: String)
     func updateWebSite(_ website: String)
-    
+
     func photoURLdidChanged(with url: URL)
 }
 
 final class EditingViewModel: EditingViewModelProtocol {
     @Observ
     private(set) var userProfile: UserProfile?
-    
+
     private let profileService: ProfileService
     private let imageValidator: ImageValidatorProtocol
-    
+
     private var isChanged: Bool = false
-    
+
     init(profileService: ProfileService, imageValidator: ImageValidatorProtocol = ImageValidator()) {
         self.profileService = profileService
         self.imageValidator = imageValidator
     }
-    
+
     func observeUserProfileChanges(_ handler: @escaping (UserProfile?) -> Void) {
         $userProfile.observe(handler)
     }
-    
+
     func viewDidLoad() {
         fetchUserProfile()
     }
-    
+
     func updateName(_ name: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -50,7 +50,7 @@ final class EditingViewModel: EditingViewModelProtocol {
         )
         isChanged = true
     }
-    
+
     func updateDescription(_ description: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -64,7 +64,7 @@ final class EditingViewModel: EditingViewModelProtocol {
         )
         isChanged = true
     }
-    
+
     func updateWebSite(_ website: String) {
         guard let currentProfile = userProfile else { return }
         userProfile = UserProfile(
@@ -78,19 +78,19 @@ final class EditingViewModel: EditingViewModelProtocol {
         )
         isChanged = true
     }
-    
+
     func exitButtonTapped() {
         guard isChanged, let userProfile = userProfile else { return }
-        
+
         let group = DispatchGroup()
         let backgroundQueue = DispatchQueue(label: "com.appname.backgroundQueue", qos: .background)
 
         backgroundQueue.async(group: group) {
             group.enter()
-            
+
             self.profileService.updateProfile(with: userProfile) { [weak self] result in
                 defer { group.leave() }
-                
+
                 guard let self = self else { return }
 
                 DispatchQueue.main.async { [weak self] in
@@ -124,7 +124,7 @@ final class EditingViewModel: EditingViewModelProtocol {
             }
         }
     }
-    
+
     private func fetchUserProfile() {
         ProgressHUD.show(NSLocalizedString("ProgressHUD.loading", comment: ""))
         profileService.fetchProfile { [weak self] result in

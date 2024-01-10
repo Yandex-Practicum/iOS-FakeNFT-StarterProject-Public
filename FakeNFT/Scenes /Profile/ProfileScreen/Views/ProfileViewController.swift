@@ -86,7 +86,7 @@ final class ProfileViewController: UIViewController {
     }
 
     // MARK: - Methods
-    
+
     private func bind() {
         viewModel.observeUserProfileChanges { [weak self] profileModel in
             guard let self = self else { return }
@@ -115,7 +115,7 @@ final class ProfileViewController: UIViewController {
             self?.tabBarController?.tabBar.isHidden = false
             self?.profileTableView.reloadData()
             [self?.editButton, self?.profileImageView, self?.userNameLabel, self?.userDescriptionLabel, self?.userWebSiteTextView, self?.profileTableView].forEach { $0?.isHidden = false }
-       
+
             // Скрываем индикатор загрузки
             ProgressHUD.dismiss()
         }
@@ -133,7 +133,6 @@ final class ProfileViewController: UIViewController {
         viewModel.viewDidLoad() // Запускаем процесс загрузки данных
     }
 
-    
     // MARK: - Layout methods
 
     private func setupViews() {
@@ -143,7 +142,7 @@ final class ProfileViewController: UIViewController {
             view.addViewWithNoTAMIC($0)
             $0.isHidden = true
         }
-        
+
         NSLayoutConstraint.activate([
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
@@ -236,4 +235,3 @@ extension ProfileViewController: UINavigationControllerDelegate {
         }
     }
 }
-

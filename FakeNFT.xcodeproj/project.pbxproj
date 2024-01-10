@@ -116,6 +116,9 @@
 		71D1BDDF2B3CCA8E00778C67 /* NumberFormatter+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D1BDDE2B3CCA8E00778C67 /* NumberFormatter+Presets.swift */; };
 		8441AC3F2AFBDA6400A34F4C /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */; };
 		8441AC412AFBDB8700A34F4C /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441AC402AFBDB8700A34F4C /* Observable.swift */; };
+		8452F1752B4C3C41002E636D /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8452F1742B4C3C23002E636D /* SF-Pro-Text-Regular.otf */; };
+		8452F1762B4C3C44002E636D /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8452F1722B4C3C23002E636D /* SF-Pro-Text-Medium.otf */; };
+		8452F1772B4C3C46002E636D /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8452F1732B4C3C23002E636D /* SF-Pro-Text-Bold.otf */; };
 		84555B022B0649BB00EDDB49 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84555B012B0649BB00EDDB49 /* CurrencyViewController.swift */; };
 		84BA4D812B07A44500284C04 /* CurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BA4D802B07A44500284C04 /* CurrencyCollectionViewCell.swift */; };
 		84BA4D832B07AB3C00284C04 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BA4D822B07AB3C00284C04 /* Currency.swift */; };
@@ -275,6 +278,9 @@
 		71DF65E32B3CBE9F0033E09F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8441AC3E2AFBDA6400A34F4C /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		8441AC402AFBDB8700A34F4C /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		8452F1722B4C3C23002E636D /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Medium.otf"; path = "../FontsResources/SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		8452F1732B4C3C23002E636D /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Bold.otf"; path = "../FontsResources/SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		8452F1742B4C3C23002E636D /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Regular.otf"; path = "../FontsResources/SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		84555B012B0649BB00EDDB49 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		84BA4D802B07A44500284C04 /* CurrencyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCollectionViewCell.swift; sourceTree = "<group>"; };
 		84BA4D822B07AB3C00284C04 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
@@ -392,6 +398,7 @@
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				8452F1712B4C3B24002E636D /* FountResources */,
 				3F478ED029DB476500F6D39E /* Fonts.swift */,
 				44AE69052B0414AC00C39DAD /* UIView+Flash.swift */,
 				71CE2D3A2B3CCE22008D16C8 /* UIView + Extensions.swift */,
@@ -782,6 +789,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		8452F1712B4C3B24002E636D /* FountResources */ = {
+			isa = PBXGroup;
+			children = (
+				8452F1732B4C3C23002E636D /* SF-Pro-Text-Bold.otf */,
+				8452F1722B4C3C23002E636D /* SF-Pro-Text-Medium.otf */,
+				8452F1742B4C3C23002E636D /* SF-Pro-Text-Regular.otf */,
+			);
+			path = FountResources;
+			sourceTree = "<group>";
+		};
 		84BA4D7C2B07A3C000284C04 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1040,9 @@
 			files = (
 				7136458F2B3D6386002C9071 /* LaunchScreen.storyboard in Resources */,
 				7136458D2B3D6378002C9071 /* Assets.xcassets in Resources */,
+				8452F1772B4C3C46002E636D /* SF-Pro-Text-Bold.otf in Resources */,
+				8452F1752B4C3C41002E636D /* SF-Pro-Text-Regular.otf in Resources */,
+				8452F1762B4C3C44002E636D /* SF-Pro-Text-Medium.otf in Resources */,
 				7136458E2B3D6381002C9071 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1280,7 +1300,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1342,7 +1362,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
