@@ -15,12 +15,12 @@ final class CatalogViewController: UIViewController {
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
 
-        button.image = UIImage(resource: .sortButton).withRenderingMode(.alwaysTemplate)
+        button.image = UIImage(named: "sort_button")?.withRenderingMode(.alwaysTemplate)
         button.style = .plain
         button.target = self
         button.action = #selector(sortButtonTapped)
         button.imageInsets = UIEdgeInsets(top: 2, left: 0, bottom: 0, right: 9)
-        button.tintColor = UIColor(resource: .blackDayNight)
+        button.tintColor = UIColor.nftBlack
 
         return button
     }()
@@ -61,10 +61,10 @@ final class CatalogViewController: UIViewController {
             quantitySortText: L10n.FilterAlert.quantitySortTitle,
             cancelButtonText: L10n.FilterAlert.cancelButtonTitle) { [weak self] in
                 guard let self = self else { return }
-                viewModel.sortCatalogByName()
+                self.viewModel.sortCatalogByName()
             } sortQuantityCompletion: { [weak self] in
                 guard let self = self else { return }
-                viewModel.sortCatalogByQuantity()
+                self.viewModel.sortCatalogByQuantity()
             }
 
         AlertPresenter.show(in: self, model: model)
@@ -76,7 +76,7 @@ extension CatalogViewController: CatalogViewDelegate {
     func showErrorAlert() {
         AlertPresenter.showError(in: self) { [weak self] in
             guard let self = self else { return }
-            catalogView.reloadData()
+            self.catalogView.reloadData()
         }
     }
 

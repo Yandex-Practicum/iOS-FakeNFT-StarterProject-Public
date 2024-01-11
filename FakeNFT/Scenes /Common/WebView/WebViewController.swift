@@ -15,12 +15,12 @@ final class WebViewController: UIViewController {
     private lazy var backButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
 
-        button.image = UIImage(resource: .backward).withRenderingMode(.alwaysTemplate)
+        button.image = UIImage(named: "backward")?.withRenderingMode(.alwaysTemplate)
         button.style = .plain
         button.target = self
         button.action = #selector(backButtonTapped)
         button.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        button.tintColor = UIColor(resource: .blackDayNight)
+        button.tintColor = UIColor.nftBlack
 
         return button
     }()
@@ -34,8 +34,8 @@ final class WebViewController: UIViewController {
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
 
-        view.progressTintColor = UIColor(resource: .blackDayNight)
-        view.trackTintColor = UIColor(resource: .lightDayNight)
+        view.progressTintColor = UIColor.nftBlack
+        view.trackTintColor = UIColor.nftLightgrey
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -60,7 +60,7 @@ final class WebViewController: UIViewController {
 
     // MARK: - Private methods
     private func setupUI() {
-        view.backgroundColor = UIColor(resource: .whiteDayNight)
+        view.backgroundColor = UIColor.nftWhite
         configureNavBar()
         addSubviews()
         applyConstraints()
@@ -95,8 +95,8 @@ final class WebViewController: UIViewController {
             .sink { [weak self] newValue in
                 guard let self = self else { return }
 
-                setProgressValue(newValue)
-                viewModel.didUpdateProgressValue(webView.estimatedProgress)
+                self.setProgressValue(newValue)
+                self.viewModel.didUpdateProgressValue(self.webView.estimatedProgress)
 
             }.store(in: &subscribes)
 
@@ -105,7 +105,7 @@ final class WebViewController: UIViewController {
                 guard let self = self else { return }
 
                 if shouldHide {
-                    setProgressHidden(shouldHide)
+                    self.setProgressHidden(shouldHide)
                 }
             }.store(in: &subscribes)
     }

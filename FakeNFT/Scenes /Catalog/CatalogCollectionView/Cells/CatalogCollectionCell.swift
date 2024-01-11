@@ -53,7 +53,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -62,7 +62,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let label = UILabel()
 
         label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        label.textColor = UIColor(resource: .blackDayNight)
+        label.textColor = UIColor.nftBlack
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
@@ -71,7 +71,7 @@ final class CatalogCollectionCell: UICollectionViewCell {
         let button = UIButton()
 
         button.addTarget(self, action: #selector(basketButtonTapped), for: .touchUpInside)
-        button.setTitleColor(UIColor(resource: .blackDayNight), for: .normal)
+        button.setTitleColor(UIColor.nftBlack, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -215,8 +215,8 @@ final class CatalogCollectionCell: UICollectionViewCell {
 
     private func makeStarIcon() -> UIImageView {
         let imageView = UIImageView(
-            image: UIImage(resource: .starInactive).withTintColor(UIColor(resource: .lightDayNight)),
-            highlightedImage: UIImage(resource: .starActive)
+            image: UIImage(named: "star_inactive")?.withTintColor(UIColor.nftLightgrey),
+            highlightedImage: UIImage(named: "star_active")
         )
         imageView.contentMode = .scaleAspectFit
         imageView.isUserInteractionEnabled = true
@@ -233,16 +233,15 @@ final class CatalogCollectionCell: UICollectionViewCell {
     }
 
     private func switchLikeImage() {
-        let image = nftIsLiked ?
-        UIImage(resource: .likeActive) : UIImage(resource: .likeInactive)
+        let image = nftIsLiked ? UIImage(named: "like_active") : UIImage(named: "like_inactive")
         likeButton.setImage(image, for: .normal)
     }
 
     private func switchBasketImage() {
         let image = nftIsAddedToBasket ?
-        UIImage(resource: .basketDelete).withTintColor(UIColor(resource: .blackDayNight))
-        : UIImage(resource: .basketAdd).withTintColor(UIColor(resource: .blackDayNight))
-        addToBasketButton.setImage(image.withRenderingMode(.automatic), for: .normal)
+        UIImage(named: "basket_delete")?.withTintColor(UIColor.nftBlack)
+        : UIImage(named: "basket_add")?.withTintColor(UIColor.nftBlack)
+        addToBasketButton.setImage(image?.withRenderingMode(.automatic), for: .normal)
     }
 
     @objc

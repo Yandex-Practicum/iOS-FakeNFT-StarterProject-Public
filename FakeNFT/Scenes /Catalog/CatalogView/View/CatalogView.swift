@@ -67,7 +67,7 @@ final class CatalogView: UIView {
             .sink { [weak self] _ in
             guard let self = self else { return }
 
-            tableView.reloadData()
+                self.tableView.reloadData()
 
             }.store(in: &subscribes)
 
@@ -76,9 +76,9 @@ final class CatalogView: UIView {
                 guard let self = self else { return }
 
                 if isLoading {
-                    delegate?.startAnimatingActivityIndicator()
+                    self.delegate?.startAnimatingActivityIndicator()
                 } else {
-                    delegate?.stopAnimatingActivityIndicator()
+                    self.delegate?.stopAnimatingActivityIndicator()
                 }
             }.store(in: &subscribes)
 
@@ -86,7 +86,7 @@ final class CatalogView: UIView {
             .sink { [weak self] error in
                 guard let self = self else { return }
                 if error != nil {
-                    delegate?.showErrorAlert()
+                    self.delegate?.showErrorAlert()
                 }
             }.store(in: &subscribes)
     }

@@ -37,7 +37,7 @@ final class CustomPageControl: UIView {
         for _ in (0..<countSegment) {
             let segment = UIProgressView()
             segment.translatesAutoresizingMaskIntoConstraints = false
-            segment.trackTintColor = UIColor(resource: .white)
+            segment.trackTintColor = UIColor.nftWhiteUniversal
             segmentStackView.addArrangedSubview(segment)
         }
     }
@@ -47,7 +47,7 @@ final class CustomPageControl: UIView {
             if let subview = subview as? UIProgressView {
                 subview.progress = index == selectSegment ? 1.0 : 0.0
                 subview.progressTintColor = index == selectSegment
-                ? UIColor(resource: .gray) : UIColor(resource: .white)
+                ? UIColor.nftGrayUniversal : UIColor.nftWhiteUniversal
             }
         }
     }

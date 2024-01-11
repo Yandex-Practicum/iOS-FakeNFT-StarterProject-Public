@@ -32,24 +32,24 @@ final class CatalogService: CatalogServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
-                request: request,
+            self.networkClient.send(
+                request: self.request,
                 type: [CatalogResult].self,
                 onResponse: { [weak self] (result: Result<[CatalogResult], Error>)  in
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         switch result {
                         case .success(let catalogRes):
-                            catalog += catalogRes.map {
-                                Catalog(
+                            self.catalog += catalogRes.map {
+                                return Catalog(
                                     name: $0.name,
-                                    coverURL: URL(string: $0.cover),
+                                    coverURL: URL(string: $0.cover.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""),
                                     nfts: $0.nfts,
                                     desription: $0.description,
                                     authorID: $0.author,
                                     id: $0.id)
                             }
-                            completion(.success(catalog))
+                            completion(.success(self.catalog))
                         case .failure(let error):
                             completion(.failure(error))
                         }
@@ -67,7 +67,7 @@ final class CatalogService: CatalogServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: ProfileLike.self) { (result: Result<ProfileLike, Error>) in
                     DispatchQueue.main.async {
@@ -87,7 +87,7 @@ final class CatalogService: CatalogServiceProtocol {
 
         queue.async { [weak self] in
             guard let self = self else { return }
-            networkClient.send(
+            self.networkClient.send(
                 request: request,
                 type: PurchaseCart.self) { (result: Result<PurchaseCart, Error>) in
                     DispatchQueue.main.async {

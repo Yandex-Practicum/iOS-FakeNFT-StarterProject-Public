@@ -9,7 +9,7 @@ final class OnboardingViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(resource: .white)
+        label.textColor = UIColor.nftWhiteUniversal
         label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         label.textAlignment = .left
         return label
@@ -17,7 +17,7 @@ final class OnboardingViewController: UIViewController {
 
     private let textInfoLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(resource: .white)
+        label.textColor = UIColor.nftWhiteUniversal
         label.font = .caption1
         label.textAlignment = .left
         label.numberOfLines = 4
@@ -78,7 +78,7 @@ final class OnboardingViewController: UIViewController {
         gradientLayer.frame = pageImageView.bounds
         gradientLayer.colors = [
             UIColor.clear.cgColor,
-            UIColor(resource: .black).withAlphaComponent(0.8).cgColor
+            UIColor.nftBlackUniversal.withAlphaComponent(0.8).cgColor
         ]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)

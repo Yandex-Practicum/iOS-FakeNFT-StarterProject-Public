@@ -69,5 +69,51 @@
 "Onboarding.infoSecond" = "Пополняйте свою коллекцию эксклюзивными картинками, созданными нейросетью!";
 "Onboarding.infoThird" = "Смотрите статистику других и покажите всем, что у вас самая ценная коллекция";
 "Onboarding.buttonText" = "Что внутри?";
+"TabBarController.Profile" = "Профиль";
+"TabBarController.Catalog" = "Каталог";
+"TabBarController.Basket" = "Корзина";
+"TabBarController.Statistics" = "Статистика";
+
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "Мои NFT";
+"ProfileViewController.favouritesNFT" = "Избранные NFT";
+"ProfileViewController.aboutDeveloper" = "О разработчике";
+
+// EditScreen
+"EditingViewController.changePhoto" = "Сменить фото";
+"EditingViewController.name" = "Имя";
+"EditingViewController.description" = "Описание";
+"EditingViewController.site" = "Cайт";
+
+//ProgressHUD
+"ProgressHUD.loading" = "Загрузка ...";
+
+//NFTCell
+"NFTCell.from" = "от";
+"NFTCell.price" = "Цена";
+
+//UserNFTViewController
+"UserNFTViewController.nonft" = "У вас еще нет NFT";
+
+//AlertAction
+"AlertAction.close" = "Закрыть";
+"AlertAction.sort" = "Сортировка";
+"AlertAction.ok" = "Подтвердить";
+"AlertAction.error" = "Ошибка";
+"AlertAction.incorrURL" = "Введен не корректный URL адрес";
+"AlertAction.cancel" = "Отмена";
+"AlertAction.enterURL" = "Введите URL";
+"AlertAction.imageURL" = "URL изображения";
+"AlertAction.UpdateError" = "Ошибка обновления профиля";
+
+//SortOptions
+"SortOptions.price" = "По цене";
+"SortOptions.rate" = "По рейтингу";
+"SortOptions.name" = "По названию";
+
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "У вас еще нет избранных NFT";
 
 

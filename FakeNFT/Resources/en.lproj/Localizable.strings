@@ -69,3 +69,54 @@
 "Onboarding.infoSecond" = "Enhance your collection with exclusive pictures created by neural network!";
 "Onboarding.infoThird" = "See others' stats and show everyone that you have the most valuable collection";
 "Onboarding.buttonText" = "What's inside?";
+"TabBarController.Profile" = "Profile";
+"TabBarController.Catalog" = "Catalog";
+"TabBarController.Basket" = "Basket";
+"TabBarController.Statistics" = "Statistics";
+
+// MARK: - Profile
+
+// MainScreen
+"ProfileViewController.myNFT" = "My NFT";
+"ProfileViewController.favouritesNFT" = "Favorites NFT";
+"ProfileViewController.aboutDeveloper" = "About developer";
+
+// EditScreen
+"EditingViewController.changePhoto" = "Change photo";
+"EditingViewController.name" = "Name";
+"EditingViewController.description" = "Description";
+"EditingViewController.site" = "Website";
+
+//ProgressHUD
+"ProgressHUD.loading" = "Loading ...";
+
+//NFTCell
+"NFTCell.from" = "from";
+"NFTCell.price" = "Price";
+
+//UserNFTViewController
+"UserNFTViewController.nonft" = "You don't have an NFT yet";
+
+//AlertAction
+"AlertAction.close" = "Close";
+"AlertAction.sort" = "Sorting";
+"AlertAction.ok" = "OK";
+"AlertAction.error" = "Error";
+"AlertAction.incorrURL" = "Incorrect URL entered";
+"AlertAction.cancel" = "Cancel";
+"AlertAction.enterURL" = "Enter URL";
+"AlertAction.imageURL" = "Image URL";
+"AlertAction.UpdateError" = "Profile update error";
+
+//SortOptions
+"SortOptions.price" = "By price";
+"SortOptions.rate" = "By rating";
+"SortOptions.name" = "By name";
+
+//FavoritesNFTViewController
+"FavoritesNFTViewController.nonft" = "You don't have any favorite NFTs yet";
+
+
+
+
+
