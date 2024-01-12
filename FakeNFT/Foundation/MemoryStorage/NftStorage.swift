@@ -11,6 +11,10 @@ final class NftStorageImpl: NftStorage {
 
     private let syncQueue = DispatchQueue(label: "sync-nft-queue")
 
+    static let shared = NftStorageImpl()
+
+    init() {}
+
     func saveNft(_ nft: Nft) {
         syncQueue.async { [weak self] in
             self?.storage[nft.id] = nft
@@ -19,7 +23,7 @@ final class NftStorageImpl: NftStorage {
 
     func getNft(with id: String) -> Nft? {
         syncQueue.sync {
-            storage[id]
+            return storage[id]
         }
     }
 }
