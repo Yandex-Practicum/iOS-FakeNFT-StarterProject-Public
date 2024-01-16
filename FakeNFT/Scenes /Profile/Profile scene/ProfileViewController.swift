@@ -16,7 +16,7 @@ final class ProfileViewController: UIViewController {
         image.clipsToBounds = true
         image.layer.cornerRadius = 35
         image.contentMode = .scaleAspectFill
-        image.image = UIImage(systemName: "person.circle")
+        image.image = UIImage(systemName: Constants.avatarPlaceholdImage)
         return image
     }()
     
@@ -50,7 +50,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(
-            systemName: "square.and.pencil",
+            systemName: Constants.editButtonImage,
             withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
         )
         button.setImage(image, for: .normal)
@@ -97,17 +97,17 @@ final class ProfileViewController: UIViewController {
     
     private func applyConstraint() {
         NSLayoutConstraint.activate([
-            editButton.heightAnchor.constraint(equalToConstant: 44),
-            editButton.widthAnchor.constraint(equalToConstant: 44),
+            editButton.heightAnchor.constraint(equalToConstant: Constants.baseSize44),
+            editButton.widthAnchor.constraint(equalToConstant: Constants.baseSize44),
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             editButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7),
-            userStack.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 20),
-            userStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            userStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            userStack.heightAnchor.constraint(equalToConstant: 70),
-            avatarImage.heightAnchor.constraint(equalToConstant: 70),
-            avatarImage.widthAnchor.constraint(equalToConstant: 70),
-            descriptionLabel.topAnchor.constraint(equalTo: userStack.bottomAnchor, constant: 20),
+            userStack.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: Constants.baseIndent),
+            userStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.baseOffset),
+            userStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.baseOffset),
+            userStack.heightAnchor.constraint(equalToConstant: Constants.baseSize70),
+            avatarImage.heightAnchor.constraint(equalToConstant: Constants.baseSize70),
+            avatarImage.widthAnchor.constraint(equalToConstant: Constants.baseSize70),
+            descriptionLabel.topAnchor.constraint(equalTo: userStack.bottomAnchor, constant: Constants.baseIndent),
             descriptionLabel.leadingAnchor.constraint(equalTo: userStack.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: userStack.trailingAnchor),
             webLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
@@ -132,6 +132,7 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - Table View Data Source
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -157,6 +158,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Table View Delegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54
@@ -165,11 +167,20 @@ extension ProfileViewController: UITableViewDelegate {
     // TODO: Переход на экраны Коллекции, избранных, разработчика (Эпик 3/3)
 }
 
-extension ProfileViewController {
+// MARK: - Constants
+private extension ProfileViewController {
     struct Constants {
         // Table cell
         static let myNFT = "Мой NFT (112)"
         static let myFavorite = "Избранные NFT (11)"
         static let about = "О разработчике"
+        // Constraint
+        static let baseSize44: CGFloat = 44
+        static let baseOffset: CGFloat = 16
+        static let baseSize70: CGFloat = 70
+        static let baseIndent: CGFloat = 20
+        // UI helper
+        static let editButtonImage = "square.and.pencil"
+        static let avatarPlaceholdImage = "person.circle"
     }
 }
