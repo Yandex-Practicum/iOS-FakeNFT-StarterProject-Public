@@ -1,0 +1,61 @@
+//
+//  ProfileService.swift
+//  FakeNFT
+//
+//  Created by Ivan Zhoglov on 16.01.2024.
+//
+
+import Foundation
+
+typealias ProfileCompletion = (Result<ProfileModel, Error>) -> Void
+
+protocol ProfileServiceProtocol {
+    func loadProfile(completion: @escaping ProfileCompletion)
+}
+
+final class ProfileService: ProfileServiceProtocol {
+
+    private let networkClient: NetworkClient
+    private let storage: ProfileStorage
+
+    init(networkClient: NetworkClient, storage: ProfileStorage) {
+        self.storage = storage
+        self.networkClient = networkClient
+    }
+    
+    func loadProfile(completion: @escaping ProfileCompletion) {
+        if let profile = storage.getProfile() {
+            completion(.success(profile))
+            return
+        }
+        
+        let request = ProfileRequest()
+        networkClient.send(request: request, type: ProfileModel.self) { [weak storage] result in
+            switch result {
+            case .success(let profile):
+                storage?.saveProfile(profile)
+                completion(.success(profile))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+//    func loadNft(id: String, completion: @escaping NftCompletion) {
+//        if let nft = storage.getNft(with: id) {
+//            completion(.success(nft))
+//            return
+//        }
+//
+//        let request = NFTRequest(id: id)
+//        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
+//            switch result {
+//            case .success(let nft):
+//                storage?.saveNft(nft)
+//                completion(.success(nft))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+}

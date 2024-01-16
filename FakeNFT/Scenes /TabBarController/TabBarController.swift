@@ -24,7 +24,9 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
         
-        let profileController = ProfileViewController()
+        // MARK: ProfileBar
+        let presenter = ProfileViewPresenter()
+        let profileController = ProfileViewController(presenter: presenter)
         profileController.tabBarItem = profileTabBarItem
         
         viewControllers = [profileController, catalogController]
