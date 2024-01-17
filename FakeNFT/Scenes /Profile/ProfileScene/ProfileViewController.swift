@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.layer.cornerRadius = 35
+        image.layer.cornerRadius = Constants.cornerRadius
         image.contentMode = .scaleAspectFill
         image.image = UIImage(systemName: Constants.avatarPlaceholdImage)
         return image
@@ -73,7 +73,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     private lazy var userStack: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 16
+        stackView.spacing = Constants.spacingForStack
         stackView.axis = .horizontal
         return stackView
     }()
@@ -141,11 +141,11 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
             descriptionLabel.topAnchor.constraint(equalTo: userStack.bottomAnchor, constant: Constants.baseIndent),
             descriptionLabel.leadingAnchor.constraint(equalTo: userStack.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: userStack.trailingAnchor),
-            webLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            webLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Constants.distance8),
             webLinkLabel.leadingAnchor.constraint(equalTo: userStack.leadingAnchor),
             webLinkLabel.trailingAnchor.constraint(equalTo: userStack.trailingAnchor),
-            webLinkLabel.heightAnchor.constraint(equalToConstant: 28),
-            tableView.topAnchor.constraint(equalTo: webLinkLabel.bottomAnchor, constant: 40),
+            webLinkLabel.heightAnchor.constraint(equalToConstant: Constants.height28),
+            tableView.topAnchor.constraint(equalTo: webLinkLabel.bottomAnchor, constant: Constants.distance40),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -181,7 +181,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
 // MARK: - Table View Data Source
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return Constants.numberOfRowInSec
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -207,7 +207,7 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: - Table View Delegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 54
+        return Constants.cellHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -239,7 +239,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     func update() {
         guard let profileModel = presenter.model else { return }
         if let avatar = profileModel.avatar {
-            let proc = RoundCornerImageProcessor(cornerRadius: 35)
+            let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)
             self.avatarImage.kf.indicatorType = .activity
             self.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
         }
@@ -261,12 +261,19 @@ private extension ProfileViewController {
         static let about = "О разработчике"
         static let bracket1st = "("
         static let bracket2nd = ")"
+        static let cellHeight: CGFloat = 54
+        static let numberOfRowInSec = 3
         // Constraint
         static let baseOffset: CGFloat = 16
         static let baseSize70: CGFloat = 70
         static let baseIndent: CGFloat = 20
+        static let height28: CGFloat = 28
+        static let distance8: CGFloat = 8
+        static let distance40: CGFloat = 40
         // UI helper
         static let editButtonImage = "square.and.pencil"
         static let avatarPlaceholdImage = "person.circle"
+        static let cornerRadius: CGFloat = 35
+        static let spacingForStack: CGFloat = 16
     }
 }
