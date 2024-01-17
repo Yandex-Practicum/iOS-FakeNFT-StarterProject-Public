@@ -27,9 +27,10 @@ final class TabBarController: UITabBarController {
         // MARK: ProfileBar
         let presenter = ProfileViewPresenter(profileService: servicesAssembly.profileService)
         let profileController = ProfileViewController(presenter: presenter)
+        let navControllerRootProfile = UINavigationController(rootViewController: profileController)
         profileController.tabBarItem = profileTabBarItem
         
-        viewControllers = [profileController, catalogController]
+        viewControllers = [navControllerRootProfile, catalogController]
 
         view.backgroundColor = .systemBackground
     }

@@ -13,9 +13,15 @@ protocol ProfileViewControllerDelegate: AnyObject, LoadingView {
     func showDescriptionAlert(title: String, message: String)
 }
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Properties & UI Elements
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     private lazy var avatarImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -49,19 +55,18 @@ final class ProfileViewController: UIViewController {
         label.textColor = .ypBlueUn
         label.font = .sfProRegular15
         label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(tapGesture)
         return label
     }()
     
-    private lazy var editButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(
-            systemName: Constants.editButtonImage,
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
+    private lazy var editButton: UIBarButtonItem = {
+        let config = UIImage.SymbolConfiguration(weight: .bold)
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: Constants.editButtonImage, withConfiguration: config),
+            style: .plain,
+            target: self,
+            action: #selector(didTapEditButton)
         )
-        button.setImage(image, for: .normal)
-        button.tintColor = .ypBlack
-        button.addTarget(self, action: #selector(didTapEditButton), for: .touchUpInside)
         return button
     }()
     
@@ -82,6 +87,7 @@ final class ProfileViewController: UIViewController {
         return table
     }()
     
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
     private var nftsCount: Int = 0
     private var likesCount: Int = 0
     private var presenter: ProfileViewPresenterProtocol
@@ -90,6 +96,8 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
+        navigationItem.rightBarButtonItem = editButton
+        navigationItem.rightBarButtonItem?.tintColor = .ypBlack
         addSubView()
         applyConstraint()
         setupDelegates()
@@ -113,18 +121,18 @@ final class ProfileViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
     private func addSubView() {
         [avatarImage, nameLabel].forEach { userStack.addArrangedSubview($0) }
-        [editButton, userStack, descriptionLabel, webLinkLabel, tableView].forEach { view.addSubview($0) }
+        [userStack, descriptionLabel, webLinkLabel, tableView, activityIndicator].forEach { view.addSubview($0) }
     }
     
     private func applyConstraint() {
         NSLayoutConstraint.activate([
-            editButton.heightAnchor.constraint(equalToConstant: Constants.baseSize44),
-            editButton.widthAnchor.constraint(equalToConstant: Constants.baseSize44),
-            editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            editButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7),
-            userStack.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: Constants.baseIndent),
+            userStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.baseIndent),
             userStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.baseOffset),
             userStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.baseOffset),
             userStack.heightAnchor.constraint(equalToConstant: Constants.baseSize70),
@@ -140,7 +148,9 @@ final class ProfileViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: webLinkLabel.bottomAnchor, constant: 40),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
@@ -148,11 +158,23 @@ final class ProfileViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         presenter.delegate = self
+        tapGesture.delegate = self
+        tapGesture.cancelsTouchesInView = false
     }
     
     // MARK: Actions
     @objc private func didTapEditButton() {
         // TODO: на экран редактирования (Эпик 2/3)
+    }
+    
+    @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
+        if let labelText = (gesture.view as? UILabel)?.text {
+            if let url = URL(string: labelText) {
+                let webVC = WebViewController(url: url)
+                webVC.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(webVC, animated: true)
+            }
+        }
     }
 }
 
@@ -188,14 +210,31 @@ extension ProfileViewController: UITableViewDelegate {
         return 54
     }
     
-    // TODO: Переход на экраны Коллекции, избранных, разработчика (Эпик 3/3)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        switch index {
+        case 0:
+            return
+            // TODO: Переход на экраны Коллекции, избранных, разработчика (Эпик 3/3)
+        case 1:
+            return
+            // TODO: Переход на экраны Коллекции, избранных, разработчика (Эпик 3/3)
+        case 2:
+            // временно, для перехода на работающую Web-страницу и отладки
+            if let url = URL(string: "https://github.com/iamjohansson") {
+                let webVC = WebViewController(url: url)
+                webVC.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(webVC, animated: true)
+            }
+        default:
+            break
+        }
+        
+    }
 }
 
+// MARK: - ProfileVC Delegate
 extension ProfileViewController: ProfileViewControllerDelegate {
-    var activityIndicator: UIActivityIndicatorView {
-        let indicator = UIActivityIndicatorView()
-        return indicator
-    }
     
     func update() {
         guard let profileModel = presenter.model else { return }
@@ -223,7 +262,6 @@ private extension ProfileViewController {
         static let bracket1st = "("
         static let bracket2nd = ")"
         // Constraint
-        static let baseSize44: CGFloat = 44
         static let baseOffset: CGFloat = 16
         static let baseSize70: CGFloat = 70
         static let baseIndent: CGFloat = 20
