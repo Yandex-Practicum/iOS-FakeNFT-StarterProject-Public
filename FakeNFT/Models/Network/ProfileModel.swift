@@ -6,8 +6,21 @@
 //
 
 import Foundation
+import UIKit
 
+// MARK: Network Model
 struct ProfileModel: Codable {
+    let name: String
+    let avatar: String?
+    let description: String?
+    let website: String?
+    let nfts: [String]
+    let likes: [String]
+    let id: String
+}
+
+// MARK: UI Model
+struct ProfileUIModel {
     let name: String
     let avatar: String?
     let description: String?

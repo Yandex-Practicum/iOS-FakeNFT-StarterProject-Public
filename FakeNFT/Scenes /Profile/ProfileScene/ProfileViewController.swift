@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
-protocol ProfileViewControllerDelegate: AnyObject {
-    
+protocol ProfileViewControllerDelegate: AnyObject, LoadingView {
+    func update()
+    func showDescriptionAlert(title: String, message: String)
 }
 
 final class ProfileViewController: UIViewController {
@@ -80,7 +82,9 @@ final class ProfileViewController: UIViewController {
         return table
     }()
     
-    private let presenter: ProfileViewPresenterProtocol?
+    private var nftsCount: Int = 0
+    private var likesCount: Int = 0
+    private var presenter: ProfileViewPresenterProtocol
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -89,13 +93,10 @@ final class ProfileViewController: UIViewController {
         addSubView()
         applyConstraint()
         setupDelegates()
-        // test stub
-        nameLabel.text = "Ivan Ivanov"
-        descriptionLabel.text = "Всем привет \n и пока!"
-        webLinkLabel.text = "https://github.com/iamjohansson"
+        presenter.getProfile()
     }
     
-    init(presenter: ProfileViewPresenterProtocol?) {
+    init(presenter: ProfileViewPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -105,6 +106,13 @@ final class ProfileViewController: UIViewController {
     }
     
     // MARK: Methods
+    func showDescriptionAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
     private func addSubView() {
         [avatarImage, nameLabel].forEach { userStack.addArrangedSubview($0) }
         [editButton, userStack, descriptionLabel, webLinkLabel, tableView].forEach { view.addSubview($0) }
@@ -139,6 +147,7 @@ final class ProfileViewController: UIViewController {
     private func setupDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
+        presenter.delegate = self
     }
     
     // MARK: Actions
@@ -160,9 +169,9 @@ extension ProfileViewController: UITableViewDataSource {
         var name = ""
         switch indexPath.row {
         case 0:
-            name = Constants.myNFT
+            name = Constants.myNFT + Constants.bracket1st + String(nftsCount) + Constants.bracket2nd
         case 1:
-            name = Constants.myFavorite
+            name = Constants.myFavorite + Constants.bracket1st + String(likesCount) + Constants.bracket2nd
         case 2:
             name = Constants.about
         default:
@@ -182,13 +191,37 @@ extension ProfileViewController: UITableViewDelegate {
     // TODO: Переход на экраны Коллекции, избранных, разработчика (Эпик 3/3)
 }
 
+extension ProfileViewController: ProfileViewControllerDelegate {
+    var activityIndicator: UIActivityIndicatorView {
+        let indicator = UIActivityIndicatorView()
+        return indicator
+    }
+    
+    func update() {
+        guard let profileModel = presenter.model else { return }
+        if let avatar = profileModel.avatar {
+            let proc = RoundCornerImageProcessor(cornerRadius: 35)
+            self.avatarImage.kf.indicatorType = .activity
+            self.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
+        }
+        self.nameLabel.text = profileModel.name
+        self.descriptionLabel.text = profileModel.description
+        self.webLinkLabel.text = profileModel.website
+        self.nftsCount = profileModel.nfts.count
+        self.likesCount = profileModel.likes.count
+        self.tableView.reloadData()
+    }
+}
+
 // MARK: - Constants
 private extension ProfileViewController {
     struct Constants {
         // Table cell
-        static let myNFT = "Мой NFT (112)"
-        static let myFavorite = "Избранные NFT (11)"
+        static let myNFT = "Мой NFT "
+        static let myFavorite = "Избранные NFT "
         static let about = "О разработчике"
+        static let bracket1st = "("
+        static let bracket2nd = ")"
         // Constraint
         static let baseSize44: CGFloat = 44
         static let baseOffset: CGFloat = 16
