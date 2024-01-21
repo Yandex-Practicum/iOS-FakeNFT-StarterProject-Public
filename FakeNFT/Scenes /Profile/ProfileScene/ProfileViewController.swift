@@ -165,6 +165,8 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     // MARK: Actions
     @objc private func didTapEditButton() {
         // TODO: на экран редактирования (Эпик 2/3)
+        let edProf = EditProfileViewController()
+        present(edProf, animated: true)
     }
     
     @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
