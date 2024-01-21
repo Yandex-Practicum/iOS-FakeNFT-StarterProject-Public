@@ -26,7 +26,7 @@ final class ProfileCell: UITableViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image =  UIImage(
             systemName: "chevron.right",
-            withConfiguration: UIImage.SymbolConfiguration(weight: .bold)
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 17)
         )
         image.tintColor = .ypBlack
         image.contentMode = .scaleAspectFit
@@ -60,8 +60,7 @@ final class ProfileCell: UITableViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: chevronImage.leadingAnchor, constant: 7.98),
             chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chevronImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            chevronImage.widthAnchor.constraint(equalToConstant: 7.98)
+            chevronImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
 }
