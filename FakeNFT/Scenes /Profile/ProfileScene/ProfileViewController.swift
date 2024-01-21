@@ -91,6 +91,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     private var nftsCount: Int = 0
     private var likesCount: Int = 0
     private var presenter: ProfileViewPresenterProtocol
+    private var currentAvatar: UIImage?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -165,8 +166,11 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     // MARK: Actions
     @objc private func didTapEditButton() {
         // TODO: на экран редактирования (Эпик 2/3)
-        let edProf = EditProfileViewController()
-        present(edProf, animated: true)
+        let editProfile = EditProfileViewController(presenter: nil, newAvatar: currentAvatar)
+        editProfile.delegate = self
+        editProfile.currentProfile = presenter.model
+        editProfile.modalPresentationStyle = .pageSheet
+        present(editProfile, animated: true, completion: nil)
     }
     
     @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
@@ -240,10 +244,26 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     
     func update() {
         guard let profileModel = presenter.model else { return }
-        if let avatar = profileModel.avatar {
-            let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)
-            self.avatarImage.kf.indicatorType = .activity
-            self.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
+//        if let avatar = profileModel.avatar {
+//            let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)
+//            self.avatarImage.kf.indicatorType = .activity
+//            self.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
+//        }
+        ImageCache.default.retrieveImage(forKey: "avatarImage", options: nil) { [weak self] result in
+            switch result {
+            case .success(let cache):
+                if let cacheImage = cache.image {
+                    self?.avatarImage.image = cacheImage
+                } else {
+                    if let avatar = profileModel.avatar {
+                        let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)
+                        self?.avatarImage.kf.indicatorType = .activity
+                        self?.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
+                    }
+                }
+            case .failure(let error):
+                assertionFailure("Error retrieving from cache: \(error)")
+            }
         }
         self.nameLabel.text = profileModel.name
         self.descriptionLabel.text = profileModel.description
@@ -251,6 +271,21 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         self.nftsCount = profileModel.nfts.count
         self.likesCount = profileModel.likes.count
         self.tableView.reloadData()
+    }
+}
+
+extension ProfileViewController: EditProfilePresenterDelegate {
+    func profileDidUpdate(_ profile: ProfileModel) {
+        presenter.saveInModel(profileModel: profile)
+    }
+}
+
+extension ProfileViewController: EditProfileViewControllerDelegate {
+    func didUpdateAvatar(_ newAvatar: UIImage) {
+        self.avatarImage.image = newAvatar
+        let cache = ImageCache.default
+        cache.store(newAvatar, forKey: "avatarImage")
+        self.currentAvatar = newAvatar
     }
 }
 

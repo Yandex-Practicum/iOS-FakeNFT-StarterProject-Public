@@ -37,16 +37,30 @@ class StackViewForEditProfile: UIStackView {
         return textView
     }()
     
+    private var currentText: String?
+    
+    // MARK: Lifecycle
     init(labelText: String, textContent: String) {
         super.init(frame: .zero)
         
         label.text = labelText
         textView.text = textContent
+        currentText = textContent
         setupView()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Methods
+    func updateText(_ text: String) {
+        textView.text = text
+        currentText = text
+    }
+    
+    func getText() -> String? {
+        return textView.text
     }
     
     private func setupView() {
@@ -56,6 +70,7 @@ class StackViewForEditProfile: UIStackView {
         spacing = 8
     }
     
+    // MARK: Constants
     private enum Constants {
         static let cornerRadius: CGFloat = 12
         static let insetValue11: CGFloat = 11

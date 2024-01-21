@@ -59,6 +59,7 @@
 		9EF669322B5D5442005BD1E1 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF669312B5D5442005BD1E1 /* EditProfileViewController.swift */; };
 		9EF669342B5D547B005BD1E1 /* EditProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF669332B5D547B005BD1E1 /* EditProfileViewPresenter.swift */; };
 		9EF669362B5D5D84005BD1E1 /* StackViewForEditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF669352B5D5D84005BD1E1 /* StackViewForEditProfile.swift */; };
+		9EF669382B5D8114005BD1E1 /* ProfileUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF669372B5D8114005BD1E1 /* ProfileUpdateRequest.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -136,6 +137,7 @@
 		9EF669312B5D5442005BD1E1 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9EF669332B5D547B005BD1E1 /* EditProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewPresenter.swift; sourceTree = "<group>"; };
 		9EF669352B5D5D84005BD1E1 /* StackViewForEditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewForEditProfile.swift; sourceTree = "<group>"; };
+		9EF669372B5D8114005BD1E1 /* ProfileUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateRequest.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D82A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			children = (
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
+				9EF669372B5D8114005BD1E1 /* ProfileUpdateRequest.swift */,
 				9E0A4D612B56A82400C70B0D /* ProfileRequest.swift */,
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
 			);
@@ -622,6 +625,7 @@
 				9EF669342B5D547B005BD1E1 /* EditProfileViewPresenter.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				9EF669382B5D8114005BD1E1 /* ProfileUpdateRequest.swift in Sources */,
 				9EF669362B5D5D84005BD1E1 /* StackViewForEditProfile.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,

@@ -6,19 +6,29 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol EditProfileViewProtocol: AnyObject {
-    func updateProfile(with: ProfileUIModel)
+    func updateProfile(with profile: ProfileModel)
+    func showLoading()
+    func hideLoading()
+}
+
+protocol EditProfileViewControllerDelegate: AnyObject {
+    func didUpdateAvatar(_ newAvatar: UIImage)
 }
 
 final class EditProfileViewController: UIViewController {
     
     // MARK: Properties & UI Elements
-    var currentProfile: ProfileUIModel? {
+    var currentProfile: ProfileModel? {
         didSet {
             updateUIProfile()
         }
     }
+    weak var delegate: EditProfileViewControllerDelegate?
+    private var presenter: EditProfilePresenterProtocol?
+    private var newAvatar: UIImage?
     
     private lazy var closeButton: UIButton = {
         let config = UIImage.SymbolConfiguration(weight: .bold)
@@ -96,13 +106,26 @@ final class EditProfileViewController: UIViewController {
         return scroll
     }()
     
+    // MARK: Lifecycle
+    init(presenter: EditProfilePresenterProtocol?, newAvatar: UIImage?) {
+        self.presenter = presenter
+        self.newAvatar = newAvatar
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
+//        avatarImage.delegate = self
         addSubView()
         applyConstraint()
     }
     
+    // MARK: Methods
     private func addSubView() {
         view.addSubview(scrollView)
         avatarImage.addSubview(dimmingForAvatarImage)
@@ -146,13 +169,79 @@ final class EditProfileViewController: UIViewController {
     }
     
     private func updateUIProfile() {
-        // TODO: Обновляем профиль
+        guard let profile = currentProfile else { return }
+        nameStack.updateText(profile.name)
+        descriptionStack.updateText(profile.description ?? "")
+        webLinkStack.updateText(profile.website ?? "")
     }
     
     // MARK: Actions
     @objc private func didTapCloseButton() {
-        // TODO: Выходим из меню редактирования, сохраняем изменения
+        let name = nameStack.getText()
+        let description = descriptionStack.getText()
+        let webLink = webLinkStack.getText()
+        presenter?.updateProfile(name: name, description: description, website: webLink)
+        if let avatar = newAvatar {
+            delegate?.didUpdateAvatar(avatar)
+        }
+        self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc private func didTapAvatarImage() {
+        openPhotoLibrary()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+extension EditProfileViewController: EditProfileViewProtocol {
+    func updateProfile(with profile: ProfileModel) {
+        nameStack.updateText(profile.name)
+        descriptionStack.updateText(profile.description ?? "")
+        webLinkStack.updateText(profile.website ?? "")
+    }
+    
+    func showLoading() {
+        guard let window = UIApplication.shared.windows.first else { return }
+            window.isUserInteractionEnabled = false
+        ProgressHUD.show()
+    }
+    
+    func hideLoading() {
+        guard let window = UIApplication.shared.windows.first else { return }
+            window.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
+    }
+    
+    
+}
+
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            avatarImage.image = image
+            newAvatar = image
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func openPhotoLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            present(imagePicker, animated: true, completion: nil)
+            } else {
+                return
+            }
+        }
 }
 
 private extension EditProfileViewController {
