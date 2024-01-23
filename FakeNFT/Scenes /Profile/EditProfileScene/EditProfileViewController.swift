@@ -18,7 +18,7 @@ protocol EditProfileViewControllerDelegate: AnyObject {
     func didUpdateAvatar(_ newAvatar: UIImage)
 }
 
-final class EditProfileViewController: UIViewController {
+final class EditProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Properties & UI Elements
     var currentProfile: ProfileModel? {
@@ -26,9 +26,11 @@ final class EditProfileViewController: UIViewController {
             updateUIProfile()
         }
     }
+    var userImage: UIImage?
     weak var delegate: EditProfileViewControllerDelegate?
-    private var presenter: EditProfilePresenterProtocol?
+    var presenter: EditProfilePresenterProtocol?
     private var newAvatar: UIImage?
+    private lazy var tapLabel = UITapGestureRecognizer(target: self, action: #selector(didTapAvatarImage(_:)))
     
     private lazy var closeButton: UIButton = {
         let config = UIImage.SymbolConfiguration(weight: .bold)
@@ -49,6 +51,7 @@ final class EditProfileViewController: UIViewController {
         image.clipsToBounds = true
         image.layer.cornerRadius = Constants.cornerRadius
         image.contentMode = .scaleAspectFill
+        image.image = userImage ?? UIImage(systemName: Constants.placeholderImage)
         image.isUserInteractionEnabled = true
         return image
     }()
@@ -70,6 +73,7 @@ final class EditProfileViewController: UIViewController {
         label.textColor = .ypWhiteUn
         label.text = Constants.textForAvatarLabel
         label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(tapLabel)
         return label
     }()
     
@@ -107,9 +111,9 @@ final class EditProfileViewController: UIViewController {
     }()
     
     // MARK: Lifecycle
-    init(presenter: EditProfilePresenterProtocol?, newAvatar: UIImage?) {
+    init(presenter: EditProfilePresenterProtocol?, avatar: UIImage?) {
         self.presenter = presenter
-        self.newAvatar = newAvatar
+        self.userImage = avatar
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -117,15 +121,24 @@ final class EditProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.loadProfile()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-//        avatarImage.delegate = self
         addSubView()
         applyConstraint()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: Methods
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
     private func addSubView() {
         view.addSubview(scrollView)
         avatarImage.addSubview(dimmingForAvatarImage)
@@ -187,7 +200,7 @@ final class EditProfileViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc private func didTapAvatarImage() {
+    @objc private func didTapAvatarImage(_ gesture: UITapGestureRecognizer) {
         openPhotoLibrary()
     }
     
@@ -205,13 +218,13 @@ extension EditProfileViewController: EditProfileViewProtocol {
     
     func showLoading() {
         guard let window = UIApplication.shared.windows.first else { return }
-            window.isUserInteractionEnabled = false
+        window.isUserInteractionEnabled = false
         ProgressHUD.show()
     }
     
     func hideLoading() {
         guard let window = UIApplication.shared.windows.first else { return }
-            window.isUserInteractionEnabled = true
+        window.isUserInteractionEnabled = true
         ProgressHUD.dismiss()
     }
     
@@ -238,16 +251,17 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
         imagePicker.sourceType = .photoLibrary
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             present(imagePicker, animated: true, completion: nil)
-            } else {
-                return
-            }
+        } else {
+            return
         }
+    }
 }
 
 private extension EditProfileViewController {
     struct Constants {
         // UI Helper
         static let closeButton = "xmark"
+        static let placeholderImage = "person.circle"
         static let textForAvatarLabel = "Сменить фото"
         static let nameLabelText = "Имя"
         static let descriptionLabelText = "Описание"

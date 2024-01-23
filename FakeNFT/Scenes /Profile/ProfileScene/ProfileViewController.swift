@@ -92,6 +92,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     private var likesCount: Int = 0
     private var presenter: ProfileViewPresenterProtocol
     private var currentAvatar: UIImage?
+    private var onImageLoaded: ((UIImage) -> Void)?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -165,9 +166,11 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     
     // MARK: Actions
     @objc private func didTapEditButton() {
-        // TODO: на экран редактирования (Эпик 2/3)
-        let editProfile = EditProfileViewController(presenter: nil, newAvatar: currentAvatar)
+        let editProfile = EditProfileViewController(presenter: nil, avatar: currentAvatar)
         editProfile.delegate = self
+        let presenterProfile = EditProfileViewPresenter(view: editProfile, profileService: presenter.profileService)
+        presenterProfile.delegate = self
+        editProfile.presenter = presenterProfile
         editProfile.currentProfile = presenter.model
         editProfile.modalPresentationStyle = .pageSheet
         present(editProfile, animated: true, completion: nil)
@@ -244,11 +247,6 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     
     func update() {
         guard let profileModel = presenter.model else { return }
-//        if let avatar = profileModel.avatar {
-//            let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)
-//            self.avatarImage.kf.indicatorType = .activity
-//            self.avatarImage.kf.setImage(with: URL(string: avatar), options: [.processor(proc)])
-//        }
         ImageCache.default.retrieveImage(forKey: "avatarImage", options: nil) { [weak self] result in
             switch result {
             case .success(let cache):
@@ -264,6 +262,10 @@ extension ProfileViewController: ProfileViewControllerDelegate {
             case .failure(let error):
                 assertionFailure("Error retrieving from cache: \(error)")
             }
+        }
+        onImageLoaded = { [weak self] image in
+            guard self?.currentAvatar != image else { return }
+            self?.currentAvatar = image
         }
         self.nameLabel.text = profileModel.name
         self.descriptionLabel.text = profileModel.description
