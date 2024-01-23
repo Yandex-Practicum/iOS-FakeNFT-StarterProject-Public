@@ -135,6 +135,20 @@ final class EditProfileViewController: UIViewController, UIGestureRecognizerDele
         applyConstraint()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+        
     }
     
     // MARK: Methods
@@ -209,6 +223,37 @@ final class EditProfileViewController: UIViewController, UIGestureRecognizerDele
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc func showKeyboard(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let keyboardSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+            
+            var activeField: UIView?
+            
+            if nameStack.isFirstResponder {
+                activeField = nameStack
+            } else if descriptionStack.isFirstResponder {
+                activeField = descriptionStack
+            } else if webLinkStack.isFirstResponder {
+                activeField = webLinkStack
+            }
+            
+            if let activeField = activeField {
+                let visibleRect = activeField.convert(activeField.bounds, to: scrollView)
+                scrollView.scrollRectToVisible(visibleRect, animated: true)
+            }
+        }
+    }
+    
+    @objc func hideKeyboard(_ notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
 }
 
 extension EditProfileViewController: EditProfileViewProtocol {
