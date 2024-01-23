@@ -14,6 +14,7 @@ protocol EditProfileViewProtocol: AnyObject {
     func hideLoading()
     func showSuccess()
     func showError()
+    func showError(error: Error)
 }
 
 protocol EditProfileViewControllerDelegate: AnyObject {
@@ -155,6 +156,7 @@ final class EditProfileViewController: UIViewController, UIGestureRecognizerDele
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
     private func addSubView() {
         view.addSubview(scrollView)
         avatarImage.addSubview(dimmingForAvatarImage)
@@ -256,6 +258,7 @@ final class EditProfileViewController: UIViewController, UIGestureRecognizerDele
     
 }
 
+// MARK: - EditProfileProtocol
 extension EditProfileViewController: EditProfileViewProtocol {
     func updateProfile(with profile: ProfileModel) {
         nameStack.updateText(profile.name)
@@ -287,8 +290,12 @@ extension EditProfileViewController: EditProfileViewProtocol {
         ProgressHUD.showSuccess("Данные пользователя обновлены", delay: 1.5)
     }
     
+    func showError(error: Error) {
+        ProgressHUD.showError(error.localizedDescription, delay: 1.5)
+    }
 }
 
+// MARK: - UIImagePicker
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -315,6 +322,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
+// MARK: - Constants
 private extension EditProfileViewController {
     struct Constants {
         // UI Helper

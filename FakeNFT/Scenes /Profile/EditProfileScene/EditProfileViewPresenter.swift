@@ -19,9 +19,9 @@ protocol EditProfilePresenterDelegate: AnyObject {
 
 final class EditProfileViewPresenter: EditProfilePresenterProtocol {
     
+    weak var delegate: EditProfilePresenterDelegate?
     private weak var view: EditProfileViewProtocol?
     private var profileService: ProfileServiceProtocol
-    weak var delegate: EditProfilePresenterDelegate?
     
     init(view: EditProfileViewProtocol, profileService: ProfileServiceProtocol) {
         self.view = view
@@ -39,6 +39,7 @@ final class EditProfileViewPresenter: EditProfilePresenterProtocol {
                     self?.delegate?.profileDidUpdate(profile)
                 case .failure(let error):
                     self?.view?.showError()
+                    assertionFailure("Ошибка обновления профиля \(error)")
                 }
             }
         }
@@ -51,7 +52,7 @@ final class EditProfileViewPresenter: EditProfilePresenterProtocol {
                 case .success(let profile):
                     self?.view?.updateProfile(with: profile)
                 case .failure(let error):
-                    self?.view?.showError()
+                    self?.view?.showError(error: error)
                 }
             }
         }

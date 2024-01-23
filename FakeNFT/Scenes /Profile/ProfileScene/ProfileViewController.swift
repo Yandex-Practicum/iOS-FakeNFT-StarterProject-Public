@@ -7,21 +7,18 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
-protocol ProfileViewControllerDelegate: AnyObject, LoadingView {
+protocol ProfileViewControllerDelegate: AnyObject {
     func update()
-    func showDescriptionAlert(title: String, message: String)
+    func showLoading()
+    func hideLoading()
+    func showError(error: Error)
 }
 
 final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Properties & UI Elements
-    lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    
     private lazy var avatarImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -117,12 +114,6 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     }
     
     // MARK: Methods
-    func showDescriptionAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -130,7 +121,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     
     private func addSubView() {
         [avatarImage, nameLabel].forEach { userStack.addArrangedSubview($0) }
-        [userStack, descriptionLabel, webLinkLabel, tableView, activityIndicator].forEach { view.addSubview($0) }
+        [userStack, descriptionLabel, webLinkLabel, tableView].forEach { view.addSubview($0) }
     }
     
     private func applyConstraint() {
@@ -151,9 +142,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
             tableView.topAnchor.constraint(equalTo: webLinkLabel.bottomAnchor, constant: Constants.distance40),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -252,7 +241,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     
     func update() {
         guard let profileModel = presenter.model else { return }
-        ImageCache.default.retrieveImage(forKey: "avatarImage", options: nil) { [weak self] result in
+        ImageCache.default.retrieveImage(forKey: Constants.avatarKey, options: nil) { [weak self] result in
             switch result {
             case .success(let cache):
                 if let cacheImage = cache.image {
@@ -280,6 +269,28 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         self.likesCount = profileModel.likes.count
         self.tableView.reloadData()
     }
+    
+    func showLoading() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.isUserInteractionEnabled = false
+        ProgressHUD.animationType = .circleRotateChase
+        ProgressHUD.colorAnimation = .ypBlack
+        ProgressHUD.colorHUD = .lightGray.withAlphaComponent(0.1)
+        ProgressHUD.show()
+    }
+    
+    func hideLoading() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
+    }
+    
+    func showError(error: Error) {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.isUserInteractionEnabled = true
+        ProgressHUD.showError("Ошибка - \(error.localizedDescription)", delay: 1.5)
+    }
+    
 }
 
 extension ProfileViewController: EditProfilePresenterDelegate {
@@ -292,7 +303,7 @@ extension ProfileViewController: EditProfileViewControllerDelegate {
     func didUpdateAvatar(_ newAvatar: UIImage) {
         self.avatarImage.image = newAvatar
         let cache = ImageCache.default
-        cache.store(newAvatar, forKey: "avatarImage")
+        cache.store(newAvatar, forKey: Constants.avatarKey)
         self.currentAvatar = newAvatar
     }
 }
@@ -316,6 +327,7 @@ private extension ProfileViewController {
         static let distance8: CGFloat = 8
         static let distance40: CGFloat = 40
         // UI helper
+        static let avatarKey = "avatarImage"
         static let editButtonImage = "square.and.pencil"
         static let avatarPlaceholdImage = "person.circle"
         static let cornerRadius: CGFloat = 35

@@ -18,23 +18,23 @@ protocol ProfileViewPresenterProtocol {
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     internal weak var delegate: ProfileViewControllerDelegate?
-    private (set) var model: ProfileModel? = nil
     internal var profileService: ProfileServiceProtocol
+    private (set) var model: ProfileModel? = nil
     
     init(profileService: ProfileServiceProtocol) {
         self.profileService = profileService
     }
     
     func getProfile() {
-        delegate?.showLoading()
+        self.delegate?.showLoading()
         profileService.loadProfile() { [weak self] result in
             switch result {
             case .success(let profile):
                 self?.delegate?.hideLoading()
                 self?.saveInModel(profileModel: profile)
             case .failure(let error):
-                self?.delegate?.hideLoading()
-                self?.delegate?.showDescriptionAlert(title: "Ошибка сетевого запроса", message: error.localizedDescription)
+                self?.delegate?.showError(error: error)
+
             }
         }
     }
