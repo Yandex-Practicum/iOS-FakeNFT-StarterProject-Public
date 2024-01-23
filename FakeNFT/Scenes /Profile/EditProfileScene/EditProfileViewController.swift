@@ -12,6 +12,8 @@ protocol EditProfileViewProtocol: AnyObject {
     func updateProfile(with profile: ProfileModel)
     func showLoading()
     func hideLoading()
+    func showSuccess()
+    func showError()
 }
 
 protocol EditProfileViewControllerDelegate: AnyObject {
@@ -228,6 +230,17 @@ extension EditProfileViewController: EditProfileViewProtocol {
         ProgressHUD.dismiss()
     }
     
+    func showError() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.isUserInteractionEnabled = true
+        ProgressHUD.showError("Ошибка", delay: 1.5)
+    }
+    
+    func showSuccess() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.isUserInteractionEnabled = true
+        ProgressHUD.showSuccess("Данные пользователя обновлены", delay: 1.5)
+    }
     
 }
 

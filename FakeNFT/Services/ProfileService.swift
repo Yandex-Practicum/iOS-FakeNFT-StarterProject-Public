@@ -47,11 +47,9 @@ final class ProfileService: ProfileServiceProtocol {
         networkClient.send(request: request, type: ProfileModel.self) { [weak storage] result in
             switch result {
             case .success(let profile):
-                print("да")
                 storage?.saveProfile(profile)
                 completion(.success(profile))
             case .failure(let error):
-                print("нет")
                 completion(.failure(error))
             }
         }

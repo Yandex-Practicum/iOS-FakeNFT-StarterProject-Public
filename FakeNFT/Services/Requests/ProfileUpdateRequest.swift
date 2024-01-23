@@ -23,14 +23,10 @@ struct ProfileUpdateRequest: NetworkRequest {
         if let website = profileModel.website {
             components.append(URLQueryItem(name: "website", value: website))
         }
-//        if let likes = profileModel.likes {
-//            let likesString = likes.joined(separator: ",")
-//            components.append(URLQueryItem(name: "likes", value: likesString))
-//        }
-        for likes in profileModel.likes {
-            components.append(URLQueryItem(name: "likes", value: likes))
+        if let likes = profileModel.likes {
+            let likesString = likes.joined(separator: ",")
+            components.append(URLQueryItem(name: "likes", value: likesString))
         }
-                
         urlComponents?.queryItems = components
         return urlComponents?.url
     }
@@ -38,8 +34,4 @@ struct ProfileUpdateRequest: NetworkRequest {
     var httpMethod: HttpMethod {
         return .put
     }
-
-//    var dto: Encodable? {
-//        return profileModel
-//    }
 }

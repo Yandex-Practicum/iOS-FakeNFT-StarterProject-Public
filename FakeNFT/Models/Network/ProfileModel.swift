@@ -19,21 +19,10 @@ struct ProfileModel: Codable {
     let id: String
 }
 
-//// MARK: UI Model
-//struct ProfileUIModel {
-//    let name: String
-//    let avatar: String?
-//    let description: String?
-//    let website: String?
-//    let nfts: [String]
-//    let likes: [String]
-//    let id: String
-//}
-
 // MARK: Profile Model Editing
 struct ProfileModelEditing: Encodable {
     let name: String?
     let description: String?
     let website: String?
-    let likes: [String]
+    let likes: [String]?
 }

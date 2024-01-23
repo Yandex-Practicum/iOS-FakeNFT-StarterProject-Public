@@ -83,6 +83,7 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
         table.translatesAutoresizingMaskIntoConstraints = false
         table.isScrollEnabled = false
         table.separatorStyle = .none
+        table.backgroundColor = .ypWhite
         table.register(ProfileCell.self, forCellReuseIdentifier: ProfileCell.identifier)
         return table
     }()
@@ -178,7 +179,11 @@ final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate
     
     @objc private func labelTapped(_ gesture: UITapGestureRecognizer) {
         if let labelText = (gesture.view as? UILabel)?.text {
-            if let url = URL(string: labelText) {
+            var urlString = labelText
+            if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
+                urlString = "https://" + urlString
+            }
+            if let url = URL(string: urlString) {
                 let webVC = WebViewController(url: url)
                 webVC.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(webVC, animated: true)
@@ -252,6 +257,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
             case .success(let cache):
                 if let cacheImage = cache.image {
                     self?.avatarImage.image = cacheImage
+                    self?.onImageLoaded?(cacheImage)
                 } else {
                     if let avatar = profileModel.avatar {
                         let proc = RoundCornerImageProcessor(cornerRadius: Constants.cornerRadius)

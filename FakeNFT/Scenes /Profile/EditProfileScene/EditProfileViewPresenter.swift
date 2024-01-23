@@ -21,9 +21,7 @@ final class EditProfileViewPresenter: EditProfilePresenterProtocol {
     
     private weak var view: EditProfileViewProtocol?
     private var profileService: ProfileServiceProtocol
-    private var profile: ProfileStorage?
     weak var delegate: EditProfilePresenterDelegate?
-    private weak var delegateVC: ProfileViewControllerDelegate?
     
     init(view: EditProfileViewProtocol, profileService: ProfileServiceProtocol) {
         self.view = view
@@ -32,22 +30,15 @@ final class EditProfileViewPresenter: EditProfilePresenterProtocol {
     
     func updateProfile(name: String?, description: String?, website: String?) {
         view?.showLoading()
-        
-        let likes = profile?.getProfile()
-        print(likes)
-        let profileModel = ProfileModelEditing(name: name, description: description, website: website, likes: likes?.likes ?? [])
+        let profileModel = ProfileModelEditing(name: name, description: description, website: website, likes: nil)
         profileService.updateProfile(profile: profileModel) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let profile):
-                    print(profile)
-                    print("Удачно!")
-                    self?.view?.hideLoading()
+                    self?.view?.showSuccess()
                     self?.delegate?.profileDidUpdate(profile)
                 case .failure(let error):
-                    self?.view?.hideLoading()
-                    print("Неудачно")
-                    self?.delegateVC?.showDescriptionAlert(title: "Ошибка обновления профиля", message: error.localizedDescription)
+                    self?.view?.showError()
                 }
             }
         }
@@ -60,7 +51,7 @@ final class EditProfileViewPresenter: EditProfilePresenterProtocol {
                 case .success(let profile):
                     self?.view?.updateProfile(with: profile)
                 case .failure(let error):
-                    self?.delegateVC?.showDescriptionAlert(title: "Ошибка загрузки профиля", message: error.localizedDescription)
+                    self?.view?.showError()
                 }
             }
         }
