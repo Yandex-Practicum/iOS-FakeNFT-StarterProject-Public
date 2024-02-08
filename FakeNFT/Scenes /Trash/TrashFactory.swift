@@ -8,12 +8,18 @@
 import UIKit
 
 final class TrashFactory {
-    func create() -> UIViewController {
-        let presenter = TrashPresenter()
+    func create(with context: Context) -> UIViewController {
+        let presenter = TrashPresenter(servicesAssembly: context.servicesAssembly)
         let controller = TrashViewController(presenter: presenter)
         
         presenter.view = controller
         
         return controller
+    }
+}
+// MARK: - Context
+extension TrashFactory {
+    struct Context {
+        let servicesAssembly: ServicesAssembly
     }
 }

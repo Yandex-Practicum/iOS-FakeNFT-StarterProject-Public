@@ -45,6 +45,10 @@
 		4B52C6482B757F8A0006B7B2 /* TrashFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B52C6472B757F8A0006B7B2 /* TrashFactory.swift */; };
 		4B52C64A2B757F9B0006B7B2 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B52C6492B757F9B0006B7B2 /* TrashViewController.swift */; };
 		4B52C64C2B757FC10006B7B2 /* TrashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B52C64B2B757FC10006B7B2 /* TrashPresenter.swift */; };
+		7F91C20D2B758976007D8189 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91C20C2B758976007D8189 /* TrashView.swift */; };
+		7F91C20F2B758B4F007D8189 /* TrashTableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91C20E2B758B4F007D8189 /* TrashTableManager.swift */; };
+		7F91C2142B758C21007D8189 /* TableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91C2132B758C21007D8189 /* TableItem.swift */; };
+		7F91C2162B759105007D8189 /* TrashItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F91C2152B759105007D8189 /* TrashItemCell.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -108,6 +112,10 @@
 		4B52C6472B757F8A0006B7B2 /* TrashFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashFactory.swift; sourceTree = "<group>"; };
 		4B52C6492B757F9B0006B7B2 /* TrashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewController.swift; sourceTree = "<group>"; };
 		4B52C64B2B757FC10006B7B2 /* TrashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashPresenter.swift; sourceTree = "<group>"; };
+		7F91C20C2B758976007D8189 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
+		7F91C20E2B758B4F007D8189 /* TrashTableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashTableManager.swift; sourceTree = "<group>"; };
+		7F91C2132B758C21007D8189 /* TableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItem.swift; sourceTree = "<group>"; };
+		7F91C2152B759105007D8189 /* TrashItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashItemCell.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D82A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -340,11 +348,47 @@
 		4B52C6462B757F4D0006B7B2 /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				7F91C2122B758C19007D8189 /* Models */,
+				7F91C20B2B75896D007D8189 /* View */,
 				4B52C6472B757F8A0006B7B2 /* TrashFactory.swift */,
-				4B52C6492B757F9B0006B7B2 /* TrashViewController.swift */,
 				4B52C64B2B757FC10006B7B2 /* TrashPresenter.swift */,
 			);
 			path = Trash;
+			sourceTree = "<group>";
+		};
+		7F91C20B2B75896D007D8189 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F91C2102B758B55007D8189 /* TableViewComponents */,
+				4B52C6492B757F9B0006B7B2 /* TrashViewController.swift */,
+				7F91C20C2B758976007D8189 /* TrashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7F91C2102B758B55007D8189 /* TableViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				7F91C20E2B758B4F007D8189 /* TrashTableManager.swift */,
+				7F91C2112B758B5D007D8189 /* Cells */,
+			);
+			path = TableViewComponents;
+			sourceTree = "<group>";
+		};
+		7F91C2112B758B5D007D8189 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7F91C2152B759105007D8189 /* TrashItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7F91C2122B758C19007D8189 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7F91C2132B758C21007D8189 /* TableItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -543,6 +587,7 @@
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				7F91C2162B759105007D8189 /* TrashItemCell.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
@@ -551,6 +596,7 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
+				7F91C20D2B758976007D8189 /* TrashView.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
@@ -558,9 +604,11 @@
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				7F91C20F2B758B4F007D8189 /* TrashTableManager.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				4B52C64A2B757F9B0006B7B2 /* TrashViewController.swift in Sources */,
+				7F91C2142B758C21007D8189 /* TableItem.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
@@ -750,6 +798,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PT94VR8DZT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -778,6 +827,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PT94VR8DZT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
