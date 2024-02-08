@@ -1,0 +1,51 @@
+diff a/FakeNFT/Scenes /Trash/TrashPresenter.swift b/FakeNFT/Scenes /Trash/TrashPresenter.swift	(rejected hunks)
+@@ -5,19 +5,47 @@
+ //  Created by Никита Гончаров on 09.02.2024.
+ //
+ 
+-import Foundation
++import UIKit
+ 
+ protocol TrashPresenterProtocol {
++    var title: String { get }
+     
++    func viewLoaded()
+ }
+ 
+ final class TrashPresenter {
+     weak var view: TrashViewProtocol?
+     
++    private let servicesAssembly: ServicesAssembly
++
++    init(servicesAssembly: ServicesAssembly) {
++        self.servicesAssembly = servicesAssembly
++    }
+ }
+ 
+ // MARK: - TrashPresenterProtocol
+ 
+ extension TrashPresenter: TrashPresenterProtocol {
+-    
++    var title: String {
++        "Корзина"
++    }
++
++    func viewLoaded() {
++        let items: [TableCellItem] = [
++            .init(
++                title: "Элемент 1",
++                image: UIImage(systemName: "trash.fill") ?? .init()
++            ),
++            .init(
++                title: "Элемент 2",
++                image: UIImage(systemName: "trash.fill") ?? .init()
++            )
++        ]
++        
++        view?.updateUI(
++            with: .init(
++                items: items
++            )
++        )
++    }
+ }

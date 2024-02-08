@@ -16,9 +16,14 @@ final class TabBarController: UITabBarController {
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
+        let trashController = TrashFactory().create(
+            with: .init(
+                servicesAssembly: servicesAssembly
+            )
+        )
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        viewControllers = [catalogController, trashController]
 
         view.backgroundColor = .systemBackground
     }
