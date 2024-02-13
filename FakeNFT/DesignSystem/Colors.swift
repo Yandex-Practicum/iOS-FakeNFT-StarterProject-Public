@@ -35,6 +35,7 @@ extension UIColor {
 
     // Background Colors
     static let background = UIColor.white
+    static let figmaWhite = UIColor(hexString: "FFFFFF")
 
     // Text Colors
     static let textPrimary = UIColor.black
