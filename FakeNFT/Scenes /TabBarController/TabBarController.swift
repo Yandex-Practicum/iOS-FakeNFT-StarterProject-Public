@@ -9,7 +9,11 @@ final class TabBarController: UITabBarController {
         image: UIImage(systemName: "square.stack.3d.up.fill"),
         tag: 0
     )
-
+    private let trashTabBarItem = UITabBarItem(
+           title: NSLocalizedString("Tab.trash", comment: ""),
+           image: UIImage(systemName: "trash.fill"),
+           tag: 1
+       )
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,7 +26,8 @@ final class TabBarController: UITabBarController {
             )
         )
         catalogController.tabBarItem = catalogTabBarItem
-
+        trashController.tabBarItem = trashTabBarItem
+        
         viewControllers = [catalogController, trashController]
 
         view.backgroundColor = .systemBackground

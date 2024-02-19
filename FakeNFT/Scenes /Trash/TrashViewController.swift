@@ -12,7 +12,7 @@ protocol TrashViewProtocol: AnyObject {
 }
 
 final class TrashViewController: UIViewController {
-    private let presenter: TrashPresenter
+    let presenter: TrashPresenter
     
     init(presenter: TrashPresenter) {
         self.presenter = presenter

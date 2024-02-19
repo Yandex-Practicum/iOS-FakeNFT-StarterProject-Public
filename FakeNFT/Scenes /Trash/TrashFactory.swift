@@ -15,6 +15,7 @@ final class TrashFactory {
         presenter.view = controller
         
         return controller
+        return UINavigationController(rootViewController: controller)
     }
 }
 // MARK: - Context
