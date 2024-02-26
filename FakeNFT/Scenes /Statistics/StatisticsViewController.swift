@@ -4,7 +4,7 @@ final class StatisticsViewController: UIViewController {
 	
 	// MARK: Private Properties
 	
-	private let viewModel: StatisticsViewModelProtocol = StatisticsViewModel()
+	private let viewModel = StatisticsViewModel()
 	
 	private let reuseIdentifier = "cell"
 	
