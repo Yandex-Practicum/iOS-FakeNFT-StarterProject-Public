@@ -4,7 +4,7 @@ protocol StatisticsViewModelProtocol {
 	var usersStore: UsersStore { get }
 	var users: [StatisticsTableViewCellViewModel] { get }
 	func getUsers()
-	func sortBy(_ sortBy: String)
+	func sortBy(_ sortBy: SortBy)
 }
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
@@ -13,13 +13,21 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 	
 	private let filterKey = "StatisticsViewFilter"
 	
-	private var sortBy: String? {
+	@Observable
+	private(set) var isLoading = false
+	
+	private var sortBy: SortBy? {
 		get {
-			UserDefaults.standard.string(forKey: filterKey)
+			guard let sortByString = UserDefaults.standard.string(forKey: filterKey),
+				  let sortBy = SortBy(rawValue: sortByString) else {
+				return .name
+			}
+			
+			return sortBy
 		}
 		set {
 			if let newValue {
-				UserDefaults.standard.set(newValue, forKey: filterKey)
+				UserDefaults.standard.set(newValue.rawValue, forKey: filterKey)
 			} else {
 				UserDefaults.standard.set("", forKey: filterKey)
 			}
@@ -36,8 +44,12 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 	// MARK: Public methods
 	
 	func getUsers() {
-		UIBlockingProgressHUD.show()
-		usersStore.getUsers(sortBy: self.sortBy) { result in
+		isLoading = true
+		usersStore.getUsers(sortBy: self.sortBy) { [weak self] result in
+			guard let self else {
+				return
+			}
+			
 			switch result {
 			case.success(let users):
 				self.users = users.map {
@@ -46,11 +58,11 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 			case .failure(let error):
 				assertionFailure(error.localizedDescription)
 			}
-			UIBlockingProgressHUD.dismiss()
+			self.isLoading = false
 		}
 	}
 	
-	func sortBy(_ sortBy: String) {
+	func sortBy(_ sortBy: SortBy) {
 		self.sortBy = sortBy
 	}
 }

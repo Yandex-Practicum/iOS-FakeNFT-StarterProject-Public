@@ -4,7 +4,7 @@ final class UsersStore {
 	let networkClient = DefaultNetworkClient()
 	
 	func getUsers(
-		sortBy: String? = nil,
+		sortBy: SortBy? = nil,
 		completion: @escaping (Result<[User], Error>) -> Void
 	) {
 		let request = UsersRequest(sortBy: sortBy)

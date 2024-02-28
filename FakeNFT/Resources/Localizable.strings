@@ -5,7 +5,7 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
-"Sort" = "Сортировка";
-"Sort.ByName" = "По имени";
-"Sort.ByRating" = "По рейтингу";
-"Sort.Cancel" = "Закрыть";
+"Statistics.Rating.Sort" = "Сортировка";
+"Statistics.Rating.SortByName" = "По имени";
+"Statistics.Rating.SortByRating" = "По рейтингу";
+"Statistics.Rating.SortCancel" = "Закрыть";

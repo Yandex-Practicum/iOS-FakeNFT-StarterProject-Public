@@ -1,5 +1,10 @@
 import UIKit
 
+enum SortBy: String {
+	case name
+	case rating
+}
+
 final class StatisticsViewController: UIViewController {
 	
 	// MARK: Private Properties
@@ -37,10 +42,7 @@ final class StatisticsViewController: UIViewController {
 		super.viewDidLoad()
 		setupViews()
 		setupConstraints()
-		
-		viewModel.$users.bind { _ in
-			self.tableView.reloadData()
-		}
+		bindViewModelProperties()
 		viewModel.getUsers()
 	}
 	
@@ -53,7 +55,6 @@ final class StatisticsViewController: UIViewController {
 			StatisticsTableViewCell.self,
 			forCellReuseIdentifier: reuseIdentifier
 		)
-		
 		
 		view.addSubview(tableView)
 	}
@@ -68,21 +69,46 @@ final class StatisticsViewController: UIViewController {
 		])
 	}
 	
+	private func bindViewModelProperties() {
+		viewModel.$users.bind { [weak self] _ in
+			self?.tableView.reloadData()
+		}
+		viewModel.$isLoading.bind { [weak self] isLoading in
+			guard let self else {
+				return
+			}
+			
+			if isLoading {
+				self.showLoadingMask()
+			} else {
+				self.hideLoadingMask()
+			}
+		}
+	}
+	
+	private func showLoadingMask() {
+		UIBlockingProgressHUD.show()
+	}
+	
+	private func hideLoadingMask() {
+		UIBlockingProgressHUD.dismiss()
+	}
+	
 	@objc private func sortButtonDidTap() {
 		let sort = NSLocalizedString(
-			"Sort",
+			"Statistics.Rating.Sort",
 			comment: ""
 		)
 		let sortByName = NSLocalizedString(
-			"Sort.ByName",
+			"Statistics.Rating.SortByName",
 			comment: ""
 		)
 		let sortByRating = NSLocalizedString(
-			"Sort.ByRating",
+			"Statistics.Rating.SortByRating",
 			comment: ""
 		)
 		let cancelCaption = NSLocalizedString(
-			"Sort.Cancel",
+			"Statistics.Rating.SortCancel",
 			comment: ""
 		)
 		
@@ -96,13 +122,13 @@ final class StatisticsViewController: UIViewController {
 			title: sortByName,
 			style: .default,
 			handler: { _ in
-				self.sortBy("name")
+				self.sortBy(.name)
 			}))
 		alert.addAction(UIAlertAction(
 			title: sortByRating,
 			style: .default,
 			handler: { _ in
-				self.sortBy("rating")
+				self.sortBy(.rating)
 			}))
 		alert.addAction(UIAlertAction(
 			title: cancelCaption,
@@ -112,7 +138,7 @@ final class StatisticsViewController: UIViewController {
 		present(alert, animated: true, completion: nil)
 	}
 	
-	private func sortBy(_ sortBy: String) {
+	private func sortBy(_ sortBy: SortBy) {
 		viewModel.sortBy(sortBy)
 	}
 }
