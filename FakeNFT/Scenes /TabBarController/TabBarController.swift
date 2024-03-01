@@ -9,9 +9,9 @@ final class TabBarController: UITabBarController {
         image: UIImage(systemName: "square.stack.3d.up.fill"),
         tag: 0
     )
-    private let trashTabBarItem = UITabBarItem(
-           title: NSLocalizedString("Tab.trash", comment: ""),
-           image: UIImage(systemName: "trash.fill"),
+    private let cardTabBarItem = UITabBarItem(
+           title: NSLocalizedString("Tab.cart", comment: ""),
+           image: .cardActiveIcon,
            tag: 1
        )
     override func viewDidLoad() {
@@ -20,15 +20,15 @@ final class TabBarController: UITabBarController {
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
-        let trashController = TrashFactory().create(
+        let cardController = CartFactory().create(
             with: .init(
                 servicesAssembly: servicesAssembly
             )
         )
         catalogController.tabBarItem = catalogTabBarItem
-        trashController.tabBarItem = trashTabBarItem
+        cardController.tabBarItem = cardTabBarItem
         
-        viewControllers = [catalogController, trashController]
+        viewControllers = [catalogController, cardController]
 
         view.backgroundColor = .systemBackground
     }

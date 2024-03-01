@@ -35,6 +35,7 @@ extension UIColor {
 
     // Background Colors
     static let background = UIColor.white
+    static let figmaWhite = UIColor(hexString: "FFFFFF")
 
     // Text Colors
     static let textPrimary = UIColor.black
@@ -42,10 +43,26 @@ extension UIColor {
     static let textOnPrimary = UIColor.white
     static let textOnSecondary = UIColor.black
 
-    private static let yaBlackLight = UIColor(hexString: "1A1B22")
+    static let yaBlackLight = UIColor(hexString: "1A1B22")
     private static let yaBlackDark = UIColor.white
     private static let yaLightGrayLight = UIColor(hexString: "#F7F7F8")
     private static let yaLightGrayDark = UIColor(hexString: "#2C2C2E")
+
+    // Universal Colors
+    static let yaGrayUniversal = UIColor(hexString: "#625C5C")
+    static let yaRedUniversal = UIColor(hexString: "#F56B6C")
+    static let yaBackgroundUniversal = UIColor(hexString: "#1A1B22")
+    static let yaGreenUniversal = UIColor(hexString: "#1C9F00")
+    static let yaBlueUniversal = UIColor(hexString: "#0A84FF")
+    static let yaBlackUniversal = UIColor(hexString: "#1A1B22")
+    static let yaWhiteUniversal = UIColor(hexString: "#FFFFFF")
+    static let yaYellowUniversal = UIColor(hexString: "#FEEF0D")
+    static let yaBlackDayNight = UIColor(hexString: "#FFFFFF")
+    static let yaWhiteDayNight = UIColor(hexString: "#1A1B22")
+    static let yaRedUni = UIColor(hexString: "#F56B6C")
+    static let yaYellowUni = UIColor(hexString: "#625C5C")
+    static let yaLightGreyDayNight = UIColor(hexString: "#FEEF0D")
+    static let yaGreenUni = UIColor(hexString: "#1C9F00")
 
     static let segmentActive = UIColor { traits in
         return traits.userInterfaceStyle == .dark
