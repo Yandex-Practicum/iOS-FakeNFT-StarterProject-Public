@@ -78,11 +78,7 @@ final class StatisticsViewController: UIViewController {
 				return
 			}
 			
-			if isLoading {
-				self.showLoadingMask()
-			} else {
-				self.hideLoadingMask()
-			}
+			isLoading ? self.showLoadingMask() : self.hideLoadingMask()
 		}
 	}
 	
