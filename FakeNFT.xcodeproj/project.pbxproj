@@ -48,6 +48,10 @@
 		F40FD9C02B83DE45008317AF /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40FD9BF2B83DE45008317AF /* StatisticsTableViewCell.swift */; };
 		F40FD9C22B83E24F008317AF /* StatisticsTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40FD9C12B83E24F008317AF /* StatisticsTableViewCellViewModel.swift */; };
 		F40FD9C42B85188C008317AF /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40FD9C32B85188C008317AF /* StatisticsViewModel.swift */; };
+		F45E95872B9262E9002AB3AE /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45E95862B9262E9002AB3AE /* UserCardViewController.swift */; };
+		F45E95892B926A92002AB3AE /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45E95882B926A92002AB3AE /* UserCardViewModel.swift */; };
+		F46266662B96621A008A7FF0 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46266652B96621A008A7FF0 /* WebViewViewController.swift */; };
+		F46266682B97A498008A7FF0 /* WebViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46266672B97A498008A7FF0 /* WebViewViewModel.swift */; };
 		F4760DD42B8B97F400A12E47 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4760DD32B8B97F400A12E47 /* UIBlockingProgressHUD.swift */; };
 		F4C8F7882B7D50A9009A87AF /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C8F7872B7D50A9009A87AF /* StatisticsViewController.swift */; };
 		F4F4E1E02B87735300E0C76F /* UsersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F4E1DF2B87735300E0C76F /* UsersStore.swift */; };
@@ -119,6 +123,10 @@
 		F40FD9BF2B83DE45008317AF /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		F40FD9C12B83E24F008317AF /* StatisticsTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		F40FD9C32B85188C008317AF /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
+		F45E95862B9262E9002AB3AE /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
+		F45E95882B926A92002AB3AE /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewModel.swift; sourceTree = "<group>"; };
+		F46266652B96621A008A7FF0 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		F46266672B97A498008A7FF0 /* WebViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewModel.swift; sourceTree = "<group>"; };
 		F4760DD32B8B97F400A12E47 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		F4C8F7872B7D50A9009A87AF /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		F4F4E1DF2B87735300E0C76F /* UsersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStore.swift; sourceTree = "<group>"; };
@@ -380,9 +388,21 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F45E95852B9262D2002AB3AE /* UserCard */ = {
+			isa = PBXGroup;
+			children = (
+				F45E95862B9262E9002AB3AE /* UserCardViewController.swift */,
+				F45E95882B926A92002AB3AE /* UserCardViewModel.swift */,
+				F46266652B96621A008A7FF0 /* WebViewViewController.swift */,
+				F46266672B97A498008A7FF0 /* WebViewViewModel.swift */,
+			);
+			path = UserCard;
+			sourceTree = "<group>";
+		};
 		F4C8F7862B7D5092009A87AF /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				F45E95852B9262D2002AB3AE /* UserCard */,
 				F4C8F7872B7D50A9009A87AF /* StatisticsViewController.swift */,
 				F40FD9BF2B83DE45008317AF /* StatisticsTableViewCell.swift */,
 				F40FD9C12B83E24F008317AF /* StatisticsTableViewCellViewModel.swift */,
@@ -571,7 +591,9 @@
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				F4F4E1E02B87735300E0C76F /* UsersStore.swift in Sources */,
+				F45E95872B9262E9002AB3AE /* UserCardViewController.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
+				F45E95892B926A92002AB3AE /* UserCardViewModel.swift in Sources */,
 				F40FD9C02B83DE45008317AF /* StatisticsTableViewCell.swift in Sources */,
 				F40FD9C42B85188C008317AF /* StatisticsViewModel.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
@@ -590,6 +612,7 @@
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
+				F46266662B96621A008A7FF0 /* WebViewViewController.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
@@ -599,6 +622,7 @@
 				F4760DD42B8B97F400A12E47 /* UIBlockingProgressHUD.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
 				F4F4E1E22B87E7A500E0C76F /* User.swift in Sources */,
+				F46266682B97A498008A7FF0 /* WebViewViewModel.swift in Sources */,
 				F4F4E1E42B88F53700E0C76F /* UsersRequest.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
