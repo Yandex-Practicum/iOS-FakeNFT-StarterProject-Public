@@ -128,11 +128,10 @@ final class UserCardViewController: UIViewController {
 	
 	private func setupViews() {
 		view.backgroundColor = .systemBackground
-		view.addSubview(avatar)
-		view.addSubview(nameLabel)
-		view.addSubview(descriptionLabel)
-		view.addSubview(navigateToUserWebsiteButton)
-		view.addSubview(nftCollectionButton)
+		[avatar, nameLabel, descriptionLabel,
+		 navigateToUserWebsiteButton, nftCollectionButton].forEach {
+			view.addSubview($0)
+		}
 		
 		self.navigationItem.leftBarButtonItem = backButton
 	}
