@@ -5,7 +5,27 @@ final class UserCardViewController: UIViewController {
 	
 	// MARK: Public properties
 	
-	var viewModel: UserCardViewModel?
+	var viewModel: UserCardViewModel? {
+		didSet {
+			guard let viewModel else {
+				return
+			}
+			
+			let avatarUrl = URL(string: viewModel.user.avatar)
+			let placeholderAvatarImage = UIImage(named: "UserAvatarPlaceholder")
+			avatar.kf.setImage(with: avatarUrl, placeholder: placeholderAvatarImage)
+			
+			nameLabel.text = viewModel.user.name
+			descriptionLabel.text = viewModel.user.description
+			nftCollectionButton.setTitle(
+				NSLocalizedString(
+					"Statistics.UserCard.NFTCollection",
+					comment: ""
+				) + " (\(viewModel.user.nfts.count))", 
+				for: .normal
+			)
+		}
+	}
 	
 	// MARK: Private UI Properties
 	
@@ -26,14 +46,6 @@ final class UserCardViewController: UIViewController {
 		view.layer.cornerRadius = view.frame.width / 2
 		view.clipsToBounds = true
 		
-		guard let viewModel else {
-			return view
-		}
-		
-		let avatarUrl = URL(string: viewModel.user.avatar)
-		let placeholderAvatarImage = UIImage(named: "UserAvatarPlaceholder")
-		view.kf.setImage(with: avatarUrl, placeholder: placeholderAvatarImage)
-		
 		return view
 	}()
 	
@@ -43,7 +55,6 @@ final class UserCardViewController: UIViewController {
 		label.textColor = .textColor
 		label.textAlignment = .left
 		label.font = .systemFont(ofSize: 22, weight: .bold)
-		label.text = viewModel?.user.name
 		
 		return label
 	}()
@@ -54,7 +65,6 @@ final class UserCardViewController: UIViewController {
 		label.textColor = .textColor
 		label.font = .systemFont(ofSize: 13, weight: .regular)
 		label.numberOfLines = 0
-		label.text = viewModel?.user.description
 		
 		return label
 	}()
@@ -85,14 +95,9 @@ final class UserCardViewController: UIViewController {
 	
 	private lazy var nftCollectionButton = {
 		let button = UIButton()
-		let caption = NSLocalizedString(
-			"Statistics.UserCard.NFTCollection",
-				comment: ""
-		) + " (\(viewModel?.user.nfts.count ?? 0))"
 		
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.setTitleColor(.textColor, for: .normal)
-		button.setTitle(caption, for: .normal)
 		button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
 		button.contentHorizontalAlignment = .left
 		button.layer.cornerRadius = 16
