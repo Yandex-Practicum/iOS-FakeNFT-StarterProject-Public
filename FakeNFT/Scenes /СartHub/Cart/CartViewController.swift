@@ -51,7 +51,7 @@ final class CartViewController: UIViewController {
     private let totalPriceLabel: UILabel = {
         let totalPriceLabel = UILabel()
         totalPriceLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        totalPriceLabel.textColor = .yaGreenUni
+        totalPriceLabel.textColor = .yaGreenUniversal
         totalPriceLabel.translatesAutoresizingMaskIntoConstraints = false
         return totalPriceLabel
     }()
@@ -81,7 +81,7 @@ final class CartViewController: UIViewController {
     private let emptyPlaceholderLabel: UILabel = {
         let emptyPlaceholderLabel = UILabel()
         emptyPlaceholderLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        emptyPlaceholderLabel.textColor = .yaBlackDayNight
+        emptyPlaceholderLabel.textColor = .yaWhiteDayNight
         emptyPlaceholderLabel.text = TextLabels.CartViewController.emptyCartLabel
         emptyPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
         return emptyPlaceholderLabel
@@ -132,11 +132,11 @@ final class CartViewController: UIViewController {
 
     // MARK: - Private Methods
     private func configureView() {
-        view.backgroundColor = .yaWhiteDayNight
+        view.backgroundColor = .clear
         [tableView, payBackroundView, emptyPlaceholderLabel].forEach { view.addSubview($0) }
         [nftCounterLabel, totalPriceLabel, toPaymentButton].forEach { payBackroundView.addSubview($0) }
 
-        sortNavigationButton.tintColor = .yaBlackDayNight
+        sortNavigationButton.tintColor = .yaWhiteDayNight
         navigationController?.navigationBar.tintColor = .yaBlackDayNight
         navigationItem.rightBarButtonItem = sortNavigationButton
 
@@ -229,7 +229,7 @@ extension CartViewController: UITableViewDelegate {
                 let cellModel = presenter.cellsModels[indexPath.row]
                 deleteNFTButtonDidTapped(
                     id: cellModel.id,
-                    imageURL: cellModel.imageURL,
+                    imageURL: cellModel.imageURL?.absoluteString ?? "",
                     returnHandler: completionHandler)
             }
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])

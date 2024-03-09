@@ -9,7 +9,7 @@ import Foundation
 
 struct CartCellModel {
     let id: String
-    let imageURL: String
+    let imageURL: URL?
     let title: String
     let price: String
     let rating: Int

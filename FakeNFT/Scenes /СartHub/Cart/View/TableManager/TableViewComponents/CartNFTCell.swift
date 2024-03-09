@@ -82,7 +82,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Public Methods
     func configureCell(_ cartCellModel: CartCellModel) {
-        let imageURL = URL(string: cartCellModel.imageURL)
+        let imageURL = cartCellModel.imageURL
         nftImage.kf.setImage(with: imageURL)
         title.text = cartCellModel.title
         price.text = cartCellModel.price
@@ -126,7 +126,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
 
     @objc private func deleteButtonTapped() {
         guard let cartCellModel else { return }
-        delegate?.deleteNFTButtonDidTapped(id: cartCellModel.id, imageURL: cartCellModel.imageURL, returnHandler: nil)
+        delegate?.deleteNFTButtonDidTapped(id: cartCellModel.id, imageURL: cartCellModel.imageURL?.absoluteString ?? "", returnHandler: nil)
     }
 }
 
