@@ -1,6 +1,6 @@
 import Foundation
 
-class User: Decodable {
+struct User: Decodable {
 	let name: String
 	let avatar: String
 	let description: String

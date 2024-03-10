@@ -12,8 +12,7 @@ final class UserCardViewController: UIViewController {
 			}
 			
 			let avatarUrl = URL(string: viewModel.user.avatar)
-			let placeholderAvatarImage = UIImage(named: "UserAvatarPlaceholder")
-			avatar.kf.setImage(with: avatarUrl, placeholder: placeholderAvatarImage)
+			avatar.kf.setImage(with: avatarUrl)
 			
 			nameLabel.text = viewModel.user.name
 			descriptionLabel.text = viewModel.user.description
@@ -185,7 +184,17 @@ final class UserCardViewController: UIViewController {
 	}
 	
 	@objc func nftCollectionButtonDidTap() {
+		let nftCollectionController = NftCollectionViewController()
+		let controller = UINavigationController(
+			rootViewController: nftCollectionController
+		)
 		
+		let viewModel = NftCollectionViewModel()
+		viewModel.nftsUrls = self.viewModel?.user.nfts
+		
+		nftCollectionController.viewModel = viewModel
+		controller.modalPresentationStyle = .fullScreen
+		present(controller, animated: true)
 	}
 	
 	@objc func backButtonDidTap() {

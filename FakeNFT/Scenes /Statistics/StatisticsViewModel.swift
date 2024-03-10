@@ -1,7 +1,6 @@
 import Foundation
 
 protocol StatisticsViewModelProtocol {
-	var usersStore: UsersStore { get }
 	var users: [StatisticsTableViewCellViewModel] { get }
 	func getUsers()
 	func sortBy(_ sortBy: SortBy)
@@ -36,8 +35,6 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 		}
 	}
 	
-	private(set) var usersStore = UsersStore()
-	
 	@Observable
 	private(set) var users: [StatisticsTableViewCellViewModel] = []
 	
@@ -45,7 +42,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 	
 	func getUsers() {
 		isLoading = true
-		usersStore.getUsers(sortBy: self.sortBy) { [weak self] result in
+		getUsers(sortBy: self.sortBy) { [weak self] result in
 			guard let self else {
 				return
 			}
@@ -60,6 +57,16 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 			}
 			self.isLoading = false
 		}
+	}
+	
+	func getUsers(
+		sortBy: SortBy? = nil,
+		completion: @escaping (Result<[User], Error>) -> Void
+	) {
+		let request = UsersRequest(sortBy: sortBy)
+		let store = Store<[User]>(request: request)
+		
+		store.sendRequest(completion: completion)
 	}
 	
 	func sortBy(_ sortBy: SortBy) {
