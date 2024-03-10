@@ -27,7 +27,7 @@ Module 2:
 Экран способа оплаты:
 - Создать ячейку валют - (est: 1 hour; fact: x min).
 - Создать экран и собрать вью: collectionView, navigationBar - (est: 1 hour; fact: x min).
-- Добавления сетевого слоя на экран Корзины  - (est: 1 hour; fact: x min).
+- Добавления сетевого слоя на экран Корзины  - (est: 1 hour; fact: 30 min).
 - Написать презентер и сетевую логику - (est: 3 hour; fact: x min).
 - Сверстать экран пользовательского соглашения: webView - (est: 1 hour; fact: x min).
 
