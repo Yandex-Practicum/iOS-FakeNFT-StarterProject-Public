@@ -36,9 +36,9 @@ final class TabBarController: UITabBarController {
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
+            appearance.backgroundColor = .yaBlackDayNight
             appearance.shadowColor = nil
-            appearance.stackedLayoutAppearance.normal.iconColor = .black
+            appearance.stackedLayoutAppearance.normal.iconColor = .yaWhiteDayNight
             appearance.stackedLayoutAppearance.selected.iconColor = .yaBlueUniversal
             tabBar.standardAppearance = appearance
             tabBar.scrollEdgeAppearance = appearance

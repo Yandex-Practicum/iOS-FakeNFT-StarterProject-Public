@@ -60,8 +60,8 @@ extension UIColor {
     static let yaBlackDayNight = UIColor(hexString: "#FFFFFF")
     static let yaWhiteDayNight = UIColor(hexString: "#1A1B22")
     static let yaRedUni = UIColor(hexString: "#F56B6C")
-    static let yaYellowUni = UIColor(hexString: "#625C5C")
-    static let yaLightGreyDayNight = UIColor(hexString: "#FEEF0D")
+    static let yaYellowUni = UIColor(hexString: "#FEEF0D")
+    static let yaLightGreyDayNight = UIColor(hexString: "#F7F7F8")
     static let yaGreenUni = UIColor(hexString: "#1C9F00")
 
     static let segmentActive = UIColor { traits in

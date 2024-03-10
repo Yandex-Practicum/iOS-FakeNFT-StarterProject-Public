@@ -14,7 +14,7 @@ final class StarRatingView: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = .horizontal
-        spacing = 2
+        spacing = 0
         distribution = .fillEqually
         for _ in 1...5 {
             let starView = makeStarView()
@@ -52,7 +52,7 @@ extension StarRatingView {
         arrangedSubviews.forEach { $0.removeFromSuperview() }
         starImageViews.removeAll()
         axis = .horizontal
-        spacing = 2
+        spacing = 0
         distribution = .fillEqually
         for _ in 1...5 {
             let starView = makeStarView(with: height)

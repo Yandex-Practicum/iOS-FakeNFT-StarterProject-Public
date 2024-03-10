@@ -24,7 +24,7 @@ final class CartViewController: UIViewController {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = .yaWhiteDayNight
+        tableView.backgroundColor = .yaBlackDayNight
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ final class CartViewController: UIViewController {
     private let nftCounterLabel: UILabel = {
         let nftCounterLabel = UILabel()
         nftCounterLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        nftCounterLabel.textColor = .yaBlackDayNight
+        nftCounterLabel.textColor = .yaWhiteDayNight
         nftCounterLabel.translatesAutoresizingMaskIntoConstraints = false
         return nftCounterLabel
     }()
@@ -59,7 +59,7 @@ final class CartViewController: UIViewController {
     private let toPaymentButton: CustomButton = {
         let toPaymentButton = CustomButton(
             type: .filled,
-            title: TextLabels.CartViewController.toPaymentButton,
+            title:TextLabels.CartViewController.toPaymentButton,
             action: #selector(toPaymentButtonTapped)
         )
         toPaymentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +136,7 @@ final class CartViewController: UIViewController {
         [tableView, payBackroundView, emptyPlaceholderLabel].forEach { view.addSubview($0) }
         [nftCounterLabel, totalPriceLabel, toPaymentButton].forEach { payBackroundView.addSubview($0) }
 
-        sortNavigationButton.tintColor = .yaWhiteDayNight
+        sortNavigationButton.tintColor = .yaBlackDayNight
         navigationController?.navigationBar.tintColor = .yaBlackDayNight
         navigationItem.rightBarButtonItem = sortNavigationButton
 
@@ -145,7 +145,7 @@ final class CartViewController: UIViewController {
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .yaWhiteDayNight
+            appearance.backgroundColor = .yaBlackDayNight
             appearance.shadowColor = nil
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -254,6 +254,7 @@ extension CartViewController: CartViewProtocol {
         tableView.isHidden = true
         payBackroundView.isHidden = true
         emptyPlaceholderLabel.isHidden = false
+        
         if #available(iOS 16.0, *) {
             sortNavigationButton.isHidden = true
         }
@@ -277,7 +278,7 @@ extension CartViewController: CartViewProtocol {
 
     func showAlertController(alerts: [AlertModel]) {
         let alertController = UIAlertController(
-            title: TextLabels.CartViewController.alertTitle,
+            title:TextLabels.CartViewController.alertTitle,
             message: nil,
             preferredStyle: .actionSheet)
 

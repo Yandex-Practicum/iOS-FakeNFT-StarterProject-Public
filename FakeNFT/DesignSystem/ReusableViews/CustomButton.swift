@@ -49,8 +49,8 @@ final class CustomButton: UIButton {
 
         switch type {
         case .filled:
-            backgroundColor = .yaBlackDayNight
-            setTitleColor(.yaWhiteDayNight, for: .normal)
+            backgroundColor = .yaWhiteDayNight
+            setTitleColor(.yaBlackDayNight, for: .normal)
             titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         case .bordered:
             backgroundColor = .yaWhiteDayNight

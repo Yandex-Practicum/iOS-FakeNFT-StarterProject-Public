@@ -8,6 +8,6 @@
 import UIKit
 
 extension UIImage {
-    static let cartDeleteIcon = UIImage(named: "cartDelete") ?? UIImage()
+    static let cartDeleteIcon = UIImage(named: "cardDelete") ?? UIImage()
     static let cardActiveIcon = UIImage(named: "cardActive") ?? UIImage()
 }

@@ -16,10 +16,7 @@ final class FavouriteNFTController: FavouriteNFTControllerProtocol {
         return favouriteQueue.sync { _favourites }
     }
 
-    /// Adds NFT to favourites
-    /// - Parameters:
-    ///   - nft: NFT to add to favourites
-    ///   - completion: Optional: completion called when the NFT is added to the favourites
+
     func addToFavourite(_ nft: NFT, completion: (() -> Void)? = nil) {
         favouriteQueue.async(flags: .barrier) { [weak self] in
             self?._favourites.append(nft)
@@ -29,10 +26,6 @@ final class FavouriteNFTController: FavouriteNFTControllerProtocol {
         }
     }
 
-    /// Removes NFT from favourites
-    /// - Parameters:
-    ///   - nft: NFT, to be removed from the favourites
-    ///   - completion: Optional: completion called when the NFT is removed from the favourites.
     func removeFromFavourite(_ nft: NFT, completion: (() -> Void)? = nil) {
         favouriteQueue.async(flags: .barrier) { [weak self] in
             guard let self,

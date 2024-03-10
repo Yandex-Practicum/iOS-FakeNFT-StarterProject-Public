@@ -36,7 +36,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     private let priceDescription: UILabel = {
         let priceDescription = UILabel()
         priceDescription.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        priceDescription.textColor = .yaBlackDayNight
+        priceDescription.textColor = .yaWhiteDayNight
         priceDescription.text = TextLabels.CartNFTCell.priceDescription
         priceDescription.translatesAutoresizingMaskIntoConstraints = false
         return priceDescription
@@ -45,7 +45,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     private let price: UILabel = {
         let price = UILabel()
         price.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        price.textColor = .yaBlackDayNight
+        price.textColor = .yaWhiteDayNight
         price.translatesAutoresizingMaskIntoConstraints = false
         return price
     }()
