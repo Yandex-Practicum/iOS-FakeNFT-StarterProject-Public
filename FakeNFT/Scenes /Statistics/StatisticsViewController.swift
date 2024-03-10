@@ -137,6 +137,17 @@ final class StatisticsViewController: UIViewController {
 	private func sortBy(_ sortBy: SortBy) {
 		viewModel.sortBy(sortBy)
 	}
+	
+	private func navigateToUserCardViewController(user: User) {
+		let controller = UserCardViewController()
+		let userCardViewModel = UserCardViewModel(user: user)
+		controller.viewModel = userCardViewModel
+		
+		let navigationController = UINavigationController(rootViewController: controller)
+		navigationController.modalPresentationStyle = .fullScreen
+		
+		present(navigationController, animated: true)
+	}
 }
 
 // MARK: UITableViewDataSource
@@ -168,5 +179,9 @@ extension StatisticsViewController: UITableViewDataSource {
 extension StatisticsViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		88
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		navigateToUserCardViewController(user: viewModel.users[indexPath.item].user)
 	}
 }
