@@ -36,7 +36,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     private let priceDescription: UILabel = {
         let priceDescription = UILabel()
         priceDescription.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        priceDescription.textColor = .yaBlackDayNight
+        priceDescription.textColor = .yaWhiteDayNight
         priceDescription.text = TextLabels.CartNFTCell.priceDescription
         priceDescription.translatesAutoresizingMaskIntoConstraints = false
         return priceDescription
@@ -45,7 +45,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     private let price: UILabel = {
         let price = UILabel()
         price.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        price.textColor = .yaBlackDayNight
+        price.textColor = .yaWhiteDayNight
         price.translatesAutoresizingMaskIntoConstraints = false
         return price
     }()
@@ -82,7 +82,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Public Methods
     func configureCell(_ cartCellModel: CartCellModel) {
-        let imageURL = URL(string: cartCellModel.imageURL)
+        let imageURL = cartCellModel.imageURL
         nftImage.kf.setImage(with: imageURL)
         title.text = cartCellModel.title
         price.text = cartCellModel.price
@@ -126,7 +126,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
 
     @objc private func deleteButtonTapped() {
         guard let cartCellModel else { return }
-        delegate?.deleteNFTButtonDidTapped(id: cartCellModel.id, imageURL: cartCellModel.imageURL, returnHandler: nil)
+        delegate?.deleteNFTButtonDidTapped(id: cartCellModel.id, imageURL: cartCellModel.imageURL?.absoluteString ?? "", returnHandler: nil)
     }
 }
 

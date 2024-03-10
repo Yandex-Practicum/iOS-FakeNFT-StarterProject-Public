@@ -17,7 +17,7 @@ struct Currency {
 extension Currency: Codable {
     enum CodingKeys: String, CodingKey {
         case title
-        case image
+        case image 
         case id
         case ticker = "name"
     }

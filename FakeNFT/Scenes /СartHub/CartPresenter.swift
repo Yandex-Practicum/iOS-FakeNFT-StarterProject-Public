@@ -169,12 +169,7 @@ final class CartPresenter: CartPresenterProtocol {
         for nft in nfts {
             let priceString = numberFormatter.string(from: NSNumber(value: nft.price)) ?? ""
             let cellModel = CartCellModel(
-                id: nft.id,
-                imageURL: nft.images.first?.absoluteString ?? "",
-                title: nft.name,
-                price: "\(priceString) ETH",
-                rating: nft.rating
-            )
+                id: nft.id, imageURL: nft.images.first, title: nft.name, price: "\(priceString) ETH", rating: nft.rating)
             cellsModels.append(cellModel)
         }
     }

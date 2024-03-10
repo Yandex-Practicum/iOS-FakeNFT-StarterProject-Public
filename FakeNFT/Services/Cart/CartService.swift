@@ -11,7 +11,7 @@ final class CartService: CartServiceProtocol {
     weak var delegate: CartServiceDelegate?
 
     private var _cart: [NFT] = []
-    private let cartQueue = DispatchQueue(label: "com.nftMarketplace.cartQueue", attributes: .concurrent)
+    private let cartQueue = DispatchQueue(label: "com.FakeNFT.cartQueue", attributes: .concurrent)
 
     var cart: [NFT] {
         return cartQueue.sync { _cart }

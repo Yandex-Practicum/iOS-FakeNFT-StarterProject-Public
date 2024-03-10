@@ -28,7 +28,7 @@ final class DeleteNFTView: UIView {
     private let title: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        title.textColor = .yaBlackDayNight
+        title.textColor = .yaWhiteDayNight
         title.numberOfLines = 2
         title.textAlignment = .center
         title.text = TextLabels.CartViewController.deleteFromCartTitle
@@ -43,7 +43,7 @@ final class DeleteNFTView: UIView {
             action: #selector(deleteButtonTapped))
         deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         deleteButton.layer.cornerRadius = 12
-        deleteButton.setTitleColor(.yaRedUni, for: .normal)
+        deleteButton.setTitleColor(.yaRedUniversal, for: .normal)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         return deleteButton
     }()
@@ -55,7 +55,7 @@ final class DeleteNFTView: UIView {
             action: #selector(returnButtonTapped))
         returnButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         returnButton.layer.cornerRadius = 12
-        returnButton.setTitleColor(.yaWhiteDayNight, for: .normal)
+        returnButton.setTitleColor(.yaBlackDayNight, for: .normal)
         returnButton.translatesAutoresizingMaskIntoConstraints = false
         return returnButton
     }()
@@ -115,6 +115,7 @@ final class DeleteNFTView: UIView {
 
     @objc private func deleteButtonTapped() {
         delegate?.deleteButtonTapped()
+        
     }
 
     @objc private func returnButtonTapped() {
