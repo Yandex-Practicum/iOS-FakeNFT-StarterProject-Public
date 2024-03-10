@@ -9,10 +9,10 @@ import Foundation
 
 final class CartServiceStub: CartServiceProtocol {
     var delegate: CartServiceDelegate?
-//url
+
     var cart: [NFT] = [
         NFT(name: "April",
-            images: [],
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")!],
             rating: 1,
             description: "",
             price: 1.78,
@@ -20,7 +20,7 @@ final class CartServiceStub: CartServiceProtocol {
             id: "1",
             createdAt: ""),
         NFT(name: "Greena",
-            images: [],
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Breena/1.png")!],
             rating: 3,
             description: "",
             price: 1.78,
@@ -28,7 +28,7 @@ final class CartServiceStub: CartServiceProtocol {
             id: "2",
             createdAt: ""),
         NFT(name: "Spring",
-            images: [],
+            images: [URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Green/Spring/1.png")!],
             rating: 5,
             description: "",
             price: 1.78,
