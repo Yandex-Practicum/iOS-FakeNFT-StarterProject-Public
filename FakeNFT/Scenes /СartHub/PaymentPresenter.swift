@@ -26,6 +26,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     // MARK: - Private Properties
     private let networkManager: NetworkManagerProtocol
     private var paymentManager: PaymentManagerProtocol
+    private let paymentRouter: PaymentRouterProtocol
     private let cartController: CartServiceProtocol
     private var currentState: PaymentViewState? {
         didSet {
@@ -48,11 +49,13 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     // MARK: - Initializers
     init(networkManager: NetworkManagerProtocol,
          paymentManager: PaymentManagerProtocol,
-         cartController: CartServiceProtocol) {
+         cartController: CartServiceProtocol,
+         paymentRouter: PaymentRouterProtocol
+    ) {
         self.networkManager = networkManager
         self.paymentManager = paymentManager
         self.cartController = cartController
-        //        self.paymentManager.delegate = self
+        self.paymentRouter = paymentRouter
     }
 
     // MARK: - Public Methods

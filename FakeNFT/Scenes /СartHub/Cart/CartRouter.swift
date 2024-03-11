@@ -17,6 +17,12 @@ final class CartRouter {
 
 extension CartRouter: CartRouterProtocol{
     func showPaymentTypeScreen() {
+        let paymentController = PaymentFactory().create(
+            with: .init(
+                servicesAssembly: servicesAssembly
+            )
+        )
         
+        rootController?.navigationController?.pushViewController(paymentController, animated: true)
     }
 }

@@ -18,11 +18,12 @@ final class PaymentRouter {
 extension PaymentRouter: PaymentRouterProtocol{
     func showPaymentTypeScreen() {
         let paymentController = PaymentFactory().create(
-                    with: .init(
-                        servicesAssembly: servicesAssembly
-                    )
-                )
-                
-                rootController?.navigationController?.pushViewController(paymentController, animated: true)
+            with: .init(
+                servicesAssembly: servicesAssembly
+            )
+        )
+        func showFinalPaymentScreen() {
+            
+        }
     }
-    }
+}
