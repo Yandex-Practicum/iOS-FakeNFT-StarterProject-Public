@@ -48,6 +48,8 @@
 		4B4C37F62B9E4BA100B974DC /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4C37F02B9E4BA100B974DC /* PaymentViewController.swift */; };
 		4B4C37F72B9E4BA100B974DC /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4C37F12B9E4BA100B974DC /* CurrencyCell.swift */; };
 		4B4C37F82B9E4BA100B974DC /* PaymentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4C37F22B9E4BA100B974DC /* PaymentPresenter.swift */; };
+		4B4C37FA2B9E909800B974DC /* PaymentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4C37F92B9E909800B974DC /* PaymentFactory.swift */; };
+		4B4C37FC2B9E910000B974DC /* PaymentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4C37FB2B9E910000B974DC /* PaymentRouter.swift */; };
 		4B771D082B8B990600FE7F62 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B771D072B8B990600FE7F62 /* Currency.swift */; };
 		4B771D0A2B8B992700FE7F62 /* OrderPayMentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B771D092B8B992700FE7F62 /* OrderPayMentResponse.swift */; };
 		4B771D0C2B8B994700FE7F62 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B771D0B2B8B994700FE7F62 /* OrderResponse.swift */; };
@@ -137,6 +139,8 @@
 		4B4C37F02B9E4BA100B974DC /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		4B4C37F12B9E4BA100B974DC /* CurrencyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		4B4C37F22B9E4BA100B974DC /* PaymentPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPresenter.swift; sourceTree = "<group>"; };
+		4B4C37F92B9E909800B974DC /* PaymentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFactory.swift; sourceTree = "<group>"; };
+		4B4C37FB2B9E910000B974DC /* PaymentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRouter.swift; sourceTree = "<group>"; };
 		4B771D032B8B927E00FE7F62 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4B771D072B8B990600FE7F62 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4B771D092B8B992700FE7F62 /* OrderPayMentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPayMentResponse.swift; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 				4B4C37EC2B9E4BA100B974DC /* Payment */,
 				7F91C2122B758C19007D8189 /* Models */,
 				4B771D1F2B8B9FA000FE7F62 /* CartPresenter.swift */,
+				4B4C37F92B9E909800B974DC /* PaymentFactory.swift */,
+				4B4C37FB2B9E910000B974DC /* PaymentRouter.swift */,
 				4B771D462B9207B000FE7F62 /* CartFactory.swift */,
 				4B771D482B9207DE00FE7F62 /* CartRouter.swift */,
 			);
@@ -731,6 +737,7 @@
 				4B4C37F72B9E4BA100B974DC /* CurrencyCell.swift in Sources */,
 				4B771D472B9207B000FE7F62 /* CartFactory.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
+				4B4C37FC2B9E910000B974DC /* PaymentRouter.swift in Sources */,
 				4B771D3A2B8BA28B00FE7F62 /* FavouriteNFTControllerProtocol.swift in Sources */,
 				4B771D362B8BA24A00FE7F62 /* CartControllerProtocol.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
@@ -755,6 +762,7 @@
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				4B4C37F42B9E4BA100B974DC /* NetworkManager.swift in Sources */,
 				4B4C37F52B9E4BA100B974DC /* CurrencyCellModel.swift in Sources */,
+				4B4C37FA2B9E909800B974DC /* PaymentFactory.swift in Sources */,
 				4B771D262B8B9FFD00FE7F62 /* DeleteNFTView.swift in Sources */,
 				4B4C37F62B9E4BA100B974DC /* PaymentViewController.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
