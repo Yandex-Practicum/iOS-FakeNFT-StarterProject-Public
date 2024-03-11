@@ -407,12 +407,10 @@
 		4B4C37EC2B9E4BA100B974DC /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				4B4C37ED2B9E4BA100B974DC /* PaymentManager.swift */,
-				4B4C37EE2B9E4BA100B974DC /* NetworkManager.swift */,
-				4B4C37EF2B9E4BA100B974DC /* CurrencyCellModel.swift */,
 				4B4C37F02B9E4BA100B974DC /* PaymentViewController.swift */,
 				4B4C37F12B9E4BA100B974DC /* CurrencyCell.swift */,
-				4B4C37F22B9E4BA100B974DC /* PaymentPresenter.swift */,
+				4B4C37ED2B9E4BA100B974DC /* PaymentManager.swift */,
+				4B4C37EE2B9E4BA100B974DC /* NetworkManager.swift */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -423,9 +421,10 @@
 				4B771D1C2B8B9F5200FE7F62 /* Cart */,
 				4B4C37EC2B9E4BA100B974DC /* Payment */,
 				7F91C2122B758C19007D8189 /* Models */,
-				4B771D1F2B8B9FA000FE7F62 /* CartPresenter.swift */,
+				4B4C37F22B9E4BA100B974DC /* PaymentPresenter.swift */,
 				4B4C37F92B9E909800B974DC /* PaymentFactory.swift */,
 				4B4C37FB2B9E910000B974DC /* PaymentRouter.swift */,
+				4B771D1F2B8B9FA000FE7F62 /* CartPresenter.swift */,
 				4B771D462B9207B000FE7F62 /* CartFactory.swift */,
 				4B771D482B9207DE00FE7F62 /* CartRouter.swift */,
 			);
@@ -521,6 +520,7 @@
 		7F91C2122B758C19007D8189 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4B4C37EF2B9E4BA100B974DC /* CurrencyCellModel.swift */,
 				7F91C2132B758C21007D8189 /* TableItem.swift */,
 				4B771D4F2B9209ED00FE7F62 /* AlertModel.swift */,
 				4B771D512B9209F500FE7F62 /* CartCellViewModel.swift */,

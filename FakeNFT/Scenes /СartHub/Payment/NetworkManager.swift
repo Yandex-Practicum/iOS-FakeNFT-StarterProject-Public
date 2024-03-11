@@ -18,7 +18,7 @@ final class NetworkManager {
     private let networkClient: NetworkClient
     private var onGoingTasks: [String: NetworkTask] = [:]
 
-    private let onGoingTasksQueue = DispatchQueue(label: "com.nftMarketplace.onGoingTasks")
+    private let onGoingTasksQueue = DispatchQueue(label: "com.fakeNFT.onGoingTasks")
 
     // MARK: - Initializer
     init(networkClient: NetworkClient) {
