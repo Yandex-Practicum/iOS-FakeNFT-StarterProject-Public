@@ -9,22 +9,33 @@ import UIKit
 
 final class PaymentFactory {
     func create(with context: Context) -> UIViewController {
+        
         // TODO: - Перевести на реальную реализацию CartService после теста
         let cartService = CartServiceStub()
 
-        let router = CartRouter()
+        let paymentRouter = PaymentRouter()
 
-        let presenter = CartPresenter(
+        let networkClient = DefaultNetworkClient()
+        
+        let networkManager = NetworkManager(networkClient: networkClient)
+        
+        let paymentManager = PaymentManager(networkManager: NetworkManager(networkClient: networkClient))
+        
+        let paymentPresenter = PaymentPresenter(
+            networkManager: networkManager,
+            paymentManager: paymentManager,
             cartService: cartService,
-            router: router
+            paymentRouter:paymentRouter
         )
 
-        let controller = CartViewController(presenter: presenter)
         
-        presenter.view = controller
-        router.rootController = controller
-
-        return controller
+        let paymentController = PaymentViewController(presenter: paymentPresenter)
+        
+        paymentPresenter.viewController = paymentController
+        
+        paymentRouter.rootController = paymentController
+       
+        return UINavigationController(rootViewController: paymentController)
     }
 }
 

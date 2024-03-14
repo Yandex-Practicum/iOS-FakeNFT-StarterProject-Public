@@ -8,6 +8,8 @@
 import UIKit
 
 protocol CartPresenterProtocol {
+    var viewController: CartViewProtocol? { get set }
+    var navigationController: UINavigationController? { get set }
     var cellsModels: [CartCellModel] { get }
 
     func viewWillAppear()
@@ -20,6 +22,9 @@ protocol CartPresenterProtocol {
 }
 
 final class CartPresenter: CartPresenterProtocol {
+    weak var viewController: CartViewProtocol?
+    weak var navigationController: UINavigationController?
+    
     // MARK: - Parameters
 
     private let cartService: CartServiceProtocol

@@ -120,6 +120,7 @@ final class CartViewController: UIViewController {
         tableView.register(CartNFTCell.self)
         tableView.dataSource = self
         tableView.delegate = self
+        presenter.viewController = self
         deleteNFTView.delegate = self
         presenter.viewDidLoad()
     }

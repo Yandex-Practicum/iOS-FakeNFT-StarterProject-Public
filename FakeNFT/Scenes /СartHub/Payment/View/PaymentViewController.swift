@@ -48,7 +48,7 @@ final class PaymentViewController: UIViewController {
     private let payDescription: UILabel = {
         let payDescription = UILabel()
         payDescription.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        payDescription.textColor = .yaBlackDayNight
+        payDescription.textColor = .yaWhiteDayNight
         payDescription.text = TextLabels.PaymentViewController.payDescription
         payDescription.translatesAutoresizingMaskIntoConstraints = false
         return payDescription
@@ -175,7 +175,7 @@ final class PaymentViewController: UIViewController {
                 payDescription.leadingAnchor.constraint(
                     equalTo: payView.leadingAnchor, constant: Constants.defaultOffset),
                 payDescription.trailingAnchor.constraint(
-                    equalTo: payView.trailingAnchor, constant: Constants.defaultOffset),
+                    equalTo: payView.trailingAnchor, constant: -Constants.defaultOffset),
 
                 userAgreementButton.topAnchor.constraint(
                     equalTo: payDescription.bottomAnchor, constant: Constants.defaultOffset / 4),

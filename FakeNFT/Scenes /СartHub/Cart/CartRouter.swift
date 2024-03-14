@@ -13,6 +13,8 @@ protocol CartRouterProtocol {
 
 final class CartRouter {
     weak var rootController: UIViewController?
+    let servicesAssembly = ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()
+    )
 }
 
 extension CartRouter: CartRouterProtocol{

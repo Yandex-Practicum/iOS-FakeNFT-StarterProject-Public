@@ -20,11 +20,13 @@ final class CartFactory {
         )
 
         let controller = CartViewController(presenter: presenter)
-        
+    
+        let navigationController = UINavigationController(rootViewController: controller)
         presenter.view = controller
-        router.rootController = controller
+        router.rootController = navigationController
+        
 
-        return controller
+        return navigationController
     }
 }
 

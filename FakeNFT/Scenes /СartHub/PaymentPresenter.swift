@@ -27,7 +27,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     private let networkManager: NetworkManagerProtocol
     private var paymentManager: PaymentManagerProtocol
     private let paymentRouter: PaymentRouterProtocol
-    private let cartController: CartServiceProtocol
+    private let cartService: CartServiceProtocol
     private var currentState: PaymentViewState? {
         didSet {
             viewControllerShouldChangeView()
@@ -49,15 +49,16 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     // MARK: - Initializers
     init(networkManager: NetworkManagerProtocol,
          paymentManager: PaymentManagerProtocol,
-         cartController: CartServiceProtocol,
+         cartService: CartServiceProtocol,
          paymentRouter: PaymentRouterProtocol
     ) {
         self.networkManager = networkManager
         self.paymentManager = paymentManager
-        self.cartController = cartController
+        self.cartService = cartService
         self.paymentRouter = paymentRouter
+//        self.paymentManager.delegate = self
     }
-
+    
     // MARK: - Public Methods
     func viewDidLoad() {
         checkState()
@@ -134,7 +135,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
 
     private func getNFTSIds() -> [String] {
         var ids: [String] = []
-        for nft in cartController.cart {
+        for nft in cartService.cart {
             ids.append(nft.id)
         }
         return ids
@@ -144,7 +145,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         guard let payButtonState else { return }
         switch payButtonState {
         case .disabled:
-            viewController?.changeButtonState(color: .yaGrayUniversal, isEnabled: false, isLoading: false)
+            viewController?.changeButtonState(color: .yaWhiteDayNight, isEnabled: false, isLoading: false)
         case .enabled:
             viewController?.changeButtonState(color: .yaBlackDayNight, isEnabled: true, isLoading: false)
         case .loading:
