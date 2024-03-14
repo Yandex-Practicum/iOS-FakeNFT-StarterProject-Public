@@ -9,14 +9,14 @@ import Foundation
 
 final class CartService: CartServiceProtocol {
     weak var delegate: CartServiceDelegate?
-
+    
     private var _cart: [NFT] = []
     private let cartQueue = DispatchQueue(label: "com.FakeNFT.cartQueue", attributes: .concurrent)
-
+    
     var cart: [NFT] {
         return cartQueue.sync { _cart }
     }
-
+    
     func addToCart(_ nft: NFT, completion: (() -> Void)? = nil) {
         cartQueue.async(flags: .barrier) { [weak self] in
             guard let self else { return }
@@ -28,7 +28,7 @@ final class CartService: CartServiceProtocol {
             }
         }
     }
-
+    
     func removeFromCart(_ id: String, completion: (() -> Void)? = nil) {
         cartQueue.async(flags: .barrier) { [weak self] in
             guard let self,

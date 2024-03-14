@@ -11,7 +11,7 @@ protocol CartPresenterProtocol {
     var viewController: CartViewProtocol? { get set }
     var navigationController: UINavigationController? { get set }
     var cellsModels: [CartCellModel] { get }
-
+    
     func viewWillAppear()
     func viewDidLoad()
     func deleteNFT()
@@ -26,7 +26,7 @@ final class CartPresenter: CartPresenterProtocol {
     weak var navigationController: UINavigationController?
     
     // MARK: - Parameters
-
+    
     private let cartService: CartServiceProtocol
     private let userDefaults: UserDefaultsProtocol
     private let router: CartRouterProtocol
@@ -34,30 +34,30 @@ final class CartPresenter: CartPresenterProtocol {
     weak var view: CartViewProtocol?
     
     var cellsModels: [CartCellModel] = []
-
+    
     private var choosedNFTId: String?
-
+    
     private var currentState: CartViewState = .empty {
         didSet {
             viewControllerShouldChangeView()
         }
     }
-
+    
     private let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.locale = Locale(identifier: "ru_RU")
         return numberFormatter
     }()
-
+    
     private var nfts: [NFT] {
         return cartService.cart
     }
-
+    
     private var currentCartSortState = CartSortState.name.rawValue
-
+    
     private var paymentFlowStarted = false
-
+    
     // MARK: - Initializers
     
     init(
@@ -69,7 +69,7 @@ final class CartPresenter: CartPresenterProtocol {
         self.cartService = cartService
         self.router = router
     }
-
+    
     // MARK: - Public Methods
     func viewWillAppear() {
         let count = nfts.count
@@ -83,7 +83,7 @@ final class CartPresenter: CartPresenterProtocol {
         applySorting()
         checkNeedSwitchToCatalogVC()
     }
-
+    
     func deleteNFT() {
         guard let choosedNFTId else { return }
         cartService.removeFromCart(choosedNFTId) { [weak self] in
@@ -97,16 +97,16 @@ final class CartPresenter: CartPresenterProtocol {
             self.choosedNFTId = nil
         }
     }
-
+    
     func didSelectCellToDelete(id: String) {
         choosedNFTId = id
     }
-
+    
     func toPaymentButtonTapped() {
         router.showPaymentTypeScreen()
         paymentFlowStarted = true
     }
-
+    
     func sortButtonTapped() {
         let alerts = [
             AlertModel(
@@ -131,17 +131,17 @@ final class CartPresenter: CartPresenterProtocol {
         ]
         view?.showAlertController(alerts: alerts)
     }
-
+    
     func refreshTableViewCalled() {
         checkViewState()
         view?.reloadTableView()
     }
-
+    
     func viewDidLoad() {
         let newCount = cartService.cart.count
         cartCountDidChanged(newCount)
     }
-
+    
     // MARK: - Private Methods
     private func calculateTotalPrice() -> String {
         let price = nfts.reduce(into: 0) { partialResult, nft in
@@ -151,7 +151,7 @@ final class CartPresenter: CartPresenterProtocol {
         let formatted = numberFormatter.string(from: number) ?? ""
         return formatted
     }
-
+    
     private func viewControllerShouldChangeView() {
         switch currentState {
         case .empty:
@@ -160,7 +160,7 @@ final class CartPresenter: CartPresenterProtocol {
             view?.displayLoadedCart()
         }
     }
-
+    
     private func checkViewState() {
         if nfts.isEmpty {
             currentState = .empty
@@ -168,7 +168,7 @@ final class CartPresenter: CartPresenterProtocol {
             currentState = .loaded
         }
     }
-
+    
     private func createCellsModels() {
         cellsModels.removeAll()
         for nft in nfts {
@@ -178,7 +178,7 @@ final class CartPresenter: CartPresenterProtocol {
             cellsModels.append(cellModel)
         }
     }
-
+    
     private func applySorting() {
         switch currentCartSortState {
         case CartSortState.name.rawValue:
@@ -191,25 +191,25 @@ final class CartPresenter: CartPresenterProtocol {
             return
         }
     }
-
+    
     private func sortByNames() {
         cellsModels.sort { $0.title < $1.title }
         currentCartSortState = CartSortState.name.rawValue
         didFinishSortCellsModels()
     }
-
+    
     private func sortByRating() {
         cellsModels.sort { $0.rating > $1.rating }
         currentCartSortState = CartSortState.rating.rawValue
         didFinishSortCellsModels()
     }
-
+    
     private func sortByPrice() {
         cellsModels.sort { $0.price < $1.price }
         currentCartSortState = CartSortState.price.rawValue
         didFinishSortCellsModels()
     }
-
+    
     private func didFinishSortCellsModels() {
         view?.reloadTableView()
         DispatchQueue.global(qos: .utility).async { [weak self] in
@@ -217,7 +217,7 @@ final class CartPresenter: CartPresenterProtocol {
             userDefaults.set(currentCartSortState, forKey: Constants.cartSortStateKey)
         }
     }
-
+    
     private func checkNeedSwitchToCatalogVC() {
         if paymentFlowStarted && cartService.cart.isEmpty {
             paymentFlowStarted = false

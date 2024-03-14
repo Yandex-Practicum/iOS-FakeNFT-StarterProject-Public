@@ -6,7 +6,7 @@ protocol NetworkTask {
 
 struct DefaultNetworkTask: NetworkTask {
     let dataTask: URLSessionDataTask
-
+    
     func cancel() {
         dataTask.cancel()
     }

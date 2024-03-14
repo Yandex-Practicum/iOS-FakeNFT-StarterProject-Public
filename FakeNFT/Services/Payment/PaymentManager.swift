@@ -20,11 +20,11 @@ protocol PaymentManagerDelegate: AnyObject {
 final class PaymentManager: PaymentManagerProtocol {
     weak var delegate: PaymentManagerDelegate?
     private let networkManager: NetworkManagerProtocol
-
+    
     init(networkManager: NetworkManagerProtocol) {
         self.networkManager = networkManager
     }
-
+    
     func performPayment(nfts: [String], currencyId: Int) {
         putOrder(nfts: nfts) {[weak self] result in
             switch result {
@@ -35,7 +35,7 @@ final class PaymentManager: PaymentManagerProtocol {
             }
         }
     }
-
+    
     private func putOrder(nfts: [String], completion: @escaping (Result<Bool, Error>) -> Void) {
         let request = OrderPut(nfts: ["nfts": nfts])
         networkManager.send(request: request, type: OrderResponse.self, id: request.requestId) { result in

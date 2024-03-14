@@ -11,7 +11,7 @@ import SafariServices
 protocol PaymentPresenterProtocol {
     var currenciesCellModel: [CurrencyCellModel] { get }
     var viewController: PaymentViewControllerProtocol? { get set }
-
+    
     func viewDidLoad()
     func didSelectItemAt(_ indexPath: IndexPath)
     func userAgreementButtonTapped()
@@ -22,7 +22,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     // MARK: - Public Properties
     weak var viewController: PaymentViewControllerProtocol?
     var currenciesCellModel: [CurrencyCellModel] = []
-
+    
     // MARK: - Private Properties
     private let networkManager: NetworkManagerProtocol
     private var paymentManager: PaymentManagerProtocol
@@ -45,7 +45,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         }
     }
     private var paymentIsSucceeded: Bool?
-
+    
     // MARK: - Initializers
     init(networkManager: NetworkManagerProtocol,
          paymentManager: PaymentManagerProtocol,
@@ -56,7 +56,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         self.paymentManager = paymentManager
         self.cartService = cartService
         self.paymentRouter = paymentRouter
-//        self.paymentManager.delegate = self
+        //        self.paymentManager.delegate = self
     }
     
     // MARK: - Public Methods
@@ -65,27 +65,27 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         payButtonState = .disabled
         fetchCurrencies()
     }
-
+    
     func didSelectItemAt(_ indexPath: IndexPath) {
         seletedItemIndexPath = indexPath
         makeCurrenciesCellModel()
         viewController?.reloadCollectionView()
         payButtonState = .enabled
     }
-
+    
     func userAgreementButtonTapped() {
         guard let url = URL(string: Constants.termsOfUseURL) else { return }
         let safariViewController = SFSafariViewController(url: url)
         viewController?.presentView(safariViewController)
     }
-
+    
     func payButtonTapped() {
         guard let currencyId else { return }
         let nfts = getNFTSIds()
         payButtonState = .loading
         paymentManager.performPayment(nfts: nfts, currencyId: currencyId)
     }
-
+    
     // MARK: - Private Methods
     private func fetchCurrencies() {
         let request = CurrenciesRequest()
@@ -104,14 +104,14 @@ final class PaymentPresenter: PaymentPresenterProtocol {
             }
         }
     }
-
+    
     private func checkState() {
         currentState = currencies.isEmpty ? .loading : .loaded
     }
-
+    
     private func viewControllerShouldChangeView() {
         guard let currentState else { return }
-
+        
         switch currentState {
         case .loading:
             viewController?.displayLoadingIndicator()
@@ -119,7 +119,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
             viewController?.removeLoadingIndicator()
         }
     }
-
+    
     private func makeCurrenciesCellModel() {
         currenciesCellModel.removeAll()
         for (index, currency) in currencies.enumerated() {
@@ -132,7 +132,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
             currenciesCellModel.append(model)
         }
     }
-
+    
     private func getNFTSIds() -> [String] {
         var ids: [String] = []
         for nft in cartService.cart {
@@ -140,7 +140,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         }
         return ids
     }
-
+    
     private func viewControllerShouldChnangeButtonAppearance() {
         guard let payButtonState else { return }
         switch payButtonState {

@@ -12,9 +12,9 @@ final class PaymentFactory {
         
         // TODO: - Перевести на реальную реализацию CartService после теста
         let cartService = CartServiceStub()
-
+        
         let paymentRouter = PaymentRouter()
-
+        
         let networkClient = DefaultNetworkClient()
         
         let networkManager = NetworkManager(networkClient: networkClient)
@@ -27,14 +27,14 @@ final class PaymentFactory {
             cartService: cartService,
             paymentRouter:paymentRouter
         )
-
+        
         
         let paymentController = PaymentViewController(presenter: paymentPresenter)
         
         paymentPresenter.viewController = paymentController
         
         paymentRouter.rootController = paymentController
-       
+        
         return UINavigationController(rootViewController: paymentController)
     }
 }

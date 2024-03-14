@@ -17,14 +17,14 @@ final class NetworkManager {
     // MARK: - Private Properties
     private let networkClient: NetworkClient
     private var onGoingTasks: [String: NetworkTask] = [:]
-
+    
     private let onGoingTasksQueue = DispatchQueue(label: "com.fakeNFT.onGoingTasks")
-
+    
     // MARK: - Initializer
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-
+    
     // MARK: - Private Properties
     private func shouldBreakTaskForId(_ id: String) -> Bool {
         onGoingTasksQueue.sync {
@@ -40,22 +40,22 @@ extension NetworkManager: NetworkManagerProtocol {
         type: T.Type,
         id: String,
         completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
-        guard !shouldBreakTaskForId(id) else { return }
-
-        let task = networkClient.send(request: request, type: type) { [weak self] result in
-            self?.onGoingTasksQueue.sync {
-                self?.onGoingTasks[id] = nil
+            guard !shouldBreakTaskForId(id) else { return }
+            
+            let task = networkClient.send(request: request, type: type) { [weak self] result in
+                self?.onGoingTasksQueue.sync {
+                    self?.onGoingTasks[id] = nil
+                }
+                completion(result)
             }
-            completion(result)
-        }
-
-        if let task {
-            onGoingTasksQueue.sync {
-                onGoingTasks[id] = task
+            
+            if let task {
+                onGoingTasksQueue.sync {
+                    onGoingTasks[id] = task
+                }
             }
         }
-    }
-
+    
     func cancelAllLoadTasks() {
         onGoingTasksQueue.sync {
             onGoingTasks.forEach { $0.value.cancel() }
