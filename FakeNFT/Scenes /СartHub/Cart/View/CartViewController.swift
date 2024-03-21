@@ -133,12 +133,12 @@ final class CartViewController: UIViewController {
     
     // MARK: - Private Methods
     private func configureView() {
-        view.backgroundColor = .clear
+        view.backgroundColor = .yaBlackDayNight
         [tableView, payBackroundView, emptyPlaceholderLabel].forEach { view.addSubview($0) }
         [nftCounterLabel, totalPriceLabel, toPaymentButton].forEach { payBackroundView.addSubview($0) }
         
-        sortNavigationButton.tintColor = .yaBlackDayNight
-        navigationController?.navigationBar.tintColor = .yaBlackDayNight
+        sortNavigationButton.tintColor = .yaWhiteDayNight
+        navigationController?.navigationBar.tintColor = .yaWhiteDayNight
         navigationItem.rightBarButtonItem = sortNavigationButton
         
         tableView.refreshControl = refreshControl

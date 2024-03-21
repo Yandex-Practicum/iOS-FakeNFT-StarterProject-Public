@@ -56,7 +56,6 @@ final class PaymentPresenter: PaymentPresenterProtocol {
         self.paymentManager = paymentManager
         self.cartService = cartService
         self.paymentRouter = paymentRouter
-        //        self.paymentManager.delegate = self
     }
     
     // MARK: - Public Methods
@@ -165,33 +164,6 @@ extension PaymentPresenter {
         static let termsOfUseURL = "https://yandex.ru/legal/practicum_termsofuse/"
     }
 }
-// MARK: - PaymentManagerDelegate
-//extension PaymentPresenter: PaymentManagerDelegate {
-//    func paymentFinishedWithError(_ error: Error) {
-//        DispatchQueue.main.async { [weak self] in
-//            let presenter = PaymentConfirmationPresenter(configuration: .failure)
-//            presenter.delegate = self
-//            let confirmationViewController = PaymentConfirmationViewController(presenter: presenter)
-//            confirmationViewController.modalPresentationStyle = .fullScreen
-//            self?.viewController?.presentView(confirmationViewController)
-//            self?.payButtonState = .enabled
-//           self?.paymentIsSucceeded = false
-//        }
-//    }
-
-//    func paymentFinishedWithSuccess() {
-//        DispatchQueue.main.async { [weak self] in
-//            let presenter = PaymentConfirmationPresenter(configuration: .success)
-//            presenter.delegate = self
-//           let confirmationViewController = PaymentConfirmationViewController(presenter: presenter)
-//            confirmationViewController.modalPresentationStyle = .fullScreen
-//            self?.viewController?.presentView(confirmationViewController)
-//            self?.payButtonState = .enabled
-//            self?.paymentIsSucceeded = true
-//        }
-//    }
-//}
-
 // MARK: - PayButtonState
 extension PaymentPresenter {
     enum PayButtonState {
@@ -200,14 +172,3 @@ extension PaymentPresenter {
         case loading
     }
 }
-
-//extension PaymentPresenter: PaymentConfirmationPresenterDelegate {
-//   func didTapDismissButton() {
-//        viewController?.dismiss()
-//        guard let paymentIsSucceeded,
-//        paymentIsSucceeded else { return }
-//        cartController.removeAll { [weak self] in
-//            self?.viewController?.popToRootViewController(animated: true)
-//        }
-//    }
-//}

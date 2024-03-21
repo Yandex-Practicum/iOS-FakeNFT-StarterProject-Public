@@ -116,7 +116,7 @@ final class PaymentViewController: UIViewController {
     
     // MARK: - Private Methods
     private func setupView() {
-        view.backgroundColor = .yaWhiteDayNight
+        view.backgroundColor = .yaBlackDayNight
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
@@ -316,7 +316,7 @@ extension PaymentViewController: PaymentViewControllerProtocol {
     }
     
     func changeButtonState(color: UIColor, isEnabled: Bool, isLoading: Bool) {
-        payButton.backgroundColor = color
+        payButton.backgroundColor = .yaWhiteDayNight
         payButton.isEnabled = isEnabled
         
         isLoading ? payButton.setTitle("", for: .normal) : payButton.setTitle(TextLabels.PaymentViewController.payButtonTitle, for: .normal)

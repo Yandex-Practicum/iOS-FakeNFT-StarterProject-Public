@@ -12,8 +12,10 @@ protocol CartRouterProtocol {
 }
 
 final class CartRouter {
-    weak var rootController: UIViewController?
-    let servicesAssembly = ServicesAssembly(networkClient: DefaultNetworkClient(), nftStorage: NftStorageImpl()
+    weak var rootController: UINavigationController?
+    let servicesAssembly = ServicesAssembly(
+        networkClient: DefaultNetworkClient(),
+        nftStorage: NftStorageImpl()
     )
 }
 
@@ -25,6 +27,9 @@ extension CartRouter: CartRouterProtocol{
             )
         )
         
-        rootController?.navigationController?.pushViewController(paymentController, animated: true)
+        rootController?.pushViewController(
+                paymentController,
+                animated: true
+            )
     }
 }

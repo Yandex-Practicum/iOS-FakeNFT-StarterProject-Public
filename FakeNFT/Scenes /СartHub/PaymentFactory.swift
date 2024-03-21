@@ -35,7 +35,7 @@ final class PaymentFactory {
         
         paymentRouter.rootController = paymentController
         
-        return UINavigationController(rootViewController: paymentController)
+        return paymentController
     }
 }
 

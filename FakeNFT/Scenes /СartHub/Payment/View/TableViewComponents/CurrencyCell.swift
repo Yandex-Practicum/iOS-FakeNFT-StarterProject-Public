@@ -14,7 +14,7 @@ final class CurrencyCell: UICollectionViewCell, ReuseIdentifying {
         let background = UIView()
         background.backgroundColor = .yaLightGreyDayNight
         background.layer.cornerRadius = 12
-        background.layer.borderColor = UIColor.yaBlackDayNight.cgColor
+        background.layer.borderColor = UIColor.yaWhiteDayNight.cgColor
         background.translatesAutoresizingMaskIntoConstraints = false
         return background
     }()
@@ -31,7 +31,7 @@ final class CurrencyCell: UICollectionViewCell, ReuseIdentifying {
     private let title: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        title.textColor = .yaBlackDayNight
+        title.textColor = .yaWhiteDayNight
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()

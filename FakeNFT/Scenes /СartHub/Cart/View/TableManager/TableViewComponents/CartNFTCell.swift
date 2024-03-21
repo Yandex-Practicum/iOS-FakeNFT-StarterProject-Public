@@ -28,7 +28,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     private let title: UILabel = {
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        title.textColor = .yaBlackDayNight
+        title.textColor = .yaWhiteDayNight
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -54,7 +54,7 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
         let deleteButton = UIButton()
         deleteButton.setTitle("", for: .normal)
         deleteButton.setImage(UIImage.cartDeleteIcon, for: .normal)
-        deleteButton.tintColor = .yaBlackDayNight
+        deleteButton.tintColor = .yaWhiteDayNight
         deleteButton.contentMode = .scaleAspectFit
         deleteButton.addTarget(nil, action: #selector(deleteButtonTapped), for: .touchUpInside)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false

@@ -9,7 +9,7 @@ import Foundation
 
 final class FavouriteNFTController: FavouriteNFTControllerProtocol {
     private var _favourites: [NFT] = []
-    private let favouriteQueue = DispatchQueue(label: "com.nftMarketplace.favouriteQueue", attributes: .concurrent)
+    private let favouriteQueue = DispatchQueue(label: "com.FakeNFT.favouriteQueue", attributes: .concurrent)
     
     /// Array of NFTs added to favourites
     var favourites: [NFT] {
