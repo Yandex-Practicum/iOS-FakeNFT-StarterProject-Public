@@ -10,6 +10,8 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
 
+    private let cartTabBarItem = UITableView ()
+    
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
