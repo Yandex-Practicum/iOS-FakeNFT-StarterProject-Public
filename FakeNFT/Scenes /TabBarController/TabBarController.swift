@@ -4,12 +4,6 @@ final class TabBarController: UITabBarController {
 
     var servicesAssembly: ServicesAssembly!
 
-    private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
-        tag: 0
-    )
-
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
@@ -21,12 +15,11 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let profileViewController = createNavigation(with: L10n.TabBar.profileTabBarTitle,
+                                                     and: UIImage(named: "profile_tab_active"),
+                                                     vc: ProfileViewController(servicesAssembly: servicesAssembly))
 
-        let catalogController = createNavigation(with: L10n.Tab.catalog,
-                                                 and: UIImage(systemName: "square.stack.3d.up.fill"),
-                                                 vc: TestCatalogViewController(servicesAssembly: servicesAssembly))
-
-        self.setViewControllers([catalogController], animated: true)
+        self.setViewControllers([profileViewController], animated: true)
 
         view.backgroundColor = .systemBackground
     }
@@ -35,10 +28,8 @@ final class TabBarController: UITabBarController {
                                   and image: UIImage?,
                                   vc: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: vc)
-        nav.navigationBar.prefersLargeTitles = true
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
-        nav.viewControllers.first?.navigationItem.title = title
 
         return nav
     }
