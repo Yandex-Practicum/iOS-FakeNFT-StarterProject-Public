@@ -10,10 +10,22 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
-  internal enum Catalog {
-    /// Открыть Nft
-    internal static let openNft = L10n.tr("Localizable", "Catalog.openNft", fallback: "Открыть Nft")
-  }
+    internal enum Catalog {
+        /// Открыть Nft
+        internal static let openNft = L10n.tr("Localizable", "Catalog.openNft", fallback: "Открыть Nft")
+        /// Закрыть
+        internal static let close = L10n.tr("Localizable", "catalog.Close", fallback: "Закрыть")
+        /// По названию
+        internal static let sortByName = L10n.tr("Localizable", "catalog.SortByName", fallback: "По названию")
+        /// По количеству NFT
+        internal static let sortByNFTCount = L10n.tr("Localizable", "catalog.SortByNFTCount", fallback: "По количеству NFT")
+        /// Cортировка
+        internal static let sorting = L10n.tr("Localizable", "catalog.Sorting", fallback: "Cортировка")
+        internal enum Collection {
+            /// Автор коллекции:
+            internal static let aboutAuthor = L10n.tr("Localizable", "catalog.collection.AboutAuthor", fallback: "Автор коллекции:")
+        }
+    }
   internal enum Error {
     /// Произошла ошибка сети
     internal static let network = L10n.tr("Localizable", "Error.network", fallback: "Произошла ошибка сети")
@@ -28,20 +40,7 @@ internal enum L10n {
     /// Каталог
     internal static let catalog = L10n.tr("Localizable", "Tab.catalog", fallback: "Каталог")
   }
-  internal enum Catalog {
-    /// Закрыть
-    internal static let close = L10n.tr("Localizable", "catalog.Close", fallback: "Закрыть")
-    /// По названию
-    internal static let sortByName = L10n.tr("Localizable", "catalog.SortByName", fallback: "По названию")
-    /// По количеству NFT
-    internal static let sortByNFTCount = L10n.tr("Localizable", "catalog.SortByNFTCount", fallback: "По количеству NFT")
-    /// Cортировка
-    internal static let sorting = L10n.tr("Localizable", "catalog.Sorting", fallback: "Cортировка")
-    internal enum Collection {
-      /// Автор коллекции:
-      internal static let aboutAuthor = L10n.tr("Localizable", "catalog.collection.AboutAuthor", fallback: "Автор коллекции:")
-    }
-  }
+
   internal enum TabBar {
     /// Корзина
     internal static let cartTabBarTitle = L10n.tr("Localizable", "tabBar.cartTabBarTitle", fallback: "Корзина")
