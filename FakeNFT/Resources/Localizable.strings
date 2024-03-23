@@ -8,16 +8,16 @@
 
 
 // CatalogVC
-"catalogSorting" = "Cортировка";
-"catalogSortByName" = "По названию";
-"catalogSortByNFTCount" = "По количеству NFT";
-"catalogClose" = "Закрыть";
+"catalog.Sorting" = "Cортировка";
+"catalog.SortByName" = "По названию";
+"catalog.SortByNFTCount" = "По количеству NFT";
+"catalog.Close" = "Закрыть";
 
 // CollectionVC
-"collectionAboutAuthor" = "Автор коллекции:";
+"catalog.collection.AboutAuthor" = "Автор коллекции:";
 
 // TabBarController
-"profileTabBarTitle" = "Профиль";
-"catalogTabBarTitle" = "Каталог";
-"cartTabBarTitle" = "Корзина";
-"statisticTabBarTitle" = "Статистика";
+"tabBar.profileTabBarTitle" = "Профиль";
+"tabBar.catalogTabBarTitle" = "Каталог";
+"tabBar.cartTabBarTitle" = "Корзина";
+"tabBar.statisticTabBarTitle" = "Статистика";
