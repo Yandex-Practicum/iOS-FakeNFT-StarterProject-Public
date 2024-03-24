@@ -18,7 +18,10 @@ final class TabBarController: UITabBarController {
         let profileViewController = ProfileViewController(
             servicesAssembly: servicesAssembly
         )
-        profileViewController.tabBarItem = UITabBarItem(
+
+        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
+
+        profileNavigationController.tabBarItem = UITabBarItem(
             title: L10n.TabBar.profileTabBarTitle,
             image: UIImage(named: "profile_tab_inactive"),
             selectedImage: UIImage(named: "profile_tab_active")
@@ -28,7 +31,7 @@ final class TabBarController: UITabBarController {
         profileViewController.presenter = profilePresenter
         profilePresenter.view = profileViewController
 
-        self.setViewControllers([profileViewController], animated: true)
+        self.setViewControllers([profileNavigationController], animated: true)
 
         view.backgroundColor = .systemBackground
 

@@ -134,8 +134,9 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - ProfileViewController Class
 private extension ProfileViewController {
-    // MARK: - SetupViews
+    // MARK: - Setup Views
     func setupViews() {
         view.backgroundColor = .systemBackground
 
@@ -162,7 +163,7 @@ private extension ProfileViewController {
         }
     }
 
-    // MARK: - SetupConstraints
+    // MARK: - Setup Constraints
     func setupConstraints() {
         let cellHeight = CGFloat(54)
 
@@ -200,6 +201,7 @@ private extension ProfileViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableViewLabels.count
@@ -229,10 +231,25 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            print("My NFTs cell did tap")
+        case 1:
+            print("My Favourite NFTs cell did tap")
+        case 2:
+            print("About Developer cell did tap")
+            let viewController = AboutDeveloperViewController()
+            self.navigationController?.pushViewController(viewController, animated: true)
+        default:
+            break
+        }
+    }
 }
 
+// MARK: - ProfileViewControllerProtocol
 extension ProfileViewController: ProfileViewControllerProtocol {
     func updateProfileDetails(_ profile: Profile?) {
         if let profile {
