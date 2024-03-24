@@ -30,6 +30,8 @@
 		275E330F2BAF5C3B00BE3090 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E330E2BAF5C3B00BE3090 /* ProfilePresenter.swift */; };
 		275E33122BAF5D9C00BE3090 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E33112BAF5D9C00BE3090 /* Profile.swift */; };
 		275E33142BAF612800BE3090 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E33132BAF612800BE3090 /* ProfileService.swift */; };
+		276925E92BB08029001A3E70 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276925E82BB08029001A3E70 /* EditProfileViewController.swift */; };
+		276925EC2BB08120001A3E70 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276925EB2BB08120001A3E70 /* EditProfileView.swift */; };
 		2778ED3F2BB0157100E069B1 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2778ED3E2BB0157100E069B1 /* NetworkError.swift */; };
 		2778ED432BB0197000E069B1 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2778ED422BB0197000E069B1 /* URLSession.swift */; };
 		27DE59E22BADED860003CBA2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 27DE59E12BADED860003CBA2 /* SnapKit */; };
@@ -98,6 +100,8 @@
 		275E330E2BAF5C3B00BE3090 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		275E33112BAF5D9C00BE3090 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		275E33132BAF612800BE3090 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		276925E82BB08029001A3E70 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		276925EB2BB08120001A3E70 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		2778ED3E2BB0157100E069B1 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		2778ED422BB0197000E069B1 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				275E33072BAF275000BE3090 /* Main */,
+				276925E72BB08015001A3E70 /* EditProfile */,
 				2744E7332BB0769800E21FAD /* AboutDeveloper */,
 			);
 			path = Profile;
@@ -259,6 +264,15 @@
 				275E33112BAF5D9C00BE3090 /* Profile.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		276925E72BB08015001A3E70 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				276925EB2BB08120001A3E70 /* EditProfileView.swift */,
+				276925E82BB08029001A3E70 /* EditProfileViewController.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		2778ED3D2BB012FE00E069B1 /* Service */ = {
@@ -605,6 +619,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				276925EC2BB08120001A3E70 /* EditProfileView.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
@@ -619,6 +634,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				276925E92BB08029001A3E70 /* EditProfileViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				275E330F2BAF5C3B00BE3090 /* ProfilePresenter.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,

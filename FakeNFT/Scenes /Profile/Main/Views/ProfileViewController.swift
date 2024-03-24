@@ -196,6 +196,15 @@ private extension ProfileViewController {
     // MARK: - Actions
     @objc func editBarButtonTapped() {
         print("editBarButton Did Tap")
+        if let presenter = presenter {
+            let editProfileViewController = EditProfileViewController(
+                presenter: presenter
+            )
+            editProfileViewController.modalPresentationStyle = .popover
+            self.present(editProfileViewController, animated: true)
+        } else {
+            print("Presenter is nil")
+        }
     }
 }
 
