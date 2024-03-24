@@ -30,6 +30,11 @@ final class ProfileViewController: UIViewController {
         L10n.Profile.favoritesNFT,
         L10n.Profile.aboutDeveloper
     ]
+    private lazy var value: [String?] = [
+        "\(profile?.nfts.count ?? 0)",
+        "\(profile?.likes.count ?? 0)",
+        nil
+    ]
 
     // MARK: - UI
     private lazy var editButton: UIButton = {
@@ -207,10 +212,12 @@ extension ProfileViewController: UITableViewDataSource {
         ) as? ProfileCell else {
             fatalError("Could not cast to ProfileCell")
         }
+
+        let label = tableViewLabels[indexPath.row]
+
         cell.configureCell(
-            label: tableViewLabels[indexPath.row],
-            value: "(112)"
-            // заменить моковые данные
+            label: label,
+            value: value[indexPath.row]
         )
         cell.selectionStyle = .none
 
@@ -237,6 +244,11 @@ extension ProfileViewController: ProfileViewControllerProtocol {
                 return
             }
             updateAvatar(url: avatarURL)
+            let myNFTs = tableView.cellForRow(at: [0, 0]) as? ProfileCell
+            myNFTs?.configureCell(label: nil, value: "(\(String(profile.nfts.count)))")
+
+            let myFavorites = tableView.cellForRow(at: [0, 1]) as? ProfileCell
+            myFavorites?.configureCell(label: nil, value: "(\(String(profile.likes.count)))")
         } else {
             nameLabel.text = ""
             descriptionLabel.text = ""
