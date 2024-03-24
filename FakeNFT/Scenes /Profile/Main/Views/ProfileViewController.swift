@@ -31,13 +31,15 @@ final class ProfileViewController: UIViewController {
     ]
 
     // MARK: - UI
-    private lazy var editBarButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(
-            image: UIImage(systemName: "square.and.pencil"),
-            style: .plain,
-            target: self,
-            action: #selector(editBarButtonTapped))
+    private lazy var editButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         button.tintColor = UIColor(named: "ypUniBlack")
+        button.addTarget(
+            self,
+            action: #selector(editBarButtonTapped),
+            for: .touchUpInside
+        )
         return button
     }()
 
@@ -116,7 +118,6 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
         setupViews()
         setupConstraints()
         presenter?.viewDidLoad()
@@ -129,11 +130,6 @@ final class ProfileViewController: UIViewController {
 }
 
 private extension ProfileViewController {
-    // MARK: - Setup Navigation
-    func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = editBarButton
-    }
-
     // MARK: - SetupViews
     func setupViews() {
         view.backgroundColor = .systemBackground
@@ -153,7 +149,8 @@ private extension ProfileViewController {
 
         userInfoStackView.setCustomSpacing(8, after: descriptionLabel)
 
-        [userInfoStackView,
+        [editButton,
+         userInfoStackView,
          tableView
         ].forEach {
             view.addSubview($0)
@@ -163,6 +160,12 @@ private extension ProfileViewController {
     // MARK: - SetupConstraints
     func setupConstraints() {
         let cellHeight = CGFloat(54)
+
+        editButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(8)
+            make.trailing.equalToSuperview().offset(-10)
+            make.size.equalTo(26)
+        }
 
         avatarImageView.snp.makeConstraints { make in
             make.size.equalTo(70)
@@ -174,7 +177,7 @@ private extension ProfileViewController {
         }
 
         userInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(editButton.snp.bottom).offset(15)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
         }
