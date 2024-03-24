@@ -19,6 +19,15 @@ final class CartViewController: UIViewController {
         return label
     }()
     
+    private let sortButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "sort"), for: .normal)
+        button.backgroundColor = .clear
+        button.addTarget(CartViewController.self, action: #selector(sortButtonActions), for: .valueChanged)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     // MARK: - Initialisation
     
     init(viewModel: CartViewModel) {
@@ -49,6 +58,11 @@ final class CartViewController: UIViewController {
         })
     }
     
+    // MARK: - Actions
+    
+    @objc private func sortButtonActions() {
+    }
+    
     // MARK: - Private methods
     
     private func screenRenderingLogic() {
@@ -63,16 +77,21 @@ final class CartViewController: UIViewController {
     private func configViews() {
         view.backgroundColor = UIColor(named: "YPWhite")
         view.addSubview(placeholderLabel)
+        view.addSubview(sortButton)
     }
     
     private func configConstraints() {
         NSLayoutConstraint.activate([
+            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
+            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+            sortButton.widthAnchor.constraint(equalToConstant: 42),
+            sortButton.heightAnchor.constraint(equalToConstant: 42),
             placeholderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
-    func cartIsEmpty(empty: Bool) {
+    private func cartIsEmpty(empty: Bool) {
         placeholderLabel.isHidden = !empty
     }
 }
