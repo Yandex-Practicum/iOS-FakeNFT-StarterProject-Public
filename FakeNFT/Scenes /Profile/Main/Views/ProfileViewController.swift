@@ -5,14 +5,15 @@
 //  Created by Dinara on 23.03.2024.
 //
 
-import UIKit
+import Kingfisher
 import SnapKit
+import UIKit
 
 // MARK: - ProfileViewControllerProtocol
 public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateProfileDetails(_ profile: Profile?)
-    func updateAvatar()
+    func updateAvatar(url: URL)
 }
 
 // MARK: - ProfileViewController Class 
@@ -120,7 +121,6 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
-        presenter?.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -232,14 +232,20 @@ extension ProfileViewController: ProfileViewControllerProtocol {
             nameLabel.text = profile.name
             descriptionLabel.text = profile.description
             siteLabel.text = profile.website
+            guard let avatarURLString = ProfileService.shared.profile?.avatar,
+                  let avatarURL = URL(string: avatarURLString) else {
+                return
+            }
+            updateAvatar(url: avatarURL)
         } else {
             nameLabel.text = ""
             descriptionLabel.text = ""
             siteLabel.text = ""
+            avatarImageView.image = UIImage()
         }
     }
 
-    func updateAvatar() {
-        avatarImageView.image = UIImage(named: "avatar_icon")
+    func updateAvatar(url: URL) {
+        avatarImageView.kf.setImage(with: url)
     }
 }

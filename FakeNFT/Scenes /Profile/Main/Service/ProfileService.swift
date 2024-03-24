@@ -48,6 +48,7 @@ final class ProfileService {
             case .success(let profileResult):
                 let profile = Profile(
                     name: profileResult.name,
+                    avatar: profileResult.avatar,
                     description: profileResult.description,
                     website: profileResult.website,
                     nfts: profileResult.nfts,

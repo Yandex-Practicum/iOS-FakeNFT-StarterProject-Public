@@ -10,7 +10,6 @@ import Foundation
 public protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     func viewWillAppear()
-    func viewDidLoad()
 }
 
 // MARK: - ProfilePresenter Class
@@ -22,10 +21,6 @@ final class ProfilePresenter {
 }
 
 extension ProfilePresenter: ProfilePresenterProtocol {
-    func viewDidLoad() {
-        updateAvatar()
-    }
-
     func viewWillAppear() {
         guard let profile = profileService.profile else {
             profileService.fetchProfile(tokenKey) { [weak self] result in
@@ -40,11 +35,5 @@ extension ProfilePresenter: ProfilePresenterProtocol {
             return
         }
         view?.updateProfileDetails(profile)
-    }
-}
-
-private extension ProfilePresenter {
-    func updateAvatar() {
-        view?.updateAvatar()
     }
 }
