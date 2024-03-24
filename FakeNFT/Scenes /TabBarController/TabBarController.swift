@@ -15,19 +15,29 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let profileViewController = createNavigation(with: L10n.TabBar.profileTabBarTitle,
-                                                     and: UIImage(named: "profile_tab_active"),
-                                                     vc: ProfileViewController(servicesAssembly: servicesAssembly))
+        let profileViewController = ProfileViewController(
+            servicesAssembly: servicesAssembly
+        )
+        profileViewController.tabBarItem = UITabBarItem(
+            title: L10n.TabBar.profileTabBarTitle,
+            image: UIImage(named: "profile_tab_inactive"),
+            selectedImage: UIImage(named: "profile_tab_active")
+        )
+
+        let profilePresenter = ProfilePresenter()
+        profileViewController.presenter = profilePresenter
+        profilePresenter.view = profileViewController
 
         self.setViewControllers([profileViewController], animated: true)
 
         view.backgroundColor = .systemBackground
+
     }
 
     private func createNavigation(with title: String,
                                   and image: UIImage?,
-                                  vc: UIViewController) -> UINavigationController {
-        let nav = UINavigationController(rootViewController: vc)
+                                  viewController: UIViewController) -> UINavigationController {
+        let nav = UINavigationController(rootViewController: viewController)
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
 

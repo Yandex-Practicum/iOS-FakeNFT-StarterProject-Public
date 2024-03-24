@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+// MARK: - Profile TableView Cell
 final class ProfileCell: UITableViewCell {
     // MARK: - Public properties
     public static let cellID = String(describing: ProfileCell.self)
