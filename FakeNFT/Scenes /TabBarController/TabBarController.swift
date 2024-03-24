@@ -6,7 +6,7 @@ final class TabBarController: UITabBarController {
     
     private let cartTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.cart", comment: ""),
-        image: UIImage(named: "YPCart"),
+        image: UIImage(named: "Add Cart"),
         tag: 2
     )
     
@@ -18,9 +18,9 @@ final class TabBarController: UITabBarController {
         cartController.tabBarItem = cartTabBarItem
         
         viewControllers = [cartController]
-        view.backgroundColor = UIColor(named: "YPWhite")
-        tabBar.tintColor = UIColor(named: "YPBlue")
-        tabBar.unselectedItemTintColor = UIColor(named: "YPBlack")
+        view.backgroundColor = UIColor(named: "YP White")
+        tabBar.tintColor = UIColor(named: "YP Blue")
+        tabBar.unselectedItemTintColor = UIColor(named: "YP Black")
         view.backgroundColor = .systemBackground
     }
 }
