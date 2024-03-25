@@ -10,7 +10,11 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
     
-    private let cartTabBarItem = UITabBarItem(title: "Корзина", image: UIImage(named: "Cart"), tag: 1)
+    private let cartTabBarItem = UITabBarItem(
+        title: "Корзина",
+        image: UIImage(named: "Cart"),
+        tag: 1
+    )
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -27,7 +31,7 @@ final class TabBarController: UITabBarController {
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
         )
-        let cartViewController = CartViewController()
+        let cartViewController = UINavigationController( rootViewController: CartViewController())
         
         catalogController.tabBarItem = catalogTabBarItem
         cartViewController.tabBarItem = cartTabBarItem

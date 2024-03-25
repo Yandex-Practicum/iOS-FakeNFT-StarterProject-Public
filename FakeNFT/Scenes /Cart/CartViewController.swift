@@ -64,9 +64,16 @@ class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let addButton = UIBarButtonItem(image: UIImage(named: "filterIcon")!, style: .plain, target: self, action: #selector(addButtonTapped))
+        addButton.tintColor = .black
+        navigationItem.rightBarButtonItem = addButton
         tableView.delegate = self
         tableView.dataSource = self
         setupAllViews()
+    }
+    
+    @objc func addButtonTapped() {
+        print("Сортировка тут!")
     }
         
     @objc func payButtonClicked() {

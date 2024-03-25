@@ -49,6 +49,7 @@
 		F40983652BAE191500A06D8B /* CartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983642BAE191500A06D8B /* CartCustomCell.swift */; };
 		F40983672BAE191D00A06D8B /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983662BAE191D00A06D8B /* DeleteViewController.swift */; };
 		F40983692BAEDBFE00A06D8B /* PayNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */; };
+		F4B007ED2BB1B95000510B71 /* CryptoWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */; };
 		F4BAEA672BAE1796007C5D43 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAEA662BAE1796007C5D43 /* CartViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		F40983642BAE191500A06D8B /* CartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCustomCell.swift; sourceTree = "<group>"; };
 		F40983662BAE191D00A06D8B /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 		F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayNftViewController.swift; sourceTree = "<group>"; };
+		F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoWalletCell.swift; sourceTree = "<group>"; };
 		F4BAEA662BAE1796007C5D43 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -379,9 +381,10 @@
 			isa = PBXGroup;
 			children = (
 				F4BAEA662BAE1796007C5D43 /* CartViewController.swift */,
-				F40983642BAE191500A06D8B /* CartCustomCell.swift */,
 				F40983662BAE191D00A06D8B /* DeleteViewController.swift */,
 				F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */,
+				F40983642BAE191500A06D8B /* CartCustomCell.swift */,
+				F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
+				F4B007ED2BB1B95000510B71 /* CryptoWalletCell.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
