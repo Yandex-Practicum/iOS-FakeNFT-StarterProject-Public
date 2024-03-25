@@ -70,6 +70,9 @@ class CartViewController: UIViewController {
     }
         
     @objc func payButtonClicked() {
+        let viewController = UINavigationController(rootViewController:  PayNftViewController())
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated:  true)
         print("Оплатить!")
     }
     

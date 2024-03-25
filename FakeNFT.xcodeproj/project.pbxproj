@@ -48,6 +48,7 @@
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 		F40983652BAE191500A06D8B /* CartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983642BAE191500A06D8B /* CartCustomCell.swift */; };
 		F40983672BAE191D00A06D8B /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983662BAE191D00A06D8B /* DeleteViewController.swift */; };
+		F40983692BAEDBFE00A06D8B /* PayNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */; };
 		F4BAEA672BAE1796007C5D43 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAEA662BAE1796007C5D43 /* CartViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		F40983642BAE191500A06D8B /* CartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCustomCell.swift; sourceTree = "<group>"; };
 		F40983662BAE191D00A06D8B /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
+		F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayNftViewController.swift; sourceTree = "<group>"; };
 		F4BAEA662BAE1796007C5D43 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -379,6 +381,7 @@
 				F4BAEA662BAE1796007C5D43 /* CartViewController.swift */,
 				F40983642BAE191500A06D8B /* CartCustomCell.swift */,
 				F40983662BAE191D00A06D8B /* DeleteViewController.swift */,
+				F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				84141B392BACB66200134393 /* XCAssets+Generated.swift in Sources */,
+				F40983692BAEDBFE00A06D8B /* PayNftViewController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				F4BAEA672BAE1796007C5D43 /* CartViewController.swift in Sources */,
