@@ -70,6 +70,7 @@ class CartViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         setupAllViews()
+        print("Sprint19_Cart1/3")
     }
     
     @objc func addButtonTapped() {
