@@ -10,6 +10,14 @@ import WebKit
 
 class PayNftViewController: UIViewController {
     
+    private let cryptoImage: [String] = ["Bitcoin (BTC)", "Dogecoin (DOGE)", "Tether (USDT)", "ApeCoin (APE)", "Solana (SOL)", "Ethereum (ETH)", "Cardano (ADA)", "Shiba Inu (SHIB)"]
+    
+    private let cryptoFullName: [String] = ["Bitcoin", "Dogecoin", "Tether", "Apecoin", "Solana", "Ethereum", "Cardano", "Shiba Inu"]
+    
+    private let cryptoShortName: [String] = ["BTC", "DOGE", "USDT", "APE", "SOL", "ETH", "ADA", "SHIB"]
+    
+    var back = false
+    
     private lazy var selectedCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -25,7 +33,7 @@ class PayNftViewController: UIViewController {
     //Отделение с кнопкой оплаты
     private lazy var bottomView: UIView = {
        let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(named: "ypLightGray")
         view.layer.masksToBounds = true
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.cornerRadius = 12
@@ -80,7 +88,18 @@ class PayNftViewController: UIViewController {
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if back {
+            dismissModal()
+        }
+    }
+    
     @objc func payButtonClicked() {
+        let vc = CongratulationViewController()
+        back = true
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         print("PAY PAY PAY")
     }
     
@@ -149,7 +168,18 @@ extension PayNftViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CryptoCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CryptoCell", for: indexPath) as! CryptoWalletCell
+        
+        let imageName = cryptoImage[indexPath.row]
+        let image = UIImage(named: imageName)
+        cell.cryptoImage.image = image
+        
+        let cryptoFullName = cryptoFullName[indexPath.row]
+        cell.fullNameCrypto.text = cryptoFullName
+        
+        let cryptoShortName = cryptoShortName[indexPath.row]
+        cell.shortNameCrypto.text = cryptoShortName
+        
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 12
         return cell
@@ -173,4 +203,18 @@ extension PayNftViewController: UICollectionViewDelegateFlowLayout {
         //отступы от краев секции
         return UIEdgeInsets(top: 20, left: 0, bottom: 7, right: 0)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CryptoWalletCell {
+            cell.layer.borderWidth = 1 // Устанавливаем толщину рамки
+            cell.layer.borderColor = UIColor.black.cgColor // Устанавливаем цвет рамки
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CryptoWalletCell {
+            cell.layer.borderWidth = 0 // Сбрасываем толщину рамки
+        }
+    }
+
 }

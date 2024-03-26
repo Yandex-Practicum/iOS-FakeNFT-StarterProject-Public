@@ -22,7 +22,7 @@ class CartViewController: UIViewController {
     //Отделение с кнопкой оплаты
     private let bottomView: UIView = {
        let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(named: "ypLightGray")
         view.layer.masksToBounds = true
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.cornerRadius = 12
@@ -43,7 +43,7 @@ class CartViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.text = "5,34 ETH"
-        label.textColor = .green
+        label.textColor = UIColor(named: "ypUniGreen")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -73,7 +73,26 @@ class CartViewController: UIViewController {
     }
     
     @objc func addButtonTapped() {
-        print("Сортировка тут!")
+        let alertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        
+        // Добавляем действия для каждой опции сортировки
+        alertController.addAction(UIAlertAction(title: "По цене", style: .default) { _ in
+            // Обработка сортировки по имени
+            print("Сортировка по цене")
+        })
+        
+        alertController.addAction(UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            // Обработка сортировки по цене
+            print("Сортировка по рейтингу")
+        })
+        
+        alertController.addAction(UIAlertAction(title: "По названию", style: .default) { _ in
+            print("Сортировка по названию")})
+        
+        alertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
+        
+        // Показываем UIAlertController
+        present(alertController, animated: true, completion: nil)
     }
         
     @objc func payButtonClicked() {

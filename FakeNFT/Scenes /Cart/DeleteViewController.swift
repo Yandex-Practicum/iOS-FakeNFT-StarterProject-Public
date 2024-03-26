@@ -36,9 +36,9 @@ class DeleteViewController: UIViewController {
         let button = UIButton()
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 16
-        button.setTitleColor(UIColor.red, for: .normal)
+        button.setTitleColor(UIColor(named: "ypUniRed"), for: .normal)
         button.setTitle("Удалить", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         button.backgroundColor = .black
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.widthAnchor.constraint(equalToConstant: 127).isActive = true
@@ -53,7 +53,7 @@ class DeleteViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.titleLabel?.textColor = .red
         button.setTitle("Вернуться", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         button.backgroundColor = .black
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.widthAnchor.constraint(equalToConstant: 127).isActive = true

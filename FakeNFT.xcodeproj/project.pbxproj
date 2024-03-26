@@ -49,6 +49,7 @@
 		F40983652BAE191500A06D8B /* CartCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983642BAE191500A06D8B /* CartCustomCell.swift */; };
 		F40983672BAE191D00A06D8B /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983662BAE191D00A06D8B /* DeleteViewController.swift */; };
 		F40983692BAEDBFE00A06D8B /* PayNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */; };
+		F47F66A82BB29FBF0062511D /* CongratulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47F66A72BB29FBE0062511D /* CongratulationViewController.swift */; };
 		F4B007ED2BB1B95000510B71 /* CryptoWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */; };
 		F4BAEA672BAE1796007C5D43 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BAEA662BAE1796007C5D43 /* CartViewController.swift */; };
 /* End PBXBuildFile section */
@@ -114,6 +115,7 @@
 		F40983642BAE191500A06D8B /* CartCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCustomCell.swift; sourceTree = "<group>"; };
 		F40983662BAE191D00A06D8B /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 		F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayNftViewController.swift; sourceTree = "<group>"; };
+		F47F66A72BB29FBE0062511D /* CongratulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationViewController.swift; sourceTree = "<group>"; };
 		F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoWalletCell.swift; sourceTree = "<group>"; };
 		F4BAEA662BAE1796007C5D43 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -383,6 +385,7 @@
 				F4BAEA662BAE1796007C5D43 /* CartViewController.swift */,
 				F40983662BAE191D00A06D8B /* DeleteViewController.swift */,
 				F40983682BAEDBFE00A06D8B /* PayNftViewController.swift */,
+				F47F66A72BB29FBE0062511D /* CongratulationViewController.swift */,
 				F40983642BAE191500A06D8B /* CartCustomCell.swift */,
 				F4B007EC2BB1B95000510B71 /* CryptoWalletCell.swift */,
 			);
@@ -576,6 +579,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
+				F47F66A82BB29FBF0062511D /* CongratulationViewController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
