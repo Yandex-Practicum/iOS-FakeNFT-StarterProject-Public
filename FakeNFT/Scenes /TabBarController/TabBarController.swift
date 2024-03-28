@@ -13,7 +13,8 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cartModel = CartViewModel()
+        let cartService = CartServiceImpl(networkClient: DefaultNetworkClient())
+        let cartModel = CartViewModel(service: cartService)
         let cartController = CartViewController(viewModel: cartModel)
         cartController.tabBarItem = cartTabBarItem
         
