@@ -11,6 +11,17 @@ class CartViewController: UIViewController {
     
     var mockData: [String] = ["NFT1", "NFT2", "NFT3", "NFT4", "NFT5", "NFT6"]
     
+    private let emptyCart: UILabel = {
+       let label = UILabel()
+        label.text = "Корзина пуста"
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.textAlignment = .center
+        label.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 343).isActive = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(CartCustomCell.self, forCellReuseIdentifier: "customCell")
@@ -69,7 +80,7 @@ class CartViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
         tableView.delegate = self
         tableView.dataSource = self
-        setupAllViews()
+        mockData.isEmpty ? setupEmptyViews() : setupAllViews()
         print("Sprint19_Cart1/3")
     }
     
@@ -81,7 +92,7 @@ class CartViewController: UIViewController {
             // Обработка сортировки по имени
             print("Сортировка по цене")
         })
-        
+    
         alertController.addAction(UIAlertAction(title: "По рейтингу", style: .default) { _ in
             // Обработка сортировки по цене
             print("Сортировка по рейтингу")
@@ -126,6 +137,13 @@ class CartViewController: UIViewController {
                 blurView.removeFromSuperview()
             }
         }
+    }
+    
+    private func setupEmptyViews() {
+        view.addSubview(emptyCart)
+        NSLayoutConstraint.activate([
+            emptyCart.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyCart.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
     }
     
     private func setupAllViews() {
