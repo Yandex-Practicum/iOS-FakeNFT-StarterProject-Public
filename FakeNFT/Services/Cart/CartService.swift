@@ -12,6 +12,7 @@ typealias NftsCompletion = (Result<[Nft], Error>) -> Void
 
 protocol CartService {
     func downloadServiceNFTs(with id: String, completion: @escaping NftsCompletion)
+    func removingFromCart(id: String, nftsID: [String], completion: @escaping CartCompletion)
 }
 
 final class CartServiceImpl: CartService {
@@ -53,12 +54,17 @@ final class CartServiceImpl: CartService {
         }
     }
     
-    func downloadCart(id: String, completion: @escaping CartCompletion) {
+    func removingFromCart(id: String, nftsID: [String], completion: @escaping CartCompletion) {
+        let request = CartRequestPut(id: id, nfts: nftsID)
+        networkClient.send(request: request, type: CartModel.self, onResponse: completion)
+    }
+    
+    private func downloadCart(id: String, completion: @escaping CartCompletion) {
         let request = CartRequest(id: id)
         networkClient.send(request: request, type: CartModel.self, onResponse: completion)
     }
     
-    func downloadNft(id: String, completion: @escaping NftCompletion) {
+    private func downloadNft(id: String, completion: @escaping NftCompletion) {
         let request = NFTRequest(id: id)
         networkClient.send(request: request, type: Nft.self, onResponse: completion)
     }

@@ -240,6 +240,6 @@ extension CartViewController: UITableViewDelegate {
 
 extension CartViewController: CartViewControllerDelegate {
     func removingNFTsFromCart(id: String) {
-        
+        viewModel?.removeItemFromCart(idNFT: id)
     }
 }
