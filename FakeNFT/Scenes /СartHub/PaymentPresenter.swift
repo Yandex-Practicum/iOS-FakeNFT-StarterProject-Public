@@ -98,9 +98,29 @@ final class PaymentPresenter: PaymentPresenterProtocol {
                     self.viewController?.reloadCollectionView()
                 }
             case .failure(let error):
-                print(error)
+                let errorModel = errorModel(error)
+                self.viewController?.showError(errorModel)
             }
         }
+    }
+    
+    private func errorModel(_ error: Error) -> ErrorModel {
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "") // или "Произошла ошибка сети"
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "") // или "Произошла неизвестная ошибка"
+        }
+        
+        let actionText = NSLocalizedString("Error.repeat", comment: "") // или "Повторить"
+        return ErrorModel(
+            message: message,
+            actionText: actionText,
+            action: { [weak self] in
+                self?.currentState = .loading 
+            }
+        )
     }
     
     private func checkState() {

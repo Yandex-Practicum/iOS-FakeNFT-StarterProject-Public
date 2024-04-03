@@ -11,7 +11,7 @@ final class PaymentFactory {
     func create(with context: Context) -> UIViewController {
         
         // TODO: - Перевести на реальную реализацию CartService после теста
-        let cartService = CartServiceStub()
+        let cartService = CartService()
         
         let paymentRouter = PaymentRouter()
         

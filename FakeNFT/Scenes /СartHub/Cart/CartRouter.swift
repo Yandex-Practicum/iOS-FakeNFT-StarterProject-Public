@@ -26,7 +26,6 @@ extension CartRouter: CartRouterProtocol{
                 servicesAssembly: servicesAssembly
             )
         )
-        
         rootController?.pushViewController(
                 paymentController,
                 animated: true

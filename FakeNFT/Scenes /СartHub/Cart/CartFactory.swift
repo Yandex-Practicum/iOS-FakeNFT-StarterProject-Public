@@ -10,7 +10,7 @@ import UIKit
 final class CartFactory {
     func create(with context: Context) -> UIViewController {
         // TODO: - Перевести на реальную реализацию CartService после теста
-        let cartService = CartServiceStub()
+        let cartService = CartService()
         
         let router = CartRouter()
         

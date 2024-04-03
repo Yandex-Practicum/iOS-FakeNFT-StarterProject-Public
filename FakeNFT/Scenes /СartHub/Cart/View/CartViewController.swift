@@ -322,7 +322,7 @@ extension CartViewController: CartNFTCellDelegate {
            let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
             
             blurredView.frame = window.bounds
-            window.addSubview(blurredView)
+            view.addSubview(blurredView)
         }
     }
     

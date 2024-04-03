@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-protocol PaymentViewControllerProtocol: AnyObject {
+protocol PaymentViewControllerProtocol: AnyObject, ErrorView {
     func reloadCollectionView()
     func displayLoadingIndicator()
     func removeLoadingIndicator()
@@ -67,7 +67,7 @@ final class PaymentViewController: UIViewController {
     private let loadingIndicator: UIActivityIndicatorView = {
         let loadingIndicator = UIActivityIndicatorView(style: .medium)
         loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.color = .yaWhiteDayNight
+        loadingIndicator.color = .yaBlackDayNight
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         return loadingIndicator
     }()
@@ -153,22 +153,22 @@ final class PaymentViewController: UIViewController {
     
     private func setupPayView() {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+           let view = windowScene.windows.first(where: { $0.isKeyWindow }) {
             
             userAgreementButton.addTarget(self, action: #selector(userAgreementButtonTapped), for: .touchUpInside)
             payButton.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
             
-            window.addSubview(payView)
+            view.addSubview(payView)
             payViewIsAddedToWindow = true
             [payDescription, userAgreementButton, payButton].forEach { payView.addSubview($0) }
             
             payButton.addSubview(loadingIndicator)
             
-            let safeAreaHeight = window.safeAreaInsets.bottom
+            let safeAreaHeight = view.safeAreaInsets.bottom
             
             NSLayoutConstraint.activate([
-                payView.leadingAnchor.constraint(equalTo: window.leadingAnchor),
-                payView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+                payView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                payView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 
                 payDescription.topAnchor.constraint(
                     equalTo: payView.topAnchor, constant: Constants.defaultOffset),
@@ -195,8 +195,8 @@ final class PaymentViewController: UIViewController {
                 loadingIndicator.centerXAnchor.constraint(equalTo: payButton.centerXAnchor),
                 loadingIndicator.centerYAnchor.constraint(equalTo: payButton.centerYAnchor)
             ])
-            payViewInitialBottomConstraint = payView.topAnchor.constraint(equalTo: window.bottomAnchor)
-            payViewFinalBottomConstraint = payView.bottomAnchor.constraint(equalTo: window.bottomAnchor)
+            payViewInitialBottomConstraint = payView.topAnchor.constraint(equalTo: view.bottomAnchor)
+            payViewFinalBottomConstraint = payView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         }
     }
     
@@ -257,6 +257,17 @@ final class PaymentViewController: UIViewController {
         presenter.payButtonTapped()
     }
     
+    @objc private func backButtonTapped() {
+        dismiss(animated: true)
+    }
+    
+    @objc private func linkLabelButtonTapped() {
+        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
+        let webView = WebViewController(link: url)
+        webView.modalPresentationStyle = .fullScreen
+        present(webView, animated: true)
+    }
+
     @objc private func userAgreementButtonTapped() {
         presenter.userAgreementButtonTapped()
     }
