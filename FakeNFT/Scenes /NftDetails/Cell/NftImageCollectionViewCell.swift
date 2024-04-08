@@ -39,7 +39,7 @@ final class NftImageCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Functions
 
     func configure(with cellModel: NftDetailCellModel) {
-        imageView.kf.setImage(with: cellModel.url)
+//        imageView.kf.setImage(with: cellModel.url)
     }
 }
 
