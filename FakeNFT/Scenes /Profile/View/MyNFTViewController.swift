@@ -53,8 +53,21 @@ final class MyNFTViewController: UIViewController {
     }
     
     @objc func sortingButtonTap() {
+        let contextMenu = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         
-    }
+        contextMenu.addAction(UIAlertAction(title: "По цене", style: .default, handler: { _ in
+            print("Кнопка сортировки по цене")
+        }))
+        contextMenu.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { _ in
+            print("Кнопка сортировки по рейтингу")
+        }))
+        contextMenu.addAction(UIAlertAction(title: "По названию", style: .default, handler: { _ in
+            print("Кнопка сортировки по названию")
+        }))
+        contextMenu.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+        
+        present(contextMenu, animated: true)
+      }
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -65,7 +78,7 @@ final class MyNFTViewController: UIViewController {
         customizingTheLayoutOfScreenElements()
     }
     //MARK: - Private Methods
-    func customizingNavigation() {
+    private func customizingNavigation() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: "ypWhite")
         navigationItem.title = "Мой NFT"
         navigationItem.leftBarButtonItem = returnButton

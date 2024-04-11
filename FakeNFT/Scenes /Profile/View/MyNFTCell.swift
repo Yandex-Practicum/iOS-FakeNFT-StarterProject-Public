@@ -67,6 +67,14 @@ final class MyNFTCell: UITableViewCell {
         return imVi
     }()
     
+    lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.addTarget(self, action: #selector(tapLikeButton), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Private Properties
     private lazy var infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 35
@@ -100,6 +108,8 @@ final class MyNFTCell: UITableViewCell {
         return stackView
     }()
     
+    
+    
     // MARK: - Initializers
     override init(
         style: UITableViewCell.CellStyle,
@@ -117,16 +127,21 @@ final class MyNFTCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Action
+    @objc func tapLikeButton() {
+        print("Кнопка likeButton работает")
+    }
+    
     // MARK: - Public Methods
     func changingNFT(image: String, name: String) {
         nftImage.image = UIImage(named: image)
         nameLabel.text = name
-     
+        
     }
- 
+    
     // MARK: - Private Methods
     private func customizingScreenElements() {
-        [nftImage, infoStackView].forEach {contentView.addSubview($0)}
+        [nftImage, infoStackView, likeButton].forEach {contentView.addSubview($0)}
         [nameStackView, priceStackView].forEach {infoStackView.addArrangedSubview($0)}
         [priceLabel, ethLabel].forEach {priceStackView.addArrangedSubview($0)}
         [nameLabel, ratingImage, fromStackView].forEach {nameStackView.addArrangedSubview($0)}
@@ -134,7 +149,7 @@ final class MyNFTCell: UITableViewCell {
     }
     
     private func customizingTheLayoutOfScreenElements() {
-        [nftImage, infoStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
+        [nftImage, infoStackView, likeButton].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
             nftImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -146,6 +161,11 @@ final class MyNFTCell: UITableViewCell {
             infoStackView.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 20),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
             infoStackView.heightAnchor.constraint(equalToConstant: 62),
+            
+            likeButton.topAnchor.constraint(equalTo: nftImage.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
+            likeButton.heightAnchor.constraint(equalToConstant: 40),
+            likeButton.widthAnchor.constraint(equalToConstant: 40),
         ])
     }
 }
