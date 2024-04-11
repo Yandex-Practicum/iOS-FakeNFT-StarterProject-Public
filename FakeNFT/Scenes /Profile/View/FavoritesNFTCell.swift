@@ -29,12 +29,23 @@ final class FavoritesNFTCell: UICollectionViewCell {
     lazy var nftImage: UIImageView = {
         let imVi = UIImageView()
         imVi.contentMode = .scaleAspectFit
+        imVi.backgroundColor = UIColor(named: "ypBlueUn")
+        imVi.layer.cornerRadius = 12
+        imVi.clipsToBounds = true
         return imVi
     }()
     
     lazy var ratingImage: SpecialRatingView = {
         let imVi = SpecialRatingView()
         return imVi
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.tintColor = UIColor(named: "ypRedUn")
+        button.addTarget(self, action: #selector(tapLikeButton), for: .touchUpInside)
+        return button
     }()
     
     // MARK: - Private Properties
@@ -50,9 +61,9 @@ final class FavoritesNFTCell: UICollectionViewCell {
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillProportionally
         stackView.alignment = .leading
-        stackView.spacing = 20
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -84,13 +95,13 @@ final class FavoritesNFTCell: UICollectionViewCell {
     
     // MARK: - Private Methods
     private func customizingScreenElements() {
-        [nftImage, mainStackView].forEach {contentView.addSubview($0)}
+        [nftImage, likeButton, mainStackView].forEach {contentView.addSubview($0)}
         [stackView, ethLabel].forEach {mainStackView.addArrangedSubview($0)}
         [nameLabel, ratingImage.view].forEach {stackView.addArrangedSubview($0)}
     }
     
     private func customizingTheLayoutOfScreenElements() {
-        [nftImage, mainStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
+        [nftImage, likeButton, mainStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
             nftImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -102,6 +113,11 @@ final class FavoritesNFTCell: UICollectionViewCell {
             mainStackView.leadingAnchor.constraint(equalTo: nftImage.trailingAnchor, constant: 12),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainStackView.heightAnchor.constraint(equalToConstant: 66),
+            
+            likeButton.topAnchor.constraint(equalTo: nftImage.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
+            likeButton.heightAnchor.constraint(equalToConstant: 30),
+            likeButton.widthAnchor.constraint(equalToConstant: 30),
         ])
     }
 }

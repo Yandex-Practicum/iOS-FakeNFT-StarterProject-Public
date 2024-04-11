@@ -75,17 +75,17 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         }
         switch indexPath.row {
         case 0:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "archieImage", name: "Archie", rating: 0, price: "1,78 ЕТН")
         case 1:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "pixiImage", name: "Pixi", rating: 2, price: "1,78 ЕТН")
         case 2:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "melissaImage", name: "Melissa", rating: 4, price: "1,78 ЕТН")
         case 3:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "aprilImage", name: "April", rating: 1, price: "1,78 ЕТН")
         case 4:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "daisyImage", name: "Daisy", rating: 0, price: "1,78 ЕТН")
         case 5:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 1, price: "1,78 ЕТН")
+            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 3, price: "1,78 ЕТН")
         default:
             break
         }

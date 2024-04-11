@@ -16,7 +16,6 @@ final class MyNFTCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "ypBlack")
-        label.text = "Lilo"
         label.font = UIFont.sfProBold17
         return label
     }()
@@ -32,7 +31,6 @@ final class MyNFTCell: UITableViewCell {
     lazy var holderLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "ypBlack")
-        label.text = "John Doe"
         label.font = UIFont.sfProRegular13
         return label
     }()
@@ -48,28 +46,28 @@ final class MyNFTCell: UITableViewCell {
     lazy var ethLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "ypBlack")
-        label.text = "1,78 ЕТН"
         label.font = UIFont.sfProBold17
         return label
     }()
     
     lazy var nftImage: UIImageView = {
         let imVi = UIImageView()
-        imVi.image = UIImage(named: "liloImage")
         imVi.contentMode = .scaleAspectFit
+        imVi.backgroundColor = UIColor(named: "ypBlueUn")
+        imVi.layer.cornerRadius = 12
+        imVi.clipsToBounds = true
         return imVi
     }()
     
-    lazy var ratingImage: UIImageView = {
-        let imVi = UIImageView()
-        imVi.image = UIImage(named: "ratingImage")
-        imVi.contentMode = .scaleAspectFit
+    lazy var ratingImage: SpecialRatingView = {
+        let imVi = SpecialRatingView()
         return imVi
     }()
     
     lazy var likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.tintColor = UIColor(named: "ypWhite")
         button.addTarget(self, action: #selector(tapLikeButton), for: .touchUpInside)
         return button
     }()
@@ -78,8 +76,8 @@ final class MyNFTCell: UITableViewCell {
     private lazy var infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 35
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
         return stackView
     }()
     
@@ -93,7 +91,7 @@ final class MyNFTCell: UITableViewCell {
     private lazy var nameStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
         stackView.alignment = .leading
         stackView.spacing = 4
         return stackView
@@ -133,10 +131,12 @@ final class MyNFTCell: UITableViewCell {
     }
     
     // MARK: - Public Methods
-    func changingNFT(image: String, name: String) {
+    func changingNFT(image: String, name: String, rating: Int, price: String, holder: String) {
         nftImage.image = UIImage(named: image)
         nameLabel.text = name
-        
+        ratingImage.ratingVisualization(rating: rating)
+        ethLabel.text = price
+        holderLabel.text = holder
     }
     
     // MARK: - Private Methods
@@ -144,7 +144,7 @@ final class MyNFTCell: UITableViewCell {
         [nftImage, infoStackView, likeButton].forEach {contentView.addSubview($0)}
         [nameStackView, priceStackView].forEach {infoStackView.addArrangedSubview($0)}
         [priceLabel, ethLabel].forEach {priceStackView.addArrangedSubview($0)}
-        [nameLabel, ratingImage, fromStackView].forEach {nameStackView.addArrangedSubview($0)}
+        [nameLabel, ratingImage.view, fromStackView].forEach {nameStackView.addArrangedSubview($0)}
         [fromLabel, holderLabel].forEach {fromStackView.addArrangedSubview($0)}
     }
     

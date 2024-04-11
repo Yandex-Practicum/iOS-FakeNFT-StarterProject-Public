@@ -10,12 +10,12 @@ import UIKit
 
 final class SpecialRatingView: UIViewController {
     //MARK: - Public Properties
-    var imageViewArray: [UIImageView] = []
+    var imageViewArray: [UIImageView] = [UIImageView(image: UIImage(named: "noActiveStar")), UIImageView(image: UIImage(named: "noActiveStar")), UIImageView(image: UIImage(named: "noActiveStar")), UIImageView(image: UIImage(named: "noActiveStar")), UIImageView(image: UIImage(named: "noActiveStar"))]
     
     // MARK: - Private Properties
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 0.75
+        stackView.spacing = 2
         stackView.distribution = .fillProportionally
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -32,7 +32,9 @@ final class SpecialRatingView: UIViewController {
         for i in 0..<5 {
             switch rating {
             case i:
-                imageViewArray[i].image = UIImage(named: "activeStar")
+                for n in 0...i {
+                    imageViewArray[n].image = UIImage(named: "activeStar")
+                }
             default:
                 imageViewArray[i].image = UIImage(named: "noActiveStar")
             }
@@ -42,7 +44,7 @@ final class SpecialRatingView: UIViewController {
     private func customizingTheLayoutOfScreenElements() {
         view.addSubview(stackView)
         
-        for i in 1...5 {
+        for i in 0..<5 {
             stackView.addArrangedSubview(imageViewArray[i])
         }
         

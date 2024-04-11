@@ -110,11 +110,11 @@ extension MyNFTViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyNFTCell.cellID,for: indexPath) as? MyNFTCell else {fatalError("Could not cast to MyNFTCell")}
         switch indexPath.row {
         case 0:
-            cell.changingNFT(image: "liloImage", name: "Lilo")
+            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
         case 1:
-            cell.changingNFT(image: "springImage", name: "Spring")
+            cell.changingNFT(image: "springImage", name: "Spring", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
         case 2:
-            cell.changingNFT(image: "aprilImage", name: "April")
+            cell.changingNFT(image: "aprilImage", name: "April", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
         default:
             break
         }
