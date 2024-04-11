@@ -47,6 +47,15 @@ final class MyNFTViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        customizingNavigation()
+        customizingScreenElements()
+        customizingTheLayoutOfScreenElements()
+    }
+    
     //MARK: - Action
     @objc func returnButtonTap() {
         self.navigationController?.popViewController(animated: true)
@@ -69,14 +78,6 @@ final class MyNFTViewController: UIViewController {
         present(contextMenu, animated: true)
       }
     
-    //MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        customizingNavigation()
-        customizingScreenElements()
-        customizingTheLayoutOfScreenElements()
-    }
     //MARK: - Private Methods
     private func customizingNavigation() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: "ypWhite")

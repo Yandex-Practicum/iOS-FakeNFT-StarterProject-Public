@@ -169,5 +169,4 @@ final class MyNFTCell: UITableViewCell {
         ])
     }
 }
-//Test
 

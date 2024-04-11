@@ -174,9 +174,17 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             let viewController = MyNFTViewController()
             self.navigationController?.pushViewController(viewController, animated: true)
+        case 1:
+            let viewController = FavoritesNFTViewController()
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case 2:
+            print("Кнопка О разработчике функционирует")
+        default:
+            break
         }
     }
 }
