@@ -29,11 +29,21 @@ final class FavoritesNFTViewController: UIViewController {
         return collection
       }()
     
+    private lazy var  stubLabel: UILabel = {
+        let label = UILabel()
+        label.text = "У Вас еще нет избранных NFT"
+        label.font = UIFont.sfProBold17
+        label.textColor = UIColor(named: "ypBlack")
+        label.textAlignment = .center
+        return label
+    }()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customizingNavigation()
+        customizingStub()
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
     }
@@ -44,6 +54,27 @@ final class FavoritesNFTViewController: UIViewController {
     }
     
     //MARK: - Private Methods
+    private func updateView() {
+//        let thereAreFavoritesNFT: Bool = прописать условия наличия NFT
+       
+//        stubLabel.isHidden = thereAreFavoritesNFT
+    }
+    
+    private func customizingStub () {
+        view.addSubview(stubLabel)
+        
+        stubLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+        ])
+        
+        stubLabel.isHidden = true
+    }
+    
     private func customizingNavigation() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: "ypWhite")
         navigationItem.title = "Избранные NFT"

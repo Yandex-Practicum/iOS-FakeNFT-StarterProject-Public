@@ -47,6 +47,15 @@ final class MyNFTViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var  stubLabel: UILabel = {
+        let label = UILabel()
+        label.text = "У Вас еще нет NFT"
+        label.font = UIFont.sfProBold17
+        label.textColor = UIColor(named: "ypBlack")
+        label.textAlignment = .center
+        return label
+    }()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +88,33 @@ final class MyNFTViewController: UIViewController {
       }
     
     //MARK: - Private Methods
+    private func updateView() {
+//        let therIsNFT: Bool = прописать условия наличия NFT
+       
+//        stubLabel.isHidden = therIsNFT
+//        if therIsNFT == false {
+//            sortingButton.tintColor = UIColor(named: "ypWhite")
+//            sortingButton.isEnabled = false
+//        }
+          
+    }
+    
+    private func customizingStub () {
+        view.addSubview(stubLabel)
+        
+        stubLabel.translatesAutoresizingMaskIntoConstraints = false
+        sortingButton.tintColor = UIColor(named: "ypWhite")
+        sortingButton.isEnabled = false
+        
+        NSLayoutConstraint.activate([
+            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+        ])
+        
+        stubLabel.isHidden = true
+    }
     private func customizingNavigation() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: "ypWhite")
         navigationItem.title = "Мой NFT"

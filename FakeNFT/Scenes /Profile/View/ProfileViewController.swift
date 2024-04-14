@@ -105,7 +105,9 @@ final class ProfileViewController: UIViewController {
     
     //MARK: - Action
     @objc func editButtonTap() {
-        
+        let viewController = EditProfileViewController()
+        viewController.modalPresentationStyle = .pageSheet
+        present(viewController, animated: true)
     }
     
     //MARK: - Lifecycle
@@ -188,3 +190,4 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
 }
+
