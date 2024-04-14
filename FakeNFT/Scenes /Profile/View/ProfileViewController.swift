@@ -55,6 +55,12 @@ final class ProfileViewController: UIViewController {
         label.font = UIFont.sfProRegular15
         label.text = "Joaquin Phoenix.com"
         label.textColor = UIColor(named: "ypBlueUn")
+        let action = UITapGestureRecognizer(
+            target: self,
+            action: #selector(goToWebsiteTap(_:))
+        )
+        label.addGestureRecognizer(action)
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -108,6 +114,13 @@ final class ProfileViewController: UIViewController {
         let viewController = EditProfileViewController()
         viewController.modalPresentationStyle = .pageSheet
         present(viewController, animated: true)
+    }
+    
+    @objc func goToWebsiteTap(_ sender: UITapGestureRecognizer) {
+        var urlString = "https://\(siteLabel.text)"
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     //MARK: - Lifecycle
