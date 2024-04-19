@@ -318,13 +318,9 @@ extension CartViewController: CartNFTCellDelegate {
     }
     
     private func enableBlurEffect() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
-            
-            blurredView.frame = window.bounds
+            blurredView.frame = view.bounds
             view.addSubview(blurredView)
         }
-    }
     
     private func disableBlurEffect() {
         blurredView.removeFromSuperview()

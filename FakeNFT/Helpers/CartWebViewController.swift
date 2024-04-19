@@ -1,5 +1,5 @@
 //
-//  WebViewController.swift
+//  CartWebViewController.swift
 //  FakeNFT
 //
 //  Created by Никита Гончаров on 29.03.2024.
@@ -9,7 +9,7 @@ import WebKit
 import UIKit
 import ProgressHUD
 
-final class WebViewController: UIViewController {
+final class CartWebViewController: UIViewController {
     private var webSite: URL
     private lazy var webView: WKWebView = {
         let view = WKWebView()
@@ -27,8 +27,8 @@ final class WebViewController: UIViewController {
         return button
     }()
     
-    init(link: URL) {
-        self.webSite = link
+    init(ref: URL) {
+        self.webSite = ref
         super.init(nibName: nil, bundle: nil)
         loadSite()
     }
@@ -37,8 +37,13 @@ final class WebViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lyfe cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let url = URL(string: "https://practicum.yandex.ru/") {
+            webView.navigationDelegate = self
+            webView.load(URLRequest(url: url))
+        }
         view.backgroundColor = UIColor.yaWhiteUniversal
         setupPayView()
     }
@@ -71,7 +76,7 @@ final class WebViewController: UIViewController {
     }
 }
 
-extension WebViewController: WKNavigationDelegate {
+extension CartWebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         ProgressHUD.show()
     }
@@ -81,7 +86,7 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        assertionFailure("Webview failed with error: \(error.localizedDescription)")
         ProgressHUD.dismiss()
-        print(error)
     }
 }

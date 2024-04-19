@@ -152,8 +152,6 @@ final class PaymentViewController: UIViewController {
     }
     
     private func setupPayView() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let view = windowScene.windows.first(where: { $0.isKeyWindow }) {
             
             userAgreementButton.addTarget(self, action: #selector(userAgreementButtonTapped), for: .touchUpInside)
             payButton.addTarget(self, action: #selector(payButtonTapped), for: .touchUpInside)
@@ -198,42 +196,33 @@ final class PaymentViewController: UIViewController {
             payViewInitialBottomConstraint = payView.topAnchor.constraint(equalTo: view.bottomAnchor)
             payViewFinalBottomConstraint = payView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         }
-    }
     
     private func showPayView() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
-            
-            if !payViewIsAddedToWindow {
-                setupPayView()
-            }
+        if !payViewIsAddedToWindow {
+            setupPayView()
+        }
             
             payViewFinalBottomConstraint?.isActive = false
             payViewInitialBottomConstraint?.isActive = true
             
-            window.layoutIfNeeded()
+            view.layoutIfNeeded()
             
             payViewInitialBottomConstraint?.isActive = false
             payViewFinalBottomConstraint?.isActive = true
             
             UIView.animate(withDuration: 0.2) {
-                window.layoutIfNeeded()
+            self.view.layoutIfNeeded()
             }
         }
-    }
     
     private func hidePayView() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
-            
             payViewFinalBottomConstraint?.isActive = false
             payViewInitialBottomConstraint?.isActive = true
             
             UIView.animate(withDuration: 0.2) {
-                window.layoutIfNeeded()
+            self.view.layoutIfNeeded()
             }
         }
-    }
     
     private func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let spacing = Constants.collectionViewSpacing
@@ -261,9 +250,9 @@ final class PaymentViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func linkLabelButtonTapped() {
+    @objc private func refLabelButtonTapped() {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
-        let webView = WebViewController(link: url)
+        let webView = CartWebViewController(ref: url)
         webView.modalPresentationStyle = .fullScreen
         present(webView, animated: true)
     }

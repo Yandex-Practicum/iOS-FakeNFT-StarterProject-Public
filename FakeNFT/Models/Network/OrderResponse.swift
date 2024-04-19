@@ -11,3 +11,17 @@ struct OrderResponse: Decodable {
     let nfts: [String]
     let id: String
 }
+
+struct CartResponse: Codable {
+    let name: String
+    let avatar: String
+    let description: String
+    let website: String
+    let nfts: [String]
+    let likes: [String]
+    let id: String
+}
+struct CartModel: Codable {
+    let nfts: [String]
+    let id: String
+}
