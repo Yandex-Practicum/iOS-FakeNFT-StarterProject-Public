@@ -17,23 +17,24 @@ Epic: Statistic
 > e.t. - 1 hour
 > r.t. - 20 minute
 ______________________________________________________
-- [x]  **Add Table View**
+-   **Add Table View**
 > e.t. - 1 hour
+
 > r.t. - 1 hour
 ______________________________________________________
-- [x]  **Config Table View with Mock-Data**
+-   **Config Table View with Mock-Data**
 > e.t. - 7 hour
 > r.t. - 6 hour
 ______________________________________________________
-- [x]  **Add Action on Sort Button**
+-   **Add Action on Sort Button**
 > e.t. - 1 hour
 > r.t. - 10 minute
 ______________________________________________________
-- [x]  **Realise Sort for Table View**
+-   **Realise Sort for Table View**
 > e.t. - 2 hour
 > r.t. - 10 minute
 ______________________________________________________
-- [x]  **Add transit to CardUser View (With Navigation)**
+-   **Add transit to CardUser View (With Navigation)**
 > e.t. - 1 hour
 > r.t. - 10 minute
 ______________________________________________________
