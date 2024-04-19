@@ -19,7 +19,7 @@ ______________________________________________________
 ## 1_3 Create and config Statistic View with Mock-Data 
 e.t. - 12 hour
 
-r.t. 7 hour 40 minute
+r.t. - 7 hour 40 minute
 
 -   **Add Navigation Bar**
 > e.t. - 1 hour
@@ -56,7 +56,7 @@ ______________________________________________________
 # 1_3 Create and config UserCard View with Mock-Data
 e.t. - 7 hour
 
-r.t. 4 hour
+r.t. - 4 hour
 
 -   **Add Navigation Bar**
 > e.t. - 1 hour
@@ -88,7 +88,7 @@ ____________________________________________________________
 # 1_3 Create and config User's Collection View with Mock Data
 e.t. - 7 hour
 
-r.t. 5 hour 5 minute
+r.t. - 5 hour 5 minute
 
 -   **Add Navigation Bar**
 > e.t. - 1 hour
