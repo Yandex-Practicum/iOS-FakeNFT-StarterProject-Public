@@ -16,7 +16,9 @@ Epic: Statistic
 ______________________________________________________
 ______________________________________________________
 
-## 1_3 Create and config Statistic View with Mock-Data (e.t. - 12 hoir || r.t. 7 hour 40 minute)
+## 1_3 Create and config Statistic View with Mock-Data 
+e.t. - 12 hoir
+r.t. 7 hour 40 minute
 
 -   **Add Navigation Bar**
 > e.t. - 1 hour
