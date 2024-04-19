@@ -28,14 +28,9 @@ final class UserCardFabric {
 
 extension UserCardFabric: UserCardProtocol {
     
-    func getProfileUser(with id: String) -> ProfileModel {
-        
-        let user = mockData.userCardInfo.first { model in
-            model.id == id
-        }
-        guard let user = user else { return mockData.userCardInfo[0] }
-        return user
-    }
+//    func getProfileUser(with id: String) -> ProfileModel {
+//        //TODO: get profile user from network client
+//    }
     
     func getAvatar(with id: String) -> URL {
         

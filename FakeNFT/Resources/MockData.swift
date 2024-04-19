@@ -43,26 +43,31 @@ final class MockData {
     private let website5 = URL(string: "https://practicum.yandex.ru/algorithms/")!
     
     private let nft1 = NftModel(
+        id: "1",
         name: "April",
         avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")!,
         price: "4.5",
         rating: 5)
     private let nft2 = NftModel(
+        id: "2",
         name: "Aurora",
         avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Aurora/1.png")!,
         price: "1.69",
         rating: 4)
     private let nft3 = NftModel(
+        id: "3",
         name: "Bimbo",
         avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Bimbo/1.png")!,
         price: "6.02",
         rating: 4)
     private let nft4 = NftModel(
+        id: "4",
         name: "Biscuit",
         avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Biscuit/1.png")!,
         price: "5.95",
         rating: 5)
     private let nft5 = NftModel(
+        id: "5",
         name: "Breena",
         avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Breena/1.png")!,
         price: "7.05",

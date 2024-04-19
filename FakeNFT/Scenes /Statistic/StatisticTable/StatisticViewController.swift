@@ -4,6 +4,7 @@ import UIKit
 final class StatisticViewController: UIViewController {
     
     private var mockData = MockData.shared
+    let servicesAssembly: ServicesAssembly
     private var statisticFabric: StatisticFabric?
     
     private var tableView: UITableView = {
@@ -21,8 +22,6 @@ final class StatisticViewController: UIViewController {
         sortButton.image = UIImage(resource: .sort).withTintColor(UIColor(resource: .ypBlack), renderingMode: .alwaysOriginal)
         return sortButton
     }()
-    
-    let servicesAssembly: ServicesAssembly
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
@@ -145,7 +144,7 @@ extension StatisticViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         let cell = tableView.cellForRow(at: indexPath) as? StatisticTableViewCell
         
-        let vc = UserCardViewController(idUser: cell?.getUserId() ?? "")
+        let vc = UserCardViewController(idUser: cell?.getUserId() ?? "", servicesAssembly: servicesAssembly)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

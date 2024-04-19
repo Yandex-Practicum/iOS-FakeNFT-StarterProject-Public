@@ -6,6 +6,7 @@ final class UserCardViewController: UIViewController {
     
     private var idUser: String
     private var userCardFabric: UserCardFabric
+    private var servicesAssembly: ServicesAssembly
     
     private lazy var backwardButton: UIBarButtonItem = {
         let sortButton = UIBarButtonItem(title: "",
@@ -95,9 +96,10 @@ final class UserCardViewController: UIViewController {
     }()
     
     //MARK: init
-    init(idUser: String) {
+    init(idUser: String, servicesAssembly: ServicesAssembly) {
         self.idUser = idUser
         self.userCardFabric = UserCardFabric(with: idUser)
+        self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -129,8 +131,8 @@ final class UserCardViewController: UIViewController {
     
     @objc
     private func showUsersCollectionOfNft() {
-        //TODO: Transit to user collection of nft
-        print("KEKES")
+        let vc = CollectionOfUsersNftViewController(servicesAssembly: servicesAssembly)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -277,7 +279,6 @@ extension UserCardViewController: UserCardProtocol {
         
         let descriptionUser = userCardFabric.getDescription(with: id)
         descriptionLabel.text = descriptionUser
-        print(descriptionUser)
         return descriptionUser
     }
     
