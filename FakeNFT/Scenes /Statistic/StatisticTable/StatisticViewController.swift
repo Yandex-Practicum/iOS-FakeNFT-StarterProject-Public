@@ -145,7 +145,9 @@ extension StatisticViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as? StatisticTableViewCell
         
         let vc = UserCardViewController(idUser: cell?.getUserId() ?? "", servicesAssembly: servicesAssembly)
-        navigationController?.pushViewController(vc, animated: true)
+        let viewToPresent = UINavigationController(rootViewController: vc)
+        viewToPresent.modalPresentationStyle = .overFullScreen
+        self.present(viewToPresent, animated: true)
     }
 }
 

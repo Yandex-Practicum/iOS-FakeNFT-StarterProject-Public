@@ -119,7 +119,7 @@ final class UserCardViewController: UIViewController {
     //MARK: objc Methods
     @objc
     private func backwardButtonAction() {
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
     
     @objc
@@ -142,6 +142,7 @@ extension UserCardViewController {
     func setupNavigation() {
         
         navigationController?.view.backgroundColor = UIColor(resource: .ypWhite)
+        navigationController?.modalPresentationStyle = .popover
         navigationItem.leftBarButtonItem = backwardButton
     }
 }
@@ -151,6 +152,7 @@ extension UserCardViewController {
     
     func activateUI() {
         
+        view.backgroundColor = UIColor(resource: .ypWhite)
         activateConstraint()
         addTargetForStackView()
     }
