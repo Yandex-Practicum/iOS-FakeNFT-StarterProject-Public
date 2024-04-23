@@ -137,7 +137,17 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier, for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
-
+        cell.delegate = self
         return cell
+    }
+}
+
+extension CartViewController: CustomCellViewCartDelegate {
+    func cellDidTapDeleteCart() {
+        print("YF:FNF")
+        let newCategoryViewController = CartDeleteConfirmView()
+        let navigationController = UINavigationController(rootViewController: newCategoryViewController)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
     }
 }
