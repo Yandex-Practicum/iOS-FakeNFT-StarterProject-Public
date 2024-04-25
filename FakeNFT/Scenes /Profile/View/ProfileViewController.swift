@@ -201,11 +201,11 @@ extension ProfileViewController: UITableViewDataSource {
         let name = tableСell[indexPath.row]
         switch indexPath.row {
         case 0:
-            let number = "\(myNFTCount)"
+            let number = "(\(myNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
             return cell
         case 1:
-            let number = "\(favoritesNFTCount)"
+            let number = "(\(favoritesNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
             return cell
         case 2:
