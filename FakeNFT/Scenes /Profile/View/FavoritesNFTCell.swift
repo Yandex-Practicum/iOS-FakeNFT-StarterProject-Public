@@ -5,7 +5,6 @@
 //  Created by Ринат Шарафутдинов on 11.04.2024.
 //
 
-import Foundation
 import UIKit
 import Kingfisher
 
@@ -108,6 +107,16 @@ final class FavoritesNFTCell: UICollectionViewCell {
         id = nft.id
     }
     
+    func setIsLikedNFT(_ isLiked: Bool) {
+        if isLiked {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.tintColor = UIColor(named: "ypRedUn")
+        } else {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.tintColor = UIColor(named: "ypWhite")
+        }
+    }
+
     // MARK: - Private Methods
     private func customizingScreenElements() {
         [nftImage, likeButton, mainStackView].forEach {contentView.addSubview($0)}

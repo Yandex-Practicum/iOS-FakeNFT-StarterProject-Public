@@ -5,7 +5,6 @@
 //  Created by Ринат Шарафутдинов on 11.04.2024.
 //
 
-import Foundation
 import UIKit
 
 protocol FavoritesNFTViewControllerProtocol: AnyObject {
@@ -21,6 +20,8 @@ final class FavoritesNFTViewController: UIViewController {
     private var myNFTs: [NFT] = []
     private var nftID: [String]
     private var likedNFT: [String]
+    private let editProfileService = EditProfileService.shared
+    
     private lazy var returnButton: UIBarButtonItem = {
         let button = UIBarButtonItem( image: UIImage(systemName: "chevron.left"),
                                       style: .plain,
@@ -73,8 +74,9 @@ final class FavoritesNFTViewController: UIViewController {
         customizingStub()
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
-        presenter = FavoritesNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT)
+        presenter = FavoritesNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT, editProfileService: editProfileService)
         presenter?.view = self
+        presenter?.viewDidLoad()
     }
     
     //MARK: - Private Methods
@@ -127,6 +129,8 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         }
         cell.changingNFT(nft: likes)
         cell.delegate = self
+        cell.setIsLikedNFT(likedNFT.contains(likes.id))
+        cell.selectedBackgroundView = .none
         return cell
     }
 }

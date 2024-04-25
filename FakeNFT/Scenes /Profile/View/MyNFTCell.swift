@@ -5,7 +5,6 @@
 //  Created by Ринат Шарафутдинов on 04.04.2024.
 //
 
-import Foundation
 import UIKit
 import Kingfisher
 
@@ -135,7 +134,9 @@ final class MyNFTCell: UITableViewCell {
     
     //MARK: - Action
     @objc func tapLikeButton() {
-        print("Кнопка likeButton работает")
+        if let id = id {
+            delegate?.didTapLikeButton(nftID: id)
+        }
     }
     
     // MARK: - Public Methods
@@ -147,11 +148,20 @@ final class MyNFTCell: UITableViewCell {
         } else {
             nftImage.image = UIImage(named: "avatar")
         }
-        
         nameLabel.text = nft.name
         ratingImage.ratingVisualization(rating: nft.rating)
         ethLabel.text = String(format: "%.2f", nft.price) + " ETH"
         holderLabel.text = nft.author
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        if isLiked {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.tintColor = UIColor(named: "ypRedUn")
+        } else {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.tintColor = UIColor(named: "ypWhite")
+        }
     }
     
     // MARK: - Private Methods

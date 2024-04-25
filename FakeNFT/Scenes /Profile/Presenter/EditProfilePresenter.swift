@@ -13,7 +13,7 @@ protocol EditProfilePresenterProtocol {
 }
 
 protocol EditProfilePresenterDelegate: AnyObject {
-    func profileDidUpdate(_ profile: Profile, newAvatarURL: String?)
+    func profileDidUpdate(profile: Profile, newAvatarURL: String?)
 }
 
 final class EditProfilePresenter {
@@ -23,12 +23,15 @@ final class EditProfilePresenter {
     
     // MARK: - Private Properties
     private var profile: Profile
+    private let editProfileService: EditProfileService
     
     // MARK: - Initializers
     init(view: EditProfileViewControllerProtocol,
-         profile: Profile) {
+         profile: Profile,
+         editProfileService: EditProfileService) {
         self.view = view
         self.profile = profile
+        self.editProfileService = editProfileService
     }
 }
 
@@ -38,15 +41,22 @@ extension EditProfilePresenter: EditProfilePresenterProtocol {
     }
     
     func updateProfile(name: String?, description: String?, website: String?, newAvatarURL: String?) {
-        let updateProfile = EditProfile(
+        let updatedProfile = EditProfile(
             name: name ?? "",
             avatar: description ?? "",
             description: newAvatarURL ?? "",
             website: website ?? "",
             likes: nil
         )
-        
+        editProfileService.updateProfile(with: updatedProfile) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self?.delegate?.profileDidUpdate(profile: profile, newAvatarURL: newAvatarURL)
+                case .failure(let error):
+                    print("UpdateProfile error")
+                }
+            }
+        }
     }
-    
-    
 }

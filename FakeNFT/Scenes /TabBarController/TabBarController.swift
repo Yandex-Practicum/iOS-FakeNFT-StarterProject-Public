@@ -2,29 +2,30 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
+    
+    
+    
+    
     var servicesAssembly: ServicesAssembly!
     
-    private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
-        viewController.tabBarItem.title = title
-        viewController.tabBarItem.image = image
-        return viewController
-    }
-    
-    private func generateTabBar() {
-        viewControllers = [
-            UINavigationController(rootViewController: generateVC(
-                viewController: ProfileViewController(servicesAssembly: servicesAssembly),
-                title: "Профиль",
-                image: UIImage(named: "profileBar"))
-            )
-        ]
-        
-    }
+    private let profileTabBarItem = UITabBarItem(
+        title: "Профиль",
+        image: UIImage(named: "profileBar"),
+        tag: 0
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let profileViewController = ProfileViewController(servicesAssembly: servicesAssembly)
+        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
+        profileViewController.tabBarItem = profileTabBarItem
+
+        let profilePresenter = ProfilePresenter()
+        profileViewController.presenter = profilePresenter
+        profilePresenter.view = profileViewController
         
-        generateTabBar()
+        viewControllers = [profileNavigationController]
 
         view.backgroundColor = .systemBackground
     }

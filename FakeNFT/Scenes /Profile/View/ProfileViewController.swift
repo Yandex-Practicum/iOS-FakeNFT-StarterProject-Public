@@ -5,7 +5,6 @@
 //  Created by Ринат Шарафутдинов on 03.04.2024.
 //
 
-import Foundation
 import UIKit
 import Kingfisher
 
@@ -26,6 +25,7 @@ final class ProfileViewController: UIViewController {
     private let tableСell = ["Мой NFT", "Избранные NFT", "О разработчике"]
     private var myNFTCount = 0
     private var favoritesNFTCount = 0
+    private let profileService = ProfileService.shared
     
     private lazy var editButton: UIBarButtonItem = {
         let button = UIBarButtonItem( image: UIImage(systemName: "square.and.pencil"),
@@ -142,11 +142,19 @@ final class ProfileViewController: UIViewController {
         delegate = self
         presenter?.delegate = self
     }
-    //MARK: - Private Methods
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter?.viewWillAppear()
+    }
+    
+    //MARK: - Public Methods
     func customizingNavigation() {
         navigationItem.rightBarButtonItem = editButton
     }
     
+    //MARK: - Private Methods
     private func customizingScreenElements() {
         view.backgroundColor = .systemBackground
         
@@ -257,10 +265,10 @@ extension ProfileViewController: ProfileViewControllerProtocol {
 
 // MARK: - EditProfilePresenterDelegate
 extension ProfileViewController: EditProfilePresenterDelegate {
-    func profileDidUpdate(_ profile: Profile, newAvatarURL: String?) {
+    func profileDidUpdate(profile: Profile, newAvatarURL: String?) {
         DispatchQueue.main.async { [weak self] in
             self?.updateProfile(profile: profile)
-            self?.presenter?.updateUserProfile(with: profile)
+            self?.presenter?.updateUserProfile(profile: profile)
         }
     }
 }
@@ -283,10 +291,14 @@ extension ProfileViewController: ProfilePresenterDelegate {
     
     func goToEditProfile(profile: Profile) {
         let editProfileViewController = EditProfileViewController(presenter: nil, cell: nil)
+        let editProfileService = EditProfileService.shared
+
         editProfileViewController.editProfilePresenterDelegate = self
+        editProfileService.setView(editProfileViewController)
         let editProfilePresenter = EditProfilePresenter(
             view: editProfileViewController,
-            profile: profile
+            profile: profile,
+            editProfileService: editProfileService
         )
         editProfilePresenter.delegate = self
         editProfileViewController.presenter = editProfilePresenter

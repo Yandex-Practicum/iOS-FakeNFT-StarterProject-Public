@@ -5,7 +5,6 @@
 //  Created by Ринат Шарафутдинов on 04.04.2024.
 //
 
-import Foundation
 import UIKit
 
 protocol MyNFTLikesDelegate: AnyObject {
@@ -25,6 +24,8 @@ final class MyNFTViewController: UIViewController {
     private var myNFTs: [NFT] = []
     private var nftID: [String]
     private var likedNFT: [String]
+    private let profileService = ProfileService.shared
+    private let editProfileService = EditProfileService.shared
     
     private lazy var returnButton: UIBarButtonItem = {
         let button = UIBarButtonItem( image: UIImage(systemName: "chevron.left"),
@@ -86,7 +87,6 @@ final class MyNFTViewController: UIViewController {
     
     @objc func sortingButtonTap() {
         let contextMenu = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        
         contextMenu.addAction(UIAlertAction(title: "По цене", style: .default, handler: { _ in
             print("Кнопка сортировки по цене")
         }))
@@ -109,8 +109,9 @@ final class MyNFTViewController: UIViewController {
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
         
-        presenter = MyNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT)
+        presenter = MyNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT, editProfileService: editProfileService)
         presenter?.view = self
+        presenter?.viewDidLoad()
     }
     
     //MARK: - Private Methods
@@ -166,6 +167,9 @@ extension MyNFTViewController: UITableViewDataSource {
         
         cell.delegate = self
         cell.changingNFT(nft: nft)
+        let isLiked = presenter?.isLiked(id: nft.id) ?? true
+        cell.setIsLiked(isLiked: isLiked)
+        cell.selectionStyle = .none
         return cell
     }
 }
@@ -200,6 +204,7 @@ extension MyNFTViewController: MyNFTViewControllerProtocol {
 // MARK: - MyNFTCellDelegate
 extension MyNFTViewController: MyNFTCellDelegate {
     func didTapLikeButton(nftID: String) {
+        presenter?.tapLike(id: nftID)
         if let index = self.presenter?.nfts.firstIndex(where: { $0.id == nftID }) {
             let indexPath = IndexPath(row: index, section: 0)
             
