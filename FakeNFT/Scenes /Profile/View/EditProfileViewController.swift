@@ -85,12 +85,54 @@ final class EditProfileViewController: UIViewController {
             website: siteTextView,
             newAvatarURL: newAvatarURL
         )
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func changeImageDidTap(_ sender: UITapGestureRecognizer) {
-        print("Загрузка изображения")
         loadAvatarLabel.isHidden = false
+        
+        let alert = UIAlertController(
+            title: "Загрузить изображение",
+            message: "Вставьте ссылку на изображение",
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { textField in
+            textField.placeholder = "Вставьте ссылку: "
+        }
+
+        alert.addAction(
+            UIAlertAction(
+                title: "ОK",
+                style: .default) { [weak self] _ in
+                    guard
+                    let self = self,
+                    let textField = alert.textFields?[0],
+                    let URL = textField.text
+                else { return }
+
+                if validateURLFormat(urlString: URL) {
+                    self.loadAvatarLabel.text = URL
+                    self.newAvatarURL = URL
+                } else {
+                    let wrongURL = UIAlertController(
+                        title: "Cсылка недействительна",
+                        message: "Проверьте верность ссылки",
+                        preferredStyle: .alert)
+                    wrongURL.addAction(
+                        UIAlertAction(
+                            title: "ОK",
+                            style: .cancel
+                        ) { _ in
+                            wrongURL.dismiss(animated: true)
+                        }
+                    )
+                    self.present(wrongURL, animated: true)
+                }
+                alert.dismiss(animated: true)
+            }
+        )
+        self.present(alert, animated: true)
     }
     
     //MARK: - Lifecycle
@@ -128,6 +170,13 @@ final class EditProfileViewController: UIViewController {
             editProfileCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             editProfileCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func validateURLFormat(urlString: String?) -> Bool {
+        guard
+            let urlString = urlString,
+            let url = NSURL(string: urlString) else { return false }
+        return UIApplication.shared.canOpenURL(url as URL)
     }
 }
 

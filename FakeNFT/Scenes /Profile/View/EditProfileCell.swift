@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditProfileCell: UICollectionViewCell {
+final class EditProfileCell: UICollectionViewCell, UITextViewDelegate {
     // MARK: - Public Properties
     static let cellID = "EditProfileCell"
     lazy var textViewInCell: UITextView = {
@@ -23,6 +23,7 @@ final class EditProfileCell: UICollectionViewCell {
             bottom: 11,
             right: 16
         )
+        textView.delegate = self
         return textView
     }()
     
