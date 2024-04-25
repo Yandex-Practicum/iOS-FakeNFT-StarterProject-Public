@@ -39,6 +39,9 @@ final class ProfileViewController: UIViewController {
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "avatar")
+        image.layer.cornerRadius = 35
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
     
@@ -167,6 +170,8 @@ final class ProfileViewController: UIViewController {
         bigStackView.setCustomSpacing(8, after: descriptionLabel)
         
         NSLayoutConstraint.activate([
+            profileImage.widthAnchor.constraint(equalToConstant: 70),
+            
             bigStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             bigStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             bigStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
