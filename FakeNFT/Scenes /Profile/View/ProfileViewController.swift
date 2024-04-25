@@ -227,7 +227,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 1:
             presenter?.didTapFavoriteNFT()
         case 2:
-            print("Кнопка О разработчике функционирует")
+            presenter?.didTapAboutTheDeveloper()
         default:
             break
         }
@@ -275,15 +275,19 @@ extension ProfileViewController: EditProfilePresenterDelegate {
 
 // MARK: - ProfilePresenterDelegate
 extension ProfileViewController: ProfilePresenterDelegate {
+    func goToAboutTheDeveloper() {
+        let aboutDeveloperViewController = AboutDeveloperViewController()
+        aboutDeveloperViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(aboutDeveloperViewController, animated: true)
+    }
+    
     func goToMyNFT(with nftID: [String], and likedNFT: [String]) {
-        
         let myNFTViewController = MyNFTViewController(nftID: nftID, likedID: likedNFT)
         myNFTViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(myNFTViewController, animated: true)
     }
     
     func goToFavoriteNFT(with nftID: [String], and likedNFT: [String]) {
-        
         let favoritesNFTViewController = FavoritesNFTViewController(nftID: nftID, likedID: likedNFT)
         favoritesNFTViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(favoritesNFTViewController, animated: true)
@@ -292,7 +296,6 @@ extension ProfileViewController: ProfilePresenterDelegate {
     func goToEditProfile(profile: Profile) {
         let editProfileViewController = EditProfileViewController(presenter: nil, cell: nil)
         let editProfileService = EditProfileService.shared
-
         editProfileViewController.editProfilePresenterDelegate = self
         editProfileService.setView(editProfileViewController)
         let editProfilePresenter = EditProfilePresenter(
