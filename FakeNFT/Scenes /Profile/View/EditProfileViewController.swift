@@ -35,14 +35,27 @@ final class EditProfileViewController: UIViewController {
     
     private lazy var profileEditImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "avatarChangeImage")
+        image.layer.cornerRadius = 35
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    private lazy var changeImageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.sfProMedium10
+        label.textColor = UIColor(named: "ypWhite")
+        label.text = "Сменить фото"
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
         let action = UITapGestureRecognizer(
             target: self,
             action: #selector(changeImageDidTap(_:))
         )
-        image.addGestureRecognizer(action)
-        image.isUserInteractionEnabled = true
-        return image
+        label.addGestureRecognizer(action)
+        label.isUserInteractionEnabled = true
+        return label
     }()
     
     private lazy var editProfileCollection: UICollectionView = {
@@ -146,8 +159,8 @@ final class EditProfileViewController: UIViewController {
     //MARK: - Private Methods
     private func customizingScreenElements() {
         view.backgroundColor = .systemBackground
-        [closeButton, profileEditImage, editProfileCollection, loadAvatarLabel].forEach {view.addSubview($0)}
-        [closeButton, profileEditImage, loadAvatarLabel, editProfileCollection].forEach {($0).translatesAutoresizingMaskIntoConstraints = false}
+        [closeButton, profileEditImage, editProfileCollection, loadAvatarLabel, changeImageLabel].forEach {view.addSubview($0)}
+        [closeButton, profileEditImage, loadAvatarLabel, editProfileCollection, changeImageLabel].forEach {($0).translatesAutoresizingMaskIntoConstraints = false}
     }
     
     private func customizingTheLayoutOfScreenElements() {
@@ -169,6 +182,10 @@ final class EditProfileViewController: UIViewController {
             editProfileCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             editProfileCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             editProfileCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            changeImageLabel.centerXAnchor.constraint(equalTo: profileEditImage.centerXAnchor),
+            changeImageLabel.centerYAnchor.constraint(equalTo: profileEditImage.centerYAnchor),
+            changeImageLabel.widthAnchor.constraint(equalToConstant: 45),
         ])
     }
     
