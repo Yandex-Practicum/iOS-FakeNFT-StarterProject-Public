@@ -105,6 +105,7 @@ final class MyNFTViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        customizingStub()
         customizingNavigation()
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
@@ -119,8 +120,6 @@ final class MyNFTViewController: UIViewController {
         view.addSubview(stubLabel)
         
         stubLabel.translatesAutoresizingMaskIntoConstraints = false
-        sortingButton.tintColor = UIColor(named: "ypWhite")
-        sortingButton.isEnabled = false
         
         NSLayoutConstraint.activate([
             stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -128,8 +127,6 @@ final class MyNFTViewController: UIViewController {
             stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
-        
-        stubLabel.isHidden = true
     }
     private func customizingNavigation() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: "ypWhite")
@@ -155,6 +152,21 @@ final class MyNFTViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let presenter = presenter {
+            if presenter.nfts.isEmpty {
+                stubLabel.isHidden = false
+                myNFTTableView.isHidden = true
+                sortingButton.image = nil
+                navigationItem.title = ""
+            } else {
+                stubLabel.isHidden = true
+                myNFTTableView.isHidden = false
+                sortingButton.image = UIImage(systemName: "text.justify.left")
+                navigationItem.title = "Мой NFT"
+            }
+        } else {
+            print("presenter is nil")
+        }
         return presenter?.nfts.count ?? 0
     }
     

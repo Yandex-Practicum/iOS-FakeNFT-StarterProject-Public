@@ -91,7 +91,6 @@ final class FavoritesNFTViewController: UIViewController {
             stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
-        stubLabel.isHidden = true
     }
     
     private func customizingNavigation() {
@@ -117,6 +116,17 @@ final class FavoritesNFTViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension FavoritesNFTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let presenter = presenter {
+            if presenter.likes.isEmpty {
+                stubLabel.isHidden = false
+                favoritesNFTCollectionView.isHidden = true
+            } else {
+                stubLabel.isHidden = true
+                favoritesNFTCollectionView.isHidden = false
+            }
+        } else {
+            print("presenter is nil")
+        }
         return presenter?.likes.count ?? 0
     }
     
