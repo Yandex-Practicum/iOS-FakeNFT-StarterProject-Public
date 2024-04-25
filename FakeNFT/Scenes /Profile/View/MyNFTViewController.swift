@@ -8,12 +8,24 @@
 import Foundation
 import UIKit
 
+protocol MyNFTLikesDelegate: AnyObject {
+    func didUpdateLikedNFTCount(count: Int)
+}
+
+protocol MyNFTViewControllerProtocol: AnyObject {
+    var presenter: MyNFTPresenter? { get set }
+    func updateMyNFTs(nfts: [NFT]?)
+}
+
 final class MyNFTViewController: UIViewController {
-    
     //MARK:  - Public Properties
-   
+    var presenter: MyNFTPresenter?
     
     //MARK:  - Private Properties
+    private var myNFTs: [NFT] = []
+    private var nftID: [String]
+    private var likedNFT: [String]
+    
     private lazy var returnButton: UIBarButtonItem = {
         let button = UIBarButtonItem( image: UIImage(systemName: "chevron.left"),
                                       style: .plain,
@@ -56,13 +68,15 @@ final class MyNFTViewController: UIViewController {
         return label
     }()
     
-    //MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        customizingNavigation()
-        customizingScreenElements()
-        customizingTheLayoutOfScreenElements()
+    // MARK: - Initializers
+    init(nftID: [String], likedID: [String]) {
+        self.nftID = nftID
+        self.likedNFT = likedID
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Action
@@ -85,20 +99,21 @@ final class MyNFTViewController: UIViewController {
         contextMenu.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         
         present(contextMenu, animated: true)
-      }
-    
-    //MARK: - Private Methods
-    private func updateView() {
-//        let therIsNFT: Bool = прописать условия наличия NFT
-       
-//        stubLabel.isHidden = therIsNFT
-//        if therIsNFT == false {
-//            sortingButton.tintColor = UIColor(named: "ypWhite")
-//            sortingButton.isEnabled = false
-//        }
-          
     }
     
+    //MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        customizingNavigation()
+        customizingScreenElements()
+        customizingTheLayoutOfScreenElements()
+        
+        presenter = MyNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT)
+        presenter?.view = self
+    }
+    
+    //MARK: - Private Methods
     private func customizingStub () {
         view.addSubview(stubLabel)
         
@@ -139,21 +154,18 @@ final class MyNFTViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return presenter?.nfts.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyNFTCell.cellID,for: indexPath) as? MyNFTCell else {fatalError("Could not cast to MyNFTCell")}
-        switch indexPath.row {
-        case 0:
-            cell.changingNFT(image: "liloImage", name: "Lilo", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
-        case 1:
-            cell.changingNFT(image: "springImage", name: "Spring", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
-        case 2:
-            cell.changingNFT(image: "aprilImage", name: "April", rating: 2, price: "1,78 ЕТН", holder: "John Doe")
-        default:
-            break
+        
+        guard let nft = presenter?.nfts[indexPath.row] else {
+            return UITableViewCell()
         }
+        
+        cell.delegate = self
+        cell.changingNFT(nft: nft)
         return cell
     }
 }
@@ -163,7 +175,35 @@ extension MyNFTViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+}
+
+// MARK: - MyNFTViewControllerProtocol
+extension MyNFTViewController: MyNFTViewControllerProtocol {
+    func updateMyNFTs(nfts: [NFT]?) {
+        guard let presenter = presenter else {
+            print("Presenter is nil")
+            return
+        }
+        
+        guard let nfts = nfts else {
+            print("Received nil NFTs")
+            return
+        }
+        
+        presenter.nfts = nfts
+        DispatchQueue.main.async {
+            self.myNFTTableView.reloadData()
+        }
+    }
+}
+
+// MARK: - MyNFTCellDelegate
+extension MyNFTViewController: MyNFTCellDelegate {
+    func didTapLikeButton(nftID: String) {
+        if let index = self.presenter?.nfts.firstIndex(where: { $0.id == nftID }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            
+            self.myNFTTableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 }

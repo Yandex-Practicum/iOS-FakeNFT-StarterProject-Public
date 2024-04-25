@@ -11,23 +11,7 @@ import UIKit
 final class EditProfileCell: UICollectionViewCell {
     // MARK: - Public Properties
     static let cellID = "EditProfileCell"
-    
-    // MARK: - Private Properties
-//    private lazy var textFieldInCell: UITextField = {
-//        let textField = UITextField()
-//        textField.layer.cornerRadius = 12
-//        textField.backgroundColor = UIColor(named: "ypLightGray")
-//        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
-//        textField.leftViewMode = .always
-//        textField.font = UIFont.sfProRegular17
-//        textField.textColor = UIColor(named: "ypBlack")
-//        textField.clearButtonMode = .whileEditing
-//        textField.resignFirstResponder()
-//        textField.layer.masksToBounds = true
-//        return textField
-//    }()
-    
-    private lazy var textViewInCell: UITextView = {
+    lazy var textViewInCell: UITextView = {
         let textView = UITextView()
         textView.layer.cornerRadius = 12
         textView.backgroundColor = UIColor(named: "ypLightGray")
@@ -58,11 +42,6 @@ final class EditProfileCell: UICollectionViewCell {
     @objc func handleTapGesture() {
         print("Tap Gesture did tap")
         textViewInCell.resignFirstResponder()
-    }
-
-    // MARK: - Public Methods
-    func changingNFT(text: String) {
-        textViewInCell.text = text
     }
     
     // MARK: - Private Methods

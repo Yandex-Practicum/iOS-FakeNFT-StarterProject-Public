@@ -7,11 +7,17 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+
+protocol MyNFTCellDelegate: AnyObject {
+    func didTapLikeButton(nftID: String)
+}
 
 final class MyNFTCell: UITableViewCell {
     
     // MARK: - Public Properties
     static let cellID = "MyNFTCell"
+    weak var delegate: MyNFTCellDelegate?
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -73,6 +79,8 @@ final class MyNFTCell: UITableViewCell {
     }()
     
     // MARK: - Private Properties
+    private var id: String?
+    
     private lazy var infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 35
@@ -131,12 +139,19 @@ final class MyNFTCell: UITableViewCell {
     }
     
     // MARK: - Public Methods
-    func changingNFT(image: String, name: String, rating: Int, price: String, holder: String) {
-        nftImage.image = UIImage(named: image)
-        nameLabel.text = name
-        ratingImage.ratingVisualization(rating: rating)
-        ethLabel.text = price
-        holderLabel.text = holder
+    func changingNFT(nft: NFT) {
+        
+        if let nftImageURLString = nft.images.first,
+           let nftImageURL = URL(string: nftImageURLString) {
+            nftImage.kf.setImage(with: nftImageURL)
+        } else {
+            nftImage.image = UIImage(named: "avatar")
+        }
+        
+        nameLabel.text = nft.name
+        ratingImage.ratingVisualization(rating: nft.rating)
+        ethLabel.text = String(format: "%.2f", nft.price) + " ETH"
+        holderLabel.text = nft.author
     }
     
     // MARK: - Private Methods

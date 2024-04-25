@@ -13,11 +13,6 @@ final class TabBarController: UITabBarController {
     private func generateTabBar() {
         viewControllers = [
             UINavigationController(rootViewController: generateVC(
-                viewController: TestCatalogViewController(servicesAssembly: servicesAssembly),
-                title: NSLocalizedString("Tab.catalog", comment: ""),
-                image: UIImage(systemName: "square.stack.3d.up.fill"))
-            ),
-            UINavigationController(rootViewController: generateVC(
                 viewController: ProfileViewController(servicesAssembly: servicesAssembly),
                 title: "Профиль",
                 image: UIImage(named: "profileBar"))

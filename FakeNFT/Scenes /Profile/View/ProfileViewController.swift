@@ -7,14 +7,25 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenter? {get set}
+    func updateProfile(profile: Profile?)
+    func updateAvatar(url: URL)
+}
 
 final class ProfileViewController: UIViewController {
     
     //MARK:  - Public Properties
     let servicesAssembly: ServicesAssembly
+    var presenter: ProfilePresenter?
+    weak var delegate: ProfilePresenterDelegate?
     
     //MARK:  - Private Properties
     private let tableСell = ["Мой NFT", "Избранные NFT", "О разработчике"]
+    private var myNFTCount = 0
+    private var favoritesNFTCount = 0
     
     private lazy var editButton: UIBarButtonItem = {
         let button = UIBarButtonItem( image: UIImage(systemName: "square.and.pencil"),
@@ -111,16 +122,14 @@ final class ProfileViewController: UIViewController {
     
     //MARK: - Action
     @objc func editButtonTap() {
-        let viewController = EditProfileViewController()
-        viewController.modalPresentationStyle = .pageSheet
-        present(viewController, animated: true)
+        presenter?.didTapEditProfile()
     }
     
     @objc func goToWebsiteTap(_ sender: UITapGestureRecognizer) {
-        var urlString = "https://\(siteLabel.text)"
-        if let url = URL(string: urlString) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        //        var urlString = "https://\(siteLabel.text)"
+        //        if let url = URL(string: urlString) {
+        //            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        //        }
     }
     
     //MARK: - Lifecycle
@@ -130,6 +139,8 @@ final class ProfileViewController: UIViewController {
         customizingNavigation()
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
+        delegate = self
+        presenter?.delegate = self
     }
     //MARK: - Private Methods
     func customizingNavigation() {
@@ -174,10 +185,23 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileCell.cellID,for: indexPath) as? ProfileCell else {fatalError("Could not cast to CategoryCell")}
-        
         let name = tableСell[indexPath.row]
-        let number = "(112)"
-        cell.changingLabels(nameView: name, numberView: number)
+        switch indexPath.row {
+        case 0:
+            let number = "\(myNFTCount)"
+            cell.changingLabels(nameView: name, numberView: number)
+            return cell
+        case 1:
+            let number = "\(favoritesNFTCount)"
+            cell.changingLabels(nameView: name, numberView: number)
+            return cell
+        case 2:
+            
+            cell.changingLabels(nameView: name, numberView: "")
+            return cell
+        default:
+            break
+        }
         return cell
     }
 }
@@ -191,11 +215,9 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let viewController = MyNFTViewController()
-            self.navigationController?.pushViewController(viewController, animated: true)
+            presenter?.didTapMyNFT()
         case 1:
-            let viewController = FavoritesNFTViewController()
-            self.navigationController?.pushViewController(viewController, animated: true)
+            presenter?.didTapFavoriteNFT()
         case 2:
             print("Кнопка О разработчике функционирует")
         default:
@@ -204,3 +226,71 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - ProfileViewControllerProtocol
+extension ProfileViewController: ProfileViewControllerProtocol {
+    func updateProfile(profile: Profile?) {
+        if let profile {
+            nameLabel.text = profile.name
+            descriptionLabel.text = profile.description
+            siteLabel.text = profile.website
+            
+            guard let avatarURLString = profile.avatar,
+                  let avatarURL = URL(string: avatarURLString) else {
+                return
+            }
+            updateAvatar(url: avatarURL)
+            myNFTCount = profile.nfts.count
+            favoritesNFTCount = profile.likes.count
+            profileTableView.reloadData()
+        } else {
+            nameLabel.text = ""
+            descriptionLabel.text = ""
+            siteLabel.text = ""
+            profileImage.image = UIImage()
+        }
+    }
+    
+    func updateAvatar(url: URL) {
+        profileImage.kf.setImage(with: url, options: [.forceRefresh])
+    }
+}
+
+// MARK: - EditProfilePresenterDelegate
+extension ProfileViewController: EditProfilePresenterDelegate {
+    func profileDidUpdate(_ profile: Profile, newAvatarURL: String?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.updateProfile(profile: profile)
+            self?.presenter?.updateUserProfile(with: profile)
+        }
+    }
+}
+
+// MARK: - ProfilePresenterDelegate
+extension ProfileViewController: ProfilePresenterDelegate {
+    func goToMyNFT(with nftID: [String], and likedNFT: [String]) {
+        
+        let myNFTViewController = MyNFTViewController(nftID: nftID, likedID: likedNFT)
+        myNFTViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(myNFTViewController, animated: true)
+    }
+    
+    func goToFavoriteNFT(with nftID: [String], and likedNFT: [String]) {
+        
+        let favoritesNFTViewController = FavoritesNFTViewController(nftID: nftID, likedID: likedNFT)
+        favoritesNFTViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(favoritesNFTViewController, animated: true)
+    }
+    
+    func goToEditProfile(profile: Profile) {
+        let editProfileViewController = EditProfileViewController(presenter: nil, cell: nil)
+        editProfileViewController.editProfilePresenterDelegate = self
+        let editProfilePresenter = EditProfilePresenter(
+            view: editProfileViewController,
+            profile: profile
+        )
+        editProfilePresenter.delegate = self
+        editProfileViewController.presenter = editProfilePresenter
+        editProfileViewController.modalPresentationStyle = .pageSheet
+        present(editProfileViewController, animated: true)
+    }
+}

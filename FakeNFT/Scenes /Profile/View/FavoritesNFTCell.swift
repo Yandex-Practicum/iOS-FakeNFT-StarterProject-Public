@@ -7,10 +7,16 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+
+protocol FavoritesNFTCellDelegate: AnyObject {
+    func didTapLikeButton(cell: FavoritesNFTCell)
+}
 
 final class FavoritesNFTCell: UICollectionViewCell {
     // MARK: - Public Properties
     static let cellID = "FavoritesNFTCell"
+    weak var delegate: FavoritesNFTCellDelegate?
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -49,6 +55,8 @@ final class FavoritesNFTCell: UICollectionViewCell {
     }()
     
     // MARK: - Private Properties
+    private var id: String?
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -79,18 +87,25 @@ final class FavoritesNFTCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     //MARK: - Action
     @objc func tapLikeButton() {
-        print("Кнопка likeButton работает")
+        delegate?.didTapLikeButton(cell: self)
     }
     
     // MARK: - Public Methods
-    func changingNFT(image: String, name: String, rating: Int, price: String) {
-        nftImage.image = UIImage(named: image)
-        nameLabel.text = name
-        ratingImage.ratingVisualization(rating: rating)
-        ethLabel.text = price
+    func changingNFT(nft: NFT) {
+        if let nftImageURLString = nft.images.first,
+           let nftImageURL = URL(string: nftImageURLString) {
+            nftImage.kf.setImage(with: nftImageURL)
+        } else {
+            nftImage.image = UIImage(named: "avatar_icon")
+        }
+        
+        nameLabel.text = nft.name
+        ratingImage.ratingVisualization(rating: nft.rating)
+        ethLabel.text = String(format: "%.2f", nft.price) + " ETH"
+        id = nft.id
     }
     
     // MARK: - Private Methods

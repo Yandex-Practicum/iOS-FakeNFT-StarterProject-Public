@@ -29,7 +29,7 @@ final class ProfileCell: UITableViewCell {
         return label
     }()
     
-    lazy var imageCheck: UIImageView = {
+    lazy var imageArrow: UIImageView = {
         let imVi = UIImageView()
         imVi.image = UIImage(systemName: "chevron.right")
         imVi.contentMode = .scaleAspectFit
@@ -59,14 +59,14 @@ final class ProfileCell: UITableViewCell {
         nameLabel.text = nameView
         numberLabel.text = numberView
     }
- 
+    
     // MARK: - Private Methods
     private func customizingScreenElements() {
-        [nameLabel, numberLabel, imageCheck].forEach {contentView.addSubview($0)}
+        [nameLabel, numberLabel, imageArrow].forEach {contentView.addSubview($0)}
     }
     
     private func customizingTheLayoutOfScreenElements() {
-        [nameLabel, numberLabel, imageCheck].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
+        [nameLabel, numberLabel, imageArrow].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -77,8 +77,8 @@ final class ProfileCell: UITableViewCell {
             numberLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 8),
             numberLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
             
-            imageCheck.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageCheck.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageArrow.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            imageArrow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
 }

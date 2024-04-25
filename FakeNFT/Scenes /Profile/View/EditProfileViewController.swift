@@ -7,11 +7,25 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+
+protocol EditProfileViewControllerProtocol: AnyObject {
+    func setProfile(profile: Profile)
+    func updateAvatar(url: URL, options: Kingfisher.KingfisherOptionsInfo?)
+}
 
 final class EditProfileViewController: UIViewController {
     //MARK:  - Public Properties
+    var presenter: EditProfilePresenter?
+    var cell: EditProfileCell?
+    weak var editProfilePresenterDelegate: EditProfilePresenterDelegate?
     
     //MARK:  - Private Properties
+    private var nameTextView = ""
+    private var descriptionTextView = ""
+    private var siteTextView = ""
+    private var newAvatarURL: String?
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor(named: "ypBlack")
@@ -53,8 +67,25 @@ final class EditProfileViewController: UIViewController {
         return label
     }()
     
+    // MARK: - Initializers
+    init(presenter: EditProfilePresenter?, cell: EditProfileCell?) {
+        self.presenter = presenter
+        self.cell = cell
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Action
     @objc func closeButtonTap() {
+        presenter?.updateProfile(
+            name: nameTextView,
+            description: descriptionTextView,
+            website: siteTextView,
+            newAvatarURL: newAvatarURL
+        )
         dismiss(animated: true, completion: nil)
     }
     
@@ -69,6 +100,7 @@ final class EditProfileViewController: UIViewController {
         
         customizingScreenElements()
         customizingTheLayoutOfScreenElements()
+        presenter?.viewDidLoad()
     }
     //MARK: - Private Methods
     private func customizingScreenElements() {
@@ -115,11 +147,11 @@ extension EditProfileViewController: UICollectionViewDataSource {
         }
         switch indexPath.section {
         case 0:
-            cell.changingNFT(text: "Joaquin Phoenix")
+            cell.textViewInCell.text = "\(nameTextView)"
         case 1:
-            cell.changingNFT(text: "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям.")
+            cell.textViewInCell.text = "\(descriptionTextView)"
         case 2:
-            cell.changingNFT(text: "Joaquin Phoenix.com")
+            cell.textViewInCell.text = "\(siteTextView)"
         default:
             fatalError("Сollection section numbering error")
         }
@@ -182,6 +214,30 @@ extension EditProfileViewController: UICollectionViewDelegateFlowLayout {
         } else {
             return CGSize(width: collectionView.frame.width, height: 28)
         }
+    }
+}
+
+// MARK: - EditProfileViewControllerProtocol
+extension EditProfileViewController: EditProfileViewControllerProtocol {
+    func setProfile(profile: Profile) {
+        nameTextView = profile.name
+        descriptionTextView = profile.description
+        siteTextView = profile.website
+        if let avatarURLString = profile.avatar {
+            let avatarURL = URL(string: avatarURLString)
+            if let url = avatarURL {
+                updateAvatar(url: url, options: nil)
+            } else {
+                print("Avatar is nil")
+            }
+        }
+    }
+    
+    func updateAvatar(url: URL, options: Kingfisher.KingfisherOptionsInfo?) {
+        profileEditImage.kf.indicatorType = .activity
+        profileEditImage.kf.setImage(
+            with: url,
+            options: options)
     }
 }
 
