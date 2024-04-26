@@ -79,13 +79,11 @@ final class EditProfileViewController: UIViewController {
         textView.font = UIFont.sfProRegular17
         textView.textColor = UIColor(named: "ypBlack")
         textView.layer.masksToBounds = true
-        let leftView = UIView(
-            frame: CGRect(
-                x: 0,
-                y: 0,
-                width: 16,
-                height: textView.frame.height
-            )
+        textView.textContainerInset = UIEdgeInsets(
+            top: 11,
+            left: 16,
+            bottom: 11,
+            right: 16
         )
         textView.delegate = self
         return textView
@@ -131,13 +129,11 @@ final class EditProfileViewController: UIViewController {
         textView.font = UIFont.sfProRegular17
         textView.textColor = UIColor(named: "ypBlack")
         textView.layer.masksToBounds = true
-        let leftView = UIView(
-            frame: CGRect(
-                x: 0,
-                y: 0,
-                width: 16,
-                height: textView.frame.height
-            )
+        textView.textContainerInset = UIEdgeInsets(
+            top: 11,
+            left: 16,
+            bottom: 11,
+            right: 16
         )
         textView.delegate = self
         return textView
@@ -325,3 +321,4 @@ extension EditProfileViewController: UITextViewDelegate {
         return true
     }
 }
+
