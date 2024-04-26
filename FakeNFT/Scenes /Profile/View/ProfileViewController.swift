@@ -38,7 +38,6 @@ final class ProfileViewController: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "avatar")
         image.layer.cornerRadius = 35
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
@@ -48,7 +47,6 @@ final class ProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.sfProBold22
-        label.text = "Joaquin Phoenix"
         label.textColor = UIColor(named: "ypBlack")
         return label
     }()
@@ -59,7 +57,6 @@ final class ProfileViewController: UIViewController {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
-        label.text = "Дизайнер из Казани, люблю цифровое искусство\n и бейглы. В моей коллекции уже 100+ NFT,\n и еще больше — на моём сайте. Открыт\n к коллаборациям."
         label.textColor = UIColor(named: "ypBlack")
         return label
     }()
@@ -67,14 +64,7 @@ final class ProfileViewController: UIViewController {
     private lazy var siteLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.sfProRegular15
-        label.text = "Joaquin Phoenix.com"
         label.textColor = UIColor(named: "ypBlueUn")
-        let action = UITapGestureRecognizer(
-            target: self,
-            action: #selector(goToWebsiteTap(_:))
-        )
-        label.addGestureRecognizer(action)
-        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -126,13 +116,6 @@ final class ProfileViewController: UIViewController {
     //MARK: - Action
     @objc func editButtonTap() {
         presenter?.didTapEditProfile()
-    }
-    
-    @objc func goToWebsiteTap(_ sender: UITapGestureRecognizer) {
-        //        var urlString = "https://\(siteLabel.text)"
-        //        if let url = URL(string: urlString) {
-        //            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        //        }
     }
     
     //MARK: - Lifecycle
@@ -203,18 +186,22 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             let number = "(\(myNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
+//            cell.selectionStyle = .none
             return cell
         case 1:
             let number = "(\(favoritesNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
+//            cell.selectionStyle = .none
             return cell
         case 2:
             
             cell.changingLabels(nameView: name, numberView: "")
+//            cell.selectionStyle = .none
             return cell
         default:
             break
         }
+        cell.selectionStyle = .none
         return cell
     }
 }
