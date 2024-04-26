@@ -87,14 +87,20 @@ final class MyNFTViewController: UIViewController {
     
     @objc func sortingButtonTap() {
         let contextMenu = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        contextMenu.addAction(UIAlertAction(title: "По цене", style: .default, handler: { _ in
-            print("Кнопка сортировки по цене")
+        contextMenu.addAction(UIAlertAction(title: "По цене", style: .default, handler: {[weak self] _ in
+            self?.presenter?.nfts = self?.applySortType(by: .price) ?? []
+            self?.saveSortType(type: .price)
+            self?.myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }))
-        contextMenu.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { _ in
-            print("Кнопка сортировки по рейтингу")
+        contextMenu.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: {[weak self] _ in
+            self?.presenter?.nfts = self?.applySortType(by: .rating) ?? []
+            self?.saveSortType(type: .rating)
+            self?.myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }))
-        contextMenu.addAction(UIAlertAction(title: "По названию", style: .default, handler: { _ in
-            print("Кнопка сортировки по названию")
+        contextMenu.addAction(UIAlertAction(title: "По названию", style: .default, handler: {[weak self] _ in
+            self?.presenter?.nfts = self?.applySortType(by: .name) ?? []
+            self?.saveSortType(type: .name)
+            self?.myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }))
         contextMenu.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         
@@ -113,6 +119,15 @@ final class MyNFTViewController: UIViewController {
         presenter = MyNFTPresenter(nftID: self.nftID, likedNFT: self.likedNFT, editProfileService: editProfileService)
         presenter?.view = self
         presenter?.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let sortType = UserDefaults.standard.data(forKey: "sortType") {
+            let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
+            presenter?.nfts = applySortType(by: type ?? .rating)
+            myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
     }
     
     //MARK: - Private Methods
@@ -146,6 +161,26 @@ final class MyNFTViewController: UIViewController {
             myNFTTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             myNFTTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func saveSortType(type: Filter) {
+        let type = try? PropertyListEncoder().encode(type)
+        UserDefaults.standard.set(type, forKey: "sortType")
+    }
+
+    private func applySortType(by type: Filter) -> [NFT] {
+        guard let nfts = presenter?.nfts else {
+            return []
+        }
+
+        switch type {
+        case .name:
+            return nfts.sorted(by: { $0.name < $1.name })
+        case .rating:
+            return nfts.sorted(by: { $0.rating > $1.rating })
+        case .price:
+            return nfts.sorted(by: { $0.price > $1.price })
+        }
     }
 }
 
