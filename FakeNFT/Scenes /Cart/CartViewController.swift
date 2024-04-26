@@ -7,20 +7,27 @@
 
 import UIKit
 
-final class CartViewController: UIViewController {
+protocol CartViewControllerProtocol: AnyObject {
+    var presenter: CartPresenterProtocol? { get set }
+    var tableView: UITableView { get set }
+}
+
+final class CartViewController: UIViewController & CartViewControllerProtocol {
+
+    var presenter: CartPresenterProtocol? = CartPresenter()
 
     private let sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "sortButton.png")
         button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(sortBttnTapped), for: .touchUpInside)
         return button
     }()
 
-    private let tableView: UITableView = {
+    var tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.layer.masksToBounds = true
         table.separatorStyle = .none
         table.register(CustomCellViewCart.self, forCellReuseIdentifier: CustomCellViewCart.reuseIdentifier)
         return table
@@ -30,7 +37,7 @@ final class CartViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(named: "Light grey [day]")
+        view.backgroundColor = .segmentInactive
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.cornerRadius = 12
         return view
@@ -58,7 +65,7 @@ final class CartViewController: UIViewController {
     private let priceNfts: UILabel = {
         let label = UILabel()
         label.text = "5,34 ETH"
-        label.textColor = UIColor(named: "greenUnivesal")
+        label.textColor = .greenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         return label
@@ -74,15 +81,42 @@ final class CartViewController: UIViewController {
         return stack
     }()
 
+    @objc private func sortBttnTapped() {
+        let byPrice = NSLocalizedString("Cart.sortByPrice", comment: "")
+        let byName = NSLocalizedString("Cart.sortByName", comment: "")
+        let byRating = NSLocalizedString("Cart.sortByRating", comment: "")
+        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: byPrice, style: .default, handler: { [weak self] _ in
+            self?.presenter?.sortType = .byPrice
+            self?.presenter?.sortCatalog()
+        }))
+        alert.addAction(UIAlertAction(title: byName, style: .default, handler: { [weak self] _ in
+            self?.presenter?.sortType = .byRating
+            self?.presenter?.sortCatalog()
+        }))
+        alert.addAction(UIAlertAction(title: byRating, style: .default, handler: { [weak self] _ in
+            self?.presenter?.sortType = .byName
+            self?.presenter?.sortCatalog()
+        }))
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.view = self
+        presenter?.viewDidLoad()
         configureView()
         configureConstraits()
     }
 
     private func configureView() {
-        [tableView,
-        priceView].forEach {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        [
+         tableView,
+         sortButton,
+         priceView].forEach {
             view.addSubview($0)
         }
         [valueNft,
@@ -95,12 +129,16 @@ final class CartViewController: UIViewController {
         }
         tableView.dataSource = self
         tableView.delegate = self
-        let segmentBarItem = UIBarButtonItem(customView: sortButton)
-        navigationItem.rightBarButtonItem = segmentBarItem    }
+    }
 
     private func configureConstraits() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
+            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
+            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+            sortButton.heightAnchor.constraint(equalToConstant: 42),
+            sortButton.widthAnchor.constraint(equalToConstant: 42),
+
+            tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: priceView.topAnchor),
@@ -119,10 +157,8 @@ final class CartViewController: UIViewController {
             payButton.trailingAnchor.constraint(equalTo: priceView.trailingAnchor, constant: -16),
             payButton.widthAnchor.constraint(equalToConstant: 240),
             payButton.heightAnchor.constraint(equalToConstant: 44)
-
         ])
     }
-
 }
 
 extension CartViewController: UITableViewDelegate {
@@ -131,20 +167,20 @@ extension CartViewController: UITableViewDelegate {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return presenter?.mock.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier, for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.delegate = self
+        presenter?.configureCell(for: cell, with: indexPath)
         return cell
     }
 }
 
 extension CartViewController: CustomCellViewCartDelegate {
     func cellDidTapDeleteCart() {
-        print("YF:FNF")
         let newCategoryViewController = CartDeleteConfirmView()
         let navigationController = UINavigationController(rootViewController: newCategoryViewController)
         navigationController.modalPresentationStyle = .overFullScreen

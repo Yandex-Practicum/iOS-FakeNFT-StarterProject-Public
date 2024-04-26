@@ -153,6 +153,10 @@ final class CustomCellViewCart: UITableViewCell {
         return stack
     }()
 
+    @objc private func deleteBttnTapped() {
+        delegate?.cellDidTapDeleteCart()
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureView()
@@ -163,8 +167,11 @@ final class CustomCellViewCart: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initCell() {
-        imageViews.image = UIImage(named: "SortButton.png")
+    func initCell(nameLabel: String, priceLabel: Double, rating: Int) {
+        imageViews.image = UIImage(named: "mockCart.png")
+        nftNameLabel.text = nameLabel
+        nftPriceLabel.text = String(priceLabel) + " ETH"
+        setRating(rating)
     }
 
     private func configureView() {
@@ -219,6 +226,11 @@ final class CustomCellViewCart: UITableViewCell {
     }
 
     private func setRating(_ rating: Int) {
+        firstStar.image = UIImage(named: "starsNoActive")
+        secondStar.image = UIImage(named: "starsNoActive")
+        thirdStar.image = UIImage(named: "starsNoActive")
+        fourthStar.image = UIImage(named: "starsNoActive")
+        fifthStar.image = UIImage(named: "starsNoActive")
         switch rating {
         case 1:
             firstStar.image = UIImage(named: "starsActive")
@@ -243,10 +255,5 @@ final class CustomCellViewCart: UITableViewCell {
         default:
             break
         }
-    }
-
-    @objc private func deleteBttnTapped() {
-        print("Нажалось")
-        delegate?.cellDidTapDeleteCart()
     }
 }
