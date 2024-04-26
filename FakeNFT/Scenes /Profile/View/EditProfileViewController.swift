@@ -16,13 +16,9 @@ protocol EditProfileViewControllerProtocol: AnyObject {
 final class EditProfileViewController: UIViewController {
     //MARK:  - Public Properties
     var presenter: EditProfilePresenter?
-    var cell: EditProfileCell?
     weak var editProfilePresenterDelegate: EditProfilePresenterDelegate?
     
     //MARK:  - Private Properties
-    private var nameTextView = ""
-    private var descriptionTextView = ""
-    private var siteTextView = ""
     private var newAvatarURL: String?
     
     private lazy var closeButton: UIButton = {
@@ -58,17 +54,6 @@ final class EditProfileViewController: UIViewController {
         return label
     }()
     
-    private lazy var editProfileCollection: UICollectionView = {
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.dataSource = self
-        collection.delegate = self
-        collection.backgroundColor = UIColor(named: "ypWhite")
-        collection.register(EditProfileCell.self, forCellWithReuseIdentifier: EditProfileCell.cellID)
-        collection.register(EditProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: EditProfileHeader.headerID)
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        return collection
-    }()
-    
     private lazy var loadAvatarLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.sfProRegular17
@@ -79,10 +64,88 @@ final class EditProfileViewController: UIViewController {
         return label
     }()
     
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.sfProBold22
+        label.textColor = UIColor(named: "ypBlack")
+        label.text = "Имя"
+        return label
+    }()
+    
+    private lazy var nameTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 12
+        textView.backgroundColor = UIColor(named: "ypLightGray")
+        textView.font = UIFont.sfProRegular17
+        textView.textColor = UIColor(named: "ypBlack")
+        textView.layer.masksToBounds = true
+        let leftView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 16,
+                height: textView.frame.height
+            )
+        )
+        textView.delegate = self
+        return textView
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.sfProBold22
+        label.textColor = UIColor(named: "ypBlack")
+        label.text = "Описание"
+        return label
+    }()
+    
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 12
+        textView.backgroundColor = UIColor(named: "ypLightGray")
+        textView.font = UIFont.sfProRegular17
+        textView.textColor = UIColor(named: "ypBlack")
+        textView.layer.masksToBounds = true
+        textView.textContainerInset = UIEdgeInsets(
+            top: 11,
+            left: 16,
+            bottom: 11,
+            right: 16
+        )
+        textView.delegate = self
+        return textView
+    }()
+    
+    private let siteLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.sfProBold22
+        label.textColor = UIColor(named: "ypBlack")
+        label.text = "Сайт"
+        return label
+    }()
+    
+    private lazy var siteTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 12
+        textView.backgroundColor = UIColor(named: "ypLightGray")
+        textView.font = UIFont.sfProRegular17
+        textView.textColor = UIColor(named: "ypBlack")
+        textView.layer.masksToBounds = true
+        let leftView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 16,
+                height: textView.frame.height
+            )
+        )
+        textView.delegate = self
+        return textView
+    }()
+    
     // MARK: - Initializers
-    init(presenter: EditProfilePresenter?, cell: EditProfileCell?) {
+    init(presenter: EditProfilePresenter?) {
         self.presenter = presenter
-        self.cell = cell
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -92,10 +155,13 @@ final class EditProfileViewController: UIViewController {
     
     //MARK: - Action
     @objc func closeButtonTap() {
+        let name = nameTextView.text
+        let description = descriptionTextView.text
+        let website = siteTextView.text
         presenter?.updateProfile(
-            name: nameTextView,
-            description: descriptionTextView,
-            website: siteTextView,
+            name: name,
+            description: description,
+            website: website,
             newAvatarURL: newAvatarURL
         )
         self.dismiss(animated: true, completion: nil)
@@ -129,7 +195,7 @@ final class EditProfileViewController: UIViewController {
                     self.newAvatarURL = URL
                 } else {
                     let wrongURL = UIAlertController(
-                        title: "Cсылка недействительна",
+                        title: "Ccылка недействительна",
                         message: "Проверьте верность ссылки",
                         preferredStyle: .alert)
                     wrongURL.addAction(
@@ -148,6 +214,12 @@ final class EditProfileViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
+    @objc func handleTapGesture() {
+        nameTextView.resignFirstResponder()
+        descriptionTextView.resignFirstResponder()
+        siteTextView.resignFirstResponder()
+    }
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,8 +231,14 @@ final class EditProfileViewController: UIViewController {
     //MARK: - Private Methods
     private func customizingScreenElements() {
         view.backgroundColor = .systemBackground
-        [closeButton, profileEditImage, editProfileCollection, loadAvatarLabel, changeImageLabel].forEach {view.addSubview($0)}
-        [closeButton, profileEditImage, loadAvatarLabel, editProfileCollection, changeImageLabel].forEach {($0).translatesAutoresizingMaskIntoConstraints = false}
+        [closeButton, profileEditImage, loadAvatarLabel, changeImageLabel, nameLabel, nameTextView, descriptionLabel, descriptionTextView, siteLabel, siteTextView].forEach {view.addSubview($0)}
+        [closeButton, profileEditImage, loadAvatarLabel, changeImageLabel,nameLabel, nameTextView, descriptionLabel, descriptionTextView, siteLabel, siteTextView].forEach {($0).translatesAutoresizingMaskIntoConstraints = false}
+        
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleTapGesture)
+        )
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func customizingTheLayoutOfScreenElements() {
@@ -178,14 +256,33 @@ final class EditProfileViewController: UIViewController {
             loadAvatarLabel.topAnchor.constraint(equalTo: profileEditImage.bottomAnchor, constant: 11),
             loadAvatarLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            editProfileCollection.topAnchor.constraint(equalTo: profileEditImage.bottomAnchor, constant: 24),
-            editProfileCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            editProfileCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            editProfileCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             changeImageLabel.centerXAnchor.constraint(equalTo: profileEditImage.centerXAnchor),
             changeImageLabel.centerYAnchor.constraint(equalTo: profileEditImage.centerYAnchor),
             changeImageLabel.widthAnchor.constraint(equalToConstant: 45),
+            
+            nameLabel.topAnchor.constraint(equalTo: profileEditImage.bottomAnchor, constant: 24),
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            nameTextView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            nameTextView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            nameTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nameTextView.heightAnchor.constraint(equalToConstant: 44),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: nameTextView.bottomAnchor, constant: 24),
+            descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            
+            descriptionTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            descriptionTextView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            descriptionTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            descriptionTextView.heightAnchor.constraint(equalToConstant: 132),
+            
+            siteLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 24),
+            siteLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            
+            siteTextView.topAnchor.constraint(equalTo: siteLabel.bottomAnchor, constant: 8),
+            siteTextView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            siteTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            siteTextView.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
     
@@ -197,97 +294,12 @@ final class EditProfileViewController: UIViewController {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-extension EditProfileViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditProfileCell.cellID, for: indexPath) as? EditProfileCell else { fatalError("Failed to cast UICollectionViewCell to EditProfileCell")
-        }
-        switch indexPath.section {
-        case 0:
-            cell.textViewInCell.text = "\(nameTextView)"
-        case 1:
-            cell.textViewInCell.text = "\(descriptionTextView)"
-        case 2:
-            cell.textViewInCell.text = "\(siteTextView)"
-        default:
-            fatalError("Сollection section numbering error")
-        }
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension EditProfileViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let header = editProfileCollection.dequeueReusableSupplementaryView(ofKind: kind,withReuseIdentifier: EditProfileHeader.headerID,for: indexPath) as? EditProfileHeader
-            else { fatalError("Failed to cast UICollectionReusableView to TrackersHeader") }
-            
-            switch indexPath.section {
-            case 0:
-                header.titleLabel.text = "Имя"
-            case 1:
-                header.titleLabel.text = "Описание"
-            case 2:
-                header.titleLabel.text = "Сайт"
-            default: break
-            }
-            return header
-        default:
-            fatalError("Unexpected element kind")
-        }
-    }
-}
-// MARK: - UICollectionViewDelegateFlowLayout
-extension EditProfileViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8,
-                            left: 16,
-                            bottom: 24,
-                            right: 16)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.section {
-        case 0:
-            return CGSize(width: 343, height: 44)
-        case 1:
-            return CGSize(width: 343, height: 132)
-        case 2:
-            return CGSize(width: 343, height: 44)
-        default:
-            return CGSize(width: 343, height: 44) // подумать
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
-            return CGSize(width: 50, height: 28)
-        } else {
-            return CGSize(width: collectionView.frame.width, height: 28)
-        }
-    }
-}
-
 // MARK: - EditProfileViewControllerProtocol
 extension EditProfileViewController: EditProfileViewControllerProtocol {
     func setProfile(profile: Profile) {
-        nameTextView = profile.name
-        descriptionTextView = profile.description
-        siteTextView = profile.website
+        nameTextView.text = profile.name
+        descriptionTextView.text = profile.description
+        siteTextView.text = profile.website
         if let avatarURLString = profile.avatar {
             let avatarURL = URL(string: avatarURLString)
             if let url = avatarURL {
@@ -306,3 +318,10 @@ extension EditProfileViewController: EditProfileViewControllerProtocol {
     }
 }
 
+// MARK: - UITextViewDelegate
+extension EditProfileViewController: UITextViewDelegate {
+    func textViewShouldReturn(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        return true
+    }
+}

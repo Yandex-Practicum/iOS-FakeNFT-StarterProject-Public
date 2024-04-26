@@ -28,8 +28,6 @@
 		0E7CF84D2BC818BA00235CB3 /* SpecialRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CF84C2BC818BA00235CB3 /* SpecialRatingView.swift */; };
 		0E7CF84F2BC82F0900235CB3 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CF84E2BC82F0900235CB3 /* NFT.swift */; };
 		0E7CFB152BC95E5900235CB3 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CFB142BC95E5900235CB3 /* EditProfileViewController.swift */; };
-		0E7CFB172BC9621500235CB3 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CFB162BC9621500235CB3 /* EditProfileCell.swift */; };
-		0E7CFB192BCBDEBF00235CB3 /* EditProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CFB182BCBDEBF00235CB3 /* EditProfileHeader.swift */; };
 		0E7CFB1B2BCBEFF600235CB3 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7CFB1A2BCBEFF600235CB3 /* Profile.swift */; };
 		0E830EB12BD7BE660000D615 /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830EB02BD7BE650000D615 /* EditProfile.swift */; };
 		0E830EB32BD7BEDB0000D615 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830EB22BD7BEDB0000D615 /* Filter.swift */; };
@@ -114,8 +112,6 @@
 		0E7CF84C2BC818BA00235CB3 /* SpecialRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialRatingView.swift; sourceTree = "<group>"; };
 		0E7CF84E2BC82F0900235CB3 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		0E7CFB142BC95E5900235CB3 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
-		0E7CFB162BC9621500235CB3 /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
-		0E7CFB182BCBDEBF00235CB3 /* EditProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileHeader.swift; sourceTree = "<group>"; };
 		0E7CFB1A2BCBEFF600235CB3 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		0E830EB02BD7BE650000D615 /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
 		0E830EB22BD7BEDB0000D615 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -287,8 +283,6 @@
 				0E9EB2902BC4453E00762ED1 /* ProfileViewController.swift */,
 				0E9EB2922BC4455500762ED1 /* ProfileCell.swift */,
 				0E7CFB142BC95E5900235CB3 /* EditProfileViewController.swift */,
-				0E7CFB182BCBDEBF00235CB3 /* EditProfileHeader.swift */,
-				0E7CFB162BC9621500235CB3 /* EditProfileCell.swift */,
 				0E9EB2942BC4478000762ED1 /* MyNFTViewController.swift */,
 				0E9EB2962BC447A100762ED1 /* MyNFTCell.swift */,
 				0E7CF8482BC7F1DB00235CB3 /* FavoritesNFTViewController.swift */,
@@ -663,7 +657,6 @@
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				0E830EB32BD7BEDB0000D615 /* Filter.swift in Sources */,
 				0E7CF84F2BC82F0900235CB3 /* NFT.swift in Sources */,
-				0E7CFB172BC9621500235CB3 /* EditProfileCell.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				0E9EB2912BC4453E00762ED1 /* ProfileViewController.swift in Sources */,
 				0E830EB92BDA72AC0000D615 /* MyNFTPresenter.swift in Sources */,
@@ -676,7 +669,6 @@
 				BF995FBF2BB4873C00F4E8EC /* UIFont+Extension.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				0E9EB2952BC4478000762ED1 /* MyNFTViewController.swift in Sources */,
-				0E7CFB192BCBDEBF00235CB3 /* EditProfileHeader.swift in Sources */,
 				0E830ECA2BDAB7E70000D615 /* NetworkError.swift in Sources */,
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,

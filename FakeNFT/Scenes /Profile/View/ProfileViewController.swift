@@ -180,23 +180,19 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileCell.cellID,for: indexPath) as? ProfileCell else {fatalError("Could not cast to CategoryCell")}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileCell.cellID,for: indexPath) as? ProfileCell else {fatalError("Could not cast to ProfileCell")}
         let name = tableСell[indexPath.row]
         switch indexPath.row {
         case 0:
             let number = "(\(myNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
-//            cell.selectionStyle = .none
             return cell
         case 1:
             let number = "(\(favoritesNFTCount))"
             cell.changingLabels(nameView: name, numberView: number)
-//            cell.selectionStyle = .none
             return cell
         case 2:
-            
             cell.changingLabels(nameView: name, numberView: "")
-//            cell.selectionStyle = .none
             return cell
         default:
             break
@@ -286,7 +282,7 @@ extension ProfileViewController: ProfilePresenterDelegate {
     }
     
     func goToEditProfile(profile: Profile) {
-        let editProfileViewController = EditProfileViewController(presenter: nil, cell: nil)
+        let editProfileViewController = EditProfileViewController(presenter: nil)
         let editProfileService = EditProfileService.shared
         editProfileViewController.editProfilePresenterDelegate = self
         editProfileService.setView(editProfileViewController)
