@@ -166,15 +166,15 @@ final class MyNFTCell: UITableViewCell {
     
     // MARK: - Private Methods
     private func customizingScreenElements() {
-        [nftImage, infoStackView, likeButton].forEach {contentView.addSubview($0)}
-        [nameStackView, priceStackView].forEach {infoStackView.addArrangedSubview($0)}
+        [nftImage, infoStackView, likeButton, priceStackView].forEach {contentView.addSubview($0)}
+        [nameStackView].forEach {infoStackView.addArrangedSubview($0)}
         [priceLabel, ethLabel].forEach {priceStackView.addArrangedSubview($0)}
         [nameLabel, ratingImage.view, fromStackView].forEach {nameStackView.addArrangedSubview($0)}
         [fromLabel, holderLabel].forEach {fromStackView.addArrangedSubview($0)}
     }
     
     private func customizingTheLayoutOfScreenElements() {
-        [nftImage, infoStackView, likeButton].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
+        [nftImage, infoStackView, likeButton, priceStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
             nftImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -191,6 +191,10 @@ final class MyNFTCell: UITableViewCell {
             likeButton.trailingAnchor.constraint(equalTo: nftImage.trailingAnchor),
             likeButton.heightAnchor.constraint(equalToConstant: 40),
             likeButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            priceStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            priceStackView.trailingAnchor.constraint(equalTo: infoStackView.trailingAnchor),
+            priceStackView.topAnchor.constraint(equalTo: infoStackView.topAnchor, constant: 10),
         ])
     }
 }
