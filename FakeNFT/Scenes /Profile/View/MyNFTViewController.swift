@@ -120,15 +120,15 @@ final class MyNFTViewController: UIViewController {
         presenter?.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let sortType = UserDefaults.standard.data(forKey: "sortType") {
-            let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
-            presenter?.nfts = applySortType(by: type ?? .rating)
-            myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-            
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if let sortType = UserDefaults.standard.data(forKey: "sortType") {
+//            let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
+//            print ("МОИ НФТ = \(presenter?.nfts)")
+//            presenter?.nfts = applySortType(by: type ?? .rating)
+//            myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+//        }
+//    }
     
     //MARK: - Private Methods
     private func customizingStub () {
@@ -239,13 +239,15 @@ extension MyNFTViewController: MyNFTViewControllerProtocol {
         }
         
         presenter.nfts = nfts
-        print("NFT!!!!! \(presenter.nfts)")
         DispatchQueue.main.async {
-            self.myNFTTableView.reloadData()
+            if let sortType = UserDefaults.standard.data(forKey: "sortType") {
+                let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
+                presenter.nfts = self.applySortType(by: type ?? .rating)
+                self.myNFTTableView.reloadData()
+            }
         }
     }
 }
-
 // MARK: - MyNFTCellDelegate
 extension MyNFTViewController: MyNFTCellDelegate {
     func didTapLikeButton(nftID: String) {
