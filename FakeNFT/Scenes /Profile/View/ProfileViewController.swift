@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SafariServices
 
 protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenter? {get set}
@@ -264,9 +265,9 @@ extension ProfileViewController: EditProfilePresenterDelegate {
 // MARK: - ProfilePresenterDelegate
 extension ProfileViewController: ProfilePresenterDelegate {
     func goToAboutTheDeveloper() {
-        let aboutDeveloperViewController = AboutDeveloperViewController()
+        let aboutDeveloperViewController = SFSafariViewController(url: URL(string: NetworkConstants.urlAboutTheDeveloper)!)
         aboutDeveloperViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(aboutDeveloperViewController, animated: true)
+            self.navigationController?.pushViewController(aboutDeveloperViewController, animated: true)
     }
     
     func goToMyNFT(with nftID: [String], and likedNFT: [String]) {

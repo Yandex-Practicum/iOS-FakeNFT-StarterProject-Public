@@ -14,6 +14,7 @@ enum NetworkConstants {
     static let urlHost = "d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net"
     static let urlPath = "/api/v1/profile/1"
     static let urlPathNFT = "/api/v1/nft/"
+    static let urlAboutTheDeveloper = "https://www.apple.com"
 }
 
 

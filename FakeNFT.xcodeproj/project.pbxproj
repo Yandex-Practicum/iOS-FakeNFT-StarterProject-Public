@@ -42,7 +42,6 @@
 		0E830EC82BDAB6F80000D615 /* FavoriteNFTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830EC72BDAB6F80000D615 /* FavoriteNFTService.swift */; };
 		0E830ECA2BDAB7E70000D615 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830EC92BDAB7E70000D615 /* NetworkError.swift */; };
 		0E830ECC2BDAB92D0000D615 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830ECB2BDAB92D0000D615 /* URLSession.swift */; };
-		0E830ECE2BDB106E0000D615 /* AboutTheDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830ECD2BDB106E0000D615 /* AboutTheDeveloperViewController.swift */; };
 		0E830ED12BDC35E40000D615 /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 0E830ED02BDC35E40000D615 /* Profile.md */; };
 		0E830ED62BDCEE140000D615 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E830ED52BDCEE130000D615 /* NetworkConstants.swift */; };
 		0E9EB2912BC4453E00762ED1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9EB2902BC4453E00762ED1 /* ProfileViewController.swift */; };
@@ -127,7 +126,6 @@
 		0E830EC72BDAB6F80000D615 /* FavoriteNFTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNFTService.swift; sourceTree = "<group>"; };
 		0E830EC92BDAB7E70000D615 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		0E830ECB2BDAB92D0000D615 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
-		0E830ECD2BDB106E0000D615 /* AboutTheDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTheDeveloperViewController.swift; sourceTree = "<group>"; };
 		0E830ED02BDC35E40000D615 /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Profile.md; sourceTree = "<group>"; };
 		0E830ED52BDCEE130000D615 /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		0E9EB2902BC4453E00762ED1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 				0E7CF8482BC7F1DB00235CB3 /* FavoritesNFTViewController.swift */,
 				0E7CF84A2BC7F42300235CB3 /* FavoritesNFTCell.swift */,
 				0E7CF84C2BC818BA00235CB3 /* SpecialRatingView.swift */,
-				0E830ECD2BDB106E0000D615 /* AboutTheDeveloperViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -652,7 +649,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
-				0E830ECE2BDB106E0000D615 /* AboutTheDeveloperViewController.swift in Sources */,
 				0E830ED62BDCEE140000D615 /* NetworkConstants.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0E830ECC2BDAB92D0000D615 /* URLSession.swift in Sources */,
