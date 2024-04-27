@@ -6,9 +6,8 @@
 //
 
 import UIKit
+import SafariServices
 import WebKit
-
-
 
 final class AboutDeveloperViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
@@ -42,3 +41,19 @@ private extension AboutDeveloperViewController {
         }
     }
 }
+
+//final class AboutDeveloperViewController: SFSafariViewController {
+//    init() {
+//        guard let url = URL(string: "https://www.apple.com") else {
+//            fatalError("Invalid URL")
+//        }
+//        super.init(url: url)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//}
+
+
+
