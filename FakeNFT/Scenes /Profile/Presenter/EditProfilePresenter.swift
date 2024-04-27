@@ -43,7 +43,7 @@ extension EditProfilePresenter: EditProfilePresenterProtocol {
     func updateProfile(name: String?, description: String?, website: String?, newAvatarURL: String?) {
         let updatedProfile = EditProfile(
             name: name ?? "",
-            avatar: newAvatarURL ?? "",
+            avatar: newAvatarURL ?? profile.avatar,
             description: description ?? "",
             website: website ?? "",
             likes: nil
