@@ -108,13 +108,8 @@ final class FavoritesNFTCell: UICollectionViewCell {
     }
     
     func setIsLikedNFT(_ isLiked: Bool) {
-        if isLiked {
-            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            likeButton.tintColor = UIColor(named: "ypRedUn")
-        } else {
-            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            likeButton.tintColor = UIColor(named: "ypWhite")
-        }
+        likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        likeButton.tintColor = isLiked ? UIColor(named: "ypRedUn"): UIColor(named: "ypWhite")
     }
 
     // MARK: - Private Methods
