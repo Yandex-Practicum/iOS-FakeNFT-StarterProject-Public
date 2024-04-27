@@ -49,16 +49,16 @@ final class FavoriteNFTService {
     //MARK: - Private Methods
     private func makeFetchNFTRequest(id: String) -> URLRequest? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host  = "d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net"
-        urlComponents.path = "/api/v1/nft/\(id)"
+        urlComponents.scheme = NetworkConstants.urlScheme
+        urlComponents.host  = NetworkConstants.urlHost
+        urlComponents.path = NetworkConstants.urlPathNFT + "\(id)"
         guard let url = urlComponents.url else {
             fatalError("Failed to create URL")
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("107f0274-8faf-4343-b31f-c12b62673e2f", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        request.setValue(NetworkConstants.tokenKey, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         return request
     }
 }

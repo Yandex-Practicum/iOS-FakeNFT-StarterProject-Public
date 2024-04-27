@@ -46,9 +46,9 @@ final class EditProfileService {
     //MARK: - Private Methods
     private func makePutRequest(with profile: EditProfile) -> URLRequest? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host  = "d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net"
-        urlComponents.path = "/api/v1/profile/1"
+        urlComponents.scheme = NetworkConstants.urlScheme
+        urlComponents.host  = NetworkConstants.urlHost
+        urlComponents.path = NetworkConstants.urlPath
         
         guard let url = urlComponents.url else {
             fatalError("Failed to create URL")
@@ -57,7 +57,7 @@ final class EditProfileService {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue("107f0274-8faf-4343-b31f-c12b62673e2f", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        request.setValue(NetworkConstants.tokenKey, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
         var profileData: String = ""
         for like in profile.likes ?? [] {

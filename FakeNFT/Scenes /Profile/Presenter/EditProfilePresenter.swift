@@ -54,9 +54,13 @@ extension EditProfilePresenter: EditProfilePresenterProtocol {
                 case .success(let profile):
                     self?.delegate?.profileDidUpdate(profile: profile, newAvatarURL: newAvatarURL)
                 case .failure(let error):
-                    print("UpdateProfile error")
+                    self?.handleError(error)
                 }
             }
         }
     }
+    func handleError(_ error: Error) {
+        print("UpdateProfile error")
+    }
+    
 }

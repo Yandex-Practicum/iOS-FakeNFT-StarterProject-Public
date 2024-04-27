@@ -33,7 +33,6 @@ final class ProfilePresenter {
     // MARK: - Private Properties
     private var profile: Profile?
     private let profileService = ProfileService.shared
-    private let tokenKey = "107f0274-8faf-4343-b31f-c12b62673e2f"
 }
 
 // MARK: - ProfilePresenterProtocol

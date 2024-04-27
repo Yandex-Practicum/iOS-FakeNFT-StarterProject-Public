@@ -15,7 +15,6 @@ final class ProfileService {
     private var urlSession = URLSession.shared
     private var token: String?
     private var urlSessionTask: URLSessionTask?
-    private let tokenKey = "107f0274-8faf-4343-b31f-c12b62673e2f"
     private (set) var profile: Profile?
     
     // MARK: - Initialization
@@ -61,9 +60,9 @@ final class ProfileService {
     //MARK: - Private Methods
     private func makeFetchProfileRequest() -> URLRequest? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host  = "d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net"
-        urlComponents.path = "/api/v1/profile/1"
+        urlComponents.scheme = NetworkConstants.urlScheme
+        urlComponents.host  = NetworkConstants.urlHost
+        urlComponents.path = NetworkConstants.urlPath
         
         guard let url = urlComponents.url else {
             fatalError("Failed to create URL")
@@ -74,7 +73,7 @@ final class ProfileService {
         request.httpMethod = "GET"
         
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue(tokenKey, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        request.setValue(NetworkConstants.tokenKey, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         return request
     }
 }
