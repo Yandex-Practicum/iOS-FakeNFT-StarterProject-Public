@@ -12,6 +12,7 @@ protocol ProfilePresenterDelegate: AnyObject {
     func goToFavoriteNFT(with nftID: [String], and likedNFT: [String])
     func goToEditProfile(profile: Profile)
     func goToAboutTheDeveloper ()
+    func didTapWebsite(websiteAdres: String)
     
 }
 
@@ -23,6 +24,7 @@ protocol ProfilePresenterProtocol: AnyObject {
     func updateUserProfile(profile: Profile)
     func viewWillAppear()
     func didTapAboutTheDeveloper()
+    func didTapWebsite(websiteAdres: String)
 }
 
 final class ProfilePresenter {
@@ -41,7 +43,6 @@ extension ProfilePresenter: ProfilePresenterProtocol {
         delegate?.goToAboutTheDeveloper()
     }
     
-    
     func didTapMyNFT() {
         let nftID = profile?.nfts ?? []
         let likedNFT = profile?.likes ?? []
@@ -58,6 +59,10 @@ extension ProfilePresenter: ProfilePresenterProtocol {
         if let profile = profile {
             delegate?.goToEditProfile(profile: profile)
         }
+    }
+    
+    func didTapWebsite(websiteAdres: String) {
+        delegate?.didTapWebsite(websiteAdres: websiteAdres)
     }
     
     func updateUserProfile(profile: Profile) {

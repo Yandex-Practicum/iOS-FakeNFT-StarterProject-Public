@@ -26,6 +26,7 @@ final class ProfileViewController: UIViewController {
     private let tableСell = ["Мой NFT", "Избранные NFT", "О разработчике"]
     private var myNFTCount = 0
     private var favoritesNFTCount = 0
+    private var websiteAdres = ""
     private let profileService = ProfileService.shared
     
     private lazy var editButton: UIBarButtonItem = {
@@ -66,6 +67,12 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.sfProRegular15
         label.textColor = UIColor(named: "ypBlueUn")
+        let action = UITapGestureRecognizer(
+            target: self,
+            action: #selector(goToWebsiteTap(_:))
+        )
+        label.addGestureRecognizer(action)
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -117,6 +124,11 @@ final class ProfileViewController: UIViewController {
     //MARK: - Action
     @objc func editButtonTap() {
         presenter?.didTapEditProfile()
+    }
+    
+    @objc func goToWebsiteTap(_ sender: UITapGestureRecognizer) {
+        presenter?.didTapWebsite(websiteAdres: websiteAdres)
+        
     }
     
     //MARK: - Lifecycle
@@ -238,6 +250,7 @@ extension ProfileViewController: ProfileViewControllerProtocol {
             updateAvatar(url: avatarURL)
             myNFTCount = profile.nfts.count
             favoritesNFTCount = profile.likes.count
+            websiteAdres = profile.website
             profileTableView.reloadData()
         } else {
             nameLabel.text = ""
@@ -267,7 +280,14 @@ extension ProfileViewController: ProfilePresenterDelegate {
     func goToAboutTheDeveloper() {
         let aboutDeveloperViewController = SFSafariViewController(url: URL(string: NetworkConstants.urlAboutTheDeveloper)!)
         aboutDeveloperViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(aboutDeveloperViewController, animated: true)
+        self.navigationController?.pushViewController(aboutDeveloperViewController, animated: true)
+    }
+    
+    func didTapWebsite(websiteAdres: String) {
+        guard let websiteURL = URL(string: websiteAdres) else {return}
+        let websiteViewController = SFSafariViewController(url: websiteURL)
+        websiteViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(websiteViewController, animated: true)
     }
     
     func goToMyNFT(with nftID: [String], and likedNFT: [String]) {
