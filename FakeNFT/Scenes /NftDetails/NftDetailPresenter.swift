@@ -52,7 +52,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         case .failed(let error):
             let errorModel = makeErrorModel(error)
             view?.hideLoading()
-            view?.showError(errorModel)
+            view?.showError(with: errorModel)
         }
     }
     

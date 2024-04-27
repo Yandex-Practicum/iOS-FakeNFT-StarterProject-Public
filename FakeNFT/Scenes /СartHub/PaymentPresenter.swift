@@ -99,7 +99,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
                 }
             case .failure(let error):
                 let errorModel = errorModel(error)
-                self.viewController?.showError(errorModel)
+                self.viewController?.showError(with: errorModel)
             }
         }
     }
@@ -153,7 +153,7 @@ final class PaymentPresenter: PaymentPresenterProtocol {
     
     private func getNFTSIds() -> [String] {
         var ids: [String] = []
-        for nft in cartService.cart {
+        for nft in cartService.cartItems {
             ids.append(nft.id)
         }
         return ids

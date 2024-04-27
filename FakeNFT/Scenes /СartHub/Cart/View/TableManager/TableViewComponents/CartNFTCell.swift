@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol CartNFTCellDelegate: AnyObject {
-    func deleteNFTButtonDidTapped(id: String, imageURL: String, returnHandler: ((Bool) -> Void)?)
+    func deleteNFTButtonDidTapped(with id: String, imageURL: String, returnHandler: ((Bool) -> Void)?)
 }
 
 final class CartNFTCell: UITableViewCell, ReuseIdentifying {
@@ -126,7 +126,11 @@ final class CartNFTCell: UITableViewCell, ReuseIdentifying {
     
     @objc private func deleteButtonTapped() {
         guard let cartCellModel else { return }
-        delegate?.deleteNFTButtonDidTapped(id: cartCellModel.id, imageURL: cartCellModel.imageURL?.absoluteString ?? "", returnHandler: nil)
+        self.delegate?.deleteNFTButtonDidTapped(
+            with: cartCellModel.id,
+            imageURL: cartCellModel.imageURL?.absoluteString ?? "", 
+            returnHandler: nil
+        )
     }
 }
 

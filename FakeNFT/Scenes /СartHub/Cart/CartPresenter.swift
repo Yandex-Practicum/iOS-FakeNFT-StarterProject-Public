@@ -12,8 +12,9 @@ protocol CartPresenterProtocol {
     var navigationController: UINavigationController? { get set }
     var cellsModels: [CartCellModel] { get }
     
-    func viewWillAppear()
     func viewDidLoad()
+    func viewWillAppear()
+    
     func deleteNFT()
     func didSelectCellToDelete(id: String)
     func toPaymentButtonTapped()
@@ -22,24 +23,25 @@ protocol CartPresenterProtocol {
 }
 
 final class CartPresenter: CartPresenterProtocol {
+    
+    
     weak var viewController: CartViewProtocol?
     weak var navigationController: UINavigationController?
     
     // MARK: - Parameters
-    
     private let cartService: CartServiceProtocol
     private let userDefaults: UserDefaultsProtocol
     private let router: CartRouterProtocol
     
     weak var view: CartViewProtocol?
     
-    var cellsModels: [CartCellModel] = []
+    private(set) var cellsModels: [CartCellModel] = []
     
     private var choosedNFTId: String?
     
     private var currentState: CartViewState = .empty {
         didSet {
-            viewControllerShouldChangeView()
+            self.viewControllerShouldChangeView()
         }
     }
     
@@ -51,7 +53,7 @@ final class CartPresenter: CartPresenterProtocol {
     }()
     
     private var nfts: [NFT] {
-        return cartService.cart
+        return cartService.cartItems
     }
     
     private var currentCartSortState = CartSortState.name.rawValue
@@ -65,17 +67,31 @@ final class CartPresenter: CartPresenterProtocol {
         cartService: CartServiceProtocol,
         router: CartRouterProtocol
     ) {
-        self.userDefaults = userDefaults
-        self.cartService = cartService
-        self.router = router
+        self.userDefaults   = userDefaults
+        self.cartService    = cartService
+        self.router         = router
     }
     
     // MARK: - Public Methods
+    
+    func viewDidLoad() {
+        self.currentState = .empty
+    }
+    
     func viewWillAppear() {
-        let count = nfts.count
+        if (self.currentState == .empty ||
+            self.currentState == .error) {
+            self.currentState = .loading
+        }
+    }
+    
+    func refreshData() {
+        let count = self.nfts.count
         let totalPrice = calculateTotalPrice()
         view?.updatePayView(count: count, price: totalPrice)
-        checkViewState()
+        
+//         checkViewState()
+        
         if let savedSortState = userDefaults.string(forKey: Constants.cartSortStateKey) {
             currentCartSortState = savedSortState
         }
@@ -85,21 +101,26 @@ final class CartPresenter: CartPresenterProtocol {
     }
     
     func deleteNFT() {
-        guard let choosedNFTId else { return }
-        cartService.removeFromCart(choosedNFTId) { [weak self] in
-            guard let self,
-                  let index = cellsModels.firstIndex(where: { $0.id == choosedNFTId })
-            else { return }
-            checkViewState()
-            cellsModels.remove(at: index)
-            view?.didDeleteNFT(for: IndexPath(row: index, section: 0))
-            view?.updatePayView(count: nfts.count, price: calculateTotalPrice())
-            self.choosedNFTId = nil
+        guard let choosedNFTId,
+              let index = cellsModels.firstIndex(where: { $0.id == choosedNFTId }) else { return }
+        
+        self.cartService.removeFromCart(with: choosedNFTId) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                self.view?.didDeleteNFT(for: IndexPath(row: index, section: 0))
+                self.view?.updatePayView(count: nfts.count, price: calculateTotalPrice())
+                self.cellsModels.remove(at: index)
+                self.choosedNFTId = nil
+                self.checkViewState()
+            case .failure(let error):
+                self.deleteItemRequestError(with: error)
+            }
         }
     }
     
     func didSelectCellToDelete(id: String) {
-        choosedNFTId = id
+        self.choosedNFTId = id
     }
     
     func toPaymentButtonTapped() {
@@ -133,16 +154,44 @@ final class CartPresenter: CartPresenterProtocol {
     }
     
     func refreshTableViewCalled() {
-        checkViewState()
-        view?.reloadTableView()
-    }
-    
-    func viewDidLoad() {
-        let newCount = cartService.cart.count
-        cartCountDidChanged(newCount)
+        self.currentState = .loading
     }
     
     // MARK: - Private Methods
+    private func loadItems(){
+        self.cartService.fetchData(with: "1") { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let nfts):
+                self.currentState = (nfts.isEmpty ? .empty : .loaded)
+            case .failure(let error):
+                self.loadingRequestError(with: error)
+            }
+        }
+    }
+    
+    private func loadingRequestError(with error: Error) {
+        self.currentState = .error
+        
+        guard let errorModel = self.view?.errorModel(error, action: { [weak self] in
+            guard let self = self else { return }
+            self.currentState = .loading
+        }) else { return }
+        
+        self.view?.showError(with: errorModel)
+    }
+    
+    private func deleteItemRequestError(with error: Error) {
+        self.currentState = .error
+        
+        guard let errorModel = self.view?.errorModel(error, action: { [weak self] in
+            guard let self = self else { return }
+            self.deleteNFT()
+        }) else { return }
+        
+        self.view?.showError(with: errorModel)
+    }
+    
     private func calculateTotalPrice() -> String {
         let price = nfts.reduce(into: 0) { partialResult, nft in
             partialResult += nft.price
@@ -154,10 +203,18 @@ final class CartPresenter: CartPresenterProtocol {
     
     private func viewControllerShouldChangeView() {
         switch currentState {
+        case .error:
+            self.view?.removeLoadingIndicator()
         case .empty:
-            view?.displayEmptyCart()
+            self.view?.removeLoadingIndicator()
+            self.view?.displayEmptyCart()
+        case .loading:
+            self.view?.displayLoadingIndicator()
+            self.loadItems()
         case .loaded:
-            view?.displayLoadedCart()
+            self.view?.removeLoadingIndicator()
+            self.refreshData()
+            self.view?.displayLoadedCart()
         }
     }
     
@@ -219,7 +276,7 @@ final class CartPresenter: CartPresenterProtocol {
     }
     
     private func checkNeedSwitchToCatalogVC() {
-        if paymentFlowStarted && cartService.cart.isEmpty {
+        if paymentFlowStarted && cartService.cartItems.isEmpty {
             paymentFlowStarted = false
             view?.switchToCatalogVC()
         }
@@ -229,18 +286,22 @@ final class CartPresenter: CartPresenterProtocol {
 // MARK: - CartServiceDelegate
 
 extension CartPresenter: CartServiceDelegate {
+    
     func cartCountDidChanged(_ newCount: Int) {
         let badgeValue = newCount > 0 ? String(newCount) : nil
-        view?.updateTabBarItem(newValue: badgeValue)
+        self.view?.updateTabBarItem(newValue: badgeValue)
     }
 }
 
 // MARK: - CartViewState
 
 extension CartPresenter {
+    
     enum CartViewState {
-        case empty
+        case loading
         case loaded
+        case empty
+        case error
     }
 }
 

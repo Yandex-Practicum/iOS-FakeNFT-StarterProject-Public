@@ -8,20 +8,25 @@
 import Foundation
 
 final class CartService: CartServiceProtocol {
+
     weak var delegate: CartServiceDelegate?
     
-    private var _cart: [NFT] = []
+    private(set) var cartItems: [NFT] = []
     private let cartQueue = DispatchQueue(label: "com.FakeNFT.cartQueue", attributes: .concurrent)
     
     var cart: [NFT] {
-        return cartQueue.sync { _cart }
+        return cartQueue.sync { cartItems }
+    }
+    
+    func fetchData(with id: String, completion: @escaping (Result<[NFT], any Error>) -> Void) {
+        
     }
     
     func addToCart(_ nft: NFT, completion: (() -> Void)? = nil) {
         cartQueue.async(flags: .barrier) { [weak self] in
             guard let self else { return }
-            self._cart.append(nft)
-            let cartCount = self._cart.count
+            self.cartItems.append(nft)
+            let cartCount = self.cartItems.count
             DispatchQueue.main.async {
                 completion?()
                 self.delegate?.cartCountDidChanged(cartCount)
@@ -29,13 +34,13 @@ final class CartService: CartServiceProtocol {
         }
     }
     
-    func removeFromCart(_ id: String, completion: (() -> Void)? = nil) {
+    func removeFromCart(with id: String, completion: (() -> Void)? = nil) {
         cartQueue.async(flags: .barrier) { [weak self] in
             guard let self,
-                  let index = self._cart.firstIndex( where: { $0.id == id })
+                  let index = self.cartItems.firstIndex( where: { $0.id == id })
             else { return }
-            self._cart.remove(at: index)
-            let cartCount = self._cart.count
+            self.cartItems.remove(at: index)
+            let cartCount = self.cartItems.count
             DispatchQueue.main.async {
                 completion?()
                 self.delegate?.cartCountDidChanged(cartCount)
@@ -48,8 +53,8 @@ extension CartService {
     func removeAll(completion: (() -> Void)?) {
         cartQueue.async(flags: .barrier) { [weak self] in
             guard let self else { return }
-            self._cart.removeAll()
-            let cartCount = self._cart.count
+            self.cartItems.removeAll()
+            let cartCount = self.cartItems.count
             DispatchQueue.main.async {
                 completion?()
                 self.delegate?.cartCountDidChanged(cartCount)

@@ -7,12 +7,16 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
-protocol CartViewProtocol: AnyObject {
+protocol CartViewProtocol: AnyObject,
+                           ErrorView {
     func updatePayView(count: Int, price: String)
     func didDeleteNFT(for indexPath: IndexPath)
     func displayEmptyCart()
     func displayLoadedCart()
+    func displayLoadingIndicator()
+    func removeLoadingIndicator()
     func updateTabBarItem(newValue: String?)
     func showAlertController(alerts: [AlertModel])
     func reloadTableView()
@@ -20,6 +24,7 @@ protocol CartViewProtocol: AnyObject {
 }
 
 final class CartViewController: UIViewController {
+    
     // MARK: - Private Properties
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -115,20 +120,18 @@ final class CartViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureView()
         tableView.register(CartNFTCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         presenter.viewController = self
         deleteNFTView.delegate = self
-        presenter.viewDidLoad()
+        self.presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-        tableView.reloadData()
+        self.presenter.viewWillAppear()
     }
     
     // MARK: - Private Methods
@@ -136,7 +139,6 @@ final class CartViewController: UIViewController {
         view.backgroundColor = .yaBlackDayNight
         [tableView, payBackroundView, emptyPlaceholderLabel].forEach { view.addSubview($0) }
         [nftCounterLabel, totalPriceLabel, toPaymentButton].forEach { payBackroundView.addSubview($0) }
-        
         sortNavigationButton.tintColor = .yaWhiteDayNight
         navigationController?.navigationBar.tintColor = .yaWhiteDayNight
         navigationItem.rightBarButtonItem = sortNavigationButton
@@ -194,6 +196,106 @@ final class CartViewController: UIViewController {
     }
 }
 
+// MARK: - CartViewProtocol
+extension CartViewController: CartViewProtocol {
+    
+    func updatePayView(count: Int, price: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.nftCounterLabel.text = "\(count) NFT"
+            self.totalPriceLabel.text = "\(price) ETH"
+        }
+    }
+    
+    func didDeleteNFT(for indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.disableBlurEffect()
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    func displayEmptyCart() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.isHidden = true
+            self.payBackroundView.isHidden = true
+            emptyPlaceholderLabel.isHidden = false
+            
+            if #available(iOS 16.0, *) {
+                sortNavigationButton.isHidden = true
+            }
+            
+            self.reloadTableView()
+        }
+    }
+    
+    func displayLoadedCart() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            tableView.isHidden = false
+            payBackroundView.isHidden = false
+            emptyPlaceholderLabel.isHidden = true
+            if #available(iOS 16.0, *) {
+                sortNavigationButton.isHidden = false
+            }
+            reloadTableView()
+        }
+    }
+    
+    func displayLoadingIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.view.endEditing(true)
+            ProgressHUD.colorBackground = .lightGray
+            ProgressHUD.animationType   = .circleStrokeSpin
+            ProgressHUD.show(interaction: false)
+        }
+    }
+    
+    func removeLoadingIndicator() {
+        DispatchQueue.main.async {
+            ProgressHUD.dismiss()
+        }
+    }
+    
+    func updateTabBarItem(newValue: String?) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tabBarItem.badgeValue = newValue
+        }
+    }
+    
+    func showAlertController(alerts: [AlertModel]) {
+        let alertController = UIAlertController(
+            title:TextLabels.CartViewController.alertTitle,
+            message: nil,
+            preferredStyle: .actionSheet)
+        
+        for alert in alerts {
+            let action = UIAlertAction(title: alert.title, style: alert.style) { _ in
+                if let completion = alert.completion {
+                    completion()
+                }
+            }
+            alertController.addAction(action)
+        }
+        present(alertController, animated: true)
+    }
+    
+    func reloadTableView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.tableView.refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+        }
+    }
+    
+    func switchToCatalogVC() {
+        self.tabBarController?.selectedIndex = 1
+    }
+}
+
 // MARK: - UITableViewDataSource
 
 extension CartViewController: UITableViewDataSource {
@@ -229,7 +331,7 @@ extension CartViewController: UITableViewDelegate {
                 
                 let cellModel = presenter.cellsModels[indexPath.row]
                 deleteNFTButtonDidTapped(
-                    id: cellModel.id,
+                    with: cellModel.id,
                     imageURL: cellModel.imageURL?.absoluteString ?? "",
                     returnHandler: completionHandler)
             }
@@ -238,89 +340,38 @@ extension CartViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - CartViewControllerProtocol
-
-extension CartViewController: CartViewProtocol {
-    func updatePayView(count: Int, price: String) {
-        nftCounterLabel.text = "\(count) NFT"
-        totalPriceLabel.text = "\(price) ETH"
-    }
-    
-    func didDeleteNFT(for indexPath: IndexPath) {
-        disableBlurEffect()
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-    
-    func displayEmptyCart() {
-        tableView.isHidden = true
-        payBackroundView.isHidden = true
-        emptyPlaceholderLabel.isHidden = false
-        
-        if #available(iOS 16.0, *) {
-            sortNavigationButton.isHidden = true
-        }
-        tableView.refreshControl?.endRefreshing()
-        tableView.reloadData()
-    }
-    
-    func displayLoadedCart() {
-        tableView.isHidden = false
-        payBackroundView.isHidden = false
-        emptyPlaceholderLabel.isHidden = true
-        if #available(iOS 16.0, *) {
-            sortNavigationButton.isHidden = false
-        }
-        tableView.refreshControl?.endRefreshing()
-    }
-    
-    func updateTabBarItem(newValue: String?) {
-        tabBarItem.badgeValue = newValue
-    }
-    
-    func showAlertController(alerts: [AlertModel]) {
-        let alertController = UIAlertController(
-            title:TextLabels.CartViewController.alertTitle,
-            message: nil,
-            preferredStyle: .actionSheet)
-        
-        for alert in alerts {
-            let action = UIAlertAction(title: alert.title, style: alert.style) { _ in
-                if let completion = alert.completion {
-                    completion()
-                }
-            }
-            alertController.addAction(action)
-        }
-        present(alertController, animated: true)
-    }
-    
-    func reloadTableView() {
-        tableView.reloadData()
-    }
-    
-    func switchToCatalogVC() {
-        tabBarController?.selectedIndex = 1
-    }
-}
-
 // MARK: - CartNFTCellDelegate
 extension CartViewController: CartNFTCellDelegate {
-    func deleteNFTButtonDidTapped(id: String, imageURL: String, returnHandler: ((Bool) -> Void)?) {
-        presenter.didSelectCellToDelete(id: id)
-        deleteNFTView.setImage(imageURL)
-        deleteNFTView.setReturnHandler(returnHandler)
-        enableBlurEffect()
-        blurredView.contentView.addSubview(deleteNFTView)
-        NSLayoutConstraint.activate([
-            deleteNFTView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            deleteNFTView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+    
+    func deleteNFTButtonDidTapped(with id: String,
+                                  imageURL: String,
+                                  returnHandler: ((Bool) -> Void)?) {
+        self.presenter.didSelectCellToDelete(id: id)
+        self.showDeleteDialogView(with: id,
+                                  imageURL: imageURL,
+                                  returnHandler: returnHandler)
+    }
+    
+    private func showDeleteDialogView(with id: String,
+                                      imageURL: String,
+                                      returnHandler: ((Bool) -> Void)?) {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.deleteNFTView.setImage(imageURL)
+            self.deleteNFTView.setReturnHandler(returnHandler)
+            self.enableBlurEffect()
+            self.blurredView.contentView.addSubview(deleteNFTView)
+            NSLayoutConstraint.activate([
+                self.deleteNFTView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                self.deleteNFTView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+        }
     }
     
     private func enableBlurEffect() {
-            blurredView.frame = view.bounds
-            view.addSubview(blurredView)
-        }
+        blurredView.frame = view.bounds
+        view.addSubview(blurredView)
+    }
     
     private func disableBlurEffect() {
         blurredView.removeFromSuperview()
@@ -330,6 +381,7 @@ extension CartViewController: CartNFTCellDelegate {
 
 // MARK: - DeleteNFTViewDelegate
 extension CartViewController: DeleteNFTViewDelegate {
+    
     func deleteButtonTapped() {
         presenter.deleteNFT()
     }
