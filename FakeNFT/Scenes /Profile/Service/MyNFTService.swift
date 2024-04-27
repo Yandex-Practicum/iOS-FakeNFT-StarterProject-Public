@@ -52,9 +52,7 @@ final class ProfileNFTService {
         urlComponents.scheme = NetworkConstants.urlScheme
         urlComponents.host  = NetworkConstants.urlHost
         urlComponents.path = NetworkConstants.urlPathNFT + "\(id)"
-        guard let url = urlComponents.url else {
-            fatalError("Failed to create URL")
-        }
+        guard let url = urlComponents.url else {return nil}
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")

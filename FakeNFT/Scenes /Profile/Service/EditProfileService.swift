@@ -50,9 +50,7 @@ final class EditProfileService {
         urlComponents.host  = NetworkConstants.urlHost
         urlComponents.path = NetworkConstants.urlPath
         
-        guard let url = urlComponents.url else {
-            fatalError("Failed to create URL")
-        }
+        guard let url = urlComponents.url else {return nil}
         
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
