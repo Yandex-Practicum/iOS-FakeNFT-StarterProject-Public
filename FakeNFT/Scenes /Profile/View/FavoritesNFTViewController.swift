@@ -17,7 +17,6 @@ final class FavoritesNFTViewController: UIViewController {
     var presenter: FavoritesNFTPresenter?
     
     //MARK:  - Private Properties
-    private var myNFTs: [NFT] = []
     private var nftID: [String]
     private var likedNFT: [String]
     private let editProfileService = EditProfileService.shared

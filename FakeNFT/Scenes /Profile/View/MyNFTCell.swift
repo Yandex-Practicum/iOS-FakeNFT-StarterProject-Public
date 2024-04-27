@@ -91,7 +91,7 @@ final class MyNFTCell: UITableViewCell {
     private lazy var fromStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 4
-        stackView.distribution = .equalCentering
+        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -169,7 +169,7 @@ final class MyNFTCell: UITableViewCell {
     }
     
     private func customizingTheLayoutOfScreenElements() {
-        [nftImage, infoStackView, likeButton, priceStackView].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
+        [nftImage, infoStackView, likeButton, priceStackView, fromStackView, nameLabel].forEach {$0.translatesAutoresizingMaskIntoConstraints = false}
         
         NSLayoutConstraint.activate([
             nftImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -190,6 +190,9 @@ final class MyNFTCell: UITableViewCell {
             priceStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             priceStackView.trailingAnchor.constraint(equalTo: infoStackView.trailingAnchor),
             priceStackView.topAnchor.constraint(equalTo: infoStackView.topAnchor, constant: 10),
+            
+            fromStackView.widthAnchor.constraint(equalToConstant: 58),
+            nameLabel.widthAnchor.constraint(equalToConstant: 78)
         ])
     }
 }

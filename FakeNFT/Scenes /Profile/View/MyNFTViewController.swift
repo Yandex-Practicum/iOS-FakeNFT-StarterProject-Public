@@ -21,7 +21,6 @@ final class MyNFTViewController: UIViewController {
     var presenter: MyNFTPresenter?
     
     //MARK:  - Private Properties
-    private var myNFTs: [NFT] = []
     private var nftID: [String]
     private var likedNFT: [String]
     private let profileService = ProfileService.shared
@@ -127,6 +126,7 @@ final class MyNFTViewController: UIViewController {
             let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
             presenter?.nfts = applySortType(by: type ?? .rating)
             myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            
         }
     }
     
@@ -169,10 +169,7 @@ final class MyNFTViewController: UIViewController {
     }
 
     private func applySortType(by type: Filter) -> [NFT] {
-        guard let nfts = presenter?.nfts else {
-            return []
-        }
-
+        guard let nfts = presenter?.nfts else {return []}
         switch type {
         case .name:
             return nfts.sorted(by: { $0.name < $1.name })
@@ -242,6 +239,7 @@ extension MyNFTViewController: MyNFTViewControllerProtocol {
         }
         
         presenter.nfts = nfts
+        print("NFT!!!!! \(presenter.nfts)")
         DispatchQueue.main.async {
             self.myNFTTableView.reloadData()
         }
