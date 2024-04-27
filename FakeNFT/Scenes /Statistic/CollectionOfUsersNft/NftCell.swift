@@ -2,8 +2,8 @@ import UIKit
 
 //MARK: - Protocol
 protocol NftCellDelegate: AnyObject {
-    func isLiked(with id: String) -> Bool
-    func isOnBasket(with id: String) -> Bool
+    func isLiked() -> Bool
+    func isOnBasket() -> Bool
 }
 
 //MARK: - NftCell
@@ -12,9 +12,10 @@ final class NftCell: UICollectionViewCell {
     //MARK: - Properties
     static let identifier = "NftCollectionCell"
     weak var delegate: NftCellDelegate?
-    private var id: String = ""
+    private var nft: NftModel?
     private lazy var nftCellFabric: NftCellFabric = {
-        let nftCellFabric = NftCellFabric(with: id)
+        
+        let nftCellFabric = NftCellFabric(nft: nft!)
         return nftCellFabric
     }()
     
@@ -42,7 +43,6 @@ final class NftCell: UICollectionViewCell {
         let nftInfoStackView = UIStackView()
         nftInfoStackView.axis = .vertical
         nftInfoStackView.spacing = 4
-//        nftInfoStackView.distribution = .fillEqually
         return nftInfoStackView
     }()
 
@@ -56,7 +56,6 @@ final class NftCell: UICollectionViewCell {
         let bottomStackView = UIStackView()
         bottomStackView.axis = .horizontal
         bottomStackView.spacing = 4
-//        bottomStackView.distribution = .fillEqually
         return bottomStackView
     }()
 
@@ -65,7 +64,6 @@ final class NftCell: UICollectionViewCell {
         let leftStackView = UIStackView()
         leftStackView.axis = .vertical
         leftStackView.spacing = 4
-//        leftStackView.distribution = .fillEqually
         return leftStackView
     }()
 
@@ -122,6 +120,11 @@ extension NftCell {
         
         backgroundColor = UIColor(resource: .ypWhite)
         activateConstraints()
+    }
+    
+    func setNft(by nft: NftModel) {
+        
+        self.nft = nft
     }
     
     func activateConstraints() {
@@ -201,7 +204,7 @@ extension NftCell {
     }
     
     func configureCell(with data: NftModel) {
-        id = data.id
+        nft = data
         
         setAvatar()
         setRating()
@@ -219,33 +222,38 @@ extension NftCell {
         
         let placeholderAvatar = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(UIColor(resource: .ypGrayUn), renderingMode: .alwaysOriginal)
         
-        let avatarUrl = nftCellFabric.getAvatar(with: id)
+        let avatarUrl = nftCellFabric.getAvatar()
         nftImageView.kf.setImage(with: avatarUrl, placeholder: placeholderAvatar)
     }
     
     func setRating() {
-        let ratingNft = nftCellFabric.getRating(with: id)
+        
+        let ratingNft = nftCellFabric.getRating()
         nftRating.rating = ratingNft
         nftRating.setStars()
     }
     
     func setName() {
-        let name = nftCellFabric.getName(with: id)
+        
+        let name = nftCellFabric.getName()
         nameLabel.text = name
     }
     
     func setCost() {
-        let cost = nftCellFabric.getCost(with: id)
+        
+        let cost = nftCellFabric.getCost()
         costLabel.text = cost
     }
     
     func setLike() {
-        let isLike = nftCellFabric.isLiked(with: id)
+        
+        let isLike = nftCellFabric.isLiked()
         likeImageView.isHighlighted = isLike ? true : false
     }
     
     func setBasket() {
-        let isBasket = nftCellFabric.isOnBasket(with: id)
+        
+        let isBasket = nftCellFabric.isOnBasket()
         basketImageView.isHighlighted = isBasket ? false : true
     }
 }

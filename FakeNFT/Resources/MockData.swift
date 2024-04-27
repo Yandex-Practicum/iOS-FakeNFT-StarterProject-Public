@@ -1,5 +1,25 @@
 import Foundation
 
+struct LeaderBoardModel: Decodable {
+    let id: String
+    let name: String
+    let avatar: URL
+    let countOfNft: Int
+}
+
+struct NftModelMockData: Decodable {
+    
+    let id: String
+    let name: String
+    let images: [URL]
+    let price: String
+    let rating: String
+    
+    func getRating() -> Int {
+        Int(rating) ?? 0
+    }
+}
+
 final class MockData {
     
     static let shared = MockData()
@@ -42,40 +62,71 @@ final class MockData {
     private let website4 = URL(string: "https://practicum.yandex.ru/qa-automation-engineer-java/")!
     private let website5 = URL(string: "https://practicum.yandex.ru/algorithms/")!
     
-    private let nft1 = NftModel(
+    private let nft1 = NftModelMockData(
         id: "1",
         name: "April",
-        avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")!,
+        images: [
+            URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png")!
+        ],
         price: "4.5",
-        rating: 5)
-    private let nft2 = NftModel(
+        rating: "5")
+    private let nft2 = NftModelMockData(
         id: "2",
         name: "Aurora",
-        avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Aurora/1.png")!,
+        images: [
+            URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Aurora/1.png")!
+        ],
         price: "1.69",
-        rating: 4)
-    private let nft3 = NftModel(
+        rating: "4")
+    private let nft3 = NftModelMockData(
         id: "3",
         name: "Bimbo",
-        avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Bimbo/1.png")!,
+        images: [
+            URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Bimbo/1.png")!
+        ],
         price: "6.02",
-        rating: 4)
-    private let nft4 = NftModel(
+        rating: "4")
+    private let nft4 = NftModelMockData(
         id: "4",
         name: "Biscuit",
-        avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Biscuit/1.png")!,
+        images: [
+            URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Biscuit/1.png")!
+        ],
         price: "5.95",
-        rating: 5)
-    private let nft5 = NftModel(
+        rating: "5")
+    private let nft5 = NftModelMockData(
         id: "5",
         name: "Breena",
-        avatar: URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Breena/1.png")!,
+        images: [
+            URL(string: "https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Breena/1.png")!
+        ],
         price: "7.05",
-        rating: 2)
+        rating: "2")
     
     var leaderboardStatistic: [LeaderBoardModel] = []
     var userCardInfo: [ProfileModel] = []
-    var collectionOfNft: [NftModel] = []
+    var collectionOfNft: [NftModelMockData] = []
+    
+    var placeholderUser: UsersModel = UsersModel(
+        id: "1",
+        name: "",
+        avatar: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsurgassociates.com%2Four-physicians%2Fdr-mohammad-r-siadati%2F610-6104451_image-placeholder-png-user-profile-placeholder-image-png%2F&psig=AOvVaw3XOxk-pmGNiQwY2NFArOD-&ust=1713977364160000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiynbHl2IUDFQAAAAAdAAAAABAE",
+        rating: "",
+        website: "",
+        nfts: [],
+        description: ""
+    )
+    
+    var placeholderNft: NftModel = NftModel(
+        id: "1",
+        name: "",
+        images: [URL(string: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsurgassociates.com%2Four-physicians%2Fdr-mohammad-r-siadati%2F610-6104451_image-placeholder-png-user-profile-placeholder-image-png%2F&psig=AOvVaw3XOxk-pmGNiQwY2NFArOD-&ust=1713977364160000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiynbHl2IUDFQAAAAAdAAAAABAE")],
+        price: 0,
+        rating: 0,
+        createdAt: "",
+        description: "",
+        author: ""
+    )
     
     init() {
         setMockData()
@@ -94,7 +145,7 @@ final class MockData {
                 ProfileModel(id: $0.0.id,
                              name: $0.0.name,
                              avatar: $0.0.avatar,
-                             description: $0.1, 
+                             description: $0.1,
                              website: $0.3,
                              countOfNft: $0.0.countOfNft)
             )

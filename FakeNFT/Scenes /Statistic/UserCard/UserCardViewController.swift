@@ -4,7 +4,6 @@ import SafariServices
 //MARK: - UserCardViewController
 final class UserCardViewController: UIViewController {
     
-    private var idUser: String
     private var userCardFabric: UserCardFabric
     private var servicesAssembly: ServicesAssembly
     
@@ -96,9 +95,8 @@ final class UserCardViewController: UIViewController {
     }()
     
     //MARK: init
-    init(idUser: String, servicesAssembly: ServicesAssembly) {
-        self.idUser = idUser
-        self.userCardFabric = UserCardFabric(with: idUser)
+    init(user: UsersModel, servicesAssembly: ServicesAssembly) {
+        self.userCardFabric = UserCardFabric(with: user)
         self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,14 +122,18 @@ final class UserCardViewController: UIViewController {
     
     @objc
     private func userWebsiteButtonAction() {
-        let url = getWebsiteUser(with: idUser)
+        guard let url = getWebsiteUser() else { return }
         let vcToPresent = SFSafariViewController(url: url)
         navigationController?.present(vcToPresent, animated: true)
     }
     
     @objc
     private func showUsersCollectionOfNft() {
-        let vc = CollectionOfUsersNftViewController(servicesAssembly: servicesAssembly)
+        let nfts = userCardFabric.getNfts()
+        print(nfts)
+        let vc = CollectionOfUsersNftViewController(
+            with: nfts,
+            servicesAssembly: servicesAssembly)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -252,48 +254,48 @@ extension UserCardViewController: UserCardProtocol {
     
     func loadData() {
         
-        getAvatar(with: idUser)
-        getName(with: idUser)
-        getDescription(with: idUser)
-        getCountOfNft(with: idUser)
+        getAvatar()
+        getName()
+        getDescription()
+        getCountOfNft()
     }
     
     @discardableResult
-    func getAvatar(with id: String) -> URL {
+    func getAvatar() -> URL? {
         
         let placeholderAvatar = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(UIColor(resource: .ypGrayUn), renderingMode: .alwaysOriginal)
         
-        let avatarUrl = userCardFabric.getAvatar(with: id)
+        let avatarUrl = userCardFabric.getAvatar()
         avatarImageView.kf.setImage(with: avatarUrl, placeholder: placeholderAvatar)
         return avatarUrl
     }
     
     @discardableResult
-    func getName(with id: String) -> String {
+    func getName() -> String {
         
-        let nameUser = userCardFabric.getName(with: id)
+        let nameUser = userCardFabric.getName()
         nameLabel.text = nameUser
         return nameUser
     }
     
     @discardableResult
-    func getDescription(with id: String) -> String {
+    func getDescription() -> String {
         
-        let descriptionUser = userCardFabric.getDescription(with: id)
+        let descriptionUser = userCardFabric.getDescription()
         descriptionLabel.text = descriptionUser
         return descriptionUser
     }
     
     @discardableResult
-    func getCountOfNft(with id: String) -> Int {
+    func getCountOfNft() -> String {
         
-        let countOfNft = userCardFabric.getCountOfNft(with: id)
-        countOfNftLabel.text = ("(\(countOfNft))")
+        let countOfNft = userCardFabric.getCountOfNft()
+        countOfNftLabel.text = (" \(countOfNft)")
         return countOfNft
     }
     
-    func getWebsiteUser(with id: String) -> URL {
+    func getWebsiteUser() -> URL? {
         
-        userCardFabric.getWebsiteUser(with: id)
+        userCardFabric.getWebsiteUser()
     }
 }

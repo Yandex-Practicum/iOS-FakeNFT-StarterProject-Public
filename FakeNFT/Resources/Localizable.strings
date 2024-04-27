@@ -11,3 +11,4 @@
 "Close" = "Закрыть";
 "Statistic.userCard.transitToUserWebsite" = "Перейти на сайт пользователя";
 "Statistic.userCard.collectionOfNft" = "Коллекция NFT";
+"Statistic.collectionsOfNft.emptyNfts" = "У пользователя отсутствуют NFT";

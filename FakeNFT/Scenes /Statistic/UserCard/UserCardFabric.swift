@@ -2,58 +2,52 @@ import Foundation
 
 protocol UserCardProtocol {
     
-    func getAvatar(with id: String) -> URL
-    func getName(with id: String) -> String
-    func getDescription(with id: String) -> String
-    func getWebsiteUser(with id: String) -> URL
-    func getCountOfNft(with id: String) -> Int
+    func getAvatar() -> URL?
+    func getName() -> String
+    func getDescription() -> String
+    func getWebsiteUser() -> URL?
+    func getCountOfNft() -> String
 }
 
 final class UserCardFabric {
     
     private let mockData = MockData.shared
-    private var profileUser: ProfileModel
+    private var profileUser: UsersModel
     
-    init(profileUser: ProfileModel) {
+    init(with profileUser: UsersModel) {
         self.profileUser = profileUser
-    }
-    
-    convenience init(with id: String) {
-        let user = MockData.shared.userCardInfo.first { model in
-            model.id == id
-        }
-        self.init(profileUser: user!)
     }
 }
 
 extension UserCardFabric: UserCardProtocol {
     
-//    func getProfileUser(with id: String) -> ProfileModel {
-//        //TODO: get profile user from network client
-//    }
-    
-    func getAvatar(with id: String) -> URL {
+    func getNfts() -> [String]? {
         
-        profileUser.avatar
+        profileUser.nfts
     }
     
-    func getName(with id: String) -> String {
+    func getAvatar() -> URL? {
+        
+        URL(string: profileUser.avatar)
+    }
+    
+    func getName() -> String {
         
         profileUser.name
     }
     
-    func getDescription(with id: String) -> String {
+    func getDescription() -> String {
         
         profileUser.description
     }
     
-    func getWebsiteUser(with id: String) -> URL {
+    func getWebsiteUser() -> URL? {
         
-        profileUser.website
+        URL(string: profileUser.website)
     }
     
-    func getCountOfNft(with id: String) -> Int {
+    func getCountOfNft() -> String {
         
-        profileUser.countOfNft
+        profileUser.rating
     }
 }

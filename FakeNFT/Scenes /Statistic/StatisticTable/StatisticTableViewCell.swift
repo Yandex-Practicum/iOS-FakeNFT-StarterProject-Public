@@ -5,7 +5,7 @@ final class StatisticTableViewCell: UITableViewCell {
     
     static let reusedIdentifier = "StatisticCell"
     
-    private var idUser: String = ""
+    private var user: UsersModel?
     
     private lazy var positionLabel: UILabel = {
         let positionLabel = UILabel()
@@ -51,9 +51,10 @@ final class StatisticTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func getUserId() -> String {
+    func getUser() -> UsersModel {
         
-        idUser
+        guard let user = user else { return MockData.shared.placeholderUser }
+        return user
     }
 }
 
@@ -105,14 +106,15 @@ extension StatisticTableViewCell {
         ])
     }
     
-    func loadData(with user: LeaderBoardModel, position: Int) {
+    func loadData(with user: UsersModel, position: Int) {
         
-        idUser = user.id
+        self.user = user
         positionLabel.text = String(position)
         nameLabel.text = user.name
-        countOfNftLabel.text = String(user.countOfNft)
+        countOfNftLabel.text = user.rating
         
         let placeholderAvatar = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(UIColor(resource: .ypGrayUn), renderingMode: .alwaysOriginal)
-        avatarImageView.kf.setImage(with: user.avatar, placeholder: placeholderAvatar)
+        let url = URL(string: user.avatar)
+        avatarImageView.kf.setImage(with: url, placeholder: placeholderAvatar)
     }
 }

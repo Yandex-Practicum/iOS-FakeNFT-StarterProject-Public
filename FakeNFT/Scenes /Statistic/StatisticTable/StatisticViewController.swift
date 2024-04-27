@@ -3,7 +3,7 @@ import UIKit
 //MARK: - StatisticViewController
 final class StatisticViewController: UIViewController {
     
-    private var mockData = MockData.shared
+//    private var mockData = MockData.shared
     let servicesAssembly: ServicesAssembly
     private var statisticFabric: StatisticFabric?
     
@@ -26,7 +26,7 @@ final class StatisticViewController: UIViewController {
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
-        statisticFabric = StatisticFabric(delegate: self)
+        statisticFabric = StatisticFabric(delegate: self, servicesAssembly: servicesAssembly)
     }
     
     required init?(coder: NSCoder) {
@@ -72,6 +72,31 @@ extension StatisticViewController {
         
         navigationController?.view.backgroundColor = UIColor(resource: .ypWhite)
         navigationItem.rightBarButtonItem = sortButton
+    }
+}
+
+//MARK: - Show Error
+extension StatisticViewController {
+    
+    private func makeErrorModel(_ error: Error) -> ErrorModel {
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+
+        let actionText = NSLocalizedString("Error.repeat", comment: "")
+        return ErrorModel(message: message, actionText: actionText) { [weak self] in
+            print("SHOW ERROR REPEAT")
+            self?.reloadFabric()
+            self?.tableView.reloadData()
+        }
+    }
+    
+    private func reloadFabric() {
+        statisticFabric = StatisticFabric(delegate: self, servicesAssembly: servicesAssembly)
     }
 }
 
@@ -142,9 +167,9 @@ extension StatisticViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let cell = tableView.cellForRow(at: indexPath) as? StatisticTableViewCell
+        guard let cell = tableView.cellForRow(at: indexPath) as? StatisticTableViewCell else { return }
         
-        let vc = UserCardViewController(idUser: cell?.getUserId() ?? "", servicesAssembly: servicesAssembly)
+        let vc = UserCardViewController(user: cell.getUser(), servicesAssembly: servicesAssembly)
         let viewToPresent = UINavigationController(rootViewController: vc)
         viewToPresent.modalPresentationStyle = .overFullScreen
         self.present(viewToPresent, animated: true)
@@ -152,9 +177,13 @@ extension StatisticViewController: UITableViewDelegate {
 }
 
 //MARK: - StatisticFabricDelegate
-extension StatisticViewController: StatisticFabricDelegate {
+extension StatisticViewController: StatisticFabricDelegate, ErrorView {
     
     func reloadData() {
         tableView.reloadData()
+    }
+    
+    func showError(with error: Error) {
+        self.showError(makeErrorModel(error))
     }
 }
