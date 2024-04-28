@@ -9,7 +9,7 @@ import UIKit
 
 protocol CartViewControllerProtocol: AnyObject {
     var presenter: CartPresenterProtocol? { get set }
-    var tableView: UITableView { get set }
+    func updateTable()
 }
 
 final class CartViewController: UIViewController & CartViewControllerProtocol {
@@ -19,7 +19,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     private let sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "sortButton.png")
+        let image = UIImage(named: "SortButton.png")
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(sortBttnTapped), for: .touchUpInside)
         return button
@@ -87,15 +87,15 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         let byRating = NSLocalizedString("Cart.sortByRating", comment: "")
         let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: byPrice, style: .default, handler: { [weak self] _ in
-            self?.presenter?.sortType = .byPrice
+            UserDefaults.standard.set("byPrice", forKey: "CartSorted")
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: byName, style: .default, handler: { [weak self] _ in
-            self?.presenter?.sortType = .byName
+            UserDefaults.standard.set("byName", forKey: "CartSorted")
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: byRating, style: .default, handler: { [weak self] _ in
-            self?.presenter?.sortType = .byRating
+            UserDefaults.standard.set("byRating", forKey: "CartSorted")
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
@@ -159,6 +159,10 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
             payButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
+    func updateTable() {
+        tableView.reloadData()
+    }
 }
 
 extension CartViewController: UITableViewDelegate {
@@ -167,14 +171,15 @@ extension CartViewController: UITableViewDelegate {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.mock.count ?? 0
+        return presenter?.visibleNft.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier, for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.delegate = self
-        presenter?.configureCell(for: cell, with: indexPath)
+        guard let data = presenter?.visibleNft[indexPath.row] else { return UITableViewCell() }
+        cell.initCell(nameLabel: data.name, priceLabel: data.price, rating: data.rating)
         return cell
     }
 }

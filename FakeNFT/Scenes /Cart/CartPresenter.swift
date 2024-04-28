@@ -8,11 +8,10 @@
 import UIKit
 
 protocol CartPresenterProtocol {
-    var mock: [Nft] { get set }
+    var visibleNft: [Nft] { get set }
     var view: CartViewControllerProtocol? { get set }
     var sortType: SortType { get set }
     func viewDidLoad()
-    func configureCell(for cell: CustomCellViewCart, with indexPath: IndexPath)
     func sortCatalog()
 }
 
@@ -35,7 +34,7 @@ final class CartPresenter: CartPresenterProtocol {
             description: "kdkkdd",
             price: 3.03,
             author: ""),
-        
+
         Nft(id: "1",
             createdAt: "23",
             name: "November",
@@ -46,7 +45,19 @@ final class CartPresenter: CartPresenterProtocol {
             author: "")
     ]
 
-    var sortType: SortType = .byName
+    var sortType: SortType = {
+        let type = UserDefaults.standard.string(forKey: "CartSorted")
+        switch type {
+        case "byName":
+            return .byName
+        case "byPrice":
+            return .byPrice
+        case "byRating":
+            return .byRating
+        default:
+            return .none
+        }
+    }()
 
     var visibleNft: [Nft] = []
 
@@ -55,24 +66,32 @@ final class CartPresenter: CartPresenterProtocol {
         sortCatalog()
     }
 
-    func configureCell(for cell: CustomCellViewCart, with indexPath: IndexPath) {
-        let data = visibleNft[indexPath.row]
-        cell.initCell(nameLabel: data.name, priceLabel: data.price, rating: data.rating)
-    }
-
     func sortCatalog() {
+        sortType = {
+            let type = UserDefaults.standard.string(forKey: "CartSorted")
+            switch type {
+            case "byName":
+                return .byName
+            case "byPrice":
+                return .byPrice
+            case "byRating":
+                return .byRating
+            default:
+                return .none
+            }
+        }()
         switch sortType {
         case .none:
             break
         case .byName:
             visibleNft.sort { $0.name < $1.name }
-            view?.tableView.reloadData()
+            view?.updateTable()
         case .byPrice:
             visibleNft.sort { $0.price > $1.price }
-            view?.tableView.reloadData()
+            view?.updateTable()
         case .byRating:
             visibleNft.sort { $0.rating > $1.rating }
-            view?.tableView.reloadData()
+            view?.updateTable()
         }
     }
 }
