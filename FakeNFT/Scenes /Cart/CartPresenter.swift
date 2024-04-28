@@ -25,7 +25,7 @@ enum SortType {
 
 final class CartPresenter: CartPresenterProtocol {
 
-    var view: CartViewControllerProtocol?
+    weak var view: CartViewControllerProtocol?
     var mock: [Nft] = [
         Nft(id: "1",
             createdAt: "2",
