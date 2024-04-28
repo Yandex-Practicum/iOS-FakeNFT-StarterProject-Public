@@ -9,7 +9,7 @@ import Foundation
 
 protocol FavouriteNFTControllerProtocol {
     var favourites: [NFT] { get }
-
+    
     func addToFavourite(_ nft: NFT, completion: (() -> Void)?)
     func removeFromFavourite(_ nft: NFT, completion: (() -> Void)?)
 }

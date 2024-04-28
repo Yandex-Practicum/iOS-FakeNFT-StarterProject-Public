@@ -16,16 +16,23 @@ struct OrderPayment: NetworkRequest {
     let requestId = "OrderPaymentRequest"
     let currencyId: Int
     var endpoint: URL? {
-        URL(string: "https://64e794e8b0fd9648b7902516.mockapi.io/api/v1/orders/1/payment/\(currencyId)")
+        URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1/payment/\(currencyId)")
     }
 }
 
 struct OrderPut: NetworkRequest {
     let requestId = "OrderPutRequest"
     let nfts: [String: [String]]
-    var endpoint: URL? = URL(string: "https://64e794e8b0fd9648b7902516.mockapi.io/api/v1/orders/1")
+    var endpoint: URL? = URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1")
     var dto: Encodable? {
         nfts
     }
     var httpMethod: HttpMethod = .put
+}
+struct OrderRequest: NetworkRequest {
+    let id: String
+
+    var endpoint: URL? {
+        URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1/payment/\(id)")
+    }
 }

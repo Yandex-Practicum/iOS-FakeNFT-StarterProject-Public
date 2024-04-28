@@ -15,7 +15,7 @@ extension NFT: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-
+    
     static func == (lhs: NFT, rhs: NFT) -> Bool {
         lhs.id == rhs.id
     }

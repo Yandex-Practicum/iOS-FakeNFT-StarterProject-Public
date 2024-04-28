@@ -10,21 +10,25 @@ import UIKit
 final class CartFactory {
     func create(with context: Context) -> UIViewController {
         // TODO: - Перевести на реальную реализацию CartService после теста
-        let cartService = CartServiceStub()
-
+        let networkClient   = DefaultNetworkClient()
+        let networkManager  = NetworkManager(networkClient: networkClient)
+        let cartService     = CartServiceStub(networkManager: networkManager)
+        
         let router = CartRouter()
-
+        
         let presenter = CartPresenter(
             cartService: cartService,
             router: router
         )
-
+        
         let controller = CartViewController(presenter: presenter)
         
+        let navigationController = UINavigationController(rootViewController: controller)
         presenter.view = controller
-        router.rootController = controller
-
-        return controller
+        router.rootController = navigationController
+        
+        
+        return navigationController
     }
 }
 

@@ -4,6 +4,12 @@ final class TabBarController: UITabBarController {
     
     var servicesAssembly: ServicesAssembly!
     
+    private let profileTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.profile", comment: ""),
+        image: UIImage(systemName: "person.crop.circle.fill"),
+        tag: 0
+    )
+    
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
         image: UIImage(systemName: "square.stack.fill"),
@@ -13,10 +19,20 @@ final class TabBarController: UITabBarController {
     private let cardTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.cart", comment: ""),
         image: .cardActiveIcon,
-        tag: 1
+        tag: 0
+    )
+    
+    private let statisticsTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.statistics", comment: ""),
+        image: UIImage(systemName: "flag.2.crossed.fill"),
+        tag: 0
     )
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let profileViewController = TestCatalogViewController(
+                servicesAssembly: servicesAssembly
+        )
         
         let catalogController = TestCatalogViewController(
             servicesAssembly: servicesAssembly
@@ -26,12 +42,23 @@ final class TabBarController: UITabBarController {
                 servicesAssembly: servicesAssembly
             )
         )
+        let statisticsController = TestCatalogViewController(
+                servicesAssembly: servicesAssembly
+        )
+        
+        profileViewController.tabBarItem = profileTabBarItem
         catalogController.tabBarItem = catalogTabBarItem
         cardController.tabBarItem = cardTabBarItem
+        statisticsController.tabBarItem = statisticsTabBarItem
         
-        viewControllers = [catalogController, cardController]
+        viewControllers = [profileViewController, catalogController, cardController, statisticsController]
         
         view.backgroundColor = .systemBackground
+        tabBar.isTranslucent = false
+        view.tintColor = .yaBlueUniversal
+        tabBar.backgroundColor = .yaBlackDayNight
+        tabBar.unselectedItemTintColor = .yaWhiteDayNight
+        tabBar.tintColor = .yaWhiteDayNight
         
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
