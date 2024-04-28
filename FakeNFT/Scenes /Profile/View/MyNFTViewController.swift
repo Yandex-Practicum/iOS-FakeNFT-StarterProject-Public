@@ -119,17 +119,7 @@ final class MyNFTViewController: UIViewController {
         presenter?.view = self
         presenter?.viewDidLoad()
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if let sortType = UserDefaults.standard.data(forKey: "sortType") {
-//            let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
-//            print ("МОИ НФТ = \(presenter?.nfts)")
-//            presenter?.nfts = applySortType(by: type ?? .rating)
-//            myNFTTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-//        }
-//    }
-    
+        
     //MARK: - Private Methods
     private func customizingStub () {
         view.addSubview(stubLabel)
@@ -167,7 +157,7 @@ final class MyNFTViewController: UIViewController {
         let type = try? PropertyListEncoder().encode(type)
         UserDefaults.standard.set(type, forKey: "sortType")
     }
-
+    
     private func applySortType(by type: Filter) -> [NFT] {
         guard let nfts = presenter?.nfts else {return []}
         switch type {
@@ -239,15 +229,17 @@ extension MyNFTViewController: MyNFTViewControllerProtocol {
         }
         
         presenter.nfts = nfts
+        if let sortType = UserDefaults.standard.data(forKey: "sortType") {
+            let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
+            print ("МОИ НФТ = \(presenter.nfts)")
+            presenter.nfts = applySortType(by: type ?? .rating)
+        }
         DispatchQueue.main.async {
-            if let sortType = UserDefaults.standard.data(forKey: "sortType") {
-                let type = try? PropertyListDecoder().decode(Filter.self, from: sortType)
-                presenter.nfts = self.applySortType(by: type ?? .rating)
-                self.myNFTTableView.reloadData()
-            }
+            self.myNFTTableView.reloadData()
         }
     }
 }
+
 // MARK: - MyNFTCellDelegate
 extension MyNFTViewController: MyNFTCellDelegate {
     func didTapLikeButton(nftID: String) {

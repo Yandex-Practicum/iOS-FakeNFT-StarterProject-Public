@@ -68,6 +68,7 @@ final class MyNFTPresenter {
             group.notify(queue: .main) { [weak self] in
                 allNFTs.sort(by: { $0.rating > $1.rating })
                 self?.view?.updateMyNFTs(nfts: allNFTs)
+                
             }
         }
     }
