@@ -91,11 +91,11 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: byName, style: .default, handler: { [weak self] _ in
-            self?.presenter?.sortType = .byRating
+            self?.presenter?.sortType = .byName
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: byRating, style: .default, handler: { [weak self] _ in
-            self?.presenter?.sortType = .byName
+            self?.presenter?.sortType = .byRating
             self?.presenter?.sortCatalog()
         }))
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))

@@ -35,6 +35,7 @@ final class CartPresenter: CartPresenterProtocol {
             description: "kdkkdd",
             price: 3.03,
             author: ""),
+        
         Nft(id: "1",
             createdAt: "23",
             name: "November",
@@ -51,6 +52,7 @@ final class CartPresenter: CartPresenterProtocol {
 
     func viewDidLoad() {
         visibleNft = mock
+        sortCatalog()
     }
 
     func configureCell(for cell: CustomCellViewCart, with indexPath: IndexPath) {

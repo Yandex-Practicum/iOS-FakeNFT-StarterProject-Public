@@ -66,13 +66,13 @@ extension UIColor {
         ? .yaBlackDark
         : .yaBlackLight
     }
-    
+
     static let greenUniversal = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaGreenUniversal
         : .yaGreenUniversal
     }
-    
+
     static let redUniversal = UIColor { traits in
         return traits.userInterfaceStyle == .dark
         ? .yaRedUniversal
