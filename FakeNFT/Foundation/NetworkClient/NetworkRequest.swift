@@ -12,6 +12,7 @@ protocol NetworkRequest {
     var httpMethod: HttpMethod { get }
     var dto: Encodable? { get }
     var putHeader: String? { get }
+    var isUrlEncoded: Bool { get }
 }
 
 // default values

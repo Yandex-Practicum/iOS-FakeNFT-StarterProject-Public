@@ -56,6 +56,7 @@ final class CollectionOfUsersNftViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigation()
+        setUpdateCollection()
         activateUI()
     }
     
@@ -105,14 +106,17 @@ extension CollectionOfUsersNftViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        //MARK: Constraints
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
+            
             //MARK: Collection
             collection.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
             collection.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             collection.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16),
             collection.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16),
             
+            //MARK: PlaceholderLabel
             placeholderLabel.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
             placeholderLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
         ])
@@ -122,6 +126,13 @@ extension CollectionOfUsersNftViewController {
         
         collection.isHidden = collectionOfNftFabric.isEmpty()
         placeholderLabel.isHidden = !collectionOfNftFabric.isEmpty()
+    }
+    
+    func setUpdateCollection() {
+        collectionOfNftFabric.onNeedUpdate = { [weak self] in
+            self?.setupHiddensViews()
+            self?.collection.reloadData()
+        }
     }
 }
 
@@ -140,11 +151,18 @@ extension CollectionOfUsersNftViewController: UICollectionViewDataSource {
         }
         cell.prepareForReuse()
         
-//        let nft = collectionOfNftFabric.getNft(by: indexPath.row)
-//        cell.setNft(by: collectionOfNftFabric.getNft(by: indexPath.row))
-        DispatchQueue.main.async {
-            cell.configureCell(with: self.collectionOfNftFabric.getNft(by: indexPath.row))
-        }
+        let nft = collectionOfNftFabric.getNft(by: indexPath.row)
+        let nfts = collectionOfNftFabric.getNfts()
+        
+        cell.configureCell(
+            with: nft,
+            and: nfts,
+            servicesAssembly: servicesAssembly,
+            interactorAssembly: InteractorsAssembly(
+                likesInteractor: collectionOfNftFabric.self,
+                basketInteractor: collectionOfNftFabric.self
+            )
+        )
         
         return cell
     }

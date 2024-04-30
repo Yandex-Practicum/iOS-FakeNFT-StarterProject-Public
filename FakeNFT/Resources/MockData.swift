@@ -118,7 +118,7 @@ final class MockData {
     )
     
     var placeholderNft: NftModel = NftModel(
-        id: "1",
+        id: "a7efecb7-caf8-412c-838e-01e4d432907b",
         name: "",
         images: [URL(string: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsurgassociates.com%2Four-physicians%2Fdr-mohammad-r-siadati%2F610-6104451_image-placeholder-png-user-profile-placeholder-image-png%2F&psig=AOvVaw3XOxk-pmGNiQwY2NFArOD-&ust=1713977364160000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPiynbHl2IUDFQAAAAAdAAAAABAE")],
         price: 0,

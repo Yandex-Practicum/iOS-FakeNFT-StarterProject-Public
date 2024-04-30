@@ -130,7 +130,6 @@ final class UserCardViewController: UIViewController {
     @objc
     private func showUsersCollectionOfNft() {
         let nfts = userCardFabric.getNfts()
-        print(nfts)
         let vc = CollectionOfUsersNftViewController(
             with: nfts,
             servicesAssembly: servicesAssembly)

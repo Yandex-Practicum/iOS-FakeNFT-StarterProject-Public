@@ -24,6 +24,14 @@ final class ServicesAssembly {
         UsersServiceImpl(networkClient: networkClient)
     }
     
+    var basketService: BasketService {
+        BasketServiceImpl(networkClient: networkClient)
+    }
+    
+    var profileService: ProfileService {
+        ProfileServiceImpl(networkClient: networkClient)
+    }
+    
     var nftNetworkService: NftNetworkService {
         NftNetworkServiceImpl(
             networkClient: networkClient,

@@ -11,15 +11,13 @@ final class NftNetworkStorageImpl: NftNetworkStorage {
     private let syncQueue = DispatchQueue(label: "sync-nftNetwork-queue")
 
     func saveNft(_ nft: NftModel) {
-        DispatchQueue.global(qos: .userInitiated).sync {
-            print("SAVE")
-            storage[nft.id] = nft
+        DispatchQueue.main.async {
+            self.storage[nft.id] = nft
         }
     }
 
     func getNft(with id: String) -> NftModel? {
         DispatchQueue.global(qos: .userInitiated).sync {
-            print("GET")
             return storage[id]
         }
     }

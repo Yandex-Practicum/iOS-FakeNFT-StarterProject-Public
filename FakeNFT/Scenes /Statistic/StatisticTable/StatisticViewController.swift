@@ -89,7 +89,6 @@ extension StatisticViewController {
 
         let actionText = NSLocalizedString("Error.repeat", comment: "")
         return ErrorModel(message: message, actionText: actionText) { [weak self] in
-            print("SHOW ERROR REPEAT")
             self?.reloadFabric()
             self?.tableView.reloadData()
         }
@@ -106,6 +105,7 @@ extension StatisticViewController {
     func activateUI() {
         
         setTableViewParams()
+        setUpdateTable()
         activateConstraints()
     }
     
@@ -132,6 +132,12 @@ extension StatisticViewController {
             tableView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
             tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
+    }
+    
+    func setUpdateTable() {
+        statisticFabric?.onNeedUpdate = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 

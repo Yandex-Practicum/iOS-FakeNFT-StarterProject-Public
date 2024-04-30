@@ -7,9 +7,13 @@ protocol StatisticFabricDelegate: AnyObject {
 
 final class StatisticFabric {
     
+    var onNeedUpdate: (() -> Void)?
+    
     private var listOfLeaderboard: [UsersModel] = []
     weak var delegate: StatisticFabricDelegate?
     private var usersService: UsersService
+    
+    private let dispatchGroup = DispatchGroup()
     
     init(
         delegate: StatisticFabricDelegate,
@@ -17,8 +21,10 @@ final class StatisticFabric {
     ) {
         self.usersService = servicesAssembly.usersService
         self.delegate = delegate
-        DispatchQueue.global(qos: .userInitiated).sync {
-            setListOfLeaderboard()
+        dispatchGroup.enter()
+        self.setListOfLeaderboard()
+        dispatchGroup.notify(queue: .main) {
+            self.onNeedUpdate?()
         }
     }
     
@@ -28,14 +34,17 @@ final class StatisticFabric {
     
     func setListOfLeaderboard() {
         
-        usersService.loadNft { [weak self] result in
-            switch result {
-            case .success(let users):
-                self?.listOfLeaderboard = users
-                self?.getSortedLeaderboard()
-            case .failure(let error):
-                self?.delegate?.showError(with: error)
-                
+        DispatchQueue.main.async {
+            self.usersService.loadNft { [weak self] result in
+                defer { self?.dispatchGroup.leave() }
+                switch result {
+                case .success(let users):
+                    self?.listOfLeaderboard = users
+                    self?.getSortedLeaderboard()
+                case .failure(let error):
+                    self?.delegate?.showError(with: error)
+                    
+                }
             }
         }
     }
