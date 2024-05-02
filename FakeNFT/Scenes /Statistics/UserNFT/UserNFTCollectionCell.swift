@@ -69,7 +69,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         }
         
         nftImage.addSubview(addFavouriteButton)
-//        addFavouriteButton.
         setConstraints()
         
         addFavouriteButton.addTarget(self, action: #selector(favouriteButtonTapped), for: .touchUpInside)
@@ -115,11 +114,12 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     
     func set(image: UIImage, name: String, price: Float, rating: Int) {
         nftImage.image = image
-        addFavouriteButton.setImage(UIImage(named: "favoutiteImage"), for: .normal)
-        addToCart.setImage(UIImage(named: "addToCart"), for: .normal)
         nameLabel.text = name
         priceLabel.text = "\(price) ETH"
         ratingStarsView.rating = rating
+        
+        addFavouriteButton.setImage(UIImage(named: "favoutiteImage"), for: .normal)
+        addToCart.setImage(UIImage(named: "addToCart"), for: .normal)
     }
     
     

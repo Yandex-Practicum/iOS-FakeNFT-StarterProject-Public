@@ -15,4 +15,5 @@ struct Person {
     let rating: Int
     let nftCount: Int
     let description: String?
+    let nft: [NFTModel]
 }

@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol UserInfoViewDelegate: AnyObject {
+    func sentNFT(nft: [NFTModel])
+}
+
 protocol UserInfoViewControllerProtocol {
     var presenter: UserInfoPresenterProtocol { get set }
 }
 
 final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
+    
+    weak var delegate: UserInfoViewDelegate?
     
     var presenter: UserInfoPresenterProtocol = {
         return UserInfoPresenter()
@@ -144,6 +150,9 @@ extension UserInfoView: UITableViewDataSource {
 extension UserInfoView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UserNFTCollectionView()
+        self.delegate = vc
+        guard let object = presenter.object else { return }
+        delegate?.sentNFT(nft: object.nft)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -152,5 +161,6 @@ extension UserInfoView: UITableViewDelegate {
 extension UserInfoView: StatisticsViewControllerDelegate {
     func set(person: Person) {
         presenter.object = person
+        
     }
 }

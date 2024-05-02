@@ -7,14 +7,16 @@
 
 import UIKit
 
+protocol UserNFTCollectionViewProtocol {
+    var presenter: UserNFTCollectionPresenterProtocol { get set }
+}
 
-final class UserNFTCollectionView: UIViewController {
+final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProtocol {
     
-   
-    
+    var presenter: UserNFTCollectionPresenterProtocol = UserNFTCollectionPresenter()
     
     private lazy var nftCollection: UICollectionView = {
-        let collection = UICollectionView(frame: .zero, 
+        let collection = UICollectionView(frame: .zero,
                                           collectionViewLayout: UICollectionViewFlowLayout())
         
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +27,13 @@ final class UserNFTCollectionView: UIViewController {
         return collection
     }()
     
+    private lazy var emptyCollectionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.text = "У пользователя еще нет NFT"
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +42,15 @@ final class UserNFTCollectionView: UIViewController {
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
+        updateEmptyView()
     }
-    
     
     private func setViews() {
-        view.addSubview(nftCollection)
+        [nftCollection, emptyCollectionLabel].forEach {
+            view.addSubview($0)
+        }
+        
     }
-    
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -47,9 +58,18 @@ final class UserNFTCollectionView: UIViewController {
             nftCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             nftCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             nftCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emptyCollectionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyCollectionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
     
+    func updateEmptyView() {
+        if presenter.visibleNFT.isEmpty {
+            emptyCollectionLabel.isHidden = false
+        } else {
+            emptyCollectionLabel.isHidden = true
+        }
+    }
 }
 
 
@@ -57,16 +77,15 @@ final class UserNFTCollectionView: UIViewController {
 
 extension UserNFTCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        presenter.visibleNFT.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserNFTCollectionCell.identifier, for: indexPath) as! UserNFTCollectionCell
-        cell.set(image: UIImage(named: "mockNFT") ?? UIImage(), name: "Zeus", price: 1.78, rating: 3)
+        let nft = presenter.visibleNFT[indexPath.row]
+        cell.set(image: nft.image, name: nft.name, price: nft.price, rating: nft.rating)
         return cell
     }
-    
-    
 }
 
 // MARK: - UICollectionViewDelegate
@@ -78,5 +97,11 @@ extension UserNFTCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
+    }
+}
+
+extension UserNFTCollectionView: UserInfoViewDelegate {
+    func sentNFT(nft: [NFTModel]) {
+        presenter.visibleNFT = nft
     }
 }
