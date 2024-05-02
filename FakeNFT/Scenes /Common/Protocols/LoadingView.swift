@@ -16,3 +16,19 @@ extension LoadingView {
         activityIndicator.stopAnimating()
     }
 }
+
+extension LoadingView {
+    private static var window: UIWindow? {
+        return UIApplication.shared.windows.first
+    }
+    
+    func showLoadingAndBlockUI() {
+        Self.window?.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+    }
+
+    func hideLoadingAndUnblockUI() {
+        Self.window?.isUserInteractionEnabled = true
+        activityIndicator.stopAnimating()
+    }
+}
