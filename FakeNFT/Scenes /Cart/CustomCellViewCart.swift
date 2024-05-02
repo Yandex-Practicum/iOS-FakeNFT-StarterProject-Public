@@ -37,7 +37,7 @@ final class CustomCellViewCart: UITableViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleToFill
-        image.image = UIImage(named: "mockCart")
+        image.image = UIImage(named: "mockCart")?.withTintColor(.blackDayText)
         return image
     }()
 
@@ -89,7 +89,7 @@ final class CustomCellViewCart: UITableViewCell {
     private let nftNameLabel: UILabel = {
         let label = UILabel()
         label.text = "April"
-        label.textColor = .black
+        label.textColor = .blackDayText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
@@ -97,7 +97,7 @@ final class CustomCellViewCart: UITableViewCell {
 
     private let nftPriceNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .blackDayText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.text = NSLocalizedString("Cart.price", comment: "")
@@ -106,7 +106,7 @@ final class CustomCellViewCart: UITableViewCell {
 
     private let nftPriceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .blackDayText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.text = "1,78 ETH"

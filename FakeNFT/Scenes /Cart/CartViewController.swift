@@ -14,21 +14,22 @@ protocol CartViewControllerProtocol: AnyObject {
 
 final class CartViewController: UIViewController & CartViewControllerProtocol {
 
-    var presenter: CartPresenterProtocol? = CartPresenter()
+    var presenter: CartPresenterProtocol? = CartPresenter(networkClient: DefaultNetworkClient())
 
     private let sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "SortButton.png")
+        let image = UIImage(named: "SortButton.png")?.withTintColor(.blackDayText)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(sortBttnTapped), for: .touchUpInside)
         return button
     }()
 
-    var tableView: UITableView = {
+    private let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.separatorStyle = .none
+        table.backgroundColor = .clear
         table.register(CustomCellViewCart.self, forCellReuseIdentifier: CustomCellViewCart.reuseIdentifier)
         return table
     }()
@@ -50,6 +51,8 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.backgroundColor = UIColor(named: "blackDayNight")
         button.layer.cornerRadius = 16
+        button.setTitleColor(.backgroundColor, for: .normal)
+        button.addTarget(self, action: #selector(payBttnTapped), for: .touchUpInside)
         return button
     }()
 
@@ -101,6 +104,13 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: nil))
 
         self.present(alert, animated: true)
+    }
+
+    @objc private func payBttnTapped() {
+        let payPage = CartPayViewController()
+        let navigationController = UINavigationController(rootViewController: payPage)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
     }
 
     override func viewDidLoad() {
@@ -177,6 +187,7 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier, for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.backgroundColor = .clear
         cell.delegate = self
         guard let data = presenter?.visibleNft[indexPath.row] else { return UITableViewCell() }
         cell.initCell(nameLabel: data.name, priceLabel: data.price, rating: data.rating)
@@ -186,8 +197,8 @@ extension CartViewController: UITableViewDataSource {
 
 extension CartViewController: CustomCellViewCartDelegate {
     func cellDidTapDeleteCart() {
-        let newCategoryViewController = CartDeleteConfirmView()
-        let navigationController = UINavigationController(rootViewController: newCategoryViewController)
+        let deleteNft = CartDeleteConfirmView()
+        let navigationController = UINavigationController(rootViewController: deleteNft)
         navigationController.modalPresentationStyle = .overFullScreen
         present(navigationController, animated: true)
     }

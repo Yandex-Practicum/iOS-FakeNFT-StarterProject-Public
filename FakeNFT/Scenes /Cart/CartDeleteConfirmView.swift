@@ -26,7 +26,7 @@ final class CartDeleteConfirmView: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.cancelBttn", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        button.backgroundColor = UIColor(named: "blackDayNight")
+        button.backgroundColor = .blackDayText
         button.layer.cornerRadius = 12
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
@@ -42,7 +42,7 @@ final class CartDeleteConfirmView: UIViewController {
 
     private let confirmLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .blackDayText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.text = "Вы уверены, что хотите\nудалить объект из корзины?"
@@ -85,7 +85,7 @@ final class CartDeleteConfirmView: UIViewController {
     }
 
     private func configureView() {
-        let blur = UIBlurEffect(style: .light)
+        let blur = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.frame = view.bounds
         view.addSubview(blurView)

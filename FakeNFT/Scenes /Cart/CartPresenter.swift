@@ -61,9 +61,38 @@ final class CartPresenter: CartPresenterProtocol {
 
     var visibleNft: [Nft] = []
 
+    private let networkClient: DefaultNetworkClient
+
+    init(networkClient: DefaultNetworkClient) {
+            self.networkClient = networkClient
+        }
+
     func viewDidLoad() {
-        visibleNft = mock
-        sortCatalog()
+        fetchCollectionAndUpdate { [weak self] cartItems in
+            self?.visibleNft = cartItems
+            self?.sortCatalog()
+        }
+    }
+
+    func fetchCollectionAndUpdate(completion: @escaping ([Nft]) -> Void) {
+        self.getCollection { [weak self] cartItems in
+            guard let self = self else { return }
+            visibleNft = cartItems
+            completion(cartItems)
+        }
+    }
+
+    func getCollection(completion: @escaping ([Nft]) -> Void) {
+        networkClient.send(request: CartRequest(), type: [Nft].self) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let nft):
+                completion(nft)
+            case .failure(let error):
+                print("Error fetching NFT collection: \(error)")
+                completion([])
+            }
+        }
     }
 
     func sortCatalog() {
