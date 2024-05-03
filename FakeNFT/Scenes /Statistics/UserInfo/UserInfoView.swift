@@ -7,28 +7,13 @@
 
 import UIKit
 
-protocol UserInfoViewDelegate: AnyObject {
-    func sentNFT(nft: [NFTModel])
-}
-
 protocol UserInfoViewControllerProtocol {
     var presenter: UserInfoPresenterProtocol { get set }
 }
 
 final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     
-    weak var delegate: UserInfoViewDelegate?
-    
     var presenter: UserInfoPresenterProtocol = UserInfoPresenter()
-    
-    init(object: Person) {
-        presenter.object = object
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -82,6 +67,15 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         view.separatorStyle = .none
         return view
     }()
+    
+    init(object: Person) {
+        presenter.object = object
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,17 +150,9 @@ extension UserInfoView: UITableViewDataSource {
 
 extension UserInfoView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = UserNFTCollectionView()
+        guard let object = presenter.object?.nft else { return }
+        let vc = UserNFTCollectionView(nft: object)
         vc.hidesBottomBarWhenPushed = true
-        self.delegate = vc
-        guard let object = presenter.object else { return }
-        delegate?.sentNFT(nft: object.nft)
         navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension UserInfoView: StatisticsViewPresenterDelegate {
-    func set(person: Person) {
-        presenter.object = person
     }
 }

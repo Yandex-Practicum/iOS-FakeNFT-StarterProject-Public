@@ -15,6 +15,16 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     
     var presenter: UserNFTCollectionPresenterProtocol = UserNFTCollectionPresenter()
     
+    init(nft: [NFTModel]) {
+        presenter.visibleNFT = nft
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     private lazy var nftCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero,
                                           collectionViewLayout: UICollectionViewFlowLayout())
@@ -98,11 +108,5 @@ extension UserNFTCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
-    }
-}
-
-extension UserNFTCollectionView: UserInfoViewDelegate {
-    func sentNFT(nft: [NFTModel]) {
-        presenter.visibleNFT = nft
     }
 }
