@@ -19,9 +19,16 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     
     weak var delegate: UserInfoViewDelegate?
     
-    var presenter: UserInfoPresenterProtocol = {
-        return UserInfoPresenter()
-    }()
+    var presenter: UserInfoPresenterProtocol = UserInfoPresenter()
+    
+    init(object: Person) {
+        presenter.object = object
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -81,7 +88,6 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         setViews()
         setConstraints()
         set()
-        
     }
     
     private func setViews() {
@@ -92,7 +98,6 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         [stackView, descriptonText, webButton, nftCollection].forEach {
             view.addSubview($0)
         }
-        
     }
     
     private func setConstraints() {
@@ -113,13 +118,11 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
             nftCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             nftCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             nftCollection.heightAnchor.constraint(equalToConstant: 50)
-            
-            
         ])
     }
     
     private func set() {
-        avatarImage.image = presenter.object?.image
+        avatarImage.image = UIImage(named: presenter.object?.image ?? "") 
         nameLabel.text = presenter.object?.name
         descriptonText.text = presenter.object?.description
     }
@@ -129,7 +132,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     }
     
     @objc private func webButtonTapped() {
-        navigationController?.pushViewController(WebViewController(), animated: true)
+        navigationController?.pushViewController(WebViewController(url: presenter.object?.webSite ?? ""), animated: true)
     }
 }
 
@@ -139,8 +142,12 @@ extension UserInfoView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NFTTableViewCell", for: indexPath) as! NFTTableViewCell
-        cell.accessoryType = .disclosureIndicator
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NFTTableViewCell", for: indexPath) as? NFTTableViewCell else {
+            return UITableViewCell()
+        }
+        let arrowImage = UIImage(systemName: "chevron.right")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        let arrowImageView = UIImageView(image: arrowImage)
+        cell.accessoryView = arrowImageView
         cell.selectionStyle = .none
         cell.set(nftCount: presenter.object?.nftCount ?? Int())
         return cell
@@ -150,6 +157,7 @@ extension UserInfoView: UITableViewDataSource {
 extension UserInfoView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UserNFTCollectionView()
+        vc.hidesBottomBarWhenPushed = true
         self.delegate = vc
         guard let object = presenter.object else { return }
         delegate?.sentNFT(nft: object.nft)
@@ -157,10 +165,8 @@ extension UserInfoView: UITableViewDelegate {
     }
 }
 
-
-extension UserInfoView: StatisticsViewControllerDelegate {
+extension UserInfoView: StatisticsViewPresenterDelegate {
     func set(person: Person) {
         presenter.object = person
-        
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Сергей on 02.05.2024.
 //
 
-import UIKit // позже кит уберу и оставлю Foundation. На данный момент кит здесь чтобы задействовать UIimage
+import Foundation
 
 protocol UserNFTCollectionPresenterProtocol {
     var visibleNFT: [NFTModel] { get set }

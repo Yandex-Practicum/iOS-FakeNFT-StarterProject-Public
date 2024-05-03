@@ -37,7 +37,6 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "Коллекция NFT"
         view.backgroundColor = .systemBackground
         setViews()
@@ -49,7 +48,6 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         [nftCollection, emptyCollectionLabel].forEach {
             view.addSubview($0)
         }
-        
     }
     
     private func setConstraints() {
@@ -72,7 +70,6 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     }
 }
 
-
 // MARK: - UICollectionViewDataSource
 
 extension UserNFTCollectionView: UICollectionViewDataSource {
@@ -81,9 +78,13 @@ extension UserNFTCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserNFTCollectionCell.identifier, for: indexPath) as! UserNFTCollectionCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserNFTCollectionCell.identifier,
+                                                            for: indexPath) as? UserNFTCollectionCell
+        else {
+            return UICollectionViewCell()
+        }
         let nft = presenter.visibleNFT[indexPath.row]
-        cell.set(image: nft.image, name: nft.name, price: nft.price, rating: nft.rating)
+        cell.set(nft: nft)
         return cell
     }
 }

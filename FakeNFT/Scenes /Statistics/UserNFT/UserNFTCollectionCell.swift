@@ -7,13 +7,12 @@
 
 import UIKit
 
-
 final class UserNFTCollectionCell: UICollectionViewCell {
     
     static let identifier = "UserNFTCollectionCell"
     
     private lazy var nftImage: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
@@ -36,7 +35,7 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     }()
     
     private let ratingStarsView: RatingStarsView = {
-       let view = RatingStarsView()
+        let view = RatingStarsView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -57,10 +56,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
-        
-        
-        
-        
     }
     
     private func setViews() {
@@ -72,7 +67,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         setConstraints()
         
         addFavouriteButton.addTarget(self, action: #selector(favouriteButtonTapped), for: .touchUpInside)
-        
     }
     
     private func setConstraints() {
@@ -98,10 +92,7 @@ final class UserNFTCollectionCell: UICollectionViewCell {
             addToCart.widthAnchor.constraint(equalToConstant: 40),
             addToCart.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             addToCart.topAnchor.constraint(equalTo: ratingStarsView.bottomAnchor, constant: 4)
-            
-            
         ])
-       
     }
     
     @objc private func favouriteButtonTapped() {
@@ -112,23 +103,17 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         print("addToCartButtonTapped")
     }
     
-    func set(image: UIImage, name: String, price: Float, rating: Int) {
-        nftImage.image = image
-        nameLabel.text = name
-        priceLabel.text = "\(price) ETH"
-        ratingStarsView.rating = rating
+    func set(nft: NFTModel) {
+        nftImage.image = UIImage(named: nft.image)
+        nameLabel.text = nft.name
+        priceLabel.text = "\(nft.price) ETH"
+        ratingStarsView.rating = nft.rating
         
         addFavouriteButton.setImage(UIImage(named: "favoutiteImage"), for: .normal)
         addToCart.setImage(UIImage(named: "addToCart"), for: .normal)
     }
-    
-    
-    
+   
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
 }

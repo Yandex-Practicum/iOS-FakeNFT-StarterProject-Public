@@ -10,11 +10,10 @@ import UIKit
 
 struct NFTModel {
     
-    let image: UIImage
+    let image: String
     let name: String
     let price: Float
     let isFavourite: Bool
     let rating: Int
     let isAdded: Bool
-    
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class RatingCell: UICollectionViewCell {
     
     static let identifier = "RatingTableViewCell"
@@ -50,7 +49,6 @@ final class RatingCell: UICollectionViewCell {
         return view
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -62,12 +60,11 @@ final class RatingCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func set(indexPath: IndexPath, rating: Int,  name: String, image: UIImage, count: Int) {
-        ratingLabel.text = "\(rating)"
-        avatarImage.image = image
-        nameLabel.text = name
-        nftCountLabel.text = "\(count)"
+    func set(indexPath: IndexPath, person: Person) {
+        ratingLabel.text = "\(person.rating)"
+        avatarImage.image = UIImage(named: person.image) 
+        nameLabel.text = person.name
+        nftCountLabel.text = "\(person.nftCount)"
     }
     
     private func setupViews() {
@@ -99,7 +96,6 @@ final class RatingCell: UICollectionViewCell {
             nftCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16),
             
         ])
-        
     }
 }
 
