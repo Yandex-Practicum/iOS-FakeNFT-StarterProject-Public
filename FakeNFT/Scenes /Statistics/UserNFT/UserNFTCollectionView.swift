@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol UserNFTCollectionViewProtocol {
     var presenter: UserNFTCollectionPresenterProtocol { get set }
@@ -15,8 +16,8 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     
     var presenter: UserNFTCollectionPresenterProtocol = UserNFTCollectionPresenter()
     
-    init(nft: [NFTModel]) {
-        presenter.visibleNFT = nft
+    init(nft: [String]) {
+        self.presenter.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,6 +25,11 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         fatalError("init(coder:) has not been implemented")
     }
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
     
     private lazy var nftCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero,
@@ -42,6 +48,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.text = "У пользователя еще нет NFT"
+        label.isHidden = true
         return label
     }()
     
@@ -51,13 +58,19 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
-        updateEmptyView()
+        presenter.getNFT {
+            self.nftCollection.reloadData()
+            self.updateEmptyView()
+            UIBlockingProgressHUD.dismiss()
+        }
     }
     
     private func setViews() {
-        [nftCollection, emptyCollectionLabel].forEach {
+        [nftCollection, emptyCollectionLabel, activityIndicator].forEach {
             view.addSubview($0)
         }
+        activityIndicator.center = view.center
+        UIBlockingProgressHUD.show()
     }
     
     private func setConstraints() {

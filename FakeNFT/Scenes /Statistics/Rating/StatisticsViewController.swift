@@ -28,11 +28,12 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         return collection
     }()
     
-    private let sortButton: UIButton = {
+    private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
         button.setImage(UIImage(named: "vector"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtontapped), for: .touchUpInside)
         return button
     }()
     
@@ -43,11 +44,19 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         setViews()
         setConstraints()
         setNavBar()
+        presenter.getStatistic {
+            self.ratingCollectionView.reloadData()
+            UIBlockingProgressHUD.dismiss()
+           
+            
+        }
+        
     }
     
     private func setViews() {
         view.backgroundColor = .systemBackground
         view.addSubview(ratingCollectionView)
+        UIBlockingProgressHUD.show()
     }
     
     private func setConstraints() {
@@ -64,6 +73,28 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         navigationController?.navigationBar.topItem?.setRightBarButton(custom, animated: false)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
+    }
+    
+    
+    @objc private func sortButtontapped() {
+        let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
+            print("name")
+        }
+        let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
+            print("rating")
+        }
+        
+        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel) { action in
+            self.dismiss(animated: true)
+        }
+        
+        [nameAction, ratingAction, closeAction].forEach {
+            alertController.addAction($0)
+        }
+        
+        present(alertController, animated: true)
+
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class UserNFTCollectionCell: UICollectionViewCell {
     
@@ -24,6 +25,8 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -84,7 +87,7 @@ final class UserNFTCollectionCell: UICollectionViewCell {
             ratingStarsView.heightAnchor.constraint(equalToConstant: 12),
             nameLabel.topAnchor.constraint(equalTo: ratingStarsView.bottomAnchor, constant: 4),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: addToCart.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
             priceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -104,7 +107,12 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     }
     
     func set(nft: NFTModel) {
-        nftImage.image = UIImage(named: nft.image)
+        nftImage.kf.indicatorType = .activity
+        let url = URL(string: nft.images.first ?? "")
+        nftImage.kf.setImage(with: url) { [weak self] _ in
+            guard let self = self else { return }
+            self.nftImage.kf.indicatorType = .none
+        }
         nameLabel.text = nft.name
         priceLabel.text = "\(nft.price) ETH"
         ratingStarsView.rating = nft.rating
