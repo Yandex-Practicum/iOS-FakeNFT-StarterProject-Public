@@ -255,6 +255,6 @@ extension CartViewController: CustomCellViewCartDelegate {
 
 extension CartViewController: CartDeleteConfirmDelegate {
     func deleteNftCart(nftId: String) {
-        presenter?.editOrder(typeOfEdit: .deleteNft, nftId: nftId)
+        presenter?.editOrder(typeOfEdit: .deleteNft, nftId: nftId) { _ in }
     }
 }

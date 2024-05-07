@@ -11,7 +11,7 @@ protocol CartPresenterProtocol {
     var visibleNft: [Nft] { get set }
     var view: CartViewControllerProtocol? { get set }
     var sortType: SortType { get set }
-    func editOrder(typeOfEdit: EditType, nftId: String)
+    func editOrder(typeOfEdit: EditType, nftId: String, completion: @escaping (Error?) -> Void)
     func sortCatalog()
     func getAllCartData()
 }
@@ -29,9 +29,9 @@ enum EditType {
 }
 
 final class CartPresenter: CartPresenterProtocol {
-    
+
     weak var view: CartViewControllerProtocol?
-    
+
     var sortType: SortType = {
         let type = UserDefaults.standard.string(forKey: "CartSorted")
         switch type {
@@ -47,13 +47,13 @@ final class CartPresenter: CartPresenterProtocol {
     }()
     var cart: Cart?
     var visibleNft: [Nft] = []
-    
+
     private let networkClient: DefaultNetworkClient
-    
+
     init(networkClient: DefaultNetworkClient) {
         self.networkClient = networkClient
     }
-    
+
     func getAllCartData() {
         view?.startLoading()
         cart = nil
@@ -78,8 +78,8 @@ final class CartPresenter: CartPresenterProtocol {
             }
         }
     }
-    
-    func editOrder(typeOfEdit: EditType, nftId: String) {
+
+    func editOrder(typeOfEdit: EditType, nftId: String, completion: @escaping (Error?) -> Void) {
         getCart { [weak self] cartItem in
             guard let self = self, let cartItem = cartItem else { return }
             var items = cartItem.nfts
@@ -97,12 +97,12 @@ final class CartPresenter: CartPresenterProtocol {
             }
         }
     }
-    
+
     private func sendNewOrder(nftsIds: [String], completion: @escaping (Error?) -> Void) {
         let nftsString = nftsIds.joined(separator: ",")
         let bodyString = "nfts=\(nftsString)"
         guard let bodyData = bodyString.data(using: .utf8) else { return }
-        
+
         guard let url = URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/orders/1") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
@@ -112,7 +112,7 @@ final class CartPresenter: CartPresenterProtocol {
         if nftsIds.count != 0 {
             request.httpBody = bodyData
         }
-        
+
         let task = URLSession.shared.dataTask(with: request) { _, _, error in
             if let error = error {
                 completion(error)
@@ -121,9 +121,9 @@ final class CartPresenter: CartPresenterProtocol {
             completion(nil)
         }
         task.resume()
-        
+
     }
-    
+
     private func getNftsCart(cart: [String], completion: @escaping ([Nft]) -> Void) {
         cart.forEach {
             self.networkClient.send(request: CartGetNftsRequest(nftId: $0), type: Nft.self) { [weak self] result in
@@ -141,7 +141,7 @@ final class CartPresenter: CartPresenterProtocol {
             }
         }
     }
-    
+
     private func getCart(completion: @escaping (Cart?) -> Void) {
         networkClient.send(request: CartRequest(), type: Cart.self) { [weak self] result in
             guard let self = self else { return }
@@ -158,7 +158,7 @@ final class CartPresenter: CartPresenterProtocol {
             }
         }
     }
-    
+
     func sortCatalog() {
         sortType = {
             let type = UserDefaults.standard.string(forKey: "CartSorted")
@@ -173,7 +173,7 @@ final class CartPresenter: CartPresenterProtocol {
                 return .byName
             }
         }()
-        
+
         switch sortType {
         case .none:
             break
@@ -188,7 +188,7 @@ final class CartPresenter: CartPresenterProtocol {
             view?.updateTable()
         }
     }
-    
+
     private func saveCart(cart: Cart) {
         self.cart = cart
     }
