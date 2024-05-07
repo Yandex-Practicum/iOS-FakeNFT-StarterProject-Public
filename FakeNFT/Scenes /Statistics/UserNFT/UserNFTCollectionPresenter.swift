@@ -54,7 +54,7 @@ final class UserNFTCollectionPresenter: UserNFTCollectionPresenterProtocol {
     }
     
     func putLike(newLike: String)  {
-        var likes: [String] = []
+//        var likes: [String] = []
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
             NetworkConstants.tokenKey : NetworkConstants.tokenValue,
@@ -66,70 +66,59 @@ final class UserNFTCollectionPresenter: UserNFTCollectionPresenterProtocol {
         AF.request(url, headers: headers).responseDecodable(of: ProfileModel.self) { response in
             switch response.result {
             case .success(let profile):
-                print(profile.likes)
-//                likes = profile.likes
-//                likes.append(newLike)
-//                print(likes)
+                print("TODO")
             case .failure(let error):
                 print(error)
+            }
+            //TODO
         }
-            
-            
-        }
-        
-        
-        
-        
-        
-        
-        
     }
     
-    func deleteLike()  {
-        let headers: [String : String ] = [
-            NetworkConstants.acceptKey : NetworkConstants.acceptValue,
-            NetworkConstants.tokenKey : NetworkConstants.tokenValue,
-           "Content-Type" : "application/json"
-        ]
-        
-        let body: [String : Any] = [
-            "likes" : "9e472edf-ed51-4901-8cfc-8eb3f617519f"
-        ]
-        
-        
-        
-        let url = URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/profile/1")!
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "DELETE"
-        request.httpBody = Data()
-        
-        do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: body)
-            } catch {
-                print("Error serializing parameters: \(error)")
-                return
-            }
-        
-        request.allHTTPHeaderFields = headers
-        
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            if let data = data {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("JSON", json)
-                } catch {
-                    print("ERROR", error)
-                    return
-                }
-            }
-        }
-        
-        task.resume()
-    }
+//    func deleteLike()  {
+//        let headers: [String : String ] = [
+//            NetworkConstants.acceptKey : NetworkConstants.acceptValue,
+//            NetworkConstants.tokenKey : NetworkConstants.tokenValue,
+//            "Content-Type" : "application/json"
+//        ]
+//        
+//        let body: [String : Any] = [
+//            "likes" : "9e472edf-ed51-4901-8cfc-8eb3f617519f"
+//        ]
+//        
+//        
+//        
+//        let url = URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/profile/1")!
+//        var request = URLRequest(url: url)
+//        
+//        request.httpMethod = "DELETE"
+//        request.httpBody = Data()
+//        
+//        do {
+//            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+//        } catch {
+//            print("Error serializing parameters: \(error)")
+//            return
+//        }
+//        
+//        request.allHTTPHeaderFields = headers
+//        
+//        
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let error = error {
+//                print(error)
+//                return
+//            }
+//            if let data = data {
+//                do {
+//                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+//                    print("JSON", json)
+//                } catch {
+//                    print("ERROR", error)
+//                    return
+//                }
+//            }
+//        }
+//        
+//        task.resume()
+//    }
 }
