@@ -10,9 +10,13 @@ import Kingfisher
 
 protocol StatisticsViewControllerProtocol {
     var presenter: StatisticPresenterProtocol { get set }
+    func createAlert()
+    func updateCollectionViewAnimate()
 }
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
+    
+    private var statisticService = StatisticService.shared
     
     var presenter: StatisticPresenterProtocol = StatisticsPresenter()
     
@@ -25,6 +29,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         collection.dataSource = self
         collection.delegate = self
         collection.showsVerticalScrollIndicator = false
+        collection.isUserInteractionEnabled = true
         return collection
     }()
     
@@ -37,26 +42,22 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         return button
     }()
     
+    private var isLoadingData: Bool = false
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
+        presenter.view = self
         setViews()
         setConstraints()
         setNavBar()
-        presenter.getStatistic {
-            self.ratingCollectionView.reloadData()
-            UIBlockingProgressHUD.dismiss()
-           
-            
-        }
-        
     }
     
     private func setViews() {
         view.backgroundColor = .systemBackground
         view.addSubview(ratingCollectionView)
-        UIBlockingProgressHUD.show()
     }
     
     private func setConstraints() {
@@ -75,6 +76,44 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         navigationController?.navigationBar.tintColor = .black
     }
     
+    func updateCollectionViewAnimate() {
+        let oldCount = presenter.objects.count
+        let newCount = statisticService.users.count
+        self.presenter.objects = self.statisticService.users
+        if oldCount != newCount {
+            ratingCollectionView.performBatchUpdates {
+                var indexPaths: [IndexPath] = []
+                for i in oldCount..<newCount {
+                    indexPaths.append(IndexPath(row: i, section: 0))
+                }
+                ratingCollectionView.insertItems(at: indexPaths)
+            } completion: { _ in }
+        }
+        UIBlockingProgressHUD.dismiss()
+    }
+    
+    func checkCompletedList(_ indexPath: IndexPath) {
+        if !ProcessInfo.processInfo.arguments.contains("testMode") {
+            if statisticService.users.isEmpty || (indexPath.row + 1 == statisticService.users.count) {
+                statisticService.fetchNextPage()
+            }
+        }
+    }
+    
+    func createAlert() {
+        let alertController = UIAlertController(title: "Не удалось получить данные", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { action in
+            UIBlockingProgressHUD.dismiss()
+            self.dismiss(animated: true)
+        }
+        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
+            self.statisticService.fetchNextPage()
+        }
+        [cancelAction, repeatAction].forEach {
+            alertController.addAction($0)
+        }
+        present(alertController, animated: true)
+    }
     
     @objc private func sortButtontapped() {
         let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
@@ -94,7 +133,6 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         }
         
         present(alertController, animated: true)
-
     }
 }
 
@@ -134,6 +172,10 @@ extension StatisticsViewController: UICollectionViewDelegate {
         let vc = UserInfoView(object: object)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        checkCompletedList(indexPath)
     }
 }
 

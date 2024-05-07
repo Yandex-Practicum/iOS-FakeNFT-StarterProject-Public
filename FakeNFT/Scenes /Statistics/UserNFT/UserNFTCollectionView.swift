@@ -63,6 +63,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
             self.updateEmptyView()
             UIBlockingProgressHUD.dismiss()
         }
+        presenter.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
     }
     
     private func setViews() {

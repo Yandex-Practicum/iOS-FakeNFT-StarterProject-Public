@@ -14,6 +14,10 @@ final class RatingCell: UICollectionViewCell {
     
     //MARK: - private properties
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

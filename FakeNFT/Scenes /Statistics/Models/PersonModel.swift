@@ -8,7 +8,7 @@
 import UIKit
 
 
-struct Person: Decodable {
+struct Person: Decodable, Equatable {
     
     let name: String
     let avatar: String
