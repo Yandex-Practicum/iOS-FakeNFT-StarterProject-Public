@@ -11,8 +11,9 @@ protocol CartPresenterProtocol {
     var visibleNft: [Nft] { get set }
     var view: CartViewControllerProtocol? { get set }
     var sortType: SortType { get set }
-    func viewDidLoad()
+    func editOrder(typeOfEdit: EditType, nftId: String)
     func sortCatalog()
+    func getAllCartData()
 }
 
 enum SortType {
@@ -22,29 +23,15 @@ enum SortType {
     case byRating
 }
 
+enum EditType {
+    case addNft
+    case deleteNft
+}
+
 final class CartPresenter: CartPresenterProtocol {
-
+    
     weak var view: CartViewControllerProtocol?
-    var mock: [Nft] = [
-        Nft(id: "1",
-            createdAt: "2",
-            name: "April",
-            images: [],
-            rating: 2,
-            description: "kdkkdd",
-            price: 3.03,
-            author: ""),
-
-        Nft(id: "1",
-            createdAt: "23",
-            name: "November",
-            images: [],
-            rating: 4,
-            description: "sfrwfwrf",
-            price: 2.5,
-            author: "")
-    ]
-
+    
     var sortType: SortType = {
         let type = UserDefaults.standard.string(forKey: "CartSorted")
         switch type {
@@ -58,43 +45,120 @@ final class CartPresenter: CartPresenterProtocol {
             return .none
         }
     }()
-
+    var cart: Cart?
     var visibleNft: [Nft] = []
-
+    
     private let networkClient: DefaultNetworkClient
-
+    
     init(networkClient: DefaultNetworkClient) {
-            self.networkClient = networkClient
-        }
-
-    func viewDidLoad() {
-        fetchCollectionAndUpdate { [weak self] cartItems in
-            self?.visibleNft = cartItems
-            self?.sortCatalog()
-        }
+        self.networkClient = networkClient
     }
-
-    func fetchCollectionAndUpdate(completion: @escaping ([Nft]) -> Void) {
-        self.getCollection { [weak self] cartItems in
-            guard let self = self else { return }
-            visibleNft = cartItems
-            completion(cartItems)
-        }
-    }
-
-    func getCollection(completion: @escaping ([Nft]) -> Void) {
-        networkClient.send(request: CartRequest(), type: [Nft].self) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let nft):
-                completion(nft)
-            case .failure(let error):
-                print("Error fetching NFT collection: \(error)")
-                completion([])
+    
+    func getAllCartData() {
+        view?.startLoading()
+        cart = nil
+        visibleNft = []
+        getCart { [weak self] cartItem in
+            guard let self = self, let cartItem = cartItem else { return }
+            self.saveCart(cart: cartItem)
+            if cartItem.nfts.isEmpty && cartItem.nfts.count == 0 {
+                view?.showEmptyMessage()
+                visibleNft = []
+                view?.updateTable()
+                self.view?.stopLoading()
+                return
+            } else {
+                view?.hideEmptyMessage()
+            }
+            self.getNftsCart(cart: cartItem.nfts) { _ in
+                DispatchQueue.main.async {
+                    self.view?.updateTable()
+                }
+                self.view?.stopLoading()
             }
         }
     }
-
+    
+    func editOrder(typeOfEdit: EditType, nftId: String) {
+        getCart { [weak self] cartItem in
+            guard let self = self, let cartItem = cartItem else { return }
+            var items = cartItem.nfts
+            if typeOfEdit == .addNft {
+                items.append(nftId)
+            } else {
+                if let index = items.firstIndex(of: nftId) {
+                    items.remove(at: index)
+                } else {
+                    return
+                }
+            }
+            sendNewOrder(nftsIds: items) { _ in
+                self.getAllCartData()
+            }
+        }
+    }
+    
+    private func sendNewOrder(nftsIds: [String], completion: @escaping (Error?) -> Void) {
+        let nftsString = nftsIds.joined(separator: ",")
+        let bodyString = "nfts=\(nftsString)"
+        guard let bodyData = bodyString.data(using: .utf8) else { return }
+        
+        guard let url = URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/orders/1") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("9db803ac-6777-4dc6-9be2-d8eaa53129a9", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        if nftsIds.count != 0 {
+            request.httpBody = bodyData
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { _, _, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            completion(nil)
+        }
+        task.resume()
+        
+    }
+    
+    private func getNftsCart(cart: [String], completion: @escaping ([Nft]) -> Void) {
+        cart.forEach {
+            self.networkClient.send(request: CartGetNftsRequest(nftId: $0), type: Nft.self) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let nft):
+                    visibleNft.append(nft)
+                    DispatchQueue.main.async {
+                        completion(self.visibleNft)
+                    }
+                case .failure(let error):
+                    print("Error fetching NFT collection: \(error)")
+                    completion([])
+                }
+            }
+        }
+    }
+    
+    private func getCart(completion: @escaping (Cart?) -> Void) {
+        networkClient.send(request: CartRequest(), type: Cart.self) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let cart):
+                DispatchQueue.main.async {
+                    completion(cart)
+                }
+            case .failure(let error):
+                print("Error fetching NFT collection: \(error)")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
     func sortCatalog() {
         sortType = {
             let type = UserDefaults.standard.string(forKey: "CartSorted")
@@ -106,9 +170,10 @@ final class CartPresenter: CartPresenterProtocol {
             case "byRating":
                 return .byRating
             default:
-                return .none
+                return .byName
             }
         }()
+        
         switch sortType {
         case .none:
             break
@@ -122,5 +187,9 @@ final class CartPresenter: CartPresenterProtocol {
             visibleNft.sort { $0.rating > $1.rating }
             view?.updateTable()
         }
+    }
+    
+    private func saveCart(cart: Cart) {
+        self.cart = cart
     }
 }

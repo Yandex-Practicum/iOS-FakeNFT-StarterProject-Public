@@ -7,9 +7,11 @@
 
 import UIKit
 import ProgressHUD
+import Kingfisher
 
 protocol CartPayViewControllerProtocol: AnyObject {
     var presenter: CartPayPresenterProtocol? { get set }
+    var visibleCurrencies: [Currencies] { get set }
     func updateTable()
 }
 
@@ -17,7 +19,8 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     var presenter: CartPayPresenterProtocol? = CartPayPresenter(networkClient: DefaultNetworkClient())
     var num = 1
 
-    private var visibleCurrencies: [Currencies] = []
+    var visibleCurrencies: [Currencies] = []
+
     private let navigationLabel: UILabel = {
         let label = UILabel()
         label.text = "Выберите способ оплаты"
@@ -32,8 +35,11 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
             frame: .zero,
             collectionViewLayout: UICollectionViewFlowLayout()
         )
+        collectionView.allowsMultipleSelection = false
+        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CustomCellCollectionViewCart.self, forCellWithReuseIdentifier: CustomCellCollectionViewCart.reuseIdentifier)
+        collectionView.register(CustomCellCollectionViewCart.self,
+                                forCellWithReuseIdentifier: CustomCellCollectionViewCart.reuseIdentifier)
         return collectionView
     }()
 
@@ -86,6 +92,9 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     }
 
     @objc private func cancelPay() {
+        if ProgressHUD.areAnimationsEnabled {
+            ProgressHUD.dismiss()
+        }
         dismiss(animated: true)
     }
 
@@ -107,18 +116,28 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
     private func fetchCurrency() {
         ProgressHUD.show()
-        guard let currencies = presenter?.fetchCurrenciesAndUpdate() else { return }
-        visibleCurrencies = currencies
-        ProgressHUD.dismiss()
-        print(visibleCurrencies)
-        updateTable()
+
+        presenter?.getCurrencies { [weak self] items in
+            guard let self = self else { return }
+            switch items {
+            case .success(let currencies):
+                self.visibleCurrencies = currencies
+            case .failure(let error):
+                print(error)
+            }
+            updateTable()
+            ProgressHUD.dismiss()
+        }
     }
 
     private func configureView() {
 
         view.backgroundColor = .backgroundColor
         navigationItem.titleView = navigationLabel
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackBttnCart.png"), style: .plain, target: self, action: #selector(cancelPay))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackBttnCart.png"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(cancelPay))
         navigationItem.leftBarButtonItem?.tintColor = .blackDayText
         [currencysCollectionView,
         payView].forEach {
@@ -161,7 +180,6 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
 extension CartPayViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(visibleCurrencies.count)
         return visibleCurrencies.count
     }
 
@@ -169,10 +187,14 @@ extension CartPayViewController: UICollectionViewDataSource {
         return 1
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCellCollectionViewCart.reuseIdentifier,
-                                                            for: indexPath) as? CustomCellCollectionViewCart else { return UICollectionViewCell() }
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+                                    CustomCellCollectionViewCart.reuseIdentifier,
+                                    for: indexPath) as? CustomCellCollectionViewCart else { return UICollectionViewCell() }
         let data = visibleCurrencies[indexPath.row]
+        let url = URL(string: data.image)
+        cell.imageViews.kf.setImage(with: url)
         cell.initCell(currencyLabel: data.name, titleLabel: data.title)
         return cell
     }
@@ -180,7 +202,24 @@ extension CartPayViewController: UICollectionViewDataSource {
 }
 
 extension CartPayViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+        if let cell = collectionView.cellForItem(at: indexPath) as? CustomCellCollectionViewCart {
+            cell.layer.borderWidth = 1
+            let color: UIColor = .blackDayText
+            cell.layer.cornerRadius = 12
+            cell.layer.borderColor = color.cgColor
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CustomCellCollectionViewCart {
+            cell.layer.borderWidth = 0
+            let color: UIColor = .blackDayText
+            cell.layer.cornerRadius = 12
+            cell.layer.borderColor = color.cgColor
+        }
+    }
 }
 
 extension CartPayViewController: UICollectionViewDelegateFlowLayout {

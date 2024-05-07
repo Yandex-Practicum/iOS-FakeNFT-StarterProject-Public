@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CustomCellViewCartDelegate: AnyObject {
-    func cellDidTapDeleteCart()
+    func cellDidTapDeleteCart(nftId: String)
 }
 
 final class CustomCellViewCart: UITableViewCell {
@@ -153,8 +153,11 @@ final class CustomCellViewCart: UITableViewCell {
         return stack
     }()
 
+    private var nftId: String?
+
     @objc private func deleteBttnTapped() {
-        delegate?.cellDidTapDeleteCart()
+        guard let nftId = nftId else { return }
+        delegate?.cellDidTapDeleteCart(nftId: nftId)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -167,10 +170,11 @@ final class CustomCellViewCart: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initCell(nameLabel: String, priceLabel: Double, rating: Int) {
+    func initCell(nameLabel: String, priceLabel: Double, rating: Int, nftId: String) {
         imageViews.image = UIImage(named: "mockCart.png")
         nftNameLabel.text = nameLabel
         nftPriceLabel.text = String(priceLabel) + " ETH"
+        self.nftId = nftId
         setRating(rating)
     }
 

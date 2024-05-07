@@ -10,8 +10,7 @@ import UIKit
 protocol CartPayPresenterProtocol {
     var visibleCurrencies: [Currencies] { get set }
     var view: CartPayViewControllerProtocol? { get set }
-    func fetchCurrenciesAndUpdate() -> [Currencies]
-    func viewDidLoad()
+    func getCurrencies(completion: @escaping (Result<[Currencies], Error>) -> Void)
 }
 
 final class CartPayPresenter: CartPayPresenterProtocol {
@@ -26,28 +25,35 @@ final class CartPayPresenter: CartPayPresenterProtocol {
         self.networkClient = networkClient
     }
 
-    func viewDidLoad() {
+    func getCurrencies(completion: @escaping (Result<[Currencies], Error>) -> Void) {
+        let url = URL(string: "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/currencies")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("9db803ac-6777-4dc6-9be2-d8eaa53129a9", forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
-    }
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            do {
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else { return }
+                let currencies = try JSONDecoder().decode([Currencies].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(currencies))
+                }
 
-    func fetchCurrenciesAndUpdate() -> [Currencies] {
-        self.getCollection { [weak self] cartItems in
-            guard let self = self else { return }
-            self.visibleCurrencies = cartItems
-        }
-        view?.updateTable()
-        return visibleCurrencies
-    }
-
-    func getCollection(completion: @escaping ([Currencies]) -> Void) {
-        networkClient.send(request: CartPayRequest(), type: [Currencies].self) { [weak self] result in
-            switch result {
-            case .success(let currencys):
-                completion(currencys)
-            case .failure(let error):
-                print("Error fetching NFT collection: \(error)")
-                completion([])
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         }
+        task.resume()
+    }
+
+    private func saveItems(items: [Currencies]) {
+        visibleCurrencies = items
     }
 }

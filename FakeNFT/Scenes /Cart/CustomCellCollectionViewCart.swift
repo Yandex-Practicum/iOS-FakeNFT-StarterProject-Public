@@ -20,7 +20,7 @@ final class CustomCellCollectionViewCart: UICollectionViewCell {
         return view
     }()
 
-    private let imageViews: UIImageView = {
+    let imageViews: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
@@ -69,15 +69,18 @@ final class CustomCellCollectionViewCart: UICollectionViewCell {
     }
 
     func initCell(currencyLabel: String, titleLabel: String) {
-        self.currencyLabel.text = currencyLabel
-        self.shortCurrencyLabel.text = titleLabel
+        self.currencyLabel.text = titleLabel
+        self.shortCurrencyLabel.text = currencyLabel
+    }
+
+    func setImage(image: UIImage) {
+        imageViews.image = image
     }
 
     private func configureView() {
         [mainView].forEach {
             contentView.addSubview($0)
         }
-
         [currencyLabel,
          shortCurrencyLabel].forEach {
             titleStackView.addArrangedSubview($0)

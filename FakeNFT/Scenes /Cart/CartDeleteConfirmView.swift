@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol CartDeleteConfirmDelegate: AnyObject {
+    func deleteNftCart(nftId: String)
+}
+
 final class CartDeleteConfirmView: UIViewController {
+
+    weak var delegate: CartDeleteConfirmDelegate?
 
     private let deleteButton: UIButton = {
         let button = UIButton()
@@ -71,7 +77,10 @@ final class CartDeleteConfirmView: UIViewController {
         return stack
     }()
 
+    var nftId: String?
+
     @objc private func deleteTapped() {
+        delegate?.deleteNftCart(nftId: nftId ?? "")
         dismiss(animated: true)
     }
 
