@@ -106,4 +106,16 @@ extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userCellModel = cellModels[indexPath.row]
+        showUserInfoVC(with: userCellModel.id)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func showUserInfoVC(with userID: String) {
+        let assembly = UserInfoAssembly()
+        let userInfoVC = assembly.build(with: userID)
+        present(userInfoVC, animated: true)
+    }
 }

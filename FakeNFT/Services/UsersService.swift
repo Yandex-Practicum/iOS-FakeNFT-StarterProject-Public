@@ -28,7 +28,7 @@ final class UsersService: UsersServiceProtocol {
     
     func loadUsers(completion: @escaping UsersCompletion) {
         
-        var request = UsersRequest()
+        let request = UsersRequest()
         
         networkClient.send(request: request, type: [User].self) { [weak storage] result in
             switch result {
