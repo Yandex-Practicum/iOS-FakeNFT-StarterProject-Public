@@ -11,6 +11,7 @@ protocol CartPresenterProtocol {
     var visibleNft: [Nft] { get set }
     var view: CartViewControllerProtocol? { get set }
     var sortType: SortType { get set }
+    var priceCart: Double? { get set }
     func editOrder(typeOfEdit: EditType, nftId: String, completion: @escaping (Error?) -> Void)
     func sortCatalog()
     func getAllCartData()
@@ -47,6 +48,7 @@ final class CartPresenter: CartPresenterProtocol {
     }()
     var cart: Cart?
     var visibleNft: [Nft] = []
+    var priceCart: Double?
 
     private let networkClient: DefaultNetworkClient
 
@@ -58,6 +60,7 @@ final class CartPresenter: CartPresenterProtocol {
         view?.startLoading()
         cart = nil
         visibleNft = []
+        priceCart = 0
         getCart { [weak self] cartItem in
             guard let self = self, let cartItem = cartItem else { return }
             self.saveCart(cart: cartItem)
@@ -70,8 +73,10 @@ final class CartPresenter: CartPresenterProtocol {
             } else {
                 view?.hideEmptyMessage()
             }
-            self.getNftsCart(cart: cartItem.nfts) { _ in
+            self.getNftsCart(cart: cartItem.nfts) {
                 DispatchQueue.main.async {
+                    self.view?.updateNftsCount()
+                    self.sortCatalog()
                     self.view?.updateTable()
                 }
                 self.view?.stopLoading()
@@ -124,21 +129,26 @@ final class CartPresenter: CartPresenterProtocol {
 
     }
 
-    private func getNftsCart(cart: [String], completion: @escaping ([Nft]) -> Void) {
+    private func getNftsCart(cart: [String], completion: @escaping () -> Void) {
+        let group = DispatchGroup()
         cart.forEach {
+            group.enter()
             self.networkClient.send(request: CartGetNftsRequest(nftId: $0), type: Nft.self) { [weak self] result in
+                defer {
+                    group.leave()
+                }
                 guard let self = self else { return }
                 switch result {
                 case .success(let nft):
-                    visibleNft.append(nft)
-                    DispatchQueue.main.async {
-                        completion(self.visibleNft)
-                    }
+                    priceCart = (priceCart ?? 0) + nft.price
+                    self.visibleNft.append(nft)
                 case .failure(let error):
                     print("Error fetching NFT collection: \(error)")
-                    completion([])
                 }
             }
+        }
+        group.notify(queue: .main) {
+            completion()
         }
     }
 

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CustomCellViewCartDelegate: AnyObject {
-    func cellDidTapDeleteCart(nftId: String)
+    func cellDidTapDeleteCart(nftId: String, nftImage: URL)
 }
 
 final class CustomCellViewCart: UITableViewCell {
@@ -16,6 +16,9 @@ final class CustomCellViewCart: UITableViewCell {
     static let reuseIdentifier = "CustomCellView"
 
     weak var delegate: CustomCellViewCartDelegate?
+
+    private var nftId: String?
+    private var nftImage: URL?
 
     private let mainView: UIView = {
         let view = UIView()
@@ -33,10 +36,12 @@ final class CustomCellViewCart: UITableViewCell {
         return button
     }()
 
-    private let imageViews: UIImageView = {
+    let imageViews: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.layer.masksToBounds = true
         image.contentMode = .scaleToFill
+        image.layer.cornerRadius = 12
         image.image = UIImage(named: "mockCart")?.withTintColor(.blackDayText)
         return image
     }()
@@ -153,11 +158,9 @@ final class CustomCellViewCart: UITableViewCell {
         return stack
     }()
 
-    private var nftId: String?
-
     @objc private func deleteBttnTapped() {
-        guard let nftId = nftId else { return }
-        delegate?.cellDidTapDeleteCart(nftId: nftId)
+        guard let nftId = nftId, let nftImage = nftImage else { return }
+        delegate?.cellDidTapDeleteCart(nftId: nftId, nftImage: nftImage)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -170,12 +173,12 @@ final class CustomCellViewCart: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initCell(nameLabel: String, priceLabel: Double, rating: Int, nftId: String) {
-        imageViews.image = UIImage(named: "mockCart.png")
-        nftNameLabel.text = nameLabel
-        nftPriceLabel.text = String(priceLabel) + " ETH"
-        self.nftId = nftId
-        setRating(rating)
+    func initCell(nft: Nft) {
+        nftNameLabel.text = nft.name
+        nftPriceLabel.text = String(nft.price) + " ETH"
+        nftId = nft.id
+        nftImage = nft.images.first
+        setRating(nft.rating)
     }
 
     private func configureView() {

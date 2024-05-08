@@ -5,14 +5,16 @@
 //  Created by Chingiz on 19.04.2024.
 //
 
-import UIKit
+import Kingfisher
 import ProgressHUD
+import UIKit
 
 protocol CartViewControllerProtocol: AnyObject {
     var presenter: CartPresenterProtocol? { get set }
     func updateTable()
     func startLoading()
     func stopLoading()
+    func updateNftsCount()
     func showEmptyMessage()
     func hideEmptyMessage()
 }
@@ -65,7 +67,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     private let valueNft: UILabel = {
         let label = UILabel()
-        label.text = "3 NFT"
+        label.text = "0 NFT"
         label.textColor = UIColor(named: "blackDayNight")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -74,7 +76,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     private let priceNfts: UILabel = {
         let label = UILabel()
-        label.text = "5,34 ETH"
+        label.text = "0 ETH"
         label.textColor = .greenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
@@ -202,10 +204,12 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     func showEmptyMessage() {
         emptyLabel.isHidden = false
+        priceView.isHidden = true
     }
 
     func hideEmptyMessage() {
         emptyLabel.isHidden = true
+        priceView.isHidden = false
     }
 
     func updateTable() {
@@ -218,6 +222,13 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     func stopLoading() {
         ProgressHUD.dismiss()
+    }
+
+    func updateNftsCount() {
+        guard let count = presenter?.visibleNft.count else { return }
+        guard let price = presenter?.priceCart else { return }
+        valueNft.text = "\(count) NFT"
+        priceNfts.text = "\(price) ETH"
     }
 }
 
@@ -237,15 +248,19 @@ extension CartViewController: UITableViewDataSource {
         cell.backgroundColor = .clear
         cell.delegate = self
         guard let data = presenter?.visibleNft[indexPath.row] else { return UITableViewCell()}
-        cell.initCell(nameLabel: data.name, priceLabel: data.price, rating: data.rating, nftId: data.id)
+        let url = data.images.first
+        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+        cell.imageViews.kf.setImage(with: url, placeholder: nil, options: [.processor(processor)])
+        cell.initCell(nft: data)
         return cell
     }
 }
 
 extension CartViewController: CustomCellViewCartDelegate {
-    func cellDidTapDeleteCart(nftId: String) {
+    func cellDidTapDeleteCart(nftId: String, nftImage: URL) {
         let deleteNft = CartDeleteConfirmView()
         deleteNft.nftId = nftId
+        deleteNft.nftImage = nftImage
         deleteNft.delegate = self
         let navigationController = UINavigationController(rootViewController: deleteNft)
         navigationController.modalPresentationStyle = .overFullScreen
