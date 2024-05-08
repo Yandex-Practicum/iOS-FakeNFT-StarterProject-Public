@@ -9,3 +9,5 @@
 "Sorting.close" = "Закрыть";
 "Sorting.byName" = "По имени";
 "Sorting.byRating" = "По рейтингу";
+"UserInfo.openSite" = "Перейти на сайт пользователя";
+"UserInfo.nftCollections" = "Коллекция NFT";
