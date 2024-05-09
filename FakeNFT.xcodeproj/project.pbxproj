@@ -36,6 +36,7 @@
 		1FEA644C2BEB6BFB00BE271F /* CurrencyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA644B2BEB6BFB00BE271F /* CurrencyDataModel.swift */; };
 		1FEA644E2BEB818E00BE271F /* PayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA644D2BEB818E00BE271F /* PayPresenter.swift */; };
 		1FEA64502BEBD27700BE271F /* SuccessPayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA644F2BEBD27700BE271F /* SuccessPayController.swift */; };
+		1FEA64532BECFA9B00BE271F /* DeleteCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA64522BECFA9B00BE271F /* DeleteCardViewController.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
