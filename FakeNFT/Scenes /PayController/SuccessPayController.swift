@@ -21,6 +21,7 @@ final class SuccessPayController: UIViewController {
         let successLabel = UILabel()
         successLabel.text = "Успех! Оплата прошла, поздравляем с покупкой!"
         successLabel.font = .headline3
+        successLabel.textAlignment = .center
         successLabel.numberOfLines = 2
         successLabel.textColor = UIColor(named: "Black")
         successLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -41,15 +42,17 @@ final class SuccessPayController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "White")
         addSubviews()
         setupLayout()
     }
 
     private  func addSubviews() {
 
-        successImage.addSubview(view)
-        successLabel.addSubview(view)
-        returnButton.addSubview(view)
+        view.addSubview(successImage)
+        view.addSubview(successLabel)
+        view.addSubview(returnButton)
+
     }
         
     private func setupLayout() {
@@ -60,11 +63,13 @@ final class SuccessPayController: UIViewController {
             successImage.centerXAnchor.constraint(equalTo:view.centerXAnchor),
             successImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
+            
+            successLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             successLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
             successLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
             successLabel.topAnchor.constraint(equalTo: successImage.bottomAnchor, constant: 25),
             
-            returnButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            returnButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             returnButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             returnButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             returnButton.heightAnchor.constraint(equalToConstant: 60)

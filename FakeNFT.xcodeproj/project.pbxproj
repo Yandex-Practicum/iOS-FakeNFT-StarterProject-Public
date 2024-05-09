@@ -37,6 +37,7 @@
 		1FEA644E2BEB818E00BE271F /* PayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA644D2BEB818E00BE271F /* PayPresenter.swift */; };
 		1FEA64502BEBD27700BE271F /* SuccessPayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA644F2BEBD27700BE271F /* SuccessPayController.swift */; };
 		1FEA64532BECFA9B00BE271F /* DeleteCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA64522BECFA9B00BE271F /* DeleteCardViewController.swift */; };
+		1FEA64552BED4C9B00BE271F /* DeleteCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA64542BED4C9A00BE271F /* DeleteCardPresenter.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -108,6 +109,8 @@
 		1FEA644B2BEB6BFB00BE271F /* CurrencyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyDataModel.swift; sourceTree = "<group>"; };
 		1FEA644D2BEB818E00BE271F /* PayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPresenter.swift; sourceTree = "<group>"; };
 		1FEA644F2BEBD27700BE271F /* SuccessPayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPayController.swift; sourceTree = "<group>"; };
+		1FEA64522BECFA9B00BE271F /* DeleteCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCardViewController.swift; sourceTree = "<group>"; };
+		1FEA64542BED4C9A00BE271F /* DeleteCardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCardPresenter.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,6 +245,15 @@
 			path = PayController;
 			sourceTree = "<group>";
 		};
+		1FEA64512BECF9DA00BE271F /* DeleteCard */ = {
+			isa = PBXGroup;
+			children = (
+				1FEA64522BECFA9B00BE271F /* DeleteCardViewController.swift */,
+				1FEA64542BED4C9A00BE271F /* DeleteCardPresenter.swift */,
+			);
+			path = DeleteCard;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +331,7 @@
 				E1A1B9D82AA01C9700C3AFBC /* TabBarController */,
 				0CF2C2D92A783C1600FDC837 /* Common */,
 				0CFCB7472A7808870009A829 /* Catalog */,
+				1FEA64512BECF9DA00BE271F /* DeleteCard */,
 				1FEA64442BEA5D6E00BE271F /* PayController */,
 				1F853CE72BE7FB6200A1ECA2 /* CartController */,
 				0C79EE642A76DDCF00EE90EA /* NftDetails */,
@@ -610,8 +623,10 @@
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
+				1FEA64532BECFA9B00BE271F /* DeleteCardViewController.swift in Sources */,
 				1F853CF52BE8F50D00A1ECA2 /* CartViewControllerProtocol.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
+				1FEA64552BED4C9B00BE271F /* DeleteCardPresenter.swift in Sources */,
 				1FEA64462BEA8FC400BE271F /* PayViewController.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

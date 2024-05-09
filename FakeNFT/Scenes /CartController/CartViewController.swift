@@ -114,7 +114,6 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         imagePay.addSubview(moneyLabel)
         imagePay.addSubview(payButton)
         view.addSubview(emptyCartLabel)
-    //    view.addSubview(sortButton)
     }
     
     private func setupNavigationBar() {
@@ -241,9 +240,9 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension CartViewController: CartTableViewCellDelegate {
     func didTapDeleteButton(id: String, image: UIImage) {
-//        let deleteViewController = CartDeleteViewController(nftImage: image, idForDelete: id)
-//        deleteViewController.modalPresentationStyle = .overCurrentContext
-//        self.tabBarController?.present(deleteViewController, animated: true)
+        let deleteViewController = DeleteCardViewController(nftImage: image, idForDelete: id)
+        deleteViewController.modalPresentationStyle = .overCurrentContext
+        self.tabBarController?.present(deleteViewController, animated: true)
     }
 }
 

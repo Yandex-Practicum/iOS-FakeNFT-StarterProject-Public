@@ -29,7 +29,6 @@ final class MyOrderCell: UITableViewCell {
     private lazy var cardImageView: UIImageView = {
         let  cardImageView = UIImageView()
         cardImageView.layer.cornerRadius = 12
-    //    cardImageView.layer.masksToBounds = true
         cardImageView.translatesAutoresizingMaskIntoConstraints = false
         return  cardImageView
     }()
@@ -174,7 +173,6 @@ final class MyOrderCell: UITableViewCell {
         
         guard let id = self.id else { return }
         guard let image = cardImageView.image else { return }
-        
         delegate?.didTapDeleteButton(id: id, image: image)
     }
 }
