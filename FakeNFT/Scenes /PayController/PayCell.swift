@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 final class PayCell: UICollectionViewCell {
     
@@ -86,6 +86,8 @@ final class PayCell: UICollectionViewCell {
             backView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 5),
             backView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
             
+            moneyImageView.heightAnchor.constraint(equalToConstant: 36),
+            moneyImageView.widthAnchor.constraint(equalToConstant: 36),
             moneyImageView.centerXAnchor.constraint(equalTo: backView.centerXAnchor),
             moneyImageView.centerYAnchor.constraint(equalTo: backView.centerYAnchor),
             

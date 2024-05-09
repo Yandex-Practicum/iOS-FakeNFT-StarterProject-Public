@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol PayViewControllerProtocol: AnyObject {
-    func updateCurrencyList()
+    func updatePayCollection()
     func didSelectCurrency(isEnable: Bool)
     func didPay(payResult: Bool)
     func startLoadIndicator()
@@ -30,7 +30,7 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var collectionView : UICollectionView = {
+    private lazy var payCollectionView : UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: setupFlowLayout())
@@ -89,12 +89,16 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "White")
         
+        presenter = PayPresenter(payController: self)
+        
         makeNavBar()
         addSubviews()
         setupLayoutImagePay()
         setupLayout()
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        payCollectionView.dataSource = self
+        payCollectionView.delegate = self
+        
+        presenter?.getCurrencies()
     }
     
     
@@ -113,7 +117,7 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
     
     
     private func addSubviews() {
-        view.addSubview(collectionView)
+        view.addSubview(payCollectionView)
         view.addSubview(imagePay)
         imagePay.addSubview(textLabel)
         imagePay.addSubview(agreementLabel)
@@ -147,11 +151,11 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
     private func setupLayout() {
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            payCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            payCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            payCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            imagePay.topAnchor.constraint(equalTo:collectionView.bottomAnchor),
+            imagePay.topAnchor.constraint(equalTo:payCollectionView.bottomAnchor),
             imagePay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imagePay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imagePay.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor),
@@ -173,8 +177,8 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
         payButton.backgroundColor = isEnable ? UIColor(named: "Black") : UIColor(named: "LightGray")
     }
     
-    func updateCurrencyList() {
-        collectionView.reloadData()
+    func updatePayCollection() {
+        payCollectionView.reloadData()
     }
     
     func didPay(payResult: Bool) {
