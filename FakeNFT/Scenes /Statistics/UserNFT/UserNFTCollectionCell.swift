@@ -12,6 +12,12 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     
     static let identifier = "UserNFTCollectionCell"
     
+    private let ratingStarsView: RatingStarsView = {
+        let view = RatingStarsView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var nftImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,12 +41,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 10, weight: .medium)
         return label
-    }()
-    
-    private let ratingStarsView: RatingStarsView = {
-        let view = RatingStarsView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     private lazy var addFavouriteButton: UIButton = {

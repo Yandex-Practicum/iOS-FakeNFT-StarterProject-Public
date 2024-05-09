@@ -8,16 +8,12 @@
 import UIKit
 import ProgressHUD
 
-protocol UserNFTCollectionViewProtocol {
-    var presenter: UserNFTCollectionPresenterProtocol { get set }
-}
-
-final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProtocol {
+final class UserNFTCollectionView: UIViewController {
     
-    var presenter: UserNFTCollectionPresenterProtocol = UserNFTCollectionPresenter()
+    private let service = UserNFTService.shared
     
     init(nft: [String]) {
-        self.presenter.nftsIDs = nft
+        self.service.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,12 +54,12 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
-        presenter.getNFT {
+        service.getNFT {
             self.nftCollection.reloadData()
             self.updateEmptyView()
             UIBlockingProgressHUD.dismiss()
         }
-        presenter.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
+        service.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
     }
     
     private func setViews() {
@@ -86,7 +82,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     }
     
     func updateEmptyView() {
-        if presenter.visibleNFT.isEmpty {
+        if service.visibleNFT.isEmpty {
             emptyCollectionLabel.isHidden = false
         } else {
             emptyCollectionLabel.isHidden = true
@@ -98,7 +94,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
 
 extension UserNFTCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presenter.visibleNFT.count
+        service.visibleNFT.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,7 +103,7 @@ extension UserNFTCollectionView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        let nft = presenter.visibleNFT[indexPath.row]
+        let nft = service.visibleNFT[indexPath.row]
         cell.set(nft: nft)
         return cell
     }

@@ -8,17 +8,20 @@
 import UIKit
 import Kingfisher
 
-protocol StatisticsViewControllerProtocol {
+protocol StatisticsViewControllerProtocol: AnyObject{
     var presenter: StatisticPresenterProtocol { get set }
-    func createAlert()
     func updateCollectionViewAnimate()
 }
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
     
-    private var statisticService = StatisticService.shared
+    private let statisticService = StatisticService.shared
     
-    var presenter: StatisticPresenterProtocol = StatisticsPresenter()
+    lazy var presenter: StatisticPresenterProtocol = {
+        let presenter = StatisticsPresenter()
+        presenter.view = self
+        return presenter
+    }()
     
     //MARK: - Private
     
@@ -49,7 +52,6 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-        presenter.view = self
         setViews()
         setConstraints()
         setNavBar()
@@ -62,7 +64,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            ratingCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            ratingCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             ratingCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ratingCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             ratingCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
@@ -89,6 +91,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
                 ratingCollectionView.insertItems(at: indexPaths)
             } completion: { _ in }
         }
+        print(presenter.objects)
         UIBlockingProgressHUD.dismiss()
     }
     
@@ -100,39 +103,8 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         }
     }
     
-    func createAlert() {
-        let alertController = UIAlertController(title: "Не удалось получить данные", message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { action in
-            UIBlockingProgressHUD.dismiss()
-            self.dismiss(animated: true)
-        }
-        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
-            self.statisticService.fetchNextPage()
-        }
-        [cancelAction, repeatAction].forEach {
-            alertController.addAction($0)
-        }
-        present(alertController, animated: true)
-    }
-    
     @objc private func sortButtontapped() {
-        let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
-            print("name")
-        }
-        let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
-            print("rating")
-        }
-        
-        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel) { action in
-            self.dismiss(animated: true)
-        }
-        
-        [nameAction, ratingAction, closeAction].forEach {
-            alertController.addAction($0)
-        }
-        
-        present(alertController, animated: true)
+        presenter.createSortAlert(view: self, collection: ratingCollectionView)
     }
 }
 

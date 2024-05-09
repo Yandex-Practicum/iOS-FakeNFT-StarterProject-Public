@@ -8,14 +8,10 @@
 import Foundation
 import Alamofire
 
-protocol UserNFTCollectionPresenterProtocol {
-    var visibleNFT: [NFTModel] { get set }
-    var nftsIDs: [String] { get set }
-    func getNFT(complition: @escaping () -> Void )
-    func putLike(newLike: String)
-}
-
-final class UserNFTCollectionPresenter: UserNFTCollectionPresenterProtocol {
+final class UserNFTService {
+    
+    static let shared = UserNFTService()
+    private init() {}
     
     var nftsIDs: [String] = []
     var visibleNFT: [NFTModel] = []

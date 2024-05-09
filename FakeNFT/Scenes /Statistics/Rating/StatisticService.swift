@@ -22,13 +22,13 @@ final class StatisticService {
             NetworkConstants.tokenKey : NetworkConstants.tokenValue
         ]
         
-        let nextPageUrl = "\(NetworkConstants.baseURL)/api/v1/users?page=\(lastLoadedPage)&size=10"
+        let nextPageUrl = "\(NetworkConstants.baseURL)/api/v1/users?page=\(lastLoadedPage)"
         
         AF.request(nextPageUrl, headers: headers).responseDecodable(of: [Person].self) { response in
             DispatchQueue.main.async {
                 switch response.result {
                 case .success(let user):
-                    self.users.append(contentsOf: user)
+                    self.users.append(contentsOf: user.sorted { $0.nfts.count > $1.nfts.count })
                     self.lastLoadedPage += 1
                     NotificationCenter.default
                         .post(name: StatisticService.didChangeNotification,

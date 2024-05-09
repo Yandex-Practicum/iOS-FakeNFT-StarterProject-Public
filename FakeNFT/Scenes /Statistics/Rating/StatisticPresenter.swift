@@ -9,25 +9,34 @@ import UIKit
 import Alamofire
 
 protocol StatisticPresenterProtocol: AnyObject {
-   
-    func viewDidLoad()
+    
     var view: StatisticsViewControllerProtocol? { get set }
     var objects: [Person] { get set }
+    func viewDidLoad()
+    func sortByRating()
+    func createSortAlert(view: UIViewController, collection: UICollectionView)
+    func createErrorAlert(view: UIViewController)
 }
 
 final class StatisticsPresenter: StatisticPresenterProtocol {
+    
+    private let statisticService = StatisticService.shared
     let didChangeNotification = Notification.Name(rawValue: "StatisticServiceDidChange")
     private var imageListServiceObserver: NSObjectProtocol?
-    var view: StatisticsViewControllerProtocol?
+    weak var view: StatisticsViewControllerProtocol?
     var objects: [Person] = []
-    
     
     func viewDidLoad() {
         observeAnimate()
     }
     
     func sortByName() {
-        
+        //TODO 
+    }
+    
+    func sortByRating() {
+        let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
+        objects = sortedObjects
     }
     
     func observeAnimate() {
@@ -41,6 +50,41 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
             }
         StatisticService.shared.fetchNextPage()
     }
+    
+    func createSortAlert(view: UIViewController, collection: UICollectionView) {
+        let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
+            print("name")
+        }
+        let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
+            print("rating")
+            self.sortByRating()
+            collection.reloadData()
+            
+        }
+        
+        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel) { action in
+            view.dismiss(animated: true)
+        }
+        
+        [nameAction, ratingAction, closeAction].forEach {
+            alertController.addAction($0)
+        }
+        view.present(alertController, animated: true)
+    }
+    
+    func createErrorAlert(view: UIViewController) {
+        let alertController = UIAlertController(title: "Не удалось получить данные", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { action in
+            UIBlockingProgressHUD.dismiss()
+            view.dismiss(animated: true)
+        }
+        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
+            self.statisticService.fetchNextPage()
+        }
+        [cancelAction, repeatAction].forEach {
+            alertController.addAction($0)
+        }
+        view.present(alertController, animated: true)
+    }
 }
-
-

@@ -16,6 +16,4 @@ struct Person: Decodable, Equatable {
     let website: String
     let nfts: [String]
     let rating, id: String
-    
-    
 }
