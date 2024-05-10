@@ -226,7 +226,9 @@ extension CartPayViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.bounds.width - 7 - 16 - 16) / 2
+        let indentFromView: CGFloat = 16
+        let indentBetweenCells: CGFloat = 7
+        let width = (collectionView.bounds.width - indentBetweenCells - (indentFromView * 2)) / 2
         let height: CGFloat = 46
         return CGSize(width: width, height: height)
     }
