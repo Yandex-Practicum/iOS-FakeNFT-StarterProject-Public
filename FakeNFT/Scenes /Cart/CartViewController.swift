@@ -5,30 +5,40 @@
 //  Created by Chingiz on 19.04.2024.
 //
 
+import Kingfisher
+import ProgressHUD
 import UIKit
 
 protocol CartViewControllerProtocol: AnyObject {
     var presenter: CartPresenterProtocol? { get set }
     func updateTable()
+    func startLoading()
+    func stopLoading()
+    func updateNftsCount()
+    func showEmptyMessage()
+    func hideEmptyMessage()
 }
 
 final class CartViewController: UIViewController & CartViewControllerProtocol {
 
-    var presenter: CartPresenterProtocol? = CartPresenter()
+    var presenter: CartPresenterProtocol? = CartPresenter(networkClient: DefaultNetworkClient())
+    private let refreshControl = UIRefreshControl()
 
     private let sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "SortButton.png")
+        let image = UIImage(named: "SortButton.png")?.withTintColor(.blackDayText)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(sortBttnTapped), for: .touchUpInside)
         return button
     }()
 
-    var tableView: UITableView = {
+    private let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.separatorStyle = .none
+        table.backgroundColor = .clear
+        table.alwaysBounceVertical = true
         table.register(CustomCellViewCart.self, forCellReuseIdentifier: CustomCellViewCart.reuseIdentifier)
         return table
     }()
@@ -50,12 +60,14 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.backgroundColor = UIColor(named: "blackDayNight")
         button.layer.cornerRadius = 16
+        button.setTitleColor(.backgroundColor, for: .normal)
+        button.addTarget(self, action: #selector(payBttnTapped), for: .touchUpInside)
         return button
     }()
 
     private let valueNft: UILabel = {
         let label = UILabel()
-        label.text = "3 NFT"
+        label.text = "0 NFT"
         label.textColor = UIColor(named: "blackDayNight")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -64,7 +76,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     private let priceNfts: UILabel = {
         let label = UILabel()
-        label.text = "5,34 ETH"
+        label.text = "0 ETH"
         label.textColor = .greenUniversal
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
@@ -79,6 +91,16 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         stack.distribution = .equalSpacing
         stack.alignment = .leading
         return stack
+    }()
+
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Корзина пуста"
+        label.textColor = UIColor(named: "blackDayNight")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        return label
     }()
 
     @objc private func sortBttnTapped() {
@@ -103,20 +125,37 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         self.present(alert, animated: true)
     }
 
+    @objc private func payBttnTapped() {
+        let payPage = CartPayViewController()
+        let navigationController = UINavigationController(rootViewController: payPage)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
+    }
+
+    @objc
+    private func didPullToRefresh(_ sender: Any) {
+        presenter?.getAllCartData()
+        refreshControl.endRefreshing()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.view = self
-        presenter?.viewDidLoad()
         configureView()
         configureConstraits()
+        showEmptyMessage()
+        presenter?.getAllCartData()
+        updateTable()
     }
 
     private func configureView() {
         navigationController?.setNavigationBarHidden(true, animated: true)
-        [
-         tableView,
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        [tableView,
          sortButton,
-         priceView].forEach {
+         priceView,
+         emptyLabel].forEach {
             view.addSubview($0)
         }
         [valueNft,
@@ -156,12 +195,40 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
             payButton.bottomAnchor.constraint(equalTo: payButton.bottomAnchor, constant: -16),
             payButton.trailingAnchor.constraint(equalTo: priceView.trailingAnchor, constant: -16),
             payButton.widthAnchor.constraint(equalToConstant: 240),
-            payButton.heightAnchor.constraint(equalToConstant: 44)
+            payButton.heightAnchor.constraint(equalToConstant: 44),
+
+            emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+
+    func showEmptyMessage() {
+        emptyLabel.isHidden = false
+        priceView.isHidden = true
+    }
+
+    func hideEmptyMessage() {
+        emptyLabel.isHidden = true
+        priceView.isHidden = false
     }
 
     func updateTable() {
         tableView.reloadData()
+    }
+
+    func startLoading() {
+        ProgressHUD.show()
+    }
+
+    func stopLoading() {
+        ProgressHUD.dismiss()
+    }
+
+    func updateNftsCount() {
+        guard let count = presenter?.visibleNft.count else { return }
+        guard let price = presenter?.priceCart else { return }
+        valueNft.text = "\(count) NFT"
+        priceNfts.text = "\(price) ETH"
     }
 }
 
@@ -175,20 +242,34 @@ extension CartViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier, for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier,
+                                for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
+        cell.backgroundColor = .clear
         cell.delegate = self
-        guard let data = presenter?.visibleNft[indexPath.row] else { return UITableViewCell() }
-        cell.initCell(nameLabel: data.name, priceLabel: data.price, rating: data.rating)
+        guard let data = presenter?.visibleNft[indexPath.row] else { return UITableViewCell()}
+        let url = data.images.first
+        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+        cell.imageViews.kf.setImage(with: url, placeholder: nil, options: [.processor(processor)])
+        cell.initCell(nft: data)
         return cell
     }
 }
 
 extension CartViewController: CustomCellViewCartDelegate {
-    func cellDidTapDeleteCart() {
-        let newCategoryViewController = CartDeleteConfirmView()
-        let navigationController = UINavigationController(rootViewController: newCategoryViewController)
+    func cellDidTapDeleteCart(nftId: String, nftImage: URL) {
+        let deleteNft = CartDeleteConfirmView()
+        deleteNft.nftId = nftId
+        deleteNft.nftImage = nftImage
+        deleteNft.delegate = self
+        let navigationController = UINavigationController(rootViewController: deleteNft)
         navigationController.modalPresentationStyle = .overFullScreen
         present(navigationController, animated: true)
+    }
+}
+
+extension CartViewController: CartDeleteConfirmDelegate {
+    func deleteNftCart(nftId: String) {
+        presenter?.editOrder(typeOfEdit: .deleteNft, nftId: nftId) { _ in }
     }
 }

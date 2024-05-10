@@ -5,9 +5,16 @@
 //  Created by Александр Акимов on 23.04.2024.
 //
 
+import Kingfisher
 import UIKit
 
+protocol CartDeleteConfirmDelegate: AnyObject {
+    func deleteNftCart(nftId: String)
+}
+
 final class CartDeleteConfirmView: UIViewController {
+
+    weak var delegate: CartDeleteConfirmDelegate?
 
     private let deleteButton: UIButton = {
         let button = UIButton()
@@ -26,7 +33,7 @@ final class CartDeleteConfirmView: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.cancelBttn", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        button.backgroundColor = UIColor(named: "blackDayNight")
+        button.backgroundColor = .blackDayText
         button.layer.cornerRadius = 12
         button.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         return button
@@ -35,6 +42,8 @@ final class CartDeleteConfirmView: UIViewController {
     private let imageViews: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 12
         image.contentMode = .scaleToFill
         image.image = UIImage(named: "mockCart")
         return image
@@ -42,7 +51,7 @@ final class CartDeleteConfirmView: UIViewController {
 
     private let confirmLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .blackDayText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.text = "Вы уверены, что хотите\nудалить объект из корзины?"
@@ -71,7 +80,11 @@ final class CartDeleteConfirmView: UIViewController {
         return stack
     }()
 
+    var nftId: String?
+    var nftImage: URL?
+
     @objc private func deleteTapped() {
+        delegate?.deleteNftCart(nftId: nftId ?? "")
         dismiss(animated: true)
     }
 
@@ -85,7 +98,8 @@ final class CartDeleteConfirmView: UIViewController {
     }
 
     private func configureView() {
-        let blur = UIBlurEffect(style: .light)
+        imageViews.kf.setImage(with: nftImage)
+        let blur = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.frame = view.bounds
         view.addSubview(blurView)

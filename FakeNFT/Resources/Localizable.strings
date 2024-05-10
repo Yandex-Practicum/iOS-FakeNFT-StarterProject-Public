@@ -14,3 +14,4 @@
 "Cart.sortByName" = "По имени";
 "Cart.sortByPrice" = "По цене";
 "Cart.sortByRating" = "По рейтингу";
+"Cart.payPage.payBttn" = "Оплатить";
