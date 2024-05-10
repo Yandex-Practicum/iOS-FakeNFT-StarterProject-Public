@@ -99,7 +99,10 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     }
 
     @objc private func payBttnTapped() {
-        dismiss(animated: true)
+        let confirmPage = CartConfirmPayView()
+        let navigationController = UINavigationController(rootViewController: confirmPage)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
     }
 
     override func viewDidLoad() {
