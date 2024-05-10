@@ -5,27 +5,86 @@
 //  Created by Сергей on 23.04.2024.
 //
 
-import Foundation
-
-protocol StatisticsViewPresenterDelegate: AnyObject {
-    func set(person: Person)
-}
+import UIKit
+import Alamofire
 
 protocol StatisticPresenterProtocol: AnyObject {
+    
+    var view: StatisticsViewControllerProtocol? { get set }
     var objects: [Person] { get set }
-    var delegate: StatisticsViewPresenterDelegate? { get set }
+    func viewDidLoad()
+    func sortByRating()
+    func createSortAlert(view: UIViewController, collection: UICollectionView)
+    func createErrorAlert(view: UIViewController)
 }
 
 final class StatisticsPresenter: StatisticPresenterProtocol {
     
-    weak var delegate: StatisticsViewPresenterDelegate?
+    private let statisticService = StatisticService.shared
+    let didChangeNotification = Notification.Name(rawValue: "StatisticServiceDidChange")
+    private var imageListServiceObserver: NSObjectProtocol?
+    weak var view: StatisticsViewControllerProtocol?
+    var objects: [Person] = []
     
-    var objects: [Person] = [
-        Person(name: "Alex", image: "avatar", webSite: "https://ya.ru", rating: 1, nftCount: 112, description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", nft: [
-        NFTModel(image: "April", name: "April", price: 1.78, isFavourite: false, rating: 3, isAdded: false),
-        NFTModel(image: "mockNFT", name: "Zeus", price: 1.98, isFavourite: false, rating: 2, isAdded: false)
-    ]),
-        Person(name: "Mads", image: "avatar1", webSite: "https://google.com", rating: 2, nftCount: 71, description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", nft: []), Person(name: "Temothee", image: "avatar2", webSite: "https://github.com", rating: 3, nftCount: 51, description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur", nft: [])]
+    func viewDidLoad() {
+        observeAnimate()
+    }
+    
+    func sortByName() {
+        //TODO 
+    }
+    
+    func sortByRating() {
+        let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
+        objects = sortedObjects
+    }
+    
+    func observeAnimate() {
+        UIBlockingProgressHUD.show()
+        imageListServiceObserver = NotificationCenter.default.addObserver(
+            forName: didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                guard let self = self else { return }
+                view?.updateCollectionViewAnimate()
+            }
+        StatisticService.shared.fetchNextPage()
+    }
+    
+    func createSortAlert(view: UIViewController, collection: UICollectionView) {
+        let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
+            print("name")
+        }
+        let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
+            print("rating")
+            self.sortByRating()
+            collection.reloadData()
+            
+        }
+        
+        let closeAction = UIAlertAction(title: "Закрыть", style: .cancel) { action in
+            view.dismiss(animated: true)
+        }
+        
+        [nameAction, ratingAction, closeAction].forEach {
+            alertController.addAction($0)
+        }
+        view.present(alertController, animated: true)
+    }
+    
+    func createErrorAlert(view: UIViewController) {
+        let alertController = UIAlertController(title: "Не удалось получить данные", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { action in
+            UIBlockingProgressHUD.dismiss()
+            view.dismiss(animated: true)
+        }
+        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
+            self.statisticService.fetchNextPage()
+        }
+        [cancelAction, repeatAction].forEach {
+            alertController.addAction($0)
+        }
+        view.present(alertController, animated: true)
+    }
 }
-
-

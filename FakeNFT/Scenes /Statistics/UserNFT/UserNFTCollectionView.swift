@@ -6,17 +6,14 @@
 //
 
 import UIKit
+import ProgressHUD
 
-protocol UserNFTCollectionViewProtocol {
-    var presenter: UserNFTCollectionPresenterProtocol { get set }
-}
-
-final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProtocol {
+final class UserNFTCollectionView: UIViewController {
     
-    var presenter: UserNFTCollectionPresenterProtocol = UserNFTCollectionPresenter()
+    private let service = UserNFTService.shared
     
-    init(nft: [NFTModel]) {
-        presenter.visibleNFT = nft
+    init(nft: [String]) {
+        self.service.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,6 +21,11 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         fatalError("init(coder:) has not been implemented")
     }
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
     
     private lazy var nftCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero,
@@ -42,6 +44,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .bold)
         label.text = "У пользователя еще нет NFT"
+        label.isHidden = true
         return label
     }()
     
@@ -51,13 +54,20 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
-        updateEmptyView()
+        service.getNFT {
+            self.nftCollection.reloadData()
+            self.updateEmptyView()
+            UIBlockingProgressHUD.dismiss()
+        }
+        service.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
     }
     
     private func setViews() {
-        [nftCollection, emptyCollectionLabel].forEach {
+        [nftCollection, emptyCollectionLabel, activityIndicator].forEach {
             view.addSubview($0)
         }
+        activityIndicator.center = view.center
+        UIBlockingProgressHUD.show()
     }
     
     private func setConstraints() {
@@ -72,7 +82,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     }
     
     func updateEmptyView() {
-        if presenter.visibleNFT.isEmpty {
+        if service.visibleNFT.isEmpty {
             emptyCollectionLabel.isHidden = false
         } else {
             emptyCollectionLabel.isHidden = true
@@ -84,7 +94,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
 
 extension UserNFTCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presenter.visibleNFT.count
+        service.visibleNFT.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,7 +103,7 @@ extension UserNFTCollectionView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        let nft = presenter.visibleNFT[indexPath.row]
+        let nft = service.visibleNFT[indexPath.row]
         cell.set(nft: nft)
         return cell
     }

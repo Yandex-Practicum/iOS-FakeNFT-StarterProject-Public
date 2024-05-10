@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol UserInfoViewControllerProtocol {
     var presenter: UserInfoPresenterProtocol { get set }
@@ -26,7 +27,8 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 28
+        imageView.layer.cornerRadius = 35
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -82,6 +84,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         setViews()
         setConstraints()
         set()
+        
     }
     
     private func setViews() {
@@ -116,9 +119,11 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     }
     
     private func set() {
-        avatarImage.image = UIImage(named: presenter.object?.image ?? "") 
+        guard let object = presenter.object else { return }
+        let url = URL(string: object.avatar)
         nameLabel.text = presenter.object?.name
         descriptonText.text = presenter.object?.description
+        avatarImage.kf.setImage(with: url)
     }
     
     @objc private func backButtonTapped() {
@@ -126,7 +131,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
     }
     
     @objc private func webButtonTapped() {
-        navigationController?.pushViewController(WebViewController(url: presenter.object?.webSite ?? ""), animated: true)
+        navigationController?.pushViewController(WebViewController(url: presenter.object?.website ?? ""), animated: true)
     }
 }
 
@@ -143,14 +148,15 @@ extension UserInfoView: UITableViewDataSource {
         let arrowImageView = UIImageView(image: arrowImage)
         cell.accessoryView = arrowImageView
         cell.selectionStyle = .none
-        cell.set(nftCount: presenter.object?.nftCount ?? Int())
+        let count = presenter.object?.nfts.count ?? Int()
+        cell.set(nftCount: count)
         return cell
     }
 }
 
 extension UserInfoView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let object = presenter.object?.nft else { return }
+        guard let object = presenter.object?.nfts else { return }
         let vc = UserNFTCollectionView(nft: object)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)

@@ -8,13 +8,20 @@
 import UIKit
 import Kingfisher
 
-protocol StatisticsViewControllerProtocol {
+protocol StatisticsViewControllerProtocol: AnyObject{
     var presenter: StatisticPresenterProtocol { get set }
+    func updateCollectionViewAnimate()
 }
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
     
-    var presenter: StatisticPresenterProtocol = StatisticsPresenter()
+    private let statisticService = StatisticService.shared
+    
+    lazy var presenter: StatisticPresenterProtocol = {
+        let presenter = StatisticsPresenter()
+        presenter.view = self
+        return presenter
+    }()
     
     //MARK: - Private
     
@@ -25,21 +32,26 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         collection.dataSource = self
         collection.delegate = self
         collection.showsVerticalScrollIndicator = false
+        collection.isUserInteractionEnabled = true
         return collection
     }()
     
-    private let sortButton: UIButton = {
+    private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
         button.setImage(UIImage(named: "vector"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtontapped), for: .touchUpInside)
         return button
     }()
+    
+    private var isLoadingData: Bool = false
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
         setViews()
         setConstraints()
         setNavBar()
@@ -52,7 +64,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            ratingCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            ratingCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             ratingCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ratingCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             ratingCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
@@ -64,6 +76,35 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         navigationController?.navigationBar.topItem?.setRightBarButton(custom, animated: false)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
+    }
+    
+    func updateCollectionViewAnimate() {
+        let oldCount = presenter.objects.count
+        let newCount = statisticService.users.count
+        self.presenter.objects = self.statisticService.users
+        if oldCount != newCount {
+            ratingCollectionView.performBatchUpdates {
+                var indexPaths: [IndexPath] = []
+                for i in oldCount..<newCount {
+                    indexPaths.append(IndexPath(row: i, section: 0))
+                }
+                ratingCollectionView.insertItems(at: indexPaths)
+            } completion: { _ in }
+        }
+        print(presenter.objects)
+        UIBlockingProgressHUD.dismiss()
+    }
+    
+    func checkCompletedList(_ indexPath: IndexPath) {
+        if !ProcessInfo.processInfo.arguments.contains("testMode") {
+            if statisticService.users.isEmpty || (indexPath.row + 1 == statisticService.users.count) {
+                statisticService.fetchNextPage()
+            }
+        }
+    }
+    
+    @objc private func sortButtontapped() {
+        presenter.createSortAlert(view: self, collection: ratingCollectionView)
     }
 }
 
@@ -103,6 +144,10 @@ extension StatisticsViewController: UICollectionViewDelegate {
         let vc = UserInfoView(object: object)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        checkCompletedList(indexPath)
     }
 }
 

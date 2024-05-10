@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class RatingCell: UICollectionViewCell {
     
@@ -23,7 +24,8 @@ final class RatingCell: UICollectionViewCell {
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 28
+        imageView.layer.cornerRadius = 14
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -61,10 +63,11 @@ final class RatingCell: UICollectionViewCell {
     }
     
     func set(indexPath: IndexPath, person: Person) {
-        ratingLabel.text = "\(person.rating)"
-        avatarImage.image = UIImage(named: person.image) 
+        let url = URL(string: person.avatar)
+        ratingLabel.text = "\(indexPath.row + 1)"
+        avatarImage.kf.setImage(with: url)
         nameLabel.text = person.name
-        nftCountLabel.text = "\(person.nftCount)"
+        nftCountLabel.text = "\(person.nfts.count)"
     }
     
     private func setupViews() {
