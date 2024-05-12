@@ -35,6 +35,7 @@ final class InfoNFTTableCell: UITableViewCell, ReuseIdentifying {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
