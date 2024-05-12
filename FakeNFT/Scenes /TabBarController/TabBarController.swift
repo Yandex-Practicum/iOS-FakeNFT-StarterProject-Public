@@ -2,36 +2,34 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    var servicesAssembly: ServicesAssembly!
+    var servicesAssembly: ServicesAssembly?
 
-    private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
-        tag: 0
-    )
-    
     private let statisticsTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.statistics", comment: ""),
         image: UIImage(systemName: "flag.2.crossed.fill"),
         tag: 3
     )
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
-        catalogController.tabBarItem = catalogTabBarItem
-        
-        
-        let statisticsAsssembly = StatisticsAssembly(servicesAssembler: servicesAssembly)
+        let statisticsAsssembly = StatisticsAssembly(servicesAssembler: servicesAssembly ?? ServicesAssembly(
+            networkClient: DefaultNetworkClient(),
+            nftStorage: NftStorageImpl(),
+            usersStorage: UsersStorage()
+        ))
         let statisticsController = UINavigationController(rootViewController: statisticsAsssembly.build())
         statisticsController.tabBarItem = statisticsTabBarItem
+        
 
-        viewControllers = [catalogController, statisticsController]
-
-        view.backgroundColor = .systemBackground
+        viewControllers = [statisticsController]
+        selectedIndex = 0
+        view.backgroundColor = .background
         view.tintColor = UIColor.segmentActive
+    }
+    
+    func hideTabBar() {
+        view.removeFromSuperview()
     }
 }
