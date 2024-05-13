@@ -23,6 +23,10 @@
 		0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB7482A7808900009A829 /* TestCatalogController.swift */; };
 		0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */; };
 		0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74D2A7817DC0009A829 /* NftStorage.swift */; };
+		1F2410542BEF97C100B0DCF3 /* OrderDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2410532BEF97C100B0DCF3 /* OrderDataModel.swift */; };
+		1F2410562BEF983200B0DCF3 /* OrderStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2410552BEF983200B0DCF3 /* OrderStorage.swift */; };
+		1F2410582BEF9E1400B0DCF3 /* OrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2410572BEF9E1400B0DCF3 /* OrderService.swift */; };
+		1F24105A2BEFF63700B0DCF3 /* OrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2410592BEFF63700B0DCF3 /* OrderRequest.swift */; };
 		1F853CE92BE7FC1C00A1ECA2 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F853CE82BE7FC1C00A1ECA2 /* CartViewController.swift */; };
 		1F853CEB2BE7FC4A00A1ECA2 /* MyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F853CEA2BE7FC4A00A1ECA2 /* MyOrderCell.swift */; };
 		1F853CEF2BE8C2AD00A1ECA2 /* NftDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F853CEE2BE8C2AD00A1ECA2 /* NftDataModel.swift */; };
@@ -96,6 +100,10 @@
 		0CFCB7482A7808900009A829 /* TestCatalogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCatalogController.swift; sourceTree = "<group>"; };
 		0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		0CFCB74D2A7817DC0009A829 /* NftStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftStorage.swift; sourceTree = "<group>"; };
+		1F2410532BEF97C100B0DCF3 /* OrderDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDataModel.swift; sourceTree = "<group>"; };
+		1F2410552BEF983200B0DCF3 /* OrderStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStorage.swift; sourceTree = "<group>"; };
+		1F2410572BEF9E1400B0DCF3 /* OrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderService.swift; sourceTree = "<group>"; };
+		1F2410592BEFF63700B0DCF3 /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		1F853CE82BE7FC1C00A1ECA2 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		1F853CEA2BE7FC4A00A1ECA2 /* MyOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderCell.swift; sourceTree = "<group>"; };
 		1F853CEE2BE8C2AD00A1ECA2 /* NftDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDataModel.swift; sourceTree = "<group>"; };
@@ -216,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB74D2A7817DC0009A829 /* NftStorage.swift */,
+				1F2410552BEF983200B0DCF3 /* OrderStorage.swift */,
 			);
 			path = MemoryStorage;
 			sourceTree = "<group>";
@@ -321,6 +330,7 @@
 				3FC8C38F29D245250081F015 /* Requests */,
 				0C79EE6B2A76DE2E00EE90EA /* ServicesAssemly.swift */,
 				0CFCB73F2A78002A0009A829 /* NftService.swift */,
+				1F2410572BEF9E1400B0DCF3 /* OrderService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -385,6 +395,7 @@
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
 				1F853CEE2BE8C2AD00A1ECA2 /* NftDataModel.swift */,
 				1FEA644B2BEB6BFB00BE271F /* CurrencyDataModel.swift */,
+				1F2410532BEF97C100B0DCF3 /* OrderDataModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -395,6 +406,7 @@
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
+				1F2410592BEFF63700B0DCF3 /* OrderRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -604,6 +616,7 @@
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				1F853CEF2BE8C2AD00A1ECA2 /* NftDataModel.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
+				1F2410562BEF983200B0DCF3 /* OrderStorage.swift in Sources */,
 				1FEA644E2BEB818E00BE271F /* PayPresenter.swift in Sources */,
 				1F853CF12BE8C90C00A1ECA2 /* RatingView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
@@ -612,8 +625,10 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				1F853CEB2BE7FC4A00A1ECA2 /* MyOrderCell.swift in Sources */,
 				1F853CF32BE8F2FF00A1ECA2 /* LoaderView.swift in Sources */,
+				1F2410542BEF97C100B0DCF3 /* OrderDataModel.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
+				1F2410582BEF9E1400B0DCF3 /* OrderService.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				1FEA64482BEA901B00BE271F /* PayCell.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
@@ -629,6 +644,7 @@
 				1FEA64552BED4C9B00BE271F /* DeleteCardPresenter.swift in Sources */,
 				1FEA64462BEA8FC400BE271F /* PayViewController.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
+				1F24105A2BEFF63700B0DCF3 /* OrderRequest.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,

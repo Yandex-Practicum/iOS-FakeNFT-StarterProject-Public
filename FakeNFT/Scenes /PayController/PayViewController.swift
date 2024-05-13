@@ -16,20 +16,12 @@ protocol PayViewControllerProtocol: AnyObject {
     func stopLoadIndicator()
 }
 
-final class PayViewController: UIViewController, PayViewControllerProtocol {
- 
+final class PayViewController: UIViewController, PayViewControllerProtocol, UITextViewDelegate {
+    
     private var presenter: PayPresenterProtocol?
     private let agreeUrl = URL(string: "https://yandex.ru/legal/practicum_termsofuse/")
     private var cartPresenter: CartPresenter?
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private lazy var payCollectionView : UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -38,7 +30,7 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
                                 forCellWithReuseIdentifier: PayCell.identifier)
         collectionView.allowsMultipleSelection = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return collectionView
     }()
     
@@ -61,16 +53,30 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
         return textLabel
     }()
     
-    private lazy var agreementLabel: UILabel = {
-        let agreementLabel = UILabel()
-        agreementLabel.font = .caption2
-        agreementLabel.textColor = UIColor(named: "Blue")
-        agreementLabel.attributedText = NSMutableAttributedString(string: "Пользовательского соглашения", attributes:[NSAttributedString.Key.link: agreeUrl!])
+    private lazy var agreementTextView: UITextView = {
+        let agreementTextView = UITextView()
         
-        agreementLabel.translatesAutoresizingMaskIntoConstraints = false
-        return agreementLabel
+//        agreementTextView.attributedText = NSMutableAttributedString(string: "Пользовательского соглашения", attributes:[NSAttributedString.Key.link: agreeUrl!])
+        let attributedString = NSMutableAttributedString(string: "Пользовательского соглашения")
+        
+
+        let lenOfLink = "Пользовательского соглашения".count
+        attributedString.setAttributes([.font: UIFont.caption2], range: NSMakeRange(0, attributedString.length))
+        attributedString.setAttributes([.link: agreeUrl], range: NSMakeRange(0, lenOfLink))
+        
+        agreementTextView.font = .caption2
+        agreementTextView.textColor = UIColor(named: "Blue")
+        
+        agreementTextView.backgroundColor = .clear
+        agreementTextView.attributedText = attributedString
+        agreementTextView.isUserInteractionEnabled = true
+        agreementTextView.isEditable = false
+
+        agreementTextView.delegate = self
+        agreementTextView.translatesAutoresizingMaskIntoConstraints = false
+        return agreementTextView
     }()
-        
+    
     private lazy var payButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .black
@@ -84,7 +90,15 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
     }()
     
     private let loaderView = LoaderView()
-      
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "White")
@@ -101,29 +115,25 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
         presenter?.getCurrencies()
     }
     
-    
     private func makeNavBar()   {
         if let navBar = navigationController?.navigationBar {
             navigationItem.title = "Выберите способ оплаты"
             navBar.titleTextAttributes = [.font: UIFont.bodyBold]
             navBar.tintColor = UIColor(named: "Black")
-
+ 
             let leftButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(toCart))
-
             leftButton.image = UIImage(named: "Back")
-            navBar.topItem?.setLeftBarButton(leftButton, animated: false)
         }
     }
-    
     
     private func addSubviews() {
         view.addSubview(payCollectionView)
         view.addSubview(imagePay)
         imagePay.addSubview(textLabel)
-        imagePay.addSubview(agreementLabel)
+        imagePay.addSubview(agreementTextView)
         imagePay.addSubview(payButton)
     }
-        
+    
     private func setupFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         
@@ -134,13 +144,13 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
     
     private func setupLayoutImagePay() {
         NSLayoutConstraint.activate([
-
+            
             textLabel.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
             textLabel.topAnchor.constraint(equalTo: imagePay.topAnchor, constant: 16),
             
-            agreementLabel.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
-            agreementLabel.topAnchor.constraint(equalTo: imagePay.topAnchor, constant: 38),
-
+            agreementTextView.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
+            agreementTextView.topAnchor.constraint(equalTo: imagePay.topAnchor, constant: 38),
+            
             payButton.topAnchor.constraint(equalTo: imagePay.topAnchor, constant: 76),
             payButton.trailingAnchor.constraint(equalTo: imagePay.trailingAnchor, constant: -16),
             payButton.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
@@ -164,8 +174,7 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
     }
     
     @objc func toCart() {
-        let cartVC = CartViewController()
-        present(cartVC, animated: true)
+        dismiss(animated: true)
     }
     
     @objc private func didTapPayButton() {
@@ -187,8 +196,8 @@ final class PayViewController: UIViewController, PayViewControllerProtocol {
             let successPayController = SuccessPayController()
             successPayController.modalPresentationStyle = .fullScreen
             present(successPayController, animated: true) {
-                    self.navigationController?.popViewController(animated: true)
-                    self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
+                self.navigationController?.popViewController(animated: true)
+                self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
             }
         } else {
             showPayError()
@@ -244,23 +253,7 @@ extension  PayViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-//extension PayViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 168, height: 46)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 7
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 7
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16)
-//    }
-//}
+
 
 
 

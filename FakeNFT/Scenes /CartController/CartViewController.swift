@@ -8,26 +8,17 @@
 import Foundation
 import UIKit
 
-
 final class CartViewController: UIViewController, CartViewControllerProtocol {
     
-    
- private var presenter: CartPresenterProtocol?
-  
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var presenter: CartPresenterProtocol?
+    var servicesAssembly: ServicesAssembly
     
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
         button.image = UIImage(named: "sort")
         return button
     }()
-
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MyOrderCell.self, forCellReuseIdentifier: MyOrderCell.identifier)
@@ -47,7 +38,6 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         return imagePay
     }()
     
-    
     private lazy var amountLabel: UILabel = {
         let amountLabel = UILabel()
         amountLabel.text = "3 NFT"
@@ -65,7 +55,6 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         moneyLabel.translatesAutoresizingMaskIntoConstraints = false
         return moneyLabel
     }()
-    
     
     private lazy var payButton: UIButton = {
         let button = UIButton()
@@ -88,8 +77,17 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         return label
     }()
     
-    private var loaderView = LoaderView()
-   
+    private let loaderView = LoaderView()
+    
+    init(servicesAssembly: ServicesAssembly) {
+        self.servicesAssembly = servicesAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "White")
@@ -106,6 +104,36 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
         showEmptyCart()
     }
     
+    @objc private func didTapSortButton() {
+        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "По цене", style: .default, handler: { [weak self] (UIAlertAction) in
+            guard self != nil else { return }
+            //TODO: реализовать сортировку
+        } ))
+        
+        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] (UIAlertAction) in
+            guard self != nil else { return }
+            //TODO: реализовать сортировку
+        } ))
+        
+        alert.addAction(UIAlertAction(title: "По названию", style: .default, handler: { [weak self] (UIAlertAction) in
+            guard self != nil else { return }
+            //TODO: реализовать сортировку
+        } ))
+        
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: { (UIAlertAction) in
+        } ))
+        
+        self.present(alert, animated: true)
+    }
+    
+    @objc private func didTapPayButton() {
+        let payController = PayViewController()
+        payController.hidesBottomBarWhenPushed = true
+        navigationItem.backButtonTitle = ""
+        navigationController?.pushViewController(payController, animated: true)
+    }
     
     private func addSubviews() {
         view.addSubview(tableView)
@@ -119,13 +147,12 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     private func setupNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else {
             return
-            
         }
         let rightButton = UIBarButtonItem(image: UIImage(named: "sort"), style: .plain, target: self, action: #selector(didTapSortButton))
         rightButton.tintColor = UIColor(named: "Black")
         navigationBar.topItem?.setRightBarButton(rightButton, animated: false)
     }
-        
+    
     private func setupLayoutImagePay() {
         NSLayoutConstraint.activate([
             amountLabel.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
@@ -133,7 +160,7 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
             
             moneyLabel.leadingAnchor.constraint(equalTo: imagePay.leadingAnchor, constant: 16),
             moneyLabel.bottomAnchor.constraint(equalTo: imagePay.bottomAnchor, constant: -16),
-
+            
             payButton.trailingAnchor.constraint(equalTo: imagePay.trailingAnchor, constant: -16),
             payButton.centerYAnchor.constraint(equalTo: imagePay.centerYAnchor),
             payButton.widthAnchor.constraint(equalToConstant: 240),
@@ -143,7 +170,6 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
             emptyCartLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
@@ -186,50 +212,19 @@ final class CartViewController: UIViewController, CartViewControllerProtocol {
     func stopLoadIndicator() {
         loaderView.hideLoading()
     }
-    
-    @objc private func didTapSortButton() {
-        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "По цене", style: .default, handler: { [weak self] (UIAlertAction) in
-            guard self != nil else { return }
-            //TODO: реализовать сортировку
-        } ))
-        
-        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] (UIAlertAction) in
-            guard self != nil else { return }
-            //TODO: реализовать сортировку
-        } ))
-        
-        alert.addAction(UIAlertAction(title: "По названию", style: .default, handler: { [weak self] (UIAlertAction) in
-            guard self != nil else { return }
-            //TODO: реализовать сортировку
-        } ))
-        
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel, handler: { (UIAlertAction) in
-        } ))
-        
-        self.present(alert, animated: true)
-    }
-    
-    @objc private func didTapPayButton() {
-        let payController = PayViewController()
-        payController.hidesBottomBarWhenPushed = true
-        navigationItem.backButtonTitle = ""
-        navigationController?.pushViewController(payController, animated: true)
-    }
 }
 
 extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let number = presenter?.count() else {return 0}
+        guard let number = presenter?.count() else { return 0 }
         return number
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyOrderCell.identifier, for: indexPath) as? MyOrderCell else { return UITableViewCell() }
-                guard let model = presenter?.getModel(indexPath: indexPath) else { return cell }
-                cell.delegate = self
-                cell.updateCell(with: model)
+        guard let model = presenter?.getModel(indexPath: indexPath) else { return cell}
+        cell.delegate = self
+        cell.updateCell(with: model)
         return cell
     }
     
@@ -248,7 +243,7 @@ extension CartViewController: CartTableViewCellDelegate {
 
 
 
-  
+
 
 
 

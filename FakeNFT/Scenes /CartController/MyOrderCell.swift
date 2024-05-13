@@ -82,10 +82,8 @@ final class MyOrderCell: UITableViewCell {
         return cartButton
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         addSubviews()
         setupLayout()
         setupLayoutCardView()
@@ -94,8 +92,7 @@ final class MyOrderCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+        
     private  func addSubviews() {
         contentView.addSubview(cardView)
         contentView.addSubview(cartButton)
@@ -167,7 +164,6 @@ final class MyOrderCell: UITableViewCell {
         moneyLabel.text = "\(model.price) ETH"
         self.id = model.id
     }
-    
     
     @objc private func didTapDeleteButton() {
         

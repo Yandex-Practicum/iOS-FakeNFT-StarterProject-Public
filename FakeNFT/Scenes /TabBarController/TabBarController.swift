@@ -1,8 +1,10 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-
+    
+  
     var servicesAssembly: ServicesAssembly!
+//    var presenter: CartPresenterProtocol
 
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
@@ -23,7 +25,7 @@ final class TabBarController: UITabBarController {
             servicesAssembly: servicesAssembly
         )
         
-        let cartController = CartViewController()
+        let cartController = CartViewController(servicesAssembly: servicesAssembly)
         catalogController.tabBarItem = catalogTabBarItem
         cartController.tabBarItem = cartTabBarItem
         

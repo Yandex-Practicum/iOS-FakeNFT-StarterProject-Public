@@ -17,15 +17,13 @@ protocol PayPresenterProtocol {
 }
 
 final class PayPresenter: PayPresenterProtocol {
-
     
-
-    private var payController: PayViewControllerProtocol?
+    private weak var payController: PayViewControllerProtocol?
     private var currencies: [CurrencyDataModel] = []
     var selectedCurrency: CurrencyDataModel? {
         didSet {
             if selectedCurrency != nil {
-            payController?.didSelectCurrency(isEnable: true)
+                payController?.didSelectCurrency(isEnable: true)
             }
         }
     }
@@ -53,10 +51,10 @@ final class PayPresenter: PayPresenterProtocol {
         var result = Int.random(in: 0..<2)
         
         switch result {
-            case 1:
+        case 1:
             payController?.didPay(payResult: true)
             payController?.stopLoadIndicator()
-            case 0:
+        case 0:
             payController?.didPay(payResult: false)
             payController?.stopLoadIndicator()
         default:
@@ -66,9 +64,8 @@ final class PayPresenter: PayPresenterProtocol {
         //TODO: реализовать c данными из сети
     }
     
-    
     func getCurrencies() {
         payController?.startLoadIndicator()
     }
-  
+    
 }

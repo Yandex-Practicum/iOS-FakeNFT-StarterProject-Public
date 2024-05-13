@@ -52,7 +52,6 @@ final class SuccessPayController: UIViewController {
         view.addSubview(successImage)
         view.addSubview(successLabel)
         view.addSubview(returnButton)
-
     }
         
     private func setupLayout() {

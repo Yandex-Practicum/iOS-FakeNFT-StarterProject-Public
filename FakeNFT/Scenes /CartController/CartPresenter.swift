@@ -29,7 +29,6 @@ final class CartPresenter: CartPresenterProtocol {
     init(viewController: CartViewControllerProtocol) {
         self.viewController = viewController
         cartContent = [mock1, mock2]
-        
     }
         
     func totalPrice() -> Float {
