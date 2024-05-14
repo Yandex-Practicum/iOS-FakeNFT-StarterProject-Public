@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol CartConfirmPayViewDelegate: AnyObject {
+    func continueWasTapped()
+}
+
 final class CartConfirmPayView: UIViewController {
+
+    weak var delegate: CartConfirmPayViewDelegate?
 
     private let imageViews: UIImageView = {
         let image = UIImageView()
@@ -54,21 +60,8 @@ final class CartConfirmPayView: UIViewController {
 
     @objc
     private func continueBttnTapped() {
-        let irer = Int.random(in: 0...1)
-        switch irer {
-        case 0:
-            dismiss(animated: true)
-        case 1:
-            if let navigationController = self.navigationController {
-                for viewController in navigationController.viewControllers {
-                    print(viewController)
-                }
-            }
-            navigationController.
-        default:
-            dismiss(animated: true)
-        }
-
+        dismiss(animated: true)
+        delegate?.continueWasTapped()
     }
 
     override func viewDidLoad() {

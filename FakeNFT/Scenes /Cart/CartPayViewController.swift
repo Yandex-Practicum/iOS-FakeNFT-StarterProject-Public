@@ -21,6 +21,8 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
     var visibleCurrencies: [Currencies] = []
 
+    private var selectedCurrency: String?
+
     private let navigationLabel: UILabel = {
         let label = UILabel()
         label.text = "Выберите способ оплаты"
@@ -99,10 +101,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     }
 
     @objc private func payBttnTapped() {
-        let confirmPage = CartConfirmPayView()
-        let navigationController = UINavigationController(rootViewController: confirmPage)
-        navigationController.modalPresentationStyle = .overFullScreen
-        present(navigationController, animated: true)
+        tryToPay()
     }
 
     override func viewDidLoad() {
@@ -115,6 +114,18 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
     func updateTable() {
         currencysCollectionView.reloadData()
+    }
+
+    func makeAlert() {
+        let alert = UIAlertController(title: "Не удалось произвести оплату", message: "", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: { _ in
+            self.tryToPay()
+            alert.dismiss(animated: true)
+        }))
+
+        present(alert, animated: true)
     }
 
     private func fetchCurrency() {
@@ -133,8 +144,35 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
         }
     }
 
-    private func configureView() {
+    private func tryToPay() {
+        guard let selectedCurrency = selectedCurrency else { return }
+        ProgressHUD.show()
+        presenter?.getPayAnswer(currencyId: selectedCurrency) { [weak self] items in
+            guard let self = self else { return }
+            switch items {
+            case .success(let answer):
+                if answer.success == true {
+                    makeTransitionToConfirmPage()
+                } else {
+                    makeAlert()
+                }
+            case .failure(let error):
+                print(error)
+            }
+            ProgressHUD.dismiss()
+        }
+    }
 
+    private func makeTransitionToConfirmPage() {
+        let confirmPage = CartConfirmPayView()
+        let navigationController = UINavigationController(rootViewController: confirmPage)
+        confirmPage.delegate = self
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true)
+    }
+
+    private func configureView() {
+        payButton.isEnabled = false
         view.backgroundColor = .backgroundColor
         navigationItem.titleView = navigationLabel
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackBttnCart.png"),
@@ -143,7 +181,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
                                                            action: #selector(cancelPay))
         navigationItem.leftBarButtonItem?.tintColor = .blackDayText
         [currencysCollectionView,
-        payView].forEach {
+         payView].forEach {
             view.addSubview($0)
         }
 
@@ -179,6 +217,12 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
             payButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
+
+    private func enableButton() {
+        if let selectedCurrency = selectedCurrency {
+            payButton.isEnabled = true
+        }
+    }
 }
 
 extension CartPayViewController: UICollectionViewDataSource {
@@ -193,8 +237,8 @@ extension CartPayViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
-                                    CustomCellCollectionViewCart.reuseIdentifier,
-                                    for: indexPath) as? CustomCellCollectionViewCart else { return UICollectionViewCell() }
+                                                                CustomCellCollectionViewCart.reuseIdentifier,
+                                                            for: indexPath) as? CustomCellCollectionViewCart else { return UICollectionViewCell() }
         let data = visibleCurrencies[indexPath.row]
         let url = URL(string: data.image)
         cell.imageViews.kf.setImage(with: url)
@@ -206,13 +250,14 @@ extension CartPayViewController: UICollectionViewDataSource {
 
 extension CartPayViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         if let cell = collectionView.cellForItem(at: indexPath) as? CustomCellCollectionViewCart {
             cell.layer.borderWidth = 1
             let color: UIColor = .blackDayText
             cell.layer.cornerRadius = 12
             cell.layer.borderColor = color.cgColor
         }
+        selectedCurrency = visibleCurrencies[indexPath.row].id
+        enableButton()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -254,4 +299,10 @@ extension CartPayViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 
+}
+
+extension CartPayViewController: CartConfirmPayViewDelegate {
+    func continueWasTapped() {
+        dismiss(animated: true)
+    }
 }

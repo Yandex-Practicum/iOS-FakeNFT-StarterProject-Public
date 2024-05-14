@@ -21,7 +21,7 @@ protocol CartViewControllerProtocol: AnyObject {
 
 final class CartViewController: UIViewController & CartViewControllerProtocol {
 
-    var presenter: CartPresenterProtocol? = CartPresenter(networkClient: DefaultNetworkClient())
+    var presenter: CartPresenterProtocol? = CartPresenter()
     private let refreshControl = UIRefreshControl()
 
     private let sortButton: UIButton = {
@@ -53,7 +53,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         return view
     }()
 
-    private let payButton: UIButton = {
+    private lazy var payButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.payBttn", comment: ""), for: .normal)
