@@ -1,10 +1,3 @@
-//
-//  CartViewController.swift
-//  FakeNFT
-//
-//  Created by Chingiz on 19.04.2024.
-//
-
 import Kingfisher
 import ProgressHUD
 import UIKit
@@ -23,6 +16,15 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     var presenter: CartPresenterProtocol? = CartPresenter()
     private let refreshControl = UIRefreshControl()
+
+    private static var window: UIWindow? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first
+        else {
+            return nil
+        }
+        return window
+    }
 
     private let sortButton: UIButton = {
         let button = UIButton()
@@ -132,6 +134,16 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         present(navigationController, animated: true)
     }
 
+    @objc func handleDataUpdate(_ notification: Notification) {
+        if let userInfo = notification.userInfo {
+            presenter?.cleanCart()
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     @objc
     private func didPullToRefresh(_ sender: Any) {
         presenter?.getAllCartData()
@@ -149,6 +161,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     private func configureView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartUpdated"), object: nil)
         navigationController?.setNavigationBarHidden(true, animated: true)
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -217,10 +230,12 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     func startLoading() {
+        CartViewController.window?.isUserInteractionEnabled = false
         ProgressHUD.show()
     }
 
     func stopLoading() {
+        CartViewController.window?.isUserInteractionEnabled = true
         ProgressHUD.dismiss()
     }
 
@@ -243,7 +258,7 @@ extension CartViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCellViewCart.reuseIdentifier,
-                                for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
+                                                       for: indexPath) as? CustomCellViewCart else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
         cell.delegate = self

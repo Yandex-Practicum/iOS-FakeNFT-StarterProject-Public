@@ -1,19 +1,6 @@
-//
-//  CartConfirmPayView.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 10.05.2024.
-//
-
 import UIKit
 
-protocol CartConfirmPayViewDelegate: AnyObject {
-    func continueWasTapped()
-}
-
 final class CartConfirmPayView: UIViewController {
-
-    weak var delegate: CartConfirmPayViewDelegate?
 
     private let imageViews: UIImageView = {
         let image = UIImageView()
@@ -61,7 +48,7 @@ final class CartConfirmPayView: UIViewController {
     @objc
     private func continueBttnTapped() {
         dismiss(animated: true)
-        delegate?.continueWasTapped()
+        NotificationCenter.default.post(name: NSNotification.Name("CartUpdated"), object: nil, userInfo: [:])
     }
 
     override func viewDidLoad() {

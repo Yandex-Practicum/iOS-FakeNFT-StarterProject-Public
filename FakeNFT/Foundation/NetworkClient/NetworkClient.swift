@@ -116,6 +116,7 @@ struct DefaultNetworkClient: NetworkClient {
         }
 
         var urlRequest = URLRequest(url: endpoint)
+        urlRequest.timeoutInterval = 10
         urlRequest.httpMethod = request.httpMethod.rawValue
 
         if let dto = request.dto,

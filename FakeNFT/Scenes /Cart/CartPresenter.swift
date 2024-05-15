@@ -1,10 +1,3 @@
-//
-//  CartPresenter.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 24.04.2024.
-//
-
 import UIKit
 
 protocol CartPresenterProtocol {
@@ -15,6 +8,7 @@ protocol CartPresenterProtocol {
     func editOrder(typeOfEdit: EditType, nftId: String, completion: @escaping (Error?) -> Void)
     func sortCatalog()
     func getAllCartData()
+    func cleanCart()
 }
 
 enum SortType {
@@ -102,6 +96,12 @@ final class CartPresenter: CartPresenterProtocol {
             cartNetwork.sendNewOrder(nftsIds: items) { _ in
                 self.getAllCartData()
             }
+        }
+    }
+
+    func cleanCart() {
+        cartNetwork.sendNewOrder(nftsIds: []) { _ in
+            self.getAllCartData()
         }
     }
 

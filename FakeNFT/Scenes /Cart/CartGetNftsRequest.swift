@@ -1,10 +1,3 @@
-//
-//  CartGetNfts.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 03.05.2024.
-//
-
 import Foundation
 
 struct CartGetNftsRequest: NetworkRequest {

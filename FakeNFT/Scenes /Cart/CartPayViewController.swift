@@ -1,10 +1,3 @@
-//
-//  CartPayViewController.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 29.04.2024.
-//
-
 import UIKit
 import ProgressHUD
 import Kingfisher
@@ -15,13 +8,27 @@ protocol CartPayViewControllerProtocol: AnyObject {
     func updateTable()
 }
 
+protocol CartPayViewDelegate: AnyObject {
+    func updateCart()
+}
+
 final class CartPayViewController: UIViewController & CartPayViewControllerProtocol {
     var presenter: CartPayPresenterProtocol? = CartPayPresenter(networkClient: DefaultNetworkClient())
     var num = 1
 
     var visibleCurrencies: [Currencies] = []
+    weak var delegate: CartPayViewDelegate?
 
     private var selectedCurrency: String?
+
+    private static var window: UIWindow? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first
+        else {
+            return nil
+        }
+        return window
+    }
 
     private let navigationLabel: UILabel = {
         let label = UILabel()
@@ -104,6 +111,16 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
         tryToPay()
     }
 
+    @objc func handleDataUpdate(_ notification: Notification) {
+        if let userInfo = notification.userInfo {
+            dismiss(animated: true)
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -130,7 +147,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
     private func fetchCurrency() {
         ProgressHUD.show()
-
+        CartPayViewController.window?.isUserInteractionEnabled = false
         presenter?.getCurrencies { [weak self] items in
             guard let self = self else { return }
             switch items {
@@ -140,6 +157,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
                 print(error)
             }
             updateTable()
+            CartPayViewController.window?.isUserInteractionEnabled = true
             ProgressHUD.dismiss()
         }
     }
@@ -147,6 +165,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     private func tryToPay() {
         guard let selectedCurrency = selectedCurrency else { return }
         ProgressHUD.show()
+        CartPayViewController.window?.isUserInteractionEnabled = false
         presenter?.getPayAnswer(currencyId: selectedCurrency) { [weak self] items in
             guard let self = self else { return }
             switch items {
@@ -159,6 +178,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
             case .failure(let error):
                 print(error)
             }
+            CartPayViewController.window?.isUserInteractionEnabled = true
             ProgressHUD.dismiss()
         }
     }
@@ -166,12 +186,12 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     private func makeTransitionToConfirmPage() {
         let confirmPage = CartConfirmPayView()
         let navigationController = UINavigationController(rootViewController: confirmPage)
-        confirmPage.delegate = self
         navigationController.modalPresentationStyle = .overFullScreen
         present(navigationController, animated: true)
     }
 
     private func configureView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartUpdated"), object: nil)
         payButton.isEnabled = false
         view.backgroundColor = .backgroundColor
         navigationItem.titleView = navigationLabel
@@ -299,10 +319,4 @@ extension CartPayViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
 
-}
-
-extension CartPayViewController: CartConfirmPayViewDelegate {
-    func continueWasTapped() {
-        dismiss(animated: true)
-    }
 }

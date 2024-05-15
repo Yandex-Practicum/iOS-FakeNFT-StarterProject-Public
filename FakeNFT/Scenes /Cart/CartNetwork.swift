@@ -1,10 +1,3 @@
-//
-//  CartNetwork.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 12.05.2024.
-//
-
 import Foundation
 
 final class CartNetwork {
