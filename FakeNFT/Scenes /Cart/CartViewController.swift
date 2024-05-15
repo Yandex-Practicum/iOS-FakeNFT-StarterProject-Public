@@ -18,19 +18,12 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     private let refreshControl = UIRefreshControl()
 
     private static var window: UIWindow? {
-        var result: UIWindow? = nil
-        
-        DispatchQueue.main.sync {
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let window = windowScene.windows.first
-            else {
-                result = nil
-                return
-            }
-            result = window
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first
+        else {
+            return nil
         }
-        
-        return result
+        return window
     }
 
     private let sortButton: UIButton = {

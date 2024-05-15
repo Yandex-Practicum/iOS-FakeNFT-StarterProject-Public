@@ -22,19 +22,12 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     private var selectedCurrency: String?
 
     private static var window: UIWindow? {
-        var result: UIWindow?
-
-        DispatchQueue.main.sync {
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let window = windowScene.windows.first
-            else {
-                result = nil
-                return
-            }
-            result = window
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first
+        else {
+            return nil
         }
-
-        return result
+        return window
     }
 
     private let navigationLabel: UILabel = {
