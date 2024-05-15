@@ -22,12 +22,19 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     private var selectedCurrency: String?
 
     private static var window: UIWindow? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first
-        else {
-            return nil
+        var result: UIWindow?
+
+        DispatchQueue.main.sync {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first
+            else {
+                result = nil
+                return
+            }
+            result = window
         }
-        return window
+
+        return result
     }
 
     private let navigationLabel: UILabel = {
@@ -146,40 +153,44 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     }
 
     private func fetchCurrency() {
-        ProgressHUD.show()
-        CartPayViewController.window?.isUserInteractionEnabled = false
-        presenter?.getCurrencies { [weak self] items in
-            guard let self = self else { return }
-            switch items {
-            case .success(let currencies):
-                self.visibleCurrencies = currencies
-            case .failure(let error):
-                print(error)
+        DispatchQueue.main.async {
+            ProgressHUD.show()
+            CartPayViewController.window?.isUserInteractionEnabled = false
+            self.presenter?.getCurrencies { [weak self] items in
+                guard let self = self else { return }
+                switch items {
+                case .success(let currencies):
+                    self.visibleCurrencies = currencies
+                case .failure(let error):
+                    print(error)
+                }
+                updateTable()
+                CartPayViewController.window?.isUserInteractionEnabled = true
+                ProgressHUD.dismiss()
             }
-            updateTable()
-            CartPayViewController.window?.isUserInteractionEnabled = true
-            ProgressHUD.dismiss()
         }
     }
 
     private func tryToPay() {
         guard let selectedCurrency = selectedCurrency else { return }
-        ProgressHUD.show()
-        CartPayViewController.window?.isUserInteractionEnabled = false
-        presenter?.getPayAnswer(currencyId: selectedCurrency) { [weak self] items in
-            guard let self = self else { return }
-            switch items {
-            case .success(let answer):
-                if answer.success == true {
-                    makeTransitionToConfirmPage()
-                } else {
-                    makeAlert()
+        DispatchQueue.main.async {
+            ProgressHUD.show()
+            CartPayViewController.window?.isUserInteractionEnabled = false
+            self.presenter?.getPayAnswer(currencyId: selectedCurrency) { [weak self] items in
+                guard let self = self else { return }
+                switch items {
+                case .success(let answer):
+                    if answer.success == true {
+                        makeTransitionToConfirmPage()
+                    } else {
+                        makeAlert()
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
+                CartPayViewController.window?.isUserInteractionEnabled = true
+                ProgressHUD.dismiss()
             }
-            CartPayViewController.window?.isUserInteractionEnabled = true
-            ProgressHUD.dismiss()
         }
     }
 

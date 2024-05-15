@@ -18,12 +18,19 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     private let refreshControl = UIRefreshControl()
 
     private static var window: UIWindow? {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first
-        else {
-            return nil
+        var result: UIWindow? = nil
+        
+        DispatchQueue.main.sync {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first
+            else {
+                result = nil
+                return
+            }
+            result = window
         }
-        return window
+        
+        return result
     }
 
     private let sortButton: UIButton = {
@@ -230,13 +237,17 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     func startLoading() {
-        CartViewController.window?.isUserInteractionEnabled = false
-        ProgressHUD.show()
+        DispatchQueue.main.async {
+            CartViewController.window?.isUserInteractionEnabled = false
+            ProgressHUD.show()
+        }
     }
 
     func stopLoading() {
-        CartViewController.window?.isUserInteractionEnabled = true
-        ProgressHUD.dismiss()
+        DispatchQueue.main.async {
+            CartViewController.window?.isUserInteractionEnabled = true
+            ProgressHUD.dismiss()
+        }
     }
 
     func updateNftsCount() {
