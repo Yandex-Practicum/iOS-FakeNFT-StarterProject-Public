@@ -33,6 +33,8 @@ final class RatingCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -95,9 +97,9 @@ final class RatingCell: UICollectionViewCell {
             avatarImage.widthAnchor.constraint(equalToConstant: 28),
             nameLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 8),
+            nftCountLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 16),
             nftCountLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             nftCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16),
-            
         ])
     }
 }

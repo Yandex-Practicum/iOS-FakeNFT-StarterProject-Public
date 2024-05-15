@@ -50,6 +50,7 @@ final class UserNFTCollectionView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.delegate = self
         navigationItem.title = "Коллекция NFT"
         view.backgroundColor = .systemBackground
         setViews()
@@ -59,7 +60,8 @@ final class UserNFTCollectionView: UIViewController {
             self.updateEmptyView()
             UIBlockingProgressHUD.dismiss()
         }
-        service.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
+        service.getProfile()
+        service.getCart()
     }
     
     private func setViews() {
@@ -69,6 +71,7 @@ final class UserNFTCollectionView: UIViewController {
         activityIndicator.center = view.center
         UIBlockingProgressHUD.show()
     }
+    
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -88,6 +91,11 @@ final class UserNFTCollectionView: UIViewController {
             emptyCollectionLabel.isHidden = true
         }
     }
+    
+    @objc func customBackAction() {
+        navigationController?.popViewController(animated: true)
+        service.visibleNFT = []
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -100,11 +108,20 @@ extension UserNFTCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserNFTCollectionCell.identifier,
                                                             for: indexPath) as? UserNFTCollectionCell
+                
         else {
             return UICollectionViewCell()
         }
+        cell.delegate = self
         let nft = service.visibleNFT[indexPath.row]
-        cell.set(nft: nft)
+        if let profile = service.profile,
+           let cart = service.cart
+        {
+            cell.set(nft: nft, cart: cart, profile: profile)
+        } else {
+            assertionFailure("error profile unwrap")
+            
+        }
         return cell
     }
 }
@@ -118,5 +135,80 @@ extension UserNFTCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
+    }
+}
+
+extension UserNFTCollectionView: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController == self {
+            let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(customBackAction))
+            navigationItem.leftBarButtonItem = backButton
+            
+        }
+    }
+}
+
+extension UserNFTCollectionView: UserNFTCellDelegate {
+    func addToCartButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel) {
+        guard let order = service.cart else { return }
+        
+        var cart = order.nfts
+        let id = nft.id
+        var isAdded = false
+        if cart.contains(id) {
+            cart.removeAll { $0 == id }
+            isAdded = false
+        } else {
+            cart.append(id)
+            isAdded = true
+        }
+        UIBlockingProgressHUD.show()
+        service.changeCart(newCart: cart) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    self?.service.getCart()
+                    cell.setIsAdded(isAdded: isAdded)
+                    UIBlockingProgressHUD.dismiss()
+                    print("success")
+                case .failure(_):
+                    print("error")
+                    UIBlockingProgressHUD.dismiss()
+                    break
+                    
+                }
+            }
+        }
+        
+    }
+    
+    func addFavouriteButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel) {
+        guard let profile = service.profile else { return }
+        var likes = profile.likes
+        let id = nft.id
+        var isLiked = false
+        if likes.contains(id) {
+            likes.removeAll { $0 == id }
+            isLiked = false
+        } else {
+            likes.append(id)
+            isLiked = true
+        }
+        
+        UIBlockingProgressHUD.show()
+        
+        service.changeLike(newLikes: likes) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    cell.setIsLiked(isLiked: isLiked)
+                    self?.service.getProfile()
+                    UIBlockingProgressHUD.dismiss()
+                    print("success")
+                case .failure(_):
+                    print("error")
+                }
+            }
+        }
     }
 }

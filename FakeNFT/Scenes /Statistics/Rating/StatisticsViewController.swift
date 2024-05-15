@@ -15,8 +15,6 @@ protocol StatisticsViewControllerProtocol: AnyObject{
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
     
-    private let statisticService = StatisticService.shared
-    
     lazy var presenter: StatisticPresenterProtocol = {
         let presenter = StatisticsPresenter()
         presenter.view = self
@@ -24,6 +22,8 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     }()
     
     //MARK: - Private
+    
+    private let statisticService = StatisticService.shared
     
     private lazy var ratingCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -81,7 +81,15 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     func updateCollectionViewAnimate() {
         let oldCount = presenter.objects.count
         let newCount = statisticService.users.count
-        self.presenter.objects = self.statisticService.users
+        //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
+       
+        if let value = UserDefaults.standard.string(forKey: "sortBy") {
+            self.presenter.objects = self.statisticService.users
+            self.presenter.sortRating(sort: value)
+        }   else {
+            self.presenter.objects = self.statisticService.users.sorted { $0.nfts.count > $1.nfts.count }
+        }
+        
         if oldCount != newCount {
             ratingCollectionView.performBatchUpdates {
                 var indexPaths: [IndexPath] = []
@@ -91,7 +99,6 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
                 ratingCollectionView.insertItems(at: indexPaths)
             } completion: { _ in }
         }
-        print(presenter.objects)
         UIBlockingProgressHUD.dismiss()
     }
     

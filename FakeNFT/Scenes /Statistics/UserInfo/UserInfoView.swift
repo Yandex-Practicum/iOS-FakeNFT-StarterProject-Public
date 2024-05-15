@@ -36,6 +36,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.numberOfLines = 2
         return label
     }()
     
@@ -65,7 +66,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.dataSource = self
         view.delegate = self
-        view.register(NFTTableViewCell.self, forCellReuseIdentifier: "NFTTableViewCell")
+        view.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
         view.separatorStyle = .none
         return view
     }()

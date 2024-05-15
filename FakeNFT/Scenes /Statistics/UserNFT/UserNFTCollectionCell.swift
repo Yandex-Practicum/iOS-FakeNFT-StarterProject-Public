@@ -8,9 +8,22 @@
 import UIKit
 import Kingfisher
 
+protocol UserNFTCellDelegate: AnyObject {
+    func addFavouriteButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel)
+    func addToCartButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel)
+}
+
 final class UserNFTCollectionCell: UICollectionViewCell {
     
     static let identifier = "UserNFTCollectionCell"
+    
+    weak var delegate: UserNFTCellDelegate?
+    
+    private var profile: ProfileModel?
+    private var nft: NFTModel?
+    private var cart: OrderModel?
+    
+    private let userNFTService = UserNFTService.shared
     
     private let ratingStarsView: RatingStarsView = {
         let view = RatingStarsView()
@@ -26,6 +39,8 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    
+    
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -98,15 +113,32 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         ])
     }
     
+    func setIsLiked(isLiked: Bool) {
+        let like = isLiked ? UIImage(named: "favoutiteImage")?.withTintColor(UIColor.yaFavourite) : UIImage(named: "favoutiteImage")
+        addFavouriteButton.setImage(like, for: .normal)
+    }
+    
+    func setIsAdded(isAdded: Bool) {
+        let add = isAdded ? UIImage(named: "deleteFromCart") : UIImage(named: "addToCart")
+        addToCart.setImage(add, for: .normal)
+    }
+    
     @objc private func favouriteButtonTapped() {
-        print("favouriteButtonTapped")
+        guard let nft = self.nft else { return }
+        delegate?.addFavouriteButtonClicked(self, nft: nft)
+        
     }
     
     @objc private func addToCartButtonTapped() {
-        print("addToCartButtonTapped")
+        guard let nft = self.nft else { return }
+        delegate?.addToCartButtonClicked(self, nft: nft)
     }
     
-    func set(nft: NFTModel) {
+    func set(nft: NFTModel, cart: OrderModel, profile: ProfileModel) {
+        self.profile = profile
+        self.nft = nft
+        self.userNFTService.nft = nft
+        self.cart = cart
         nftImage.kf.indicatorType = .activity
         let url = URL(string: nft.images.first ?? "")
         nftImage.kf.setImage(with: url) { [weak self] _ in
@@ -117,10 +149,21 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         priceLabel.text = "\(nft.price) ETH"
         ratingStarsView.rating = nft.rating
         
-        addFavouriteButton.setImage(UIImage(named: "favoutiteImage"), for: .normal)
-        addToCart.setImage(UIImage(named: "addToCart"), for: .normal)
+        guard let profile = self.profile else { return }
+        if profile.likes.contains(nft.id) {
+            addFavouriteButton.setImage(UIImage(named: "favoutiteImage")?.withTintColor(UIColor.yaFavourite), for: .normal)
+        } else {
+            addFavouriteButton.setImage(UIImage(named: "favoutiteImage"), for: .normal)
+        }
+        
+        if cart.nfts.contains(nft.id) {
+            addToCart.setImage(UIImage(named: "deleteFromCart"), for: .normal)
+        } else {
+            addToCart.setImage(UIImage(named: "addToCart"), for: .normal)
+        }
+        
     }
-   
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

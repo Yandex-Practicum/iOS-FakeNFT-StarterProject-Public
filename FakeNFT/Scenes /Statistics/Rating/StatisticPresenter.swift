@@ -13,9 +13,9 @@ protocol StatisticPresenterProtocol: AnyObject {
     var view: StatisticsViewControllerProtocol? { get set }
     var objects: [Person] { get set }
     func viewDidLoad()
-    func sortByRating()
     func createSortAlert(view: UIViewController, collection: UICollectionView)
     func createErrorAlert(view: UIViewController)
+    func sortRating(sort value: String)
 }
 
 final class StatisticsPresenter: StatisticPresenterProtocol {
@@ -30,13 +30,18 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
         observeAnimate()
     }
     
-    func sortByName() {
-        //TODO 
-    }
-    
-    func sortByRating() {
-        let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
-        objects = sortedObjects
+    func sortRating(sort value: String) {
+        
+        switch value {
+        case "Name":
+            let sortedObjects = objects.sorted { $0.name < $1.name }
+            objects = sortedObjects
+        case "Rating":
+            let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
+            objects = sortedObjects
+        default:
+            break
+        }
     }
     
     func observeAnimate() {
@@ -49,16 +54,19 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
                 view?.updateCollectionViewAnimate()
             }
         StatisticService.shared.fetchNextPage()
+        
     }
     
     func createSortAlert(view: UIViewController, collection: UICollectionView) {
         let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
-            print("name")
+            UserDefaults.standard.set("Name", forKey: "sortBy")
+            self.sortRating(sort: "Name")
+            collection.reloadData()
         }
         let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
-            print("rating")
-            self.sortByRating()
+            UserDefaults.standard.set("Rating", forKey: "sortBy")
+            self.sortRating(sort: "Rating")
             collection.reloadData()
             
         }
