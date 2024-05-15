@@ -19,6 +19,7 @@ final class UserNFTService {
     var cart: OrderModel?
     var nft: NFTModel?
     
+    
     func getNFT(complition: @escaping () -> Void ) {
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
@@ -52,6 +53,8 @@ final class UserNFTService {
         }
     }
     
+    
+    //последний лайк невозможно убрать, потому что api не принимает запрос без параметра likes. при отправке такого запроса ничего не происходит. проверено через postman и внутри проекта
     func changeLike(newLikes: [String], completion: @escaping (Result<Void, Error>) -> Void) {
         let likesString = newLikes.joined(separator: ",")
         let url = "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/profile/1"
@@ -75,6 +78,8 @@ final class UserNFTService {
     }
     
     func changeCart(newCart: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        guard let cart = self.cart, let nft = self.nft else { return }
         let cartString = newCart.joined(separator: ",")
         let url = "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/orders/1"
         let headers: HTTPHeaders = [
@@ -84,16 +89,29 @@ final class UserNFTService {
         ]
         let parameters = ["nfts": cartString]
         
-        AF.request(url, method: .put, parameters: parameters, encoding: URLEncoding.default, headers: headers)
-            .validate()
-            .response { response in
-                switch response.result {
-                case .success:
-                    completion(.success(()))
-                case .failure(let error):
-                    completion(.failure(error))
+        if cart.nfts.count == 1 && cart.nfts.first == nft.id {
+            AF.request(url, method: .put, encoding: URLEncoding.default, headers: headers)
+                .validate()
+                .response { response in
+                    switch response.result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
                 }
-            }
+        } else {
+            AF.request(url, method: .put, parameters: parameters, encoding: URLEncoding.default, headers: headers)
+                .validate()
+                .response { response in
+                    switch response.result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+        }
     }
     
     func getProfile(){

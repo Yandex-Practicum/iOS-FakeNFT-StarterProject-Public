@@ -125,19 +125,20 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     
     @objc private func favouriteButtonTapped() {
         guard let nft = self.nft else { return }
+        userNFTService.nft = nft
         delegate?.addFavouriteButtonClicked(self, nft: nft)
         
     }
     
     @objc private func addToCartButtonTapped() {
         guard let nft = self.nft else { return }
+        userNFTService.nft = nft
         delegate?.addToCartButtonClicked(self, nft: nft)
     }
     
     func set(nft: NFTModel, cart: OrderModel, profile: ProfileModel) {
         self.profile = profile
         self.nft = nft
-        self.userNFTService.nft = nft
         self.cart = cart
         nftImage.kf.indicatorType = .activity
         let url = URL(string: nft.images.first ?? "")

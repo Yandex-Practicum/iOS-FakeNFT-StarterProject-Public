@@ -55,13 +55,14 @@ final class UserNFTCollectionView: UIViewController {
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
+        service.getProfile()
+        service.getCart()
         service.getNFT {
             self.nftCollection.reloadData()
             self.updateEmptyView()
             UIBlockingProgressHUD.dismiss()
         }
-        service.getProfile()
-        service.getCart()
+       
     }
     
     private func setViews() {
@@ -170,9 +171,7 @@ extension UserNFTCollectionView: UserNFTCellDelegate {
                     self?.service.getCart()
                     cell.setIsAdded(isAdded: isAdded)
                     UIBlockingProgressHUD.dismiss()
-                    print("success")
                 case .failure(_):
-                    print("error")
                     UIBlockingProgressHUD.dismiss()
                     break
                     
@@ -204,9 +203,9 @@ extension UserNFTCollectionView: UserNFTCellDelegate {
                     cell.setIsLiked(isLiked: isLiked)
                     self?.service.getProfile()
                     UIBlockingProgressHUD.dismiss()
-                    print("success")
                 case .failure(_):
-                    print("error")
+                    UIBlockingProgressHUD.dismiss()
+                    break
                 }
             }
         }
