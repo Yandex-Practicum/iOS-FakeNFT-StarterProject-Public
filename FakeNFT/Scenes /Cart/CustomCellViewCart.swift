@@ -1,10 +1,3 @@
-//
-//  CustomCellViewCart.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 22.04.2024.
-//
-
 import UIKit
 
 protocol CustomCellViewCartDelegate: AnyObject {
@@ -27,10 +20,10 @@ final class CustomCellViewCart: UITableViewCell {
         return view
     }()
 
-    private let deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "CartDelete.png")
+        let image = UIImage(named: "CartDelete.png")?.withTintColor(.blackDayText)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(deleteBttnTapped), for: .touchUpInside)
         return button
@@ -186,10 +179,10 @@ final class CustomCellViewCart: UITableViewCell {
             contentView.addSubview($0)
         }
         [firstStar,
-        secondStar,
-        thirdStar,
-        fourthStar,
-        fifthStar].forEach {
+         secondStar,
+         thirdStar,
+         fourthStar,
+         fifthStar].forEach {
             ratingStackView.addArrangedSubview($0)
         }
         nameAndRatingStackView.addArrangedSubview(nftNameLabel)
@@ -197,12 +190,12 @@ final class CustomCellViewCart: UITableViewCell {
         priceStackView.addArrangedSubview(nftPriceNameLabel)
         priceStackView.addArrangedSubview(nftPriceLabel)
         [nameAndRatingStackView,
-        priceStackView].forEach {
+         priceStackView].forEach {
             baseStackView.addArrangedSubview($0)
         }
         [imageViews,
-        baseStackView,
-        deleteButton].forEach {
+         baseStackView,
+         deleteButton].forEach {
             mainView.addSubview($0)
         }
     }

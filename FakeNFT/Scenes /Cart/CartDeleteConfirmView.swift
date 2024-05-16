@@ -1,10 +1,3 @@
-//
-//  CartDeleteConfirmView.swift
-//  FakeNFT
-//
-//  Created by Александр Акимов on 23.04.2024.
-//
-
 import Kingfisher
 import UIKit
 
@@ -108,7 +101,7 @@ final class CartDeleteConfirmView: UIViewController {
             view.addSubview($0)
         }
         [deleteButton,
-        cancelButton].forEach {
+         cancelButton].forEach {
             buttonsStack.addArrangedSubview($0)
         }
         [imageViews,

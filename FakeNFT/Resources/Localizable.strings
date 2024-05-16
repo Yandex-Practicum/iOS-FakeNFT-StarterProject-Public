@@ -15,3 +15,5 @@
 "Cart.sortByPrice" = "По цене";
 "Cart.sortByRating" = "По рейтингу";
 "Cart.payPage.payBttn" = "Оплатить";
+"Cart.confirmPage.confirmLabel" = "Успех! Оплата прошла,\n поздравляем с покупкой!";
+"Cart.confirmPage.continue" = "Вернуться в каталог";
