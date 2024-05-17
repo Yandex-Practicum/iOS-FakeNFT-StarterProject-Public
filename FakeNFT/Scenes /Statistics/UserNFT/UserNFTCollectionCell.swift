@@ -19,7 +19,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     
     weak var delegate: UserNFTCellDelegate?
     
-    private var profile: ProfileModel?
     private var nft: NFTModel?
     private var cart: OrderModel?
     
@@ -39,8 +38,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-    
-    
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -137,9 +134,7 @@ final class UserNFTCollectionCell: UICollectionViewCell {
     }
     
     func set(nft: NFTModel, cart: OrderModel, profile: ProfileModel) {
-        self.profile = profile
         self.nft = nft
-        self.cart = cart
         nftImage.kf.indicatorType = .activity
         let url = URL(string: nft.images.first ?? "")
         nftImage.kf.setImage(with: url) { [weak self] _ in
@@ -150,7 +145,6 @@ final class UserNFTCollectionCell: UICollectionViewCell {
         priceLabel.text = "\(nft.price) ETH"
         ratingStarsView.rating = nft.rating
         
-        guard let profile = self.profile else { return }
         if profile.likes.contains(nft.id) {
             addFavouriteButton.setImage(UIImage(named: "favoutiteImage")?.withTintColor(UIColor.yaFavourite), for: .normal)
         } else {

@@ -15,7 +15,7 @@ protocol StatisticPresenterProtocol: AnyObject {
     func viewDidLoad()
     func createSortAlert(view: UIViewController, collection: UICollectionView)
     func createErrorAlert(view: UIViewController)
-    func sortRating(sort value: String)
+    func sortUsers()
 }
 
 final class StatisticsPresenter: StatisticPresenterProtocol {
@@ -94,5 +94,15 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
             alertController.addAction($0)
         }
         view.present(alertController, animated: true)
+    }
+    
+    func sortUsers() {
+        //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
+        if let value = UserDefaults.standard.string(forKey: "sortBy") {
+            self.objects = self.statisticService.users
+            self.sortRating(sort: value)
+        }   else {
+            self.objects = self.statisticService.users.sorted { $0.nfts.count > $1.nfts.count }
+        }
     }
 }

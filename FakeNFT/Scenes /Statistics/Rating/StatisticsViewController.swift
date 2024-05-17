@@ -81,14 +81,8 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     func updateCollectionViewAnimate() {
         let oldCount = presenter.objects.count
         let newCount = statisticService.users.count
-        //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
        
-        if let value = UserDefaults.standard.string(forKey: "sortBy") {
-            self.presenter.objects = self.statisticService.users
-            self.presenter.sortRating(sort: value)
-        }   else {
-            self.presenter.objects = self.statisticService.users.sorted { $0.nfts.count > $1.nfts.count }
-        }
+        presenter.sortUsers()
         
         if oldCount != newCount {
             ratingCollectionView.performBatchUpdates {

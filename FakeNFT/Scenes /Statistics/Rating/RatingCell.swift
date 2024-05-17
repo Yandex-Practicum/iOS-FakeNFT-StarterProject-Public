@@ -67,7 +67,7 @@ final class RatingCell: UICollectionViewCell {
     func set(indexPath: IndexPath, person: Person) {
         let url = URL(string: person.avatar)
         ratingLabel.text = "\(indexPath.row + 1)"
-        avatarImage.kf.setImage(with: url)
+        avatarImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         nameLabel.text = person.name
         nftCountLabel.text = "\(person.nfts.count)"
     }

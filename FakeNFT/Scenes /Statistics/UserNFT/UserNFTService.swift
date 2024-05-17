@@ -15,8 +15,6 @@ final class UserNFTService {
     
     var nftsIDs: [String] = []
     var visibleNFT: [NFTModel] = []
-    var profile: ProfileModel?
-    var cart: OrderModel?
     var nft: NFTModel?
     
     
@@ -49,13 +47,14 @@ final class UserNFTService {
         }
         
         group.notify(queue: .main) {
+            
             complition()
         }
     }
     
-    
-    //последний лайк невозможно убрать, потому что api не принимает запрос без параметра likes. при отправке такого запроса ничего не происходит. проверено через postman и внутри проекта
-    func changeLike(newLikes: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeLike(newLikes: [String], profile: ProfileModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        guard let nft = self.nft else { return }
         let likesString = newLikes.joined(separator: ",")
         let url = "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/profile/1"
         let headers: HTTPHeaders = [
@@ -63,7 +62,14 @@ final class UserNFTService {
             "Content-Type": "application/x-www-form-urlencoded",
             "X-Practicum-Mobile-Token": "9db803ac-6777-4dc6-9be2-d8eaa53129a9"
         ]
-        let parameters = ["likes": likesString]
+        
+        var parameters: [String : String] = [ : ]
+        
+        if profile.likes.count == 1 && profile.likes.contains(nft.id) {
+            parameters = ["likes": "null"]
+        } else {
+            parameters = ["likes": likesString]
+        }
         
         AF.request(url, method: .put, parameters: parameters, encoding: URLEncoding.default, headers: headers)
             .validate()
@@ -77,9 +83,10 @@ final class UserNFTService {
             }
     }
     
-    func changeCart(newCart: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeCart(newCart: [String], cart: OrderModel, completion: @escaping (Result<Void, Error>) -> Void) {
         
-        guard let cart = self.cart, let nft = self.nft else { return }
+        
+        guard let nft = self.nft else { return }
         let cartString = newCart.joined(separator: ",")
         let url = "https://d5dn3j2ouj72b0ejucbl.apigw.yandexcloud.net/api/v1/orders/1"
         let headers: HTTPHeaders = [
@@ -114,7 +121,7 @@ final class UserNFTService {
         }
     }
     
-    func getProfile(){
+    func getProfile(completion: @escaping (Result<ProfileModel, Error>) -> Void) {
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
             NetworkConstants.tokenKey : NetworkConstants.tokenValue,
@@ -125,14 +132,14 @@ final class UserNFTService {
         AF.request(url, headers: headers).responseDecodable(of: ProfileModel.self) { response in
             switch response.result {
             case .success(let object):
-                self.profile = object
+                completion(.success(object))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
         }
     }
     
-    func getCart() {
+    func getCart(completion: @escaping (Result<OrderModel, Error>) -> Void) {
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
             NetworkConstants.tokenKey : NetworkConstants.tokenValue,
@@ -143,9 +150,9 @@ final class UserNFTService {
         AF.request(url, headers: headers).responseDecodable(of: OrderModel.self) { response in
             switch response.result {
             case .success(let object):
-                self.cart = object
+                completion(.success(object))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
         }
     }
