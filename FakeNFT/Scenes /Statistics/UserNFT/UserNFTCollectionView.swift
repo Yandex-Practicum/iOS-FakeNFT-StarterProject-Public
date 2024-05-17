@@ -16,13 +16,11 @@ protocol UserNFTCollectionViewProtocol: AnyObject {
 
 final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProtocol {
     
-    private let service = UserNFTService.shared
-    
     var presenter: UserNFTPresenterProtocol
     
     init(nft: [String]) {
         self.presenter = UserNFTPresenter()
-        self.service.nftsIDs = nft
+        self.presenter.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
         self.presenter.view = self
     }
@@ -100,7 +98,7 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     
     @objc func customBackAction() {
         navigationController?.popViewController(animated: true)
-        service.visibleNFT = []
+        presenter.visibleNFT = []
     }
 }
 

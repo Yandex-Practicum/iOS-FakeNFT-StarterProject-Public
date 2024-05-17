@@ -9,6 +9,7 @@ import Foundation
 
 protocol UserNFTPresenterProtocol: AnyObject {
     var view: UserNFTCollectionViewProtocol? { get set }
+    var nftsIDs: [String] { get set }
     var visibleNFT: [NFTModel] { get set }
     var profile: ProfileModel? { get set }
     var cart: OrderModel? { get set }
@@ -20,6 +21,7 @@ protocol UserNFTPresenterProtocol: AnyObject {
 
 final class UserNFTPresenter: UserNFTPresenterProtocol {
     
+    var nftsIDs: [String] = []
     var visibleNFT: [NFTModel] = []
     var profile: ProfileModel?
     var cart: OrderModel?
@@ -59,6 +61,8 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
     
     func getNFT() {
         UIBlockingProgressHUD.show()
+        self.service.visibleNFT = self.visibleNFT
+        self.service.nftsIDs = self.nftsIDs
         service.getNFT {
             self.visibleNFT = self.service.visibleNFT
             self.view?.reload()
