@@ -25,15 +25,11 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         self.service.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
         self.presenter.view = self
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
     
     private let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
@@ -78,7 +74,6 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
         }
         activityIndicator.center = view.center
     }
-    
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -168,7 +163,6 @@ extension UserNFTCollectionView: UserNFTCellDelegate {
                 print(error.localizedDescription)
             }
         }
-        
     }
     
     func addFavouriteButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel) {

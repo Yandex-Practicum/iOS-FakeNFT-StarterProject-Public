@@ -30,13 +30,13 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
         observeAnimate()
     }
     
-    func sortRating(sort value: String) {
+    func sortRating(sort value: SortType) {
         
         switch value {
-        case "Name":
+        case .name:
             let sortedObjects = objects.sorted { $0.name < $1.name }
             objects = sortedObjects
-        case "Rating":
+        case .rating:
             let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
             objects = sortedObjects
         default:
@@ -61,12 +61,12 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
         let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
             UserDefaults.standard.set("Name", forKey: "sortBy")
-            self.sortRating(sort: "Name")
+            self.sortRating(sort: .name)
             collection.reloadData()
         }
         let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
             UserDefaults.standard.set("Rating", forKey: "sortBy")
-            self.sortRating(sort: "Rating")
+            self.sortRating(sort: .rating)
             collection.reloadData()
             
         }
@@ -98,11 +98,19 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     
     func sortUsers() {
         //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
-        if let value = UserDefaults.standard.string(forKey: "sortBy") {
+        if let value = UserDefaults.standard.string(forKey: "sortBy"),  let stringValue = SortType(rawValue: value) {
             self.objects = self.statisticService.users
-            self.sortRating(sort: value)
+            self.sortRating(sort: stringValue)
         }   else {
             self.objects = self.statisticService.users.sorted { $0.nfts.count > $1.nfts.count }
         }
     }
+}
+
+enum SortType: String {
+    case name = "Name"
+    case rating = "Rating"
+    
+    
+  
 }
