@@ -23,8 +23,6 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     //MARK: - Private
     
-    private let statisticService = StatisticService.shared
-    
     private lazy var ratingCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +78,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     func updateCollectionViewAnimate() {
         let oldCount = presenter.objects.count
-        let newCount = statisticService.users.count
+        let newCount = presenter.newObjects.count
        
         presenter.sortUsers()
         
@@ -98,8 +96,8 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     func checkCompletedList(_ indexPath: IndexPath) {
         if !ProcessInfo.processInfo.arguments.contains("testMode") {
-            if statisticService.users.isEmpty || (indexPath.row + 1 == statisticService.users.count) {
-                statisticService.fetchNextPage()
+            if presenter.newObjects.isEmpty || (indexPath.row + 1 == presenter.newObjects.count) {
+                presenter.getStatistic()
             }
         }
     }

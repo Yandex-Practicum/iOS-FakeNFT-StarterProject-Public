@@ -13,11 +13,10 @@ final class StatisticService {
     static let didChangeNotification = Notification.Name(rawValue: "StatisticServiceDidChange")
     static let shared = StatisticService()
     private init() {}
-    private (set) var users: [Person] = []
     private var lastLoadedPage: Int = 0
     private var page: Int?
     
-    func fetchNextPage() {
+    func fetchNextPage(completion: @escaping (Result<[Person], Error>) -> Void) {
         
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
@@ -30,14 +29,15 @@ final class StatisticService {
             DispatchQueue.main.async {
                 switch response.result {
                 case .success(let user):
-                    self.users.append(contentsOf: user)
+                    completion(.success(user))
                     self.lastLoadedPage += 1
                     NotificationCenter.default
                         .post(name: StatisticService.didChangeNotification,
                               object: self
                         )
+                    
                 case .failure(let error):
-                    print(error)
+                    completion(.failure(error))
                 }
             }
         }

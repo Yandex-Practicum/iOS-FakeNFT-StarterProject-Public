@@ -61,7 +61,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
     
     func getNFT() {
         UIBlockingProgressHUD.show()
-        self.service.visibleNFT = self.visibleNFT
+        self.service.visibleNFT = []
         self.service.nftsIDs = self.nftsIDs
         service.getNFT {
             self.visibleNFT = self.service.visibleNFT

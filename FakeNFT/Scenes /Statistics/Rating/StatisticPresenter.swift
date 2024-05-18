@@ -12,7 +12,9 @@ protocol StatisticPresenterProtocol: AnyObject {
     
     var view: StatisticsViewControllerProtocol? { get set }
     var objects: [Person] { get set }
+    var newObjects: [Person] { get set }
     func viewDidLoad()
+    func getStatistic()
     func createSortAlert(view: UIViewController, collection: UICollectionView)
     func createErrorAlert(view: UIViewController)
     func sortUsers()
@@ -25,6 +27,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     private var imageListServiceObserver: NSObjectProtocol?
     weak var view: StatisticsViewControllerProtocol?
     var objects: [Person] = []
+    var newObjects: [Person] = []
     
     func viewDidLoad() {
         observeAnimate()
@@ -39,8 +42,6 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
         case .rating:
             let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
             objects = sortedObjects
-        default:
-            break
         }
     }
     
@@ -53,8 +54,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
                 guard let self = self else { return }
                 view?.updateCollectionViewAnimate()
             }
-        StatisticService.shared.fetchNextPage()
-        
+       getStatistic()
     }
     
     func createSortAlert(view: UIViewController, collection: UICollectionView) {
@@ -88,7 +88,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
             view.dismiss(animated: true)
         }
         let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
-            self.statisticService.fetchNextPage()
+            self.getStatistic()
         }
         [cancelAction, repeatAction].forEach {
             alertController.addAction($0)
@@ -99,10 +99,21 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     func sortUsers() {
         //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
         if let value = UserDefaults.standard.string(forKey: "sortBy"),  let stringValue = SortType(rawValue: value) {
-            self.objects = self.statisticService.users
+            self.objects = self.newObjects
             self.sortRating(sort: stringValue)
         }   else {
-            self.objects = self.statisticService.users.sorted { $0.nfts.count > $1.nfts.count }
+            self.objects = self.newObjects.sorted { $0.nfts.count > $1.nfts.count }
+        }
+    }
+    
+    func getStatistic() {
+        statisticService.fetchNextPage { result in
+            switch result {
+            case .success(let user):
+                self.newObjects.append(contentsOf: user)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

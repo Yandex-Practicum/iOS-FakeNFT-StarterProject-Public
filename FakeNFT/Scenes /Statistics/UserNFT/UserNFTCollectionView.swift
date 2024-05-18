@@ -98,7 +98,6 @@ final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProto
     
     @objc func customBackAction() {
         navigationController?.popViewController(animated: true)
-        presenter.visibleNFT = []
     }
 }
 
