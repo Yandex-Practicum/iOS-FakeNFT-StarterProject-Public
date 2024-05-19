@@ -33,6 +33,8 @@ final class RatingCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -65,7 +67,7 @@ final class RatingCell: UICollectionViewCell {
     func set(indexPath: IndexPath, person: Person) {
         let url = URL(string: person.avatar)
         ratingLabel.text = "\(indexPath.row + 1)"
-        avatarImage.kf.setImage(with: url)
+        avatarImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         nameLabel.text = person.name
         nftCountLabel.text = "\(person.nfts.count)"
     }
@@ -95,9 +97,9 @@ final class RatingCell: UICollectionViewCell {
             avatarImage.widthAnchor.constraint(equalToConstant: 28),
             nameLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 8),
+            nftCountLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 16),
             nftCountLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
             nftCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16),
-            
         ])
     }
 }

@@ -15,8 +15,6 @@ protocol StatisticsViewControllerProtocol: AnyObject{
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
     
-    private let statisticService = StatisticService.shared
-    
     lazy var presenter: StatisticPresenterProtocol = {
         let presenter = StatisticsPresenter()
         presenter.view = self
@@ -80,8 +78,10 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
     
     func updateCollectionViewAnimate() {
         let oldCount = presenter.objects.count
-        let newCount = statisticService.users.count
-        self.presenter.objects = self.statisticService.users
+        let newCount = presenter.newObjects.count
+       
+        presenter.sortUsers()
+        
         if oldCount != newCount {
             ratingCollectionView.performBatchUpdates {
                 var indexPaths: [IndexPath] = []
@@ -91,14 +91,13 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
                 ratingCollectionView.insertItems(at: indexPaths)
             } completion: { _ in }
         }
-        print(presenter.objects)
         UIBlockingProgressHUD.dismiss()
     }
     
     func checkCompletedList(_ indexPath: IndexPath) {
         if !ProcessInfo.processInfo.arguments.contains("testMode") {
-            if statisticService.users.isEmpty || (indexPath.row + 1 == statisticService.users.count) {
-                statisticService.fetchNextPage()
+            if presenter.newObjects.isEmpty || (indexPath.row + 1 == presenter.newObjects.count) {
+                presenter.getStatistic()
             }
         }
     }

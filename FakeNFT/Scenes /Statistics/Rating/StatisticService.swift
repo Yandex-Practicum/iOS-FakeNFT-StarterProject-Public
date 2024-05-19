@@ -13,22 +13,23 @@ final class StatisticService {
     static let didChangeNotification = Notification.Name(rawValue: "StatisticServiceDidChange")
     static let shared = StatisticService()
     private init() {}
-    private (set) var users: [Person] = []
     private var lastLoadedPage: Int = 0
+    private var page: Int?
     
-    func fetchNextPage() {
+    func fetchNextPage(completion: @escaping (Result<[Person], Error>) -> Void) {
+        
         let headers: HTTPHeaders = [
             NetworkConstants.acceptKey : NetworkConstants.acceptValue,
             NetworkConstants.tokenKey : NetworkConstants.tokenValue
         ]
         
-        let nextPageUrl = "\(NetworkConstants.baseURL)/api/v1/users?page=\(lastLoadedPage)"
+        let nextPageUrl = "\(NetworkConstants.baseURL)/api/v1/users?page=\(lastLoadedPage)&size=10"
         
         AF.request(nextPageUrl, headers: headers).responseDecodable(of: [Person].self) { response in
             DispatchQueue.main.async {
                 switch response.result {
                 case .success(let user):
-                    self.users.append(contentsOf: user.sorted { $0.nfts.count > $1.nfts.count })
+                    completion(.success(user))
                     self.lastLoadedPage += 1
                     NotificationCenter.default
                         .post(name: StatisticService.didChangeNotification,
@@ -36,7 +37,7 @@ final class StatisticService {
                         )
                     
                 case .failure(let error):
-                    print(error)
+                    completion(.failure(error))
                 }
             }
         }

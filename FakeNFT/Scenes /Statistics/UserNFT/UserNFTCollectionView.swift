@@ -8,13 +8,21 @@
 import UIKit
 import ProgressHUD
 
-final class UserNFTCollectionView: UIViewController {
+protocol UserNFTCollectionViewProtocol: AnyObject {
+    var presenter: UserNFTPresenterProtocol { get set }
+    func reload()
+    func updateEmptyView()
+}
+
+final class UserNFTCollectionView: UIViewController & UserNFTCollectionViewProtocol {
     
-    private let service = UserNFTService.shared
+    var presenter: UserNFTPresenterProtocol
     
     init(nft: [String]) {
-        self.service.nftsIDs = nft
+        self.presenter = UserNFTPresenter()
+        self.presenter.nftsIDs = nft
         super.init(nibName: nil, bundle: nil)
+        self.presenter.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -50,16 +58,12 @@ final class UserNFTCollectionView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
+        navigationController?.delegate = self
         navigationItem.title = "Коллекция NFT"
         view.backgroundColor = .systemBackground
         setViews()
         setConstraints()
-        service.getNFT {
-            self.nftCollection.reloadData()
-            self.updateEmptyView()
-            UIBlockingProgressHUD.dismiss()
-        }
-        service.putLike(newLike: "9e472edf-ed51-4901-8cfc-8eb3f617519f")
     }
     
     private func setViews() {
@@ -67,7 +71,6 @@ final class UserNFTCollectionView: UIViewController {
             view.addSubview($0)
         }
         activityIndicator.center = view.center
-        UIBlockingProgressHUD.show()
     }
     
     private func setConstraints() {
@@ -81,12 +84,20 @@ final class UserNFTCollectionView: UIViewController {
         ])
     }
     
+    func reload() {
+        nftCollection.reloadData()
+    }
+    
     func updateEmptyView() {
-        if service.visibleNFT.isEmpty {
+        if presenter.visibleNFT.isEmpty {
             emptyCollectionLabel.isHidden = false
         } else {
             emptyCollectionLabel.isHidden = true
         }
+    }
+    
+    @objc func customBackAction() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -94,17 +105,23 @@ final class UserNFTCollectionView: UIViewController {
 
 extension UserNFTCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        service.visibleNFT.count
+        presenter.visibleNFT.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserNFTCollectionCell.identifier,
                                                             for: indexPath) as? UserNFTCollectionCell
+                
         else {
             return UICollectionViewCell()
         }
-        let nft = service.visibleNFT[indexPath.row]
-        cell.set(nft: nft)
+        cell.delegate = self
+        let nft = presenter.visibleNFT[indexPath.row]
+        if let cart = self.presenter.cart,
+           let profile = self.presenter.profile {
+            cell.set(nft: nft, cart: cart, profile: profile)
+        }
+        
         return cell
     }
 }
@@ -118,5 +135,42 @@ extension UserNFTCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
+    }
+}
+
+extension UserNFTCollectionView: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController == self {
+            let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(customBackAction))
+            navigationItem.leftBarButtonItem = backButton
+            
+        }
+    }
+}
+
+extension UserNFTCollectionView: UserNFTCellDelegate {
+    
+    func addToCartButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel) {
+        presenter.changeCart(nft: nft) { result in
+            switch result {
+            case .success(let isAdded):
+                cell.setIsAdded(isAdded: isAdded)
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func addFavouriteButtonClicked(_ cell: UserNFTCollectionCell, nft: NFTModel) {
+        presenter.changeLike(nft: nft) { result in
+            switch result {
+            case .success(let isLiked):
+                cell.setIsLiked(isLiked: isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

@@ -12,10 +12,12 @@ protocol StatisticPresenterProtocol: AnyObject {
     
     var view: StatisticsViewControllerProtocol? { get set }
     var objects: [Person] { get set }
+    var newObjects: [Person] { get set }
     func viewDidLoad()
-    func sortByRating()
+    func getStatistic()
     func createSortAlert(view: UIViewController, collection: UICollectionView)
     func createErrorAlert(view: UIViewController)
+    func sortUsers()
 }
 
 final class StatisticsPresenter: StatisticPresenterProtocol {
@@ -25,18 +27,22 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     private var imageListServiceObserver: NSObjectProtocol?
     weak var view: StatisticsViewControllerProtocol?
     var objects: [Person] = []
+    var newObjects: [Person] = []
     
     func viewDidLoad() {
         observeAnimate()
     }
     
-    func sortByName() {
-        //TODO 
-    }
-    
-    func sortByRating() {
-        let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
-        objects = sortedObjects
+    func sortRating(sort value: SortType) {
+        
+        switch value {
+        case .name:
+            let sortedObjects = objects.sorted { $0.name < $1.name }
+            objects = sortedObjects
+        case .rating:
+            let sortedObjects = objects.sorted { $0.nfts.count > $1.nfts.count }
+            objects = sortedObjects
+        }
     }
     
     func observeAnimate() {
@@ -48,17 +54,19 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
                 guard let self = self else { return }
                 view?.updateCollectionViewAnimate()
             }
-        StatisticService.shared.fetchNextPage()
+       getStatistic()
     }
     
     func createSortAlert(view: UIViewController, collection: UICollectionView) {
         let alertController =  UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         let nameAction = UIAlertAction(title: "По имени", style: .default) { action in
-            print("name")
+            UserDefaults.standard.set("Name", forKey: "sortBy")
+            self.sortRating(sort: .name)
+            collection.reloadData()
         }
         let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { action in
-            print("rating")
-            self.sortByRating()
+            UserDefaults.standard.set("Rating", forKey: "sortBy")
+            self.sortRating(sort: .rating)
             collection.reloadData()
             
         }
@@ -80,11 +88,40 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
             view.dismiss(animated: true)
         }
         let repeatAction = UIAlertAction(title: "Повторить", style: .default) { action in
-            self.statisticService.fetchNextPage()
+            self.getStatistic()
         }
         [cancelAction, repeatAction].forEach {
             alertController.addAction($0)
         }
         view.present(alertController, animated: true)
     }
+    
+    func sortUsers() {
+        //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
+        if let value = UserDefaults.standard.string(forKey: "sortBy"),  let stringValue = SortType(rawValue: value) {
+            self.objects = self.newObjects
+            self.sortRating(sort: stringValue)
+        }   else {
+            self.objects = self.newObjects.sorted { $0.nfts.count > $1.nfts.count }
+        }
+    }
+    
+    func getStatistic() {
+        statisticService.fetchNextPage { result in
+            switch result {
+            case .success(let user):
+                self.newObjects.append(contentsOf: user)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+enum SortType: String {
+    case name = "Name"
+    case rating = "Rating"
+    
+    
+  
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 final class NFTTableViewCell: UITableViewCell {
+    static let identifier = "NFTTableViewCell"
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
