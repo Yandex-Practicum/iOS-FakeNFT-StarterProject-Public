@@ -8,8 +8,7 @@ final class CartNetwork {
     }
 
     func getCart(completion: @escaping (Cart?) -> Void) {
-        networkClient.send(request: CartRequest(), type: Cart.self) { [weak self] result in
-            guard let self = self else { return }
+        networkClient.send(request: CartRequest(), type: Cart.self) { result in
             switch result {
             case .success(let cart):
                 DispatchQueue.main.async {

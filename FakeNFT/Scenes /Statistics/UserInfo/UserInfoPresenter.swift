@@ -12,8 +12,6 @@ protocol UserInfoPresenterProtocol {
 }
 
 final class UserInfoPresenter: UserInfoPresenterProtocol {
-    
+
     var object: Person?
 }
-
-

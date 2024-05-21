@@ -23,7 +23,7 @@ final class CartConfirmPayView: UIViewController {
         return label
     }()
 
-    private let returnButton: UIButton = {
+    private lazy var returnButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.confirmPage.continue", comment: ""), for: .normal)

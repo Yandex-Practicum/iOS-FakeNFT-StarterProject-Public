@@ -7,9 +7,8 @@
 
 import UIKit
 
-
 struct NFTModel: Codable {
-    
+
     let createdAt, name: String
     let images: [String]
     let rating: Int

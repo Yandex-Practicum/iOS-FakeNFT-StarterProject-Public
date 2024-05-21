@@ -8,21 +8,21 @@
 import UIKit
 import Kingfisher
 
-protocol StatisticsViewControllerProtocol: AnyObject{
+protocol StatisticsViewControllerProtocol: AnyObject {
     var presenter: StatisticPresenterProtocol { get set }
     func updateCollectionViewAnimate()
 }
 
 final class StatisticsViewController: UIViewController & StatisticsViewControllerProtocol {
-    
+
     lazy var presenter: StatisticPresenterProtocol = {
         let presenter = StatisticsPresenter()
         presenter.view = self
         return presenter
     }()
-    
-    //MARK: - Private
-    
+
+    // MARK: - Private
+
     private lazy var ratingCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         collection.isUserInteractionEnabled = true
         return collection
     }()
-    
+
     private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -42,11 +42,11 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         button.addTarget(self, action: #selector(sortButtontapped), for: .touchUpInside)
         return button
     }()
-    
+
     private var isLoadingData: Bool = false
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
@@ -54,12 +54,12 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         setConstraints()
         setNavBar()
     }
-    
+
     private func setViews() {
         view.backgroundColor = .systemBackground
         view.addSubview(ratingCollectionView)
     }
-    
+
     private func setConstraints() {
         NSLayoutConstraint.activate([
             ratingCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -68,20 +68,20 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
             ratingCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
         ])
     }
-    
+
     private func setNavBar() {
         let custom = UIBarButtonItem(customView: sortButton)
         navigationController?.navigationBar.topItem?.setRightBarButton(custom, animated: false)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
     }
-    
+
     func updateCollectionViewAnimate() {
         let oldCount = presenter.objects.count
         let newCount = presenter.newObjects.count
-       
+
         presenter.sortUsers()
-        
+
         if oldCount != newCount {
             ratingCollectionView.performBatchUpdates {
                 var indexPaths: [IndexPath] = []
@@ -93,7 +93,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         }
         UIBlockingProgressHUD.dismiss()
     }
-    
+
     func checkCompletedList(_ indexPath: IndexPath) {
         if !ProcessInfo.processInfo.arguments.contains("testMode") {
             if presenter.newObjects.isEmpty || (indexPath.row + 1 == presenter.newObjects.count) {
@@ -101,7 +101,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
             }
         }
     }
-    
+
     @objc private func sortButtontapped() {
         presenter.createSortAlert(view: self, collection: ratingCollectionView)
     }
@@ -113,7 +113,7 @@ extension StatisticsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter.objects.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingCell.identifier, for: indexPath) as? RatingCell else {
             return UICollectionViewCell()
@@ -127,11 +127,11 @@ extension StatisticsViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension StatisticsViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 80)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         8
     }
@@ -144,9 +144,8 @@ extension StatisticsViewController: UICollectionViewDelegate {
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         checkCompletedList(indexPath)
     }
 }
-
