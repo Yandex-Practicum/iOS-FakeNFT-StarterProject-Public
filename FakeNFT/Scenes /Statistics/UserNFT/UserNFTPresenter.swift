@@ -125,6 +125,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
                         switch result {
                         case .success:
                             self?.getCart()
+                            NotificationCenter.default.post(name: NSNotification.Name("CartUpdated"), object: nil, userInfo: [:])
                             completion(.success(isAdded))
                         case .failure(let error):
                             completion(.failure(error))
