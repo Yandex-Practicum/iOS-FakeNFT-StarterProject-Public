@@ -167,7 +167,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     private func configureView() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartClean"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataClean(_:)), name: NSNotification.Name("CartClean"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartUpdated"), object: nil)
         navigationController?.setNavigationBarHidden(true, animated: true)
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
