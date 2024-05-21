@@ -136,6 +136,12 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
 
     @objc func handleDataUpdate(_ notification: Notification) {
         if notification.userInfo != nil {
+            presenter?.getAllCartData()
+        }
+    }
+    
+    @objc func handleDataClean(_ notification: Notification) {
+        if notification.userInfo != nil {
             presenter?.cleanCart()
         }
     }
@@ -161,6 +167,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     private func configureView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartClean"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartUpdated"), object: nil)
         navigationController?.setNavigationBarHidden(true, animated: true)
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)

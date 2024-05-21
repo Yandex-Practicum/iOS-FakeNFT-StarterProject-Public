@@ -48,7 +48,7 @@ final class CartConfirmPayView: UIViewController {
     @objc
     private func continueBttnTapped() {
         dismiss(animated: true)
-        NotificationCenter.default.post(name: NSNotification.Name("CartUpdated"), object: nil, userInfo: [:])
+        NotificationCenter.default.post(name: NSNotification.Name("CartClean"), object: nil, userInfo: [:])
     }
 
     override func viewDidLoad() {
