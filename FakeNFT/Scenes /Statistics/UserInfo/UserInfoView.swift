@@ -13,9 +13,9 @@ protocol UserInfoViewControllerProtocol {
 }
 
 final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
-    
+
     var presenter: UserInfoPresenterProtocol = UserInfoPresenter()
-    
+
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,7 +23,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         stackView.spacing  = 16
         return stackView
     }()
-    
+
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         imageView.clipsToBounds = true
         return imageView
     }()
-    
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         label.numberOfLines = 2
         return label
     }()
-    
+
     private let descriptonText: UILabel = {
         let textView = UILabel()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         textView.font = .systemFont(ofSize: 13, weight: .regular)
         return textView
     }()
-    
+
     private lazy var webButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +60,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         button.addTarget(self, action: #selector(webButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var nftCollection: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -70,24 +70,24 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         view.separatorStyle = .none
         return view
     }()
-    
+
     init(object: Person) {
         presenter.object = object
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
         setConstraints()
         set()
-        
+
     }
-    
+
     private func setViews() {
         view.backgroundColor = .systemBackground
         navigationItem.backButtonTitle = ""
@@ -97,7 +97,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
             view.addSubview($0)
         }
     }
-    
+
     private func setConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -118,7 +118,7 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
             nftCollection.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-    
+
     private func set() {
         guard let object = presenter.object else { return }
         let url = URL(string: object.avatar)
@@ -126,11 +126,11 @@ final class UserInfoView: UIViewController & UserInfoViewControllerProtocol {
         descriptonText.text = presenter.object?.description
         avatarImage.kf.setImage(with: url)
     }
-    
+
     @objc private func backButtonTapped() {
         dismiss(animated: true)
     }
-    
+
     @objc private func webButtonTapped() {
         navigationController?.pushViewController(WebViewController(url: presenter.object?.website ?? ""), animated: true)
     }
@@ -140,7 +140,7 @@ extension UserInfoView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NFTTableViewCell", for: indexPath) as? NFTTableViewCell else {
             return UITableViewCell()

@@ -20,23 +20,23 @@ protocol UserNFTPresenterProtocol: AnyObject {
 }
 
 final class UserNFTPresenter: UserNFTPresenterProtocol {
-    
+
     var nftsIDs: [String] = []
     var visibleNFT: [NFTModel] = []
     var profile: ProfileModel?
     var cart: OrderModel?
     var nft: NFTModel?
-    
+
     weak var view: UserNFTCollectionViewProtocol?
-    
+
     private let service = UserNFTService.shared
-    
+
     func viewDidLoad() {
         getNFT()
         getCart()
         getProfile()
     }
-    
+
     func getProfile() {
         service.getProfile { result in
             switch result {
@@ -47,7 +47,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
             }
         }
     }
-    
+
     func getCart() {
         service.getCart { result in
             switch result {
@@ -58,7 +58,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
             }
         }
     }
-    
+
     func getNFT() {
         UIBlockingProgressHUD.show()
         self.service.visibleNFT = []
@@ -70,7 +70,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
             UIBlockingProgressHUD.dismiss()
         }
     }
-    
+
     func changeLike(nft: NFTModel, completion: @escaping (Result<Bool, Error>) -> Void) {
         UIBlockingProgressHUD.show()
         service.getProfile { result in
@@ -86,11 +86,11 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
                     likes.append(id)
                     isLiked = true
                 }
-                
+
                 self.service.changeLike(newLikes: likes, profile: model) { [weak self] result in
                     DispatchQueue.main.async {
                         switch result {
-                        case .success(_):
+                        case .success:
                             self?.getProfile()
                             completion(.success(isLiked))
                         case .failure(let error):
@@ -103,7 +103,7 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
             }
         }
     }
-    
+
     func changeCart(nft: NFTModel, completion: @escaping (Result<Bool, Error>) -> Void) {
         UIBlockingProgressHUD.show()
         service.getCart { result in
@@ -119,11 +119,11 @@ final class UserNFTPresenter: UserNFTPresenterProtocol {
                     cart.append(id)
                     isAdded = true
                 }
-                
+
                 self.service.changeCart(newCart: cart, cart: model) { [weak self] result in
                     DispatchQueue.main.async {
                         switch result {
-                        case .success(_):
+                        case .success:
                             self?.getCart()
                             completion(.success(isAdded))
                         case .failure(let error):

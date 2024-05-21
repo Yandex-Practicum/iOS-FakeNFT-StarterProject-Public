@@ -9,18 +9,18 @@ import UIKit
 import Kingfisher
 
 final class RatingCell: UICollectionViewCell {
-    
+
     static let identifier = "RatingTableViewCell"
-    
-    //MARK: - private properties
-    
+
+    // MARK: - private properties
+
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 15, weight: .regular)
         return label
     }()
-    
+
     private let avatarImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +28,7 @@ final class RatingCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -37,14 +37,14 @@ final class RatingCell: UICollectionViewCell {
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
-    
+
     private let nftCountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
         return label
     }()
-    
+
     private let cellView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -52,18 +52,18 @@ final class RatingCell: UICollectionViewCell {
         view.backgroundColor = .segmentInactive
         return view
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func set(indexPath: IndexPath, person: Person) {
         let url = URL(string: person.avatar)
         ratingLabel.text = "\(indexPath.row + 1)"
@@ -71,17 +71,17 @@ final class RatingCell: UICollectionViewCell {
         nameLabel.text = person.name
         nftCountLabel.text = "\(person.nfts.count)"
     }
-    
+
     private func setupViews() {
         [ratingLabel, cellView].forEach {
             contentView.addSubview($0)
         }
-        
+
         [avatarImage, nameLabel, nftCountLabel].forEach {
             cellView.addSubview($0)
         }
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             ratingLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -99,9 +99,7 @@ final class RatingCell: UICollectionViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 8),
             nftCountLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 16),
             nftCountLabel.centerYAnchor.constraint(equalTo: cellView.centerYAnchor),
-            nftCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16),
+            nftCountLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16)
         ])
     }
 }
-
-

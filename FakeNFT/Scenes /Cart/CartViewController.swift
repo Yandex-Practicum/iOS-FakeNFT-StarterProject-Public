@@ -26,7 +26,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         return window
     }
 
-    private let sortButton: UIButton = {
+    private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "SortButton.png")?.withTintColor(.blackDayText)
@@ -135,7 +135,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
     }
 
     @objc func handleDataUpdate(_ notification: Notification) {
-        if let userInfo = notification.userInfo {
+        if notification.userInfo != nil {
             presenter?.cleanCart()
         }
     }

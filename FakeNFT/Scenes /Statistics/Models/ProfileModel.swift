@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct ProfileModel: Codable {
 
     let name: String

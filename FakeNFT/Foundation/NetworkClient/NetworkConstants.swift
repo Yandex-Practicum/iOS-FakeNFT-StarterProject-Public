@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct NetworkConstants {
     static let tokenValue = "9db803ac-6777-4dc6-9be2-d8eaa53129a9"
     static let tokenKey = "X-Practicum-Mobile-Token"

@@ -13,16 +13,16 @@ final class RatingStarsView: UIStackView {
             updateRating()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView() {
         spacing = 2
         for _ in 1...5 {
@@ -31,7 +31,7 @@ final class RatingStarsView: UIStackView {
             addArrangedSubview(starImageView)
         }
     }
-    
+
     private func updateRating() {
         for (index, subview) in arrangedSubviews.enumerated() {
             if let starImageView = subview as? UIImageView {

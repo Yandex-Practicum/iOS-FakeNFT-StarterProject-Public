@@ -9,7 +9,7 @@ final class CartDeleteConfirmView: UIViewController {
 
     weak var delegate: CartDeleteConfirmDelegate?
 
-    private let deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.deleteBttn", comment: ""), for: .normal)
@@ -21,7 +21,7 @@ final class CartDeleteConfirmView: UIViewController {
         return button
     }()
 
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Cart.cancelBttn", comment: ""), for: .normal)
