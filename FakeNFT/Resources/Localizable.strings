@@ -7,3 +7,13 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"Cart.price" = "Цена";
+"Cart.payBttn" = "К оплате";
+"Cart.deleteBttn" = "Удалить";
+"Cart.cancelBttn" = "Вернуться";
+"Cart.sortByName" = "По имени";
+"Cart.sortByPrice" = "По цене";
+"Cart.sortByRating" = "По рейтингу";
+"Cart.payPage.payBttn" = "Оплатить";
+"Cart.confirmPage.confirmLabel" = "Успех! Оплата прошла,\n поздравляем с покупкой!";
+"Cart.confirmPage.continue" = "Вернуться в каталог";
