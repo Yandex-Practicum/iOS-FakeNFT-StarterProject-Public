@@ -195,7 +195,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
     }
 
     private func configureView() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartUpdated"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate(_:)), name: NSNotification.Name("CartClean"), object: nil)
         payButton.isEnabled = false
         view.backgroundColor = .backgroundColor
         navigationItem.titleView = navigationLabel
