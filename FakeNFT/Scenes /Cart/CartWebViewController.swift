@@ -1,7 +1,7 @@
 import UIKit
 import WebKit
 
-class WebViewViewController: UIViewController {
+class CartWebViewController: UIViewController {
     private let webView = WKWebView()
 
     override func viewDidLoad() {

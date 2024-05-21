@@ -26,7 +26,7 @@
 		202F41B92BF0EE08009BCB85 /* CartNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202F41B82BF0EE08009BCB85 /* CartNetwork.swift */; };
 		202F41BB2BF36775009BCB85 /* PayAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202F41BA2BF36775009BCB85 /* PayAnswer.swift */; };
 		2047C0712BEDDA9000037D31 /* CartConfirmPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2047C0702BEDDA9000037D31 /* CartConfirmPayView.swift */; };
-		205191252BE3626800074EBF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205191242BE3626800074EBF /* WebViewController.swift */; };
+		205191252BE3626800074EBF /* CartWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205191242BE3626800074EBF /* CartWebViewController.swift */; };
 		205191272BE367A400074EBF /* CartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205191262BE367A400074EBF /* CartRequest.swift */; };
 		2051912B2BE3764000074EBF /* CartPayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051912A2BE3764000074EBF /* CartPayPresenter.swift */; };
 		2051912F2BE4DDB500074EBF /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051912E2BE4DDB500074EBF /* Cart.swift */; };
@@ -121,7 +121,7 @@
 		202F41B82BF0EE08009BCB85 /* CartNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNetwork.swift; sourceTree = "<group>"; };
 		202F41BA2BF36775009BCB85 /* PayAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAnswer.swift; sourceTree = "<group>"; };
 		2047C0702BEDDA9000037D31 /* CartConfirmPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartConfirmPayView.swift; sourceTree = "<group>"; };
-		205191242BE3626800074EBF /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		205191242BE3626800074EBF /* CartWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartWebViewController.swift; sourceTree = "<group>"; };
 		205191262BE367A400074EBF /* CartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRequest.swift; sourceTree = "<group>"; };
 		2051912A2BE3764000074EBF /* CartPayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartPayPresenter.swift; sourceTree = "<group>"; };
 		2051912E2BE4DDB500074EBF /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
@@ -428,7 +428,7 @@
 				209F5F722BD90E0800E63B1E /* CartPresenter.swift */,
 				209F5F742BDF916100E63B1E /* CartPayViewController.swift */,
 				2062F02B2BDFA7E300FC11E5 /* CustomCellCollectionViewCart.swift */,
-				205191242BE3626800074EBF /* WebViewController.swift */,
+				205191242BE3626800074EBF /* CartWebViewController.swift */,
 				205191262BE367A400074EBF /* CartRequest.swift */,
 				2051912A2BE3764000074EBF /* CartPayPresenter.swift */,
 				209555C82BE51E26008B3BBD /* CartGetNftsRequest.swift */,
@@ -750,9 +750,8 @@
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				2051912F2BE4DDB500074EBF /* Cart.swift in Sources */,
-				72F081AA2BD2E38900058C94 /* StatisticsViewController.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
-				205191252BE3626800074EBF /* WebViewController.swift in Sources */,
+				205191252BE3626800074EBF /* CartWebViewController.swift in Sources */,
 				72F081A82BD2E37800058C94 /* CartViewController.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				84CFE5472BE3A3BA0052D5AE /* UserInfoView.swift in Sources */,

@@ -168,6 +168,7 @@ extension UserNFTCollectionView: UserNFTCellDelegate {
             case .success(let isLiked):
                 cell.setIsLiked(isLiked: isLiked)
                 UIBlockingProgressHUD.dismiss()
+                NotificationCenter.default.post(name: NSNotification.Name("CartUpdated"), object: nil, userInfo: [:])
             case .failure(let error):
                 print(error.localizedDescription)
             }

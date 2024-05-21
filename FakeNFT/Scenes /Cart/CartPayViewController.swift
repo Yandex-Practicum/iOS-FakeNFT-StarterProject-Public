@@ -95,7 +95,7 @@ final class CartPayViewController: UIViewController & CartPayViewControllerProto
 
     @objc private func openWebView() {
         guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else { return }
-        let webViewVC = WebViewViewController()
+        let webViewVC = CartWebViewController()
         webViewVC.loadURL(url)
         present(webViewVC, animated: true)
     }

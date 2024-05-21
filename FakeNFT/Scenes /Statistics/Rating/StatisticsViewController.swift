@@ -38,7 +38,7 @@ final class StatisticsViewController: UIViewController & StatisticsViewControlle
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
-        button.setImage(UIImage(named: "vector"), for: .normal)
+        button.setImage(UIImage(named: "SortButton"), for: .normal)
         button.addTarget(self, action: #selector(sortButtontapped), for: .touchUpInside)
         return button
     }()
