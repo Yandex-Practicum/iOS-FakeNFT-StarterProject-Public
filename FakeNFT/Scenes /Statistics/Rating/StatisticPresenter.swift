@@ -33,7 +33,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
         observeAnimate()
     }
     
-    func sortRating(sort value: SortType) {
+    func sortRating(sort value: SortingType) {
         
         switch value {
         case .name:
@@ -98,7 +98,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     
     func sortUsers() {
         //сортировка реализована таким способом, потому что с сервера получить ее в отсортированном виде для дефолтного отображения невозможно по словам наставника, из за того что ее не починили. по итогу имеем что люди с рейтингом выше при прокрутке подставляются в начало
-        if let value = UserDefaults.standard.string(forKey: "sortBy"),  let stringValue = SortType(rawValue: value) {
+        if let value = UserDefaults.standard.string(forKey: "sortBy"),  let stringValue = SortingType(rawValue: value) {
             self.objects = self.newObjects
             self.sortRating(sort: stringValue)
         }   else {
@@ -118,7 +118,7 @@ final class StatisticsPresenter: StatisticPresenterProtocol {
     }
 }
 
-enum SortType: String {
+enum SortingType: String {
     case name = "Name"
     case rating = "Rating"
     
