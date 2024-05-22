@@ -254,7 +254,7 @@ final class CartViewController: UIViewController & CartViewControllerProtocol {
         guard let count = presenter?.visibleNft.count else { return }
         guard let price = presenter?.priceCart else { return }
         valueNft.text = "\(count) NFT"
-        priceNfts.text = "\(price) ETH"
+        priceNfts.text = "\(NSString(format:"%.2f", price)) ETH"
     }
 }
 

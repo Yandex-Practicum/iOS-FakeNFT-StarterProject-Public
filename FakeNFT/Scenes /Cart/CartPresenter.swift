@@ -56,14 +56,13 @@ final class CartPresenter: CartPresenterProtocol {
         view?.startLoading()
         cart = nil
         visibleNft = []
+        view?.updateTable()
         priceCart = 0
         cartNetwork.getCart { [weak self] cartItem in
             guard let self = self, let cartItem = cartItem else { return }
             self.saveCart(cart: cartItem)
             if cartItem.nfts.isEmpty && cartItem.nfts.count == 0 {
                 view?.showEmptyMessage()
-                visibleNft = []
-                view?.updateTable()
                 self.view?.stopLoading()
                 return
             } else {
