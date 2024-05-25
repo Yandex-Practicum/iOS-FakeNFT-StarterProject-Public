@@ -61,13 +61,11 @@ struct DefaultNetworkClient: NetworkClient {
             }
         }
         guard let urlRequest = create(request: request) else { return nil }
-
         let task = session.dataTask(with: urlRequest) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
                 onResponse(.failure(NetworkClientError.urlSessionError))
                 return
             }
-
             guard 200 ..< 300 ~= response.statusCode else {
                 onResponse(.failure(NetworkClientError.httpStatusCode(response.statusCode)))
                 return
@@ -120,10 +118,20 @@ struct DefaultNetworkClient: NetworkClient {
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest
+                .setValue("application/json",
+                          forHTTPHeaderField: "Accept")
             urlRequest.httpBody = dtoEncoded
         }
-
+        
+        if (request.isUrlEncoded) {
+          urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        }
+        
+        let token = "107f0274-8faf-4343-b31f-c12b62673e2f"
+        urlRequest
+            .setValue("\(token)",
+                      forHTTPHeaderField: "X-Practicum-Mobile-Token")
         return urlRequest
     }
 
@@ -132,6 +140,7 @@ struct DefaultNetworkClient: NetworkClient {
             let response = try decoder.decode(T.self, from: data)
             onResponse(.success(response))
         } catch {
+            print(error)
             onResponse(.failure(NetworkClientError.parsingError))
         }
     }
