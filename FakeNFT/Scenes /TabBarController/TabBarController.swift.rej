@@ -1,0 +1,30 @@
+diff a/FakeNFT/Scenes /TabBarController/TabBarController.swift b/FakeNFT/Scenes /TabBarController/TabBarController.swift	(rejected hunks)
+@@ -10,14 +10,27 @@ final class TabBarController: UITabBarController {
+         tag: 0
+     )
+ 
++    private let trashTabBarItem = UITabBarItem(
++        title: NSLocalizedString("Tab.trash", comment: ""),
++        image: UIImage(systemName: "trash.fill"),
++        tag: 1
++    )
++
+     override func viewDidLoad() {
+         super.viewDidLoad()
+ 
+         let catalogController = TestCatalogViewController(
+             servicesAssembly: servicesAssembly
+         )
+-        let trashController = TrashFactory().create()
++
++        let trashController = TrashFactory().create(
++            with: .init(
++                servicesAssembly: servicesAssembly
++            )
++        )
++        
+         catalogController.tabBarItem = catalogTabBarItem
++        trashController.tabBarItem = trashTabBarItem
+ 
+         viewControllers = [catalogController, trashController]
+ 
