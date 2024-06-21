@@ -36,6 +36,7 @@ extension UIColor {
     // Background Colors
     static let background = UIColor.white
 
+
     // Text Colors
     static let textPrimary = UIColor.black
     static let textSecondary = UIColor.gray
