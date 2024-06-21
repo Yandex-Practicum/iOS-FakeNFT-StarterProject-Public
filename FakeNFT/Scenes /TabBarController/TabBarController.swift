@@ -25,6 +25,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBar.backgroundColor = .ypWhiteDay
         setupViewControllers()
         setupTabBarAppearance()
     }
@@ -41,34 +42,33 @@ final class TabBarController: UITabBarController {
         let profileVC = getVC(
             viewController: ProfileViewController(),
             title: "Профиль",
-            image: getImage(named: "profile_no_active", orSystemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.black),
-            selectedImage: getImage(named: "profile_active", orSystemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+            image: getImage(named: "profile_no_active", orSystemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack),
+            selectedImage: getImage(named: "profile_active", orSystemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlue)
         )
 
         let catalogVC = getVC(
             viewController: CatalogViewController(),
             title: "Каталог",
-            image: getImage(named: "catalog_no_active", orSystemName: "square.stack.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black),
-            selectedImage: getImage(named: "catalog_active", orSystemName: "square.stack.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+            image: getImage(named: "catalog_no_active", orSystemName: "square.stack.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack),
+            selectedImage: getImage(named: "catalog_active", orSystemName: "square.stack.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlue)
         )
 
         let cartVC = getVC(
             viewController: CartViewController(),
             title: "Корзина",
-            image: getImage(named: "basket_no_active", orSystemName: "bag.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black),
-            selectedImage: getImage(named: "basket_active", orSystemName: "bag.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+            image: getImage(named: "basket_no_active", orSystemName: "bag.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack),
+            selectedImage: getImage(named: "basket_active", orSystemName: "bag.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlue)
         )
 
         let statisticsVC = getVC(
             viewController: StatisticsViewController(),
             title: "Статистика",
-            image: getImage(named: "statistics_no_active", orSystemName: "flag.2.crossed.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.black),
-            selectedImage: getImage(named: "statistics_active", orSystemName: "flag.2.crossed.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemBlue)
+            image: getImage(named: "statistics_no_active", orSystemName: "flag.2.crossed.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlack),
+            selectedImage: getImage(named: "statistics_active", orSystemName: "flag.2.crossed.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.ypBlue)
         )
 
-        _ = UINavigationController(rootViewController: catalogVC)
         viewControllers = [profileVC, catalogVC, cartVC, statisticsVC]
-
+        selectedIndex = 1
     }
 
     private func getVC(viewController: UIViewController, title: String, image: UIImage?, selectedImage: UIImage?) -> UIViewController {
