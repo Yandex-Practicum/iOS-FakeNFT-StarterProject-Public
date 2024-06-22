@@ -41,6 +41,9 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		7CC22F492C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md in Resources */ = {isa = PBXBuildFile; fileRef = 7CC22F462C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md */; };
+		7CC22F4A2C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md in Resources */ = {isa = PBXBuildFile; fileRef = 7CC22F472C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md */; };
+		7CC22F4B2C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md in Resources */ = {isa = PBXBuildFile; fileRef = 7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */; };
 		8B5D03692C25BE170096C8A1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */; };
 		8B5D036B2C25BE6B0096C8A1 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */; };
 		8B5D036D2C25BEAE0096C8A1 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */; };
@@ -104,6 +107,9 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		7CC22F462C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Decomposition (Cart) - Наташа Труфанова.md"; sourceTree = "<group>"; };
+		7CC22F472C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Decomposition (Catalog) - Антон Павлов.md"; sourceTree = "<group>"; };
+		7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Decomposition (Profile) - Влад Горелов.md"; sourceTree = "<group>"; };
 		8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				3F6806C929CBBCAF00B4F915 /* Models */,
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
+				7CC22F452C2699FC00260828 /* Docs */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 			);
 			path = FakeNFT;
@@ -337,6 +344,16 @@
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		7CC22F452C2699FC00260828 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				7CC22F462C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md */,
+				7CC22F472C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md */,
+				7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */,
+			);
+			path = Docs;
 			sourceTree = "<group>";
 		};
 		8B5D03652C25BCEF0096C8A1 /* Cart */ = {
@@ -507,6 +524,9 @@
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
+				7CC22F4A2C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md in Resources */,
+				7CC22F4B2C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md in Resources */,
+				7CC22F492C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
