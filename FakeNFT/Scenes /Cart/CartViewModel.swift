@@ -15,6 +15,7 @@ final class CartViewModel: ObservableObject {
     @Published var nftsInCart: [Nft] = []
     @Published var totalItems: String = "0 NFT"
     @Published var totalPrice: String = "0 ETH"
+    @Published var isLoading: Bool = false
     
     // MARK: - Initialization
     
@@ -25,9 +26,17 @@ final class CartViewModel: ObservableObject {
     // MARK: - Data Loading
     
     private func loadMockData() {
-        nftsInCart = MockData.createMockNFTs()
-        updateTotalItems()
-        updateTotalPrice()
+        isLoading = true
+        DispatchQueue.global().async {
+            sleep(2) // симуляция задержки загрузки данных
+            DispatchQueue.main.async { [weak self] in
+                self?.nftsInCart = MockData.createMockNFTs()
+                self?.updateTotalItems()
+                self?.updateTotalPrice()
+                self?.isLoading = false
+                self?.objectWillChange.send()
+            }
+        }
     }
     
     // MARK: - Update Methods

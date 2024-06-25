@@ -14,6 +14,7 @@ final class CartViewController: UIViewController {
     
     private var viewModel = CartViewModel()
     private var cancellables = Set<AnyCancellable>()
+    private var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - UI Components
     
@@ -71,6 +72,7 @@ final class CartViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         setupUI()
+        setupActivityIndicator()
         setupNavigationBar()
         bindViewModel()
     }
@@ -79,9 +81,9 @@ final class CartViewController: UIViewController {
     
     private func bindViewModel() {
         viewModel.$nftsInCart
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.tableView.reloadData()
-                self?.emptyStateLabel.isHidden = !(self?.viewModel.nftsInCart.isEmpty ?? true)
+                self?.updateUI()
             }
             .store(in: &cancellables)
         
@@ -95,6 +97,13 @@ final class CartViewController: UIViewController {
             .receive(on: RunLoop.main)
             .map { $0 as String? }
             .assign(to: \.text, on: totalPriceLabel)
+            .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
+                self?.updateLoadingState(isLoading)
+            }
             .store(in: &cancellables)
     }
     
@@ -142,8 +151,35 @@ final class CartViewController: UIViewController {
             totalItemsLabel.trailingAnchor.constraint(equalTo: checkoutButton.leadingAnchor, constant: -12),
             totalPriceLabel.topAnchor.constraint(equalTo: totalItemsLabel.bottomAnchor, constant: 2),
             totalPriceLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
-            totalPriceLabel.trailingAnchor.constraint(equalTo: checkoutButton.leadingAnchor, constant: -12)
+            totalPriceLabel.trailingAnchor.constraint(equalTo: checkoutButton.leadingAnchor, constant: -12),
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+    }
+    
+    // MARK: - Update Methods
+    
+    private func updateUI() {
+        tableView.reloadData()
+        emptyStateLabel.isHidden = viewModel.isLoading || !viewModel.nftsInCart.isEmpty
+    }
+    
+    private func updateLoadingState(_ isLoading: Bool) {
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+            tableView.reloadData()
+        }
+        emptyStateLabel.isHidden = isLoading || !viewModel.nftsInCart.isEmpty
     }
     
     // MARK: - Actions
