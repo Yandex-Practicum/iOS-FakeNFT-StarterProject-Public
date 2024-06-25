@@ -46,6 +46,7 @@
 		7CC22F4B2C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md in Resources */ = {isa = PBXBuildFile; fileRef = 7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */; };
 		7F1F54F62C2AA6E600E8C7C6 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F54F52C2AA6E600E8C7C6 /* ActionButton.swift */; };
 		7F1F54F82C2AAEE400E8C7C6 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */; };
+		7F73DF622C2AE0250074B69B /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73DF612C2AE0250074B69B /* CartCell.swift */; };
 		8B5D03692C25BE170096C8A1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */; };
 		8B5D036B2C25BE6B0096C8A1 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */; };
 		8B5D036D2C25BEAE0096C8A1 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */; };
@@ -114,6 +115,7 @@
 		7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Decomposition (Profile) - Влад Горелов.md"; sourceTree = "<group>"; };
 		7F1F54F52C2AA6E600E8C7C6 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		7F73DF612C2AE0250074B69B /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */,
+				7F73DF612C2AE0250074B69B /* CartCell.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
 				0C79EE632A76DD1900EE90EA /* RequestConstants.swift in Sources */,
+				7F73DF622C2AE0250074B69B /* CartCell.swift in Sources */,
 				7F1F54F62C2AA6E600E8C7C6 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
