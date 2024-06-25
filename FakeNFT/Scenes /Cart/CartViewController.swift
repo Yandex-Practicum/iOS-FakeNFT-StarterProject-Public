@@ -167,9 +167,10 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CartCell = tableView.dequeueReusableCell()
         
-        viewModel.nftsInCart[indexPath.row]
+        let nft = viewModel.nftsInCart[indexPath.row]
         cell.selectionStyle = .none
-        // TODO: конфигурация ячейки
+        let cellViewModel = CartCellViewModel(nft: nft)
+        cell.configure(with: cellViewModel)
         return cell
     }
 }
