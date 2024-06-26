@@ -14,7 +14,8 @@ final class CartViewController: UIViewController {
     
     private var viewModel = CartViewModel()
     private var cancellables = Set<AnyCancellable>()
-    private var activityIndicator: UIActivityIndicatorView!
+    private var activityIndicator: UIActivityIndicatorView?
+    private var rightBarItem: UIBarButtonItem?
     
     // MARK: - UI Components
     
@@ -160,26 +161,34 @@ final class CartViewController: UIViewController {
     
     private func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        view.addSubview(activityIndicator)
+        activityIndicator?.center = view.center
+        activityIndicator?.hidesWhenStopped = true
+        if let activityIndicator = activityIndicator {
+            view.addSubview(activityIndicator)
+        }
     }
     
     // MARK: - Update Methods
     
     private func updateUI() {
         tableView.reloadData()
-        emptyStateLabel.isHidden = viewModel.isLoading || !viewModel.nftsInCart.isEmpty
+        updateEmptyStateAndRightBarItem(isLoading: viewModel.isLoading)
     }
     
     private func updateLoadingState(_ isLoading: Bool) {
         if isLoading {
-            activityIndicator.startAnimating()
+            activityIndicator?.startAnimating()
         } else {
-            activityIndicator.stopAnimating()
+            activityIndicator?.stopAnimating()
             tableView.reloadData()
         }
-        emptyStateLabel.isHidden = isLoading || !viewModel.nftsInCart.isEmpty
+        updateEmptyStateAndRightBarItem(isLoading: isLoading)
+    }
+    
+    private func updateEmptyStateAndRightBarItem(isLoading: Bool) {
+        let isEmptyCart = viewModel.nftsInCart.isEmpty
+        emptyStateLabel.isHidden = isLoading || !isEmptyCart
+        navigationItem.rightBarButtonItem = isEmptyCart ? nil : rightBarItem
     }
     
     // MARK: - Actions
