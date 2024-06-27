@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MockData {
+enum MockData {
     static func createMockNFTs() -> [Nft] {
         guard let aprilURL = URL(
             string: "card_april"
