@@ -12,12 +12,33 @@ final class CartViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private var viewModel = CartViewModel()
+    private let viewModel = CartViewModel()
     private var cancellables = Set<AnyCancellable>()
-    private var activityIndicator: UIActivityIndicatorView?
-    private var rightBarItem: UIBarButtonItem?
     
     // MARK: - UI Components
+    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private let rightBarItem: UIBarButtonItem = {
+        let barItem = UIBarButtonItem(
+            image: UIImage(named: "sort"),
+            style: .plain,
+            target: CartViewController.self,
+            action: #selector(didTapSortButton)
+        )
+        barItem.tintColor = .ypBlackDay
+        return barItem
+    }()
+    
+    private let checkoutButton = ActionButton(
+        size: .medium,
+        type: .primary,
+        title: "К оплате"
+    )
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -58,12 +79,6 @@ final class CartViewController: UIViewController {
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
     }()
-    
-    private let checkoutButton = ActionButton(
-        size: .medium,
-        type: .primary,
-        title: "К оплате"
-    )
     
     // MARK: - Lifecycle
     
@@ -111,13 +126,6 @@ final class CartViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupNavigationBar() {
-        let rightBarItem = UIBarButtonItem(
-            image: UIImage(named: "sort"),
-            style: .plain,
-            target: self,
-            action: #selector(didTapSortButton)
-        )
-        rightBarItem.tintColor = .ypBlackDay
         navigationItem.rightBarButtonItem = rightBarItem
     }
     
@@ -160,12 +168,8 @@ final class CartViewController: UIViewController {
     }
     
     private func setupActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator?.center = view.center
-        activityIndicator?.hidesWhenStopped = true
-        if let activityIndicator = activityIndicator {
-            view.addSubview(activityIndicator)
-        }
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
     }
     
     // MARK: - Update Methods
@@ -177,9 +181,9 @@ final class CartViewController: UIViewController {
     
     private func updateLoadingState(_ isLoading: Bool) {
         if isLoading {
-            activityIndicator?.startAnimating()
+            activityIndicator.startAnimating()
         } else {
-            activityIndicator?.stopAnimating()
+            activityIndicator.stopAnimating()
             tableView.reloadData()
         }
         updateEmptyStateAndRightBarItem(isLoading: isLoading)

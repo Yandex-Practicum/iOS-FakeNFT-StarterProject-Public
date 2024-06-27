@@ -17,8 +17,8 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
     static var defaultReuseIdentifier: String = "CartCell"
     private var cancellables = Set<AnyCancellable>()
     
-    private var ratingViewModel: RatingViewModel
-    private var ratingView: RatingView
+    private let ratingViewModel: RatingViewModel
+    private let ratingView: RatingView
     
     // MARK: - UI Components
     

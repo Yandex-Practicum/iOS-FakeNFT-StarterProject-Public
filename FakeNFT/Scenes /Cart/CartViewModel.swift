@@ -27,15 +27,12 @@ final class CartViewModel: ObservableObject {
     
     private func loadMockData() {
         isLoading = true
-        DispatchQueue.global().async {
-            sleep(2) // симуляция задержки загрузки данных
-            DispatchQueue.main.async { [weak self] in
-                self?.nftsInCart = MockData.createMockNFTs()
-                self?.updateTotalItems()
-                self?.updateTotalPrice()
-                self?.isLoading = false
-                self?.objectWillChange.send()
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.nftsInCart = MockData.createMockNFTs()
+            self?.updateTotalItems()
+            self?.updateTotalPrice()
+            self?.isLoading = false
+            self?.objectWillChange.send()
         }
     }
     
