@@ -360,9 +360,9 @@
 		7CC22F452C2699FC00260828 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				7CC22F462C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md */,
 				7CC22F472C269A3A00260828 /* Decomposition (Catalog) - Антон Павлов.md */,
 				7CC22F482C269A3A00260828 /* Decomposition (Profile) - Влад Горелов.md */,
+				7CC22F462C269A3A00260828 /* Decomposition (Cart) - Наташа Труфанова.md */,
 			);
 			path = Docs;
 			sourceTree = "<group>";
