@@ -50,6 +50,7 @@
 		7F973BC22C2B02E000DCFCD2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */; };
 		7FB5C8DB2C3AFC430036DD4E /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */; };
 		7FB5C8DD2C3AFD970036DD4E /* URLNetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */; };
+		7FB5C8E32C3B05880036DD4E /* NetworkClientCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */; };
 		8B5D03692C25BE170096C8A1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */; };
 		8B5D036B2C25BE6B0096C8A1 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */; };
 		8B5D036D2C25BEAE0096C8A1 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */; };
@@ -122,6 +123,7 @@
 		7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNetworkRequest.swift; sourceTree = "<group>"; };
+		7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientCombine.swift; sourceTree = "<group>"; };
 		8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 			children = (
 				7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */,
 				7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */,
+				7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */,
 			);
 			path = CustomNetwork;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				8B5D03692C25BE170096C8A1 /* ProfileViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
+				7FB5C8E32C3B05880036DD4E /* NetworkClientCombine.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				8B5D036B2C25BE6B0096C8A1 /* CatalogViewController.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
