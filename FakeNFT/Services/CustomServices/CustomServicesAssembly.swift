@@ -2,7 +2,7 @@
 //  CustomServicesAssembly.swift
 //  FakeNFT
 //
-//  Created by Natasha Trufanova on 07/07/2024.
+//  Created by Natasha Trufanova on 28/06/2024.
 //
 
 import Foundation
@@ -21,6 +21,11 @@ final class CustomServicesAssembly {
             networkClient: try combineNetworkClient(),
             storage: servicesAssembly.nftStorage
         )
+    }
+    
+    func createProfileViewController() throws -> ProfileViewController {
+        let nftServiceCombine = try self.nftServiceCombine()
+        return ProfileViewController()
     }
     
     private func combineNetworkClient() throws -> NetworkClientCombine {
