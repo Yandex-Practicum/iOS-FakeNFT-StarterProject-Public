@@ -19,6 +19,44 @@ enum ApiRequestBuilder {
         return URLNetworkRequest(endpoint: url, httpMethod: .get)
     }
     
+    // MARK: - Profile Methods
+    
+    static func getProfile(profileId: String) -> URLNetworkRequest? {
+        return buildRequest(endpoint: "/api/v1/profile/\(1)", method: .get)
+    }
+    
+    static func updateProfile(profileId: String, name: String?, description: String?, website: String?, likes: [String]?, avatar: String?) -> URLNetworkRequest? {
+        let endpoint = "/api/v1/profile/\(profileId)"
+        guard let url = URL(string: RequestConstants.baseURL + endpoint) else {
+            return nil
+        }
+        
+        var profileData: String = ""
+        if let name = name {
+            profileData += "&name=\(name)"
+        }
+        if let avatar = avatar {
+            profileData += "&avatar=\(avatar)"
+        }
+        if let description = description {
+            profileData += "&description=\(description)"
+        }
+        if let website = website {
+            profileData += "&website=\(website)"
+        }
+        if let likes = likes {
+            for like in likes {
+                profileData += "&likes=\(like)"
+            }
+        }
+        
+        guard let requestBodyData = profileData.data(using: .utf8) else {
+            return nil
+        }
+        
+        return URLNetworkRequest(endpoint: url, httpMethod: .put, dto: requestBodyData, isUrlEncoded: true)
+    }
+    
     static func getOrder(orderId: String) -> URLNetworkRequest? {
         return buildRequest(endpoint: "/api/v1/orders/\(orderId)", method: .get)
     }

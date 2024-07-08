@@ -10,11 +10,11 @@ import Combine
 
 class NetworkClientCombine {
     private let baseClient: DefaultNetworkClient
-    
+
     init(baseClient: DefaultNetworkClient = DefaultNetworkClient()) {
         self.baseClient = baseClient
     }
-    
+
     func send<T: Decodable>(
         request: NetworkRequest,
         type: T.Type
