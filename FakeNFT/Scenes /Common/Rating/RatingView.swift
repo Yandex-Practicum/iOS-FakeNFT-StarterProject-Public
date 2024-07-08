@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-class RatingView: UIView {
+final class RatingView: UIView {
     
     // MARK: - Private Properties
     

@@ -24,7 +24,7 @@ enum CustomButtonType {
 
 // MARK: - ActionButton
 
-class ActionButton: UIButton {
+final class ActionButton: UIButton {
     
     // MARK: - Private Properties
     
