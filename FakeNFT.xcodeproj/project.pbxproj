@@ -55,6 +55,7 @@
 		7FB5C8E72C3B06640036DD4E /* NetworkClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8E62C3B06640036DD4E /* NetworkClientError.swift */; };
 		7FB5C8EA2C3B06C70036DD4E /* NftServiceCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8E92C3B06C70036DD4E /* NftServiceCombine.swift */; };
 		7FB5C8EC2C3B07220036DD4E /* CustomServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8EB2C3B07220036DD4E /* CustomServicesAssembly.swift */; };
+		8B3D9CF12C3C645200F18649 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3D9CF02C3C645200F18649 /* Profile.swift */; };
 		8B5D03692C25BE170096C8A1 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */; };
 		8B5D036B2C25BE6B0096C8A1 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */; };
 		8B5D036D2C25BEAE0096C8A1 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */; };
@@ -132,6 +133,7 @@
 		7FB5C8E62C3B06640036DD4E /* NetworkClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientError.swift; sourceTree = "<group>"; };
 		7FB5C8E92C3B06C70036DD4E /* NftServiceCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftServiceCombine.swift; sourceTree = "<group>"; };
 		7FB5C8EB2C3B07220036DD4E /* CustomServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomServicesAssembly.swift; sourceTree = "<group>"; };
+		8B3D9CF02C3C645200F18649 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		8B5D03682C25BE170096C8A1 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8B5D036A2C25BE6B0096C8A1 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		8B5D036C2C25BEAE0096C8A1 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8B3D9CF02C3C645200F18649 /* Profile.swift */,
 				3F6806D829CC979D00B4F915 /* Network */,
 				7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */,
 			);
@@ -632,6 +635,7 @@
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
+				8B3D9CF12C3C645200F18649 /* Profile.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				7FB5C8E72C3B06640036DD4E /* NetworkClientError.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
