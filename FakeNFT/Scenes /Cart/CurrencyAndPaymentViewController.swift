@@ -196,7 +196,13 @@ final class CurrencyAndPaymentViewController: UIViewController {
     }
     
     @objc private func didTapTermsLabel() {
-        // TODO: WebView
+        let formattedURL = policySite
+        let webViewController = WebViewController()
+        webViewController.targetURL = formattedURL
+        let navController = UINavigationController(rootViewController: webViewController)
+        navController.modalPresentationStyle = .fullScreen
+        
+        present(navController, animated: true, completion: nil)
     }
     
     private func showLoadingIndicator() {
