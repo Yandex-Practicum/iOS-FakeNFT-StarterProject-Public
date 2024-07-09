@@ -198,6 +198,8 @@ final class CartViewController: UIViewController {
             emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
+        checkoutButton.addTarget(self, action: #selector(didTapСheckoutButton), for: .touchUpInside)
     }
     
     private func setupRefreshControl() {
@@ -282,7 +284,10 @@ final class CartViewController: UIViewController {
     }
     
     @objc private func didTapСheckoutButton() {
-        // TODO: логика для чекаута
+        let currencyAndPaymentviewModel = CurrencyAndPaymentViewModel()
+        let currencyAndPaymentVC = CurrencyAndPaymentViewController(viewModel: currencyAndPaymentviewModel)
+        currencyAndPaymentVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(currencyAndPaymentVC, animated: true)
     }
     
     
