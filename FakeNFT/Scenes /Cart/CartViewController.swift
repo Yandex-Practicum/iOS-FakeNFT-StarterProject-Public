@@ -12,7 +12,7 @@ final class CartViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let viewModel = CartViewModel()
+    private let cartViewModel = CartViewModel()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - UI Components
@@ -90,37 +90,58 @@ final class CartViewController: UIViewController {
         setupUI()
         setupActivityIndicator()
         setupNavigationBar()
+        setupRefreshControl()
         bindViewModel()
+    }
+    
+    func endRefreshing() {
+        tableView.refreshControl?.endRefreshing()
     }
     
     // MARK: - Bind ViewModel
     
     private func bindViewModel() {
-        viewModel.$nftsInCart
+        cartViewModel.$nftsInCart
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.updateUI()
             }
             .store(in: &cancellables)
         
-        viewModel.$totalItems
+        Publishers.CombineLatest(cartViewModel.$totalItems, cartViewModel.$totalPrice)
             .receive(on: RunLoop.main)
-            .map { $0 as String? }
-            .assign(to: \.text, on: totalItemsLabel)
+            .sink { [weak self] totalItems, totalPrice in
+                self?.totalItemsLabel.text = totalItems
+                self?.totalPriceLabel.text = totalPrice
+            }
             .store(in: &cancellables)
         
-        viewModel.$totalPrice
-            .receive(on: RunLoop.main)
-            .map { $0 as String? }
-            .assign(to: \.text, on: totalPriceLabel)
-            .store(in: &cancellables)
-        
-        viewModel.$isLoading
+        cartViewModel.$isLoading
             .receive(on: RunLoop.main)
             .sink { [weak self] isLoading in
                 self?.updateLoadingState(isLoading)
             }
             .store(in: &cancellables)
+        
+        cartViewModel.presentDeleteConfirmationSubject
+            .sink { [weak self] nft, url in
+                self?.presentDeleteConfirmation(for: nft, imageURL: url)
+            }
+            .store(in: &cancellables)
+        
+        cartViewModel.confirmDeletionSubject
+            .sink { [weak self] nft in
+                self?.cartViewModel.removeItemFromCart(nft)
+            }
+            .store(in: &cancellables)
+        
+        cartViewModel.endRefreshingSubject
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.tableView.refreshControl?.endRefreshing()
+            }
+            .store(in: &cancellables)
+        
     }
     
     // MARK: - Setup UI
@@ -167,6 +188,12 @@ final class CartViewController: UIViewController {
         ])
     }
     
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
     private func setupActivityIndicator() {
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
@@ -176,7 +203,7 @@ final class CartViewController: UIViewController {
     
     private func updateUI() {
         tableView.reloadData()
-        updateEmptyStateAndRightBarItem(isLoading: viewModel.isLoading)
+        updateEmptyStateAndRightBarItem(isLoading: cartViewModel.isLoading)
     }
     
     private func updateLoadingState(_ isLoading: Bool) {
@@ -190,9 +217,29 @@ final class CartViewController: UIViewController {
     }
     
     private func updateEmptyStateAndRightBarItem(isLoading: Bool) {
-        let isEmptyCart = viewModel.nftsInCart.isEmpty
+        let isEmptyCart = cartViewModel.nftsInCart.isEmpty
         emptyStateLabel.isHidden = isLoading || !isEmptyCart
         navigationItem.rightBarButtonItem = isEmptyCart ? nil : rightBarItem
+    }
+    
+    private func presentDeleteConfirmation(for nft: Nft, imageURL: URL?) {
+        guard presentedViewController == nil else {
+            return
+        }
+        
+        let deleteViewModel = DeleteFromCartViewModel(nft: nft, imageURL: imageURL)
+        let deleteVC = DeleteFromCartViewController(viewModel: deleteViewModel)
+        deleteVC.modalPresentationStyle = .overFullScreen
+        deleteViewModel.confirmDeletion
+            .sink { [weak self] in
+                guard let self = self else { return }
+                self.cartViewModel.removeItemFromCart(nft)
+                DispatchQueue.main.async { [weak self] in
+                    self?.updateUI()
+                }
+            }
+            .store(in: &self.cancellables)
+        present(deleteVC, animated: true, completion: nil)
     }
     
     // MARK: - Actions
@@ -204,22 +251,34 @@ final class CartViewController: UIViewController {
     @objc private func didTapСheckoutButton() {
         // TODO: логика для чекаута
     }
+    
+    
+    @objc private func refreshData() {
+        cartViewModel.loadMockData()
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.nftsInCart.count
+        return cartViewModel.nftsInCart.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CartCell = tableView.dequeueReusableCell()
         
-        let nft = viewModel.nftsInCart[indexPath.row]
+        let nft = cartViewModel.nftsInCart[indexPath.row]
         cell.selectionStyle = .none
         let cellViewModel = CartCellViewModel(nft: nft)
         cell.configure(with: cellViewModel)
+        
+        cell.deleteButtonTapped
+            .sink { [weak self] nft in
+                self?.cartViewModel.deleteButtonTapped.send(nft)
+            }
+            .store(in: &cell.cancellables)
+        
         return cell
     }
 }

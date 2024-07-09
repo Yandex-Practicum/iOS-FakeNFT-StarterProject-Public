@@ -15,8 +15,9 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Properties
     
     static var defaultReuseIdentifier: String = "CartCell"
-    private var cancellables = Set<AnyCancellable>()
-    
+    var cancellables = Set<AnyCancellable>()
+    private var viewModel: CartCellViewModel?
+    var deleteButtonTapped = PassthroughSubject<Nft, Never>()
     private let ratingViewModel: RatingViewModel
     private let ratingView: RatingView
     
@@ -105,6 +106,10 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Configuration
     
     func configure(with viewModel: CartCellViewModel) {
+        guard self.viewModel !== viewModel else { return }
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+        self.viewModel = viewModel
         bindViewModel(viewModel)
     }
     
@@ -148,6 +153,8 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
         ])
         
         setCustomSpacing()
+        
+        deleteItemButton.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
     }
     
     private func setCustomSpacing() {
@@ -157,6 +164,14 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
         
         mainStackView.setCustomSpacing(20, after: nftImageView)
         mainStackView.setCustomSpacing(12, after: verticalStackView)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func didTapDeleteButton() {
+        if let nft = viewModel?.nft {
+            deleteButtonTapped.send(nft)
+        }
     }
 }
 
