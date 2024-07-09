@@ -51,6 +51,8 @@
 		7F973BC02C2B02AE00DCFCD2 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BBF2C2B02AE00DCFCD2 /* RatingView.swift */; };
 		7F973BC22C2B02E000DCFCD2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */; };
 		7F973BC52C2B129500DCFCD2 /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BC42C2B129500DCFCD2 /* CartCellViewModel.swift */; };
+		7FA2B6202C3D1C2D00879CC1 /* DeleteFromCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2B61F2C3D1C2D00879CC1 /* DeleteFromCartViewController.swift */; };
+		7FA2B6222C3D1C4000879CC1 /* DeleteFromCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2B6212C3D1C4000879CC1 /* DeleteFromCartViewModel.swift */; };
 		7FB5C8DB2C3AFC430036DD4E /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */; };
 		7FB5C8DD2C3AFD970036DD4E /* URLNetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */; };
 		7FB5C8E32C3B05880036DD4E /* NetworkClientCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */; };
@@ -132,6 +134,8 @@
 		7F973BBF2C2B02AE00DCFCD2 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		7F973BC42C2B129500DCFCD2 /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
+		7FA2B61F2C3D1C2D00879CC1 /* DeleteFromCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFromCartViewController.swift; sourceTree = "<group>"; };
+		7FA2B6212C3D1C4000879CC1 /* DeleteFromCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFromCartViewModel.swift; sourceTree = "<group>"; };
 		7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNetworkRequest.swift; sourceTree = "<group>"; };
 		7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientCombine.swift; sourceTree = "<group>"; };
@@ -429,6 +433,8 @@
 				7F73DF612C2AE0250074B69B /* CartCell.swift */,
 				7F73DF632C2AE2B10074B69B /* CartViewModel.swift */,
 				7F973BC42C2B129500DCFCD2 /* CartCellViewModel.swift */,
+				7FA2B61F2C3D1C2D00879CC1 /* DeleteFromCartViewController.swift */,
+				7FA2B6212C3D1C4000879CC1 /* DeleteFromCartViewModel.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -646,6 +652,7 @@
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				8B3D9CF12C3C645200F18649 /* Profile.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				7FA2B6202C3D1C2D00879CC1 /* DeleteFromCartViewController.swift in Sources */,
 				7FB5C8E72C3B06640036DD4E /* NetworkClientError.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
@@ -682,6 +689,7 @@
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
 				7FB5C8DD2C3AFD970036DD4E /* URLNetworkRequest.swift in Sources */,
+				7FA2B6222C3D1C4000879CC1 /* DeleteFromCartViewModel.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,
 				7FB5C8DB2C3AFC430036DD4E /* TokenManager.swift in Sources */,
