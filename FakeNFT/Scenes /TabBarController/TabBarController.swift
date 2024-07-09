@@ -9,11 +9,13 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     var servicesAssembly: ServicesAssembly
+    var customServicesAssembly: CustomServicesAssembly
 
     // MARK: - Initialization
 
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
+        self.customServicesAssembly = CustomServicesAssembly(servicesAssembly: servicesAssembly)
         super.init(nibName: nil, bundle: nil)
     }
 
