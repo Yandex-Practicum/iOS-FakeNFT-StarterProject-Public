@@ -7,6 +7,7 @@
 
 
 import Combine
+import Kingfisher
 import UIKit
 
 final class DeleteFromCartViewController: UIViewController {
@@ -25,7 +26,6 @@ final class DeleteFromCartViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -67,7 +67,13 @@ final class DeleteFromCartViewController: UIViewController {
     }()
     
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [ nftImageView, confirmLabel, horizontalStackView ])
+        let stackView = UIStackView(
+            arrangedSubviews: [
+                nftImageView,
+                confirmLabel,
+                horizontalStackView
+            ]
+        )
         stackView.axis = .vertical
         stackView.alignment = .center
         return stackView
@@ -100,6 +106,10 @@ final class DeleteFromCartViewController: UIViewController {
                 self.confirmDeletion.send()
             }
             .store(in: &cancellables)
+        
+        if let url = viewModel.imageURL {
+            loadImage(url: url)
+        }
     }
     
     // MARK: - Setup UI
@@ -137,6 +147,18 @@ final class DeleteFromCartViewController: UIViewController {
     private func setCustomSpacing() {
         mainStackView.setCustomSpacing(12, after: nftImageView)
         mainStackView.setCustomSpacing(20, after: confirmLabel)
+    }
+    
+    // MARK: - Utility Methods
+    
+    private func loadImage(url: URL) {
+        nftImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+        nftImageView.kf.setImage(
+            with: url,
+            placeholder: .none,
+            options: [.processor(processor)]
+        )
     }
     
     // MARK: - Actions

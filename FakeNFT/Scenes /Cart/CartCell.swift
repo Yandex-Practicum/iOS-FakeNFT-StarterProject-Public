@@ -8,6 +8,7 @@
 import UIKit
 
 import Combine
+import Kingfisher
 import UIKit
 
 final class CartCell: UITableViewCell, ReuseIdentifying {
@@ -26,6 +27,8 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
     private let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -122,7 +125,8 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
                 self?.nameLabel.text = viewData.name
                 self?.priceLabel.text = viewData.price
                 self?.ratingViewModel.setRating(viewData.rating)
-                self?.nftImageView.image = UIImage(named: viewData.imageURLString)
+                guard let self = self, let url = URL(string: viewData.imageURLString) else { return }
+                self.loadImage(url: url)
             }
             .store(in: &cancellables)
     }
@@ -164,6 +168,18 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
         
         mainStackView.setCustomSpacing(20, after: nftImageView)
         mainStackView.setCustomSpacing(12, after: verticalStackView)
+    }
+    
+    // MARK: - Utility Methods
+    
+    private func loadImage(url: URL) {
+        nftImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 12)
+        nftImageView.kf.setImage(
+            with: url,
+            placeholder: .none,
+            options: [.processor(processor)]
+        )
     }
     
     // MARK: - Actions

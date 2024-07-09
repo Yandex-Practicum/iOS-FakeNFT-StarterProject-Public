@@ -12,8 +12,9 @@ final class CartViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let cartViewModel = CartViewModel()
     private var cancellables = Set<AnyCancellable>()
+    private let unifiedService: NftServiceCombine
+    let cartViewModel: CartViewModel
     
     // MARK: - UI Components
     
@@ -80,6 +81,18 @@ final class CartViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Initialization
+    
+    init(cartViewModel: CartViewModel, unifiedService: NftServiceCombine) {
+        self.cartViewModel = cartViewModel
+        self.unifiedService = unifiedService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -103,7 +116,7 @@ final class CartViewController: UIViewController {
     private func bindViewModel() {
         cartViewModel.$nftsInCart
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] (_: [Nft]) in
                 self?.updateUI()
             }
             .store(in: &cancellables)
@@ -118,7 +131,7 @@ final class CartViewController: UIViewController {
         
         cartViewModel.$isLoading
             .receive(on: RunLoop.main)
-            .sink { [weak self] isLoading in
+            .sink { [weak self] (isLoading: Bool) in
                 self?.updateLoadingState(isLoading)
             }
             .store(in: &cancellables)
@@ -141,7 +154,6 @@ final class CartViewController: UIViewController {
                 self?.tableView.refreshControl?.endRefreshing()
             }
             .store(in: &cancellables)
-        
     }
     
     // MARK: - Setup UI
@@ -254,11 +266,12 @@ final class CartViewController: UIViewController {
     
     
     @objc private func refreshData() {
-        cartViewModel.loadMockData()
+        cartViewModel.loadCartItems()
     }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
+
 
 extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -268,8 +281,8 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CartCell = tableView.dequeueReusableCell()
         
-        let nft = cartViewModel.nftsInCart[indexPath.row]
         cell.selectionStyle = .none
+        let nft = cartViewModel.nftsInCart[indexPath.row]
         let cellViewModel = CartCellViewModel(nft: nft)
         cell.configure(with: cellViewModel)
         
@@ -281,4 +294,10 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
 }
+
+

@@ -30,7 +30,8 @@ final class CustomServicesAssembly {
     
     func createCartViewController() throws -> CartViewController {
         let nftServiceCombine = try self.nftServiceCombine()
-        return CartViewController()
+        let cartViewModel = CartViewModel(unifiedService: nftServiceCombine)
+        return CartViewController(cartViewModel: cartViewModel, unifiedService: nftServiceCombine)
     }
     
     private func combineNetworkClient() throws -> NetworkClientCombine {
