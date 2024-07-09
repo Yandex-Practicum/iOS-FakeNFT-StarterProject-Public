@@ -8,6 +8,16 @@
 import Combine
 import Foundation
 
+// MARK: - Enums
+
+enum SortType: String {
+    case price = "price"
+    case rating = "rating"
+    case name = "name"
+}
+
+// MARK: - ViewModel
+
 final class CartViewModel: ObservableObject {
     
     // MARK: - Published Properties
@@ -18,6 +28,7 @@ final class CartViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     private let unifiedService: NftServiceCombine
+    private let sortKey = "selectedSortType"
     private var cancellables = Set<AnyCancellable>()
     
     let deleteButtonTapped = PassthroughSubject<Nft, Never>()
@@ -33,6 +44,7 @@ final class CartViewModel: ObservableObject {
         bindConfirmDeletion()
         //        testAddOrder() // добвляем для тестирования
         loadCartItems()
+        applySavedSortType()
     }
     
     // MARK: - Data Loading
@@ -63,6 +75,7 @@ final class CartViewModel: ObservableObject {
                 guard let self = self else { return }
                 self.nftsInCart = items
                 self.updateCartSummary()
+                self.applySavedSortType()
             })
             .store(in: &cancellables)
     }
@@ -74,6 +87,23 @@ final class CartViewModel: ObservableObject {
         let nftIds = nftsInCart.map { $0.id }
         updateOrderOnServer(with: nftIds)
     }
+    
+    // MARK: - Sorting
+    
+    func sortCartItems(by sortType: SortType) {
+        switch sortType {
+        case .price:
+            nftsInCart.sort { $0.price > $1.price }
+        case .rating:
+            nftsInCart.sort { $0.rating > $1.rating }
+        case .name:
+            nftsInCart.sort { $0.name < $1.name }
+        }
+        saveSortType(sortType)
+        updateCartSummary()
+    }
+    
+    // MARK: - Private Methods
     
     private func bindDeleteButtonTapped() {
         deleteButtonTapped
@@ -120,6 +150,17 @@ final class CartViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    private func saveSortType(_ sortType: SortType) {
+        UserDefaults.standard.set(sortType.rawValue, forKey: sortKey)
+    }
+    
+    private func applySavedSortType() {
+        if let savedSortType = UserDefaults.standard.string(forKey: sortKey),
+           let sortType = SortType(rawValue: savedSortType) {
+            sortCartItems(by: sortType)
+        }
+    }
+    
     // MARK: - Update Methods
     
     private func updateOrderOnServer(with nftIds: [String]) {
@@ -157,5 +198,4 @@ final class CartViewModel: ObservableObject {
         let url = nft.images.first
         presentDeleteConfirmationSubject.send((nft, url))
     }
-    
 }

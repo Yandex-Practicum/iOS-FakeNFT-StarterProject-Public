@@ -24,11 +24,11 @@ final class CartViewController: UIViewController {
         return indicator
     }()
     
-    private let rightBarItem: UIBarButtonItem = {
+    private lazy var rightBarItem: UIBarButtonItem = {
         let barItem = UIBarButtonItem(
             image: UIImage(named: "sort"),
             style: .plain,
-            target: CartViewController.self,
+            target: self,
             action: #selector(didTapSortButton)
         )
         barItem.tintColor = .ypBlackDay
@@ -257,7 +257,28 @@ final class CartViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapSortButton() {
-        // TODO: логика для сортировки
+        let alertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        
+        let sortByPriceAction = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.cartViewModel.sortCartItems(by: .price)
+        }
+        
+        let sortByRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            self.cartViewModel.sortCartItems(by: .rating)
+        }
+        
+        let sortByNameAction = UIAlertAction(title: "По названию", style: .default) { _ in
+            self.cartViewModel.sortCartItems(by: .name)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
+        
+        alertController.addAction(sortByPriceAction)
+        alertController.addAction(sortByRatingAction)
+        alertController.addAction(sortByNameAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc private func didTapСheckoutButton() {
