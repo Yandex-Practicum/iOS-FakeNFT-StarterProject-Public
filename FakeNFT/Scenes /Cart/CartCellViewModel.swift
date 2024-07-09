@@ -8,16 +8,29 @@
 import Combine
 import Foundation
 
+// MARK: - CartViewData
+
+struct CartViewData {
+    let name: String
+    let price: String
+    let rating: Int
+    let imageURLString: String
+}
+
+// MARK: - CartCellViewModel
+
 final class CartCellViewModel: ObservableObject {
-    @Published var name: String
-    @Published var price: String
-    @Published var rating: Int
-    @Published var imageName: String
+    @Published var viewData: CartViewData
+    
+    let nft: Nft
     
     init(nft: Nft) {
-        self.name = nft.name
-        self.price = "\(nft.price) ETH"
-        self.rating = nft.rating
-        self.imageName = nft.images.first?.absoluteString ?? ""
+        self.nft = nft
+        self.viewData = CartViewData(
+            name: nft.name,
+            price: "\(nft.price) ETH",
+            rating: nft.rating,
+            imageURLString: nft.images.first?.absoluteString ?? ""
+        )
     }
 }

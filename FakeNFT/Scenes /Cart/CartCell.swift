@@ -111,29 +111,13 @@ final class CartCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Bind ViewModel
     
     private func bindViewModel(_ viewModel: CartCellViewModel) {
-        viewModel.$name
+        viewModel.$viewData
             .receive(on: RunLoop.main)
-            .map { $0 as String? }
-            .assign(to: \.text, on: nameLabel)
-            .store(in: &cancellables)
-        
-        viewModel.$price
-            .receive(on: RunLoop.main)
-            .map { $0 as String? }
-            .assign(to: \.text, on: priceLabel)
-            .store(in: &cancellables)
-        
-        viewModel.$rating
-            .receive(on: RunLoop.main)
-            .sink { [weak self] rating in
-                self?.ratingViewModel.setRating(rating)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$imageName
-            .receive(on: RunLoop.main)
-            .sink { [weak self] imageName in
-                self?.nftImageView.image = UIImage(named: imageName)
+            .sink { [weak self] viewData in
+                self?.nameLabel.text = viewData.name
+                self?.priceLabel.text = viewData.price
+                self?.ratingViewModel.setRating(viewData.rating)
+                self?.nftImageView.image = UIImage(named: viewData.imageURLString)
             }
             .store(in: &cancellables)
     }
