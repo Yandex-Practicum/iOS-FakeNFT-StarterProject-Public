@@ -48,6 +48,7 @@
 		7F1F54F82C2AAEE400E8C7C6 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */; };
 		7F973BC02C2B02AE00DCFCD2 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BBF2C2B02AE00DCFCD2 /* RatingView.swift */; };
 		7F973BC22C2B02E000DCFCD2 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */; };
+		7FA2B62F2C3D5BE700879CC1 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2B62E2C3D5BE700879CC1 /* Order.swift */; };
 		7FB5C8DB2C3AFC430036DD4E /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */; };
 		7FB5C8DD2C3AFD970036DD4E /* URLNetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */; };
 		7FB5C8E32C3B05880036DD4E /* NetworkClientCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */; };
@@ -126,6 +127,7 @@
 		7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		7F973BBF2C2B02AE00DCFCD2 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
+		7FA2B62E2C3D5BE700879CC1 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		7FB5C8DA2C3AFC430036DD4E /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		7FB5C8DC2C3AFD970036DD4E /* URLNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNetworkRequest.swift; sourceTree = "<group>"; };
 		7FB5C8E22C3B05880036DD4E /* NetworkClientCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientCombine.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7FA2B62D2C3D5BC900879CC1 /* Cart */,
 				8B3D9CF02C3C645200F18649 /* Profile.swift */,
 				3F6806D829CC979D00B4F915 /* Network */,
 				7F1F54F72C2AAEE400E8C7C6 /* MockData.swift */,
@@ -393,6 +396,14 @@
 				7F973BC12C2B02E000DCFCD2 /* RatingViewModel.swift */,
 			);
 			path = Rating;
+			sourceTree = "<group>";
+		};
+		7FA2B62D2C3D5BC900879CC1 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				7FA2B62E2C3D5BE700879CC1 /* Order.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		7FB5C8D92C3AFC160036DD4E /* CustomNetwork */ = {
@@ -647,6 +658,7 @@
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
+				7FA2B62F2C3D5BE700879CC1 /* Order.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				7FB5C8EC2C3B07220036DD4E /* CustomServicesAssembly.swift in Sources */,
 				7F1F54F82C2AAEE400E8C7C6 /* MockData.swift in Sources */,
