@@ -1,9 +1,3 @@
-//  NftServiceCombineImp.swift
-//  FakeNFT
-//
-//  Created by Natasha Trufanova on 07/07/2024.
-//
-
 import Combine
 import Foundation
 
@@ -12,6 +6,7 @@ import Foundation
 typealias NftCombineCompletion = AnyPublisher<Nft, NetworkClientError>
 typealias NftListCombineCompletion = AnyPublisher<[Nft], NetworkClientError>
 typealias CartItemsCompletion = AnyPublisher<[Nft], NetworkClientError>
+typealias OrderCompletion = AnyPublisher<Order, NetworkClientError>
 typealias ProfileCombineCompletion = AnyPublisher<Profile, NetworkClientError>
 
 // MARK: - NftServiceCombine
@@ -28,6 +23,11 @@ protocol NftServiceCombine {
     
     func loadProfile(id: String) -> ProfileCombineCompletion
     func updateProfile(profileId: String, name: String?, description: String?, website: String?, likes: [String]?, avatar: String?) -> ProfileCombineCompletion
+    
+    // Cart Methods
+    
+    func getCartItems() -> CartItemsCompletion
+    func updateOrder(id: String, nftIds: [String]) -> OrderCompletion
 }
 
 final class NftServiceCombineImp: NftServiceCombine {
@@ -115,6 +115,37 @@ final class NftServiceCombineImp: NftServiceCombine {
         }
         
         return networkClient.send(request: request, type: Profile.self)
+            .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Cart Methods
+    
+    func getCartItems() -> CartItemsCompletion {
+        guard let request = ApiRequestBuilder.getOrder(orderId: currentOrderId) else {
+            return Fail(error: NetworkClientError.custom("Unable to form order request")).eraseToAnyPublisher()
+        }
+        
+        return networkClient.send(request: request, type: Order.self)
+            .flatMap { [weak self] order -> CartItemsCompletion in
+                guard let self = self else { return Just([]).setFailureType(to: NetworkClientError.self).eraseToAnyPublisher() }
+                guard !order.nfts.isEmpty else {
+                    return Just([]).setFailureType(to: NetworkClientError.self).eraseToAnyPublisher()
+                }
+                let nftPublishers = order.nfts.map { id in
+                    self.loadNft(id: id)
+                }
+                return Publishers.MergeMany(nftPublishers).collect().eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func updateOrder(id: String, nftIds: [String]) -> OrderCompletion {
+        guard let request = ApiRequestBuilder.updateOrder(orderId: id, nftIds: nftIds) else {
+            return Fail(error: NetworkClientError.custom("Unable to form update order request")).eraseToAnyPublisher()
+        }
+        
+        return networkClient.send(request: request, type: Order.self)
+            .mapError { NetworkClientError.urlRequestError($0) }
             .eraseToAnyPublisher()
     }
 }
