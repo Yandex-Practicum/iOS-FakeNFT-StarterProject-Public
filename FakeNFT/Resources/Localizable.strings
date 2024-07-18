@@ -4,3 +4,7 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"Statistic.sortAlert.title" = "Сортировка";
+"Statistic.sortAlert.name" = "По имени";
+"Statistic.sortAlert.rating" = "По рейтингу";
+"Statistic.sortAlert.close" = "Закрыть";
