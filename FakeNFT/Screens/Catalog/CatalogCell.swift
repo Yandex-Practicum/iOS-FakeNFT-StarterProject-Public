@@ -37,7 +37,6 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
     
     func setupUI() {
         [catalogCellImage, catalogNameLabel].forEach { view in
-            view.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(view)
         }
         

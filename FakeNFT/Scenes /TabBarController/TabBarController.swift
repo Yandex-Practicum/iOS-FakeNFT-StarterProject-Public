@@ -13,10 +13,6 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        let catalogController = TestCatalogViewController(
-        //            servicesAssembly: servicesAssembly
-        //        )
-        
         let networkClient = DefaultNetworkClient()
         let dataProvider = CatalogDataProvider(networkClient: networkClient)
         let presenter = CatalogPresenter(dataProvider: dataProvider)

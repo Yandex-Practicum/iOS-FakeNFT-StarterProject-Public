@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-import Foundation
-
 // MARK: - Protocol
 
 protocol CatalogPresenterProtocol: AnyObject {
