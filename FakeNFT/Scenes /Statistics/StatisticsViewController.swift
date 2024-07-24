@@ -10,19 +10,31 @@ import UIKit
 import SnapKit
 
 protocol StatisticsViewProtocol: AnyObject {
+    
+}
 
+private struct MockUser {
+    let name : String
+    let rating : Int
 }
 
 final class StatisticsViewController: UIViewController {
-
+    
     var presenter: StatisticsPresenterProtocol?
     let cellReuseIdentifier = "tableViewCellIdentifier"
-
+    
     private var customNavBar = StatisticsCustomNavBar()
     private var ratingTableView = UITableView()
-
-    private var users = ["Peter", "John", "Alex", "Ivan", "Kate", "Yulia", "Vlad", "Marie", "Paul"]
-
+    
+    
+    
+    private var users = [MockUser(name: "Peter", rating: 200), MockUser(name: "John", rating: 22),
+                         MockUser(name: "Alex", rating: 64), MockUser(name: "Ivan", rating: 98),
+                         MockUser(name: "Kate", rating: 256), MockUser(name: "Yulia", rating: 222),
+                         MockUser(name: "Vlad", rating: 232), MockUser(name: "Marie", rating: 1),
+                         MockUser(name: "Paul", rating: 12)
+    ]
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -30,27 +42,27 @@ final class StatisticsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
         initializeUI()
     }
-
+    
     private func initializeUI() {
         setupUI()
         prepareRatingTable()
         prepareNavBar()
         activatingConstraints()
-        }
-
+    }
+    
     private func setupUI() {
         for subView in [customNavBar, ratingTableView ] {
             view.addSubview(subView)
             subView.translatesAutoresizingMaskIntoConstraints = false
         }
     }
-
+    
     private func activatingConstraints() {
         customNavBar.snp.makeConstraints { maker in
             maker.top.equalTo(view.safeAreaLayoutGuide)
@@ -69,7 +81,7 @@ final class StatisticsViewController: UIViewController {
         customNavBar.isTitleInvisible(it_s: true)
         customNavBar.sortButton.addTarget(self, action: #selector(showSortActionSheet), for: .touchUpInside)
     }
-
+    
     private func prepareRatingTable() {
         ratingTableView.layer.cornerRadius = 16
         ratingTableView.clipsToBounds = true
@@ -84,13 +96,11 @@ final class StatisticsViewController: UIViewController {
         let actionSheet = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         
         let byNameAction = UIAlertAction(title: "По имени", style: .default) { _ in
-            // Handle sorting by name
             self.sortUsersByName()
-            self.ratingTableView.reloadData()
         }
         
         let byRatingAction = UIAlertAction(title: "По рейтингу", style: .default) { _ in
-            // Handle sorting by rating
+            self.sortUsersByRating()
         }
         
         let closeAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
@@ -103,7 +113,12 @@ final class StatisticsViewController: UIViewController {
     }
     
     private func sortUsersByName() {
-        users.sort()
+        users.sort { $0.name < $1.name }
+        ratingTableView.reloadData()
+    }
+
+    private func sortUsersByRating() {
+        users.sort { $0.rating > $1.rating }
         ratingTableView.reloadData()
     }
     
@@ -122,11 +137,11 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier,
                                                        for: indexPath) as? StatisticsTableViewCell else {return StatisticsTableViewCell()}
-        cell.setUserName(with: users[indexPath.row])
+        cell.setUserName(with: users[indexPath.row].name)
         if let newImage = UIImage(systemName: "person.crop.circle.fill") {
             cell.setUserImage(with: newImage)
         }
-        cell.setUserCollectionAmount(with: 200 - indexPath.row * 15)
+        cell.setUserCollectionAmount(with: users[indexPath.row].rating)
         cell.setCellIndex(with: indexPath.row + 1)
         return cell
     }
@@ -138,12 +153,13 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension StatisticsViewController {
     func loadUserCard(){
-        let userCardViewController = UserCardViewController()
-        userCardViewController.modalPresentationStyle = .fullScreen
-                  present(userCardViewController, animated: true, completion: nil)
+        #warning("Must to be uncomment after UserCardViewController class implementation")
+        //        let userCardViewController = UserCardViewController()
+        //        userCardViewController.modalPresentationStyle = .fullScreen
+        //                  present(userCardViewController, animated: true, completion: nil)
     }
 }
 
 extension StatisticsViewController: StatisticsViewProtocol {
-
+    
 }

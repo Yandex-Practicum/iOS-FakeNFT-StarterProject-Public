@@ -70,14 +70,14 @@ extension UIColor {
     
     static let nftWhite = UIColor { traits in
         return traits.userInterfaceStyle == .dark
-        ? .yaBlackDark
-        : .yaBlackLight
+        ? .yaBlackLight
+        : .yaBlackDark
     }
     
     static let nftBlack = UIColor { traits in
         return traits.userInterfaceStyle == .dark
-        ? .yaBlackLight
-        : .yaBlackDark
+        ? .yaBlackDark
+        : .yaBlackLight
     }
     
     static let nftLightGray = UIColor { traits in

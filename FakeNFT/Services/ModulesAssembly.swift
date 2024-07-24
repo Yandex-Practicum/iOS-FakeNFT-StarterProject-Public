@@ -18,13 +18,20 @@ final class ModulesAssembly: ModulesAssemblyProtocol {
         let tabbarController = UITabBarController()
         
         let profileViewController = Self.profileScreenBuilder()
+        let statisticsViewController = Self.statisticsScreenBuilder()
         
         profileViewController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Профиль", comment: ""),
             image: UIImage(systemName: "person.crop.circle.fill"),
             tag: 0)
         
-        tabbarController.viewControllers = [profileViewController]
+        statisticsViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Статистика", comment: ""),
+            image: UIImage(systemName: "flag.2.crossed.fill"),
+            tag: 3)
+        
+        
+        tabbarController.viewControllers = [profileViewController, statisticsViewController]
         
         return tabbarController
     }
@@ -36,4 +43,12 @@ final class ModulesAssembly: ModulesAssemblyProtocol {
         
         return profileViewController
     }
+    
+    static func statisticsScreenBuilder() -> UIViewController {
+        let statisticsViewController = StatisticsViewController()
+        let statisticsPresenter = StatisticsPresenter(view: statisticsViewController)
+        statisticsViewController.presenter = statisticsPresenter
+        return statisticsViewController
+    }
+
 }
