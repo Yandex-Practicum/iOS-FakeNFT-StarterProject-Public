@@ -153,10 +153,10 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension StatisticsViewController {
     func loadUserCard(){
-        #warning("Must to be uncomment after UserCardViewController class implementation")
-        //        let userCardViewController = UserCardViewController()
-        //        userCardViewController.modalPresentationStyle = .fullScreen
-        //                  present(userCardViewController, animated: true, completion: nil)
+        
+                let userCardViewController = UserCardViewController()
+                userCardViewController.modalPresentationStyle = .fullScreen
+                          present(userCardViewController, animated: true, completion: nil)
     }
 }
 
