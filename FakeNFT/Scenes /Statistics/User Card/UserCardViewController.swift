@@ -74,7 +74,7 @@ final class UserCardViewController: UIViewController {
         
         userNameLabel.textAlignment = .natural
         userNameLabel.font = .headline3
-        userNameLabel.textColor = .textMainColor
+        userNameLabel.textColor = .nftBlack
         userNameLabel.text = "Joaquin Phoenix"
 
         userBioLabel.numberOfLines = 0
@@ -94,7 +94,7 @@ final class UserCardViewController: UIViewController {
         userWebPageLinkButton.layer.borderWidth = 1.0
         userWebPageLinkButton.layer.cornerRadius = 16
         userWebPageLinkButton.setTitle("Перейти на сайт пользователя", for: .normal)
-        userWebPageLinkButton.tintColor = .textMainColor
+        userWebPageLinkButton.tintColor = .nftBlack
         userWebPageLinkButton.titleLabel?.font = .caption1
         userWebPageLinkButton.addTarget(self, action: #selector(openUserWebPage), for: .touchUpInside)
     }
@@ -109,7 +109,7 @@ final class UserCardViewController: UIViewController {
         
         navItemButton = UIButton(type: .system)
         navItemButton.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
-        navItemButton.tintColor = .textMainColor
+        navItemButton.tintColor = .nftBlack
         navItemButton.addTarget(self, action: #selector(showCollectionNFTScreen), for: .touchUpInside)
         
         navItemTitle.text = "Коллекция NFT"
