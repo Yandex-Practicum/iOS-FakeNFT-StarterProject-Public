@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol UserCardViewProtocol: AnyObject {
-
+    
 }
 
 final class UserCardViewController: UIViewController {
@@ -48,7 +48,7 @@ final class UserCardViewController: UIViewController {
         prepareWebPageLinkButton()
         prepareNavItem()
         activatingConstraints()
-        }
+    }
     
     private func setupUI() {
         for subView in [customNavBar, userCard, userWebPageLinkButton, nftUserCollectionNavItem ] {
@@ -76,12 +76,12 @@ final class UserCardViewController: UIViewController {
         userNameLabel.font = .headline3
         userNameLabel.textColor = .nftBlack
         userNameLabel.text = "Joaquin Phoenix"
-
+        
         userBioLabel.numberOfLines = 0
         userBioLabel.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,\nи еще больше — на моём сайте.\nОткрыт к коллаборациям."
         userBioLabel.font = .caption2
         userBioLabel.textAlignment = .natural
-
+        
         for subView in [userImageImageView, userNameLabel, userBioLabel]{
             subView.translatesAutoresizingMaskIntoConstraints = false
             userCard.addSubview(subView)
@@ -104,7 +104,7 @@ final class UserCardViewController: UIViewController {
         nftUserCollectionNavItem.backgroundColor = .background
         nftUserCollectionNavItem.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showCollectionNFTScreen))
-               nftUserCollectionNavItem.addGestureRecognizer(tapGestureRecognizer)
+        nftUserCollectionNavItem.addGestureRecognizer(tapGestureRecognizer)
         
         
         navItemButton = UIButton(type: .system)
@@ -189,23 +189,23 @@ final class UserCardViewController: UIViewController {
     
     //MARK:- OBJC functions
     @objc private func backButtonTapped() {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
+    }
     @objc private func showCollectionNFTScreen(){
-       loadUserCollection()
+        loadUserCollection()
     }
     
     @objc private func openUserWebPage() {
-            if let url = URL(string: "https://www.imdb.com") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
+        if let url = URL(string: "https://www.imdb.com") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
 }
 extension UserCardViewController {
     func loadUserCollection(){
         let userCollectionViewController = UserCollectionViewController()
         userCollectionViewController.modalPresentationStyle = .fullScreen
-                  present(userCollectionViewController, animated: true, completion: nil)
+        present(userCollectionViewController, animated: true, completion: nil)
     }
 }
 
@@ -213,5 +213,5 @@ extension UserCardViewController {
 // MARK: - UsersCardViewProtocol
 
 extension UserCardViewController: UserCollectionViewProtocol {
-
+    
 }

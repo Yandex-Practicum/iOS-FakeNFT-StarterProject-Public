@@ -116,7 +116,7 @@ final class StatisticsViewController: UIViewController {
         users.sort { $0.name < $1.name }
         ratingTableView.reloadData()
     }
-
+    
     private func sortUsersByRating() {
         users.sort { $0.rating > $1.rating }
         ratingTableView.reloadData()
@@ -153,10 +153,9 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension StatisticsViewController {
     func loadUserCard(){
-        
-                let userCardViewController = UserCardViewController()
-                userCardViewController.modalPresentationStyle = .fullScreen
-                          present(userCardViewController, animated: true, completion: nil)
+        let userCardViewController = UserCardViewController()
+        userCardViewController.modalPresentationStyle = .fullScreen
+        present(userCardViewController, animated: true, completion: nil)
     }
 }
 

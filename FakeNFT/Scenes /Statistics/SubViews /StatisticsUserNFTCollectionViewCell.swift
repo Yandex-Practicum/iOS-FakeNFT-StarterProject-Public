@@ -42,7 +42,7 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
     }
     
     private func prepareImageContainer(){
-        nftImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 108, height: 108))
+        nftImageView = UIImageView()
         nftImageView.layer.cornerRadius = 12
         nftImageView.image = UIImage(systemName: "tortoise")
         nftImageView.contentMode = .scaleAspectFit
@@ -85,8 +85,6 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
-            make.width.equalTo(108)
-            make.height.equalTo(108)
         }
         heartButton.snp.makeConstraints { make in
             make.trailing.equalTo(nftImageView.snp.trailing)
