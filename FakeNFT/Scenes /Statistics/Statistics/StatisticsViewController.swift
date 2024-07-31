@@ -10,12 +10,7 @@ import UIKit
 import SnapKit
 
 protocol StatisticsViewProtocol: AnyObject {
-    func updateUsers(_ users: [NFTUser])
-}
-
-private struct MockUser {
-    let name : String
-    let rating : Int
+    func updateUsers(with users: [NFTUser])
 }
 
 final class StatisticsViewController: UIViewController {
@@ -27,7 +22,7 @@ final class StatisticsViewController: UIViewController {
     private var ratingTableView = UITableView()
     
     private var users : [NFTUser] = []
-
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -133,27 +128,27 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
                                                        for: indexPath) as? StatisticsTableViewCell else {return StatisticsTableViewCell()}
         cell.setUserName(with: users[indexPath.row].name)
         cell.setUserImage(with: users[indexPath.row].avatar)
-        cell.setUserCollectionAmount(with: users[indexPath.row].rating)
+        cell.setUserCollectionAmount(with: users[indexPath.row].nfts.count.description)
         cell.setCellIndex(with: indexPath.row + 1)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        loadUserCard()
+        loadUserCard(with: users[indexPath.row])
     }
 }
 
 extension StatisticsViewController {
-    func loadUserCard(){
-        let userCardViewController = UserCardViewController()
-        userCardViewController.modalPresentationStyle = .fullScreen
-        present(userCardViewController, animated: true, completion: nil)
+    func loadUserCard(with selectedUser : NFTUser){
+        if let userCardViewController = presenter?.loadUserCard(with: selectedUser) {
+            present(userCardViewController, animated: true, completion: nil)
+        }
     }
 }
 
 extension StatisticsViewController: StatisticsViewProtocol {
-    func updateUsers(_ users: [NFTUser]) {
-            self.users = users
-            ratingTableView.reloadData()
-        }
+    func updateUsers(with users: [NFTUser]) {
+        self.users = users
+        ratingTableView.reloadData()
+    }
 }

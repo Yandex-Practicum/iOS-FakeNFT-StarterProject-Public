@@ -9,20 +9,34 @@ import Foundation
 import UIKit
 
 protocol UserCardPresenterProtocol: AnyObject {
-
+    func setUser(with newUser: NFTUser)
+    func updateUser()
+    func updateSelf(view: UserCardViewProtocol)
 }
+
 
 final class UserCardPresenter {
 
     weak var view: UserCardViewProtocol?
-
-    init(view: UserCardViewProtocol?) {
-        self.view = view
+    private var selectedUser : NFTUser?
+    init() {
+       updateUser()
     }
+  
 }
 
 // MARK: UserCardPresenterProtocol
 
 extension UserCardPresenter: UserCardPresenterProtocol {
-
+    func updateSelf(view: any UserCardViewProtocol) {
+        self.view = view
+    }
+    
+    func setUser(with newUser: NFTUser) {
+        self.selectedUser = newUser
+    }
+    
+    func updateUser(){
+        view?.updateUser(with: self.selectedUser)
+    }
 }

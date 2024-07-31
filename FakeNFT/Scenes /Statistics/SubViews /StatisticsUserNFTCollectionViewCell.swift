@@ -85,6 +85,7 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
+            make.height.equalTo(108)
         }
         heartButton.snp.makeConstraints { make in
             make.trailing.equalTo(nftImageView.snp.trailing)

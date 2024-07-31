@@ -10,6 +10,7 @@ import UIKit
 
 protocol StatisticsPresenterProtocol: AnyObject {
     func getUserList() -> [NFTUser]
+    func loadUserCard(with selectedUser : NFTUser) -> UserCardViewController
 }
 
 final class StatisticsPresenter {
@@ -17,7 +18,7 @@ final class StatisticsPresenter {
     private var usersList : [NFTUser] = []
     
     weak var view: StatisticsViewProtocol?
-    
+   
     init(view: StatisticsViewController) {
         self.view = view
         self.statisticsUsersNetworkService = StatisticsUsersNetworkService(networkClient: DefaultNetworkClient())
@@ -36,12 +37,13 @@ final class StatisticsPresenter {
             } else {
                 print("Successfully fetched users: \(nftUsers)")
                 self.usersList = nftUsers
-                DispatchQueue.main.async {
-                               self.view?.updateUsers(nftUsers)
-                           }
+                self.view?.updateUsers(with: nftUsers)
+                
             }
         })
     }
+    
+ 
 }
 
 // MARK: StatisticsPresenterProtocol
@@ -49,5 +51,13 @@ final class StatisticsPresenter {
 extension StatisticsPresenter: StatisticsPresenterProtocol {
     func getUserList() -> [NFTUser] {
         return usersList
+    }
+    
+    func loadUserCard(with selectedUser : NFTUser) -> UserCardViewController{
+        let userCardViewController = UserCardViewController()
+        userCardViewController.presenter = UserCardPresenter()
+        userCardViewController.presenter?.setUser(with: selectedUser)
+        userCardViewController.modalPresentationStyle = .fullScreen
+        return userCardViewController
     }
 }
