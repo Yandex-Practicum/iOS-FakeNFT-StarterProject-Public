@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol StatisticsPresenterProtocol: AnyObject {
- func getUserList() -> [NFTUser]
+    func getUserList() -> [NFTUser]
 }
 
 final class StatisticsPresenter {
@@ -17,7 +17,7 @@ final class StatisticsPresenter {
     private var usersList : [NFTUser] = []
     
     weak var view: StatisticsViewProtocol?
-
+    
     init(view: StatisticsViewController) {
         self.view = view
         self.statisticsUsersNetworkService = StatisticsUsersNetworkService(networkClient: DefaultNetworkClient())
@@ -27,8 +27,19 @@ final class StatisticsPresenter {
     private func setupPresenter(){
         statisticsUsersNetworkService.fetchNFTUsers(completion: {[weak self] nftUsers in
             print("Setting up presenter with users: \(nftUsers)")
-            self?.usersList = nftUsers
-            self?.view?.updateUsers(nftUsers)
+            guard let self = self,
+                  let view = self.view  as? UIViewController else { return }
+            if nftUsers.isEmpty {
+                ErrorAlertController.showError(on: view) { [weak self] in
+                    self?.setupPresenter()
+                }
+            } else {
+                print("Successfully fetched users: \(nftUsers)")
+                self.usersList = nftUsers
+                DispatchQueue.main.async {
+                               self.view?.updateUsers(nftUsers)
+                           }
+            }
         })
     }
 }

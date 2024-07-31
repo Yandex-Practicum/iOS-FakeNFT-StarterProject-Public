@@ -132,9 +132,7 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier,
                                                        for: indexPath) as? StatisticsTableViewCell else {return StatisticsTableViewCell()}
         cell.setUserName(with: users[indexPath.row].name)
-        if let newImage = UIImage(systemName: "person.crop.circle.fill") {
-            cell.setUserImage(with: newImage)
-        }
+        cell.setUserImage(with: users[indexPath.row].avatar)
         cell.setUserCollectionAmount(with: users[indexPath.row].rating)
         cell.setCellIndex(with: indexPath.row + 1)
         return cell

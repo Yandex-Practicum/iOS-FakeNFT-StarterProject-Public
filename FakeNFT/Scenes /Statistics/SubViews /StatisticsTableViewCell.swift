@@ -108,11 +108,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     func setUserName(with newName: String){
         userNameLabel.text = newName
     }
-    
-    func setUserImage(with newImage : UIImage){
-        userAvatarImageView.image = newImage
-    }
-    
+
     func setUserCollectionAmount(with newAmout: String){
         nftAmountLabel.text = newAmout
     }
@@ -120,5 +116,11 @@ final class StatisticsTableViewCell: UITableViewCell {
     func setCellIndex(with newValue : Int){
         cellIndex.text = newValue.description
     }
+    
+    func setUserImage(with userImageURL: String) {
+           if let url = URL(string: userImageURL) {
+               userAvatarImageView.loadImage(from: url, placeholder: UIImage(named: "placeholder"))
+           }
+       }
     
 }

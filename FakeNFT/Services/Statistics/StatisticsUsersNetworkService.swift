@@ -7,6 +7,7 @@
 
 import Foundation
 import ProgressHUD
+import UIKit
 
 final class StatisticsUsersNetworkRequest : NetworkRequest {
     var endpoint: URL?
@@ -26,10 +27,10 @@ protocol StatisticsUsersNetworkServiceProtocol: AnyObject {
 }
 
 final class StatisticsUsersNetworkService: StatisticsUsersNetworkServiceProtocol {
-  
+    
     
     private var usersNFT: [NFTUser] = []
-  
+    
     let networkClient: NetworkClient
     
     init(networkClient: NetworkClient) {
@@ -58,8 +59,23 @@ final class StatisticsUsersNetworkService: StatisticsUsersNetworkServiceProtocol
             case .failure(let error):
                 print("Failed to fetch NFT users with error: \(error)")
                 completion([])
+                if let window = currentWindow(),
+                   let viewController = window.rootViewController {
+                    ErrorAlertController.showError(on: viewController) {
+                        self.fetchNFTUsers(completion: completion)
+                    }
+                }
             }
             ProgressHUD.dismiss()
         }
+    }
+    
+    private func currentWindow() -> UIWindow? {
+        if let windowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first {
+            return windowScene.windows.first { $0.isKeyWindow }
+        }
+        return nil
     }
 }
