@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol StatisticsViewProtocol: AnyObject {
-    
+    func updateUsers(_ users: [NFTUser])
 }
 
 private struct MockUser {
@@ -26,15 +26,8 @@ final class StatisticsViewController: UIViewController {
     private var customNavBar = StatisticsCustomNavBar()
     private var ratingTableView = UITableView()
     
-    
-    
-    private var users = [MockUser(name: "Peter", rating: 200), MockUser(name: "John", rating: 22),
-                         MockUser(name: "Alex", rating: 64), MockUser(name: "Ivan", rating: 98),
-                         MockUser(name: "Kate", rating: 256), MockUser(name: "Yulia", rating: 222),
-                         MockUser(name: "Vlad", rating: 232), MockUser(name: "Marie", rating: 1),
-                         MockUser(name: "Paul", rating: 12)
-    ]
-    
+    private var users : [NFTUser] = []
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,6 +40,7 @@ final class StatisticsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         initializeUI()
+        users = presenter?.getUserList() ?? []
     }
     
     private func initializeUI() {
@@ -160,5 +154,8 @@ extension StatisticsViewController {
 }
 
 extension StatisticsViewController: StatisticsViewProtocol {
-    
+    func updateUsers(_ users: [NFTUser]) {
+            self.users = users
+            ratingTableView.reloadData()
+        }
 }

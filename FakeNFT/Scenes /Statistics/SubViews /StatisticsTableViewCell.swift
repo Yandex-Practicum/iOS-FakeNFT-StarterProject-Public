@@ -113,8 +113,8 @@ final class StatisticsTableViewCell: UITableViewCell {
         userAvatarImageView.image = newImage
     }
     
-    func setUserCollectionAmount(with newAmout: Int){
-        nftAmountLabel.text = newAmout.description
+    func setUserCollectionAmount(with newAmout: String){
+        nftAmountLabel.text = newAmout
     }
     
     func setCellIndex(with newValue : Int){

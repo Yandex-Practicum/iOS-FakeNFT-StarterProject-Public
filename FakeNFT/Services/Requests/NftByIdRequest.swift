@@ -1,7 +1,7 @@
 import Foundation
 
 struct NFTRequest: NetworkRequest {
-
+    var token: String?
     let id: String
 
     var endpoint: URL? {
