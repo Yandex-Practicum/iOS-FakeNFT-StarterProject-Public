@@ -86,11 +86,9 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
     
     private func setupCellUI() {
         [nftImage, likeButton, ratingStarsView, cartButton, nftNameAndPriceView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         [nftName, nftPrice].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             nftNameAndPriceView.addSubview($0)
         }
         
@@ -104,8 +102,7 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(nftImage.snp.top)
             make.trailing.equalTo(nftImage.snp.trailing)
-            make.width.equalTo(42)
-            make.height.equalTo(42)
+            make.size.equalTo(42)
         }
         
         ratingStarsView.snp.makeConstraints { make in
@@ -138,8 +135,7 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
             make.centerY.equalTo(nftNameAndPriceView.snp.centerY)
             make.leading.greaterThanOrEqualTo(nftNameAndPriceView.snp.trailing)
             make.trailing.equalTo(contentView.snp.trailing)
-            make.height.equalTo(40)
-            make.width.equalTo(40)
+            make.size.equalTo(40)
         }
     }
     

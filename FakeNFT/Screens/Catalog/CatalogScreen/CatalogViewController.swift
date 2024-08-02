@@ -18,6 +18,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
     private var presenter: CatalogPresenterProtocol
     private let cartService: CartControllerProtocol
+    private let modulesAssembly = ModulesAssembly.shared
     
     private lazy var collectionsRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -141,12 +142,8 @@ extension CatalogViewController: UITableViewDataSource {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let nftModel = presenter.getDataSource()[indexPath.row]
-        let dataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
-        let presenter = CatalogСollectionPresenter(nftModel: nftModel, dataProvider: dataProvider, cartController: cartService)
-        let viewController = CatalogСollectionViewController(presenter: presenter)
-        viewController.hidesBottomBarWhenPushed = true
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        let view = modulesAssembly.CatalogСollection(nftModel: nftModel)
+        navigationController?.pushViewController(view, animated: true)
     }
 }
 

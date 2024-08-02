@@ -3,18 +3,18 @@
 //  FakeNFT
 //
 //  Created by Lolita Chernysheva on 12.07.2024.
-//  
+//
 //
 
 import UIKit
 
 final class CartService: CartControllerProtocol {
-  var cart: [Nft] = []
-  func addToCart(_ nft: Nft, completion: (() -> Void)?) { }
-  func removeFromCart(_ id: String, completion: (() -> Void)?) { }
-  func removeAll(completion: (() -> Void)?) { }
-  weak var delegate: CartControllerDelegate?
-  private var _cart: [Nft] = []
+    var cart: [Nft] = []
+    func addToCart(_ nft: Nft, completion: (() -> Void)?) { }
+    func removeFromCart(_ id: String, completion: (() -> Void)?) { }
+    func removeAll(completion: (() -> Void)?) { }
+    weak var delegate: CartControllerDelegate?
+    private var _cart: [Nft] = []
 }
 
 protocol ModulesAssemblyProtocol: AnyObject {
@@ -22,6 +22,8 @@ protocol ModulesAssemblyProtocol: AnyObject {
 }
 
 final class ModulesAssembly: ModulesAssemblyProtocol {
+    
+    static let shared = ModulesAssembly()
     
     static func mainScreenBuilder() -> UIViewController {
         let tabbarController = UITabBarController()
@@ -47,5 +49,13 @@ final class ModulesAssembly: ModulesAssemblyProtocol {
         let cartService = CartService()
         let catalogViewController = CatalogViewController(presenter: presenter, cartService: cartService)
         return catalogViewController
+    }
+    
+     func CatalogСollection(nftModel: NFTCollection) -> UIViewController {
+        let dataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
+        let presenter = CatalogСollectionPresenter(nftModel: nftModel, dataProvider: dataProvider, cartController: CartService())
+        let viewController = CatalogСollectionViewController(presenter: presenter)
+        viewController.hidesBottomBarWhenPushed = true
+        return viewController
     }
 }

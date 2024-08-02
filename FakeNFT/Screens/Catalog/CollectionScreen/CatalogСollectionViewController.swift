@@ -119,7 +119,6 @@ final class CatalogСollectionViewController: UIViewController {
         scrollView.addSubview(contentView)
         
         [coverImageView, titleLabel, authorLabel, authorLink, collectionDescriptionLabel, nftCollection].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         
@@ -288,7 +287,6 @@ extension CatalogСollectionViewController: CatalogСollectionViewControllerProt
             
             self.nftCollection.visibleCells.forEach { cell in
                 guard let nftCell = cell as? NFTCollectionCell else {
-                    // Handle unexpected cell type if necessary
                     return
                 }
                 nftCell.updateLikeButtonImage()

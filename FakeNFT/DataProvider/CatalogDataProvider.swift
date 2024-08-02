@@ -11,8 +11,14 @@ import ProgressHUD
 // MARK: - Protocol
 
 protocol CatalogDataProviderProtocol: AnyObject {
-    func fetchNFTCollection(completion: @escaping ([NFTCollection]) -> Void)
-    func sortNFTCollections(by: NFTCollectionsSort)
+    func fetchNFTCollection(
+        completion: @escaping (
+            [NFTCollection]
+        ) -> Void
+    )
+    func sortNFTCollections(
+        by: NFTCollectionsSort
+    )
     func getCollectionNFT() -> [NFTCollection]
 }
 
@@ -20,10 +26,12 @@ protocol CatalogDataProviderProtocol: AnyObject {
 
 final class CatalogDataProvider: CatalogDataProviderProtocol {
     private var collectionNFT: [NFTCollection] = []
-  
+    
     let networkClient: DefaultNetworkClient
     
-    init(networkClient: DefaultNetworkClient) {
+    init(
+        networkClient: DefaultNetworkClient
+    ) {
         self.networkClient = networkClient
     }
     
@@ -31,27 +39,48 @@ final class CatalogDataProvider: CatalogDataProviderProtocol {
         return collectionNFT
     }
     
-    func fetchNFTCollection(completion: @escaping ([NFTCollection]) -> Void) {
+    func fetchNFTCollection(
+        completion: @escaping (
+            [NFTCollection]
+        ) -> Void
+    ) {
         ProgressHUD.show()
-        networkClient.send(request: NFTTableViewRequest(), type: [NFTCollection].self) { [weak self] result in
-            guard let self = self else { return }
+        networkClient.send(
+            request: NFTTableViewRequest(),
+            type: [NFTCollection].self
+        ) { [weak self] result in
+            guard let self = self else {
+                return
+            }
             switch result {
-            case .success(let nft):
+            case .success(
+                let nft
+            ):
                 self.collectionNFT = nft
-                completion(nft)
-            case .failure(_):
+                completion(
+                    nft
+                )
+            case .failure(
+                _
+            ):
                 break
             }
             ProgressHUD.dismiss()
         }
     }
     
-    func sortNFTCollections(by: NFTCollectionsSort) {
+    func sortNFTCollections(
+        by: NFTCollectionsSort
+    ) {
         switch by {
         case .name:
-            collectionNFT.sort { $0.name < $1.name }
+            collectionNFT.sort {
+                $0.name < $1.name
+            }
         case .nftCount:
-            collectionNFT.sort { $0.nfts.count > $1.nfts.count }
+            collectionNFT.sort {
+                $0.nfts.count > $1.nfts.count
+            }
         }
     }
 }
