@@ -1,26 +1,19 @@
 //
-//  CatalogСollectionViewController.swift
+//  NFTCardController.swift
 //  FakeNFT
 //
-//  Created by Денис Николаев on 29.07.2024.
+//  Created by Денис Николаев on 02.08.2024.
+//
 
 import UIKit
 import Kingfisher
 import ProgressHUD
 
-// MARK: - Protocol
-
-protocol CatalogСollectionViewControllerProtocol: AnyObject {
-    func renderViewData(viewData: CatalogCollectionViewData)
-    func reloadCollectionView()
-    func reloadVisibleCells()
-}
-
 // MARK: - Final Class
 
-final class CatalogСollectionViewController: UIViewController {
+final class NFTCardViewController: UIViewController {
     
-    private var presenter: CatalogСollectionPresenterProtocol
+    private var presenter: NFTCardPresenterProtocol
     private var heightConstraintCV = NSLayoutConstraint()
     
     private let itemsPerRow = 3
@@ -84,17 +77,7 @@ final class CatalogСollectionViewController: UIViewController {
         return label
     }()
     
-    private lazy var nftCollection: UICollectionView = {
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.isScrollEnabled = false
-        collection.dataSource = self
-        collection.delegate = self
-        collection.backgroundColor = .white
-        collection.register(NFTCollectionCell.self)
-        return collection
-    }()
-    
-    init(presenter: CatalogСollectionPresenterProtocol) {
+    init(presenter: NFTCardPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -106,7 +89,7 @@ final class CatalogСollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         presenter.viewController = self
-        presenter.loadNFTs()
+//        presenter.loadNFTs()
         setup()
         setupNavBackButton()
         presenter.presentCollectionViewData()
@@ -118,7 +101,8 @@ final class CatalogСollectionViewController: UIViewController {
         
         scrollView.addSubview(contentView)
         
-        [coverImageView, titleLabel, authorLabel, authorLink, collectionDescriptionLabel, nftCollection].forEach {
+        [coverImageView, titleLabel, authorLabel, authorLink, collectionDescriptionLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
         
@@ -128,7 +112,7 @@ final class CatalogСollectionViewController: UIViewController {
             return statusBarHeight + navigationBarHeight
         }
         
-        heightConstraintCV = nftCollection.heightAnchor.constraint(equalToConstant: 0)
+     //   heightConstraintCV = nftCollection.heightAnchor.constraint(equalToConstant: 0)
         
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view).offset(-topbarHeight)
@@ -178,14 +162,14 @@ final class CatalogСollectionViewController: UIViewController {
             make.trailing.equalTo(contentView).offset(-16)
         }
         
-        nftCollection.snp.makeConstraints { make in
-            make.top.equalTo(collectionDescriptionLabel.snp.bottom).offset(24)
-            make.leading.equalTo(contentView).offset(16)
-            make.trailing.equalTo(contentView).offset(-16)
-            make.bottom.equalTo(contentView)
-        }
-        
-        heightConstraintCV.isActive = true
+//        nftCollection.snp.makeConstraints { make in
+//            make.top.equalTo(collectionDescriptionLabel.snp.bottom).offset(24)
+//            make.leading.equalTo(contentView).offset(16)
+//            make.trailing.equalTo(contentView).offset(-16)
+//            make.bottom.equalTo(contentView)
+//        }
+//        
+//        heightConstraintCV.isActive = true
     }
     
     private func setupNavBackButton() {
@@ -222,67 +206,7 @@ final class CatalogСollectionViewController: UIViewController {
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
-extension CatalogСollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let itemCount = presenter.nftArray.count
-        calculateCollectionHeight(itemCount: itemCount)
-        return itemCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: NFTCollectionCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        let data = presenter.nftArray[indexPath.row]
-        cell.setNftModel(data)
-        cell.presenter = presenter
-        cell.delegate = self
-        cell.renderCellForModel()
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let aataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
-        let presenter = NFTCardPresenter(nftModel: NFTCollection(name: "singulis epicuri",
-                                                                 cover: "https://code.s3.yandex.net/Mobile/iOS/NFT/Обложки_коллекций/Brown.png",
-                                                                 nfts: ["c14cf3bc-7470-4eec-8a42-5eaa65f4053c", "d6a02bd1-1255-46cd-815b-656174c1d9c0", "f380f245-0264-4b42-8e7e-c4486e237504"],
-                                                                 id: "d4fea6b6-91f1-45ce-9745-55431e69ef5c",
-                                                                 description:"curabitur feugait a definitiones singulis movet eros aeque mucius evertitur assueverit et eam",
-                                                                 author: "Lourdes Harper"),dataProvider: aataProvider,cartController:CartService())
-        let viewController = NFTCardViewController(presenter: presenter)
-        present(viewController, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 108, height: 172)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        9
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        8
-    }
-}
-
-// MARK: - NFTCollectionCellDelegate
-
-extension CatalogСollectionViewController: NFTCollectionCellDelegate {
-    func onLikeButtonTapped(cell: NFTCollectionCell) {
-        guard let nftModel = cell.getNftModel() else { return }
-        presenter.toggleLikeStatus(model: nftModel)
-    }
-    
-    func addToCartButtonTapped(cell: NFTCollectionCell) {
-        guard let nftModel = cell.getNftModel() else { return }
-        presenter.toggleCartStatus(model: nftModel)
-    }
-}
-
-// MARK: - CatalogСollectionViewControllerProtocol
-
-extension CatalogСollectionViewController: CatalogСollectionViewControllerProtocol {
+extension NFTCardViewController: NFTCardViewControllerProtocol {
     func renderViewData(viewData: CatalogCollectionViewData) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -293,32 +217,14 @@ extension CatalogСollectionViewController: CatalogСollectionViewControllerProt
         }
     }
     
-    func reloadVisibleCells() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.nftCollection.visibleCells.forEach { cell in
-                guard let nftCell = cell as? NFTCollectionCell else {
-                    return
-                }
-                nftCell.updateLikeButtonImage()
-                nftCell.updateCartButtonImage()
-            }
-        }
-    }
-    
     private func loadCoverImage(url : String) {
         guard let imageUrl = URL(string: url.urlDecoder ?? "") else {
             return
         }
         coverImageView.kf.setImage(with: imageUrl)
     }
-    
-    func reloadCollectionView() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.nftCollection.reloadData()
-        }
-    }
+}
+
+protocol NFTCardViewControllerProtocol: AnyObject {
+    func renderViewData(viewData: CatalogCollectionViewData)
 }
