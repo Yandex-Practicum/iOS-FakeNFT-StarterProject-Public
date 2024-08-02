@@ -8,6 +8,15 @@
 
 import UIKit
 
+final class CartService: CartControllerProtocol {
+  var cart: [Nft] = []
+  func addToCart(_ nft: Nft, completion: (() -> Void)?) { }
+  func removeFromCart(_ id: String, completion: (() -> Void)?) { }
+  func removeAll(completion: (() -> Void)?) { }
+  weak var delegate: CartControllerDelegate?
+  private var _cart: [Nft] = []
+}
+
 protocol ModulesAssemblyProtocol: AnyObject {
     static func mainScreenBuilder() -> UIViewController
 }
@@ -35,14 +44,8 @@ final class ModulesAssembly: ModulesAssemblyProtocol {
         let networkClient = DefaultNetworkClient()
         let dataProvider = CatalogDataProvider(networkClient: networkClient)
         let presenter = CatalogPresenter(dataProvider: dataProvider)
-        let catalogViewController = CatalogViewController(presenter: presenter)
+        let cartService = CartService()
+        let catalogViewController = CatalogViewController(presenter: presenter, cartService: cartService)
         return catalogViewController
-    }
-    
-    static func ccatalogScreenBuilder() -> UIViewController {
-        let networkClient = DefaultNetworkClient()
-        let ddd = NftDetailPresenterImpl(input: NftDetailInput(id: "1"), service: NftServiceImpl(networkClient: networkClient, storage: NftStorageImpl()))
-        let talogViewController = NftDetailViewController(presenter: ddd)
-        return talogViewController
     }
 }

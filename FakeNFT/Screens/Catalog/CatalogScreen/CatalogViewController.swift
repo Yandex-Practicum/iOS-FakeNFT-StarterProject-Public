@@ -17,6 +17,7 @@ protocol CatalogViewControllerProtocol: AnyObject {
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
     private var presenter: CatalogPresenterProtocol
+    private let cartService: CartControllerProtocol
     
     private lazy var collectionsRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -36,6 +37,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.register(CatalogCell.self)
+        tableView.refreshControl = collectionsRefreshControl
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
@@ -45,8 +47,9 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         return tableView
     }()
     
-    init(presenter: CatalogPresenterProtocol) {
+    init(presenter: CatalogPresenterProtocol, cartService: CartControllerProtocol) {
         self.presenter = presenter
+        self.cartService = cartService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,7 +65,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         presenter.viewController = self
         loadNFTCollections()
         view.backgroundColor = .systemBackground
-        self.collectionsRefreshControl.endRefreshing()
     }
     
     private func setupNavigationBar() {
@@ -85,6 +87,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.collectionsRefreshControl.endRefreshing()
         }
     }
     
@@ -113,7 +116,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
+extension CatalogViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.getDataSource().count
@@ -132,6 +135,18 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         187
+    }
+}
+
+extension CatalogViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let nftModel = presenter.getDataSource()[indexPath.row]
+        let dataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
+        let presenter = CatalogСollectionPresenter(nftModel: nftModel, dataProvider: dataProvider, cartController: cartService)
+        let viewController = CatalogСollectionViewController(presenter: presenter)
+        viewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

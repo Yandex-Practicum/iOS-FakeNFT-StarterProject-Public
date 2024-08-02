@@ -16,9 +16,9 @@ final class TabBarController: UITabBarController {
         let networkClient = DefaultNetworkClient()
         let dataProvider = CatalogDataProvider(networkClient: networkClient)
         let presenter = CatalogPresenter(dataProvider: dataProvider)
-        let catalogController = CatalogViewController(presenter: presenter)
-        
-        
+        let cartService = CartControllerProtocol.self
+        let catalogController = CatalogViewController(presenter: presenter, cartService: cartService as! CartControllerProtocol)
+     
         catalogController.tabBarItem = catalogTabBarItem
         
         viewControllers = [catalogController]
