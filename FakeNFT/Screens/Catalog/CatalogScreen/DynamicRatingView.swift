@@ -31,6 +31,7 @@ final class DynamicRatingView: UIStackView {
         let star = UIImageView()
         star.image = UIImage(systemName: "star.fill")
         star.contentMode = .scaleAspectFit
+        star.tintColor = UIColor(red: 254, green: 239, blue: 13, alpha: 1)
         star.translatesAutoresizingMaskIntoConstraints = false
         return star
     }

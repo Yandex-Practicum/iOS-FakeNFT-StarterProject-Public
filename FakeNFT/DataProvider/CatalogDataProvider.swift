@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgressHUD
 
 // MARK: - Protocol
 
@@ -44,7 +43,6 @@ final class CatalogDataProvider: CatalogDataProviderProtocol {
             [NFTCollection]
         ) -> Void
     ) {
-        ProgressHUD.show()
         networkClient.send(
             request: NFTTableViewRequest(),
             type: [NFTCollection].self
@@ -65,7 +63,6 @@ final class CatalogDataProvider: CatalogDataProviderProtocol {
             ):
                 break
             }
-            ProgressHUD.dismiss()
         }
     }
     

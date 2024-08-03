@@ -63,7 +63,7 @@ final class NFTCardViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(launchWebsiteViewer))
         label.isUserInteractionEnabled = true
         label.font = .systemFont(ofSize: 13)
-        label.textColor = .blue
+        label.textColor = UIColor(red: 10, green: 132, blue: 255, alpha: 1)
         label.backgroundColor = .white
         label.addGestureRecognizer(tapGesture)
         return label

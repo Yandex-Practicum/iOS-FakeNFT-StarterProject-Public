@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 import SnapKit
+import ProgressHUD
 
 // MARK: - Protocol
 
@@ -109,11 +110,11 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     }
     
     @objc func loadNFTCollections() {
+        ProgressHUD.show()
         presenter.fetchCollections { [weak self] updatedData in
             self?.reloadTableView()
         }
-    }
-}
+    }}
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
@@ -127,10 +128,10 @@ extension CatalogViewController: UITableViewDataSource {
         let cell: CatalogCell = tableView.dequeueReusableCell()
         let nftModel = presenter.getDataSource()[indexPath.row]
         let url = URL(string: nftModel.cover.urlDecoder)
-        
         cell.selectionStyle = .none
         cell.setCellImage(with: url)
         cell.setNameLabel(with: "\(nftModel.name) (\(nftModel.nfts.count))")
+        ProgressHUD.dismiss()
         return cell
     }
     
@@ -141,8 +142,10 @@ extension CatalogViewController: UITableViewDataSource {
 
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        ProgressHUD.show()
         let nftModel = presenter.getDataSource()[indexPath.row]
         let view = modulesAssembly.CatalogСollection(nftModel: nftModel)
+        ProgressHUD.dismiss()
         navigationController?.pushViewController(view, animated: true)
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import ProgressHUD
 
 // MARK: - Protocol
 
@@ -38,7 +39,6 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
         button.imageView?.tintColor = .red
         button.addTarget(self, action: #selector(userDidLike), for: .touchUpInside)
         button.setImage(UIImage(named: "likeNotActive"), for: .normal)
-        
         return button
     }()
     
@@ -186,13 +186,17 @@ final class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - @objc func
     
     @objc func userDidLike() {
+        ProgressHUD.show()
         updateLikeButtonImage()
         delegate?.onLikeButtonTapped(cell: self)
+        ProgressHUD.dismiss()
     }
     
     @objc func cartItemAdded() {
+        ProgressHUD.show()
         updateCartButtonImage()
         delegate?.addToCartButtonTapped(cell: self)
+        ProgressHUD.dismiss()
     }
 }
 

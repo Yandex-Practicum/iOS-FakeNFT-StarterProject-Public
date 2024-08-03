@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgressHUD
 
 // MARK: - Protocol
 
@@ -42,7 +41,6 @@ final class CollectionDataProvider: CollectionDataProviderProtocol {
     }
     
     func fetchCollectionDataById(id: String, completion: @escaping (NFTCollection) -> Void) {
-        ProgressHUD.show()
         networkClient.send(request: CollectionDataRequest(id: id), type: NFTCollection.self) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -52,16 +50,13 @@ final class CollectionDataProvider: CollectionDataProviderProtocol {
             case .failure(_):
                 break
             }
-            ProgressHUD.dismiss()
         }
     }
     
     func loadNFTsBy(id: String, completion: @escaping (Result<Nft, Error>) -> Void) {
-        ProgressHUD.show()
         networkClient.send(request: NFTRequest(id: id), type: Nft.self)  { result in
             completion(result)
         }
-        ProgressHUD.dismiss()
     }
     
     func updateUserProfile(with profile: ProfileModel, completion: @escaping (Result<ProfileModel, Error>) -> Void) {
