@@ -21,32 +21,32 @@ protocol NFTCardPresenterProtocol: AnyObject {
 // MARK: - Final Class
 
 final class NFTCardPresenter: NFTCardPresenterProtocol {
-    
+
     func getUserProfile() -> ProfileModel? {
         return self.userProfile
     }
-    
+
     func getUserOrder() -> OrderModel? {
         return self.userOrder
     }
-    
+
     weak var viewController: NFTCardViewControllerProtocol?
     private var dataProvider: CollectionDataProvider
     private var userProfile: ProfileModel?
     private var userOrder: OrderModel?
-    
+
     let cartController: CartControllerProtocol
     let nftModel: NFTCollection
     var userURL: String?
     var nftArray: [Nft] = []
     var profileModel: [ProfileModel] = []
-    
+
     init(nftModel: NFTCollection, dataProvider: CollectionDataProvider, cartController: CartControllerProtocol) {
         self.nftModel = nftModel
         self.dataProvider = dataProvider
         self.cartController = cartController
     }
-    
+
     func presentCollectionViewData() {
         let viewData = CatalogCollectionViewData(
             coverImageURL: nftModel.cover,

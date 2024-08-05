@@ -8,11 +8,11 @@
 import Foundation
 
 extension String {
-    
+
     var urlDecoder: String {
         return self.removingPercentEncoding!
     }
-    
+
     var urlEncoder: String {
         return self.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
     }

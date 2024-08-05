@@ -25,19 +25,19 @@ protocol CatalogDataProviderProtocol: AnyObject {
 
 final class CatalogDataProvider: CatalogDataProviderProtocol {
     private var collectionNFT: [NFTCollection] = []
-    
+
     let networkClient: DefaultNetworkClient
-    
+
     init(
         networkClient: DefaultNetworkClient
     ) {
         self.networkClient = networkClient
     }
-    
+
     func getCollectionNFT() -> [NFTCollection] {
         return collectionNFT
     }
-    
+
     func fetchNFTCollection(
         completion: @escaping (
             [NFTCollection]
@@ -58,14 +58,12 @@ final class CatalogDataProvider: CatalogDataProviderProtocol {
                 completion(
                     nft
                 )
-            case .failure(
-                _
-            ):
+            case .failure:
                 break
             }
         }
     }
-    
+
     func sortNFTCollections(
         by: NFTCollectionsSort
     ) {

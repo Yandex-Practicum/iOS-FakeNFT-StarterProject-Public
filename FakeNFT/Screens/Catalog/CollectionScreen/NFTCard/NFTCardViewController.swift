@@ -12,14 +12,14 @@ import ProgressHUD
 // MARK: - Final Class
 
 final class NFTCardViewController: UIViewController {
-    
+
     private var presenter: NFTCardPresenterProtocol
     private var heightConstraintCV = NSLayoutConstraint()
-    
+
     private let itemsPerRow = 3
     private let bottomMargin: CGFloat = 55
     private let cellHeight: CGFloat = 172
-    
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -27,13 +27,13 @@ final class NFTCardViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
-    
+
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
-    
+
     private lazy var coverImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -41,7 +41,7 @@ final class NFTCardViewController: UIViewController {
         image.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         return image
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor =  .black
@@ -49,7 +49,7 @@ final class NFTCardViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    
+
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -57,7 +57,7 @@ final class NFTCardViewController: UIViewController {
         label.text = "Автор коллекции:"
         return label
     }()
-    
+
     private lazy var authorLink: UILabel = {
         let label = UILabel()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(launchWebsiteViewer))
@@ -68,7 +68,7 @@ final class NFTCardViewController: UIViewController {
         label.addGestureRecognizer(tapGesture)
         return label
     }()
-    
+
     private lazy var collectionDescriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -76,17 +76,17 @@ final class NFTCardViewController: UIViewController {
         label.textColor = .black
         return label
     }()
-    
+
     init(presenter: NFTCardPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         assertionFailure("init(coder:) has not been implemented")
         return nil
     }
-    
+
     override func viewDidLoad() {
         presenter.viewController = self
 //        presenter.loadNFTs()
@@ -94,33 +94,33 @@ final class NFTCardViewController: UIViewController {
         setupNavBackButton()
         presenter.presentCollectionViewData()
     }
-    
+
     private func setup() {
         view.addSubview(scrollView)
         view.backgroundColor = .white
-        
+
         scrollView.addSubview(contentView)
-        
+
         [coverImageView, titleLabel, authorLabel, authorLink, collectionDescriptionLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
-        
+
         var topbarHeight: CGFloat {
             let statusBarHeight = navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0
             let navigationBarHeight = self.navigationController?.navigationBar.frame.height ?? 0.0
             return statusBarHeight + navigationBarHeight
         }
-        
+
      //   heightConstraintCV = nftCollection.heightAnchor.constraint(equalToConstant: 0)
-        
+
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(view).offset(-topbarHeight)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
         }
-        
+
         contentView.snp.makeConstraints { make in
             make.top.equalTo(scrollView)
             make.leading.equalTo(scrollView)
@@ -128,26 +128,26 @@ final class NFTCardViewController: UIViewController {
             make.bottom.equalTo(scrollView)
             make.width.equalTo(scrollView)
         }
-        
+
         coverImageView.snp.makeConstraints { make in
             make.height.equalTo(310)
             make.top.equalTo(contentView)
             make.leading.equalTo(contentView)
             make.trailing.equalTo(contentView)
         }
-        
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(coverImageView.snp.bottom).offset(16)
             make.leading.equalTo(contentView).offset(16)
             make.trailing.lessThanOrEqualTo(contentView)
         }
-        
+
         authorLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.equalTo(titleLabel)
             make.width.equalTo(114)
         }
-        
+
         authorLink.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.equalTo(authorLabel.snp.trailing).offset(4)
@@ -155,13 +155,13 @@ final class NFTCardViewController: UIViewController {
             make.bottom.equalTo(authorLabel.snp.bottom).offset(1)
             make.height.equalTo(28)
         }
-        
+
         collectionDescriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom).offset(5)
             make.leading.equalTo(contentView).offset(16)
             make.trailing.equalTo(contentView).offset(-16)
         }
-        
+
 //        nftCollection.snp.makeConstraints { make in
 //            make.top.equalTo(collectionDescriptionLabel.snp.bottom).offset(24)
 //            make.leading.equalTo(contentView).offset(16)
@@ -171,30 +171,30 @@ final class NFTCardViewController: UIViewController {
 //        
 //        heightConstraintCV.isActive = true
     }
-    
+
     private func setupNavBackButton() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named:"backward"),
+            image: UIImage(named: "backward"),
             style: .plain,
             target: self,
             action: #selector(goBack))
     }
-    
+
     private func calculateCollectionHeight(itemCount: Int) {
         let numRows = (itemCount + itemsPerRow - 1) / itemsPerRow
         heightConstraintCV.constant = CGFloat(numRows) * cellHeight + bottomMargin
     }
-    
+
     // MARK: - @objc func
-    
+
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
-    
+
     @objc func launchWebsiteViewer(_ gesture: UITapGestureRecognizer) {
         let urlString = presenter.getUserProfile()?.website ?? ""
-        
+
         if let url = URL(string: urlString) {
             let webPresenter = WebViewPresenter()
             let webVC = WebViewController(presenter: webPresenter, url: url)
@@ -216,8 +216,8 @@ extension NFTCardViewController: NFTCardViewControllerProtocol {
             self.collectionDescriptionLabel.text = viewData.description
         }
     }
-    
-    private func loadCoverImage(url : String) {
+
+    private func loadCoverImage(url: String) {
         guard let imageUrl = URL(string: url.urlDecoder ?? "") else {
             return
         }

@@ -26,4 +26,3 @@ extension NetworkRequest {
 enum Token {
   static let token = "edfc7835-684c-4eaf-a7b3-26ecea542ca3"
 }
-
