@@ -14,7 +14,6 @@ protocol UserCollectionViewProtocol: AnyObject {
 
 final class UserCollectionViewController: UIViewController{
     var presenter: UserCollectionPresenterProtocol?
-    var catalogCollectionPresener : CatalogСollectionPresenter?
     private var selectedUser : NFTUser?
     private var customNavBar = StatisticsCustomNavBar()
     private var nftCollectionView : UICollectionView

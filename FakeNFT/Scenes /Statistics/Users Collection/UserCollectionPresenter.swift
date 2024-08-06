@@ -63,9 +63,4 @@ extension UserCollectionPresenter: UserCollectionPresenterProtocol {
     func getCollectionList() -> [NFTItem] {
         return collectionList
     }
-    
-
-    func getCollectionList() -> [NFTItem] {
-        return collectionList
-    }
 }
