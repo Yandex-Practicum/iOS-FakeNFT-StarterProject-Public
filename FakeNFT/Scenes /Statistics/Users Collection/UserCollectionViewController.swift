@@ -9,19 +9,19 @@ import Foundation
 import UIKit
 
 protocol UserCollectionViewProtocol: AnyObject {
-
+    func updateCollectionList(with items: [NFTItem])
 }
 
-final class UserCollectionViewController: UIViewController {
-
-    var presenter: UserCollectionPresenterProtocol!
+final class UserCollectionViewController: UIViewController{
+    var presenter: UserCollectionPresenterProtocol?
+    private var selectedUser : NFTUser?
     private var customNavBar = StatisticsCustomNavBar()
     private var nftCollectionView : UICollectionView
     private let nftCollectionViewCellIdentifier = "nftCollectionViewCellIdentifier"
     private let interItemSpacing = CGFloat(integerLiteral: 9)
     private let interLinesSpacing = CGFloat(integerLiteral: 8)
     
-    
+    private var collectionList : [NFTItem] = []
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -38,6 +38,8 @@ final class UserCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
+        presenter?.updateSelf(view: self)
+        collectionList = presenter?.getCollectionList() ?? []
         initializeUI()
     }
     
@@ -66,7 +68,6 @@ final class UserCollectionViewController: UIViewController {
         
         nftCollectionView.dataSource = self
         nftCollectionView.delegate = self
-        
         nftCollectionView.register(StatisticsUserNFTCollectionViewCell.self, forCellWithReuseIdentifier: nftCollectionViewCellIdentifier)
     }
     
@@ -77,12 +78,14 @@ final class UserCollectionViewController: UIViewController {
             maker.height.equalTo(42)
         }
 
-      let collectionHeight = CGFloat(4 * 192 + 12) // Refactoring gonna be later
+        let collectionHeight = CGFloat(collectionList.count/3 * 192 + 12)
+        
         nftCollectionView.snp.makeConstraints { make in
             make.top.equalTo(customNavBar.snp.bottom).offset(20)
             make.leading.equalTo(view.snp.leading).inset(16)
             make.trailing.equalTo(view.snp.trailing).inset(16)
-            make.height.equalTo(collectionHeight)
+            make.bottom.equalTo(view.snp.bottom)
+           // make.height.equalTo(collectionHeight)
         }
     }
     
@@ -107,7 +110,7 @@ extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return collectionList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -120,12 +123,14 @@ extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UI
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nftCollectionViewCellIdentifier, for: indexPath) as? StatisticsUserNFTCollectionViewCell else {
             return StatisticsUserNFTCollectionViewCell()
         }
-    
-        cell.setIsLiked(with: indexPath.row % 2 == 0 ? true : false)
-        cell.setNFTName(with: "Ralf")
-        cell.setNFTPrice(with: 12.3)
-        
-        return cell
+        if let item = presenter?.getCollectionList()[indexPath.row],
+           let imageURL = item.images.first{
+            cell.setNFTName(with: item.name)
+            cell.setNFTImage(with: imageURL)
+            cell.setNFTPrice(with: item.price)
+            cell.setNFTRating(with: item.rating)
+        }
+       return cell
     }
     
     
@@ -134,6 +139,25 @@ extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UI
 
 // MARK: - UsersCollectionViewProtocol
 
-extension StatisticsViewController: UserCollectionViewProtocol {
+extension UserCollectionViewController: UserCollectionViewProtocol {
+    func updateCollectionList(with collectionList: [NFTItem]) {
+        self.collectionList = collectionList
+        self.nftCollectionView.reloadData()
+        self.activatingConstraints()
+    }
+}
 
+
+extension UserCollectionViewController : StatisticsUserNFTCollectionViewCellDelegate{
+    func onLikeButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
+     //   guard let nftModel = cell.getNftModel() else { return }
+       // presenter?.toggleLikeStatus(model: nftModel)
+    }
+    
+    func addToCartButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
+     //   guard let nftModel = cell.getNftModel() else { return }
+     //   presenter?.toggleCartStatus(model: nftModel)
+    }
+    
+    
 }

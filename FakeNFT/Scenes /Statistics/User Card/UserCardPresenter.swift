@@ -12,6 +12,7 @@ protocol UserCardPresenterProtocol: AnyObject {
     func setUser(with newUser: NFTUser)
     func updateUser()
     func updateSelf(view: UserCardViewProtocol)
+    func loadUserCollection(with selectedUser : NFTUser) -> UserCollectionViewController
 }
 
 
@@ -38,5 +39,12 @@ extension UserCardPresenter: UserCardPresenterProtocol {
     
     func updateUser(){
         view?.updateUser(with: self.selectedUser)
+    }
+    
+    func loadUserCollection(with selectedUser : NFTUser) -> UserCollectionViewController {
+        let userCollectionViewController = UserCollectionViewController()
+        userCollectionViewController.presenter = UserCollectionPresenter(selectedUser: selectedUser)
+        userCollectionViewController.modalPresentationStyle = .fullScreen
+        return userCollectionViewController
     }
 }

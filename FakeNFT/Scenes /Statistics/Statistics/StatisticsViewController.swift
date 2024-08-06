@@ -149,6 +149,7 @@ extension StatisticsViewController {
 extension StatisticsViewController: StatisticsViewProtocol {
     func updateUsers(with users: [NFTUser]) {
         self.users = users
+        sortUsersByRating()
         ratingTableView.reloadData()
     }
 }

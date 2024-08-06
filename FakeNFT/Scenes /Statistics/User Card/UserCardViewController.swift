@@ -13,7 +13,7 @@ protocol UserCardViewProtocol: AnyObject {
     func updateUser(with user: NFTUser?)
 }
 
-final class UserCardViewController: UIViewController, UserCardViewProtocol {
+final class UserCardViewController: UIViewController {
     var presenter: UserCardPresenterProtocol?
     private var user : NFTUser?
     private var customNavBar = StatisticsCustomNavBar()
@@ -217,16 +217,18 @@ final class UserCardViewController: UIViewController, UserCardViewProtocol {
 }
 extension UserCardViewController {
     func loadUserCollection(){
-        let userCollectionViewController = UserCollectionViewController()
-        userCollectionViewController.modalPresentationStyle = .fullScreen
-        present(userCollectionViewController, animated: true, completion: nil)
+        if let user = self.user,
+           let userCollectionViewController =  presenter?.loadUserCollection(with: user) {
+            present(userCollectionViewController, animated: true, completion: nil)
+        }
     }
 }
 
 
 // MARK: - UsersCardViewProtocol
 
-extension UserCardViewController: UserCollectionViewProtocol {
+extension UserCardViewController: UserCardViewProtocol {
+    
     func updateUser(with selectedUser: NFTUser?){
         self.user = selectedUser
     }
