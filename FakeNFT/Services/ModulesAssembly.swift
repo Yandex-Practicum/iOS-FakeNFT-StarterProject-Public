@@ -3,46 +3,100 @@
 //  FakeNFT
 //
 //  Created by Lolita Chernysheva on 12.07.2024.
-//  
+//
 //
 
 import UIKit
+
+final class CartService: CartControllerProtocol {
+    var cart: [Nft] = []
+    func addToCart(
+        _ nft: Nft,
+        completion: (
+    () -> Void
+        )?
+    ) {
+
+    }
+    func removeFromCart(
+        _ id: String,
+        completion: (
+    () -> Void
+        )?
+    ) {
+
+    }
+    func removeAll(
+        completion: (
+    () -> Void
+        )?
+    ) {
+
+    }
+    weak var delegate: CartControllerDelegate?
+    private var _cart: [Nft] = []
+}
 
 protocol ModulesAssemblyProtocol: AnyObject {
     static func mainScreenBuilder() -> UIViewController
 }
 
 final class ModulesAssembly: ModulesAssemblyProtocol {
-    
+
+    static let shared = ModulesAssembly()
+
     static func mainScreenBuilder() -> UIViewController {
         let tabbarController = UITabBarController()
-        
+
         let profileViewController = UINavigationController(
             rootViewController: Self.catalogScreenBuilder()
         )
-        
+
         profileViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("Каталог", comment: ""),
+            title: NSLocalizedString(
+                "Каталог",
+                comment: ""
+            ),
             image: Asset.Images.tabBarCatalog,
-            tag: 0)
-        
+            tag: 0
+        )
+
         tabbarController.viewControllers = [profileViewController]
-        
+
         return tabbarController
     }
-    
+
     static func catalogScreenBuilder() -> UIViewController {
         let networkClient = DefaultNetworkClient()
-        let dataProvider = CatalogDataProvider(networkClient: networkClient)
-        let presenter = CatalogPresenter(dataProvider: dataProvider)
-        let catalogViewController = CatalogViewController(presenter: presenter)
+        let dataProvider = CatalogDataProvider(
+            networkClient: networkClient
+        )
+        let presenter = CatalogPresenter(
+            dataProvider: dataProvider
+        )
+        let cartService = CartService()
+        let catalogViewController = CatalogViewController(
+            presenter: presenter,
+            cartService: cartService
+        )
         return catalogViewController
     }
-    
-    static func ccatalogScreenBuilder() -> UIViewController {
-        let networkClient = DefaultNetworkClient()
-        let ddd = NftDetailPresenterImpl(input: NftDetailInput(id: "1"), service: NftServiceImpl(networkClient: networkClient, storage: NftStorageImpl()))
-        let talogViewController = NftDetailViewController(presenter: ddd)
-        return talogViewController
+
+    func catalogСollection(
+        nftModel: NFTCollection
+    ) -> UIViewController {
+        let dataProvider = CollectionDataProvider(
+            networkClient: DefaultNetworkClient()
+        )
+        let presenter = CatalogСollectionPresenter(
+            nftModel: nftModel,
+            dataProvider: dataProvider,
+            cartController: CartService()
+        )
+        let viewController = CatalogСollectionViewController(
+            presenter: presenter
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        return viewController
     }
 }

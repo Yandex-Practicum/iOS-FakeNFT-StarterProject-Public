@@ -9,20 +9,20 @@
 import Foundation
 
 protocol ProfilePresenterProtocol: AnyObject {
-    
+
 }
 
 final class ProfilePresenter {
-    
+
     weak var view: ProfileViewProtocol?
-    
+
     init(view: ProfileViewProtocol?) {
         self.view = view
     }
 }
 
-//MARK: ProfilePresenterProtocol
+// MARK: ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
-    
+
 }

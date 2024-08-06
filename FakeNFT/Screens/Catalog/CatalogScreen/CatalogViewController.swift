@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 import SnapKit
+import ProgressHUD
 
 // MARK: - Protocol
 
@@ -17,13 +18,15 @@ protocol CatalogViewControllerProtocol: AnyObject {
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
     private var presenter: CatalogPresenterProtocol
-    
+    private let cartService: CartControllerProtocol
+    private let modulesAssembly = ModulesAssembly.shared
+
     private lazy var collectionsRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(loadNFTCollections), for: .valueChanged)
         return refreshControl
     }()
-    
+
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
             image: Asset.Images.sort,
@@ -32,10 +35,11 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             action: #selector(showSortingMenu))
         return button
     }()
-    
+
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.register(CatalogCell.self)
+        tableView.refreshControl = collectionsRefreshControl
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         tableView.showsVerticalScrollIndicator = false
@@ -44,17 +48,18 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         tableView.delegate = self
         return tableView
     }()
-    
-    init(presenter: CatalogPresenterProtocol) {
+
+    init(presenter: CatalogPresenterProtocol, cartService: CartControllerProtocol) {
         self.presenter = presenter
+        self.cartService = cartService
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         assertionFailure("init(coder:) has not been implemented")
         return nil
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -62,18 +67,17 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         presenter.viewController = self
         loadNFTCollections()
         view.backgroundColor = .systemBackground
-        self.collectionsRefreshControl.endRefreshing()
     }
-    
+
     private func setupNavigationBar() {
         sortButton.tintColor = .black
         navigationController?.navigationBar.tintColor = .gray
         navigationItem.rightBarButtonItem = sortButton
     }
-    
+
     private func setup() {
         view.addSubview(tableView)
-        
+
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.leading.equalTo(view.snp.leading).offset(16)
@@ -81,16 +85,17 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             make.trailing.equalTo(view.snp.trailing).offset(-16)
         }
     }
-    
+
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.collectionsRefreshControl.endRefreshing()
         }
     }
-    
+
     @objc func showSortingMenu() {
         let alertMenu = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        
+
         alertMenu.addAction(UIAlertAction(title: "По названию", style: .default, handler: { [weak self] (_) in
             self?.presenter.sortNFTS(by: .name)
             self?.reloadTableView()
@@ -100,38 +105,47 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             self?.reloadTableView()
         }))
         alertMenu.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-        
+
         present(alertMenu, animated: true)
     }
-    
+
     @objc func loadNFTCollections() {
-        presenter.fetchCollections { [weak self] updatedData in
+        ProgressHUD.show()
+        presenter.fetchCollections { [weak self] _ in
             self?.reloadTableView()
         }
-    }
-}
+    }}
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
-    
+extension CatalogViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.getDataSource().count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CatalogCell = tableView.dequeueReusableCell()
         let nftModel = presenter.getDataSource()[indexPath.row]
         let url = URL(string: nftModel.cover.urlDecoder)
-        
         cell.selectionStyle = .none
         cell.setCellImage(with: url)
         cell.setNameLabel(with: "\(nftModel.name) (\(nftModel.nfts.count))")
+        ProgressHUD.dismiss()
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         187
     }
 }
 
+extension CatalogViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        ProgressHUD.show()
+        let nftModel = presenter.getDataSource()[indexPath.row]
+        let view = modulesAssembly.catalogСollection(nftModel: nftModel)
+        ProgressHUD.dismiss()
+        navigationController?.pushViewController(view, animated: true)
+    }
+}
