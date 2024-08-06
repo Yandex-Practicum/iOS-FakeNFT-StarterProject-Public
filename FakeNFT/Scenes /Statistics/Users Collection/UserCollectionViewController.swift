@@ -14,6 +14,7 @@ protocol UserCollectionViewProtocol: AnyObject {
 
 final class UserCollectionViewController: UIViewController{
     var presenter: UserCollectionPresenterProtocol?
+    var catalogCollectionPresener : CatalogСollectionPresenter?
     private var selectedUser : NFTUser?
     private var customNavBar = StatisticsCustomNavBar()
     private var nftCollectionView : UICollectionView
@@ -78,7 +79,7 @@ final class UserCollectionViewController: UIViewController{
             maker.height.equalTo(42)
         }
 
-        let collectionHeight = CGFloat(collectionList.count/3 * 192 + 12)
+        let collectionHeight = CGFloat(collectionList.count/3 * 192 + 12) 
         
         nftCollectionView.snp.makeConstraints { make in
             make.top.equalTo(customNavBar.snp.bottom).offset(20)

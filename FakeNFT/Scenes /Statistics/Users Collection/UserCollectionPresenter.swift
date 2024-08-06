@@ -50,6 +50,8 @@ final class UserCollectionPresenter {
 
 extension UserCollectionPresenter: UserCollectionPresenterProtocol {
     
+
+    
     func setUser(with newUser: NFTUser) {
         self.selectedUser = newUser
     }
@@ -57,6 +59,11 @@ extension UserCollectionPresenter: UserCollectionPresenterProtocol {
     func updateSelf(view: any UserCollectionViewProtocol) {
         self.view = view
     }
+
+    func getCollectionList() -> [NFTItem] {
+        return collectionList
+    }
+    
 
     func getCollectionList() -> [NFTItem] {
         return collectionList
