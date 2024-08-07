@@ -144,7 +144,7 @@ extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         ProgressHUD.show()
         let nftModel = presenter.getDataSource()[indexPath.row]
-        let view = modulesAssembly.catalogСollection(nftModel: nftModel)
+        let view = modulesAssembly.сatalogСollection(nftModel: nftModel)
         ProgressHUD.dismiss()
         navigationController?.pushViewController(view, animated: true)
     }

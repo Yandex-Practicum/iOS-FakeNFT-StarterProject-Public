@@ -1,27 +1,27 @@
 //
-//  NFTCollectionCell.swift
+//  NFTCollectionCelll.swift
 //  FakeNFT
 //
-//  Created by Денис Николаев on 29.07.2024.
+//  Created by Денис Николаев on 07.08.2024.
 //
-
-import UIKit
-import SnapKit
-import ProgressHUD
+ import UIKit
+ import SnapKit
+ import ProgressHUD
 
 // MARK: - Protocol
 
-protocol NFTCollectionCellDelegate: AnyObject {
-    func onLikeButtonTapped(cell: NFTCollectionCell)
-    func addToCartButtonTapped(cell: NFTCollectionCell)
-}
+ protocol NFTCollectionCelllDelegate: AnyObject {
+    func onLikeButtonTapped(cell: NFTCollectionCelll)
+    func addToCartButtonTapped(cell: NFTCollectionCelll)
+ }
 
 // MARK: - Final Class
 
- class NFTCollectionCell: UICollectionViewCell, ReuseIdentifying {
+ class NFTCollectionCelll: UICollectionViewCell, ReuseIdentifying {
+    weak var viewController: NFTCardViewControllerProtocol?
     private var nftModel: Nft?
-    var presenter: CatalogСollectionPresenterProtocol?
-    weak var delegate: NFTCollectionCellDelegate?
+    var presenter: NFTCardPresenterProtocol?
+    weak var delegate: NFTCollectionCelllDelegate?
 
     private lazy var nftImage: UIImageView = {
         let imageView = UIImageView()
@@ -172,7 +172,8 @@ protocol NFTCollectionCellDelegate: AnyObject {
     func updateLikeButtonImage() {
         guard let nftModel = nftModel else { return }
         let isAlreadyLiked = presenter?.isAlreadyLiked(nftId: nftModel.id) ?? false
-        presenter?.indexLike = isAlreadyLiked
+        let isAlreadyIn = isAlreadyLiked
+        presenter?.indexLike = isAlreadyIn
         print(isAlreadyLiked)
         configureLikeButtonImage(isAlreadyLiked)
     }
@@ -189,6 +190,7 @@ protocol NFTCollectionCellDelegate: AnyObject {
         ProgressHUD.show()
         updateLikeButtonImage()
         delegate?.onLikeButtonTapped(cell: self)
+        viewController?.reloadVisibleCells()
         ProgressHUD.dismiss()
     }
 
@@ -196,6 +198,7 @@ protocol NFTCollectionCellDelegate: AnyObject {
         ProgressHUD.show()
         updateCartButtonImage()
         delegate?.addToCartButtonTapped(cell: self)
+        viewController?.reloadVisibleCells()
         ProgressHUD.dismiss()
     }
-}
+ }

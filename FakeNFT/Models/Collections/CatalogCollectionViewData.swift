@@ -8,8 +8,9 @@
 import Foundation
 
 struct CatalogCollectionViewData {
-  let coverImageURL: String
-  let title: String
-  let description: String
-  let authorName: String
+    let coverImageURL: String
+    let title: String
+    let description: String
+    let authorName: String
+    let images: [URL]
 }

@@ -20,7 +20,7 @@ protocol CatalogСollectionViewControllerProtocol: AnyObject {
 
 // MARK: - Final Class
 
-final class CatalogСollectionViewController: UIViewController {
+final class CatalogСollectionViewController: UIViewController, NFTCollectionUpdaterDelegate {
 
     private var presenter: CatalogСollectionPresenterProtocol
     private var heightConstraintCV = NSLayoutConstraint()
@@ -28,6 +28,7 @@ final class CatalogСollectionViewController: UIViewController {
     private let itemsPerRow = 3
     private let bottomMargin: CGFloat = 55
     private let cellHeight: CGFloat = 172
+    var das: NFTCollection
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -113,28 +114,17 @@ final class CatalogСollectionViewController: UIViewController {
     }()
 
     private lazy var nftCollection: UICollectionView = {
-        let collection = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: UICollectionViewFlowLayout()
-        )
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.isScrollEnabled = false
-        collection.dataSource = self
-        collection.delegate = self
         collection.backgroundColor = .white
-        collection.register(
-            NFTCollectionCell.self
-        )
+        collection.register(NFTCollectionCell.self)
         return collection
     }()
 
-    init(
-        presenter: CatalogСollectionPresenterProtocol
-    ) {
+    init(presenter: CatalogСollectionPresenterProtocol, das: NFTCollection) {
         self.presenter = presenter
-        super.init(
-            nibName: nil,
-            bundle: nil
-        )
+        self.das = das
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(
@@ -152,6 +142,8 @@ final class CatalogСollectionViewController: UIViewController {
         setup()
         setupNavBackButton()
         presenter.presentCollectionViewData()
+        nftCollection.dataSource = self
+        nftCollection.delegate = self
     }
 
     private func setup() {
@@ -259,6 +251,16 @@ final class CatalogСollectionViewController: UIViewController {
         )
     }
 
+    func updateNFTCollection() {
+        nftCollection.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.loadNFTs()
+        nftCollection.reloadData()
+
+    }
     private func calculateCollectionHeight(
         itemCount: Int
     ) {
@@ -306,72 +308,80 @@ final class CatalogСollectionViewController: UIViewController {
         }
     }
 }
-
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-
+    // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension CatalogСollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        let itemCount = presenter.nftArray.count
-        calculateCollectionHeight(
-            itemCount: itemCount
-        )
-        return itemCount
-    }
+        func collectionView(
+            _ collectionView: UICollectionView,
+            numberOfItemsInSection section: Int
+        ) -> Int {
+            let itemCount = presenter.nftArray.count
+            calculateCollectionHeight(
+                itemCount: itemCount
+            )
+            return itemCount
+        }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        let cell: NFTCollectionCell = collectionView.dequeueReusableCell(
-            indexPath: indexPath
-        )
-        let data = presenter.nftArray[indexPath.row]
-        cell.setNftModel(
-            data
-        )
-        cell.presenter = presenter
-        cell.delegate = self
-        cell.renderCellForModel()
-        return cell
-    }
+        func collectionView(
+            _ collectionView: UICollectionView,
+            cellForItemAt indexPath: IndexPath
+        ) -> UICollectionViewCell {
+            let cell: NFTCollectionCell = collectionView.dequeueReusableCell(
+                indexPath: indexPath
+            )
+            let data = presenter.nftArray[indexPath.row]
+            cell.setNftModel(
+                data
+            )
+            cell.presenter = presenter
+            cell.delegate = self
+            cell.renderCellForModel()
+            return cell
+        }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        //
-    }
+        func collectionView(
+            _ collectionView: UICollectionView,
+            didSelectItemAt indexPath: IndexPath
+        ) {
+            let data = presenter.nftArray[indexPath.row]
+            let aataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
+            let presenter = NFTCardPresenter(nftArray: data,
+                                             dataProvider: aataProvider,
+                                             cartController: CartService(),
+                                             nftCollection: das,
+                                             nftArrayss: presenter.nftArray,
+                                             userProfile: presenter.userProfile!,
+                                             userOrder: presenter.userOrder!, indexLike: presenter.indexLike)
+            let viewController = NFTCardViewController(presenter: presenter)
+            navigationController?.pushViewController(viewController, animated: true)
+        }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        CGSize(
-            width: 108,
-            height: 172
-        )
-    }
+        func collectionView(
+            _ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            sizeForItemAt indexPath: IndexPath
+        ) -> CGSize {
+            CGSize(
+                width: 108,
+                height: 172
+            )
+        }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        9
-    }
+        func collectionView(
+            _ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumLineSpacingForSectionAt section: Int
+        ) -> CGFloat {
+            9
+        }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        8
+        func collectionView(
+            _ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumInteritemSpacingForSectionAt section: Int
+        ) -> CGFloat {
+            8
+        }
     }
-}
 
 // MARK: - NFTCollectionCellDelegate
 
@@ -456,4 +466,7 @@ extension CatalogСollectionViewController: CatalogСollectionViewControllerProt
             self.nftCollection.reloadData()
         }
     }
+}
+protocol NFTCollectionUpdaterDelegate: AnyObject {
+    func updateNFTCollection()
 }

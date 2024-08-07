@@ -82,21 +82,12 @@ final class ModulesAssembly: ModulesAssemblyProtocol {
         return catalogViewController
     }
 
-    func catalogСollection(
-        nftModel: NFTCollection
-    ) -> UIViewController {
-        let dataProvider = CollectionDataProvider(
-            networkClient: DefaultNetworkClient()
-        )
-        let presenter = CatalogСollectionPresenter(
-            nftModel: nftModel,
-            dataProvider: dataProvider,
-            cartController: CartService()
-        )
-        let viewController = CatalogСollectionViewController(
-            presenter: presenter
-        )
+    func сatalogСollection(nftModel: NFTCollection) -> UIViewController {
+        let dataProvider = CollectionDataProvider(networkClient: DefaultNetworkClient())
+        let presenter = CatalogСollectionPresenter(nftModel: nftModel, dataProvider: dataProvider, cartController: CartService())
+        let viewController = CatalogСollectionViewController(presenter: presenter, das: nftModel)
         viewController.hidesBottomBarWhenPushed = true
         return viewController
     }
+
 }

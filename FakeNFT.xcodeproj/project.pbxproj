@@ -46,6 +46,11 @@
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
+		E61111CC2C620A9200F0F370 /* NFTCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61111CB2C620A9200F0F370 /* NFTCardCell.swift */; };
+		E61111CE2C620ABA00F0F370 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61111CD2C620ABA00F0F370 /* Crypto.swift */; };
+		E61111D02C62419900F0F370 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61111CF2C62419900F0F370 /* PhotoViewController.swift */; };
+		E61111D32C6251FA00F0F370 /* CHIPageControl in Frameworks */ = {isa = PBXBuildFile; productRef = E61111D22C6251FA00F0F370 /* CHIPageControl */; };
+		E61111D72C63893500F0F370 /* NFTCollectionCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61111D62C63893500F0F370 /* NFTCollectionCelll.swift */; };
 		E656BD0B2C467282004D2773 /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E656BD0A2C467282004D2773 /* CatalogCell.swift */; };
 		E656BD0D2C46728F004D2773 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E656BD0C2C46728F004D2773 /* CatalogViewController.swift */; };
 		E656BD0F2C46729B004D2773 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E656BD0E2C46729B004D2773 /* CatalogPresenter.swift */; };
@@ -138,6 +143,10 @@
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E61111CB2C620A9200F0F370 /* NFTCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCardCell.swift; sourceTree = "<group>"; };
+		E61111CD2C620ABA00F0F370 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		E61111CF2C62419900F0F370 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		E61111D62C63893500F0F370 /* NFTCollectionCelll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionCelll.swift; sourceTree = "<group>"; };
 		E656BD0A2C467282004D2773 /* CatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
 		E656BD0C2C46728F004D2773 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		E656BD0E2C46729B004D2773 /* CatalogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPresenter.swift; sourceTree = "<group>"; };
@@ -176,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E61111D32C6251FA00F0F370 /* CHIPageControl in Frameworks */,
 				16243B212C41C4D8005A4CA9 /* SnapKit in Frameworks */,
 				3F603CD029DB4A74000C43D7 /* Kingfisher in Frameworks */,
 				3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */,
@@ -241,6 +251,7 @@
 		0CFCB7472A7808870009A829 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
+				E6E1FBA12C5CC6A100288DE2 /* NFTCard */,
 				E6CC6C3A2C5791410052293C /* CatalogScreen */,
 				E6CC6C392C5790E80052293C /* CollectionScreen */,
 			);
@@ -433,6 +444,7 @@
 			children = (
 				E656BD102C46732F004D2773 /* NFTCollection.swift */,
 				E6CC6C562C57A21F0052293C /* ProfileModel.swift */,
+				E61111CD2C620ABA00F0F370 /* Crypto.swift */,
 				E6CC6C542C57A2170052293C /* OrderModel.swift */,
 				E6CC6C582C57A23A0052293C /* NFTCollectionModel.swift */,
 				E6CC6C5A2C57A2440052293C /* CatalogCollectionViewData.swift */,
@@ -449,7 +461,6 @@
 				E6CC6C3F2C5791F80052293C /* CatalogСollectionPresenter.swift */,
 				E6CC6C412C57920B0052293C /* WebViewController.swift */,
 				E6CC6C432C5792150052293C /* WebViewPresenter.swift */,
-				E6E1FBA12C5CC6A100288DE2 /* NFTCard */,
 			);
 			path = CollectionScreen;
 			sourceTree = "<group>";
@@ -484,7 +495,10 @@
 			isa = PBXGroup;
 			children = (
 				E6E1FB9D2C5CC4F100288DE2 /* NFTCardViewController.swift */,
+				E61111CF2C62419900F0F370 /* PhotoViewController.swift */,
 				E6E1FB9F2C5CC69C00288DE2 /* NFTCardPresenter.swift */,
+				E61111CB2C620A9200F0F370 /* NFTCardCell.swift */,
+				E61111D62C63893500F0F370 /* NFTCollectionCelll.swift */,
 			);
 			path = NFTCard;
 			sourceTree = "<group>";
@@ -529,6 +543,7 @@
 				3F603CCC29DB4A53000C43D7 /* ProgressHUD */,
 				3F603CCF29DB4A74000C43D7 /* Kingfisher */,
 				16243B202C41C4D8005A4CA9 /* SnapKit */,
+				E61111D22C6251FA00F0F370 /* CHIPageControl */,
 			);
 			productName = FakeNFT;
 			productReference = 3F68069329CBBAF100B4F915 /* FakeNFT.app */;
@@ -607,6 +622,7 @@
 				3F603CCB29DB4A53000C43D7 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				16243B1F2C41C4D8005A4CA9 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E61111D12C6251FA00F0F370 /* XCRemoteSwiftPackageReference "CHIPageControl" */,
 			);
 			productRefGroup = 3F68069429CBBAF100B4F915 /* Products */;
 			projectDirPath = "";
@@ -680,11 +696,15 @@
 				E6CC6C4B2C57A1060052293C /* CollectionDataRequest.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E6CC6C5B2C57A2440052293C /* CatalogCollectionViewData.swift in Sources */,
+				E61111CC2C620A9200F0F370 /* NFTCardCell.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				F3EAEF4F2C413DFD00834E53 /* ProfileScreenModel.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				E61111D72C63893500F0F370 /* NFTCollectionCelll.swift in Sources */,
+				E61111D02C62419900F0F370 /* PhotoViewController.swift in Sources */,
 				F3EAEF4B2C413DAA00834E53 /* ProfileViewController.swift in Sources */,
 				E6CC6C532C57A12A0052293C /* OrderUpdateRequest.swift in Sources */,
+				E61111CE2C620ABA00F0F370 /* Crypto.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				E656BD132C46733C004D2773 /* NFTCollectionsSort.swift in Sources */,
@@ -1092,6 +1112,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		E61111D12C6251FA00F0F370 /* XCRemoteSwiftPackageReference "CHIPageControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChiliLabs/CHIPageControl";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1109,6 +1137,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F603CCE29DB4A74000C43D7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		E61111D22C6251FA00F0F370 /* CHIPageControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E61111D12C6251FA00F0F370 /* XCRemoteSwiftPackageReference "CHIPageControl" */;
+			productName = CHIPageControl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

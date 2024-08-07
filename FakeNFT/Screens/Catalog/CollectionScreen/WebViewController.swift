@@ -25,7 +25,6 @@ final class WebViewController: UIViewController {
     }()
 
     private let url: URL
-
     private var presenter: WebViewPresenterProtocol
     private var subscribes = [AnyCancellable]()
 

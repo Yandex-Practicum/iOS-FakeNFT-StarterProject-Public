@@ -35,12 +35,15 @@ protocol CatalogСollectionPresenterProtocol: AnyObject {
     func presentCollectionViewData()
     func toggleLikeStatus(model: Nft)
     func toggleCartStatus(model: Nft)
+    var userProfile: ProfileModel? { get set }
+    var userOrder: OrderModel? { get set }
+    var indexLike: Bool { get set }
 }
 
 // MARK: - Final Class
 
 final class CatalogСollectionPresenter: CatalogСollectionPresenterProtocol {
-
+    var indexLike = false
     func getUserProfile() -> ProfileModel? {
         return self.userProfile
     }
@@ -51,8 +54,8 @@ final class CatalogСollectionPresenter: CatalogСollectionPresenterProtocol {
 
     weak var viewController: CatalogСollectionViewControllerProtocol?
     private var dataProvider: CollectionDataProvider
-    private var userProfile: ProfileModel?
-    private var userOrder: OrderModel?
+    var userProfile: ProfileModel?
+    var userOrder: OrderModel?
 
     let cartController: CartControllerProtocol
     let nftModel: NFTCollection
@@ -71,7 +74,8 @@ final class CatalogСollectionPresenter: CatalogСollectionPresenterProtocol {
             coverImageURL: nftModel.cover,
             title: nftModel.name,
             description: nftModel.description,
-            authorName: nftModel.author)
+            authorName: nftModel.author,
+            images: [])
         viewController?.renderViewData(viewData: viewData)
     }
 
@@ -159,7 +163,6 @@ final class CatalogСollectionPresenter: CatalogСollectionPresenterProtocol {
         guard let profileModel = self.userProfile else {
             return
         }
-
         let updatedLikes = self.isAlreadyLiked(nftId: model.id)
         ? profileModel.likes?.filter { $0 != model.id }
         : (profileModel.likes ?? []) + [model.id]

@@ -1,6 +1,15 @@
 {
-  "originHash" : "942bb21b31c94b4914adbaa5c69f12e1199fe256e500a99c2e9140554363e511",
+  "originHash" : "3625d348f1925b3f8921f2c9237273a456c8ce3dee7ecf90ab5ab8a07e38804b",
   "pins" : [
+    {
+      "identity" : "chipagecontrol",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChiliLabs/CHIPageControl",
+      "state" : {
+        "revision" : "2d16f651a6c885e8d7eff21b36bd1cae3130aa10",
+        "version" : "0.2.1"
+      }
+    },
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
