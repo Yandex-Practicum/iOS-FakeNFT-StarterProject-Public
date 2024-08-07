@@ -24,7 +24,7 @@ final class UserCollectionItemNetworkRequest : NetworkRequest {
 }
 
 protocol UserCollectionNetworkServiceProtocol: AnyObject {
-    func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping (NFTItem) -> Void)
+    func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping () -> Void)
     func getNFTCollection() -> [NFTItem]
 }
 
@@ -41,7 +41,7 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
         self.init(networkClient: DefaultNetworkClient())
     }
     
-    func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping (NFTItem) -> Void) {
+    func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping () -> Void) {
         ProgressHUD.show()
         self.userCollection = []
         
@@ -57,7 +57,6 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
                 switch result {
                 case .success(let nftItem):
                     self.userCollection.append(nftItem)
-                    completion(nftItem)
                 case .failure(let error):
                     if let window = currentWindow(),
                        let viewController = window.rootViewController {
@@ -69,8 +68,12 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
                 dispatchGroup.leave()
             }
         }
-        ProgressHUD.dismiss()
+        dispatchGroup.notify(queue: .main) {
+                ProgressHUD.dismiss()
+            completion()
+            }
     }
+    
     
     func getNFTCollection() -> [NFTItem] {
         return userCollection

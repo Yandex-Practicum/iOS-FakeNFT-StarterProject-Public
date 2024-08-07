@@ -50,6 +50,9 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
             contentView.addSubview(subView)
             subView.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        nftImageView.layer.cornerRadius = 12
+        nftImageView.layer.masksToBounds = true
     }
     
     private func prepareImageContainer(){
@@ -89,7 +92,7 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         nftNameLabel.font = .bodyBold
         nftNameLabel.textAlignment = .natural
         nftPriceLabel.font = .caption3
-        cartButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+       // cartButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         cartButton.setImage(Asset.Images.bagCustom, for: .normal)
         cartButton.tintColor = .nftBlack
         cartButton.addTarget(self, action: #selector(didCartButtonTapped), for: .touchUpInside)
@@ -128,7 +131,7 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         bottomContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(starsHorizontalStack.snp.bottom).offset(4)
-            make.width.equalTo(108)
+           // make.width.equalTo(108)
             make.height.equalTo(40)
         }
         
@@ -151,11 +154,8 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
     private func updateStarsRating(with newRating : Int){
         for (index, starView) in starsHorizontalStack.arrangedSubviews.enumerated() {
             guard let starImageView = starView as? UIImageView else { continue }
-            if index < newRating {
-                starImageView.image = Asset.Images.starDone
-            } else {
-                starImageView.image = Asset.Images.starNoActive
-            }
+            starImageView.image =  index < newRating ? Asset.Images.starDone :
+                Asset.Images.starNoActive
         }
     }
     func setNFTImage(with newImage: String){

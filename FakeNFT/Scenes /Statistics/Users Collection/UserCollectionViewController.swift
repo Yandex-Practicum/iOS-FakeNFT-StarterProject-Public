@@ -7,28 +7,28 @@
 
 import Foundation
 import UIKit
+import ProgressHUD
 
 protocol UserCollectionViewProtocol: AnyObject {
     func updateCollectionList(with items: [NFTItem])
+    func showLoading()
+    func hideLoading()
+    func showError()
 }
 
-final class UserCollectionViewController: UIViewController{
+final class UserCollectionViewController: UIViewController {
     var presenter: UserCollectionPresenterProtocol?
-    private var selectedUser : NFTUser?
     private var customNavBar = StatisticsCustomNavBar()
-    private var nftCollectionView : UICollectionView
+    private var nftCollectionView: UICollectionView
     private let nftCollectionViewCellIdentifier = "nftCollectionViewCellIdentifier"
     private let interItemSpacing = CGFloat(integerLiteral: 9)
     private let interLinesSpacing = CGFloat(integerLiteral: 8)
-    
-    private var collectionList : [NFTItem] = []
     
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         nftCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(nibName: nil, bundle: nil)
-       
     }
     
     required init?(coder: NSCoder) {
@@ -38,17 +38,24 @@ final class UserCollectionViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .background
-        presenter?.updateSelf(view: self)
-        collectionList = presenter?.getCollectionList() ?? []
-        initializeUI()
-    }
-    
-    private func initializeUI() {
         setupUI()
         prepareNavBar()
         prepareNFTCollectionView()
         activatingConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchData()
+    }
+    
+    private func fetchData() {
+        presenter?.loadData { [weak self] in
+            DispatchQueue.main.async {
+                self?.nftCollectionView.reloadData()
+            }
         }
+    }
     
     private func setupUI() {
         for subView in [customNavBar, nftCollectionView] {
@@ -57,15 +64,14 @@ final class UserCollectionViewController: UIViewController{
         }
     }
     
-    private func prepareNavBar(){
+    private func prepareNavBar() {
         customNavBar.isBackButtonInvisible(it_s: false)
         customNavBar.isSortButtonInvisible(it_s: true)
         customNavBar.isTitleInvisible(it_s: false)
         customNavBar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
-    private func prepareNFTCollectionView(){
-        
+    private func prepareNFTCollectionView() {
         nftCollectionView.dataSource = self
         nftCollectionView.delegate = self
         nftCollectionView.register(StatisticsUserNFTCollectionViewCell.self, forCellWithReuseIdentifier: nftCollectionViewCellIdentifier)
@@ -78,25 +84,23 @@ final class UserCollectionViewController: UIViewController{
             maker.height.equalTo(42)
         }
 
-        let collectionHeight = CGFloat(collectionList.count/3 * 192 + 12) 
-        
         nftCollectionView.snp.makeConstraints { make in
             make.top.equalTo(customNavBar.snp.bottom).offset(20)
             make.leading.equalTo(view.snp.leading).inset(16)
             make.trailing.equalTo(view.snp.trailing).inset(16)
             make.bottom.equalTo(view.snp.bottom)
-           // make.height.equalTo(collectionHeight)
         }
     }
     
-    //MARK:- OBJC functions
+    // MARK: - OBJC Functions
     @objc private func backButtonTapped() {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
+    }
 }
 
-//MARK: - NFTCollectionView
-extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UICollectionViewDataSource {
+// MARK: - UICollectionViewDataSource & UICollectionViewDelegateFlowLayout
+
+extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -110,7 +114,7 @@ extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionList.count
+        return presenter?.getCollectionList().count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -124,40 +128,44 @@ extension UserCollectionViewController : UICollectionViewDelegateFlowLayout , UI
             return StatisticsUserNFTCollectionViewCell()
         }
         if let item = presenter?.getCollectionList()[indexPath.row],
-           let imageURL = item.images.first{
+           let imageURL = item.images.first {
             cell.setNFTName(with: item.name)
             cell.setNFTImage(with: imageURL)
             cell.setNFTPrice(with: item.price)
             cell.setNFTRating(with: item.rating)
         }
-       return cell
+        return cell
     }
-    
-    
 }
 
-
-// MARK: - UsersCollectionViewProtocol
+// MARK: - UserCollectionViewProtocol
 
 extension UserCollectionViewController: UserCollectionViewProtocol {
     func updateCollectionList(with collectionList: [NFTItem]) {
-        self.collectionList = collectionList
         self.nftCollectionView.reloadData()
-        self.activatingConstraints()
+    }
+    
+    func showLoading() {
+        // Show loading indicator
+    }
+    
+    func hideLoading() {
+        // Hide loading indicator
+    }
+    
+    func showError() {
+        // Show error alert or message
     }
 }
 
+// MARK: - StatisticsUserNFTCollectionViewCellDelegate
 
-extension UserCollectionViewController : StatisticsUserNFTCollectionViewCellDelegate{
+extension UserCollectionViewController: StatisticsUserNFTCollectionViewCellDelegate {
     func onLikeButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
-     //   guard let nftModel = cell.getNftModel() else { return }
-       // presenter?.toggleLikeStatus(model: nftModel)
+        // Handle like button tap
     }
     
     func addToCartButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
-     //   guard let nftModel = cell.getNftModel() else { return }
-     //   presenter?.toggleCartStatus(model: nftModel)
+        // Handle add to cart button tap
     }
-    
-    
 }
