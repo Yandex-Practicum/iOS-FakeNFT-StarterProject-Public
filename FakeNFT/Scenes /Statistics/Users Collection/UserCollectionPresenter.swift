@@ -28,6 +28,7 @@ final class UserCollectionPresenter {
     }
     
     func loadData(completion: @escaping () -> Void) {
+        collectionList = []
         guard let selectedUser = selectedUser else { return }
         view?.showLoading()
         userCollectionNetworkService.fetchNFTCollectionFrom(user: selectedUser) { [weak self] in

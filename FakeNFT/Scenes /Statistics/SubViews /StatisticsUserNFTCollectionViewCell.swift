@@ -92,6 +92,7 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         nftNameLabel.font = .bodyBold
         nftNameLabel.textAlignment = .natural
         nftPriceLabel.font = .caption3
+
         cartButton.setImage(Asset.Images.bagCustom, for: .normal)
         cartButton.tintColor = .nftBlack
         cartButton.addTarget(self, action: #selector(didCartButtonTapped), for: .touchUpInside)

@@ -27,6 +27,7 @@ final class UserCollectionViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo.on.rectangle")
         imageView.frame.size = CGSize(width: 80, height: 80)
+        imageView.tintColor = .nftPlaceHolderGray
         imageView.isHidden = true
         return imageView
     }()
@@ -49,6 +50,8 @@ final class UserCollectionViewController: UIViewController {
         prepareNavBar()
         prepareNFTCollectionView()
         activatingConstraints()
+        handleStartView()
+
         
     }
     
@@ -60,6 +63,8 @@ final class UserCollectionViewController: UIViewController {
     private func fetchData() {
         presenter?.loadData { [weak self] in
             self?.nftCollectionView.reloadData()
+            self?.handleStartView()
+        
         }
     }
     
@@ -97,9 +102,18 @@ final class UserCollectionViewController: UIViewController {
         }
         
         emptyListImageView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(view.snp.centerY)
+            make.centerX.equalTo(view.snp.centerX)
             make.height.equalTo(80)
             make.width.equalTo(80)
+        }
+    }
+     func handleStartView(){
+         guard let presenter = presenter else {return}
+         if (presenter.getCollectionList().isEmpty){
+            showEmptyListView()
+        }else{
+            hideEmptyListView()
         }
     }
     
@@ -163,6 +177,7 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
 extension UserCollectionViewController: UserCollectionViewProtocol {
     func updateCollectionList(with collectionList: [NFTItem]) {
             self.nftCollectionView.reloadData()
+        handleStartView()
     }
     
     func showLoading() {
