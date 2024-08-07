@@ -332,7 +332,6 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E7C7FD672C615E310068AF77 /* Collections */,
 				3F6806D829CC979D00B4F915 /* Network */,
 				E7EC3BE42C5306B900DF6504 /* Statistics */,
 			);
@@ -414,13 +413,6 @@
 				E7C7FD5D2C5AC9990068AF77 /* UImageViewExtension .swift */,
 			);
 			path = Statistics;
-			sourceTree = "<group>";
-		};
-		E7C7FD672C615E310068AF77 /* Collections */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Collections;
 			sourceTree = "<group>";
 		};
 		E7EC3BC12C5119C700DF6504 /* Statistics */ = {
