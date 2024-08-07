@@ -13,7 +13,6 @@ protocol UserCollectionViewProtocol: AnyObject {
     func updateCollectionList(with items: [NFTItem])
     func showLoading()
     func hideLoading()
-    func showError()
 }
 
 final class UserCollectionViewController: UIViewController {
@@ -23,6 +22,14 @@ final class UserCollectionViewController: UIViewController {
     private let nftCollectionViewCellIdentifier = "nftCollectionViewCellIdentifier"
     private let interItemSpacing = CGFloat(integerLiteral: 9)
     private let interLinesSpacing = CGFloat(integerLiteral: 8)
+    
+    private let emptyListImageView :  UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "photo.on.rectangle")
+        imageView.frame.size = CGSize(width: 80, height: 80)
+        imageView.isHidden = true
+        return imageView
+    }()
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -42,8 +49,9 @@ final class UserCollectionViewController: UIViewController {
         prepareNavBar()
         prepareNFTCollectionView()
         activatingConstraints()
+        
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
@@ -51,16 +59,13 @@ final class UserCollectionViewController: UIViewController {
     
     private func fetchData() {
         presenter?.loadData { [weak self] in
-            DispatchQueue.main.async {
-                self?.nftCollectionView.reloadData()
-            }
+            self?.nftCollectionView.reloadData()
         }
     }
     
     private func setupUI() {
-        for subView in [customNavBar, nftCollectionView] {
+        for subView in [customNavBar, nftCollectionView, emptyListImageView] {
             view.addSubview(subView)
-            subView.translatesAutoresizingMaskIntoConstraints = false
         }
     }
     
@@ -83,13 +88,28 @@ final class UserCollectionViewController: UIViewController {
             maker.leading.trailing.equalToSuperview()
             maker.height.equalTo(42)
         }
-
+        
         nftCollectionView.snp.makeConstraints { make in
             make.top.equalTo(customNavBar.snp.bottom).offset(20)
             make.leading.equalTo(view.snp.leading).inset(16)
             make.trailing.equalTo(view.snp.trailing).inset(16)
             make.bottom.equalTo(view.snp.bottom)
         }
+        
+        emptyListImageView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(80)
+            make.width.equalTo(80)
+        }
+    }
+    
+    private func showEmptyListView() {
+        emptyListImageView.isHidden = false
+        view.bringSubviewToFront(emptyListImageView)
+    }
+    private func hideEmptyListView() {
+        emptyListImageView.isHidden = true
+        view.sendSubviewToBack(emptyListImageView)
     }
     
     // MARK: - OBJC Functions
@@ -142,20 +162,17 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
 
 extension UserCollectionViewController: UserCollectionViewProtocol {
     func updateCollectionList(with collectionList: [NFTItem]) {
-        self.nftCollectionView.reloadData()
+            self.nftCollectionView.reloadData()
     }
     
     func showLoading() {
-        // Show loading indicator
+        ProgressHUD.show("Loading...")
     }
     
     func hideLoading() {
-        // Hide loading indicator
+        ProgressHUD.dismiss()
     }
-    
-    func showError() {
-        // Show error alert or message
-    }
+ 
 }
 
 // MARK: - StatisticsUserNFTCollectionViewCellDelegate

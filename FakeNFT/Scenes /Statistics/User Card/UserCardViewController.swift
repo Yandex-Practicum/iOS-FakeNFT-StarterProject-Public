@@ -61,15 +61,18 @@ final class UserCardViewController: UIViewController {
     
     private func updateUIElements(){
         presenter?.updateUser()
-        if let userToShow = user {
-            if let url = URL(string: userToShow.avatar) {
-                userImageImageView.loadImage(from: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
-                userImageImageView.tintColor = .nftPlaceHolderGray
-        }
-            userNameLabel.text = userToShow.name
-            userBioLabel.text = userToShow.description
-            navItemItemsAmount.text = "(\(userToShow.nfts.count))"
-        }
+          if let userToShow = user {
+              let placeholderImage = UIImage(systemName: "person.crop.circle.fill")
+              if let url = URL(string: userToShow.avatar) {
+                  userImageImageView.loadImage(from: url, placeholder: placeholderImage)
+              } else {
+                  userImageImageView.image = placeholderImage
+              }
+              userImageImageView.tintColor = .nftPlaceHolderGray
+              userNameLabel.text = userToShow.name
+              userBioLabel.text = userToShow.description
+              navItemItemsAmount.text = "(\(userToShow.nfts.count))"
+          }
     }
     
     private func prepareNavBar(){

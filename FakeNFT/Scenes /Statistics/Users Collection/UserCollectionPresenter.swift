@@ -1,3 +1,10 @@
+//
+//  UserCollectionPresenter.swift
+//  FakeNFT
+//
+//  Created by Vladimir Vinakheras on 12.07.2024.
+//
+
 import Foundation
 import UIKit
 import ProgressHUD
@@ -26,9 +33,7 @@ final class UserCollectionPresenter {
         userCollectionNetworkService.fetchNFTCollectionFrom(user: selectedUser) { [weak self] in
             guard let self = self else { return }
             self.collectionList = self.userCollectionNetworkService.getNFTCollection()
-            if self.collectionList.isEmpty {
-                self.view?.showError()
-            } else {
+            if !self.collectionList.isEmpty {
                 self.view?.updateCollectionList(with: self.collectionList)
             }
             self.view?.hideLoading()

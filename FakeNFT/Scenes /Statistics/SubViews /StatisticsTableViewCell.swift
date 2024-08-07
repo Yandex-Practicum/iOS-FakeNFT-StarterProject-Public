@@ -119,10 +119,12 @@ final class StatisticsTableViewCell: UITableViewCell {
     }
     
     func setUserImage(with userImageURL: String) {
-           if let url = URL(string: userImageURL) {
-               userAvatarImageView.loadImage(from: url, placeholder: UIImage(systemName: "person.crop.circle.fill"))
-               userAvatarImageView.tintColor = .nftPlaceHolderGray
-           }
-       }
-    
+        let placeholderImage = UIImage(systemName: "person.crop.circle.fill")
+        userAvatarImageView.image = placeholderImage
+        userAvatarImageView.tintColor = .nftPlaceHolderGray
+
+        if let url = URL(string: userImageURL) {
+            userAvatarImageView.loadImage(from: url, placeholder: placeholderImage)
+        }
+    }
 }

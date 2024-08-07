@@ -92,7 +92,6 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         nftNameLabel.font = .bodyBold
         nftNameLabel.textAlignment = .natural
         nftPriceLabel.font = .caption3
-       // cartButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         cartButton.setImage(Asset.Images.bagCustom, for: .normal)
         cartButton.tintColor = .nftBlack
         cartButton.addTarget(self, action: #selector(didCartButtonTapped), for: .touchUpInside)
@@ -131,7 +130,6 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         bottomContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(starsHorizontalStack.snp.bottom).offset(4)
-           // make.width.equalTo(108)
             make.height.equalTo(40)
         }
         
@@ -159,6 +157,9 @@ final class StatisticsUserNFTCollectionViewCell : UICollectionViewCell {
         }
     }
     func setNFTImage(with newImage: String){
+        let placeholderImage = UIImage(systemName: "photo")
+        
+        nftImageView.image = placeholderImage
         if let url = URL(string: newImage){
             nftImageView.loadImage(from: url)
         }
