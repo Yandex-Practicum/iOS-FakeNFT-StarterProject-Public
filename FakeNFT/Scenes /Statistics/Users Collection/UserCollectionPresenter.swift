@@ -12,7 +12,8 @@ import ProgressHUD
 protocol UserCollectionPresenterProtocol: AnyObject {
     func getCollectionList() -> [NFTItem]
     func setUser(with newUser: NFTUser)
-    func loadData(completion: @escaping () -> Void)
+    func loadData(completion: @escaping () -> Void)   
+    func dismissProgressIndicator()
 }
 
 final class UserCollectionPresenter {
@@ -46,6 +47,10 @@ final class UserCollectionPresenter {
 // MARK: UsersCollectionPresenterProtocol
 
 extension UserCollectionPresenter: UserCollectionPresenterProtocol {
+    func dismissProgressIndicator() {
+        userCollectionNetworkService.dismissProgressIndicator()
+    }
+    
     func setUser(with newUser: NFTUser) {
         self.selectedUser = newUser
     }

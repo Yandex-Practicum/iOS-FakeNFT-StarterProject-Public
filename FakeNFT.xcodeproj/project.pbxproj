@@ -48,6 +48,7 @@
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 		E745AD262C56C2E0002DFC1F /* StatisticsUsersNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E745AD252C56C2E0002DFC1F /* StatisticsUsersNetworkService.swift */; };
 		E793E27E2C6377C200D289A1 /* UserCollectionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E793E27D2C6377C200D289A1 /* UserCollectionNetworkService.swift */; };
+		E793E2892C668C7C00D289A1 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E793E2882C668C7C00D289A1 /* PlaceholderView.swift */; };
 		E7C7FD5C2C5AA5110068AF77 /* ErrorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C7FD5B2C5AA5110068AF77 /* ErrorAlertController.swift */; };
 		E7C7FD5E2C5AC9990068AF77 /* UImageViewExtension .swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C7FD5D2C5AC9990068AF77 /* UImageViewExtension .swift */; };
 		E7EC3BBD2C51142900DF6504 /* Statistics.md in Resources */ = {isa = PBXBuildFile; fileRef = E7EC3BBC2C51142900DF6504 /* Statistics.md */; };
@@ -129,6 +130,7 @@
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		E745AD252C56C2E0002DFC1F /* StatisticsUsersNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsUsersNetworkService.swift; sourceTree = "<group>"; };
 		E793E27D2C6377C200D289A1 /* UserCollectionNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionNetworkService.swift; sourceTree = "<group>"; };
+		E793E2882C668C7C00D289A1 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		E7C7FD5B2C5AA5110068AF77 /* ErrorAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertController.swift; sourceTree = "<group>"; };
 		E7C7FD5D2C5AC9990068AF77 /* UImageViewExtension .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UImageViewExtension .swift"; sourceTree = "<group>"; };
 		E7EC3BBC2C51142900DF6504 /* Statistics.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Statistics.md; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				E7EC3BC52C511A0100DF6504 /* StatisticsCustomNavBar.swift */,
 				E7EC3BDF2C52FE6200DF6504 /* StatisticsUserNFTCollectionViewCell.swift */,
 				E7EC3BC62C511A0100DF6504 /* StatisticsTableViewCell.swift */,
+				E793E2882C668C7C00D289A1 /* PlaceholderView.swift */,
 			);
 			path = "SubViews ";
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				F3EAEF482C41397700834E53 /* ModulesAssembly.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
+				E793E2892C668C7C00D289A1 /* PlaceholderView.swift in Sources */,
 				E7EC3BC42C5119C700DF6504 /* StatisticsViewController.swift in Sources */,
 				F3EAEF4F2C413DFD00834E53 /* ProfileScreenModel.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,

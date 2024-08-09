@@ -23,13 +23,10 @@ final class UserCollectionViewController: UIViewController {
     private let interItemSpacing = CGFloat(integerLiteral: 9)
     private let interLinesSpacing = CGFloat(integerLiteral: 8)
     
-    private let emptyListImageView :  UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "photo.on.rectangle")
-        imageView.frame.size = CGSize(width: 80, height: 80)
-        imageView.tintColor = .nftPlaceHolderGray
-        imageView.isHidden = true
-        return imageView
+    private let placeholderView : PlaceholderView = {
+        let phView = PlaceholderView()
+        phView.isHidden = true
+        return phView
     }()
     
     init() {
@@ -50,26 +47,21 @@ final class UserCollectionViewController: UIViewController {
         prepareNavBar()
         prepareNFTCollectionView()
         activatingConstraints()
-        handleStartView()
-
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
     }
-    
     private func fetchData() {
         presenter?.loadData { [weak self] in
             self?.nftCollectionView.reloadData()
-            self?.handleStartView()
-        
+            self?.handleStartView(with: self?.presenter?.getCollectionList())
         }
     }
     
     private func setupUI() {
-        for subView in [customNavBar, nftCollectionView, emptyListImageView] {
+        for subView in [customNavBar, nftCollectionView, placeholderView] {
             view.addSubview(subView)
         }
     }
@@ -80,6 +72,8 @@ final class UserCollectionViewController: UIViewController {
         customNavBar.isTitleInvisible(it_s: false)
         customNavBar.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
+    
+    
     
     private func prepareNFTCollectionView() {
         nftCollectionView.dataSource = self
@@ -101,34 +95,27 @@ final class UserCollectionViewController: UIViewController {
             make.bottom.equalTo(view.snp.bottom)
         }
         
-        emptyListImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(view.snp.centerY)
-            make.centerX.equalTo(view.snp.centerX)
-            make.height.equalTo(80)
-            make.width.equalTo(80)
-        }
-    }
-     func handleStartView(){
-         guard let presenter = presenter else {return}
-         if (presenter.getCollectionList().isEmpty){
-            showEmptyListView()
-        }else{
-            hideEmptyListView()
+        placeholderView.snp.makeConstraints { make in
+            make.top.equalTo(customNavBar.snp.bottom)
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    private func showEmptyListView() {
-        emptyListImageView.isHidden = false
-        view.bringSubviewToFront(emptyListImageView)
-    }
-    private func hideEmptyListView() {
-        emptyListImageView.isHidden = true
-        view.sendSubviewToBack(emptyListImageView)
+    func handleStartView(with collectionList: [NFTItem]?) {
+        let isCollectionViewEmpty = collectionList?.isEmpty
+        placeholderView.isHidden = !(isCollectionViewEmpty ?? false)
+
+        if isCollectionViewEmpty ?? false {
+             view.bringSubviewToFront(placeholderView)
+         } else {
+             view.sendSubviewToBack(placeholderView)
+         }
     }
     
     // MARK: - OBJC Functions
     @objc private func backButtonTapped() {
         dismiss(animated: true, completion: nil)
+        presenter?.dismissProgressIndicator()
     }
 }
 
@@ -149,6 +136,7 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter?.getCollectionList().count ?? 0
+           
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -177,7 +165,7 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
 extension UserCollectionViewController: UserCollectionViewProtocol {
     func updateCollectionList(with collectionList: [NFTItem]) {
             self.nftCollectionView.reloadData()
-        handleStartView()
+    
     }
     
     func showLoading() {

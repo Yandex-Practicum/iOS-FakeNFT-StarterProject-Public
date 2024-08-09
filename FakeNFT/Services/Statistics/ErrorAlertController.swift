@@ -10,12 +10,12 @@ import UIKit
 
 class ErrorAlertController: UIAlertController {
     static func showError(on viewController: UIViewController, retryHandler: @escaping () -> Void) {
-        let alert = ErrorAlertController(title: "Error",
-                                         message: "Impossible to get the data from server.",
+        let alert = ErrorAlertController(title: "Ошибка",
+                                         message: "Не удалось получить данные",
                                          preferredStyle: .alert)
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let retryAction = UIAlertAction(title: "Try Again", style: .default) { _ in
+        let cancelAction = UIAlertAction(title: "Отменя", style: .cancel, handler: nil)
+        let retryAction = UIAlertAction(title: "Повторить", style: .default) { _ in
             retryHandler()
         }
 

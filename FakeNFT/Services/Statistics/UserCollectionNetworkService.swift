@@ -14,6 +14,7 @@ final class UserCollectionItemNetworkRequest : NetworkRequest {
     var token: String?
     var itemId: String?
     
+    
     init(itemId: String?){
         guard let itemId = itemId else {return}
         let endpointURL = RequestConstants.baseURL + RequestConstants.itemById + itemId
@@ -26,11 +27,25 @@ final class UserCollectionItemNetworkRequest : NetworkRequest {
 protocol UserCollectionNetworkServiceProtocol: AnyObject {
     func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping () -> Void)
     func getNFTCollection() -> [NFTItem]
+    func dismissProgressIndicator()
 }
 
 final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
+    func dismissProgressIndicator() {
+        semaphore.wait()
+             if ongoingTasks > 0 {
+                 dispatchGroup.leave()
+                 ongoingTasks -= 1
+             }
+             semaphore.signal()
+    }
+    
     
     private var userCollection: [NFTItem] = []
+    
+    private var ongoingTasks = 0
+    private let semaphore = DispatchSemaphore(value: 1)
+    let dispatchGroup = DispatchGroup()
     
     let networkClient: NetworkClient
     
@@ -44,15 +59,16 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
     func fetchNFTCollectionFrom(user: NFTUser, completion: @escaping () -> Void) {
         ProgressHUD.show()
         self.userCollection = []
-        
-        let dispatchGroup = DispatchGroup()
-        
+       
         for itemId in user.nfts {
             dispatchGroup.enter()
+            semaphore.wait()
+            ongoingTasks += 1
+            semaphore.signal()
             let request = UserCollectionItemNetworkRequest(itemId: itemId)
             networkClient.send(request: request , type: NFTItem.self){  [weak self] result in
                 guard let self = self else { 
-                    dispatchGroup.leave()
+                    self?.dispatchGroup.leave()
                     return }
                 switch result {
                 case .success(let nftItem):
@@ -65,13 +81,14 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
                         }
                     }
                 }
-                dispatchGroup.leave()
+                self.dismissProgressIndicator()
             }
         }
         dispatchGroup.notify(queue: .main) {
-                ProgressHUD.dismiss()
+            ProgressHUD.dismiss()
             completion()
             }
+       
     }
     
     
