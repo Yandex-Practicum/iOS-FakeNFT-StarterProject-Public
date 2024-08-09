@@ -47,17 +47,19 @@ final class UserCollectionViewController: UIViewController {
         prepareNavBar()
         prepareNFTCollectionView()
         activatingConstraints()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
     }
+    
     private func fetchData() {
         presenter?.loadData { [weak self] in
-            self?.nftCollectionView.reloadData()
-            self?.handleStartView(with: self?.presenter?.getCollectionList())
-        }
+                   self?.nftCollectionView.reloadData()
+                   self?.handleStartView(with: self?.presenter?.getCollectionList())
+           }
     }
     
     private func setupUI() {
@@ -104,18 +106,20 @@ final class UserCollectionViewController: UIViewController {
     func handleStartView(with collectionList: [NFTItem]?) {
         let isCollectionViewEmpty = collectionList?.isEmpty
         placeholderView.isHidden = !(isCollectionViewEmpty ?? false)
-
+        
         if isCollectionViewEmpty ?? false {
-             view.bringSubviewToFront(placeholderView)
-         } else {
-             view.sendSubviewToBack(placeholderView)
-         }
+            ProgressHUD.dismiss()
+            view.bringSubviewToFront(placeholderView)
+        } else {
+            view.sendSubviewToBack(placeholderView)
+        }
     }
     
     // MARK: - OBJC Functions
     @objc private func backButtonTapped() {
+        ProgressHUD.dismiss()
         dismiss(animated: true, completion: nil)
-        presenter?.dismissProgressIndicator()
+     
     }
 }
 
@@ -136,7 +140,7 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter?.getCollectionList().count ?? 0
-           
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -164,18 +168,17 @@ extension UserCollectionViewController: UICollectionViewDelegateFlowLayout, UICo
 
 extension UserCollectionViewController: UserCollectionViewProtocol {
     func updateCollectionList(with collectionList: [NFTItem]) {
-            self.nftCollectionView.reloadData()
-    
+        self.nftCollectionView.reloadData()
+        self.handleStartView(with: collectionList)
     }
     
     func showLoading() {
-        ProgressHUD.show("Loading...")
+            ProgressHUD.show()
     }
     
     func hideLoading() {
-        ProgressHUD.dismiss()
+            ProgressHUD.dismiss()
     }
- 
 }
 
 // MARK: - StatisticsUserNFTCollectionViewCellDelegate

@@ -73,7 +73,7 @@ final class UserCollectionNetworkService: UserCollectionNetworkServiceProtocol {
                 switch result {
                 case .success(let nftItem):
                     self.userCollection.append(nftItem)
-                case .failure(let error):
+                case .failure(_):
                     if let window = currentWindow(),
                        let viewController = window.rootViewController {
                         ErrorAlertController.showError(on: viewController) {
