@@ -73,8 +73,10 @@ final class StatisticsTableViewCell: UITableViewCell {
         
         nftAmountLabel.snp.makeConstraints { make in
             make.trailing.equalTo(horizontalContainer.snp.trailing).inset(16)
+            make.leading.greaterThanOrEqualTo(userNameLabel.snp.trailing).offset(23)
             make.centerY.equalTo(userAvatarImageView)
             make.height.equalTo(28)
+            make.width.equalTo(31)
         }
     }
     
@@ -90,6 +92,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         userNameLabel.textAlignment = .natural
         userNameLabel.font = .headline3
         userNameLabel.textColor = .nftBlack
+        userNameLabel.lineBreakMode = .byTruncatingTail
     }
     private func prepareNFTAmonuntLabel() {
         nftAmountLabel.textAlignment = .center
