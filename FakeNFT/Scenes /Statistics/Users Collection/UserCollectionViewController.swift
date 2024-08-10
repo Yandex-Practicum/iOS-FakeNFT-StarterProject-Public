@@ -185,10 +185,10 @@ extension UserCollectionViewController: UserCollectionViewProtocol {
 
 extension UserCollectionViewController: StatisticsUserNFTCollectionViewCellDelegate {
     func onLikeButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
-        // Handle like button tap
+        // Handle like button tap.
     }
     
     func addToCartButtonTapped(cell: StatisticsUserNFTCollectionViewCell) {
-        // Handle add to cart button tap
+        // Handle add to cart button tap.
     }
 }
