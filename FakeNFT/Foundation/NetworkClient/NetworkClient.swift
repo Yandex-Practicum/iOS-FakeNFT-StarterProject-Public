@@ -120,11 +120,20 @@ struct DefaultNetworkClient: NetworkClient {
 
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
-        if let dto = request.dto,
-           let dtoEncoded = try? encoder.encode(dto) {
+        if let dtoDictionary = request.dto?.asDictionary() {
+            var urlComponents = URLComponents()
+            let queryItems = dtoDictionary.map { field in
+                URLQueryItem(
+                    name: field.key,
+                    value: field.value
+                    )
+            }
+            urlComponents.queryItems = queryItems
+            urlRequest.httpBody = urlComponents.query?.data(using: .utf8)
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = dtoEncoded
         }
+
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
         return urlRequest
     }
