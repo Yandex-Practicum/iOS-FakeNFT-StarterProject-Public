@@ -26,6 +26,6 @@ struct ExampleDtoObject: Dto {
 }
 
 struct ExamplePutResponse: Decodable {
-    let id: String
-    let success: Bool
+    let name: String
+    let devices: [String]
 }
