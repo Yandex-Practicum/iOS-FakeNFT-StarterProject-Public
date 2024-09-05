@@ -1,1 +1,63 @@
+// Tab
+"Tab.catalog" = "Catalog";
+"Tab.profile" = "Profile";
+"Tab.cart" = "Cart";
+"Tab.statistics" = "Statistics";
 
+// Alerts
+"Alert.sortByTitle" = "By Title";
+"Alert.sortByNftQuantity" = "By NFT Quantity";
+"Alert.sortByPrice" = "By Price";
+"Alert.sortByRating" = "By Rating";
+"Alert.sortByName" = "By Name";
+"Alert.closeBtn" = "Close";
+"Alert.cancleBtn" = "Cancel";
+"Alert.sortTitle" = "Sort";
+
+// Common
+"Common.price" = "Price";
+"Common.ETH" = "ETH";
+
+// Catalog
+"Catalog.openNft" = "Open NFT";
+"Catalog.collectionAuthor" = "Collection Author: ";
+"Catalog.addToCart" = "Add to Cart";
+"Catalog.toSalerSite" = "Go to Seller's Site";
+
+// Cart
+"Cart.toPay" = "To Pay";
+"Cart.deleteMessage" = "Are you sure you want to remove this item from the cart?";
+"Cart.deleteBrn" = "Remove";
+"Cart.backBtn" = "Back";
+"Cart.NavTitle" = "Select Payment Method";
+"Cart.userAgreementMsg" = "By making a purchase, you agree to the";
+"Cart.userAgreement" = "User Agreement";
+"Cart.payBtn" = "Pay";
+"Cart.successMsg" = "Success! Payment was completed, congratulations on your purchase!";
+"Cart.backToCartBtn" = "Back to Catalog";
+"Cart.errorMsg" = "Payment failed";
+"Cart.cancleBtn" = "Cancel";
+"Cart.repeatBtn" = "Repeat";
+"Cart.emptyMsg" = "Cart is empty";
+
+// Profile
+"Profile.myNft" = "My NFTs";
+"Profile.favoritesNft" = "Favorite NFTs";
+"Profile.aboutAuthor" = "About the Developer";
+"Profile.name" = "Name";
+"Profile.description" = "Description";
+"Profile.site" = "Website";
+"Profile.changePhoto" = "Change Photo";
+"Profile.loadPhoto" = "Upload Image";
+"Profile.emptyNft" = "You have no NFTs yet";
+"Profile.emptyFaforitesNft" = "You have no favorite NFTs yet";
+
+// Statistics
+"Statistics.toAuthorSite" = "Go to User's Site";
+"Statistics.collectionNft" = "NFT Collection";
+
+// Error
+"Error.network" = "Network error occurred";
+"Error.unknown" = "An unknown error occurred";
+"Error.repeat" = "Repeat";
+"Error.title" = "Error";

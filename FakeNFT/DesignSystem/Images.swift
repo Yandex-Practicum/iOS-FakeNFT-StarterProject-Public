@@ -18,4 +18,15 @@ enum Images {
             }
         }
     }
+    enum Common {
+        static let favoriteInactive = R.image.favoriteInactive()
+        static let favoriteActive = R.image.favoriteActive()
+        static let startInactive = R.image.starInactive()
+        static let starActive = R.image.starActive()
+        static let addCart = R.image.addCartBtn()
+        static let deleteCartBtn = R.image.deleteCartBtn()
+        static let addCartBtn = R.image.addCartBtn()
+        static let sortBtn = R.image.sortBtn()
+        static let closeBtn = R.image.sortBtn()
+    }
 }

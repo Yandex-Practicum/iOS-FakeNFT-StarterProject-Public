@@ -5,14 +5,56 @@
 "Tab.statistics" = "Статистика";
 
 // Alerts
+"Alert.sortByTitle" = "По названию";
+"Alert.sortByNftQuantity" = "По количеству NFT";
+"Alert.sortByPrice" = "По цене";
+"Alert.sortByRating" = "По рейтингу";
+"Alert.sortByName" = "По имени";
+"Alert.closeBtn" = "Закрыть";
+"Alert.cancleBtn" = "Отменить";
+"Alert.sortTitle" = "Сортировка";
+
+// Common
+"Common.price" = "Цена";
+"Common.ETH" = "ETH";
 
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
-// Profile
+"Catalog.collectionAuthor" = "Автор коллекции: ";
+"Catalog.addToCart" = "Добавить в корзину";
+"Catalog.toSalerSite" = "Перейти на сайт продавца";
 
 // Cart
+"Cart.toPay" = "К оплате";
+"Cart.deleteMessage" = "Вы уверены, что хотите удалить объект из корзины?";
+"Cart.deleteBrn" = "Удалить";
+"Cart.backBtn" = "Вернуться";
+"Cart.NavTitle" = "Выберите способ оплаты";
+"Cart.userAgreementMsg" = "Совершая покупку, вы соглашаетесь с условиями";
+"Cart.userAgreement" = "Пользовательского соглашения";
+"Cart.payBtn" = "Оплатить";
+"Cart.successMsg" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"Cart.backToCartBtn" = "Вернуться в каталог";
+"Cart.errorMsg" = "Не удалось произвести оплату";
+"Cart.cancleBtn" = "Отмена";
+"Cart.repeatBtn" = "Повторить";
+"Cart.emptyMsg" = "Корзина пуста";
+
+// Profile
+"Profile.myNft" = "Мои NFT";
+"Profile.favoritesNft" = "Избранные NFT";
+"Profile.aboutAuthor" = "О разработчике";
+"Profile.name" = "Имя";
+"Profile.description" = "Описание";
+"Profile.site" = "Сайт";
+"Profile.changePhoto" = "Сменить фото";
+"Profile.loadPhoto" = "Загрузить изображение";
+"Profile.emptyNft" = "У Вас еще нет NFT";
+"Profile.emptyFaforitesNft" = "У Вас еще нет избранных NFT";
 
 // Statistics
+"Statistics.toAuthorSite" = "Перейти на сайт пользователя";
+"Statistics.collectionNft" = "Коллекция NFT";
 
 // Error
 "Error.network" = "Произошла ошибка сети";
