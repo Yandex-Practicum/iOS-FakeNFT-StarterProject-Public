@@ -55,8 +55,8 @@ enum Strings {
         static let successMsg = R.string.localizable.cartSuccessMsg()
         static let backToCartBtn = R.string.localizable.cartBackToCartBtn()
         static let errorMsg = R.string.localizable.cartErrorMsg()
-        static let cancleBtn = R.string.localizable.cartCancleBtn()
-        static let repeatBtn = R.string.localizable.cartRepeatBtn()
+        static let cancleBtn = R.string.localizable.commonCancleBtn()
+        static let repeatBtn = R.string.localizable.commonRepeatBtn()
         static let emptyMsg = R.string.localizable.cartEmptyMsg()
     }
     

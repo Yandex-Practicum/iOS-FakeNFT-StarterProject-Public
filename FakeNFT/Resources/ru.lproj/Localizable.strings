@@ -17,6 +17,8 @@
 // Common
 "Common.price" = "Цена";
 "Common.ETH" = "ETH";
+"Common.cancleBtn" = "Отмена";
+"Common.repeatBtn" = "Повторить";
 
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
@@ -36,8 +38,6 @@
 "Cart.successMsg" = "Успех! Оплата прошла, поздравляем с покупкой!";
 "Cart.backToCartBtn" = "Вернуться в каталог";
 "Cart.errorMsg" = "Не удалось произвести оплату";
-"Cart.cancleBtn" = "Отмена";
-"Cart.repeatBtn" = "Повторить";
 "Cart.emptyMsg" = "Корзина пуста";
 
 // Profile
@@ -55,6 +55,7 @@
 // Statistics
 "Statistics.toAuthorSite" = "Перейти на сайт пользователя";
 "Statistics.collectionNft" = "Коллекция NFT";
+"Statistics.errorMsg" = "Не удалось получить данные";
 
 // Error
 "Error.network" = "Произошла ошибка сети";

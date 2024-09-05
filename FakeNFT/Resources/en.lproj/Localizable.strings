@@ -17,6 +17,8 @@
 // Common
 "Common.price" = "Price";
 "Common.ETH" = "ETH";
+"Common.cancleBtn" = "Cancel";
+"Common.repeatBtn" = "Repeat";
 
 // Catalog
 "Catalog.openNft" = "Open NFT";
@@ -36,8 +38,6 @@
 "Cart.successMsg" = "Success! Payment was completed, congratulations on your purchase!";
 "Cart.backToCartBtn" = "Back to Catalog";
 "Cart.errorMsg" = "Payment failed";
-"Cart.cancleBtn" = "Cancel";
-"Cart.repeatBtn" = "Repeat";
 "Cart.emptyMsg" = "Cart is empty";
 
 // Profile
@@ -55,6 +55,7 @@
 // Statistics
 "Statistics.toAuthorSite" = "Go to User's Site";
 "Statistics.collectionNft" = "NFT Collection";
+"Statistics.errorMsg" = "Failed to retrieve data";
 
 // Error
 "Error.network" = "Network error occurred";
