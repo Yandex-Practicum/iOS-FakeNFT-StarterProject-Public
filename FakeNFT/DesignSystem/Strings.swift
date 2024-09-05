@@ -12,10 +12,10 @@ enum Strings {
     enum TabBar {
         static func title(for tab: Tabs) -> String {
             switch tab {
-            case .catalog: return "Каталог"
-            case .cart: return "Корзина"
-            case .profile: return "Профиль"
-            case .statistic: return "Статистика"
+            case .catalog: return R.string.localizable.tabCatalog()
+            case .cart: return R.string.localizable.tabCart()
+            case .profile: return R.string.localizable.tabProfile()
+            case .statistic: return R.string.localizable.tabStatistics()
             }
         }
     }

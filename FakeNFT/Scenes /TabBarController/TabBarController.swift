@@ -9,7 +9,7 @@ enum Tabs: Int, CaseIterable {
 
 final class TabBarController: UITabBarController {
     
-    var servicesAssembly: ServicesAssembly!
+    var servicesAssembly: ServicesAssembly
     
     private let catalogTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.catalog", comment: ""),
@@ -17,13 +17,17 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init(servicesAssembly: ServicesAssembly) {
+        self.servicesAssembly = servicesAssembly
+    
+        super.init(nibName: nil, bundle: nil)
         
         configureAppearance()
-        view.backgroundColor = .systemBackground
-        
         switchTo(tab: .profile)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func switchTo(tab: Tabs) {
