@@ -29,5 +29,6 @@ enum Images {
         static let sortBtn = R.image.sortBtn()
         static let closeBtn = R.image.sortBtn()
         static let backBtn = R.image.backward()
+        static let forwardBtn = UIImage(systemName: "chevron.right")
     }
 }
