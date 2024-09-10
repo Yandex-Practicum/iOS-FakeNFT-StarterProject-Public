@@ -24,4 +24,12 @@ final class CartViewModel {
     nftItems.remove(at: index)
     onItemsUpdated?()
   }
+
+  func totalAmount() -> Double {
+    return nftItems.reduce(0) { $0 + $1.price }
+  }
+
+  func totalQuantity() -> Int {
+    return nftItems.count
+  }
 }

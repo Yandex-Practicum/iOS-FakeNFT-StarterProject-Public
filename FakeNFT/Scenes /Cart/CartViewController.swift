@@ -12,6 +12,7 @@ final class CartViewController: UIViewController {
     viewModel.onItemsUpdated = {
       DispatchQueue.main.async {
         self.tableView.reloadData()
+        self.updateSummary()
       }
     }
     viewModel.loadItems()
@@ -151,6 +152,15 @@ final class CartViewController: UIViewController {
       backgroundView.heightAnchor.constraint(equalToConstant: 76)
     ])
   }
+
+  private func updateSummary() {
+    let totalAmount = viewModel.totalAmount()
+    let totalQuantity = viewModel.totalQuantity()
+
+    quantityNFTLabel.text = "\(totalQuantity) NFT"
+    totalAmountLabel.text = "\(totalAmount) \(Strings.Common.eth)"
+  }
+
 }
 
 extension CartViewController: UITableViewDataSource {
