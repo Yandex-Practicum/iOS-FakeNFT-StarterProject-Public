@@ -107,7 +107,8 @@ final class CartViewController: UIViewController {
 
   @objc private func paymentButtonTapped() {
     let paymentViewController = PaymentViewController()
-    present(paymentViewController, animated: true, completion: nil)
+    navigationController?.pushViewController(paymentViewController, animated: true)
+//    present(paymentViewController, animated: true, completion: nil)
   }
 
   @objc private func sortButtonTapped() {
@@ -127,6 +128,18 @@ final class CartViewController: UIViewController {
     present(actionSheet, animated: true, completion: nil)
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    navigationController?.setNavigationBarHidden(false, animated: animated)
+  }
+
   func setupAppearance() {
     [tableView, sortButton, placeholderLabel, backgroundView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
@@ -138,7 +151,7 @@ final class CartViewController: UIViewController {
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       tableView.bottomAnchor.constraint(equalTo: backgroundView.topAnchor),
 
-      sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
+      sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
       sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
       sortButton.widthAnchor.constraint(equalToConstant: 42),
       sortButton.heightAnchor.constraint(equalToConstant: 42),
