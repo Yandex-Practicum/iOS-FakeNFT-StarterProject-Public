@@ -108,7 +108,8 @@ final class CartViewController: UIViewController {
   @objc private func paymentButtonTapped() {
     let paymentViewController = PaymentViewController()
     navigationController?.pushViewController(paymentViewController, animated: true)
-//    present(paymentViewController, animated: true, completion: nil)
+    navigationController?.navigationBar.tintColor = UIColor.segmentActive
+    navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
   }
 
   @objc private func sortButtonTapped() {
