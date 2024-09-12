@@ -14,5 +14,12 @@ final class PaymentViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    setupAppearance()
+  }
+
+  
+
+  func setupAppearance() {
+
   }
 }

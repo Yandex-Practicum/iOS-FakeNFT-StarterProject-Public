@@ -13,6 +13,7 @@ final class CartViewController: UIViewController {
       DispatchQueue.main.async {
         self.tableView.reloadData()
         self.updateSummary()
+        self.updateHolders()
       }
     }
     viewModel.loadItems()
@@ -175,6 +176,13 @@ final class CartViewController: UIViewController {
     totalAmountLabel.text = "\(totalAmount) \(Strings.Common.eth)"
   }
 
+  private func updateHolders() {
+    tableView.isHidden = viewModel.nftItems.isEmpty
+    payButton.isHidden = viewModel.nftItems.isEmpty
+    backgroundView.isHidden = viewModel.nftItems.isEmpty
+    sortButton.isHidden = viewModel.nftItems.isEmpty
+    placeholderLabel.isHidden = !viewModel.nftItems.isEmpty
+  }
 }
 
 extension CartViewController: UITableViewDataSource {
