@@ -116,13 +116,16 @@ final class CartViewController: UIViewController {
   @objc private func sortButtonTapped() {
     let actionSheet = UIAlertController(title: Strings.Alerts.sortTitle, message: nil, preferredStyle: .actionSheet)
     let priceSort = UIAlertAction(title: Strings.Alerts.sortByPrice, style: .default) { _ in
-      // TODO: Add price sort
+      self.viewModel.sortByPrice()
+      self.tableView.reloadData()
     }
     let ratingSort = UIAlertAction(title: Strings.Alerts.sortByRating, style: .default) { _ in
-      // TODO: Add rating sort
+      self.viewModel.sortByRating()
+      self.tableView.reloadData()
     }
     let titleSort = UIAlertAction(title: Strings.Alerts.sortByName, style: .default) { _ in
-      // TODO: Add name sort
+      self.viewModel.sortByName()
+      self.tableView.reloadData()
     }
     let cancelAction = UIAlertAction(title: Strings.Alerts.closeBtn, style: .cancel)
 

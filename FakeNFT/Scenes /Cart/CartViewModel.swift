@@ -2,7 +2,11 @@ import UIKit
 
 final class CartViewModel {
 
-  var nftItems: [NftItem] = []
+  var nftItems: [NftItem] = [] {
+    didSet {
+      onItemsUpdated?()
+    }
+  }
   var onItemsUpdated: (() -> Void)?
   var onLoading: ((Bool) -> Void)?
 
@@ -31,5 +35,17 @@ final class CartViewModel {
 
   func totalQuantity() -> Int {
     return nftItems.count
+  }
+
+  func sortByPrice() {
+    nftItems.sort { $0.price < $1.price }
+  }
+
+  func sortByRating() {
+    nftItems.sort { $0.rating > $1.rating }
+  }
+
+  func sortByName() {
+    nftItems.sort { $0.name < $1.name }
   }
 }
