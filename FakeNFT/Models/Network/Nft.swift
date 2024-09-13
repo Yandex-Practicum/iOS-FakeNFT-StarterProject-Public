@@ -2,12 +2,12 @@ import Foundation
 
 // MARK: - Nft
 struct Nft: Codable {
-    let createdAt: Date
+    let createdAt: String
     let name: String
     let images: [URL]
     let rating: Int
     let description: String
-    let price: Double
+    let price: Float
     let author: String
     let id: String
 }
