@@ -66,7 +66,7 @@ final class PaymentViewController: UIViewController {
     agreementButton.setTitle(Strings.Cart.userAgreement, for: .normal)
     agreementButton.setTitleColor(UIColor.link, for: .normal)
     agreementButton.titleLabel?.font = .systemFont(ofSize: 13)
-    agreementButton.addTarget(PaymentViewController.self, action: #selector(showAgreement), for: .touchUpInside)
+    agreementButton.addTarget(self, action: #selector(showAgreement), for: .touchUpInside)
     return agreementButton
   }()
 
