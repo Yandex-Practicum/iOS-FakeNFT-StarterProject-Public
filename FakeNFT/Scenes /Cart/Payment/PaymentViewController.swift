@@ -1,11 +1,3 @@
-//
-//  PaymentViewController.swift
-//  FakeNFT
-//
-//  Created by Alexander Salagubov on 09.09.2024.
-//
-
-import Foundation
 import UIKit
 
 final class PaymentViewController: UIViewController {
@@ -29,8 +21,8 @@ final class PaymentViewController: UIViewController {
   }
 
   override func viewDidLoad() {
-    super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    super.viewDidLoad()
     setupAppearance()
   }
 
@@ -95,7 +87,6 @@ final class PaymentViewController: UIViewController {
 
     backgroundView.addSubview(agreementLabel)
     backgroundView.addSubview(agreementButton)
-    backgroundView.addSubview(payButton)
 
     NSLayoutConstraint.activate([
       agreementLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
@@ -103,21 +94,16 @@ final class PaymentViewController: UIViewController {
 
       agreementButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 16),
       agreementButton.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: 4),
-
-      payButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20),
-      payButton.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 70),
-      payButton.heightAnchor.constraint(equalToConstant: 60),
-      payButton.widthAnchor.constraint(equalToConstant: 343)
     ])
     return backgroundView
   }()
 
   func setupAppearance() {
     title = Strings.Cart.navTitle
-    view.backgroundColor = UIColor.background
+    view.backgroundColor = .systemBackground
     tabBarController?.tabBar.isHidden = true
 
-    [collectionView, stack, backgroundView].forEach {
+    [collectionView, stack, backgroundView, payButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0) }
 
@@ -133,7 +119,12 @@ final class PaymentViewController: UIViewController {
       backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      backgroundView.heightAnchor.constraint(equalToConstant: 186)
+      backgroundView.heightAnchor.constraint(equalToConstant: 186),
+
+      payButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+      payButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      payButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 740),
+      payButton.heightAnchor.constraint(equalToConstant: 60),
     ])
   }
 
