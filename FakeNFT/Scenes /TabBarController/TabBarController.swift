@@ -53,7 +53,7 @@ final class TabBarController: UITabBarController {
         switch tab {
         case .profile: return ProfileViewController()
         case .cart: 
-          let cartVC = CartViewController()
+          let cartVC = CartViewController(servicesAssembly: servicesAssembly)
           let cartNavigationController = UINavigationController (rootViewController: cartVC)
           return cartNavigationController
         case .catalog: return CatalogViewController(servicesAssembly: servicesAssembly)

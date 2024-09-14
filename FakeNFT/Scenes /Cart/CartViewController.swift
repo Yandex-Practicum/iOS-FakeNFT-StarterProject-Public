@@ -5,6 +5,17 @@ final class CartViewController: UIViewController {
 
   private let viewModel = CartViewModel()
 
+  let servicesAssembly: ServicesAssembly
+
+  init(servicesAssembly: ServicesAssembly) {
+    self.servicesAssembly = servicesAssembly
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
@@ -107,7 +118,7 @@ final class CartViewController: UIViewController {
   }()
 
   @objc private func paymentButtonTapped() {
-    let paymentViewController = PaymentViewController()
+    let paymentViewController = PaymentViewController(servicesAssembly: servicesAssembly)
     navigationController?.pushViewController(paymentViewController, animated: true)
     navigationController?.navigationBar.tintColor = UIColor.segmentActive
     navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -135,7 +146,7 @@ final class CartViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-
+    tabBarController?.tabBar.isHidden = false
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 
