@@ -15,6 +15,25 @@ final class CartViewModel {
   var onLoading: ((Bool) -> Void)?
   private var order: Order?
 
+  private enum SortCriteria: String {
+    case price
+    case rating
+    case name
+    case none
+  }
+
+  private var currentSortCriteria: SortCriteria {
+    get {
+      guard let criteria = UserDefaults.standard.string(forKey: "sortCriteria") else {
+        return .none
+      }
+      return SortCriteria(rawValue: criteria) ?? .none
+    }
+    set {
+      UserDefaults.standard.setValue(newValue.rawValue, forKey: "sortCriteria")
+    }
+  }
+
 
   private func loadOrders(completion: @escaping (Order?) -> Void) {
     orderService.loadOrder { [weak self] result in
@@ -22,34 +41,29 @@ final class CartViewModel {
       case .success(let order):
         self?.order = order
         print(order)
-        completion(order) // Передаем order в completion
+        completion(order)
       case .failure(let error):
         print(error.localizedDescription)
-        completion(nil) // Возвращаем nil в случае ошибки
+        completion(nil)
       }
     }
   }
 
   func loadItems() {
     onLoading?(true)
-    ProgressHUD.show()
-
     let dispatchGroup = DispatchGroup()
 
-    // Используем dispatchGroup для ожидания завершения загрузки заказов
     dispatchGroup.enter()
     loadOrders { [weak self] order in
-      // Уходим из dispatchGroup только после получения результата
       dispatchGroup.leave()
 
+      ProgressHUD.show()
       guard let order = order else {
-        // Обработка случая, когда order равен nil (например, ошибка)
         ProgressHUD.dismiss()
         return
       }
 
       if order.nfts.isEmpty {
-        // Если нет NFT, просто выходим
         ProgressHUD.dismiss()
         return
       }
@@ -70,7 +84,6 @@ final class CartViewModel {
         }
       }
 
-      // Уведомляем после завершения всех загрузок NFT
       dispatchGroup.notify(queue: .main) {
         self?.nftItems = nftsFromNetwork
         ProgressHUD.dismiss()
@@ -93,13 +106,29 @@ final class CartViewModel {
 
   func sortByPrice() {
     nftItems.sort { $0.price < $1.price }
+    currentSortCriteria = .price
   }
 
   func sortByRating() {
     nftItems.sort { $0.rating > $1.rating }
+    currentSortCriteria = .rating
   }
 
   func sortByName() {
     nftItems.sort { $0.name < $1.name }
+    currentSortCriteria = .name
+  }
+
+  func applySorting() {
+    switch currentSortCriteria {
+    case .price:
+      sortByPrice()
+    case .rating:
+      sortByRating()
+    case .name:
+      sortByName()
+    case .none:
+      break
+    }
   }
 }

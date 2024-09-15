@@ -62,7 +62,7 @@ final class DeleteViewController: UIViewController {
   
   private lazy var cancelButton: UIButton = {
     let button = UIButton()
-    button.setTitle(Strings.Cart.cancleBtn, for: .normal)
+    button.setTitle(Strings.Cart.backBtn, for: .normal)
     button.setTitleColor(UIColor.textButton, for: .normal)
     button.backgroundColor = UIColor.segmentActive
     button.layer.cornerRadius = 16
@@ -93,34 +93,34 @@ final class DeleteViewController: UIViewController {
   }
   
   private func setupAppearance() {
-    view.backgroundColor = UIColor.clear
+      view.backgroundColor = UIColor.clear
 
-    confirmationLabel.textAlignment = .center
+      confirmationLabel.textAlignment = .center
 
-    [nftImageView, mainStack, buttonStack].forEach {
-      $0.translatesAutoresizingMaskIntoConstraints = false
-      view.addSubview($0) }
+      [nftImageView, confirmationLabel, buttonStack].forEach {
+          $0.translatesAutoresizingMaskIntoConstraints = false
+          view.addSubview($0)
+      }
 
-    NSLayoutConstraint.activate([
-      mainStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      mainStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      mainStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 244),
-      mainStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 56),
-      mainStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -56),
+      NSLayoutConstraint.activate([
+          nftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          nftImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 244),
+          nftImageView.widthAnchor.constraint(equalToConstant: 108),
+          nftImageView.heightAnchor.constraint(equalToConstant: 108),
 
-      buttonStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      buttonStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      buttonStack.heightAnchor.constraint(equalToConstant: 44),
-      buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
-      buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
+          confirmationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          confirmationLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 16),
+          confirmationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+          confirmationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
 
-      nftImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      nftImageView.widthAnchor.constraint(equalToConstant: 108),
-      nftImageView.heightAnchor.constraint(equalToConstant: 108)
-
-    ])
+          buttonStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          buttonStack.topAnchor.constraint(equalTo: confirmationLabel.bottomAnchor, constant: 16),
+          buttonStack.heightAnchor.constraint(equalToConstant: 44),
+          buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+          buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
+      ])
   }
-  
+
   private func setupBlurEffect() {
     let blurEffect = UIBlurEffect(style: .regular)
     let blurEffectView = UIVisualEffectView(effect: blurEffect)

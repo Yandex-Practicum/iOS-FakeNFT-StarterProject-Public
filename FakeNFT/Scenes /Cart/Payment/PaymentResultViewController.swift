@@ -23,10 +23,9 @@ final class PaymentResultViewController: UIViewController {
 
   private lazy var succesLabel: UILabel = {
     let succesLabel = UILabel()
-    succesLabel.font = UIFont.bodyBold
+    succesLabel.font = UIFont.headline3
     succesLabel.text = Strings.Cart.successMsg
-    succesLabel.textColor = UIColor.textPrimary
-    succesLabel.isHidden = true
+    succesLabel.textColor = UIColor.segmentActive
     return succesLabel
   }()
 
@@ -55,7 +54,7 @@ final class PaymentResultViewController: UIViewController {
 
     navigationController?.setNavigationBarHidden(true, animated: true)
 
-    [stack, backToCatalogButton].forEach {
+    [stack, backToCatalogButton, holderImage, succesLabel].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0) }
 
@@ -66,8 +65,13 @@ final class PaymentResultViewController: UIViewController {
       stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
 
       holderImage.heightAnchor.constraint(equalToConstant: 278),
+      holderImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 196),
       holderImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      holderImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+      succesLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 494),
+      succesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      succesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+      succesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
 
       backToCatalogButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       backToCatalogButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
