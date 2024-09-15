@@ -119,7 +119,7 @@ final class CartViewController: UIViewController {
   }()
 
   @objc private func paymentButtonTapped() {
-    let paymentViewController = PaymentViewController(servicesAssembly: servicesAssembly)
+    let paymentViewController = PaymentViewController()
     navigationController?.pushViewController(paymentViewController, animated: true)
     navigationController?.navigationBar.tintColor = UIColor.segmentActive
     navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -127,24 +127,24 @@ final class CartViewController: UIViewController {
 
   @objc private func sortButtonTapped() {
     let actionSheet = UIAlertController(title: Strings.Alerts.sortTitle, message: nil, preferredStyle: .actionSheet)
-    
+
     let priceSort = UIAlertAction(title: Strings.Alerts.sortByPrice, style: .default) { _ in
       self.viewModel.sortByPrice()
       self.tableView.reloadData()
     }
-    
+
     let ratingSort = UIAlertAction(title: Strings.Alerts.sortByRating, style: .default) { _ in
       self.viewModel.sortByRating()
       self.tableView.reloadData()
     }
-    
+
     let titleSort = UIAlertAction(title: Strings.Alerts.sortByName, style: .default) { _ in
       self.viewModel.sortByName()
       self.tableView.reloadData()
     }
-    
+
     let cancelAction = UIAlertAction(title: Strings.Alerts.closeBtn, style: .cancel)
-    
+
     [priceSort, ratingSort, titleSort, cancelAction].forEach { actionSheet.addAction($0) }
     present(actionSheet, animated: true, completion: nil)
   }

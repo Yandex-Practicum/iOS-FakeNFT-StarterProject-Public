@@ -1,19 +1,12 @@
 import UIKit
+import ProgressHUD
 
 final class PaymentViewController: UIViewController {
 
-  let servicesAssembly: ServicesAssembly
-
-  init(servicesAssembly: ServicesAssembly) {
-    self.servicesAssembly = servicesAssembly
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+  private let orderService: OrderService = OrderServiceImpl(networkClient: DefaultNetworkClient())
 
   private var isLoading = false
+
   private var currencies : [Currency] = [] {
     didSet {
       collectionView.reloadData()
@@ -23,7 +16,9 @@ final class PaymentViewController: UIViewController {
   override func viewDidLoad() {
     view.backgroundColor = .systemBackground
     super.viewDidLoad()
+    collectionView.register(PaymentViewCell.self, forCellWithReuseIdentifier: "cell")
     setupAppearance()
+    getCurrencyList()
   }
 
   private lazy var payButton: UIButton = {
@@ -51,13 +46,12 @@ final class PaymentViewController: UIViewController {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .clear
     collectionView.allowsMultipleSelection = false
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.showsVerticalScrollIndicator = false
-    collectionView.register(PaymentViewCell.self, forCellWithReuseIdentifier: "cell")
+    //    collectionView.register(PaymentViewCell.self, forCellWithReuseIdentifier: "cell")
     return collectionView
   }()
 
@@ -103,11 +97,13 @@ final class PaymentViewController: UIViewController {
     view.backgroundColor = .systemBackground
     tabBarController?.tabBar.isHidden = true
 
+
     [collectionView, stack, backgroundView, payButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0) }
 
     NSLayoutConstraint.activate([
+      collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       collectionView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor),
       collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -124,7 +120,7 @@ final class PaymentViewController: UIViewController {
       payButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       payButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       payButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 740),
-      payButton.heightAnchor.constraint(equalToConstant: 60),
+      payButton.heightAnchor.constraint(equalToConstant: 60)
     ])
   }
 
@@ -138,6 +134,34 @@ final class PaymentViewController: UIViewController {
     navigationController?.pushViewController(webViewController, animated: true)
     navigationController?.navigationBar.tintColor = UIColor.segmentActive
   }
+
+  private func getCurrencyList() {
+    let dispatchGroup = DispatchGroup()
+    dispatchGroup.enter()
+    ProgressHUD.show()
+    ProgressHUD.animationType = .circleSpinFade
+    if !isLoading {
+      isLoading = true
+      orderService.loadCurrencyList { (result: Result<[Currency], Error>) in
+        switch result {
+        case .success(let currencies):
+          ProgressHUD.dismiss()
+          self.currencies = currencies
+        case .failure(let error):
+          ProgressHUD.showError()
+          print(error.localizedDescription)
+        }
+      }
+      dispatchGroup.leave()
+
+      self.isLoading = false
+    }
+    dispatchGroup.notify(queue: .main) {
+      if !self.currencies.isEmpty {
+        self.collectionView.reloadData()
+      }
+    }
+  }
 }
 
 extension PaymentViewController: UICollectionViewDataSource {
@@ -148,7 +172,7 @@ extension PaymentViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? PaymentViewCell else { return UICollectionViewCell() }
     let currency = currencies[indexPath.item]
-//    cell.configureCell(currency: currency)
+    cell.configureCell(currency: currency)
     cell.backgroundColor = UIColor.segmentInactive
     cell.layer.cornerRadius = 12
     return cell
@@ -171,22 +195,6 @@ extension PaymentViewController: UICollectionViewDelegate {
 
 extension PaymentViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let itemCount : CGFloat = 2
-    let space: CGFloat = 7
-    let width : CGFloat = (collectionView.bounds.width - space - 32) / itemCount
-    let height : CGFloat = 46
-    return CGSize(width: width , height: height)
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 7
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-    return 7
-  }
-
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16)
+    return CGSize(width: (view.frame.width - 48) / 3, height: 80)
   }
 }
