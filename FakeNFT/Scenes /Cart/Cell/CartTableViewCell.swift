@@ -2,6 +2,8 @@ import UIKit
 
 final class CartTableViewCell: UITableViewCell {
 
+  private var nftItem: NftItem?
+
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupAppearance()
@@ -46,7 +48,7 @@ final class CartTableViewCell: UITableViewCell {
 
   private lazy var removeButton: UIButton = {
     let removeButton = UIButton()
-    let image = Images.Common.deleteCartBtn
+    let image = Images.Common.deleteCartBtn?.withTintColor(UIColor.segmentActive, renderingMode: .alwaysOriginal)
     removeButton.setImage(image, for: .normal)
     removeButton.addTarget(self, action: #selector(deleteNft), for: .touchUpInside)
     return removeButton
@@ -84,14 +86,20 @@ final class CartTableViewCell: UITableViewCell {
   }
 
   func configure(with nftItem: NftItem) {
+    self.nftItem = nftItem
     nftImage.image = nftItem.image
     nftLabel.text = nftItem.name
     nftPrice.text = "\(nftItem.price) \(Strings.Common.eth)"
     configureRating(rating: nftItem.rating)
   }
 
+  
   @objc private func deleteNft() {
-    
+    guard let parentViewController = self.parentViewController, let nftItem = nftItem else { return }
+    let deleteViewController = DeleteViewController(nftItem: nftItem)
+    deleteViewController.modalPresentationStyle = .overFullScreen
+    deleteViewController.delegate = parentViewController as? CartViewController
+    parentViewController.present(deleteViewController, animated: true)
   }
 
   private func configureRating(rating: Int) {
@@ -107,4 +115,17 @@ final class CartTableViewCell: UITableViewCell {
       nftRatingView.addArrangedSubview(starImageView)
     }
   }
+}
+
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder?.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
 }

@@ -53,7 +53,7 @@ final class CartViewController: UIViewController {
 
   private lazy var sortButton: UIButton = {
     let sortButton = UIButton()
-    let image = Images.Common.sortBtn
+    let image = Images.Common.sortBtn?.withTintColor(UIColor.segmentActive, renderingMode: .alwaysOriginal)
     sortButton.setImage(image, for: .normal)
     sortButton.addTarget(nil, action: #selector(sortButtonTapped), for: .touchUpInside)
     return sortButton
@@ -216,4 +216,11 @@ extension CartViewController: UITableViewDataSource {
 
 extension CartViewController: UITableViewDelegate {
   // TODO:
+}
+
+extension CartViewController: DeleteViewControllerDelegate {
+    func didConfirmDeletion(of nftItem: NftItem) {
+        guard let index = viewModel.nftItems.firstIndex(where: { $0.name == nftItem.name }) else { return }
+        viewModel.removeItem(at: index)
+    }
 }
