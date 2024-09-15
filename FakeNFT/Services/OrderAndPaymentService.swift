@@ -8,10 +8,10 @@ protocol OrderService {
 
 final class OrderServiceImpl: OrderService {
     private let networkClient: NetworkClient
-    private let storage: NftStorage
+//    private let storage: NftStorage
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
-        self.storage = storage
+    init(networkClient: NetworkClient) {
+//        self.storage = storage
         self.networkClient = networkClient
     }
 

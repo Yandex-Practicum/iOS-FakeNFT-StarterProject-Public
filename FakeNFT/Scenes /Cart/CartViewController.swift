@@ -219,7 +219,7 @@ extension CartViewController: UITableViewDelegate {
 }
 
 extension CartViewController: DeleteViewControllerDelegate {
-    func didConfirmDeletion(of nftItem: NftItem) {
+    func didConfirmDeletion(of nftItem: Nft) {
         guard let index = viewModel.nftItems.firstIndex(where: { $0.name == nftItem.name }) else { return }
         viewModel.removeItem(at: index)
     }

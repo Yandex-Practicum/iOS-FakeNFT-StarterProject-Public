@@ -1,8 +1,9 @@
 import UIKit
+import Kingfisher
 
 final class CartTableViewCell: UITableViewCell {
 
-  private var nftItem: NftItem?
+  private var nftItem: Nft?
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -85,9 +86,22 @@ final class CartTableViewCell: UITableViewCell {
     ])
   }
 
-  func configure(with nftItem: NftItem) {
+  func configure(with nftItem: Nft) {
     self.nftItem = nftItem
-    nftImage.image = nftItem.image
+    nftImage.kf.indicatorType = .activity
+    if let firstImageUrl = nftItem.images.first {
+        nftImage.kf.setImage(
+            with: firstImageUrl,
+            placeholder: UIImage(named: "mockNFT"),
+            options: [
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ]
+        )
+    } else {
+        nftImage.image = UIImage(named: "mockNFT")
+    }
     nftLabel.text = nftItem.name
     nftPrice.text = "\(nftItem.price) \(Strings.Common.eth)"
     configureRating(rating: nftItem.rating)

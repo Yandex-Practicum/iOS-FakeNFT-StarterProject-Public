@@ -1,16 +1,17 @@
 import UIKit
+import Kingfisher
 
 protocol DeleteViewControllerDelegate: AnyObject {
   
-  func didConfirmDeletion(of nftItem: NftItem)
+  func didConfirmDeletion(of nftItem: Nft)
 }
 
 final class DeleteViewController: UIViewController {
   
-  private var nftItem: NftItem
+  private var nftItem: Nft
   weak var delegate: DeleteViewControllerDelegate?
   
-  init(nftItem: NftItem) {
+  init(nftItem: Nft) {
     self.nftItem = nftItem
     super.init(nibName: nil, bundle: nil)
   }
@@ -20,9 +21,23 @@ final class DeleteViewController: UIViewController {
   }
   
   private lazy var nftImageView: UIImageView = {
-    let imageView = UIImageView(image: nftItem.image)
+    let imageView = UIImageView()
     imageView.layer.cornerRadius = 12
     imageView.layer.masksToBounds = true
+    imageView.kf.indicatorType = .activity
+    if let firstImageUrl = nftItem.images.first {
+      imageView.kf.setImage(
+            with: firstImageUrl,
+            placeholder: UIImage(named: "mockNFT"),
+            options: [
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ]
+        )
+    } else {
+      imageView.image = UIImage(named: "mockNFT")
+    }
     return imageView
   }()
   
