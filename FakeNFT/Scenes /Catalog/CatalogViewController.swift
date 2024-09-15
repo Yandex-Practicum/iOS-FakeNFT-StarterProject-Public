@@ -8,30 +8,29 @@
 import Foundation
 import UIKit
 
-class CatalogueViewController: UIViewController {
+final class CatalogueViewController: UIViewController {
     
     //let servicesAssembly: ServicesAssembly
-
-//    init(servicesAssembly: ServicesAssembly) {
-//        self.servicesAssembly = servicesAssembly
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    
+    //    init(servicesAssembly: ServicesAssembly) {
+    //        self.servicesAssembly = servicesAssembly
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    //
+    //    required init?(coder: NSCoder) {
+    //        fatalError("init(coder:) has not been implemented")
+    //    }
+    private let sortedAlert = AlertVC()
     private let image: UIImage = {
         let image = UIImage(named: "PeachPlaceholder")
-        return image!
+        return image ?? UIImage()
     }()
     
-    let sortButton: UIBarButtonItem = {
+    private let sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem()
         button.isEnabled = true
         button.image = UIImage(named: "Sort")
         button.tintColor = .black
-        //setImage(UIImage(named: "Sort"), for: .normal)
-        button.target = #selector(showSortWindow) as AnyObject
         return button
     }()
     
@@ -39,9 +38,8 @@ class CatalogueViewController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.layer.cornerRadius = 16
-        tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
-
+        
         tableView.register(CatalogueTableViewCell.self, forCellReuseIdentifier: CatalogueTableViewCell.reuseIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -53,16 +51,17 @@ class CatalogueViewController: UIViewController {
         createNavigation()
         catalogueTableView.dataSource = self
         catalogueTableView.delegate = self
-        catalogueTableView.isScrollEnabled = true
         setupUI()
     }
     
     private func createNavigation() {
+        guard let navigationController = navigationController else {return}
         navigationItem.rightBarButtonItem = sortButton
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.backIndicatorImage = UIImage()
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationItem.rightBarButtonItem?.target = #selector(showSortWindow) as AnyObject
+        navigationController.navigationBar.barTintColor = .white
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.backIndicatorImage = UIImage()
+        navigationController.navigationBar.backgroundColor = .white
     }
     
     private func setupUI() {
@@ -75,16 +74,16 @@ class CatalogueViewController: UIViewController {
             catalogueTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
+    
     @objc private func showSortWindow() {
-        //TODO: add sorted logic
+        sortedAlert.showSortedAlert()
     }
 }
 
 extension CatalogueViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -92,7 +91,7 @@ extension CatalogueViewController: UITableViewDataSource {
             withIdentifier: CatalogueTableViewCell.reuseIdentifier,
             for: indexPath
         ) as? CatalogueTableViewCell else {return UITableViewCell() }
-       
+        
         switch indexPath.section {
         case 0:
             cell.configueCover(image: UIImage(named: "PeachPlaceholder") ?? image )
@@ -107,7 +106,7 @@ extension CatalogueViewController: UITableViewDataSource {
         }
         cell.selectionStyle = .none
         return  cell
-}
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         179
@@ -117,7 +116,7 @@ extension CatalogueViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
- }
+}
 
 extension CatalogueViewController: UITableViewDelegate {
     

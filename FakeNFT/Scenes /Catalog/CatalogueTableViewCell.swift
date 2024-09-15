@@ -11,12 +11,12 @@ import UIKit
 final class CatalogueTableViewCell: UITableViewCell {
     static let reuseIdentifier = "CatalogueTableViewCell"
     
-   private let coverOfSection: UIImageView = {
+    private let coverOfSection: UIImageView = {
         let imageView = UIImageView()
-       imageView.layer.cornerRadius = 12
-       imageView.isHidden = false
-       imageView.translatesAutoresizingMaskIntoConstraints = false
-       return imageView
+        imageView.layer.cornerRadius = 12
+        imageView.isHidden = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

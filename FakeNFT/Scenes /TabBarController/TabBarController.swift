@@ -1,7 +1,7 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-   // var servicesAssembly: ServicesAssembly!
+    // var servicesAssembly: ServicesAssembly!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +41,10 @@ final class TabBarController: UITabBarController {
         
         
         viewControllers = [profileVC, catalogueVC, basketVC, statisticVC]
-        self.tabBar.tintColor = .systemBlue
-        self.tabBar.unselectedItemTintColor = .black
-        self.tabBar.shadowImage = UIImage()
-        self.tabBar.backgroundImage = UIImage()
-        self.tabBar.backgroundColor = .white
+        tabBar.tintColor = .systemBlue
+        tabBar.unselectedItemTintColor = .black
+        tabBar.shadowImage = UIImage()
+        tabBar.backgroundImage = UIImage()
+        tabBar.backgroundColor = .white
     }
 }
