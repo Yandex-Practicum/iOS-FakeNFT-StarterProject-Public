@@ -1,9 +1,10 @@
 import Foundation
 
 final class SortService {
-    static let shared = SortService() // Singleton
+    static let shared = SortService() 
     private let userDefaults = UserDefaults.standard
     private let sortKey = "basketSortKey"
+    private init() {}
     
     var sortingType: Sort {
         get {

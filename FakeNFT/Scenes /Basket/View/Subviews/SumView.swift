@@ -5,7 +5,7 @@ protocol SumViewDelegate: AnyObject {
 }
 
 final class SumView: UIView {
-    lazy private var button: Button = {
+    private lazy var button: Button = {
         let button = Button(title: "К оплате")
         button.addTarget(self, action: #selector(didTapPayButton), for: .touchUpInside)
         return button
@@ -25,7 +25,7 @@ final class SumView: UIView {
         return label
     }()
     
-    lazy private var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .yaGreenUniversal
@@ -51,10 +51,9 @@ final class SumView: UIView {
 }
 
 extension SumView {
-    func changeText(totalAmount: Int, totalPrice: Float) {
-        let roundedTotalPrice = Float(round(100 * totalPrice) / 100)
-        countLabel.text = "\(totalAmount) NFT"
-        priceLabel.text = "\(roundedTotalPrice) ETH"
+    func changeText(totalAmountStr: String, totalPriceStr: String) {
+        countLabel.text = totalAmountStr
+        priceLabel.text = totalPriceStr
     }
 }
 
