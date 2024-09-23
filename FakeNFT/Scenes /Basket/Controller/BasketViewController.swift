@@ -10,7 +10,7 @@ final class BasketViewController: UIViewController {
         basketView = BasketView(frame: UIScreen.main.bounds)
         view = basketView as? BasketView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         basketView.setDelegate(self)
@@ -82,13 +82,13 @@ final class BasketViewController: UIViewController {
     }
     
     private func removeNFTFromBasket(_ model: NftModel) {
-           nfts.removeAll(where: { $0.id == model.id })
-           loadOrder()
-           DispatchQueue.main.async { [weak self] in
-               guard let self else { return }
-               self.basketView.updateNfts(self.nfts)
-           }
-       }
+        nfts.removeAll(where: { $0.id == model.id })
+        loadOrder()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.basketView.updateNfts(self.nfts)
+        }
+    }
 }
 
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
@@ -123,5 +123,14 @@ extension BasketViewController: RemoveNFTViewControllerDelegate {
     func didTapConfirmButton(_ model: NftModel) {
         removeNFTFromBasket(model)
         dismiss(animated: true)
+    }
+}
+
+extension BasketViewController: SumViewDelegate {
+    func didTapPayButton() {
+        let checkoutViewController = CheckoutViewController()
+        let navigationController = UINavigationController(rootViewController: checkoutViewController)
+        navigationController.modalPresentationStyle = .overFullScreen
+        present(navigationController, animated: true, completion: nil)
     }
 }

@@ -19,7 +19,6 @@ final class BasketView: UIView, BasketViewProtocol {
     
     private lazy var sumView: SumView = {
         let sum = SumView()
-        sum.delegate = self
         return sum
     }()
     
@@ -109,11 +108,6 @@ final class BasketView: UIView, BasketViewProtocol {
         nftsTableView.dataSource = delegate
         nftsTableView.register(BasketNFTCell.self)
         sortButton.addTarget(delegate, action: #selector(delegate.didTapSortButton), for: .touchUpInside)
-    }
-}
-
-extension BasketView: SumViewDelegate {
-    func didTapPayButton() {
-        // to do: pay button clicked - action
+        sumView.delegate = delegate
     }
 }

@@ -44,14 +44,15 @@ extension UIColor {
 
     static let yaBlackLight = UIColor(hexString: "1A1B22")
     static let yaGreenUniversal = UIColor(hexString: "1C9F00")
-    static let yaBlackDark = UIColor.white
+    static let yaWhite = UIColor.white
     static let yaLightGrayLight = UIColor(hexString: "#F7F7F8")
     static let yaLightGrayDark = UIColor(hexString: "#2C2C2E")
+    static let yaBlueUniversal = UIColor(hexString: "#0A84FF")
 
     
     static let segmentActive = UIColor { traits in
         return traits.userInterfaceStyle == .dark
-        ? .yaBlackDark
+        ? .yaWhite
         : .yaBlackLight
     }
 
@@ -63,7 +64,7 @@ extension UIColor {
 
     static let closeButton = UIColor { traits in
         return traits.userInterfaceStyle == .dark
-        ? .yaBlackDark
+        ? .yaWhite
         : .yaBlackLight
     }
 }
