@@ -1,8 +1,8 @@
 import UIKit
 
-protocol ResultsView: AnyObject {}
+protocol ResultsViewProtocol: AnyObject {}
 
-final class ResultsViewController: UIViewController, ResultsView {
+final class ResultsViewController: UIViewController, ResultsViewProtocol {
     private let imageView = UIImageView()
     private let label: UILabel = {
         let label = UILabel()
@@ -28,12 +28,10 @@ final class ResultsViewController: UIViewController, ResultsView {
     }()
 
     private var buttonAction: (() -> Void)?
-    
-    private var presenter: ResultsPresenter?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ResultsPresenter(view: self)
+        imageView.image = UIImage(named: "mock.cell")
         setupView()
     }
 
