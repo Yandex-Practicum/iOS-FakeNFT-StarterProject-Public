@@ -20,7 +20,7 @@ final class CatalogueViewController: UIViewController {
     //    required init?(coder: NSCoder) {
     //        fatalError("init(coder:) has not been implemented")
     //    }
-    private let sortedAlert = AlertVC()
+    
     private let image: UIImage = {
         let image = UIImage(named: "PeachPlaceholder")
         return image ?? UIImage()
@@ -52,12 +52,14 @@ final class CatalogueViewController: UIViewController {
         catalogueTableView.dataSource = self
         catalogueTableView.delegate = self
         setupUI()
+        sortButton.target = self
+        sortButton.action = #selector(showSortWindow(_:))
+        
     }
     
     private func createNavigation() {
         guard let navigationController = navigationController else {return}
         navigationItem.rightBarButtonItem = sortButton
-        navigationItem.rightBarButtonItem?.target = #selector(showSortWindow) as AnyObject
         navigationController.navigationBar.barTintColor = .white
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.navigationBar.backIndicatorImage = UIImage()
@@ -75,8 +77,22 @@ final class CatalogueViewController: UIViewController {
         ])
     }
     
-    @objc private func showSortWindow() {
-        sortedAlert.showSortedAlert()
+    @objc private func showSortWindow(_ sender: UIBarButtonItem) {
+        let alert = AlertVC(title: "Сортировка", message: .none, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel, handler: nil)
+        let sortByTitle = UIAlertAction(title: "По названию", style: .default, handler: nil)
+        let sortByCount = UIAlertAction(title: "По количеству NFT", style: .default, handler: nil)
+        alert.setCustomColor(UIColor.black.withAlphaComponent(0.5))
+        alert.addAction(cancelAction)
+        alert.addAction(sortByTitle)
+        alert.addAction(sortByCount)
+        present(alert, animated: true)
+    }
+    
+    private func showChoosenNFT() {
+        let choosenVC = ChoosenNFTViewController()
+        choosenVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(choosenVC, animated: true)
     }
 }
 
@@ -144,6 +160,10 @@ extension CatalogueViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         47
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showChoosenNFT()
     }
 }
 
