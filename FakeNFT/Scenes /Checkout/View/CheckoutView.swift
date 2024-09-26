@@ -53,7 +53,7 @@ final class CheckoutView: UIView {
         
         self.addSubview(payView)
         self.addSubview(currenciesCollection)
-    
+        
         setupConstraints()
     }
     
@@ -71,10 +71,10 @@ extension CheckoutView: CheckoutViewProtocol {
     }
     
     func showHud() {
-//        ProgressHUD.show()
+        ProgressHUD.show()
     }
     
     func removeHud() {
-//        ProgressHUD.dismiss()
+        ProgressHUD.dismiss()
     }
 }

@@ -1,10 +1,12 @@
 import UIKit
 
 final class BasketViewController: UIViewController {
-    private var nfts: [NftModel] = [.init(createdAt: "1344", name: "April", images: [], rating: 1, description: "da", price: 1.78, author: "", id: "1"), .init(createdAt: "1366", name: "Zreena", images: [], rating: 4, description: "", price: 3.44, author: "", id: "2"), .init(createdAt: "1211", name: "Qwerty", images: [], rating: 5, description: "11", price: 1, author: "", id: "3")]
+    private var nfts: [NftModel] = []
     private let sortService = SortService.shared
     private let servicesAssembly: ServicesAssembly
     private var basketView: BasketViewProtocol
+    private let orderService = OrderService.shared
+    private let basketService = BasketService.shared
     
     override func loadView() {
         basketView = BasketView(frame: UIScreen.main.bounds)
@@ -18,6 +20,7 @@ final class BasketViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        basketView.showHud()
         loadOrder()
     }
     
@@ -51,7 +54,23 @@ final class BasketViewController: UIViewController {
     }
     
     private func loadOrder() {
-        // to do: load order
+        orderService.getNFTModels { nfts in
+            if let nfts = nfts {
+                self.basketService.basket = nfts
+            } else {
+                print("Error with handling nfts")
+                self.basketService.basket = []
+            }
+            
+//            self.basketService.basket = [.init(createdAt: "s231", name: "sda", images: [], rating: 1, description: "sad", price: 1.2, author: "sa", id: "1")]
+//            self.nfts = self.basketService.basket
+            self.loadBasket()
+            self.basketView.removeHud()
+        }
+    }
+    
+    private func loadBasket() {
+        nfts = basketService.basket
         let currentSortType = sortService.sortingType
         sortNfts(by: currentSortType)
         
@@ -82,12 +101,12 @@ final class BasketViewController: UIViewController {
     }
     
     private func removeNFTFromBasket(_ model: NftModel) {
-        nfts.removeAll(where: { $0.id == model.id })
-        loadOrder()
+        basketService.removeNFTFromBasket(model)
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.basketView.updateNfts(self.nfts)
         }
+        loadBasket()
     }
 }
 

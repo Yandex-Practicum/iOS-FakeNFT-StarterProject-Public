@@ -31,7 +31,6 @@ final class ResultsViewController: UIViewController, ResultsViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = UIImage(named: "mock.cell")
         setupView()
     }
 

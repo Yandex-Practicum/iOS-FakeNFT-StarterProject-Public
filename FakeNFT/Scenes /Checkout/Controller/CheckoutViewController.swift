@@ -2,8 +2,9 @@ import UIKit
 
 final class CheckoutViewController: UIViewController, CheckoutViewProtocol {
     private let checkoutView = CheckoutView()
-    private var currencies: [CurrencyModel] = [.init(id: "1", title: "jqwe", name: "qwe", image: ""), .init(id: "2", title: "113", name: ";psdsa", image: "")]
+    private var currencies: [CurrencyModel] = []
     private let currenciesService: CurrenciesService = .shared
+    private let orderService = OrderService.shared
     private var selectedCurrencyId: String?
     
     private lazy var backButton: UIBarButtonItem = {
@@ -27,7 +28,6 @@ final class CheckoutViewController: UIViewController, CheckoutViewProtocol {
     init() {
         super.init(nibName: nil, bundle: nil)
         checkoutView.setDelegate(self)
-        updateCurrencies(currencies)
     }
     
     required init?(coder: NSCoder) {
@@ -37,11 +37,33 @@ final class CheckoutViewController: UIViewController, CheckoutViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        checkoutView.showHud()
+        loadCurrencies()
+    }
+    
+    private func loadCurrencies() {
+        currenciesService.load { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let currencies):
+                DispatchQueue.main.async {
+                    self.updateCurrencies(currencies)
+                    self.checkoutView.removeHud()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     private func setupNavBar() {
         title = "Выберите способ оплаты"
         navigationItem.leftBarButtonItem = backButton
+        backButton.tintColor = .yaBlackLight
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yaBlackLight]
     }
     
@@ -62,10 +84,6 @@ final class CheckoutViewController: UIViewController, CheckoutViewProtocol {
         checkoutView.updateCurrencies(currencies)
     }
     
-    private func makePayment() {
-        displayPaymentResult(success: true)
-    }
-    
     func didSelectCurrency(id: String?) {
         selectedCurrencyId = id
     }
@@ -73,7 +91,20 @@ final class CheckoutViewController: UIViewController, CheckoutViewProtocol {
 
 extension CheckoutViewController: PayViewDelegate {
     func didTapPayButton() {
-        makePayment()
+        guard let selectedCurrencyId else { return }
+        orderService.makePayment(currencyId: selectedCurrencyId) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.displayPaymentResult(success: true)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.displayPaymentResult(success: false)
+                }
+            }
+        }
     }
     
     func displayPaymentResult(success: Bool) {
@@ -96,7 +127,7 @@ extension CheckoutViewController: PayViewDelegate {
                 }
                 
                 let secondAction = UIAlertAction(title: "Повторить", style: .cancel) { _ in
-                    self.makePayment()
+                    self.didTapPayButton()
                 }
                 
                 alertController.addAction(firstAction)

@@ -96,11 +96,11 @@ final class BasketView: UIView, BasketViewProtocol {
     }
     
     func showHud() {
-//        ProgressHUD.show()
+        ProgressHUD.show()
     }
     
     func removeHud() {
-//        ProgressHUD.dismiss()
+        ProgressHUD.dismiss()
     }
     
     func setDelegate(_ delegate: BasketViewController) {

@@ -9,7 +9,6 @@ final class BasketNFTCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 12
-        imageView.image = UIImage(named: "mock.cell")
         return imageView
     }()
     
@@ -64,12 +63,12 @@ final class BasketNFTCell: UITableViewCell {
     
     func configure(with model: NftModel) {
         self.model = model
-//        if
-//            let image = model.images.first,
-//            let url = URL(string: image)
-//        {
-//            nftImageView.kf.setImage(with: url)
-//        }
+        if
+            let image = model.images.first,
+            let url = URL(string: image)
+        {
+            nftImageView.kf.setImage(with: url)
+        }
         nftLabel.text = model.name
         priceValue.text = "\(model.price) ETH"
         
