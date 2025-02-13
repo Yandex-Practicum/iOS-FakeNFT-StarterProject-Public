@@ -6,6 +6,12 @@ protocol NftDetailView: AnyObject, ErrorView, LoadingView {
 }
 
 final class NftDetailViewController: UIViewController {
+    
+    // MARK: - Public Propeties
+    
+    lazy var activityIndicator = UIActivityIndicatorView()
+    
+    // MARK: - Private Propeties
 
     private let presenter: NftDetailPresenter
 
@@ -33,7 +39,6 @@ final class NftDetailViewController: UIViewController {
     }()
 
     private lazy var pageControl = LinePageControl()
-    internal lazy var activityIndicator = UIActivityIndicatorView()
 
     private var cellModels: [NftDetailCellModel] = []
 
@@ -48,7 +53,7 @@ final class NftDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Functions
+    // MARK: - Public Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +63,7 @@ final class NftDetailViewController: UIViewController {
         presenter.viewDidLoad()
     }
 
-    // MARK: - private functions
+    // MARK: - Private Methods
 
     private func setupLayout() {
         collectionView.addSubview(activityIndicator)
@@ -123,6 +128,7 @@ extension NftDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         collectionView.bounds.size
     }
 
