@@ -192,11 +192,34 @@
 			path = MemoryStorage;
 			sourceTree = "<group>";
 		};
+		180D11052D5E6480005BAB31 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
+				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		180D11062D5E64BE005BAB31 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		180D11072D5E64D0005BAB31 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		3F478ECD29DB473000F6D39E /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
 				3F478ECE29DB474E00F6D39E /* Colors.swift */,
-				3F478ED029DB476500F6D39E /* Fonts.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -224,15 +247,14 @@
 		3F68069529CBBAF100B4F915 /* FakeNFT */ = {
 			isa = PBXGroup;
 			children = (
-				3F68069629CBBAF100B4F915 /* AppDelegate.swift */,
-				3F68069829CBBAF100B4F915 /* SceneDelegate.swift */,
-				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
+				180D11052D5E6480005BAB31 /* Application */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
 				3F6806C929CBBCAF00B4F915 /* Models */,
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
-				3F6806A429CBBAF200B4F915 /* Info.plist */,
+				180D11072D5E64D0005BAB31 /* Localization */,
+				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -288,6 +310,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				180D11062D5E64BE005BAB31 /* Domain */,
 				3F6806D829CC979D00B4F915 /* Network */,
 			);
 			path = Models;
@@ -355,8 +378,9 @@
 			children = (
 				3F68069C29CBBAF100B4F915 /* Main.storyboard */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
+				3F478ED029DB476500F6D39E /* Fonts.swift */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
-				E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */,
+				3F6806A429CBBAF200B4F915 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -714,7 +738,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6H2GQX47PU;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FakeNFT/Info.plist;
+				INFOPLIST_FILE = FakeNFT/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -743,7 +767,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6H2GQX47PU;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FakeNFT/Info.plist;
+				INFOPLIST_FILE = FakeNFT/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
