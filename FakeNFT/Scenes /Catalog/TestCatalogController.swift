@@ -1,10 +1,14 @@
 import UIKit
 
 final class TestCatalogViewController: UIViewController {
+    
+    // MARK: - Private Propeties
 
-    let servicesAssembly: ServicesAssembly
-    let testNftButton = UIButton()
+    private let servicesAssembly: ServicesAssembly
+    private let testNftButton = UIButton()
 
+    // MARK: - Init
+    
     init(servicesAssembly: ServicesAssembly) {
         self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
@@ -13,6 +17,8 @@ final class TestCatalogViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Public Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +31,8 @@ final class TestCatalogViewController: UIViewController {
         testNftButton.addTarget(self, action: #selector(showNft), for: .touchUpInside)
         testNftButton.setTitleColor(.systemBlue, for: .normal)
     }
+    
+    // MARK: - Private Methods
 
     @objc
     func showNft() {
@@ -34,6 +42,8 @@ final class TestCatalogViewController: UIViewController {
         present(nftViewController, animated: true)
     }
 }
+
+// MARK: - Constants
 
 private enum Constants {
     static let openNftTitle = NSLocalizedString("Catalog.openNft", comment: "")

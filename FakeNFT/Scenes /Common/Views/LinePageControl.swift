@@ -2,7 +2,7 @@ import UIKit
 
 final class LinePageControl: UIView {
 
-    // MARK: - Properties
+    // MARK: - Public Properties
 
     var numberOfItems: Int = 0 {
         didSet {
@@ -20,7 +20,7 @@ final class LinePageControl: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
 
-    // MARK: - Private properties
+    // MARK: - Private Properties
 
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -43,7 +43,7 @@ final class LinePageControl: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Functions
+    // MARK: - Public Methods
 
     func setupStackView() {
         stackView.arrangedSubviews.forEach { stackView.removeArrangedSubview($0) }
@@ -61,7 +61,7 @@ final class LinePageControl: UIView {
     func selectedSegmentChanged() {
         for (index, subview) in stackView.arrangedSubviews.enumerated() {
             let isSelected = index == selectedItem
-            subview.backgroundColor = isSelected ? .segmentActive : .segmentInactive
+            subview.backgroundColor = isSelected ? .blackDyn : .whiteDyn
         }
     }
 }

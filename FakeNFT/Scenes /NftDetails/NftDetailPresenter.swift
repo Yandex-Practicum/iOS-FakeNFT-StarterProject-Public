@@ -1,22 +1,21 @@
 import Foundation
 
-// MARK: - Protocol
-
 protocol NftDetailPresenter {
     func viewDidLoad()
 }
 
-// MARK: - State
-
-enum NftDetailState {
+fileprivate enum NftDetailState {
     case initial, loading, failed(Error), data(Nft)
 }
 
 final class NftDetailPresenterImpl: NftDetailPresenter {
 
-    // MARK: - Properties
+    // MARK: - Public Properties
 
     weak var view: NftDetailView?
+    
+    // MARK: - Private Properties
+    
     private let input: NftDetailInput
     private let service: NftService
     private var state = NftDetailState.initial {
@@ -32,11 +31,13 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
         self.service = service
     }
 
-    // MARK: - Functions
+    // MARK: - Public Methods
 
     func viewDidLoad() {
         state = .loading
     }
+    
+    // MARK: - Private Methods
 
     private func stateDidChanged() {
         switch state {

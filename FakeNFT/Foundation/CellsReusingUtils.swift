@@ -4,6 +4,8 @@ protocol ReuseIdentifying {
     static var defaultReuseIdentifier: String { get }
 }
 
+// MARK: - Reuse Identifiers
+
 extension ReuseIdentifying where Self: UITableViewCell {
     static var defaultReuseIdentifier: String {
         NSStringFromClass(self).components(separatedBy: ".").last ?? NSStringFromClass(self)
@@ -15,6 +17,8 @@ extension ReuseIdentifying where Self: UICollectionViewCell {
         NSStringFromClass(self).components(separatedBy: ".").last ?? NSStringFromClass(self)
     }
 }
+
+// MARK: - Cell Registration
 
 extension UITableView {
     func register<T: UITableViewCell>(_: T.Type) where T: ReuseIdentifying {
