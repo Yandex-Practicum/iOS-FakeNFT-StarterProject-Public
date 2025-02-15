@@ -8,7 +8,7 @@
 
 Эпик: Каталог
 
-ссылка: https://github.com/users/gibbonch/projects/1/views/1
+ссылка: https://github.com/users/gibbonch/projects/2
 
 ## Epic 1/3 (Экран "Catalog")
 1.  Создание модели Catalog
