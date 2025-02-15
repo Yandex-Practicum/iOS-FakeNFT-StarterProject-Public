@@ -1,5 +1,5 @@
-input_dir: FakeNFT/
-output_dir: FakeNFT/Localization
+input_dir: ${PROJECT_DIR}/FakeNFT/
+output_dir: ${PROJECT_DIR}/FakeNFT/SwiftGen
 
 strings:
   inputs:

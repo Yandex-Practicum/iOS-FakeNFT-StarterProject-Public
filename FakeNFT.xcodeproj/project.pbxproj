@@ -25,7 +25,7 @@
 		0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74D2A7817DC0009A829 /* NftStorage.swift */; };
 		180D110A2D5E6797005BAB31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 180D11092D5E6797005BAB31 /* Localizable.strings */; };
 		18E7CD122D60DEF50019254C /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 18E7CD112D60DEF50019254C /* swiftgen.yml */; };
-		18E7CD172D60E9100019254C /* Localization.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7CD162D60E9100019254C /* Localization.generated.swift */; };
+		18FB68562D60F50500EEB68F /* Localization.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FB68552D60F50500EEB68F /* Localization.generated.swift */; };
 		227CA8D7DCB5D568B87056C0 /* Pods_FakeNFT_FakeNFTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B42194CC39E8042AA787BF3D /* Pods_FakeNFT_FakeNFTUITests.framework */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -88,8 +88,8 @@
 		11975EA2B7B5D750B81E4984 /* Pods_FakeNFT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		180D11082D5E6797005BAB31 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18E7CD112D60DEF50019254C /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
-		18E7CD162D60E9100019254C /* Localization.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.generated.swift; sourceTree = "<group>"; };
 		18E7CD182D60E9220019254C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		18FB68552D60F50500EEB68F /* Localization.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.generated.swift; sourceTree = "<group>"; };
 		1E7307049D0AF7800DE59744 /* Pods-FakeNFT-FakeNFTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT-FakeNFTUITests/Pods-FakeNFT-FakeNFTUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,16 +226,23 @@
 		180D11072D5E64D0005BAB31 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				18E7CD162D60E9100019254C /* Localization.generated.swift */,
 				180D11092D5E6797005BAB31 /* Localizable.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		18FB68542D60F24500EEB68F /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+				18FB68552D60F50500EEB68F /* Localization.generated.swift */,
+				18E7CD112D60DEF50019254C /* swiftgen.yml */,
+			);
+			path = SwiftGen;
+			sourceTree = "<group>";
+		};
 		3F68068A29CBBAF100B4F915 = {
 			isa = PBXGroup;
 			children = (
-				18E7CD112D60DEF50019254C /* swiftgen.yml */,
 				3F68069529CBBAF100B4F915 /* FakeNFT */,
 				3F6806AC29CBBAF200B4F915 /* FakeNFTTests */,
 				3F6806B629CBBAF200B4F915 /* FakeNFTUITests */,
@@ -264,6 +271,7 @@
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				180D11072D5E64D0005BAB31 /* Localization */,
+				18FB68542D60F24500EEB68F /* SwiftGen */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 			);
 			path = FakeNFT;
@@ -574,7 +582,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi \n";
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config FakeNFT/SwiftGen/swiftgen.yml\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
 		};
 		6AB5ABA1DED7DDC6584AC332 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -651,7 +659,7 @@
 			files = (
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
-				18E7CD172D60E9100019254C /* Localization.generated.swift in Sources */,
+				18FB68562D60F50500EEB68F /* Localization.generated.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
