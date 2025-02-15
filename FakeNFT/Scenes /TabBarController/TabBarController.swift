@@ -7,8 +7,8 @@ final class TabBarController: UITabBarController {
     private let servicesAssembly: ServicesAssembly
 
     private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
+        title: L10n.Tab.catalog,
+        image: .catalog,
         tag: 0
     )
     

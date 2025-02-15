@@ -1,0 +1,26 @@
+
+// MARK: - TabBar
+
+"Tab.catalog" = "Catalog";
+
+// MARK: - Catalog
+
+"Catalog.openNft" = "Open Nft";
+
+// MARK: - Cart
+
+// MARK: - Profile
+
+// MARK: - Statistics
+
+// MARK: - Errors
+
+"Error.network" = "A network error has occurred";
+"Error.unknown" = "An unknown error has occurred";
+"Error.repeat" = "Repeat";
+"Error.title" = "Error";
+
+// MARK: - Authorization
+
+// MARK: - Onboarding
+
