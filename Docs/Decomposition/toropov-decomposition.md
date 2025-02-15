@@ -1,9 +1,13 @@
 # Дипломный проект FakeNFT. Декомпозиция
 
 Торопов Александр Вадимович
+
 Когорта: 22
+
 Группа: 3
+
 Эпик: Каталог
+
 ссылка: https://github.com/users/gibbonch/projects/1/views/1
 
 ## Epic 1/3 (Экран "Catalog")
