@@ -4,17 +4,17 @@ final class LinePageControl: UIView {
 
     // MARK: - Properties
 
-    var numberOfItems: Int = 0 {
-        didSet {
-            setupStackView()
-        }
-    }
+//    var numberOfItems: Int = 0 {
+//        didSet {
+//            setupStackView()
+//        }
+//    }
 
-    var selectedItem: Int = 0 {
-        didSet {
-            selectedSegmentChanged()
-        }
-    }
+//    var selectedItem: Int = 0 {
+//        didSet {
+//            selectedSegmentChanged()
+//        }
+//    }
 
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
@@ -45,25 +45,25 @@ final class LinePageControl: UIView {
 
     // MARK: - Functions
 
-    func setupStackView() {
-        stackView.arrangedSubviews.forEach { stackView.removeArrangedSubview($0) }
+//    func setupStackView() {
+//        stackView.arrangedSubviews.forEach { stackView.removeArrangedSubview($0) }
+//
+//        for _ in (0..<numberOfItems) {
+//            let segment = UIView()
+//            segment.heightAnchor.constraint(equalToConstant: height).isActive = true
+//            segment.layer.cornerRadius = height / 2
+//            stackView.addArrangedSubview(segment)
+//        }
+//
+//        selectedItem = 0
+//    }
 
-        for _ in (0..<numberOfItems) {
-            let segment = UIView()
-            segment.heightAnchor.constraint(equalToConstant: height).isActive = true
-            segment.layer.cornerRadius = height / 2
-            stackView.addArrangedSubview(segment)
-        }
-
-        selectedItem = 0
-    }
-
-    func selectedSegmentChanged() {
-        for (index, subview) in stackView.arrangedSubviews.enumerated() {
-            let isSelected = index == selectedItem
-            subview.backgroundColor = isSelected ? .segmentActive : .segmentInactive
-        }
-    }
+//    func selectedSegmentChanged() {
+//        for (index, subview) in stackView.arrangedSubviews.enumerated() {
+//            let isSelected = index == selectedItem
+//            subview.backgroundColor = isSelected ? .segmentActive : .segmentInactive
+//        }
+//    }
 }
 
 // MARK: - Constants
