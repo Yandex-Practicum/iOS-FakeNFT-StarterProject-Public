@@ -23,6 +23,9 @@ struct TabBarView: View {
             }
         }
         .padding(.horizontal)
+        .onAppear {
+            setupTabBarAppearance()
+        }
     }
     
     private func tabItemView(for tab: Tab) -> some View {
@@ -34,6 +37,12 @@ struct TabBarView: View {
                 .font(.medium10)
         }
         .frame(maxWidth: .infinity)
+    }
+    private func setupTabBarAppearance() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.shadowColor = .clear
+        UITabBar.appearance().standardAppearance = tabBarAppearance
     }
 }
 
