@@ -16,6 +16,7 @@ struct NavigationBarStyle: ViewModifier {
     let title: String?
     let backButtonHidden: Bool
     let filterButtonHidden: Bool
+    let isTabBarHidden: Binding<Bool>?
     var filterButtonTapHandler: () -> Void?
     
     // MARK: - Initializers
@@ -23,11 +24,13 @@ struct NavigationBarStyle: ViewModifier {
     init(title: String?,
          backButtonHidden: Bool,
          filterButtonHidden: Bool,
+         isTabBarHidden: Binding<Bool>? = nil,
          filterButtonTapHandler: @escaping () -> Void?
     ) {
         self.title = title
         self.backButtonHidden = backButtonHidden
         self.filterButtonHidden = filterButtonHidden
+        self.isTabBarHidden = isTabBarHidden
         self.filterButtonTapHandler = filterButtonTapHandler
         setupNavigationBarAppearance()
     }
@@ -55,6 +58,7 @@ struct NavigationBarStyle: ViewModifier {
     
     private var backButton: some View {
         Button {
+            isTabBarHidden?.wrappedValue = false
             dismiss()
         } label: {
             Image("backButton")
