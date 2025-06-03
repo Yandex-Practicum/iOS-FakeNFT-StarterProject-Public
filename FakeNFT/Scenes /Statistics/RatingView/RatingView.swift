@@ -11,6 +11,15 @@ struct RatingView: View {
     
     // MARK: - Properties
     
+    let user = User(
+        id: "1",
+        name: "Joaquin Phoenix",
+        avatar: "",
+        description: "",
+        website: "",
+        nfts: ["1", "2", "3"],
+        rating: "1"
+    )
     
     // MARK: - Content
     
@@ -36,7 +45,9 @@ struct RatingView: View {
     
     private var ratingList: some View {
         VStack(spacing: .zero) {
-            
+            RatingList(isLoading: false) {
+                RatingRow(user: user)
+            }
         }
         .padding(.horizontal)
         .padding(.top, StatisticsConstants.topAnchorSmall)
