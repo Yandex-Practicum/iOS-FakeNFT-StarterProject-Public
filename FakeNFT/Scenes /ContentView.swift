@@ -25,7 +25,7 @@ struct ContentView: View {
                 Text("Cart")
                     .tag(Tab.catalog)
                 
-                Text("Statistics")
+                RatingView()
                     .tag(Tab.statistics)
             }
             if !isTabBarHidden {
