@@ -1,11 +1,13 @@
-final class ServicesAssembly {
+import Foundation
+
+final class ServicesAssembly: ObservableObject {
 
     private let networkClient: NetworkClient
     private let nftStorage: NftStorage
 
     init(
-        networkClient: NetworkClient,
-        nftStorage: NftStorage
+        networkClient: NetworkClient = DefaultNetworkClient(),
+        nftStorage: NftStorage = NftStorageImpl()
     ) {
         self.networkClient = networkClient
         self.nftStorage = nftStorage
