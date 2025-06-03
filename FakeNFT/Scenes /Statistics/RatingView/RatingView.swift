@@ -11,7 +11,7 @@ struct RatingView: View {
     
     // MARK: - Properties
     
-    @StateObject private var viewModel = RatingViewModel()
+    @StateObject var viewModel: RatingViewModel
     @Binding var isTabBarHidden: Bool
     
     // MARK: - Content
@@ -67,7 +67,7 @@ struct RatingView: View {
     
     private var ratingList: some View {
         VStack(spacing: .zero) {
-            RatingList(isLoading: false) {
+            RatingList(isLoading: viewModel.isLoading) {
                 ForEach(viewModel.filteredUsers) { user in
                     NavigationLink(destination: UserCardView(isTabBarHidden: $isTabBarHidden)){
                         RatingRow(user: user)
@@ -81,5 +81,9 @@ struct RatingView: View {
 }
 
 #Preview {
-    RatingView(isTabBarHidden: .constant(true))
+    let services = ServicesAssembly()
+    RatingView(
+        viewModel: RatingViewModel(usersService: services.usersService),
+        isTabBarHidden: .constant(true)
+    )
 }

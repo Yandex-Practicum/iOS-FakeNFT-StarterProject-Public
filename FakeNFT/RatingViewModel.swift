@@ -14,32 +14,31 @@ final class RatingViewModel: ObservableObject {
     @Published var isShowingFilterSheet: Bool = false
     @Published var isShowingErrorAlert: Bool = false
     private var users: [User] = []
+    private let usersService: UsersService
     
     @AppStorage("ratingSort") private var currentSorting: RatingFilterType = .rating
     
-    let user1 = User(
-        id: "1",
-        name: "Test user1",
-        avatar: "",
-        description: "",
-        website: "",
-        nfts: ["1", "2", "3"],
-        rating: "1"
-    )
-    let user2 = User(
-        id: "2",
-        name: "Test user2",
-        avatar: "",
-        description: "",
-        website: "",
-        nfts: ["1", "2"],
-        rating: "2"
-    )
+    init(usersService: UsersService) {
+        self.usersService = usersService
+    }
     
     func loadUsers() {
         if !users.isEmpty { return }
-        users = [user1, user2]
-        filteredUsers = users
+        isLoading = true
+        
+        usersService.loadUsers { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                self.isLoading = false
+                switch result {
+                case .success(let users):
+                    self.users = users
+                    self.filterUsers(by: self.currentSorting)
+                case .failure(_):
+                    self.isShowingErrorAlert = true
+                }
+            }
+        }
     }
     
     func filterUsers(by type: RatingFilterType) {
