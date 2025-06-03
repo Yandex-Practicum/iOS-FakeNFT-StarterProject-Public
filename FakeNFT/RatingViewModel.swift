@@ -5,13 +5,16 @@
 //  Created by Anastasia on 03.06.2025.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 final class RatingViewModel: ObservableObject {
     @Published var filteredUsers: [User] = []
     @Published var isLoading: Bool = false
+    @Published var isShowingFilterSheet: Bool = false
     private var users: [User] = []
+    
+    @AppStorage("ratingSort") private var currentSorting: RatingFilterType = .rating
     
     let user1 = User(
         id: "1",
@@ -39,10 +42,16 @@ final class RatingViewModel: ObservableObject {
     }
     
     func filterUsers(by type: RatingFilterType) {
-        
+        switch type {
+        case .name:
+            currentSorting = .name
+            filteredUsers = users.sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .rating:
+            currentSorting = .rating
+            filteredUsers = users.sorted { Int($0.rating) ?? 0 < Int($1.rating) ?? 0 }
+        }
     }
 }
-
 
 enum RatingFilterType: String {
     case name

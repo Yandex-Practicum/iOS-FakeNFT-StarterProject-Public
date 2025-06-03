@@ -33,9 +33,21 @@ struct RatingView: View {
                 backButtonHidden: true,
                 filterButtonHidden: false,
                 filterButtonTapHandler: {
-                    
+                    viewModel.isShowingFilterSheet = true
                 }
             ))
+            .confirmationDialog(
+                "Сортировка",
+                isPresented: $viewModel.isShowingFilterSheet,
+                titleVisibility: .visible
+            ) {
+                Button("По имени") {
+                    viewModel.filterUsers(by: .name)
+                }
+                Button("По рейтингу") {
+                    viewModel.filterUsers(by: .rating)
+                }
+            }
     }
     
     private var ratingList: some View {
