@@ -33,6 +33,16 @@
 		793BCC902DEEF06800DF1252 /* WebViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793BCC8F2DEEF06800DF1252 /* WebViewRepresentable.swift */; };
 		793BCC922DEEF46600DF1252 /* Statistics.md in Resources */ = {isa = PBXBuildFile; fileRef = 793BCC912DEEF46600DF1252 /* Statistics.md */; };
 		793BCC942DEEF47200DF1252 /* CartAnisimov.md in Resources */ = {isa = PBXBuildFile; fileRef = 793BCC932DEEF47200DF1252 /* CartAnisimov.md */; };
+		793BCC972DEF12F500DF1252 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793BCC962DEF12F500DF1252 /* RatingView.swift */; };
+		793BCC992DEF1B8800DF1252 /* StatisticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793BCC982DEF1B8800DF1252 /* StatisticsConstants.swift */; };
+		79641C182DEF1D33004C970D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C172DEF1D33004C970D /* User.swift */; };
+		79641C1C2DEF1E17004C970D /* RatingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C1B2DEF1E17004C970D /* RatingRow.swift */; };
+		79641C1E2DEF1E63004C970D /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C1D2DEF1E63004C970D /* UserAvatar.swift */; };
+		79641C212DEF1ED7004C970D /* RatingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C202DEF1ED7004C970D /* RatingList.swift */; };
+		79641C232DEF2081004C970D /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C222DEF2081004C970D /* RatingViewModel.swift */; };
+		79641C282DEF293A004C970D /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C272DEF293A004C970D /* UserCardView.swift */; };
+		797AAE882DEF30E400745B0D /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AAE872DEF30E400745B0D /* UsersService.swift */; };
+		797AAE8A2DEF316100745B0D /* UsersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AAE892DEF316100745B0D /* UsersRequest.swift */; };
 		79D0C7532DE396AC00D53241 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7522DE396AC00D53241 /* Tab.swift */; };
 		79D0C7562DE3973200D53241 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7552DE3973200D53241 /* TabBarView.swift */; };
 		79D0C7592DE39C3800D53241 /* NavigationBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */; };
@@ -86,6 +96,16 @@
 		793BCC8F2DEEF06800DF1252 /* WebViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewRepresentable.swift; sourceTree = "<group>"; };
 		793BCC912DEEF46600DF1252 /* Statistics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Statistics.md; sourceTree = "<group>"; };
 		793BCC932DEEF47200DF1252 /* CartAnisimov.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CartAnisimov.md; sourceTree = "<group>"; };
+		793BCC962DEF12F500DF1252 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		793BCC982DEF1B8800DF1252 /* StatisticsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StatisticsConstants.swift; path = FakeNFT/StatisticsConstants.swift; sourceTree = SOURCE_ROOT; };
+		79641C172DEF1D33004C970D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		79641C1B2DEF1E17004C970D /* RatingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRow.swift; sourceTree = "<group>"; };
+		79641C1D2DEF1E63004C970D /* UserAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
+		79641C202DEF1ED7004C970D /* RatingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingList.swift; sourceTree = "<group>"; };
+		79641C222DEF2081004C970D /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingViewModel.swift; path = FakeNFT/RatingViewModel.swift; sourceTree = SOURCE_ROOT; };
+		79641C272DEF293A004C970D /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
+		797AAE872DEF30E400745B0D /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
+		797AAE892DEF316100745B0D /* UsersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequest.swift; sourceTree = "<group>"; };
 		79D0C7522DE396AC00D53241 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		79D0C7552DE3973200D53241 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarStyle.swift; sourceTree = "<group>"; };
@@ -215,6 +235,7 @@
 				3FC8C38F29D245250081F015 /* Requests */,
 				0C79EE6B2A76DE2E00EE90EA /* ServicesAssemly.swift */,
 				558E39E62C68CE0900FB86AC /* NftService.swift */,
+				797AAE872DEF30E400745B0D /* UsersService.swift */,
 				0CFCB73F2A78002A0009A829 /* ExamplePutService.swift */,
 			);
 			path = Services;
@@ -224,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				5019A4CF2DE1E8E0009A5AF8 /* ContentView.swift */,
+				793BCC952DEF12D900DF1252 /* Statistics */,
 				0CF2C2D92A783C1600FDC837 /* Common */,
 				79D0C7572DE39C1100D53241 /* ViewModifier */,
 				79D0C7542DE396D400D53241 /* TabBar */,
@@ -264,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
+				79641C172DEF1D33004C970D /* User.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -274,6 +297,7 @@
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
 				3FC8C39029D2453B0081F015 /* ExamplePutRequest.swift */,
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
+				797AAE892DEF316100745B0D /* UsersRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -285,6 +309,58 @@
 				793BCC8F2DEEF06800DF1252 /* WebViewRepresentable.swift */,
 			);
 			path = WebView;
+			sourceTree = "<group>";
+		};
+		793BCC952DEF12D900DF1252 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				793BCC9A2DEF1BC500DF1252 /* RatingView */,
+				79641C262DEF292A004C970D /* UserCardView */,
+				79641C192DEF1D63004C970D /* Common */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		793BCC9A2DEF1BC500DF1252 /* RatingView */ = {
+			isa = PBXGroup;
+			children = (
+				793BCC962DEF12F500DF1252 /* RatingView.swift */,
+			);
+			path = RatingView;
+			sourceTree = "<group>";
+		};
+		79641C192DEF1D63004C970D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				79641C1F2DEF1ECB004C970D /* List */,
+				79641C1A2DEF1DF4004C970D /* Row */,
+				79641C1D2DEF1E63004C970D /* UserAvatar.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		79641C1A2DEF1DF4004C970D /* Row */ = {
+			isa = PBXGroup;
+			children = (
+				79641C1B2DEF1E17004C970D /* RatingRow.swift */,
+			);
+			path = Row;
+			sourceTree = "<group>";
+		};
+		79641C1F2DEF1ECB004C970D /* List */ = {
+			isa = PBXGroup;
+			children = (
+				79641C202DEF1ED7004C970D /* RatingList.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		79641C262DEF292A004C970D /* UserCardView */ = {
+			isa = PBXGroup;
+			children = (
+				79641C272DEF293A004C970D /* UserCardView.swift */,
+			);
+			path = UserCardView;
 			sourceTree = "<group>";
 		};
 		79D0C74F2DE393F600D53241 /* Docs */ = {
@@ -299,6 +375,7 @@
 		79D0C7502DE3940800D53241 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				79641C222DEF2081004C970D /* RatingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -330,6 +407,7 @@
 		79D0C75A2DE39E1100D53241 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				793BCC982DEF1B8800DF1252 /* StatisticsConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -492,15 +570,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79641C182DEF1D33004C970D /* User.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				793BCC992DEF1B8800DF1252 /* StatisticsConstants.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				79641C1E2DEF1E63004C970D /* UserAvatar.swift in Sources */,
+				793BCC972DEF12F500DF1252 /* RatingView.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				79D0C7592DE39C3800D53241 /* NavigationBarStyle.swift in Sources */,
 				79D0C75D2DE39F5900D53241 /* LoadingView.swift in Sources */,
+				797AAE8A2DEF316100745B0D /* UsersRequest.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
+				79641C212DEF1ED7004C970D /* RatingList.swift in Sources */,
 				5019A4CE2DE1E899009A5AF8 /* FakeNftApp.swift in Sources */,
+				79641C1C2DEF1E17004C970D /* RatingRow.swift in Sources */,
+				79641C282DEF293A004C970D /* UserCardView.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
+				797AAE882DEF30E400745B0D /* UsersService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
@@ -509,6 +596,7 @@
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				5019A4D02DE1E8E0009A5AF8 /* ContentView.swift in Sources */,
+				79641C232DEF2081004C970D /* RatingViewModel.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,

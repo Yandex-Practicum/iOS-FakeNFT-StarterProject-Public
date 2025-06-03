@@ -25,7 +25,10 @@ struct ContentView: View {
                 Text("Cart")
                     .tag(Tab.catalog)
                 
-                Text("Statistics")
+                RatingView(
+                    viewModel: RatingViewModel(usersService: service.usersService),
+                    isTabBarHidden: $isTabBarHidden
+                )
                     .tag(Tab.statistics)
             }
             if !isTabBarHidden {

@@ -19,4 +19,8 @@ final class ServicesAssembly: ObservableObject {
             storage: nftStorage
         )
     }
+    
+    var usersService: UsersService {
+        UsersServiceImpl(networkClient: networkClient)
+    }
 }
