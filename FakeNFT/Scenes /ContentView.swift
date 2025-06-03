@@ -22,8 +22,9 @@ struct ContentView: View {
                 Text("Catalog")
                     .tag(Tab.catalog)
                 
-                Text("Cart")
-                    .tag(Tab.catalog)
+                CartView(isTabBarHidden: $isTabBarHidden)
+                    .tag(Tab.cart)
+                    .environmentObject(cartViewModel)
                 
                 Text("Statistics")
                     .tag(Tab.statistics)
@@ -37,4 +38,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(CartViewViewModel())
 }
