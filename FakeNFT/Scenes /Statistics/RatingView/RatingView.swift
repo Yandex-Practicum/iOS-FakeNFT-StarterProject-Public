@@ -69,7 +69,7 @@ struct RatingView: View {
         VStack(spacing: .zero) {
             RatingList(isLoading: viewModel.isLoading) {
                 ForEach(viewModel.filteredUsers) { user in
-                    NavigationLink(destination: UserCardView(isTabBarHidden: $isTabBarHidden)){
+                    NavigationLink(destination: UserCardView(isTabBarHidden: $isTabBarHidden)) {
                         RatingRow(user: user)
                     }
                 }
