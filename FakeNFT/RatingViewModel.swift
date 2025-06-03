@@ -12,6 +12,7 @@ final class RatingViewModel: ObservableObject {
     @Published var filteredUsers: [User] = []
     @Published var isLoading: Bool = false
     @Published var isShowingFilterSheet: Bool = false
+    @Published var isShowingErrorAlert: Bool = false
     private var users: [User] = []
     
     @AppStorage("ratingSort") private var currentSorting: RatingFilterType = .rating

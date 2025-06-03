@@ -48,6 +48,20 @@ struct RatingView: View {
                     viewModel.filterUsers(by: .rating)
                 }
             }
+            .alert(isPresented: $viewModel.isShowingErrorAlert) {
+                Alert(
+                    title: Text("Не удалось получить данные"),
+                    primaryButton: .default(
+                        Text("Отмена")
+                    ),
+                    secondaryButton: .default(
+                        Text("Повторить"),
+                        action: {
+                            viewModel.loadUsers()
+                        }
+                    )
+                )
+            }
     }
     
     private var ratingList: some View {
