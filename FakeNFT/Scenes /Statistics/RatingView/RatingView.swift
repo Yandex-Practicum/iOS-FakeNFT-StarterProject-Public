@@ -11,21 +11,16 @@ struct RatingView: View {
     
     // MARK: - Properties
     
-    let user = User(
-        id: "1",
-        name: "Joaquin Phoenix",
-        avatar: "",
-        description: "",
-        website: "",
-        nfts: ["1", "2", "3"],
-        rating: "1"
-    )
+    @StateObject private var viewModel = RatingViewModel()
     
     // MARK: - Content
     
     var body: some View {
         NavigationStack {
             content
+                .onAppear {
+                    viewModel.loadUsers()
+                }
         }
     }
     
@@ -46,7 +41,9 @@ struct RatingView: View {
     private var ratingList: some View {
         VStack(spacing: .zero) {
             RatingList(isLoading: false) {
-                RatingRow(user: user)
+                ForEach(viewModel.filteredUsers) { user in
+                    RatingRow(user: user)
+                }
             }
         }
         .padding(.horizontal)
