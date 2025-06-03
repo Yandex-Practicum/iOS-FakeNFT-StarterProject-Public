@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct FakeNftApp: App {
+    
+    @StateObject var service = ServicesAssembly()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(service)
         }
     }
 }
