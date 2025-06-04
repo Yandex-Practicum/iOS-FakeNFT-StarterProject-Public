@@ -20,4 +20,7 @@ struct StatisticsConstants {
     static let avatarSizeSmall: CGFloat = 28.0
     static let avatarSizeLarge: CGFloat = 70.0
     static let ratingLabelWidth: CGFloat = 27.0
+    static let buttonHeightMedium: CGFloat = 40.0
+    static let buttonHeightLarge: CGFloat = 54.0
+    static let borderLineWidth: CGFloat = 1.0
 }
