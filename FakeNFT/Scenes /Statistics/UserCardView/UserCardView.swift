@@ -9,23 +9,52 @@ import SwiftUI
 
 struct UserCardView: View {
     
+    // MARK: - Properties
+    
     @Binding var isTabBarHidden: Bool
     
-    // TODO: 2/3 Statistics
+    // MARK: - Content
     
     var body: some View {
-        VStack {
-            Text("Hello, World!")
+        content
+            .modifier(NavigationBarStyle(
+                title: nil,
+                backButtonHidden: false,
+                filterButtonHidden: true,
+                isTabBarHidden: $isTabBarHidden,
+                filterButtonTapHandler: { }
+            ))
+            .onAppear {
+                isTabBarHidden = true
+            }
+    }
+    
+    // MARK: - View
+    
+    private var content: some View {
+        VStack(alignment: .leading) {
+            userInfo
+            Text("user.description")
+                .font(.footnote)
+                .foregroundStyle(Color.blackDay)
+                .padding(.top, StatisticsConstants.topAnchorSmall)
+            Spacer()
         }
-        .modifier(NavigationBarStyle(
-            title: nil,
-            backButtonHidden: false,
-            filterButtonHidden: true,
-            isTabBarHidden: $isTabBarHidden,
-            filterButtonTapHandler: { }
-        ))
-        .onAppear {
-            isTabBarHidden = true
+        .padding(.top, StatisticsConstants.topAnchorSmall)
+        .padding(.horizontal)
+    }
+    
+    private var userInfo: some View {
+        HStack(spacing: .zero) {
+            UserAvatar(
+                url: "user.avatar",
+                size: StatisticsConstants.avatarSizeLarge
+            )
+            Text("user.name")
+                .font(.bold22)
+                .foregroundStyle(Color.blackDay)
+                .padding(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
