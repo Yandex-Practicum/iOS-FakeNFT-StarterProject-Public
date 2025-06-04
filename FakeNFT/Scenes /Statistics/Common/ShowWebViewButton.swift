@@ -12,7 +12,10 @@ struct ShowWebViewButton: View {
     let url: String
     
     var body: some View {
-        NavigationLink(destination: WebView(url: URL(string: url))) {
+        NavigationLink(
+            destination: WebView(url: URL(string: url))
+                .toolbar(.hidden, for: .tabBar)
+        ) {
             Text("Перейти на сайт пользователя")
                 .font(.regular15)
                 .foregroundStyle(Color.blackDay)

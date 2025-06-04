@@ -49,6 +49,7 @@
 		79D0C75D2DE39F5900D53241 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C75C2DE39F5900D53241 /* LoadingView.swift */; };
 		79D9E0402DF0316F005D5DB1 /* ShowWebViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */; };
 		79D9E0422DF03260005D5DB1 /* ShowCollectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E0412DF03260005D5DB1 /* ShowCollectionButton.swift */; };
+		79D9E0442DF03392005D5DB1 /* UserCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E0432DF03392005D5DB1 /* UserCardViewModel.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		79D0C75C2DE39F5900D53241 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewButton.swift; sourceTree = "<group>"; };
 		79D9E0412DF03260005D5DB1 /* ShowCollectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCollectionButton.swift; sourceTree = "<group>"; };
+		79D9E0432DF03392005D5DB1 /* UserCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCardViewModel.swift; path = FakeNFT/UserCardViewModel.swift; sourceTree = SOURCE_ROOT; };
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -382,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				79641C222DEF2081004C970D /* RatingViewModel.swift */,
+				79D9E0432DF03392005D5DB1 /* UserCardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				79D9E0402DF0316F005D5DB1 /* ShowWebViewButton.swift in Sources */,
 				79641C212DEF1ED7004C970D /* RatingList.swift in Sources */,
 				5019A4CE2DE1E899009A5AF8 /* FakeNftApp.swift in Sources */,
+				79D9E0442DF03392005D5DB1 /* UserCardViewModel.swift in Sources */,
 				79641C1C2DEF1E17004C970D /* RatingRow.swift in Sources */,
 				79641C282DEF293A004C970D /* UserCardView.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* ExamplePutService.swift in Sources */,
