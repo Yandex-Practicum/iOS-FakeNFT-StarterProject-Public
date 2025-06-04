@@ -40,6 +40,8 @@ struct UserCardView: View {
                 .padding(.top, StatisticsConstants.topAnchorSmall)
             ShowWebViewButton(url: "user.website")
                 .padding(.top, StatisticsConstants.topAnchorMedium)
+            ShowCollectionButton(nftsCount: 122)
+                .padding(.top, StatisticsConstants.topAnchorLarge)
             Spacer()
         }
         .padding(.top, StatisticsConstants.topAnchorSmall)

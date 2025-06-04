@@ -48,6 +48,7 @@
 		79D0C7592DE39C3800D53241 /* NavigationBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */; };
 		79D0C75D2DE39F5900D53241 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C75C2DE39F5900D53241 /* LoadingView.swift */; };
 		79D9E0402DF0316F005D5DB1 /* ShowWebViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */; };
+		79D9E0422DF03260005D5DB1 /* ShowCollectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E0412DF03260005D5DB1 /* ShowCollectionButton.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +113,7 @@
 		79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarStyle.swift; sourceTree = "<group>"; };
 		79D0C75C2DE39F5900D53241 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewButton.swift; sourceTree = "<group>"; };
+		79D9E0412DF03260005D5DB1 /* ShowCollectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCollectionButton.swift; sourceTree = "<group>"; };
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -338,6 +340,7 @@
 				79641C1A2DEF1DF4004C970D /* Row */,
 				79641C1D2DEF1E63004C970D /* UserAvatar.swift */,
 				79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */,
+				79D9E0412DF03260005D5DB1 /* ShowCollectionButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				5019A4D02DE1E8E0009A5AF8 /* ContentView.swift in Sources */,
+				79D9E0422DF03260005D5DB1 /* ShowCollectionButton.swift in Sources */,
 				79641C232DEF2081004C970D /* RatingViewModel.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
