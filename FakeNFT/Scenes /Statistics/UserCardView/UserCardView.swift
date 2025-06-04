@@ -38,6 +38,8 @@ struct UserCardView: View {
                 .font(.footnote)
                 .foregroundStyle(Color.blackDay)
                 .padding(.top, StatisticsConstants.topAnchorSmall)
+            ShowWebViewButton(url: "user.website")
+                .padding(.top, StatisticsConstants.topAnchorMedium)
             Spacer()
         }
         .padding(.top, StatisticsConstants.topAnchorSmall)

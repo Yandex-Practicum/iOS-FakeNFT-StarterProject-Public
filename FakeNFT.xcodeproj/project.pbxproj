@@ -47,6 +47,7 @@
 		79D0C7562DE3973200D53241 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7552DE3973200D53241 /* TabBarView.swift */; };
 		79D0C7592DE39C3800D53241 /* NavigationBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */; };
 		79D0C75D2DE39F5900D53241 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C75C2DE39F5900D53241 /* LoadingView.swift */; };
+		79D9E0402DF0316F005D5DB1 /* ShowWebViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +111,7 @@
 		79D0C7552DE3973200D53241 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		79D0C7582DE39C3800D53241 /* NavigationBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarStyle.swift; sourceTree = "<group>"; };
 		79D0C75C2DE39F5900D53241 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowWebViewButton.swift; sourceTree = "<group>"; };
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -335,6 +337,7 @@
 				79641C1F2DEF1ECB004C970D /* List */,
 				79641C1A2DEF1DF4004C970D /* Row */,
 				79641C1D2DEF1E63004C970D /* UserAvatar.swift */,
+				79D9E03F2DF0316F005D5DB1 /* ShowWebViewButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				79D0C75D2DE39F5900D53241 /* LoadingView.swift in Sources */,
 				797AAE8A2DEF316100745B0D /* UsersRequest.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
+				79D9E0402DF0316F005D5DB1 /* ShowWebViewButton.swift in Sources */,
 				79641C212DEF1ED7004C970D /* RatingList.swift in Sources */,
 				5019A4CE2DE1E899009A5AF8 /* FakeNftApp.swift in Sources */,
 				79641C1C2DEF1E17004C970D /* RatingRow.swift in Sources */,
