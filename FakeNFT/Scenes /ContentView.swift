@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var service: ServicesAssembly
+    @StateObject private var cartViewModel = CartViewViewModel()
     @State private var isTabBarHidden = false
     @State private var selectedTab = Tab.profile
     
