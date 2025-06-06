@@ -27,7 +27,7 @@ struct CartPaymentView: View {
         VStack(alignment: .leading) {
             Text("\(viewModel.nftCount) NFT")
                 .font(.regular15)
-            Text("\(viewModel.totalAmount.formatted()) ETP")
+            Text("\(viewModel.totalAmount.formatted()) ETH")
                 .font(.bold17)
                 .foregroundStyle(Color.yaGreenUniversal)
         }

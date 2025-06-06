@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CartCellView: View {
     
-    @EnvironmentObject var viewModel: CartViewViewModel
     let item: Nft
+    let onDelete: () -> Void
     
     var body: some View {
         HStack {
@@ -22,7 +22,9 @@ struct CartCellView: View {
             }
             Spacer()
             
-            Image("cartDelete")
+            Button(action: onDelete) {
+                Image("cartDelete")
+            }
         }
         .padding()
         .frame(maxHeight: 140)
@@ -34,12 +36,13 @@ struct CartCellView: View {
     }
     
     private var nftImage: some View {
-        Image(item.images.first ?? "")
-            .resizable()
-            .frame(width: 108, height: 108)
-            .cornerRadius(12)
+        AsyncImage(url: URL(string: item.images.first ?? "")) { image in
+            image
+                .image?.resizable()
+                .frame(width: 108, height: 108)
+                .cornerRadius(12)
+        }
     }
-    
     private var starRating: some View {
         HStack(spacing: 2) {
             ForEach(0..<5) {
@@ -60,7 +63,6 @@ struct CartCellView: View {
 }
 
 #Preview {
-    CartCellView(item: Nft.mock)
+    CartCellView(item: Nft.mock, onDelete: {})
         .background(Color.pink.opacity(0.7))
-        .environmentObject(CartViewViewModel())
 }

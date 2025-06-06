@@ -10,6 +10,7 @@ import SwiftUI
 struct CurrencyCellView: View {
     
     let currency: Currency
+    //let onSelect: () -> Void
     
     var body: some View {
         HStack {
@@ -17,7 +18,7 @@ struct CurrencyCellView: View {
             currencyName
         }
         .frame(height: 46)
-        .frame(maxWidth: 190, alignment: .leading)
+        .frame(maxWidth: 210, alignment: .leading)
         .overlay(RoundedRectangle(cornerRadius: 12)
             .stroke(Color.blackDay, lineWidth: 1))
         .background(Color.lightGrayDay)
@@ -28,8 +29,6 @@ struct CurrencyCellView: View {
         AsyncImage(url: URL(string: currency.image)) { image in
             image
                 .image?.resizable()
-           
-            
                 .frame(width: 32, height: 32)
                 .padding(.leading,12)
         }
