@@ -48,7 +48,9 @@ struct UserCardView: View {
                 .padding(.top, StatisticsConstants.topAnchorSmall)
             ShowWebViewButton(url: viewModel.user.website)
                 .padding(.top, StatisticsConstants.topAnchorMedium)
-            NavigationLink(destination: UserCollectionView()) {
+            NavigationLink(
+                destination: UserCollectionView(nftIds: viewModel.user.nfts)
+            ) {
                 ShowCollectionButton(nftsCount: viewModel.user.nfts.count)
                     .padding(.top, StatisticsConstants.topAnchorLarge)
             }

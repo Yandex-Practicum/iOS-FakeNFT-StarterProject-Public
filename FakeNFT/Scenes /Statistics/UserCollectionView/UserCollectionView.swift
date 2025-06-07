@@ -11,6 +11,14 @@ struct UserCollectionView: View {
     
     // MARK: - Properties
     
+    @ObservedObject var viewModel: UserCollectionViewModel
+    
+    // MARK: - Initializers
+    
+    init(nftIds: [String]) {
+        self.viewModel = UserCollectionViewModel(nftIds: nftIds)
+    }
+    
     // MARK: - Content
     
     var body: some View {
@@ -48,6 +56,6 @@ struct UserCollectionView: View {
 
 #Preview {
     NavigationStack {
-        UserCollectionView()
+        UserCollectionView(nftIds: [""])
     }
 }
