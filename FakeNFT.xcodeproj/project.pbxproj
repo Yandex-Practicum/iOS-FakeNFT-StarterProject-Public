@@ -42,6 +42,7 @@
 		79641C232DEF2081004C970D /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C222DEF2081004C970D /* RatingViewModel.swift */; };
 		79641C282DEF293A004C970D /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641C272DEF293A004C970D /* UserCardView.swift */; };
 		796CB7962DF4269F0028631B /* CollectionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796CB7952DF4269F0028631B /* CollectionRow.swift */; };
+		796CB7982DF42A620028631B /* UserNFTCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796CB7972DF42A620028631B /* UserNFTCollection.swift */; };
 		797AAE882DEF30E400745B0D /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AAE872DEF30E400745B0D /* UsersService.swift */; };
 		797AAE8A2DEF316100745B0D /* UsersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AAE892DEF316100745B0D /* UsersRequest.swift */; };
 		79D0C7532DE396AC00D53241 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D0C7522DE396AC00D53241 /* Tab.swift */; };
@@ -110,6 +111,7 @@
 		79641C222DEF2081004C970D /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingViewModel.swift; path = FakeNFT/RatingViewModel.swift; sourceTree = SOURCE_ROOT; };
 		79641C272DEF293A004C970D /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
 		796CB7952DF4269F0028631B /* CollectionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRow.swift; sourceTree = "<group>"; };
+		796CB7972DF42A620028631B /* UserNFTCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNFTCollection.swift; sourceTree = "<group>"; };
 		797AAE872DEF30E400745B0D /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		797AAE892DEF316100745B0D /* UsersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequest.swift; sourceTree = "<group>"; };
 		79D0C7522DE396AC00D53241 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				79641C202DEF1ED7004C970D /* RatingList.swift */,
+				796CB7972DF42A620028631B /* UserNFTCollection.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				5019A4D02DE1E8E0009A5AF8 /* ContentView.swift in Sources */,
 				79D9E0422DF03260005D5DB1 /* ShowCollectionButton.swift in Sources */,
 				79641C232DEF2081004C970D /* RatingViewModel.swift in Sources */,
+				796CB7982DF42A620028631B /* UserNFTCollection.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				79D9E0472DF03E41005D5DB1 /* UserCollectionView.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

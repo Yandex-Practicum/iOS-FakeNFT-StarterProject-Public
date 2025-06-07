@@ -9,20 +9,41 @@ import SwiftUI
 
 struct UserCollectionView: View {
     
-    // TODO: 3/3 Statistics
+    // MARK: - Properties
+    
+    // MARK: - Content
     
     var body: some View {
-        VStack {
-            Text("Hello, World!")
-        }
+        content
             .modifier(NavigationBarStyle(
                 title: "Коллекция NFT",
                 backButtonHidden: false,
                 filterButtonHidden: true,
-                filterButtonTapHandler: { }
+                filterButtonTapHandler: {}
             ))
+            .onAppear {
+                // TODO: load data
+            }
             .toolbar(.hidden, for: .tabBar)
     }
+    
+    // MARK: - View
+    
+    private var content: some View {
+        ZStack {
+            UserNFTCollection(
+                likeTapHandler: { index in
+                    print("like tapped \(index)")
+                },
+                cartTapHandler: { index in
+                    print("cart tapped \(index)")
+                }
+            )
+            .padding(.top, StatisticsConstants.topAnchorSmall)
+            // LoadingView() .opacity(isLoading ? 1 : 0)
+        }
+    }
+    
 }
 
 #Preview {
