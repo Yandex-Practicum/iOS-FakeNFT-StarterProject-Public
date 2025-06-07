@@ -12,6 +12,7 @@ struct CollectionRow: View {
     // MARK: - Properties
     
     let nft: NftInfo
+    let userLikes: UserLikes
     var likeTapHandler: (NftInfo) -> Void
     var cartTapHandler: (NftInfo) -> Void
     
@@ -64,7 +65,7 @@ struct CollectionRow: View {
                 Button {
                     likeTapHandler(nft)
                 } label: {
-                    Image("likeNoActive") // TODO: ? "likeActive" : "likeNoActive"
+                    Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
             }
         }
@@ -108,6 +109,7 @@ struct CollectionRow: View {
             rating: 4,
             price: 1.79
         ),
+        userLikes: UserLikes(likes: []),
         likeTapHandler: {_ in },
         cartTapHandler: {_ in}
     )

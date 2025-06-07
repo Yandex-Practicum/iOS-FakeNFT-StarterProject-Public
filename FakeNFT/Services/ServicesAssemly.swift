@@ -27,4 +27,8 @@ final class ServicesAssembly: ObservableObject {
     var nftInfoService: NftInfoService {
         NftInfoServiceImpl(networkClient: networkClient)
     }
+    
+    var likesService: LikesService {
+        LikesServiceImpl(networkClient: networkClient)
+    }
 }

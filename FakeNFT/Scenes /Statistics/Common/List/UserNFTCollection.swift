@@ -10,13 +10,14 @@ import SwiftUI
 struct UserNFTCollection: View {
     
     let nftInfo: [NftInfo]
+    let userLikes: UserLikes
     var likeTapHandler: (NftInfo) -> Void
     var cartTapHandler: (NftInfo) -> Void
     
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), alignment: .top),
+        GridItem(.flexible(), alignment: .top),
+        GridItem(.flexible(), alignment: .top)
     ]
     
     var body: some View {
@@ -25,6 +26,7 @@ struct UserNFTCollection: View {
                 ForEach(nftInfo, id: \.self) { nft in
                     CollectionRow(
                         nft: nft,
+                        userLikes: userLikes,
                         likeTapHandler: likeTapHandler,
                         cartTapHandler: cartTapHandler
                     )
@@ -45,6 +47,7 @@ struct UserNFTCollection: View {
                 rating: 1,
                 price: 3.98
             )],
+        userLikes: UserLikes(likes: []),
         likeTapHandler: {_ in },
         cartTapHandler: {_ in }
     )

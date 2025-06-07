@@ -16,7 +16,7 @@ struct UserCollectionView: View {
     // MARK: - Initializers
     
     init(nftIds: [String], service: ServicesAssembly) {
-        self.viewModel = UserCollectionViewModel(nftIds: nftIds, nftInfoService: service.nftInfoService)
+        self.viewModel = UserCollectionViewModel(nftIds: nftIds, service: service)
     }
     
     // MARK: - Content
@@ -41,6 +41,7 @@ struct UserCollectionView: View {
         ZStack {
             UserNFTCollection(
                 nftInfo: viewModel.nftInfo,
+                userLikes: viewModel.userLikes,
                 likeTapHandler: { nft in
                     print("like tapped \(nft.id)")
                 },

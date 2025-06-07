@@ -11,13 +11,16 @@ import Foundation
 final class UserCollectionViewModel: ObservableObject {
     @Published var nftIds: [String]
     @Published var nftInfo: [NftInfo] = []
+    @Published var userLikes = UserLikes(likes: [])
     @Published var isLoading: Bool = false
     
     private let nftInfoService: NftInfoService
+    private let likesService: LikesService
     
-    init(nftIds: [String], nftInfoService: NftInfoService) {
+    init(nftIds: [String], service: ServicesAssembly) {
         self.nftIds = nftIds
-        self.nftInfoService = nftInfoService
+        self.nftInfoService = service.nftInfoService
+        self.likesService = service.likesService
     }
     
     func loadData() {
@@ -27,14 +30,15 @@ final class UserCollectionViewModel: ObservableObject {
         let group = DispatchGroup()
         
         loadNftInfo(group)
+        loadLikes(group)
         
         group.notify(queue: .main) {
             self.isLoading = false
-            print(self.nftInfo)
+            print(self.userLikes.likes)
         }
     }
     
-    func loadNftInfo(_ group: DispatchGroup) {
+    private func loadNftInfo(_ group: DispatchGroup) {
         for id in nftIds {
             group.enter()
             nftInfoService.loadNftInfo(id: id) { [weak self] result in
@@ -43,10 +47,24 @@ final class UserCollectionViewModel: ObservableObject {
                 case .success(let nftInfo):
                     self.nftInfo.append(nftInfo)
                 case .failure(let error):
-                    print("Error: \(error)")
+                    print("Error: \(error)") // TODO: alert
                 }
                 group.leave()
             }
+        }
+    }
+    
+    private func loadLikes(_ group: DispatchGroup) {
+        group.enter()
+        likesService.loadLikes() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let likes):
+                self.userLikes = likes
+            case .failure(let error):
+                print("Error: \(error)") // TODO: alert
+            }
+            group.leave()
         }
     }
 }
