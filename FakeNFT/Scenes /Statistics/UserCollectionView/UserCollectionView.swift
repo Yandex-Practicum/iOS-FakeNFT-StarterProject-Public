@@ -15,8 +15,8 @@ struct UserCollectionView: View {
     
     // MARK: - Initializers
     
-    init(nftIds: [String]) {
-        self.viewModel = UserCollectionViewModel(nftIds: nftIds)
+    init(nftIds: [String], service: ServicesAssembly) {
+        self.viewModel = UserCollectionViewModel(nftIds: nftIds, nftInfoService: service.nftInfoService)
     }
     
     // MARK: - Content
@@ -30,7 +30,7 @@ struct UserCollectionView: View {
                 filterButtonTapHandler: {}
             ))
             .onAppear {
-                // TODO: load data
+                viewModel.loadData()
             }
             .toolbar(.hidden, for: .tabBar)
     }
@@ -40,22 +40,23 @@ struct UserCollectionView: View {
     private var content: some View {
         ZStack {
             UserNFTCollection(
-                likeTapHandler: { index in
-                    print("like tapped \(index)")
+                nftInfo: viewModel.nftInfo,
+                likeTapHandler: { nft in
+                    print("like tapped \(nft.id)")
                 },
-                cartTapHandler: { index in
-                    print("cart tapped \(index)")
+                cartTapHandler: { nft in
+                    print("cart tapped \(nft.id)")
                 }
             )
             .padding(.top, StatisticsConstants.topAnchorSmall)
-            // LoadingView() .opacity(isLoading ? 1 : 0)
+             LoadingView()
+                .opacity(viewModel.isLoading ? 1 : 0)
         }
     }
-    
 }
 
 #Preview {
     NavigationStack {
-        UserCollectionView(nftIds: [""])
+        UserCollectionView(nftIds: [""], service: ServicesAssembly())
     }
 }

@@ -9,8 +9,9 @@ import SwiftUI
 
 struct UserNFTCollection: View {
     
-    var likeTapHandler: (Int) -> Void
-    var cartTapHandler: (Int) -> Void
+    let nftInfo: [NftInfo]
+    var likeTapHandler: (NftInfo) -> Void
+    var cartTapHandler: (NftInfo) -> Void
     
     let columns = [
         GridItem(.flexible()),
@@ -21,9 +22,9 @@ struct UserNFTCollection: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(0..<7) { index in // TODO: ForEach
+                ForEach(nftInfo, id: \.self) { nft in
                     CollectionRow(
-                        index: index,
+                        nft: nft,
                         likeTapHandler: likeTapHandler,
                         cartTapHandler: cartTapHandler
                     )
@@ -35,5 +36,16 @@ struct UserNFTCollection: View {
 }
 
 #Preview {
-    UserNFTCollection(likeTapHandler: {_ in }, cartTapHandler: {_ in })
+    UserNFTCollection(
+        nftInfo: [
+            NftInfo(
+                id: "",
+                name: "",
+                images: [""],
+                rating: 1,
+                price: 3.98
+            )],
+        likeTapHandler: {_ in },
+        cartTapHandler: {_ in }
+    )
 }

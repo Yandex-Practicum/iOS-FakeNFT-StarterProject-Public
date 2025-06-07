@@ -13,6 +13,7 @@ struct UserCardView: View {
     
     @Binding var isTabBarHidden: Bool
     @ObservedObject var viewModel: UserCardViewModel
+    @EnvironmentObject var service: ServicesAssembly
     
     // MARK: - Initializers
     
@@ -49,7 +50,7 @@ struct UserCardView: View {
             ShowWebViewButton(url: viewModel.user.website)
                 .padding(.top, StatisticsConstants.topAnchorMedium)
             NavigationLink(
-                destination: UserCollectionView(nftIds: viewModel.user.nfts)
+                destination: UserCollectionView(nftIds: viewModel.user.nfts, service: service)
             ) {
                 ShowCollectionButton(nftsCount: viewModel.user.nfts.count)
                     .padding(.top, StatisticsConstants.topAnchorLarge)

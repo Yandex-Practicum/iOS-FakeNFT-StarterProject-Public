@@ -11,9 +11,9 @@ struct CollectionRow: View {
     
     // MARK: - Properties
     
-    let index: Int
-    var likeTapHandler: (Int) -> Void
-    var cartTapHandler: (Int) -> Void
+    let nft: NftInfo
+    var likeTapHandler: (NftInfo) -> Void
+    var cartTapHandler: (NftInfo) -> Void
     
     // MARK: - Content
     
@@ -37,7 +37,7 @@ struct CollectionRow: View {
     
     private var image: some View {
         ZStack(alignment: .top) {
-            AsyncImage(url: URL(string: "url")) { phase in // TODO: url
+            AsyncImage(url: URL(string: nft.images.first ?? "")) { phase in
                 switch phase {
                 case .success(let image):
                     image
@@ -47,9 +47,7 @@ struct CollectionRow: View {
                             height: StatisticsConstants.collectionRowSize
                         )
                         .aspectRatio(contentMode: .fill)
-                        .background(
-                            RoundedRectangle(cornerRadius: StatisticsConstants.cornerRadiusSmall)
-                        )
+                        .clipShape(.rect(cornerRadius: StatisticsConstants.cornerRadiusSmall))
                 case .failure, .empty:
                     RoundedRectangle(cornerRadius: StatisticsConstants.cornerRadiusSmall)
                         .fill(Color.lightGrayDay)
@@ -64,7 +62,7 @@ struct CollectionRow: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(index)
+                    likeTapHandler(nft)
                 } label: {
                     Image("likeNoActive") // TODO: ? "likeActive" : "likeNoActive"
                 }
@@ -74,7 +72,7 @@ struct CollectionRow: View {
     
     private var ratingView: some View {
         HStack(spacing: 2) {
-            let rating = 4 // TODO: rating
+            let rating = nft.rating
             ForEach(1..<6) { index in
                 Image(index <= rating ? "starActive" : "starNoActive")
             }
@@ -85,16 +83,15 @@ struct CollectionRow: View {
     private var nftInfo: some View {
         HStack(spacing: .zero) {
             VStack(alignment: .leading) {
-                Text("Archie")
+                Text(nft.name)
                     .font(.bold17)
-                    .lineLimit(1)
-                Text("1,78 ETH") // TODO: "\(price) ETH"
+                Text("\(nft.price, specifier: "%.2f") ETH")
                     .font(.medium10)
             }
-            .foregroundStyle(Color.blackDay) // TODO: color
+            .foregroundStyle(Color.blackDay)
             Spacer()
             Button {
-                cartTapHandler(index)
+                cartTapHandler(nft)
             } label: {
                 Image("cartAdd") // TODO: ? "cartAdd" : "cartDelete"
             }
@@ -103,5 +100,15 @@ struct CollectionRow: View {
 }
 
 #Preview {
-    CollectionRow(index: 1, likeTapHandler: {_ in }, cartTapHandler: {_ in})
+    CollectionRow(
+        nft: NftInfo(
+            id: "",
+            name: "",
+            images: [""],
+            rating: 4,
+            price: 1.79
+        ),
+        likeTapHandler: {_ in },
+        cartTapHandler: {_ in}
+    )
 }
