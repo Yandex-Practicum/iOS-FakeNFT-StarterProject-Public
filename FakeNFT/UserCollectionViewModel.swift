@@ -12,15 +12,18 @@ final class UserCollectionViewModel: ObservableObject {
     @Published var nftIds: [String]
     @Published var nftInfo: [NftInfo] = []
     @Published var userLikes = UserLikes(likes: [])
+    @Published var userOrders = UserOrders(nfts: [])
     @Published var isLoading: Bool = false
     
     private let nftInfoService: NftInfoService
     private let likesService: LikesService
+    private let userOrdersService: UserOrdersService
     
     init(nftIds: [String], service: ServicesAssembly) {
         self.nftIds = nftIds
         self.nftInfoService = service.nftInfoService
         self.likesService = service.likesService
+        self.userOrdersService = service.userOrdersService
     }
     
     func loadData() {
@@ -31,10 +34,11 @@ final class UserCollectionViewModel: ObservableObject {
         
         loadNftInfo(group)
         loadLikes(group)
+        loadUserOrders(group)
         
         group.notify(queue: .main) {
             self.isLoading = false
-            print(self.userLikes.likes)
+            print(self.userOrders.nfts)
         }
     }
     
@@ -63,6 +67,20 @@ final class UserCollectionViewModel: ObservableObject {
                 self.userLikes = likes
             case .failure(let error):
                 print("Error: \(error)") // TODO: alert
+            }
+            group.leave()
+        }
+    }
+    
+    private func loadUserOrders(_ group: DispatchGroup) {
+        group.enter()
+        userOrdersService.loadUserOrders() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let orders):
+                self.userOrders = orders
+            case .failure(let error):
+                print("Error: \(error)") 
             }
             group.leave()
         }

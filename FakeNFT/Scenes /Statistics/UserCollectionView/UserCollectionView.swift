@@ -42,6 +42,7 @@ struct UserCollectionView: View {
             UserNFTCollection(
                 nftInfo: viewModel.nftInfo,
                 userLikes: viewModel.userLikes,
+                userOrders: viewModel.userOrders,
                 likeTapHandler: { nft in
                     print("like tapped \(nft.id)")
                 },

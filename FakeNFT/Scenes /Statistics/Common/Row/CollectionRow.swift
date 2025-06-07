@@ -13,6 +13,7 @@ struct CollectionRow: View {
     
     let nft: NftInfo
     let userLikes: UserLikes
+    let userOrders: UserOrders
     var likeTapHandler: (NftInfo) -> Void
     var cartTapHandler: (NftInfo) -> Void
     
@@ -94,7 +95,7 @@ struct CollectionRow: View {
             Button {
                 cartTapHandler(nft)
             } label: {
-                Image("cartAdd") // TODO: ? "cartAdd" : "cartDelete"
+                Image(userOrders.nfts.contains(nft.id) ? "cartDelete" : "cartAdd")
             }
         }
     }
@@ -110,6 +111,7 @@ struct CollectionRow: View {
             price: 1.79
         ),
         userLikes: UserLikes(likes: []),
+        userOrders: UserOrders(nfts: []),
         likeTapHandler: {_ in },
         cartTapHandler: {_ in}
     )

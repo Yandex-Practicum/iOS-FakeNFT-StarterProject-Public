@@ -11,6 +11,7 @@ struct UserNFTCollection: View {
     
     let nftInfo: [NftInfo]
     let userLikes: UserLikes
+    let userOrders: UserOrders
     var likeTapHandler: (NftInfo) -> Void
     var cartTapHandler: (NftInfo) -> Void
     
@@ -27,6 +28,7 @@ struct UserNFTCollection: View {
                     CollectionRow(
                         nft: nft,
                         userLikes: userLikes,
+                        userOrders: userOrders,
                         likeTapHandler: likeTapHandler,
                         cartTapHandler: cartTapHandler
                     )
@@ -48,6 +50,7 @@ struct UserNFTCollection: View {
                 price: 3.98
             )],
         userLikes: UserLikes(likes: []),
+        userOrders: UserOrders(nfts: []),
         likeTapHandler: {_ in },
         cartTapHandler: {_ in }
     )
