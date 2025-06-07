@@ -13,3 +13,19 @@ struct UserOrdersRequest: NetworkRequest {
     }
     var dto: Dto?
 }
+
+struct UserOrdersPutRequest: NetworkRequest {
+    var endpoint: URL? {
+        URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1")
+    }
+    var httpMethod: HttpMethod = .put
+    var dto: Dto?
+}
+
+struct UserOrdersDtoObject: Dto {
+    let nfts: [String]
+    
+    func asDictionary() -> [String : String] {
+        ["nfts" : nfts.joined(separator: ",")]
+    }
+}

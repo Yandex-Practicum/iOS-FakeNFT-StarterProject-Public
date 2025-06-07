@@ -32,6 +32,20 @@ struct UserCollectionView: View {
             .onAppear {
                 viewModel.loadData()
             }
+            .alert(isPresented: $viewModel.isShowingErrorAlert) {
+                Alert(
+                    title: Text("Не удалось получить данные"),
+                    primaryButton: .default(
+                        Text("Отмена")
+                    ),
+                    secondaryButton: .default(
+                        Text("Повторить"),
+                        action: {
+                            viewModel.loadData()
+                        }
+                    )
+                )
+            }
             .toolbar(.hidden, for: .tabBar)
     }
     
@@ -44,13 +58,16 @@ struct UserCollectionView: View {
                 userLikes: viewModel.userLikes,
                 userOrders: viewModel.userOrders,
                 likeTapHandler: { nft in
-                    print("like tapped \(nft.id)")
+                    viewModel.updateLike(nftId: nft.id)
                 },
                 cartTapHandler: { nft in
-                    print("cart tapped \(nft.id)")
+                    viewModel.updateUserOrder(nftId: nft.id)
                 }
             )
             .padding(.top, StatisticsConstants.topAnchorSmall)
+            Text("Пусто")
+                .font(.bold17)
+                .opacity(viewModel.nftIds.isEmpty ? 1 : 0)
              LoadingView()
                 .opacity(viewModel.isLoading ? 1 : 0)
         }
