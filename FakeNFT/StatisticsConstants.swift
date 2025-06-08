@@ -23,4 +23,8 @@ struct StatisticsConstants {
     static let buttonHeightMedium: CGFloat = 40.0
     static let buttonHeightLarge: CGFloat = 54.0
     static let borderLineWidth: CGFloat = 1.0
+    
+    static let collectionRowSize: CGFloat = 108.0
+    static let rowAnchorSmall: CGFloat = 5.0
+    static let rowAnchorMedium: CGFloat = 20.0
 }
