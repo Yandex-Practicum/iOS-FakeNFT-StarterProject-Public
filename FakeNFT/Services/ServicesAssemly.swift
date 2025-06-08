@@ -19,4 +19,20 @@ final class ServicesAssembly: ObservableObject {
             storage: nftStorage
         )
     }
+    
+    var usersService: UsersService {
+        UsersServiceImpl(networkClient: networkClient)
+    }
+    
+    var nftInfoService: NftInfoService {
+        NftInfoServiceImpl(networkClient: networkClient)
+    }
+    
+    var likesService: LikesService {
+        LikesServiceImpl(networkClient: networkClient)
+    }
+    
+    var userOrdersService: UserOrdersService {
+        UserOrdersImpl(networkClient: networkClient)
+    }
 }
