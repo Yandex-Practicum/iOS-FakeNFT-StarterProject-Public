@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -120,6 +120,10 @@
 		79D0C75C2DE39F5900D53241 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		50AA3F8C2DF6FE2100104874 /* LoadingState */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoadingState; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3F68069029CBBAF100B4F915 /* Frameworks */ = {
@@ -357,8 +361,9 @@
 		50D90C502DEF4AEE0023BD17 /* CartView */ = {
 			isa = PBXGroup;
 			children = (
-				50D90C442DEF4AEE0023BD17 /* CartCellView */,
+				50AA3F8C2DF6FE2100104874 /* LoadingState */,
 				50D90C472DEF4AEE0023BD17 /* CartPaymentView */,
+				50D90C442DEF4AEE0023BD17 /* CartCellView */,
 				50D90C4A2DEF4AEE0023BD17 /* CartViewViewModel */,
 				50D90C4E2DEF4AEE0023BD17 /* ChoosePaymentView */,
 				50D90C4F2DEF4AEE0023BD17 /* CartView.swift */,
@@ -463,6 +468,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				50AA3F8C2DF6FE2100104874 /* LoadingState */,
 			);
 			name = FakeNFT;
 			packageProductDependencies = (

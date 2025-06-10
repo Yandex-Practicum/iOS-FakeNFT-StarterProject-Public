@@ -10,11 +10,11 @@ import SwiftUI
 struct CartCellView: View {
     
     let item: Nft
-    let onDelete: () -> Void
+    let onDeleteTapped: () -> Void
     
     var body: some View {
-        HStack {
-            nftImage
+        HStack(spacing: 20) {
+            image
             VStack(alignment: .leading) {
                 nftName
                 starRating
@@ -22,7 +22,7 @@ struct CartCellView: View {
             }
             Spacer()
             
-            Button(action: onDelete) {
+            Button(action: onDeleteTapped) {
                 Image("cartDelete")
             }
         }
@@ -35,7 +35,7 @@ struct CartCellView: View {
             .font(.bold17)
     }
     
-    private var nftImage: some View {
+    private var image: some View {
         AsyncImage(url: URL(string: item.images.first ?? "")) { image in
             image
                 .image?.resizable()
@@ -63,6 +63,6 @@ struct CartCellView: View {
 }
 
 #Preview {
-    CartCellView(item: Nft.mock, onDelete: {})
+    CartCellView(item: Nft.mock, onDeleteTapped: {})
         .background(Color.pink.opacity(0.7))
 }

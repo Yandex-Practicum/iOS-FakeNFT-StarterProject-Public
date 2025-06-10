@@ -22,8 +22,8 @@ final class CartViewViewModel: ObservableObject {
     @Published var cartItems: [Nft] = []
     @Published var order: Order?
     @Published var currentSortType: CartSortType = .name
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+    @Published var state: LoadingState<[Nft]> = .loading
+    
     
     // MARK: - Services
     private let nftService: NftCartService
@@ -69,28 +69,30 @@ final class CartViewViewModel: ObservableObject {
         case .name:
             cartItems.sort { $0.name < $1.name }
         }
+        state = .loaded(cartItems)
     }
     
     func loadCart() async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            order = try await orderService.getOrder()
-            let nftIds = order?.nfts ?? []
-            cartItems = []
-            
-            for nftId in nftIds {
-                let nft = try await nftService.getNFT(id: nftId)
-                cartItems.append(nft)
+            state = .loading
+            do {
+                order = try await orderService.getOrder()
+                let nftIds = order?.nfts ?? []
+                cartItems = []
+                
+                for nftId in nftIds {
+                    let nft = try await nftService.getNFT(id: nftId)
+                    cartItems.append(nft)
+                }
+                
+                // Синхронизируем enum с cartItems
+                state = cartItems.isEmpty ? .empty : .loaded(cartItems)
+                
+            } catch {
+                state = .error(error.localizedDescription)
+                //cartItems = []  очищаем при ошибке
             }
-            
-        } catch {
-            errorMessage = "Ошибка загрузки корзины: \(error.localizedDescription)"
         }
-        sortItems(by: currentSortType)
-        isLoading = false
-    }
+    
     
     func removeFromCart(_ nft: Nft) {
         cartItems.removeAll { $0.id == nft.id }

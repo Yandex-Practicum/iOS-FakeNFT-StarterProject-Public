@@ -17,13 +17,16 @@ struct CartView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if viewModel.isLoading {
+                switch viewModel.state {
+                case .loading:
                     LoadingView()
-                } else if viewModel.cartItems.isEmpty {
+                    
+                case .empty:
                     Text("Корзина пуста")
                         .font(.bold17)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
+                    
+                case .loaded:
                     VStack {
                         ScrollView {
                             ForEach(viewModel.cartItems, id: \.id) { item in
@@ -38,6 +41,18 @@ struct CartView: View {
                             isTabBarHidden = true
                         })
                     }
+                case .error(let errorMessage):
+                    VStack {
+                        Text("Ошибка")
+                            .font(.bold17)
+                        Text(errorMessage)
+                            .font(.regular13)
+                            .multilineTextAlignment(.center)
+                        Button("Повторить") {
+                            Task { await viewModel.loadCart() }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             .task {

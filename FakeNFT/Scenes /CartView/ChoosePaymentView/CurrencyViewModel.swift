@@ -8,36 +8,33 @@
 import SwiftUI
 
 @MainActor
-class CurrencyViewModel: ObservableObject {
+final class CurrencyViewModel: ObservableObject {
+    
+    // MARK: - Published Properties
     @Published var currencies: [Currency] = []
     @Published var selectedCurrency: Currency?
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+    @Published var state: LoadingState<[Currency]> = .loading
+   
     
     private let service = CurrencyService.shared
     
     func loadCurrencies() async {
-        isLoading = true
-        errorMessage = nil
-        
+        state = .loading
         do {
             currencies = try await service.getAllCurrencies()
+            state = currencies.isEmpty ? .empty : .loaded(currencies)
         } catch {
-            errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
+            state = .error("Ошибка загрузки: \(error.localizedDescription)")
         }
-        
-        isLoading = false
     }
     
     func loadCurrency(id: String) async {
-        isLoading = true
-        errorMessage = nil
+        state = .loading
         do {
             selectedCurrency = try await service.getCurrency(id: id)
         } catch {
-            errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
-        }
+            state = .error("Ошибка загрузки: \(error.localizedDescription)")        }
         
-        isLoading = false
+      
     }
 }

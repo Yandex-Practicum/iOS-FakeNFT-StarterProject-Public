@@ -15,20 +15,28 @@ struct ChoosePaymentView: View {
     
     var body: some View {
         Group {
-            if viewModel.isLoading {
+            switch viewModel.state {
+                
+            case.loading:
                 LoadingView()
-            } else if viewModel.currencies.isEmpty {
+                
+            case.empty:
                 Text("Валюты не найдены")
-                    .foregroundStyle(.secondary)
-            } else {
+                    .font(.bold17)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            case.loaded(let currencies):
                 ScrollView {
                     LazyVGrid(columns: columns,  spacing: 7) {
-                        ForEach(viewModel.currencies) { currency in
+                        ForEach(currencies) { currency in
                             CurrencyCellView(currency: currency)
                         }
                     }
                     .padding()
                 }
+            case .error(let errorMessage):
+                Text("Error currencies loading \(errorMessage)")
+                
             }
         }
         .modifier(NavigationBarStyle(
@@ -41,13 +49,6 @@ struct ChoosePaymentView: View {
         
         .task {
             await viewModel.loadCurrencies()
-        }
-        .alert("Ошибка", isPresented: .constant(viewModel.errorMessage != nil)) {
-            Button("OK") {
-                viewModel.errorMessage = nil
-            }
-        } message: {
-            Text(viewModel.errorMessage ?? "")
         }
     }
 }
