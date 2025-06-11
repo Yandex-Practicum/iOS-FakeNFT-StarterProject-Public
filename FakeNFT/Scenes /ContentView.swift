@@ -9,24 +9,28 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @EnvironmentObject var service: ServicesAssembly
+    @StateObject private var cartViewModel = CartViewViewModel()
+    @State private var isTabBarHidden = false
     @State private var selectedTab = Tab.profile
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationStack {
-                TabView(selection: $selectedTab) {
-                    Text("Profile")
-                        .tag(Tab.profile)
-                    
-                    Text("Catalog")
-                        .tag(Tab.catalog)
-                    
-                    Text("Cart")
-                        .tag(Tab.cart)
-                    
-                    Text("Statistics")
-                        .tag(Tab.statistics)
-                }
+            TabView(selection: $selectedTab) {
+                Text("Profile")
+                    .tag(Tab.profile)
+                
+                Text("Catalog")
+                    .tag(Tab.catalog)
+                
+                CartView(isTabBarHidden: $isTabBarHidden)
+                    .tag(Tab.cart)
+                    .environmentObject(cartViewModel)
+                
+                Text("Statistics")
+                    .tag(Tab.statistics)
+            }
+            if !isTabBarHidden {
                 TabBarView(selectedTab: $selectedTab)
             }
         }
@@ -35,4 +39,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(ServicesAssembly())
+
 }
