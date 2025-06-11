@@ -34,7 +34,7 @@ class NetworkService: NetworkServiceProtocol {
         }
         
         guard 200...299 ~= httpResponse.statusCode else {
-            if let responseString = String(data: data, encoding: .utf8) {
+            if String(data: data, encoding: .utf8) != nil {
             }
             throw URLError(.badServerResponse)
         }
