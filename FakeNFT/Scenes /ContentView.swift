@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                Text("Profile")
+                ProfileView()
                     .tag(Tab.profile)
                 
                 Text("Catalog")
