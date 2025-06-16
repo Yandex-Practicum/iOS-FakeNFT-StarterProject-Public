@@ -23,15 +23,17 @@ struct ContentView: View {
                 Text("Catalog")
                     .tag(Tab.catalog)
                 
-                CartView(isTabBarHidden: $isTabBarHidden)
+                CartView(isTabBarHidden: $isTabBarHidden, selectedTab: $selectedTab)
                     .tag(Tab.cart)
                     .environmentObject(cartViewModel)
                 
                 Text("Statistics")
                     .tag(Tab.statistics)
             }
+           
             if !isTabBarHidden {
                 TabBarView(selectedTab: $selectedTab)
+                    .blur(radius: cartViewModel.showDeleteConfirmation ? 12 : 0)
             }
         }
     }
