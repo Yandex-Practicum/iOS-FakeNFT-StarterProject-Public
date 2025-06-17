@@ -16,21 +16,15 @@ final class PaymentService {
     }
     
     func processPayment() async throws -> PaymentResponse {
-        let endpoint = "/api/v1/orders/1/payment/1"
-        do {
-            let data = try await networkService.performRequest(endpoint: endpoint)
-            
-            if String(data: data, encoding: .utf8) != nil {
-            }
-            
-            let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
-            
-            return response
-            
-        } catch let decodingError as DecodingError {
-            throw decodingError
-        } catch {
-            throw error
-        }
+        let data = try await networkService.performRequest(
+            endpoint: "/api/v1/orders/1/payment/1",
+            method: NetworkConstants.HTTPMethod.get,
+            body: nil,
+            contentType: nil
+        )
+        
+        let response = try JSONDecoder().decode(PaymentResponse.self, from: data)
+        
+        return response
     }
 }
