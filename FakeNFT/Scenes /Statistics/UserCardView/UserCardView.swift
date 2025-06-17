@@ -89,6 +89,7 @@ struct UserCardView: View {
         UserCardView(
             user: userTest,
             isTabBarHidden: .constant(true)
+            
         )
     }
 }
