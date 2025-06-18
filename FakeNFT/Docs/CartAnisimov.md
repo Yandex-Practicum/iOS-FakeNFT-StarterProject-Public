@@ -4,7 +4,7 @@
 Эпик: Корзина
 
 Ссылка на доску: [ссылка](https://github.com/users/Maxoscaro/projects/1/views/4)
-
+Ссылка на запись экрана https://disk.yandex.ru/i/1KX3kx6lkR3sFQ
 
 # Декомпозиция эпика Корзина
 
