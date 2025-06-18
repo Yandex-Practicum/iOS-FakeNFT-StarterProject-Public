@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct SuccessPaymentView: View {
+    
+    @Binding var selectedTab: Tab
+    @Binding var isTabBarHidden: Bool
+    @Binding var showPayment: Bool
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var cartViewModel: CartViewViewModel
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Spacer()
@@ -20,13 +27,27 @@ struct SuccessPaymentView: View {
             
             Spacer()
             
-            ButtonView(action: {}, textColor: .whiteDay, buttonColor: .blackDay, text: "Вернуться в каталог", font: .bold17, cornerRadius: 16, buttonHieght: 60)
+            ButtonView(action: {returnToCatalog()}, textColor: .whiteDay, buttonColor: .blackDay, text: "Вернуться в каталог", font: .bold17, cornerRadius: 16, buttonHieght: 60)
         }
         .padding()
         .navigationBarBackButtonHidden(true)
     }
+    
+    private func returnToCatalog() {
+        Task {
+            await cartViewModel.clearCartOnServerOnly()
+        }
+        showPayment = false
+        selectedTab = .catalog
+        isTabBarHidden = false
+        dismiss()
+    }
 }
 
+
 #Preview {
-    SuccessPaymentView()
+    SuccessPaymentView(
+        selectedTab: .constant(.cart),
+        isTabBarHidden: .constant(true), showPayment: .constant(true)
+    )
 }

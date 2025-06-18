@@ -6,23 +6,57 @@
 //
 import Foundation
 
-class OrderService {
+final class OrderService {
     static let shared = OrderService()
     private let networkService: NetworkServiceProtocol
+    private let orderEndpoint = "/api/v1/orders/1"
     
     init(networkService: NetworkServiceProtocol = NetworkService.shared) {
         self.networkService = networkService
     }
     
-    /// Получить заказ (корзину) пользователя
+    
     func getOrder() async throws -> Order {
-        let data = try await networkService.performRequest(endpoint: "/api/v1/orders/1")
+        let data = try await networkService.performRequest(
+            endpoint: orderEndpoint,
+            method: NetworkConstants.HTTPMethod.get,
+            body: nil,
+            contentType: nil
+        )
         return try JSONDecoder().decode(Order.self, from: data)
     }
     
-    /// Добавить NFT в заказ (если API поддерживает)
-    func addToOrder(nftId: String) async throws -> Order {
-        // TODO: PUT запрос для добавления
-        throw URLError(.badURL)
+    func updateOrder(nftIds: [String]) async throws -> Order {
+        var components = URLComponents()
+        components.queryItems = nftIds.map { URLQueryItem(name: "nfts", value: $0) }
+        
+        guard let bodyString = components.query,
+              let bodyData = bodyString.data(using: .utf8) else {
+            throw URLError(.badURL)
+        }
+        
+        let data = try await networkService.performRequest(
+            endpoint: orderEndpoint,
+            method: NetworkConstants.HTTPMethod.put,
+            body: bodyData,
+            contentType: NetworkConstants.ContentType.formUrlEncoded
+        )
+        
+        let updatedOrder = try JSONDecoder().decode(Order.self, from: data)
+        
+        return updatedOrder
+    }
+    
+    func removeFromOrder(nftId: String) async throws -> Order {
+        let currentOrder = try await getOrder()
+        
+        var updatedNfts = currentOrder.nfts
+        updatedNfts.removeAll { $0 == nftId }
+        
+        return try await updateOrder(nftIds: updatedNfts)
+    }
+    
+    func clearOrder() async throws -> Order {
+        return try await updateOrder(nftIds: [])
     }
 }

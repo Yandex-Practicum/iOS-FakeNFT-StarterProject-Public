@@ -23,6 +23,9 @@ final class CartViewViewModel: ObservableObject {
     @Published var order: Order?
     @Published var currentSortType: CartSortType = .name
     @Published var state: LoadingState<[Nft]> = .loading
+    @Published var showDeleteConfirmation = false
+    @Published var nftToDelete: Nft?
+    @Published var isDeleting = false
     
     
     // MARK: - Services
@@ -73,31 +76,68 @@ final class CartViewViewModel: ObservableObject {
     }
     
     func loadCart() async {
-            state = .loading
+        state = .loading
+        do {
+            order = try await orderService.getOrder()
+            let nftIds = order?.nfts ?? []
+            cartItems = []
+            
+            for nftId in nftIds {
+                let nft = try await nftService.getNFT(id: nftId)
+                cartItems.append(nft)
+            }
+            
+            sortItems(by: currentSortType)
+            
+            state = cartItems.isEmpty ? .empty : .loaded(cartItems)
+            
+        } catch {
+            state = .error(error.localizedDescription)
+        }
+    }
+    
+    func removeFromCart(_ nft: Nft) {
+        Task {
+            showDeleteConfirmation = false
+            nftToDelete = nil
+            isDeleting = true
+            
             do {
-                order = try await orderService.getOrder()
-                let nftIds = order?.nfts ?? []
-                cartItems = []
+                _ = try await orderService.removeFromOrder(nftId: nft.id)
                 
-                for nftId in nftIds {
-                    let nft = try await nftService.getNFT(id: nftId)
-                    cartItems.append(nft)
-                }
-
+                cartItems.removeAll { $0.id == nft.id }
+                
                 state = cartItems.isEmpty ? .empty : .loaded(cartItems)
                 
             } catch {
-                state = .error(error.localizedDescription)
+                print("Ошибка при удалении NFT: \(error.localizedDescription)")
             }
+            
+            isDeleting = false
         }
-    
-    
-    func removeFromCart(_ nft: Nft) {
-        cartItems.removeAll { $0.id == nft.id }
     }
     
-    func clearCart() {
-        cartItems.removeAll()
+    func clearCart() async throws {
+        do {
+            _ = try await orderService.clearOrder()
+            
+            cartItems.removeAll()
+            order = nil
+            state = .empty
+            
+        } catch {
+            throw error
+        }
+    }
+    
+    func clearCartOnServerOnly() async {
+        do {
+            _ = try await orderService.clearOrder()
+            
+        } catch {
+            print("❌ Ошибка при очистке корзины на сервере: \(error)")
+        }
     }
 }
+
 
