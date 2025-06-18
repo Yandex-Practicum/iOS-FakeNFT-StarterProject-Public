@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "likeActive.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
