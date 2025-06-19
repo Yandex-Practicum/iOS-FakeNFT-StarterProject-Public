@@ -60,8 +60,8 @@ struct FavouriteNft: View {
                     RoundedRectangle(cornerRadius: StatisticsConstants.cornerRadiusSmall)
                         .fill(Color.lightGrayDay)
                         .frame(
-                            width: 90,
-                            height: 90
+                            width: 100,
+                            height: 100
                         )
                 default:
                     EmptyView()
@@ -89,7 +89,7 @@ struct FavouriteNft: View {
                        }
                       
                    }
-            Text("\(nft.price, specifier: "%.2f") ETH")
+            Text("\(nft.price, specifier: "%.2f") ETH").font(.system(size: 16))
             
         }
 

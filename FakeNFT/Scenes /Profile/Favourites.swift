@@ -30,11 +30,15 @@ struct Favourites: View {
     
     var content: some View {
         ScrollView{
-            LazyVGrid(columns: columns, spacing: 20) {
-                VStack(alignment: .leading) {
-                    nft
-                }
-            }
+            LazyVGrid(columns: columns, spacing: .zero) {
+                nft
+                nft
+                nft
+                nft
+                nft
+                nft
+            }.padding(13)
+            
         }
     }
     var nft: some View{
