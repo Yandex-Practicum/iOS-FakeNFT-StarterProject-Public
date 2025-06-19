@@ -1,16 +1,16 @@
 //
-//  CollectionRow.swift
+//  NftRow.swift
 //  FakeNFT
 //
-//  Created by Anastasia on 07.06.2025.
+//  Created by Mac on 18.06.2025.
 //
 
 import SwiftUI
 
-struct CollectionRow: View {
+struct NftRow: View {
     
     // MARK: - Properties
-    
+    let name: String
     let nft: NftInfo
     let userLikes: UserLikes
     let userOrders: UserOrders
@@ -20,25 +20,41 @@ struct CollectionRow: View {
     // MARK: - Content
     
     var body: some View {
-        content
+        HStack(){
+           
+                image
+                .frame(width: 109)
+                
+            
+            
+            HStack(){
+                
+                    ratingView
+                    .padding()
+                Spacer()
+                VStack(alignment: .leading){
+                    Text("Цена")
+                    
+                    Text("\(nft.price, specifier: "%.2f") ETH")
+                        .font(.headline)
+                }
+                .padding()
+                
+                
+                
+                
+                
+        
+            }
+            
+        }.padding()
+    
+         
     }
     
     // MARK: - View
     
-    private var content: some View {
-        HStack() {
-            VStack(spacing: .zero) {
-                       image
-                       ratingView
-                           .padding(.top, StatisticsConstants.anchorSmall)
-                       nftInfo
-                           .padding(.top, StatisticsConstants.rowAnchorSmall)
-                           .padding(.bottom, StatisticsConstants.rowAnchorMedium)
-                   }
-                   .frame(width: StatisticsConstants.collectionRowSize)
-        }
-       
-    }
+
     
     private var image: some View {
         ZStack(alignment: .top) {
@@ -76,37 +92,30 @@ struct CollectionRow: View {
     }
     
     private var ratingView: some View {
-        HStack(spacing: 2) {
-            let rating = nft.rating
-            ForEach(1..<6) { index in
-                Image(index <= rating ? "starActive" : "starNoActive")
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: 6){
+            Text("\(name)")
+                .font(.headline)
+            HStack(spacing: 2) {
+                       let rating = nft.rating
+                       ForEach(1..<6) { index in
+                           Image(index <= rating ? "starActive" : "starNoActive")
+                       }
+                      
+                   }
+            Text("от Jhon Doe")
+            
         }
+
+        
     }
     
-    private var nftInfo: some View {
-        HStack(spacing: .zero) {
-            VStack(alignment: .leading) {
-                Text(nft.name)
-                    .font(.bold17)
-                Text("\(nft.price, specifier: "%.2f") ETH")
-                    .font(.medium10)
-            }
-            .foregroundStyle(Color.blackDay)
-            Spacer()
-            Button {
-                cartTapHandler(nft)
-            } label: {
-                Image(userOrders.nfts.contains(nft.id) ? "cartDelete" : "cartAdd")
-            }
-        }
-    }
+
 }
 
+
 #Preview {
-    CollectionRow(
-        nft: NftInfo(
+    NftRow(
+        name: "Lilo", nft: NftInfo(
             id: "",
             name: "",
             images: [""],
