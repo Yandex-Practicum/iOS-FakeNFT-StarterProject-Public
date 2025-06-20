@@ -19,6 +19,8 @@ struct UserNft: View {
                     filterButtonTapHandler: {}
                 ))
         }
+        .navigationBarBackButtonHidden(true)
+        
  
     }
     

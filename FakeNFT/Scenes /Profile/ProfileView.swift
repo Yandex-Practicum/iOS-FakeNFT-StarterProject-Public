@@ -60,7 +60,7 @@ struct ProfileView: View {
                 NavigationLink(destination: UserNft()){
                     NftsButton(nfts: 122, name: "Мои NFT")
                 }
-                .navigationBarBackButtonHidden(true)
+                
                 
                 NavigationLink(destination: Favourites()){
                     NftsButton(nfts: 11, name: " Избранные NFT")
