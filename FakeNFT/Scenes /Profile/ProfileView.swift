@@ -35,19 +35,19 @@ struct ProfileView: View {
                     Button("",systemImage: "square.and.pencil"){
                         isPresenting = true
                     }
-                    .fullScreenCover(isPresented: $isPresenting) {
+                    .sheet(isPresented: $isPresenting) {
                         FullScreenModalView()
-                            .onTapGesture {
-                                isPresenting = false
-                            }
+                            
                     }
                     .foregroundStyle(Color.blackDay)
+                    .frame(width: 42,height: 42)
+                    .font(.system(size: 26, weight: .semibold))
                    
                 }
                 
                 userInfo
                 Text("\(description)")
-                    .font(.footnote)
+                    .font(.custom("SFProText-Regular", size: 13))
                     .foregroundStyle(Color.blackDay)
                     .padding(.top)
                 Button(action: send) {
@@ -63,7 +63,7 @@ struct ProfileView: View {
                 
                 
                 NavigationLink(destination: Favourites()){
-                    NftsButton(nfts: 11, name: " Избранные NFT")
+                    NftsButton(nfts: 11, name: "Избранные NFT")
                 }
                 NavigationLink(destination: AboutUser()){
                     AboutButton(name: "О разработчике")
@@ -102,7 +102,7 @@ struct ProfileView: View {
                     .scaledToFit()
                     .frame(width: 100,height: 100)
                     .frame(width: 70, height: 70)
-                    .cornerRadius(60/2)
+                    .clipShape(.circle)
             }
             Text("\(name)")
                 .font(.bold22)
