@@ -35,6 +35,7 @@
 		505B25162DFCA987001FE06C /* AboutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B25152DFCA987001FE06C /* AboutButton.swift */; };
 		505B25182DFD73E3001FE06C /* FullScreenModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B25172DFD73E3001FE06C /* FullScreenModalView.swift */; };
 		5086615A2E096A9800C30955 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508661592E096A9800C30955 /* UserProfile.swift */; };
+		5086615C2E0988AE00C30955 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086615B2E0988A600C30955 /* ProfileModel.swift */; };
 		509263F32E02FACA00D35F08 /* NftRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509263F22E02FAC900D35F08 /* NftRow.swift */; };
 		509717FF2E04256D00C847F2 /* FavouriteNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509717FE2E04256D00C847F2 /* FavouriteNft.swift */; };
 		509EF9782E016D0400E67749 /* UserNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF9772E016D0400E67749 /* UserNft.swift */; };
@@ -129,6 +130,7 @@
 		505B25152DFCA987001FE06C /* AboutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutButton.swift; sourceTree = "<group>"; };
 		505B25172DFD73E3001FE06C /* FullScreenModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenModalView.swift; sourceTree = "<group>"; };
 		508661592E096A9800C30955 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		5086615B2E0988A600C30955 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		509263F22E02FAC900D35F08 /* NftRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftRow.swift; sourceTree = "<group>"; };
 		509717FE2E04256D00C847F2 /* FavouriteNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteNft.swift; sourceTree = "<group>"; };
 		509EF9772E016D0400E67749 /* UserNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNft.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 		505B250D2DF9795B001FE06C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				5086615B2E0988A600C30955 /* ProfileModel.swift */,
 				505B250F2DF9797C001FE06C /* ProfileView.swift */,
 				505B25132DFCA6A1001FE06C /* NftsButton.swift */,
 				505B25152DFCA987001FE06C /* AboutButton.swift */,
@@ -717,6 +720,7 @@
 				558E39E72C68CE0A00FB86AC /* NftService.swift in Sources */,
 				796CB7A42DF467060028631B /* LikesRequest.swift in Sources */,
 				505B25122DFB09D3001FE06C /* ProfileViewModel.swift in Sources */,
+				5086615C2E0988AE00C30955 /* ProfileModel.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
 				793BCC902DEEF06800DF1252 /* WebViewRepresentable.swift in Sources */,
 				505B25102DF9797C001FE06C /* ProfileView.swift in Sources */,
