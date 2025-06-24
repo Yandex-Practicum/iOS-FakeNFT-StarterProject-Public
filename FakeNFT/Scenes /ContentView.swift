@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                ProfileView(viewModel: ProfileViewModel.init(profile: ProfileModel.init(name: "", description: "", link: ""), name: "", description: "", link: ""))
+                ProfileView()
                     .tag(Tab.profile)
                 
                 Text("Catalog")
