@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    var viewModel: ProfileViewModel
     @State private var isPresenting = false
     
     
-    @AppStorage("name") var name: String = "Joaquin Phoenix"
     
-    @AppStorage("description") var description: String = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
-    
-    @AppStorage("link") var link: String = "link"
-    
-    @AppStorage("savedImage") private var imageData: Data?
     func send(){
         
     }
@@ -46,12 +42,12 @@ struct ProfileView: View {
                 }
                 
                 userInfo
-                Text("\(description)")
+                Text("\(viewModel.description)")
                     .font(.custom("SFProText-Regular", size: 13))
                     .foregroundStyle(Color.blackDay)
                     .padding(.top)
                 Button(action: send) {
-                    Text("\(link)")
+                    Text("\(viewModel.link)")
                         .padding(.top, 6)
                         .padding(.bottom)
                         
@@ -88,7 +84,7 @@ struct ProfileView: View {
         
         
         HStack(spacing: .zero){
-            if let data = imageData, let uiImage = UIImage(data: data) {
+            if let data = viewModel.imageData, let uiImage = UIImage(data: data) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFit()
@@ -104,7 +100,7 @@ struct ProfileView: View {
                     .frame(width: 70, height: 70)
                     .clipShape(.circle)
             }
-            Text("\(name)")
+            Text("\(viewModel.name)")
                 .font(.bold22)
                 .foregroundStyle(Color.blackDay)
                 .padding(.leading)
@@ -122,5 +118,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(viewModel: ProfileViewModel.init(profile: ProfileModel.init(name: "", description: "", link: ""), name: "", description: "", link: ""))
 }
