@@ -10,24 +10,39 @@ import SwiftUI
 @MainActor
 
 final class ProfileViewModel: ObservableObject {
+    @AppStorage("userData") private var storedData: Data = Data()
     
-    @Published var profile: ProfileModel
+    @Published var name: String = "Joaquin Phoenix"
     
-    init(profile: ProfileModel, name: String, description: String, link: String, imageData: Data? = nil) {
-        self.profile = profile
-        self.name = name
-        self.description = description
-        self.link = link
-        self.imageData = imageData
+    @Published var description: String = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
+    
+    @Published var link: String = "link"
+    
+    @Published var imageData: Data?
+    
+    init() {
+        load()
     }
-    @AppStorage("name") var name: String = "Joaquin Phoenix"
     
-    @AppStorage("description") var description: String = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
+    func load() {
+        if let loaded = try? JSONDecoder().decode(UserData.self, from: storedData) {
+            self.name = loaded.name
+            self.description = loaded.description
+            self.link = loaded.link
+            self.imageData = loaded.imageData
+        }
+    }
     
-    @AppStorage("link") var link: String = "link"
-    
-    @AppStorage("savedImage") var imageData: Data?
-   
-    
+    func save(name: String, description: String, link: String, imageData: Data?) {
+        let newData = UserData(name: name, description: description, link: link, imageData: imageData)
+            if let encoded = try? JSONEncoder().encode(newData) {
+                storedData = encoded
+                self.name = name
+                self.description = description
+                self.link = link
+                self.imageData = imageData
+            }
+        }
 }
+
 

@@ -8,22 +8,25 @@
 import SwiftUI
 import PhotosUI
 struct FullScreenModalView: View {
+    
+    @ObservedObject var viewModel: ProfileViewModel
    
+    
 
     @Environment(\.presentationMode) var presentationMode
     @State var description: String = ""
     @State var name: String = ""
     @State var link: String = ""
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @AppStorage("savedImage") private var imageData: Data?
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var tempImageData: Data?
+   
+
    
     var body: some View {
         HStack{
             Spacer()
             Button("", systemImage: "xmark") {
-                UserDefaults.standard.set(description, forKey: "description")
-                UserDefaults.standard.set(name, forKey: "name")
-                UserDefaults.standard.set(link, forKey: "link")
+                viewModel.save(name: name, description: description, link: link, imageData: tempImageData)
                 presentationMode.wrappedValue.dismiss()
             }
             .padding(.top, 16)
@@ -35,7 +38,7 @@ struct FullScreenModalView: View {
         }
         VStack(spacing: 20){
             ZStack(alignment: .center){
-                if let data = imageData, let uiImage = UIImage(data: data){
+                if let data = tempImageData, let uiImage = UIImage(data: data){
 
                         Image(uiImage: uiImage)
                             .resizable()
@@ -77,10 +80,16 @@ struct FullScreenModalView: View {
             
         }
         .interactiveDismissDisabled(true)
+        .onAppear{
+            name = viewModel.name
+            link = viewModel.link
+            description = viewModel.description
+            tempImageData = viewModel.imageData
+        }
         .onChange(of: selectedItem) { newItem in
             Task{
                 if let data = try? await newItem?.loadTransferable(type: Data.self){
-                    imageData = data
+                    tempImageData = data
                 }
             }
             
@@ -171,6 +180,11 @@ extension View{
     }
 }
 
-#Preview {
-    FullScreenModalView()
+#Preview("FullScreenModalView MVVM") {
+    let vm = ProfileViewModel()
+    vm.name = "N"
+    vm.description = "D"
+    vm.link = "L"
+    vm.imageData = UIImage(systemName: "photo")?.jpegData(compressionQuality: 1.0)
+    return FullScreenModalView(viewModel: vm)
 }

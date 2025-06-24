@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
-    var viewModel: ProfileViewModel
+    @StateObject private var viewModel = ProfileViewModel()
+   
     @State private var isPresenting = false
     
     
@@ -31,13 +31,14 @@ struct ProfileView: View {
                     Button("",systemImage: "square.and.pencil"){
                         isPresenting = true
                     }
+                    .foregroundStyle(Color.blackDay)
+                                        .frame(width: 42,height: 42)
+                                        .font(.system(size: 26, weight: .semibold))
                     .sheet(isPresented: $isPresenting) {
-                        FullScreenModalView()
+                        FullScreenModalView(viewModel: viewModel)
                             
                     }
-                    .foregroundStyle(Color.blackDay)
-                    .frame(width: 42,height: 42)
-                    .font(.system(size: 26, weight: .semibold))
+                    
                    
                 }
                 
@@ -110,13 +111,11 @@ struct ProfileView: View {
         }
         
         
-        
-        
-        
+
     }
     
 }
 
 #Preview {
-    ProfileView(viewModel: ProfileViewModel.init(profile: ProfileModel.init(name: "", description: "", link: ""), name: "", description: "", link: ""))
+    ProfileView()
 }

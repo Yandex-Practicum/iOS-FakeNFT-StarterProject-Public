@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ProfileModel{
+struct UserData: Codable{
     var name: String
     var description: String
     var link: String
-    var image: Data?
+    var imageData: Data?
 }
