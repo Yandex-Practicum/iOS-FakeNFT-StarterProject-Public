@@ -1,8 +1,27 @@
-//
-//  CartStubView.swift
-//  FakeNFT
-//
-//  Created by Илья Ануфриев on 09.07.2025.
-//
+import UIKit
+import SnapKit
 
-import Foundation
+final class CartStubView: UIView {
+    private let label: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.bodyBold
+        label.textColor = UIColor.segmentActive
+        return label
+    }()
+    
+    init(text: String) {
+        label.text = text
+        super.init(frame: .zero)
+        
+        addSubview(label)
+        
+        label.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
