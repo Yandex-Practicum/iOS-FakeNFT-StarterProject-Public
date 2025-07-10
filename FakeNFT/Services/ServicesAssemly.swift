@@ -17,4 +17,9 @@ final class ServicesAssembly {
             storage: nftStorage
         )
     }
+    
+    // не забыть, что здесь моковые данные
+    var cartService: CartServiceProtocol {
+        MockCartService()
+    }
 }
