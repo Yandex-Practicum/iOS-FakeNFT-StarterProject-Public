@@ -105,7 +105,7 @@ final class CartViewController: UIViewController {
         let filterButton = UIBarButtonItem(
             image: UIImage(resource: .sort),
             style: .plain,
-            target: nil,
+            target: #selector(didTapSortButton),
             action: nil
         )
         filterButton.tintColor = UIColor.segmentActive
@@ -145,6 +145,11 @@ final class CartViewController: UIViewController {
             nftTableView.reloadData()
             stubView.isHidden = true
         }
+    }
+    
+    @objc
+    private func didTapSortButton() {
+        
     }
 
 }
