@@ -9,7 +9,7 @@ protocol CartViewProtocol: AnyObject {
 }
 
 final class CartViewController: UIViewController {
-    // презентер ещё не сделан
+    
     private let presenter: CartPresenterProtocol
     
     private var cards = [CartItemModel]()
@@ -105,9 +105,13 @@ final class CartViewController: UIViewController {
         let filterButton = UIBarButtonItem(
             image: UIImage(resource: .sort),
             style: .plain,
-            target: #selector(didTapSortButton),
-            action: nil
+            target: self,
+            action: #selector(didTapSortButton)
         )
+//            image: UIImage(resource: .sort),
+//            style: .plain,
+//            target: #selector(didTapSortButton),
+//            action: nil
         filterButton.tintColor = UIColor.segmentActive
         navigationItem.setRightBarButton(filterButton, animated: false)
     }
@@ -149,7 +153,28 @@ final class CartViewController: UIViewController {
     
     @objc
     private func didTapSortButton() {
+        // NSLocalizedString
+        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet)
+        // NSLocalizedString
+        let alertAction1 = UIAlertAction(title: "По цене", style: .default) { _ in
+        }
+        // NSLocalizedString
+        let alertAction2 = UIAlertAction(title: "По рэйтингу", style: .default) { _ in
+        }
+        // NSLocalizedString
+        let alertAction3 = UIAlertAction(title:"По названию" , style: .default) { _ in
+        }
         
+        let alertActionCancel = UIAlertAction(title: "Закрыть", style: .cancel)
+        
+        [alertAction1,
+         alertAction2,
+         alertAction3,
+        alertActionCancel].forEach {
+            alert.addAction($0)
+        }
+        
+        present(alert, animated: true)
     }
 
 }
