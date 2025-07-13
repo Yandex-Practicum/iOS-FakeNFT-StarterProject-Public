@@ -6,7 +6,6 @@ protocol CartViewProtocol: AnyObject {
     func update(with data: CartScreenModel)
     func showProgressHUD()
     func hideProgressHUD()
-    func display(_ items: [CartItemModel])
 }
 
 final class CartViewController: UIViewController {
@@ -155,18 +154,18 @@ final class CartViewController: UIViewController {
     @objc
     private func didTapSortButton() {
         // NSLocalizedString
-        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet) { _ in
-            self.presenter.sort(by: .name)
-        }
-        }
+        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet)
         // NSLocalizedString
         let alertAction1 = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.presenter.sort(by: .price)
         }
         // NSLocalizedString
         let alertAction2 = UIAlertAction(title: "По рэйтингу", style: .default) { _ in
+            self.presenter.sort(by: .rating)
         }
         // NSLocalizedString
         let alertAction3 = UIAlertAction(title:"По названию" , style: .default) { _ in
+            self.presenter.sort(by: .name)
         }
         
         let alertActionCancel = UIAlertAction(title: "Закрыть", style: .cancel)
@@ -216,6 +215,7 @@ extension CartViewController: CartViewProtocol {
             showStubView()
         } else {
             showMainViews(with: data)
+            nftTableView.reloadData()
         }
     }
     
@@ -233,10 +233,5 @@ extension CartViewController: CartViewProtocol {
         }
         stubView.isHidden = false
         hideMainViews()
-    }
-    
-    func display(_ items: [CartItemModel]) {
-        self.cards = items
-        nftTableView.reloadData()
     }
 }

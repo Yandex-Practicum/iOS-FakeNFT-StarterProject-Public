@@ -1,6 +1,6 @@
 import Foundation
 
-enum SortOption {
+enum SortOption: String, Codable {
    case price
    case rating
    case name
