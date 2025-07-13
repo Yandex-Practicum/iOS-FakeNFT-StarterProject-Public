@@ -6,6 +6,7 @@ protocol CartViewProtocol: AnyObject {
     func update(with data: CartScreenModel)
     func showProgressHUD()
     func hideProgressHUD()
+    func display(_ items: [CartItemModel])
 }
 
 final class CartViewController: UIViewController {
@@ -154,7 +155,10 @@ final class CartViewController: UIViewController {
     @objc
     private func didTapSortButton() {
         // NSLocalizedString
-        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet) { _ in
+            self.presenter.sort(by: .name)
+        }
+        }
         // NSLocalizedString
         let alertAction1 = UIAlertAction(title: "По цене", style: .default) { _ in
         }
@@ -229,5 +233,10 @@ extension CartViewController: CartViewProtocol {
         }
         stubView.isHidden = false
         hideMainViews()
+    }
+    
+    func display(_ items: [CartItemModel]) {
+        self.cards = items
+        nftTableView.reloadData()
     }
 }
