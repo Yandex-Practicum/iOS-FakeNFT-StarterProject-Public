@@ -1,20 +1,21 @@
 import Foundation
-//вынести протокол в отдельную папку
-protocol CartPresenterProtocol: AnyObject {
-    func setup()
-    func sort(by option: SortOption)
-}
-// сейчас работа ведется с моковым сервисом 10.07 18:40
+
 final class CartPresenter {
+    
+    // MARK: - Properties
     
     weak var view: CartViewProtocol?
     private let cartService: CartServiceProtocol
     private let sortOptionKey = "sortOption"
     private var items: [CartItemModel] = []
     
+    // MARK: - Initializers
+    
     init(cartService: CartServiceProtocol) {
         self.cartService = cartService
     }
+    
+    // MARK: - Public Methods
     
     func sort (by option: SortOption ) {
         UserDefaults.standard.set(option.rawValue, forKey: sortOptionKey)
@@ -32,6 +33,8 @@ final class CartPresenter {
         view?.update(with: model)
     }
     
+    // MARK: - Private Methods
+    
     private func buildScreenModel(onResponse: @escaping (Result<CartScreenModel, Error>) -> Void) {
         cartService.getCartItems { result in
             switch result {
@@ -43,6 +46,8 @@ final class CartPresenter {
         }
     }
 }
+
+// MARK: - CartPresenterProtocol
 
 extension CartPresenter: CartPresenterProtocol {
     func setup() {

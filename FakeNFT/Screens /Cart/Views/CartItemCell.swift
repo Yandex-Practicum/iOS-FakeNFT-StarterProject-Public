@@ -6,6 +6,8 @@ final class CartItemCell: UITableViewCell {
     
     static let reuseIdentifier = "CartItemCell"
     
+    // MARK: - UI Elements
+    
     let nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 12
@@ -28,8 +30,7 @@ final class CartItemCell: UITableViewCell {
         label.numberOfLines = 1
         label.font = UIFont.caption1
         label.textColor = UIColor.segmentActive
-        // здесь также не забыть про добавление в словарь
-        label.text = NSLocalizedString("Цена", comment: "")
+        label.text = NSLocalizedString("CartItem.price", comment: "")
         
         return label
     }()
@@ -52,9 +53,13 @@ final class CartItemCell: UITableViewCell {
         return button
     }()
     
+    // MARK: - Layout Stacks
+    
     private var infoVStack = UIStackView()
     private var ratingHStack = UIStackView()
     private var titleAndStarsVStack = UIStackView()
+    
+    // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,14 +77,18 @@ final class CartItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 16,
-                                                                     left: 16,
-                                                                     bottom: 16,
-                                                                     right: 16)
-        )
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
+            top: 16,
+            left: 16,
+            bottom: 16,
+            right: 16
+         )
+      )
     }
     
     override func prepareForReuse() {
@@ -87,6 +96,8 @@ final class CartItemCell: UITableViewCell {
         
         ratingHStack.removeFromSuperview()
     }
+    
+    // MARK: - Public Methods
     
     func configure(with model: CartItemModel) {
         ratingHStack = getRatingHStack(model.rating)
@@ -96,6 +107,8 @@ final class CartItemCell: UITableViewCell {
         setPrice(model.price)
         setTitle(model.title)
     }
+    
+    // MARK: - Private Methods
     
     private func changeImage(_ url: URL) {
         nftImageView.kf.setImage(with: url)
@@ -124,7 +137,7 @@ final class CartItemCell: UITableViewCell {
         let infoVStack = UIStackView(arrangedSubviews: [titleAndStarsVStack, priceVStack])
         
         [infoVStack,
-        titleAndStarsVStack,
+         titleAndStarsVStack,
          priceVStack].forEach{
             $0.axis = .vertical
             $0.translatesAutoresizingMaskIntoConstraints = false

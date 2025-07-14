@@ -1,8 +1,6 @@
-//
-//  CartPresenterProtocol.swift
-//  FakeNFT
-//
-//  Created by Илья Ануфриев on 14.07.2025.
-//
-
 import Foundation
+
+protocol CartPresenterProtocol: AnyObject {
+    func setup()
+    func sort(by option: SortOption)
+}

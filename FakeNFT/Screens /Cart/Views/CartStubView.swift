@@ -2,12 +2,17 @@ import UIKit
 import SnapKit
 
 final class CartStubView: UIView {
+    
+    // MARK: - UI Elements
+    
     private let label: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.bodyBold
         label.textColor = UIColor.segmentActive
         return label
     }()
+    
+    // MARK: - Initializers
     
     init(text: String) {
         label.text = text

@@ -2,6 +2,8 @@ import UIKit
 
 final class PaymentPanelView: UIView {
     
+    // MARK: - UI Elements
+    
     private let countLabel: UILabel = {
         let label =  UILabel()
         label.numberOfLines = 1
@@ -22,8 +24,7 @@ final class PaymentPanelView: UIView {
     
     private let payButton: UIButton = {
         let button = UIButton(type: .system)
-        // добавить подобные строки в локализацию
-        button.setTitle(NSLocalizedString("К оплате", comment: ""),
+        button.setTitle(NSLocalizedString("PaymentPanel", comment: ""),
                         for: .normal)
         button.titleLabel?.font = UIFont.bodyBold
         button.setTitleColor(UIColor.background,
@@ -34,9 +35,10 @@ final class PaymentPanelView: UIView {
         return button
     }()
     
+    // MARK: - Initializers
+    
     init() {
         super.init(frame: .zero)
-        
         initialize()
     }
     
@@ -44,10 +46,14 @@ final class PaymentPanelView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Public Methods
+    
     func set(count: Int, price: Double) {
         countLabel.text = "\(count) NFT"
         priceLabel.text = "\(String(format: "%.2f", price)) ETH"
     }
+    
+    // MARK: - Private Methods
     
     private func initialize() {
         backgroundColor = UIColor.segmentInactive
@@ -60,17 +66,27 @@ final class PaymentPanelView: UIView {
             addSubview($0)
         }
         
+        setupPayButton()
+        setupCountLabel()
+        setupPriceLabel()
+    }
+    
+    private func setupPayButton() {
         payButton.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.leading.equalTo(priceLabel.snp.trailing).offset(24)
         }
-        
+    }
+    
+    private func setupCountLabel() {
         countLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(16)
         }
-        
+    }
+    
+    private func setupPriceLabel() {
         priceLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.top.equalTo(countLabel.snp.bottom).offset(2)

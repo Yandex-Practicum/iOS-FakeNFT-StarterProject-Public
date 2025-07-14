@@ -4,3 +4,11 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"CartItem.price" = "Цена";
+"PaymentPanel" = "К оплате";
+"Cart.empty" = "Корзина пуста";
+"Sort.label" = "Сортировка";
+"Sort.byPrice" = "По цене";
+"Sort.byRating" = "По рэйтингу";
+"Sort.byName" = "По названию";
+"Sort.dismiss" = "Закрыть";

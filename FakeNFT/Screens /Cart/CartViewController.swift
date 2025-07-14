@@ -1,22 +1,17 @@
 import SnapKit
 import UIKit
 
-// протокол не забыть перенести в отдельную папку протоколов для вьюхи
-protocol CartViewProtocol: AnyObject {
-    func update(with data: CartScreenModel)
-    func showProgressHUD()
-    func hideProgressHUD()
-}
-
 final class CartViewController: UIViewController {
     
-    private let presenter: CartPresenterProtocol
+    // MARK: - Properties
     
+    private let presenter: CartPresenterProtocol
     private var cards = [CartItemModel]()
     
+    // MARK: - UI Elements
+    
     private lazy var paymentPanel = PaymentPanelView()
-    // NSLocalizedString
-    private lazy var stubView = CartStubView(text: "Корзина пуста")
+    private lazy var stubView = CartStubView(text: NSLocalizedString("Cart.empty", comment: ""))
     
     private var progressHud: UIActivityIndicatorView = {
         let progress = UIActivityIndicatorView(style: .medium)
@@ -27,17 +22,20 @@ final class CartViewController: UIViewController {
     }()
     
     private lazy var nftTableView: UITableView = {
-       let tableView = UITableView()
+        let tableView = UITableView()
         tableView.register(CartItemCell.self,
                            forCellReuseIdentifier: CartItemCell.reuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.contentInset = UIEdgeInsets(top: 20,
-                                              left: 0,
-                                              bottom: 0,
-                                              right: 0)
-        
+        tableView.contentInset = UIEdgeInsets(
+            top: 20,
+            left: 0,
+            bottom: 0,
+            right: 0
+        )
         return tableView
     }()
+    
+    // MARK: - Initializers
     
     init(presenter: CartPresenterProtocol) {
         self.presenter = presenter
@@ -48,6 +46,8 @@ final class CartViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +61,11 @@ final class CartViewController: UIViewController {
         presenter.setup()
     }
     
+    // MARK: - Private Methods
+    
     private func configure() {
         view.backgroundColor = UIColor.background
+        
         setupProgressHud()
     }
     
@@ -91,16 +94,16 @@ final class CartViewController: UIViewController {
             make.height.equalTo(76)
         }
     }
-
+    
     private func setupStubView() {
         view.addSubview(stubView)
-
+        
         stubView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
     }
-
+    
     private func setupNavBar() {
         let filterButton = UIBarButtonItem(
             image: UIImage(resource: .sort),
@@ -108,18 +111,14 @@ final class CartViewController: UIViewController {
             target: self,
             action: #selector(didTapSortButton)
         )
-//            image: UIImage(resource: .sort),
-//            style: .plain,
-//            target: #selector(didTapSortButton),
-//            action: nil
         filterButton.tintColor = UIColor.segmentActive
         navigationItem.setRightBarButton(filterButton, animated: false)
     }
-
+    
     private func setupTableView() {
         nftTableView.dataSource = self
         nftTableView.delegate = self
-
+        
         nftTableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide.snp.edges)
         }
@@ -131,7 +130,7 @@ final class CartViewController: UIViewController {
         }
         navigationItem.setRightBarButton(nil, animated: false)
     }
-
+    
     private func showMainViews(with data: CartScreenModel) {
         if !nftTableView.isDescendant(of: view) {
             setupViews()
@@ -145,7 +144,7 @@ final class CartViewController: UIViewController {
                 $0.isHidden = false
             }
             setupNavBar()
-
+            
             nftTableView.reloadData()
             stubView.isHidden = true
         }
@@ -153,34 +152,47 @@ final class CartViewController: UIViewController {
     
     @objc
     private func didTapSortButton() {
-        // NSLocalizedString
-        let alert = UIAlertController(title: "Соритировка", message: nil, preferredStyle: .actionSheet)
-        // NSLocalizedString
-        let alertAction1 = UIAlertAction(title: "По цене", style: .default) { _ in
-            self.presenter.sort(by: .price)
-        }
-        // NSLocalizedString
-        let alertAction2 = UIAlertAction(title: "По рэйтингу", style: .default) { _ in
-            self.presenter.sort(by: .rating)
-        }
-        // NSLocalizedString
-        let alertAction3 = UIAlertAction(title:"По названию" , style: .default) { _ in
-            self.presenter.sort(by: .name)
-        }
+        let alert = UIAlertController(
+            title: NSLocalizedString("Sort.label", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
         
-        let alertActionCancel = UIAlertAction(title: "Закрыть", style: .cancel)
+        let alertAction1 = UIAlertAction(
+            title: NSLocalizedString("Sort.byPrice", comment: ""),
+            style: .default) { _ in
+                self.presenter.sort(by: .price)
+            }
+        
+        let alertAction2 = UIAlertAction(
+            title: NSLocalizedString("Sort.byRating", comment: ""),
+            style: .default) { _ in
+                self.presenter.sort(by: .rating)
+            }
+        
+        let alertAction3 = UIAlertAction(
+            title:NSLocalizedString("Sort.byName", comment: ""),
+            style: .default) { _ in
+                self.presenter.sort(by: .name)
+            }
+        
+        let alertActionCancel = UIAlertAction(
+            title: NSLocalizedString("Sort.dismiss", comment: ""),
+            style: .cancel)
         
         [alertAction1,
          alertAction2,
          alertAction3,
-        alertActionCancel].forEach {
+         alertActionCancel].forEach {
             alert.addAction($0)
         }
         
         present(alert, animated: true)
     }
-
+    
 }
+
+// MARK: - UITableViewDataSource
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -204,9 +216,13 @@ extension CartViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension CartViewController: UITableViewDelegate {
     
 }
+
+// MARK: - CartViewProtocol
 
 extension CartViewController: CartViewProtocol {
     func update(with data: CartScreenModel) {
