@@ -20,6 +20,6 @@ final class ServicesAssembly {
     
     // не забыть, что здесь моковые данные
     var cartService: CartServiceProtocol {
-        MockCartService()
+        CartService()
     }
 }

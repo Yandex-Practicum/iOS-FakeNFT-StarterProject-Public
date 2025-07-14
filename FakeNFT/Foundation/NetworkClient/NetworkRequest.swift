@@ -14,10 +14,6 @@ protocol NetworkRequest {
     var token: String? {get}
 }
 
-//protocol Dto {
-//    func asDictionary() -> [String: String]
-//}
-
 // default values
 extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
