@@ -10,12 +10,9 @@ import SwiftUI
 struct NftRow: View {
     
     // MARK: - Properties
-    let name: String
+   
     let nft: NftInfo
-    let userLikes: UserLikes
-    let userOrders: UserOrders
-    var likeTapHandler: (NftInfo) -> Void
-    var cartTapHandler: (NftInfo) -> Void
+
     
     // MARK: - Content
     
@@ -83,9 +80,9 @@ struct NftRow: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(nft)
+                   // likeTapHandler(nft)
                 } label: {
-                    Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
+//                    Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
             }
         }
@@ -93,7 +90,7 @@ struct NftRow: View {
     
     private var ratingView: some View {
         VStack(alignment: .leading, spacing: 6){
-            Text("\(name)")
+            Text("\(nft.name)")
                 .font(.headline)
             HStack(spacing: 2) {
                        let rating = nft.rating
@@ -102,7 +99,7 @@ struct NftRow: View {
                        }
                       
                    }
-            Text("от Jhon Doe")
+            Text("ds")
             
         }
 
@@ -113,18 +110,6 @@ struct NftRow: View {
 }
 
 
-#Preview {
-    NftRow(
-        name: "Lilo", nft: NftInfo(
-            id: "",
-            name: "",
-            images: [""],
-            rating: 4,
-            price: 1.79
-        ),
-        userLikes: UserLikes(likes: []),
-        userOrders: UserOrders(nfts: []),
-        likeTapHandler: {_ in },
-        cartTapHandler: {_ in}
-    )
+#Preview{
+    NftRow(nft: NftInfo.init(id: "1", name: "WD", images: ["String"], rating: 1, price: 2.1))
 }

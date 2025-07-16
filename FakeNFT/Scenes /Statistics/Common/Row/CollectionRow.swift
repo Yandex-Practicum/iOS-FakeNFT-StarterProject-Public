@@ -67,7 +67,7 @@ struct CollectionRow: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(nft)
+                   // likeTapHandler(nft)
                 } label: {
                     Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
@@ -96,7 +96,7 @@ struct CollectionRow: View {
             .foregroundStyle(Color.blackDay)
             Spacer()
             Button {
-                cartTapHandler(nft)
+              //  cartTapHandler(nft)
             } label: {
                 Image(userOrders.nfts.contains(nft.id) ? "cartDelete" : "cartAdd")
             }

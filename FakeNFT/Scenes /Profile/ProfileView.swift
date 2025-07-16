@@ -53,15 +53,13 @@ struct ProfileView: View {
                         .padding(.bottom)
                         
                         }
-                
-                NavigationLink(destination: UserNft()){
-                    NftsButton(nfts: 122, name: "Мои NFT")
-                }
-                
-                
+                NavigationLink(destination: UserNFT()){
+                                    NftsButton(nfts: 122, name: "Мои NFT")
+                                }
                 NavigationLink(destination: Favourites()){
                     NftsButton(nfts: 11, name: "Избранные NFT")
                 }
+                
                 NavigationLink(destination: AboutUser()){
                     AboutButton(name: "О разработчике")
                 }

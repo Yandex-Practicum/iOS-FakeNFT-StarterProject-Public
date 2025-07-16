@@ -24,6 +24,7 @@ struct Favourites: View {
                     filterButtonTapHandler: {}
                 ))
         }
+        .navigationBarBackButtonHidden(true)
 
             
     }
