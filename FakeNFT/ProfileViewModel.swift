@@ -10,6 +10,8 @@ import SwiftUI
 @MainActor
 
 final class ProfileViewModel: ObservableObject {
+    
+    
     @AppStorage("userData") private var storedData: Data = Data()
     
     @Published var name: String = "Joaquin Phoenix"
@@ -19,6 +21,8 @@ final class ProfileViewModel: ObservableObject {
     @Published var link: String = "link"
     
     @Published var imageData: Data?
+    
+    
     
     init() {
         load()

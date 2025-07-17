@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
+import Combine
 
 struct UserNFT: View {
-    @StateObject private var viewModel = NFTViewModel()
+    @ObservedObject private var viewModel = NFTViewModel()
     @State private var showSortSheet = false
     var body: some View {
         NavigationView{
             if viewModel.sortedNFTs.isEmpty{
                 Text("У вас еще нет NFT")
+                
             } else {
                 
                 ScrollView{
                     LazyVStack(spacing: 12){
                         ForEach(viewModel.sortedNFTs) { nft in
                             NFTCardView(nft: nft)
+                            
                         }
 
                     }
@@ -38,7 +41,7 @@ struct UserNFT: View {
                 ForEach(NFTViewModel.SortOption.allCases) { option in
                     Button(option.rawValue) {
                         withAnimation {
-                            viewModel.applySort(by: option)
+                            viewModel.selectedSortOption = option
                         }
                     }
                 }

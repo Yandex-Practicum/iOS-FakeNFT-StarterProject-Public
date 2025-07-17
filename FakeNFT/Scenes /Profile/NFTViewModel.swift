@@ -16,29 +16,46 @@ final class NFTViewModel: ObservableObject {
         
         var id: String { rawValue }
     }
-    
-    @Published var nfts: [NFT] = MockNFTData.nfts
-    @Published var sortedNFTs: [NFT] = []
-    @Published var isShowingFilterSheet: Bool = false
-    
+     
+       @Published var isShowingFilterSheet: Bool = false
+       @Published var allNFTs: [NFT] = MockNFTData.sampleNFTs
+       @Published var likedNFTs: [NFT] = []
+
     @AppStorage("selectedSortOption") private var storedSortOption: String = SortOption.name.rawValue
     
+    
+    
+
     var selectedSortOption: SortOption {
-         SortOption(rawValue: storedSortOption) ?? .name
+        get{ SortOption(rawValue: storedSortOption) ?? .name}
+        set { storedSortOption = newValue.rawValue }
     }
     
-    init() {
-        applySort(by: selectedSortOption)
-    }
-
-    func applySort(by option: SortOption) {
-        switch option {
+   
+    var sortedNFTs: [NFT] {
+        switch selectedSortOption {
         case .name:
-            sortedNFTs = nfts.sorted { $0.name < $1.name }
+            return allNFTs.sorted { $0.name < $1.name }
         case .price:
-            sortedNFTs = nfts.sorted { $0.price < $1.price }
+            return allNFTs.sorted { $0.price < $1.price }
         case .rating:
-            sortedNFTs = nfts.sorted { $0.rating > $1.rating }
+            return allNFTs.sorted { $0.rating > $1.rating }
         }
+    }
+    
+    func toggleLike(for nft: NFT) {
+        if let index = likedNFTs.firstIndex(of: nft) {
+            likedNFTs.remove(at: index)
+        } else {
+            likedNFTs.append(nft)
+        }
+    }
+    
+    func isLiked(_ nft: NFT) -> Bool{
+        likedNFTs.contains(where: { $0.id == nft.id})
+    }
+    
+    var likeCount: Int {
+        likedNFTs.count
     }
 }

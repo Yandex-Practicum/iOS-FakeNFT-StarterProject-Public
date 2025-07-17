@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct NFT: Identifiable, Codable {
+struct NFT: Identifiable, Codable, Equatable {
     let id: UUID
     let name: String
     let price: Double
     let rating: Int
+    let images: [String]
 
-    init(id: UUID = UUID(), name: String, price: Double, rating: Int) {
-        self.id = id
-        self.name = name
-        self.price = price
-        self.rating = rating
+    
+    static func == (lhs: NFT, rhs: NFT) -> Bool {
+        lhs.id == rhs.id
     }
 }

@@ -9,10 +9,8 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
-   
     @State private var isPresenting = false
-    
-    
+    @EnvironmentObject var viewModel2: NFTViewModel
     
     func send(){
         
@@ -54,10 +52,10 @@ struct ProfileView: View {
                         
                         }
                 NavigationLink(destination: UserNFT()){
-                                    NftsButton(nfts: 122, name: "Мои NFT")
+                    NftsButton(nfts: viewModel2.sortedNFTs.count, name: "Мои NFT")
                                 }
-                NavigationLink(destination: Favourites()){
-                    NftsButton(nfts: 11, name: "Избранные NFT")
+                NavigationLink(destination: FavouritesView()){
+                    NftsButton(nfts: viewModel2.likeCount, name: "Избранные NFT")
                 }
                 
                 NavigationLink(destination: AboutUser()){
