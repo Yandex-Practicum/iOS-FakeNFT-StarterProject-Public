@@ -9,22 +9,23 @@ import SwiftUI
 import Combine
 
 struct UserNFT: View {
-    @ObservedObject private var viewModel = NFTViewModel()
+    @EnvironmentObject var viewModel: ProfileViewModel
     @State private var showSortSheet = false
+    
+    
     var body: some View {
         NavigationView{
-            if viewModel.sortedNFTs.isEmpty{
+            if viewModel.nfts.isEmpty{
                 Text("У вас еще нет NFT")
                 
             } else {
-                
                 ScrollView{
                     LazyVStack(spacing: 12){
-                        ForEach(viewModel.sortedNFTs) { nft in
+                        ForEach(viewModel.nfts) { nft in
                             NFTCardView(nft: nft)
                             
                         }
-
+                        
                     }
                 }
                 
@@ -34,32 +35,34 @@ struct UserNFT: View {
                     filterButtonHidden: false,
                     filterButtonTapHandler: {
                         showSortSheet = true
-
+                        
                     }
                 ))
-            .confirmationDialog("Сортировка", isPresented: $showSortSheet, titleVisibility: .visible) {
-                ForEach(NFTViewModel.SortOption.allCases) { option in
-                    Button(option.rawValue) {
-                        withAnimation {
-                            viewModel.selectedSortOption = option
-                        }
-                    }
-                }
-                
-                Button("Закрыть", role: .cancel) {}
-             }
+
             }
         }
         .navigationBarBackButtonHidden(true)
-        
-        
- 
+        .confirmationDialog("Сортировка", isPresented: $showSortSheet, titleVisibility: .visible) {
+            ForEach(NFTViewModel.SortOption.allCases) { option in
+                Button(option.rawValue) {
+                    
+                    switch option {
+                    case .name:
+                        viewModel.nfts.sort { $0.name < $1.name }
+                    case .price:
+                        viewModel.nfts.sort { $0.price > $1.price }
+                    case .rating:
+                        viewModel.nfts.sort { $0.rating > $1.rating }
+                    }
+                    
+                }
+            }
+            
+            Button("Закрыть", role: .cancel) {}
+        }
     }
-        
-    
-
 }
 
 #Preview {
-    UserNFT()
+     UserNFT()
 }

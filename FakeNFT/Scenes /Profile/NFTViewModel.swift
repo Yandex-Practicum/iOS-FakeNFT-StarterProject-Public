@@ -9,6 +9,7 @@ import SwiftUI
 
 @MainActor
 final class NFTViewModel: ObservableObject {
+    
     enum SortOption: String, CaseIterable, Identifiable {
         case name = "По названию"
         case price = "По цене"
@@ -16,46 +17,53 @@ final class NFTViewModel: ObservableObject {
         
         var id: String { rawValue }
     }
-     
-       @Published var isShowingFilterSheet: Bool = false
-       @Published var allNFTs: [NFT] = MockNFTData.sampleNFTs
-       @Published var likedNFTs: [NFT] = []
-
     @AppStorage("selectedSortOption") private var storedSortOption: String = SortOption.name.rawValue
-    
-    
-    
 
+    @Published var isShowingFilterSheet: Bool = false
+    @Published var favoritesNfts: [Nft] = []
+    @Published var nfts: [Nft] = []
+    
+    private let likesService: LikesService
+    private let nftService: NftService
+
+    
+    init(likesService: LikesService, nftService: NftService) {
+        self.likesService = likesService
+        self.nftService = nftService
+    }
+  
+  
+    
     var selectedSortOption: SortOption {
         get{ SortOption(rawValue: storedSortOption) ?? .name}
         set { storedSortOption = newValue.rawValue }
     }
     
-   
-    var sortedNFTs: [NFT] {
+    
+    var sortedNFTs: [Nft] {
         switch selectedSortOption {
         case .name:
-            return allNFTs.sorted { $0.name < $1.name }
+            return nfts.sorted { $0.name < $1.name }
         case .price:
-            return allNFTs.sorted { $0.price < $1.price }
+            return nfts.sorted { $0.price < $1.price }
         case .rating:
-            return allNFTs.sorted { $0.rating > $1.rating }
+            return nfts.sorted { $0.rating > $1.rating }
         }
     }
     
-    func toggleLike(for nft: NFT) {
-        if let index = likedNFTs.firstIndex(of: nft) {
-            likedNFTs.remove(at: index)
+    func toggleLike(for nft: Nft) {
+        if let index = favoritesNfts.firstIndex(of: nft) {
+            favoritesNfts.remove(at: index)
         } else {
-            likedNFTs.append(nft)
+            favoritesNfts.append(nft)
         }
     }
     
-    func isLiked(_ nft: NFT) -> Bool{
-        likedNFTs.contains(where: { $0.id == nft.id})
+    func isLiked(_ nft: Nft) -> Bool{
+        favoritesNfts.contains(where: { $0.id == nft.id})
     }
     
     var likeCount: Int {
-        likedNFTs.count
+        favoritesNfts.count
     }
 }

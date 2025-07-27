@@ -7,34 +7,29 @@
 
 import Foundation
 import SwiftUI
-@MainActor
 
+@MainActor
 final class ProfileViewModel: ObservableObject {
-    
-    
     @AppStorage("userData") private var storedData: Data = Data()
     
-    @Published var name: String = "Joaquin Phoenix"
-    
-    @Published var description: String = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
-    
-    @Published var link: String = "link"
-    
+    @Published var name: String = ""
+    @Published var avatar: String = ""
+    @Published var description: String = ""
+    @Published var link: String = ""
+    @Published var nfts: [Nft] = []
+    @Published var favoritesNfts: [Nft] = []
     @Published var imageData: Data?
     
+    private var userLikes = UserLikes(likes: [])
     
+    private let profileService: ProfileService
+    private let nftsService: NftService
+    private let likesService: LikesService
     
-    init() {
-        load()
-    }
-    
-    func load() {
-        if let loaded = try? JSONDecoder().decode(UserData.self, from: storedData) {
-            self.name = loaded.name
-            self.description = loaded.description
-            self.link = loaded.link
-            self.imageData = loaded.imageData
-        }
+    init(profileService: ProfileService, nftsService: NftService, likesService: LikesService) {
+        self.profileService = profileService
+        self.nftsService = nftsService
+        self.likesService = likesService
     }
     
     func save(name: String, description: String, link: String, imageData: Data?) {
@@ -47,6 +42,88 @@ final class ProfileViewModel: ObservableObject {
                 self.imageData = imageData
             }
         }
+    
+    func fetchProfile() async  {
+        await profileService.fetchProfile { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let fetchedProfile):
+                self.name = fetchedProfile.name
+                self.avatar = fetchedProfile.avatar
+                self.description = fetchedProfile.description ?? ""
+                self.link = fetchedProfile.website
+                
+                if nfts.isEmpty || favoritesNfts.isEmpty {
+                    fetchOwnNfts(fetchedProfile.nfts)
+                    fetchFavoritesNfts(fetchedProfile.likes)
+                }
+                
+            case .failure(let error):
+                print("Ошибка загрузки профиля: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func isLiked(_ nft: Nft) -> Bool{
+        favoritesNfts.contains(where: { $0.id == nft.id})
+    }
+    
+    func toggleLike(for nft: Nft) {
+        print("nachalo: \(userLikes.likes.count)")
+        userLikes = UserLikes(likes: favoritesNfts.map { $0.id })
+        print("loaded: \(userLikes.likes.count)")
+        
+        likesService.updateLikes(likes: userLikes) {[weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success:
+                if let index = self.favoritesNfts.firstIndex(of: nft) {
+                    self.favoritesNfts.remove(at: index)
+                } else {
+                    self.favoritesNfts.append(nft)
+                }
+                print("SUCCESS: \(self.userLikes.likes.count)")
+                break
+            case .failure(let error):
+                print("Ошибка при обновлении лайков: \(error.localizedDescription)")
+                print("ERROR: \(self.userLikes.likes.count)")
+            }
+        }
+    }
+    
+    private func fetchOwnNfts(_ nftIds: [String]) {
+        nftIds.forEach { id in
+            nftsService.loadNft(id: id) {
+                switch $0 {
+                case .success(let nft):
+                    self.nfts.append(nft)
+                    
+                case .failure(let error):
+                    print("Ошибка загрузки NFT: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func fetchFavoritesNfts(_ nftIds: [String]) {
+        nftIds.forEach { id in
+            nftsService.loadNft(id: id) {
+                switch $0 {
+                case .success(let nft):
+                    self.favoritesNfts.append(nft)
+                    
+                case .failure(let error):
+                    print("Ошибка загрузки NFT: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func fetchLikedNfts(_ nftIds: [String]) {
+        
+    }
 }
 
 

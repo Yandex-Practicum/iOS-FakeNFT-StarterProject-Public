@@ -67,7 +67,7 @@ struct CollectionRow: View {
             HStack {
                 Spacer()
                 Button {
-                   // likeTapHandler(nft)
+                    likeTapHandler(nft)
                 } label: {
                     Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }

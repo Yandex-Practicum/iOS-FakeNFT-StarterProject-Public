@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct NFTCardView: View {
-    let nft: NFT
-    @EnvironmentObject var viewModel: NFTViewModel
-
-
+    @EnvironmentObject var viewModel: ProfileViewModel
+    
+    let nft: Nft
+    
     var body: some View {
         HStack {
             
@@ -20,6 +20,8 @@ struct NFTCardView: View {
                 AsyncImage(url: url) { image in
                     image.image?.resizable()
                         .aspectRatio(contentMode: .fill)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(width: 108, height: 108)
                 }
             }
                 // Временное изображение-заглушка
@@ -30,7 +32,7 @@ struct NFTCardView: View {
                     viewModel.toggleLike(for: nft)
                 }) {
                     Image(systemName:"heart.fill")
-                        .foregroundColor(viewModel.isLiked(nft) ? .red : .white)
+                       .foregroundColor(viewModel.isLiked(nft) ? .red : .white)
                         .padding(10)
                 }
                 .buttonStyle(.plain)
@@ -69,5 +71,6 @@ struct NFTCardView: View {
 }
 
 #Preview {
-    NFTCardView(nft: NFT.init(id: UUID(), name: "Q", price: 1.1, rating: 4, images: [""]))
+//    let nft = Nft(id: "lkjkjkj", name: "sdf", images: [""], description: "sdf", rating: 1, price: 1.2, author: "sdfsdf")
+//    NFTCardView(nft: nft)
 }

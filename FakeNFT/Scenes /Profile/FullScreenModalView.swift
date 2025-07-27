@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+
 struct FullScreenModalView: View {
     
     @ObservedObject var viewModel: ProfileViewModel
@@ -181,10 +182,6 @@ extension View{
 }
 
 #Preview("FullScreenModalView MVVM") {
-    let vm = ProfileViewModel()
-    vm.name = "N"
-    vm.description = "D"
-    vm.link = "L"
-    vm.imageData = UIImage(systemName: "photo")?.jpegData(compressionQuality: 1.0)
-    return FullScreenModalView(viewModel: vm)
+  
 }
+
