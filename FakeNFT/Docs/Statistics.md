@@ -7,7 +7,7 @@
 Эпик: Статистика
 
 Ссылка на доску: [ссылка](https://github.com/users/Maxoscaro/projects/1/views/3)
-
+Ссылка на запись экрана https://disk.yandex.ru/i/DHQmvFo6UH4LiA
 
 # Декомпозиция эпика Статистика
 

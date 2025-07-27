@@ -2,7 +2,7 @@ import Foundation
 
 struct ExamplePutRequest: NetworkRequest {
    var endpoint: URL? {
-       URL(string: "\(RequestConstants.baseURL)/api/v1/someMethod")
+       URL(string: "\(NetworkConstants.RequestConstants.baseURL)/api/v1/someMethod")
    }
    var httpMethod: HttpMethod = .put
    var dto: Dto?

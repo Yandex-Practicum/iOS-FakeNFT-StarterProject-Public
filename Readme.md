@@ -1,5 +1,11 @@
 # ТЗ мобильного приложения FakeNFT
 
+# Скринкасты с демонстрацией эпиков
+
+Ссылка на запись экрана эпика корзина [ссылка](https://disk.yandex.ru/i/1KX3kx6lkR3sFQ)
+
+Ссылка на запись экрана эпика статистика [ссылка](https://disk.yandex.ru/i/DHQmvFo6UH4LiA)
+
 # Ссылки
 
 [Дизайн Figma](https://www.figma.com/design/Uz5G39wRRCr2mRE4SbnNla/FakeNFT)
