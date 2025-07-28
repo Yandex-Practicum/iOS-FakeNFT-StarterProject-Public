@@ -19,13 +19,39 @@ final class ProfileViewModel: ObservableObject {
     @Published var nfts: [Nft] = []
     @Published var favoritesNfts: [Nft] = []
     @Published var imageData: Data?
+
     
+    enum SortOption: String, CaseIterable, Identifiable {
+        case name = "По названию"
+        case price = "По цене"
+        case rating = "По рейтингу"
+        
+        var id: String { rawValue }
+    }
+    @AppStorage("selectedSortOption") private var storedSortOption: String = SortOption.name.rawValue
+
     private var userLikes = UserLikes(likes: [])
+    private var didLoadNFTs = false
     
     private let profileService: ProfileService
     private let nftsService: NftService
     private let likesService: LikesService
     
+    var selectedSortOption: SortOption {
+        get{ SortOption(rawValue: storedSortOption) ?? .name}
+        set { storedSortOption = newValue.rawValue }
+    }
+    
+    var sortedNFTs: [Nft] {
+        switch selectedSortOption {
+        case .name:
+            return nfts.sorted { $0.name < $1.name }
+        case .price:
+            return nfts.sorted { $0.price < $1.price }
+        case .rating:
+            return nfts.sorted { $0.rating > $1.rating }
+        }
+    }
     init(profileService: ProfileService, nftsService: NftService, likesService: LikesService) {
         self.profileService = profileService
         self.nftsService = nftsService
@@ -54,9 +80,10 @@ final class ProfileViewModel: ObservableObject {
                 self.description = fetchedProfile.description ?? ""
                 self.link = fetchedProfile.website
                 
-                if nfts.isEmpty || favoritesNfts.isEmpty {
+                if !didLoadNFTs {
                     fetchOwnNfts(fetchedProfile.nfts)
                     fetchFavoritesNfts(fetchedProfile.likes)
+                    didLoadNFTs = true
                 }
                 
             case .failure(let error):
@@ -124,6 +151,7 @@ final class ProfileViewModel: ObservableObject {
     private func fetchLikedNfts(_ nftIds: [String]) {
         
     }
+    
 }
 
 

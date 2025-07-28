@@ -17,7 +17,7 @@ struct FavouritesView: View {
             VStack{
                 if viewModel.favoritesNfts.isEmpty {
                     Text("Нет избранных NFT")
-                        .font(.headline)
+                        .font(.custom("SFProText-Bold", size: 17))
                         .padding()
                     
                 } else {

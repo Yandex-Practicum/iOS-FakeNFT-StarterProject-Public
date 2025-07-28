@@ -4,7 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SFProText-Regular</string>
+		<string>SFProText-Bold.ttf</string>
+		<string>SFProText-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

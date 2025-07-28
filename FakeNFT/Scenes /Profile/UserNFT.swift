@@ -17,6 +17,7 @@ struct UserNFT: View {
         NavigationView{
             if viewModel.nfts.isEmpty{
                 Text("У вас еще нет NFT")
+                    .font(.custom("SFProText-Bold", size: 17))
                 
             } else {
                 ScrollView{
@@ -29,21 +30,22 @@ struct UserNFT: View {
                     }
                 }
                 
-                .modifier(NavigationBarStyle(
-                    title: "Мои NFT",
-                    backButtonHidden: false,
-                    filterButtonHidden: false,
-                    filterButtonTapHandler: {
-                        showSortSheet = true
-                        
-                    }
-                ))
+                
 
             }
         }
         .navigationBarBackButtonHidden(true)
+        .modifier(NavigationBarStyle(
+                            title: "Мои NFT",
+                            backButtonHidden: false,
+                            filterButtonHidden: false,
+                            filterButtonTapHandler: {
+                                showSortSheet = true
+                                
+                            }
+                        ))
         .confirmationDialog("Сортировка", isPresented: $showSortSheet, titleVisibility: .visible) {
-            ForEach(NFTViewModel.SortOption.allCases) { option in
+            ForEach(ProfileViewModel.SortOption.allCases) { option in
                 Button(option.rawValue) {
                     
                     switch option {

@@ -33,12 +33,12 @@ final class NFTViewModel: ObservableObject {
     }
   
   
+
     
     var selectedSortOption: SortOption {
         get{ SortOption(rawValue: storedSortOption) ?? .name}
         set { storedSortOption = newValue.rawValue }
     }
-    
     
     var sortedNFTs: [Nft] {
         switch selectedSortOption {
