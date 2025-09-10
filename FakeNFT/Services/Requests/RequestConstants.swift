@@ -3,3 +3,10 @@ enum RequestConstants {
     #warning("Instert your token here")
     static let token = ""
 }
+<<<<<<< HEAD
+=======
+//testtesttest
+
+////////////
+///
+>>>>>>> 5a573c1 (smth)
