@@ -4,3 +4,7 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+
+"Tab.profile" = "Профиль";
+"ViewProfile.MyNFT" = "Мои NFT";
+"ViewProfile.Favorites" = "Избранные NFT";
