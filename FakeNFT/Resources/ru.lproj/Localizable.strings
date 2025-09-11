@@ -1,0 +1,13 @@
+// MARK: - Default
+"Tab.catalog" = "Каталог";
+"Catalog.openNft" = "Открыть Nft";
+"Error.network" = "Произошла ошибка сети";
+"Error.unknown" = "Произошла неизвестная ошибка";
+"Error.repeat" = "Повторить";
+"Error.title" = "Ошибка";
+
+// MARK: - TabView
+"tab_basket" = "Корзина";
+"tab_catalog" = "Каталог";
+"tab_profile" = "Профиль";
+"tab_statistics" = "Статистика";

@@ -1,0 +1,13 @@
+// MARK: - Default
+"Tab.catalog" = "Catalog";
+"Catalog.openNft" = "Open NFT";
+"Error.network" = "A network error occurred";
+"Error.unknown" = "An unknown error occurred";
+"Error.repeat" = "Retry";
+"Error.title" = "Error";
+
+// MARK: - TabView
+"tab_basket" = "Basket";
+"tab_catalog" = "Catalog";
+"tab_profile" = "Profile";
+"tab_statistics" = "Statistics";
