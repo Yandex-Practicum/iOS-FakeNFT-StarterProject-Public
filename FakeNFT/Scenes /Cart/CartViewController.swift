@@ -10,9 +10,17 @@ final class CartViewController: UIViewController {
         return tableView
     }()
     let bottomView = BottomCartView()
+    let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bodyBold
+        label.text = "Корзина пуста"
+        label.textColor = .segmentActive
+        return label
+    }()
     
     var nfts: [CartNfts] = []
     var totalSum: Float = 0
+
     
     init(servicesAssembly: ServicesAssembly, cartService: CartService) {
         self.servicesAssembly = servicesAssembly
@@ -44,8 +52,11 @@ final class CartViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self?.nfts = mapped
+                    let isNftsEmpty = nfts.isEmpty
+                    self?.isCartEmpty(isNftsEmpty)
                     self?.tableview.reloadData()
                     self?.bottomViewUpadte()
+                    self?.view.layoutIfNeeded()
                 }
                 
             case .failure(let error):
@@ -58,13 +69,15 @@ final class CartViewController: UIViewController {
         setupUI()
     }
     private func setupUI(){
-        setupNavBar()
         tableview.delegate = self
         tableview.dataSource = self
         tableview.register(CartCell.self, forCellReuseIdentifier: "cell")
         bottomViewUpadte()
-        view.addSubviews(tableview,bottomView)
+        view.addSubviews(tableview,bottomView,emptyLabel)
         let safeArea = view.safeAreaLayoutGuide
+        let isNftsEmpty = nfts.isEmpty
+        isCartEmpty(isNftsEmpty)
+        view.layoutIfNeeded()
         NSLayoutConstraint.activate([
             bottomView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             bottomView.heightAnchor.constraint(equalToConstant: 76),
@@ -75,9 +88,18 @@ final class CartViewController: UIViewController {
             tableview.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             tableview.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             tableview.bottomAnchor.constraint(equalTo: bottomView.topAnchor),
+            
+            emptyLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            emptyLabel.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor)
         ])
     }
-    private func setupNavBar(){
+    private func isCartEmpty(_ isEmpty: Bool){
+        tableview.isHidden = isEmpty
+        bottomView.isHidden = isEmpty
+        emptyLabel.isHidden = !isEmpty
+        setupNavBar(isEmpty)
+    }
+    private func setupNavBar(_ isEmpty: Bool){
         let sortButton = UIBarButtonItem(
             image: UIImage(resource: .sort),
             style: .plain,
@@ -85,7 +107,8 @@ final class CartViewController: UIViewController {
             action: #selector(didTapSortButton))
         sortButton.tintColor = .black
         sortButton.imageInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -30)
-        navigationItem.rightBarButtonItem = sortButton
+        let emptyButton = UIBarButtonItem(image: nil, style: .done, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = isEmpty ? emptyButton : sortButton
     }
     @objc private func didTapSortButton(){
         let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
@@ -164,9 +187,10 @@ extension CartViewController: CartCellDelegate {
             guard let self else { return }
             totalSum -= nftToDelete.price
             self.nfts.remove(at: indexPath.row)
-            
             self.tableview.deleteRows(at: [indexPath], with: .automatic)
-            
+            let isNftsEmpty = nfts.isEmpty
+            self.isCartEmpty(isNftsEmpty)
+            view.layoutIfNeeded()
             self.bottomViewUpadte()
             
             let remainingIds = self.nfts.map { $0.id }
