@@ -7,6 +7,7 @@ final class CartViewController: UIViewController {
     
     let tableview: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         return tableView
     }()
     let bottomView = BottomCartView()
