@@ -24,43 +24,43 @@ extension UIColor {
             alpha: CGFloat(alpha) / 255
         )
     }
-
+    
     // MARK: - Theme Colors (Day/Night)
-        
-        static let black = UIColor { traits in
-            return traits.userInterfaceStyle == .dark
-            ? UIColor(hexString: "FFFFFF") // White [night]
-            : UIColor(hexString: "1A1B22") // Black [day]
-        }
-        
-        static let white = UIColor { traits in
-            return traits.userInterfaceStyle == .dark
-            ? UIColor(hexString: "1A1B22") // White [night]
-            : UIColor(hexString: "FFFFFF") // White [day]
-        }
-        
-        static let lightGray = UIColor { traits in
-            return traits.userInterfaceStyle == .dark
-            ? UIColor(hexString: "2C2C2E") // Light grey [night]
-            : UIColor(hexString: "F7F7F8") // Light grey [day]
-        }
-
-        // MARK: - Universal Colors
-        
-        static let greyUniversal = UIColor(hexString: "625C5C")
-        static let redUniversal = UIColor(hexString: "F56B6C")
-        static let greenUniversal = UIColor(hexString: "1C9F00")
-        static let blueUniversal = UIColor(hexString: "0A84FF")
-        static let yellowUniversal = UIColor(hexString: "FEEF0D")
-        
-        // Background Universal with 50% opacity
-        static let backgroundUniversal: UIColor = {
-            return UIColor(hexString: "1A1B22").withAlphaComponent(0.5)
-        }()
-
-        // MARK: - Component Colors (для конкретных компонентов UI)
-        
-        static let segmentActive = black
-        static let segmentInactive = lightGray
-        static let closeButton = black
+    
+    static let black = UIColor { traits in
+        return traits.userInterfaceStyle == .dark
+        ? UIColor(hexString: "FFFFFF") // White [night]
+        : UIColor(hexString: "1A1B22") // Black [day]
     }
+    
+    static let white = UIColor { traits in
+        return traits.userInterfaceStyle == .dark
+        ? UIColor(hexString: "1A1B22") // White [night]
+        : UIColor(hexString: "FFFFFF") // White [day]
+    }
+    
+    static let lightGray = UIColor { traits in
+        return traits.userInterfaceStyle == .dark
+        ? UIColor(hexString: "2C2C2E") // Light grey [night]
+        : UIColor(hexString: "F7F7F8") // Light grey [day]
+    }
+    
+    // MARK: - Universal Colors
+    
+    static let greyUniversal = UIColor(hexString: "625C5C")
+    static let redUniversal = UIColor(hexString: "F56B6C")
+    static let greenUniversal = UIColor(hexString: "1C9F00")
+    static let blueUniversal = UIColor(hexString: "0A84FF")
+    static let yellowUniversal = UIColor(hexString: "FEEF0D")
+    
+    // Background Universal with 50% opacity
+    static let backgroundUniversal: UIColor = {
+        return UIColor(hexString: "1A1B22").withAlphaComponent(0.5)
+    }()
+    
+    // MARK: - Component Colors (для конкретных компонентов UI)
+    
+    static let segmentActive = black
+    static let segmentInactive = lightGray
+    static let closeButton = black
+}
