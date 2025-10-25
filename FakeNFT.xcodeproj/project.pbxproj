@@ -50,6 +50,7 @@
 		E4F541152EABC6370046681D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F541142EABC6370046681D /* User.swift */; };
 		E4F541172EACF23D0046681D /* CollectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F541162EACF23D0046681D /* CollectionService.swift */; };
 		E4F541192EACF2850046681D /* CollectionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F541182EACF2850046681D /* CollectionsRequest.swift */; };
+		E4F5411B2EACFA980046681D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5411A2EACFA980046681D /* CatalogViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		E4F541142EABC6370046681D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E4F541162EACF23D0046681D /* CollectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionService.swift; sourceTree = "<group>"; };
 		E4F541182EACF2850046681D /* CollectionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsRequest.swift; sourceTree = "<group>"; };
+		E4F5411A2EACFA980046681D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB7482A7808900009A829 /* TestCatalogController.swift */,
+				E4F5411A2EACFA980046681D /* CatalogViewController.swift */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExamplePutRequest.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
+				E4F5411B2EACFA980046681D /* CatalogViewController.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
