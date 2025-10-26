@@ -5,4 +5,11 @@ struct CollectionsRequest: NetworkRequest {
         URL(string: "\(RequestConstants.baseURL)/api/v1/collections")
     }
     var dto: Dto?
+    
+    var headers: [String: String]? {
+        return [
+            "X-API-KEY": RequestConstants.token,
+            "Content-Type": "application/json"
+        ]
+    }
 }

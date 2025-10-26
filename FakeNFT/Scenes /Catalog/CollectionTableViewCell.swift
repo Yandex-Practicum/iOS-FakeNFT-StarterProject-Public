@@ -37,8 +37,7 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Configuration
     
     func configure(with collection: NFTCollection) {
-        // Форматируем текст: "Название (X NFT)"
-        let nftCount = collection.nftCount
+        let nftCount = collection.nfts.count
         let nftText = NSLocalizedString("Catalog.nftCount", value: "NFT", comment: "")
         let titleText = "\(collection.name) (\(nftCount))"
         
@@ -64,18 +63,31 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
         coverImageView.image = nil
         coverImageView.backgroundColor = .lightGray
         
-        // Загружаем изображение из Assets
-        let image = UIImage(named: collection.cover)
-        coverImageView.image = image
-        
-        // Если изображение найдено, убираем серый фон
-        if image != nil {
-            coverImageView.backgroundColor = .clear
-            print("Successfully loaded local image: \(collection.cover)")
-        } else {
-            print("Failed to load local image: \(collection.cover)")
+        if let coverURL = collection.coverURL {
             coverImageView.backgroundColor = .lightGray
-        }
+                
+                coverImageView.kf.setImage(
+                    with: coverURL,
+                    options: [
+                        .transition(.fade(0.3)),
+                        .cacheOriginalImage
+                    ]
+                ) { [weak self] result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(_):
+                            self?.coverImageView.backgroundColor = .clear
+                            print("Successfully loaded image from: \(coverURL)")
+                        case .failure(let error):
+                            self?.coverImageView.backgroundColor = .lightGray
+                            print("Failed to load image from: \(coverURL), error: \(error)")
+                        }
+                    }
+                }
+            } else {
+                coverImageView.backgroundColor = .lightGray
+                print("Invalid cover URL for collection: \(collection.name)")
+            }
     }
     
     // MARK: - Private Methods

@@ -177,7 +177,7 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 180 // 179 (высота ячейки) + 8 (отступ между ячейками)
+        return 187
     }
 }
 
