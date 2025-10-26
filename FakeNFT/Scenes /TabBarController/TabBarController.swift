@@ -13,12 +13,13 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
-        )
-        catalogController.tabBarItem = catalogTabBarItem
+        let catalogController = CatalogViewController(
+                collectionService: servicesAssembly.collectionService
+            )
+            let catalogNavigationController = UINavigationController(rootViewController: catalogController)
+            catalogNavigationController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        viewControllers = [catalogNavigationController]
 
         view.backgroundColor = .systemBackground
     }
