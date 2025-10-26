@@ -60,25 +60,22 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func loadCoverImage(for collection: NFTCollection) {
-        // TODO: Заменить на реальные URL из API когда будут доступны
-        // Временно используем локальные ассеты из Figma
-        let coverImageName = getLocalCoverImageName(for: collection.name)
-        coverImageView.image = UIImage(named: coverImageName)
+        // Сбрасываем изображение перед загрузкой нового
+        coverImageView.image = nil
+        coverImageView.backgroundColor = .lightGray
         
-        // Если есть реальный URL, используем его (раскомментировать когда API будет готово)
-        /*
-        if let url = URL(string: collection.cover.absoluteString) {
-            coverImageView.kf.setImage(with: url)
+        // Загружаем изображение из Assets
+        let image = UIImage(named: collection.cover)
+        coverImageView.image = image
+        
+        // Если изображение найдено, убираем серый фон
+        if image != nil {
+            coverImageView.backgroundColor = .clear
+            print("Successfully loaded local image: \(collection.cover)")
+        } else {
+            print("Failed to load local image: \(collection.cover)")
+            coverImageView.backgroundColor = .lightGray
         }
-        */
-    }
-    
-    private func getLocalCoverImageName(for collectionName: String) -> String {
-        // Временная логика для демонстрации - сопоставляем названия коллекций с ассетами
-        // TODO: Заменить на реальную логику когда будет API
-        let availableImages = ["Beige", "Blue", "Broun", "Gray", "Green", "Peach", "Pink", "White", "Yellow"]
-        let index = abs(collectionName.hash) % availableImages.count
-        return availableImages[index]
     }
     
     // MARK: - Private Methods
@@ -106,5 +103,12 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        coverImageView.kf.cancelDownloadTask() // отменяем загрузку если ячейка переиспользуется
+        coverImageView.image = nil
+        coverImageView.backgroundColor = .lightGray
     }
 }

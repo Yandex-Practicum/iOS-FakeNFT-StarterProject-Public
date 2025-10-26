@@ -22,7 +22,7 @@ final class CatalogViewController: UIViewController {
     
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.up.arrow.down"),
+            image: UIImage(named: "sort-lines"),
             style: .plain,
             target: self,
             action: #selector(sortButtonTapped)
@@ -83,7 +83,6 @@ final class CatalogViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        title = NSLocalizedString("Tab.catalog", comment: "")
         navigationItem.rightBarButtonItem = sortButton
     }
     
@@ -130,13 +129,13 @@ final class CatalogViewController: UIViewController {
         // TODO: Реализовать выбор сортировки в следующих частях
         let alert = UIAlertController(
             title: "Сортировка",
-            message: "Выберите тип сортировки",
+            message: nil,
             preferredStyle: .actionSheet
         )
         
         alert.addAction(UIAlertAction(title: "По названию", style: .default))
         alert.addAction(UIAlertAction(title: "По количеству NFT", style: .default))
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         
         present(alert, animated: true)
     }

@@ -18,8 +18,9 @@ final class ServicesAssembly {
         )
     }
     var collectionService: CollectionService {
-        CollectionServiceImpl(
-            networkClient: networkClient
-        )
+        //CollectionServiceImpl(
+           // networkClient: networkClient
+        //)
+        CollectionServiceMock()
     }
 }
