@@ -16,7 +16,7 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyRegular
+        label.font = .bodyBold
         label.textColor = .black
         label.numberOfLines = 0
         return label
@@ -40,7 +40,7 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
         // Форматируем текст: "Название (X NFT)"
         let nftCount = collection.nftCount
         let nftText = NSLocalizedString("Catalog.nftCount", value: "NFT", comment: "")
-        let titleText = "\(collection.name) (\(nftCount) \(nftText))"
+        let titleText = "\(collection.name) (\(nftCount))"
         
         // Создаем атрибутивную строку для разного форматирования
         let attributedString = NSMutableAttributedString(string: titleText)
@@ -96,12 +96,12 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
             coverImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             coverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             coverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            coverImageView.heightAnchor.constraint(equalToConstant: 179),
+            coverImageView.heightAnchor.constraint(equalToConstant: 140),
             
             titleLabel.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
