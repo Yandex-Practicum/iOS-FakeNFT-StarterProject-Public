@@ -41,25 +41,20 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
         let nftText = NSLocalizedString("Catalog.nftCount", value: "NFT", comment: "")
         let titleText = "\(collection.name) (\(nftCount))"
         
-        // Создаем атрибутивную строку для разного форматирования
         let attributedString = NSMutableAttributedString(string: titleText)
         
-        // Находим диапазон количества NFT
         if let nftRange = titleText.range(of: "(\(nftCount) \(nftText))") {
             let nsRange = NSRange(nftRange, in: titleText)
             
-            // Применяем жирный шрифт для количества NFT
             attributedString.addAttribute(.font, value: UIFont.bodyBold, range: nsRange)
         }
         
         titleLabel.attributedText = attributedString
         
-        // Загружаем изображение коллекции
         loadCoverImage(for: collection)
     }
     
     private func loadCoverImage(for collection: NFTCollection) {
-        // Сбрасываем изображение перед загрузкой нового
         coverImageView.image = nil
         coverImageView.backgroundColor = .lightGray
         
@@ -115,7 +110,7 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             titleLabel.heightAnchor.constraint(equalToConstant: 22),
             
-            contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 22)
+            contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 13)
         ])
     }
     
