@@ -65,29 +65,29 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
         
         if let coverURL = collection.coverURL {
             coverImageView.backgroundColor = .lightGray
-                
-                coverImageView.kf.setImage(
-                    with: coverURL,
-                    options: [
-                        .transition(.fade(0.3)),
-                        .cacheOriginalImage
-                    ]
-                ) { [weak self] result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .success(_):
-                            self?.coverImageView.backgroundColor = .clear
-                            print("Successfully loaded image from: \(coverURL)")
-                        case .failure(let error):
-                            self?.coverImageView.backgroundColor = .lightGray
-                            print("Failed to load image from: \(coverURL), error: \(error)")
-                        }
+            
+            coverImageView.kf.setImage(
+                with: coverURL,
+                options: [
+                    .transition(.fade(0.3)),
+                    .cacheOriginalImage
+                ]
+            ) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        self?.coverImageView.backgroundColor = .clear
+                        print("Successfully loaded image from: \(coverURL)")
+                    case .failure(let error):
+                        self?.coverImageView.backgroundColor = .lightGray
+                        print("Failed to load image from: \(coverURL), error: \(error)")
                     }
                 }
-            } else {
-                coverImageView.backgroundColor = .lightGray
-                print("Invalid cover URL for collection: \(collection.name)")
             }
+        } else {
+            coverImageView.backgroundColor = .lightGray
+            print("Invalid cover URL for collection: \(collection.name)")
+        }
     }
     
     // MARK: - Private Methods
@@ -113,13 +113,15 @@ final class CollectionTableViewCell: UITableViewCell, ReuseIdentifying {
             titleLabel.topAnchor.constraint(equalTo: coverImageView.bottomAnchor, constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            titleLabel.heightAnchor.constraint(equalToConstant: 22),
+            
+            contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 22)
         ])
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        coverImageView.kf.cancelDownloadTask() // отменяем загрузку если ячейка переиспользуется
+        coverImageView.kf.cancelDownloadTask()
         coverImageView.image = nil
         coverImageView.backgroundColor = .lightGray
     }
