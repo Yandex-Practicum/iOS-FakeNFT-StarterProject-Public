@@ -56,4 +56,17 @@ extension ErrorView where Self: UIViewController {
         
         present(alert, animated: true)
     }
+    
+    func showErrorAlertWithTwoButtons(titleOfAlert: String, firstAction: UIAlertAction, secondAction: UIAlertAction) {
+        let alert = UIAlertController(
+            title: titleOfAlert,
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(firstAction)
+        alert.addAction(secondAction)
+        
+        present(alert, animated: true)
+    }
 }
