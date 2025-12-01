@@ -28,11 +28,26 @@ final class CartViewModel {
     func removeItem(at index: Int) {
         guard items.indices.contains(index) else { return }
         items.remove(at: index)
+        notifyUpdates()
     }
     
     func updateRating(at index: Int, rating: Int) {
         guard items.indices.contains(index) else { return }
         items[index].rating = rating
+        notifyUpdates()
+    }
+    
+    private func notifyUpdates() {
+        onItemsUpdated?()
+        updateTotal()
+    }
+    
+    func updateTotal() {
+        let countText = "\(items.count) NFT"
+        let sum = items.reduce(0) { $0 + $1.price }
+        let totalText = String(format: "%.2f ETH", sum).replacingOccurrences(of: ".", with: ",")
+        
+        onTotalUpdated?(countText, totalText)
     }
 }
 

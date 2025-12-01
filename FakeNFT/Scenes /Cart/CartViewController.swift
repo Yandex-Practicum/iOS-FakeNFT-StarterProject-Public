@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CartViewController: UIViewController, CartTableViewCellDelegate {
+final class CartViewController: UIViewController {
     
     private let viewModel: CartViewModel
     
@@ -22,14 +22,27 @@ final class CartViewController: UIViewController, CartTableViewCellDelegate {
     
     private let tableView = UITableView()
     private let bottomView = UIView()
+    private let countLabel = UILabel()
+    private let totalLabel = UILabel()
+    private let payButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("К оплате", for: .normal)
+        btn.tintColor = .white
+        btn.backgroundColor = .black
+        btn.layer.cornerRadius = 18
+        btn.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        return btn
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        setupTable()
         setupBottom()
+        setupTable()
         setupBindings()
+        
+        viewModel.updateTotal()
         
     }
     
@@ -37,6 +50,10 @@ final class CartViewController: UIViewController, CartTableViewCellDelegate {
     private func setupBindings() {
         viewModel.onItemsUpdated = { [weak self] in
             self?.tableView.reloadData()
+        }
+        viewModel.onTotalUpdated = { [weak self] count, total in
+            self?.countLabel.text = count
+            self?.totalLabel.text = total
         }
     }
     
@@ -54,7 +71,7 @@ final class CartViewController: UIViewController, CartTableViewCellDelegate {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -130)
+            tableView.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
         ])
     }
     
@@ -62,18 +79,41 @@ final class CartViewController: UIViewController, CartTableViewCellDelegate {
     private func setupBottom() {
         bottomView.backgroundColor = .secondarySystemBackground
         view.addSubview(bottomView)
+        bottomView.addSubview(countLabel)
+        bottomView.addSubview(totalLabel)
+        bottomView.addSubview(payButton)
+        
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        countLabel.translatesAutoresizingMaskIntoConstraints = false
+        totalLabel.translatesAutoresizingMaskIntoConstraints = false
+        payButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        countLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        totalLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        totalLabel.textColor = UIColor.greenUniversal
         
         NSLayoutConstraint.activate([
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bottomView.heightAnchor.constraint(equalToConstant: 130),
+            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomView.heightAnchor.constraint(equalToConstant: 76),
+            
+            countLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
+            countLabel.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 18),
+            
+            totalLabel.leadingAnchor.constraint(equalTo: countLabel.leadingAnchor),
+            totalLabel.topAnchor.constraint(equalTo: countLabel.bottomAnchor, constant: 4),
+            
+            payButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
+            payButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 16),
+            payButton.widthAnchor.constraint(equalToConstant: 240),
+            payButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
 
 // MARK: - TableView
-extension CartViewController: UITableViewDataSource, UITableViewDelegate {
+extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTableViewCellDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfItems()
@@ -107,8 +147,10 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func cartCellDidTapDelete(_ cell: CartTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
+        tableView.beginUpdates()
         viewModel.removeItem(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
     }
 }
 
