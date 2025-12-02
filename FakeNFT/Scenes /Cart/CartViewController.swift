@@ -27,8 +27,8 @@ final class CartViewController: UIViewController {
     private let payButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("К оплате", for: .normal)
-        btn.tintColor = .white
-        btn.backgroundColor = .black
+        btn.tintColor = UIColor.segmentButtonText
+        btn.backgroundColor = UIColor.segmentButtonBackground
         btn.layer.cornerRadius = 18
         btn.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         return btn
@@ -147,10 +147,23 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
     
     func cartCellDidTapDelete(_ cell: CartTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        tableView.beginUpdates()
-        viewModel.removeItem(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        tableView.endUpdates()
+        
+        let item = viewModel.item(at: indexPath.row)
+        
+        let vc = DeleteModalViewController(
+            image: item.image,
+            title: item.title,
+            onDelete: { [weak self] in
+                guard let self = self else { return }
+                self.viewModel.removeItem(at: indexPath.row)
+                self.tableView.reloadData()
+            }
+        )
+        
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        
+        present(vc, animated: true)
     }
 }
 

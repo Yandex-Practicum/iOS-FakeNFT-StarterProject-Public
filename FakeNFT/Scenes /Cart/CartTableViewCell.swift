@@ -57,7 +57,7 @@ final class CartTableViewCell: UITableViewCell {
     let deleteButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "Delete"), for: .normal)
-        btn.tintColor = .gray
+        btn.tintColor = UIColor.segmentButtonBackground
         return btn
     }()
     
