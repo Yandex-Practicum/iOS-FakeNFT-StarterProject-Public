@@ -4,6 +4,8 @@
 
 Группа: 1
 
+Архитектура: MVVM, UIKit
+
 Эпик: Корзина
 
 Ссылка на доску: https://github.com/users/zanpakt0/projects/1/views/12
