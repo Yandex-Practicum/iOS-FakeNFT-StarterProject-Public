@@ -81,4 +81,10 @@ extension UIColor {
         ? .yaBlackDark
         : .yaBlackLight
     }
+    
+    static let forViewBackgound = UIColor { traits in
+        return traits.userInterfaceStyle == .light
+        ? .yaBlackDark
+        : .yaBlackLight
+    }
 }

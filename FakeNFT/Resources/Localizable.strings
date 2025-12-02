@@ -5,3 +5,8 @@
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+
+
+//Filter actionSheet
+"Filter.actionSheet.title" = "Сортировка";
+"Filter.actionSheet.closeButton.text" = "Закрыть";
