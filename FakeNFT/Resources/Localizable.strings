@@ -10,3 +10,7 @@
 //Filter actionSheet
 "Filter.actionSheet.title" = "Сортировка";
 "Filter.actionSheet.closeButton.text" = "Закрыть";
+"Filter.actionSheet.title.toPay" = "К оплате";
+"Are you sure you want to\n remove the item from the cart?" = "Вы уверены, что хотите\n удалить объект из корзины?";
+"button.Delete" = "Удалить";
+"button.GoBack" = "Вернуться";

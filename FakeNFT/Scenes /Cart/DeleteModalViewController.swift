@@ -67,13 +67,13 @@ final class DeleteModalViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
-        titleLabel.text = "Вы уверены, что хотите\n удалить объект из корзины?"
+        titleLabel.text = NSLocalizedString("Are you sure you want to\n remove the item from the cart?", comment: "")
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        deleteButton.setTitle("Удалить", for: .normal)
+        deleteButton.setTitle(NSLocalizedString("button.Delete", comment: ""), for: .normal)
         deleteButton.backgroundColor = UIColor.segmentButtonBackground
         deleteButton.layer.cornerRadius = 12
         deleteButton.setTitleColor(UIColor.redUniversal, for: .normal)
@@ -81,7 +81,7 @@ final class DeleteModalViewController: UIViewController {
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
         
-        cancelButton.setTitle("Вернуться", for: .normal)
+        cancelButton.setTitle(NSLocalizedString("button.GoBack", comment: ""), for: .normal)
         cancelButton.backgroundColor = UIColor.segmentButtonBackground
         cancelButton.layer.cornerRadius = 12
         cancelButton.setTitleColor(UIColor.segmentButtonText, for: .normal)

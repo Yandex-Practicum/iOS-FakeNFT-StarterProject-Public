@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CartViewController: UIViewController {
+final class CartViewController: UIViewController, ErrorView {
     
     private let viewModel: CartViewModel
     
@@ -26,11 +26,18 @@ final class CartViewController: UIViewController {
     private let totalLabel = UILabel()
     private let payButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("К оплате", for: .normal)
+        btn.setTitle(NSLocalizedString("Filter.actionSheet.title.toPay", comment: ""), for: .normal)
         btn.tintColor = UIColor.segmentButtonText
         btn.backgroundColor = UIColor.segmentButtonBackground
         btn.layer.cornerRadius = 18
         btn.titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
+        return btn
+    }()
+
+    private let sortButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "sortButton"), for: .normal)
+        btn.tintColor = UIColor.segmentButtonBackground
         return btn
     }()
     
@@ -38,6 +45,7 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        setupButton()
         setupBottom()
         setupTable()
         setupBindings()
@@ -57,6 +65,39 @@ final class CartViewController: UIViewController {
         }
     }
     
+    private func setupButton() {
+        view.addSubview(sortButton)
+        sortButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            sortButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
+            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+            sortButton.heightAnchor.constraint(equalToConstant: 42),
+            sortButton.widthAnchor.constraint(equalToConstant: 42)
+            ])
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+    }
+
+    @objc private func sortButtonTapped() {
+        let priceAction = UIAlertAction(title: "По цене", style: .default) { [weak self] _ in
+            print("Сортировка по цене")
+            self?.viewModel.sortByPrice()
+        }
+        let ratingAction = UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+            print("Сортировка по рейтингу")
+            self?.viewModel.sortByRating()
+        }
+        let titleAction = UIAlertAction(title: "По названию", style: .default) { [weak self] _ in
+            print("Сортировка по названию")
+            self?.viewModel.sortByTitle()
+        }
+        showFilterActionSheet(
+            firstAction: priceAction,
+            secondAction: ratingAction,
+            thirdAction: titleAction
+        )
+    }
+    
     // MARK: - Setup Table
     private func setupTable() {
         tableView.dataSource = self
@@ -68,7 +109,7 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 2),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
