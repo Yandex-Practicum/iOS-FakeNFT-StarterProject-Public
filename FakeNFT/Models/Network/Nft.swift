@@ -1,6 +1,11 @@
-import Foundation
+import SwiftUI
 
-struct Nft: Decodable {
+struct Nft: Identifiable, Hashable, Codable, Equatable {
     let id: String
-    let images: [URL]
+    let name: String
+    let images: [String]
+    let description: String
+    let rating: Int
+    let price: Double
+    let author: String
 }
