@@ -47,6 +47,9 @@ struct DefaultNetworkClient: NetworkClient {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
+        
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
     }
 
     @discardableResult
@@ -114,7 +117,10 @@ struct DefaultNetworkClient: NetworkClient {
             assertionFailure("Empty endpoint")
             return nil
         }
-
+        
+        print("🔗 Создаем запрос к: \(endpoint.absoluteString)")
+        print("🔑 Токен: \(RequestConstants.token)")
+        
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
 
