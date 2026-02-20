@@ -62,11 +62,17 @@ struct DefaultNetworkClient: NetworkClient {
         }
         guard let urlRequest = create(request: request) else { return nil }
 
+        // Debug: log outgoing request
+        logRequest(urlRequest)
+
         let task = session.dataTask(with: urlRequest) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
                 onResponse(.failure(NetworkClientError.urlSessionError))
                 return
             }
+
+            // Debug: log every response status and body (if present)
+            logResponse(response, data: data)
 
             guard 200 ..< 300 ~= response.statusCode else {
                 onResponse(.failure(NetworkClientError.httpStatusCode(response.statusCode)))
@@ -119,21 +125,35 @@ struct DefaultNetworkClient: NetworkClient {
         urlRequest.httpMethod = request.httpMethod.rawValue
 
         urlRequest.addValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        request.headers.forEach { urlRequest.addValue($0.value, forHTTPHeaderField: $0.key) }
 
-        if let dtoDictionary = request.dto?.asDictionary() {
-            var urlComponents = URLComponents()
-            let queryItems = dtoDictionary.map { field in
-                URLQueryItem(
-                    name: field.key,
-                    value: field.value
-                    )
+        let dtoDictionary = request.dto?.asDictionary()
+        var urlComponents = URLComponents(url: endpoint, resolvingAgainstBaseURL: false) ?? URLComponents()
+
+        switch request.httpMethod {
+        case .get:
+            // GET: передаём параметры только в query, без тела запроса.
+            var items = request.queryItems
+            if let dtoDictionary {
+                items.append(contentsOf: dtoDictionary.map { URLQueryItem(name: $0.key, value: $0.value) })
             }
-            urlComponents.queryItems = queryItems
-            urlRequest.httpBody = urlComponents.query?.data(using: .utf8)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            if !items.isEmpty {
+                var existingItems = urlComponents.queryItems ?? []
+                existingItems.append(contentsOf: items)
+                urlComponents.queryItems = existingItems
+            }
+            if let updatedURL = urlComponents.url {
+                urlRequest.url = updatedURL
+            }
+        default:
+            if let dtoDictionary {
+                // POST/PUT/...: тело кодируем как x-www-form-urlencoded.
+                var bodyComponents = URLComponents()
+                bodyComponents.queryItems = dtoDictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
+                urlRequest.httpBody = bodyComponents.query?.data(using: .utf8)
+                urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            }
         }
-
-        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
         return urlRequest
     }
@@ -144,6 +164,30 @@ struct DefaultNetworkClient: NetworkClient {
             onResponse(.success(response))
         } catch {
             onResponse(.failure(NetworkClientError.parsingError))
+        }
+    }
+
+    private func logRequest(_ request: URLRequest) {
+        let urlString = request.url?.absoluteString ?? "nil"
+        let method = request.httpMethod ?? "nil"
+        let headers = request.allHTTPHeaderFields ?? [:]
+        let bodyString: String
+        if let body = request.httpBody, let str = String(data: body, encoding: .utf8) {
+            bodyString = str
+        } else {
+            bodyString = "nil"
+        }
+
+        print("[Network][Request] \(method) \(urlString)")
+        print("[Network][Headers] \(headers)")
+        print("[Network][Body] \(bodyString)")
+    }
+
+    private func logResponse(_ response: HTTPURLResponse, data: Data?) {
+        let urlString = response.url?.absoluteString ?? "nil"
+        print("[Network][Response] \(response.statusCode) \(urlString)")
+        if let data, let body = String(data: data, encoding: .utf8), !body.isEmpty {
+            print("[Network][ResponseBody] \(body)")
         }
     }
 }

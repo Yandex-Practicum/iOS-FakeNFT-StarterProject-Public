@@ -11,3 +11,4 @@ struct DefaultNetworkTask: NetworkTask {
         dataTask.cancel()
     }
 }
+

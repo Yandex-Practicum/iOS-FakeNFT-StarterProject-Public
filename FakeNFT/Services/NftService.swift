@@ -1,36 +1,26 @@
 import Foundation
 
-typealias NftCompletion = (Result<Nft, Error>) -> Void
+typealias NftListCompletion = (Result<[Nft], Error>) -> Void
 
 protocol NftService {
-    func loadNft(id: String, completion: @escaping NftCompletion)
+    func loadNfts(page: Int, size: Int, sortBy: String?, completion: @escaping NftListCompletion)
+    func loadNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void)
 }
 
 final class NftServiceImpl: NftService {
-
-    private let networkClient: NetworkClient
-    private let storage: NftStorage
-
-    init(networkClient: NetworkClient, storage: NftStorage) {
-        self.storage = storage
-        self.networkClient = networkClient
+    private let client: NetworkClient
+    
+    init(client: NetworkClient) {
+        self.client = client
     }
 
-    func loadNft(id: String, completion: @escaping NftCompletion) {
-        if let nft = storage.getNft(with: id) {
-            completion(.success(nft))
-            return
-        }
+    func loadNfts(page: Int, size: Int, sortBy: String?, completion: @escaping NftListCompletion) {
+        let request = NftListRequest(dto: PageDto(page: page, size: size, sortBy: sortBy))
+        client.send(request: request, type: [Nft].self, onResponse: completion)
+    }
 
-        let request = NFTRequest(id: id)
-        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
-            switch result {
-            case .success(let nft):
-                storage?.saveNft(nft)
-                completion(.success(nft))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func loadNft(id: String, completion: @escaping (Result<Nft, Error>) -> Void) {
+        let request = NftByIdRequest(id: id)
+        client.send(request: request, type: Nft.self, onResponse: completion)
     }
 }
