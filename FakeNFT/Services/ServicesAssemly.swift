@@ -12,9 +12,23 @@ final class ServicesAssembly {
     }
 
     var nftService: NftService {
-        NftServiceImpl(
-            networkClient: networkClient,
-            storage: nftStorage
-        )
+        NftServiceImpl(client: networkClient)
+    }
+    
+    var nftListService: NftListService {
+        NftListNetworkService(networkClient: networkClient)
+    }
+
+    var catalogProvider: CatalogProviderProtocol {
+        let catalogsService = CatalogsServiceImpl(client: networkClient)
+        return CatalogNetworkProvider(service: catalogsService)
+    }
+    
+    var favoriteNftService: FavoriteNftService {
+        FavoriteNftNetworkService(networkClient: networkClient)
+    }
+
+    var orderNftService: OrderNftService {
+        OrderNftNetworkService(networkClient: networkClient)
     }
 }
