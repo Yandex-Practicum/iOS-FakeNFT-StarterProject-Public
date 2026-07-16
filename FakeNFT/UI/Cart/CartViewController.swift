@@ -4,15 +4,16 @@
 //
 //  Created by Сергей Петров on 16.07.2026.
 //
-
 import UIKit
 import Observation
 
-// MARK: - CartViewController
 final class CartViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: CartViewModel
+    
+    // Действие при нажатии на кнопку оплаты (можно передать извне или обрабатывать здесь)
+    var onPaymentTapped: (() -> Void)?
     
     // MARK: - UI Elements
     private let tableView: UITableView = {
@@ -24,12 +25,61 @@ final class CartViewController: UIViewController {
         return table
     }()
     
-    // Плейсхолдер для будущей нижней панели с ценой (аналог EmptyView в SwiftUI)
-    private let priceSectionView: UIView = {
+    // MARK: - Total Section UI
+    private let totalSectionView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .segmentInactiveFallback // Фон из SwiftUI
+        view.layer.cornerRadius = SizeConstants.totalSectionRadius
+        view.clipsToBounds = true // Чтобы cornerRadius работал для фона
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private let contentStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .fill
+        stack.spacing = 16 // Расстояние между текстом и кнопкой
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let infoStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 2 // spacing: 2 из SwiftUI VStack
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let countLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular) // .regular15
+        label.textColor = .segmentActiveFallback
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let totalPriceLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
+        label.textColor = .systemGreen // .green из SwiftUI
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let paymentButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(NSLocalizedString("To payment", comment: "Кнопка оплаты"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
+        button.backgroundColor = .black // TODO: ЗАМЕНИТЬ ЦВЕТ на нужный
+        button.layer.cornerRadius = SizeConstants.buttonRadius
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     // MARK: - Diffable DataSource
@@ -38,14 +88,11 @@ final class CartViewController: UIViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<Section, CartItem> = {
         UITableViewDiffableDataSource<Section, CartItem>(tableView: tableView) { [weak self] tableView, indexPath, item in
             guard let self else { return UITableViewCell() }
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.reuseID, for: indexPath) as! CartCell
             
-            // Передаём замыкание удаления из ячейки в ViewModel
             cell.configure(with: item) { [weak self] deletedItem in
                 self?.viewModel.removeItem(deletedItem)
             }
-            
             return cell
         }
     }()
@@ -65,7 +112,7 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupTableView()
-        setupDataSource()
+        setupTotalSection()
         observeViewModel()
         applyInitialSnapshot()
     }
@@ -76,20 +123,20 @@ final class CartViewController: UIViewController {
         title = NSLocalizedString("Cart", comment: "Заголовок экрана корзины")
         
         view.addSubview(tableView)
-        view.addSubview(priceSectionView)
+        view.addSubview(totalSectionView)
         
         NSLayoutConstraint.activate([
-            // Список занимает всё пространство сверху до priceSection
+            // Таблица занимает всё пространство сверху до totalSection
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: priceSectionView.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: totalSectionView.topAnchor, constant: -16), // Отступ 16 от нижней панели
             
-            // Нижняя панель (пока пустая, высота 0)
-            priceSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            priceSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            priceSectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            priceSectionView.heightAnchor.constraint(equalToConstant: 0)
+            // Нижняя панель прижата к низу с горизонтальными отступами 16 (аналог .padding(.horizontal, 16))
+            totalSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            totalSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            totalSectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            totalSectionView.heightAnchor.constraint(equalToConstant: SizeConstants.totalSectionHeight)
         ])
     }
     
@@ -98,46 +145,48 @@ final class CartViewController: UIViewController {
         tableView.delegate = self
     }
     
-    private func setupDataSource() {
-        // DataSource уже настроен через lazy var
+    private func setupTotalSection() {
+        totalSectionView.addSubview(contentStackView)
+        contentStackView.addArrangedSubview(infoStackView)
+        contentStackView.addArrangedSubview(paymentButton)
+        
+        infoStackView.addArrangedSubview(countLabel)
+        infoStackView.addArrangedSubview(totalPriceLabel)
+        
+        // Фиксируем размеры кнопки (аналог .frame(width:height:))
+        NSLayoutConstraint.activate([
+            paymentButton.widthAnchor.constraint(equalToConstant: SizeConstants.buttonWidth),
+            paymentButton.heightAnchor.constraint(equalToConstant: SizeConstants.buttonHeight),
+            
+            // Внутренние отступы для contentStackView (аналог .padding(.horizontal, 16) внутри HStack)
+            contentStackView.topAnchor.constraint(equalTo: totalSectionView.topAnchor, constant: 12),
+            contentStackView.leadingAnchor.constraint(equalTo: totalSectionView.leadingAnchor, constant: 16),
+            contentStackView.trailingAnchor.constraint(equalTo: totalSectionView.trailingAnchor, constant: -16),
+            contentStackView.bottomAnchor.constraint(equalTo: totalSectionView.bottomAnchor, constant: -12)
+        ])
+        
+        // Обработчик нажатия на кнопку
+        paymentButton.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Observation (iOS 17+ @Observable)
     private func observeViewModel() {
         withObservationTracking {
-            // Следим за свойством items
             _ = viewModel.items
         } onChange: { [weak self] in
             guard let self else { return }
-            
-            // Колбэк вызывается на фоновом потоке, переключаемся на главный
             Task { @MainActor in
                 self.applySnapshot(animating: true)
-                // ВАЖНО: перезапускаем наблюдение, т.к. withObservationTracking срабатывает только один раз
-                self.observeViewModel()
+                self.updateTotalSection() // <-- Обновляем нижнюю панель при изменении данных!
+                self.observeViewModel()   // Перезапускаем наблюдение
             }
         }
     }
     
-    /*
-     // MARK: - Alternative: Combine (для iOS 15/16)
-     // Раскомментируй этот блок и удали observeViewModel() выше, если Deployment Target < 17
-     
-     private var cancellables = Set<AnyCancellable>()
-     
-     private func observeViewModel() {
-         viewModel.$items
-             .receive(on: RunLoop.main)
-             .sink { [weak self] _ in
-                 self?.applySnapshot(animating: true)
-             }
-             .store(in: &cancellables)
-     }
-     */
-    
-    // MARK: - Snapshot
+    // MARK: - Data & UI Updates
     private func applyInitialSnapshot() {
         applySnapshot(animating: false)
+        updateTotalSection() // Первичная отрисовка нижней панели
     }
     
     private func applySnapshot(animating: Bool) {
@@ -146,40 +195,36 @@ final class CartViewController: UIViewController {
         snapshot.appendItems(viewModel.items, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: animating)
     }
+    
+    private func updateTotalSection() {
+        // Обновляем тексты на основе актуальных данных ViewModel
+        countLabel.text = "\(viewModel.items.count) NFT"
+        totalPriceLabel.text = String(format: "%.2f ETH", viewModel.totalPrice)
+        
+        // Опционально: скрыть или показать панель, если корзина пуста
+        totalSectionView.isHidden = viewModel.items.isEmpty
+    }
+    
+    // MARK: - Actions
+    @objc private func paymentButtonTapped() {
+        // Здесь логика перехода к оплате
+        onPaymentTapped?()
+        print("Переход к оплате на сумму: \(viewModel.totalPrice) ETH")
+    }
 }
 
 // MARK: - UITableViewDelegate
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        // Здесь можно открыть детали товара, например:
-        // let detailsVC = NFTDetailsViewController(item: item)
-        // navigationController?.pushViewController(detailsVC, animated: true)
-        print("Selected: \(item.name)")
-    }
-    
-    // Убираем стандартные insets у строк
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.separatorInset = .zero
     }
 }
 
-// MARK: - Preview Helper (для запуска из AppDelegate / SceneDelegate)
-/*
- В SceneDelegate.swift:
- 
- func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-     guard let windowScene = (scene as? UIWindowScene) else { return }
-     
-     let window = UIWindow(windowScene: windowScene)
-     let viewModel = CartViewModel()
-     let cartVC = CartViewController(viewModel: viewModel)
-     let navController = UINavigationController(rootViewController: cartVC)
-     
-     window.rootViewController = navController
-     window.makeKeyAndVisible()
-     self.window = window
- }
- */
+// MARK: - Size Constants (можно вынести в отдельный файл)
+private enum SizeConstants {
+    static let totalSectionHeight: CGFloat = 72
+    static let totalSectionRadius: CGFloat = 16
+    static let buttonWidth: CGFloat = 140
+    static let buttonHeight: CGFloat = 44
+    static let buttonRadius: CGFloat = 12
+}
