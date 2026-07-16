@@ -11,8 +11,6 @@ final class CartViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: CartViewModel
-    
-    // Действие при нажатии на кнопку оплаты (можно передать извне или обрабатывать здесь)
     var onPaymentTapped: (() -> Void)?
     
     // MARK: - UI Elements
@@ -25,12 +23,24 @@ final class CartViewController: UIViewController {
         return table
     }()
     
+    // MARK: - Empty State UI
+    private let emptyCartLabel: UILabel = {
+        let label = UILabel()
+        label.text = NSLocalizedString("Cart is empty", comment: "Корзина пуста")
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
+        label.textColor = .black // TODO: ЗАМЕНИТЬ ЦВЕТ на нужный (например, .segmentActive)
+        label.textAlignment = .center
+        label.alpha = 0 // Скрыт по умолчанию для анимации появления
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     // MARK: - Total Section UI
     private let totalSectionView: UIView = {
         let view = UIView()
-        view.backgroundColor = .segmentInactiveFallback // Фон из SwiftUI
+        view.backgroundColor = .segmentInactiveFallback
         view.layer.cornerRadius = SizeConstants.totalSectionRadius
-        view.clipsToBounds = true // Чтобы cornerRadius работал для фона
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -40,7 +50,7 @@ final class CartViewController: UIViewController {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fill
-        stack.spacing = 16 // Расстояние между текстом и кнопкой
+        stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -49,14 +59,14 @@ final class CartViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .leading
-        stack.spacing = 2 // spacing: 2 из SwiftUI VStack
+        stack.spacing = 2
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
     private let countLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular) // .regular15
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = .segmentActiveFallback
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -64,8 +74,8 @@ final class CartViewController: UIViewController {
     
     private let totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
-        label.textColor = .systemGreen // .green из SwiftUI
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.textColor = .systemGreen
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -74,8 +84,8 @@ final class CartViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(NSLocalizedString("To payment", comment: "Кнопка оплаты"), for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
-        button.backgroundColor = .black // TODO: ЗАМЕНИТЬ ЦВЕТ на нужный
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.backgroundColor = .black // TODO: ЗАМЕНИТЬ ЦВЕТ
         button.layer.cornerRadius = SizeConstants.buttonRadius
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -124,19 +134,24 @@ final class CartViewController: UIViewController {
         
         view.addSubview(tableView)
         view.addSubview(totalSectionView)
+        view.addSubview(emptyCartLabel) // Добавляем лейбл пустой корзины
         
         NSLayoutConstraint.activate([
-            // Таблица занимает всё пространство сверху до totalSection
+            // Таблица
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: totalSectionView.topAnchor, constant: -16), // Отступ 16 от нижней панели
+            tableView.bottomAnchor.constraint(equalTo: totalSectionView.topAnchor, constant: -16),
             
-            // Нижняя панель прижата к низу с горизонтальными отступами 16 (аналог .padding(.horizontal, 16))
+            // Нижняя панель
             totalSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             totalSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             totalSectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            totalSectionView.heightAnchor.constraint(equalToConstant: SizeConstants.totalSectionHeight)
+            totalSectionView.heightAnchor.constraint(equalToConstant: SizeConstants.totalSectionHeight),
+            
+            // Пустая корзина (Аналог Spacer() сверху и снизу в SwiftUI)
+            emptyCartLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyCartLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -153,19 +168,16 @@ final class CartViewController: UIViewController {
         infoStackView.addArrangedSubview(countLabel)
         infoStackView.addArrangedSubview(totalPriceLabel)
         
-        // Фиксируем размеры кнопки (аналог .frame(width:height:))
         NSLayoutConstraint.activate([
             paymentButton.widthAnchor.constraint(equalToConstant: SizeConstants.buttonWidth),
             paymentButton.heightAnchor.constraint(equalToConstant: SizeConstants.buttonHeight),
             
-            // Внутренние отступы для contentStackView (аналог .padding(.horizontal, 16) внутри HStack)
             contentStackView.topAnchor.constraint(equalTo: totalSectionView.topAnchor, constant: 12),
             contentStackView.leadingAnchor.constraint(equalTo: totalSectionView.leadingAnchor, constant: 16),
             contentStackView.trailingAnchor.constraint(equalTo: totalSectionView.trailingAnchor, constant: -16),
             contentStackView.bottomAnchor.constraint(equalTo: totalSectionView.bottomAnchor, constant: -12)
         ])
         
-        // Обработчик нажатия на кнопку
         paymentButton.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
     }
     
@@ -177,8 +189,9 @@ final class CartViewController: UIViewController {
             guard let self else { return }
             Task { @MainActor in
                 self.applySnapshot(animating: true)
-                self.updateTotalSection() // <-- Обновляем нижнюю панель при изменении данных!
-                self.observeViewModel()   // Перезапускаем наблюдение
+                self.updateTotalSection()
+                self.updateEmptyState() // <-- Обновляем состояние пустой корзины
+                self.observeViewModel()
             }
         }
     }
@@ -186,7 +199,8 @@ final class CartViewController: UIViewController {
     // MARK: - Data & UI Updates
     private func applyInitialSnapshot() {
         applySnapshot(animating: false)
-        updateTotalSection() // Первичная отрисовка нижней панели
+        updateTotalSection()
+        updateEmptyState() // <-- Первичная проверка при загрузке
     }
     
     private func applySnapshot(animating: Bool) {
@@ -197,19 +211,29 @@ final class CartViewController: UIViewController {
     }
     
     private func updateTotalSection() {
-        // Обновляем тексты на основе актуальных данных ViewModel
         countLabel.text = "\(viewModel.items.count) NFT"
         totalPriceLabel.text = String(format: "%.2f ETH", viewModel.totalPrice)
+    }
+    
+    // MARK: - Empty State Logic
+    private func updateEmptyState() {
+        let isEmpty = viewModel.items.isEmpty
         
-        // Опционально: скрыть или показать панель, если корзина пуста
-        totalSectionView.isHidden = viewModel.items.isEmpty
+        // Плавная анимация переключения состояний (как в SwiftUI)
+        UIView.animate(withDuration: 0.25, animations: {
+            self.tableView.alpha = isEmpty ? 0 : 1
+            self.totalSectionView.alpha = isEmpty ? 0 : 1
+            self.emptyCartLabel.alpha = isEmpty ? 1 : 0
+        })
+        
+        // Блокируем взаимодействие со скрытыми элементами
+        tableView.isUserInteractionEnabled = !isEmpty
+        totalSectionView.isUserInteractionEnabled = !isEmpty
     }
     
     // MARK: - Actions
     @objc private func paymentButtonTapped() {
-        // Здесь логика перехода к оплате
         onPaymentTapped?()
-        print("Переход к оплате на сумму: \(viewModel.totalPrice) ETH")
     }
 }
 
@@ -220,7 +244,7 @@ extension CartViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Size Constants (можно вынести в отдельный файл)
+// MARK: - Size Constants
 private enum SizeConstants {
     static let totalSectionHeight: CGFloat = 72
     static let totalSectionRadius: CGFloat = 16
