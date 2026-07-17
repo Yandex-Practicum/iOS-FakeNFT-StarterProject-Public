@@ -26,7 +26,6 @@ final class CartViewModel {
         items.removeAll { $0.id == item.id }
     }
     
-    // Удобный геттер для будущей priceSection
     var totalPrice: Double {
         items.reduce(0) { $0 + $1.price }
     }

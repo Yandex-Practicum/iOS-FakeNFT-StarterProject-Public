@@ -18,9 +18,9 @@ final class CartViewController: UIViewController {
     private let totalLabel = UILabel()
     private let payButton = UIButton(type: .system)
 
-    // Заменяем обычный dimmingView на UIVisualEffectView для эффекта блюра
+
     private let blurOverlayView: UIVisualEffectView = {
-        let effect = UIBlurEffect(style: .regular) // Темный блюр, чтобы белый текст читался
+        let effect = UIBlurEffect(style: .regular)
         let view = UIVisualEffectView(effect: effect)
         view.alpha = 0.0
         view.isHidden = true
@@ -123,7 +123,7 @@ final class CartViewController: UIViewController {
     }
 
     private func setupOverlay() {
-        // Добавляем блюр-вью на весь экран
+
         view.addSubview(blurOverlayView)
         blurOverlayView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -133,7 +133,6 @@ final class CartViewController: UIViewController {
             blurOverlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        // Тап по размытому фону закрывает окно
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissDeleteConfirmation))
         blurOverlayView.addGestureRecognizer(tapGesture)
     }

@@ -22,10 +22,8 @@ final class DeleteConfirmationView: UIView {
     }
 
     private func setupUI(item: CartItem?) {
-        // Делаем сам контейнер полностью прозрачным
         backgroundColor = .clear
         
-        // Image
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = CartSizeConstants.modalImageRadius
@@ -35,16 +33,14 @@ final class DeleteConfirmationView: UIView {
         imageView.heightAnchor.constraint(equalToConstant: CartSizeConstants.modalImageSize).isActive = true
         imageView.image = UIImage(named: item?.name ?? "")
 
-        // Message label
         let messageLabel = UILabel()
         messageLabel.text = "Вы уверены, что хотите\nудалить объект из корзины?"
         messageLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
-        messageLabel.textColor = .black // Белый текст, так как фон теперь темный размытый
+        messageLabel.textColor = .black
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        // Delete button
         let deleteButton = UIButton(type: .custom)
         deleteButton.setTitle("Удалить", for: .normal)
         deleteButton.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
@@ -56,7 +52,6 @@ final class DeleteConfirmationView: UIView {
         deleteButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         deleteButton.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)
 
-        // Return button
         let returnButton = UIButton(type: .custom)
         returnButton.setTitle("Вернуться", for: .normal)
         returnButton.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
@@ -68,14 +63,12 @@ final class DeleteConfirmationView: UIView {
         returnButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         returnButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
 
-        // Buttons horizontal stack
         let buttonsStack = UIStackView(arrangedSubviews: [deleteButton, returnButton])
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 8
         buttonsStack.distribution = .fill
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
 
-        // Main vertical stack
         let mainStack = UIStackView(arrangedSubviews: [imageView, messageLabel, buttonsStack])
         mainStack.axis = .vertical
         mainStack.spacing = 12
