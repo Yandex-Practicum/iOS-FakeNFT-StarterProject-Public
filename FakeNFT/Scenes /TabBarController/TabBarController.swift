@@ -18,7 +18,10 @@ final class TabBarController: UITabBarController {
         )
         catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        let cartVC = UINavigationController(rootViewController: CartViewController())
+        cartVC.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "cart"), selectedImage: UIImage(systemName: "cart.fill"))
+        
+        viewControllers = [catalogController, cartVC]
 
         view.backgroundColor = .systemBackground
     }
