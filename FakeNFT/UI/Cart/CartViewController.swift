@@ -44,7 +44,7 @@ final class CartViewController: UIViewController {
         setupOverlay()
         applySnapshot(animated: false)
         updateTotal()
-        updateEmptyState() // ⭐ Проверяем состояние при загрузке
+        updateEmptyState()
     }
 
     private func setupUI() {
@@ -56,7 +56,6 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         totalContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        // Создаем два варианта нижнего констрейнта для таблицы
         tableViewBottomToContainerConstraint = tableView.bottomAnchor.constraint(equalTo: totalContainer.topAnchor)
         tableViewBottomToSafeAreaConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 
@@ -70,7 +69,6 @@ final class CartViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            // По умолчанию таблица привязана к контейнеру
             tableViewBottomToContainerConstraint
         ])
     }
@@ -154,8 +152,6 @@ final class CartViewController: UIViewController {
         snapshot.appendItems(viewModel.items, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: animated)
         tableView.backgroundView = viewModel.items.isEmpty ? emptyView() : nil
-        
-        // ⭐ Обновляем состояние нижней панели после изменения данных
         updateEmptyState()
     }
 
@@ -179,19 +175,14 @@ final class CartViewController: UIViewController {
         
         UIView.animate(withDuration: 0.3, animations: {
             if isEmpty {
-                // Скрываем нижнюю панель
                 self.totalContainer.isHidden = true
-                // Растягиваем таблицу до низа экрана
                 self.tableViewBottomToContainerConstraint.isActive = false
                 self.tableViewBottomToSafeAreaConstraint.isActive = true
             } else {
-                // Показываем нижнюю панель
                 self.totalContainer.isHidden = false
-                // Возвращаем таблицу к упору в нижнюю панель
                 self.tableViewBottomToSafeAreaConstraint.isActive = false
                 self.tableViewBottomToContainerConstraint.isActive = true
             }
-            // Применяем изменения констрейнтов с анимацией
             self.view.layoutIfNeeded()
         })
     }
@@ -205,7 +196,7 @@ final class CartViewController: UIViewController {
             guard let self else { return }
             self.hideDeleteConfirmation(animated: true) {
                 self.viewModel.removeItem(item)
-                self.applySnapshot() // Внутри уже вызывается updateEmptyState()
+                self.applySnapshot()
                 self.updateTotal()
             }
         }

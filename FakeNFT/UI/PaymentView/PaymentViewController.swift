@@ -7,7 +7,7 @@
 
 import UIKit
 import Observation
-import WebKit // Добавляем для WebView
+import WebKit
 
 // MARK: - PaymentViewController
 final class PaymentViewController: UIViewController {
@@ -57,7 +57,7 @@ final class PaymentViewController: UIViewController {
         button.setTitle(NSLocalizedString("Пользовательского соглашения", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         button.setTitleColor(UIColor(named: "uniBlue") ?? .systemBlue, for: .normal)
-        button.contentHorizontalAlignment = .leading // Аналог alignment: .leading
+        button.contentHorizontalAlignment = .leading
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -115,10 +115,10 @@ final class PaymentViewController: UIViewController {
         setupNavigation()
         setupView()
         setupCollectionView()
-        setupPayBlock() // ⭐ Новый метод
+        setupPayBlock()
         observeViewModel()
         applyInitialSnapshot()
-        updatePayButtonState() // ⭐ Первичное состояние кнопки
+        updatePayButtonState()
     }
     
     // MARK: - Setup
@@ -128,16 +128,14 @@ final class PaymentViewController: UIViewController {
     
     private func setupView() {
         view.addSubview(collectionView)
-        view.addSubview(payBlockView) // Добавляем нижний блок
+        view.addSubview(payBlockView)
         
         NSLayoutConstraint.activate([
-            // Collection View занимает всё пространство сверху до payBlockView
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: payBlockView.topAnchor),
             
-            // Pay Block прижат к самому низу экрана (игнорирует safe area, как в SwiftUI)
             payBlockView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             payBlockView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             payBlockView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -152,7 +150,6 @@ final class PaymentViewController: UIViewController {
     }
     
     private func setupPayBlock() {
-        // Скругляем только верхние углы
         payBlockView.layer.cornerRadius = CartSizeConstants.payBlockRadius
         payBlockView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         payBlockView.clipsToBounds = true
@@ -163,17 +160,13 @@ final class PaymentViewController: UIViewController {
         contentStackView.addArrangedSubview(agreementLabel)
         contentStackView.addArrangedSubview(agreementButton)
         
-        // Фиксируем высоту кнопки
         payButton.heightAnchor.constraint(equalToConstant: CartSizeConstants.payButtonHeight).isActive = true
         
-        // Действия кнопок
         agreementButton.addTarget(self, action: #selector(agreementTapped), for: .touchUpInside)
         payButton.addTarget(self, action: #selector(payTapped), for: .touchUpInside)
         
-        // ⭐ Убираем отступ между текстом и ссылкой (было spacing: 4 в SwiftUI)
         contentStackView.setCustomSpacing(4, after: agreementLabel)
         
-        // Констрейнты для текста и ссылки
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: payBlockView.topAnchor, constant: 16),
             contentStackView.leadingAnchor.constraint(equalTo: payBlockView.leadingAnchor, constant: 16),
@@ -181,7 +174,6 @@ final class PaymentViewController: UIViewController {
             contentStackView.bottomAnchor.constraint(equalTo: payButton.topAnchor, constant: -16)
         ])
         
-        // Констрейнты для кнопки: на всю ширину с отступами 16
         NSLayoutConstraint.activate([
             payButton.leadingAnchor.constraint(equalTo: payBlockView.leadingAnchor, constant: 16),
             payButton.trailingAnchor.constraint(equalTo: payBlockView.trailingAnchor, constant: -16),
@@ -193,7 +185,7 @@ final class PaymentViewController: UIViewController {
     // MARK: - Compositional Layout
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5), // 50% ширины группы = 2 колонки
+            widthDimension: .fractionalWidth(0.5),
             heightDimension: .estimated(80)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -223,7 +215,7 @@ final class PaymentViewController: UIViewController {
             guard let self else { return }
             Task { @MainActor in
                 self.collectionView.reloadData()
-                self.updatePayButtonState() // ⭐ Обновляем состояние кнопки при смене валюты
+                self.updatePayButtonState()
                 self.observeViewModel()
             }
         }
@@ -241,40 +233,34 @@ final class PaymentViewController: UIViewController {
     private func updatePayButtonState() {
         let isDisabled = viewModel.selectedCurrencyId.isEmpty
         payButton.isEnabled = !isDisabled
-        payButton.alpha = isDisabled ? 0.6 : 1.0 // Аналог .opacity(isDisabled ? 0.6 : 1)
+        payButton.alpha = isDisabled ? 0.6 : 1.0
     }
     
     // MARK: - Error Handling
     private func showPaymentErrorAlert() {
         let alert = UIAlertController(
             title: NSLocalizedString("Не удалось произвести оплату", comment: "Заголовок ошибки оплаты"),
-            message: nil, // Можно добавить сообщение об ошибке, если нужно
+            message: nil,
             preferredStyle: .alert
         )
         
-        // Кнопка "Отмена"
         let cancelAction = UIAlertAction(
             title: NSLocalizedString("Отмена", comment: "Кнопка отмены"),
             style: .cancel
         ) { [weak self] _ in
-            // Возвращаемся на предыдущий экран (корзину)
             self?.navigationController?.popViewController(animated: true)
         }
         
-        // Кнопка "Повторить"
         let retryAction = UIAlertAction(
             title: NSLocalizedString("Повторить", comment: "Кнопка повтора"),
             style: .default
         ) { [weak self] _ in
-            // Просто закрываем алерт, пользователь остается на экране оплаты
-            // Можно добавить дополнительную логику, если нужно
             print("Повторная попытка оплаты...")
         }
         
         alert.addAction(cancelAction)
         alert.addAction(retryAction)
         
-        // Показываем алерт
         present(alert, animated: true)
     }
     
@@ -282,33 +268,27 @@ final class PaymentViewController: UIViewController {
     @objc private func agreementTapped() {
         guard let url = URL(string: CartRequestsConstants.webViewURL) else { return }
         let webVC = WebViewController(url: url)
-        // Скрываем таб-бар и для веб-вью тоже
         webVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(webVC, animated: true)
     }
     
-    // В PaymentViewController при успешной оплате:
     @objc private func payTapped() {
         guard let currency = viewModel.selectedCurrency else { return }
         
         print("Попытка оплаты на сумму \(viewModel.totalPrice) ETH через \(currency.title)")
         
-        // Здесь должна быть реальная логика оплаты (API запрос и т.д.)
-        // Для примера симулируем успешную/неуспешную оплату
-        
-        // Пример: если сумма больше 100 ETH - ошибка, иначе успех
         let isSuccess = viewModel.totalPrice <= 100
         
         if isSuccess {
-            // ✅ Успешная оплата - показываем экран успеха
+
             let successVC = SuccessPaymentViewController { [weak self] in
-                // Возврат в корзину
+
                 self?.navigationController?.popToRootViewController(animated: true)
             }
             successVC.modalPresentationStyle = .fullScreen
             present(successVC, animated: true)
         } else {
-            // ❌ Ошибка оплаты - показываем алерт
+
             showPaymentErrorAlert()
         }
     }
@@ -333,7 +313,7 @@ final class PaymentCurrencyCollectionViewCell: UICollectionViewCell {
         guard let collectionView = superview?.superview as? UICollectionView else {
             return super.preferredLayoutAttributesFitting(layoutAttributes)
         }
-        let width = collectionView.bounds.width / 2 - 4 // Половина ширины минус половина spacing
+        let width = collectionView.bounds.width / 2 - 4
         var attributes = layoutAttributes
         attributes.frame.size.width = width
         return attributes

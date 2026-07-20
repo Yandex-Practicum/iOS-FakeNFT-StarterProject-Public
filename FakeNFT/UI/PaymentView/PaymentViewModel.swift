@@ -21,36 +21,26 @@ final class PaymentViewModel {
     init(cartItems: [CartItem]) {
         self.cartItems = cartItems
         
-        // Хороший UX: сразу выбираем первую валюту по умолчанию,
-        // чтобы кнопка "Оплатить" была активна сразу
         if let firstCurrency = currencies.first {
             selectedCurrencyId = firstCurrency.id
         }
     }
     
     // MARK: - Methods
-    
-    /// Выбор валюты пользователем
     func selectCurrency(_ currency: Currency) {
-        // Guard предотвращает лишние обновления UI,
-        // если пользователь нажал на уже выбранную валюту
         guard selectedCurrencyId != currency.id else { return }
         selectedCurrencyId = currency.id
     }
     
     // MARK: - Computed Properties
-    
-    /// Полный объект выбранной валюты (удобно для перехода на следующий экран)
     var selectedCurrency: Currency? {
         currencies.first { $0.id == selectedCurrencyId }
     }
     
-    /// Общая сумма корзины
     var totalPrice: Double {
         cartItems.reduce(0) { $0 + $1.price }
     }
     
-    /// Флаг, выбрана ли валюта (для валидации перед оплатой)
     var isCurrencySelected: Bool {
         !selectedCurrencyId.isEmpty
     }

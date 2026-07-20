@@ -17,7 +17,7 @@ final class CurrencyCell: UIView {
     private let mainStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 12 // Увеличенный отступ между иконкой и текстом (соответствует дизайну)
+        stack.spacing = 12
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -27,7 +27,7 @@ final class CurrencyCell: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6 // Полностью круглые иконки (32x32 / 2 = 16)
+        imageView.layer.cornerRadius = 6
         imageView.backgroundColor = .systemGray5
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -37,7 +37,7 @@ final class CurrencyCell: UIView {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .leading
-        stack.spacing = 2 // Отступ между названием и тикером
+        stack.spacing = 2
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -71,7 +71,7 @@ final class CurrencyCell: UIView {
     // MARK: - Setup
     private func setupUI() {
         backgroundColor = UIColor(named: "yaLightGrey") ?? .secondarySystemBackground
-        layer.cornerRadius = 12 // Закругленные углы ячейки
+        layer.cornerRadius = 12
         clipsToBounds = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
@@ -92,8 +92,6 @@ final class CurrencyCell: UIView {
             mainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            // ⭐ ВАЖНО: разрешаем stack view быть меньше ширины ячейки,
-            // но не выходить за её пределы. Это предотвращает "распирание" ячейки.
             mainStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
             
             mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
@@ -107,11 +105,9 @@ final class CurrencyCell: UIView {
         
         titleLabel.text = currency.title
         nameLabel.text = currency.name
-        
-        // Загрузка картинки
+
         loadImage(from: currency.image)
-        
-        // Обводка при выборе
+
         layer.borderWidth = isSelected ? 1 : 0
         layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.clear.cgColor
     }

@@ -18,12 +18,9 @@ final class WebViewController: UIViewController {
     private lazy var webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
         
-        // Опционально: включаем JavaScript (если нужно)
-        configuration.preferences.javaScriptEnabled = true
-        
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.allowsBackForwardNavigationGestures = true // Свайпы назад/вперед
+        webView.allowsBackForwardNavigationGestures = true
         return webView
     }()
     
@@ -108,7 +105,6 @@ extension WebViewController: WKNavigationDelegate {
         activityIndicator.stopAnimating()
         print("❌ WebView error: \(error.localizedDescription)")
         
-        // Показываем алерт об ошибке
         let alert = UIAlertController(
             title: "Ошибка загрузки",
             message: "Не удалось загрузить страницу",
@@ -119,7 +115,6 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     private func updateNavigationButtons() {
-        // Можно добавить кнопки "Назад" и "Вперед" в навбар
         navigationItem.hidesBackButton = webView.canGoBack
     }
 }
