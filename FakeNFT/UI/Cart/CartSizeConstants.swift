@@ -34,5 +34,10 @@ enum CartSizeConstants {
     static let carrencyImageSize: CGFloat = 32
     static let carrencyImageCornerRadius: CGFloat = 8
     
+    // MARK: - Кнопки и Секции (PaymentView)
+    static let payButtonHeight: CGFloat = 60
+    static let payButtonRadius: CGFloat = 16
+    static let payBlockRadius: CGFloat = 12
+    
     
 }

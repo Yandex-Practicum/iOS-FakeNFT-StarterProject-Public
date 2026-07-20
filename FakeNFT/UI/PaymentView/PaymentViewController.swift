@@ -7,6 +7,7 @@
 
 import UIKit
 import Observation
+import WebKit // Добавляем для WebView
 
 // MARK: - PaymentViewController
 final class PaymentViewController: UIViewController {
@@ -14,7 +15,7 @@ final class PaymentViewController: UIViewController {
     // MARK: - Properties
     private let viewModel: PaymentViewModel
     
-    // MARK: - UI Elements
+    // MARK: - UI Elements (Collection)
     private lazy var collectionView: UICollectionView = {
         let layout = createCompositionalLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -22,6 +23,54 @@ final class PaymentViewController: UIViewController {
         cv.showsVerticalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
+    }()
+    
+    // MARK: - UI Elements (Pay Block)
+    private let payBlockView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "yaLightGrey") ?? .systemGray6
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let contentStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.alignment = .leading
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let agreementLabel: UILabel = {
+        let label = UILabel()
+        label.text = NSLocalizedString("Совершая покупку, вы соглашаетесь с условиями", comment: "")
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.textColor = UIColor(named: "yaBlack") ?? .black
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let agreementButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(NSLocalizedString("Пользовательского соглашения", comment: ""), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        button.setTitleColor(UIColor(named: "uniBlue") ?? .systemBlue, for: .normal)
+        button.contentHorizontalAlignment = .leading // Аналог alignment: .leading
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let payButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(NSLocalizedString("Оплатить", comment: ""), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.setTitleColor(UIColor(named: "yaWhite") ?? .white, for: .normal)
+        button.backgroundColor = UIColor(named: "yaBlack") ?? .black
+        button.layer.cornerRadius = CartSizeConstants.payButtonRadius
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     // MARK: - Diffable DataSource
@@ -53,8 +102,6 @@ final class PaymentViewController: UIViewController {
     init(viewModel: PaymentViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        // Скрывает таб-бар при переходе на этот экран
         self.hidesBottomBarWhenPushed = true
     }
     
@@ -68,25 +115,32 @@ final class PaymentViewController: UIViewController {
         setupNavigation()
         setupView()
         setupCollectionView()
+        setupPayBlock() // ⭐ Новый метод
         observeViewModel()
         applyInitialSnapshot()
+        updatePayButtonState() // ⭐ Первичное состояние кнопки
     }
     
     // MARK: - Setup
     private func setupNavigation() {
-        // Задаем заголовок. Стандартная кнопка "Назад" появится автоматически
-        // благодаря тому, что экран открыт через UINavigationController
         title = NSLocalizedString("Выберите способ оплаты", comment: "Заголовок выбора оплаты")
     }
     
     private func setupView() {
         view.addSubview(collectionView)
+        view.addSubview(payBlockView) // Добавляем нижний блок
         
         NSLayoutConstraint.activate([
+            // Collection View занимает всё пространство сверху до payBlockView
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: payBlockView.topAnchor),
+            
+            // Pay Block прижат к самому низу экрана (игнорирует safe area, как в SwiftUI)
+            payBlockView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            payBlockView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            payBlockView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -97,27 +151,63 @@ final class PaymentViewController: UIViewController {
         )
     }
     
+    private func setupPayBlock() {
+        // Скругляем только верхние углы
+        payBlockView.layer.cornerRadius = CartSizeConstants.payBlockRadius
+        payBlockView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        payBlockView.clipsToBounds = true
+        
+        payBlockView.addSubview(contentStackView)
+        payBlockView.addSubview(payButton)
+        
+        contentStackView.addArrangedSubview(agreementLabel)
+        contentStackView.addArrangedSubview(agreementButton)
+        
+        // Фиксируем высоту кнопки
+        payButton.heightAnchor.constraint(equalToConstant: CartSizeConstants.payButtonHeight).isActive = true
+        
+        // Действия кнопок
+        agreementButton.addTarget(self, action: #selector(agreementTapped), for: .touchUpInside)
+        payButton.addTarget(self, action: #selector(payTapped), for: .touchUpInside)
+        
+        // ⭐ Убираем отступ между текстом и ссылкой (было spacing: 4 в SwiftUI)
+        contentStackView.setCustomSpacing(4, after: agreementLabel)
+        
+        // Констрейнты для текста и ссылки
+        NSLayoutConstraint.activate([
+            contentStackView.topAnchor.constraint(equalTo: payBlockView.topAnchor, constant: 16),
+            contentStackView.leadingAnchor.constraint(equalTo: payBlockView.leadingAnchor, constant: 16),
+            contentStackView.trailingAnchor.constraint(equalTo: payBlockView.trailingAnchor, constant: -16),
+            contentStackView.bottomAnchor.constraint(equalTo: payButton.topAnchor, constant: -16)
+        ])
+        
+        // Констрейнты для кнопки: на всю ширину с отступами 16
+        NSLayoutConstraint.activate([
+            payButton.leadingAnchor.constraint(equalTo: payBlockView.leadingAnchor, constant: 16),
+            payButton.trailingAnchor.constraint(equalTo: payBlockView.trailingAnchor, constant: -16),
+            payButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            payButton.heightAnchor.constraint(equalToConstant: CartSizeConstants.payButtonHeight)
+        ])
+    }
+    
     // MARK: - Compositional Layout
     private func createCompositionalLayout() -> UICollectionViewLayout {
-        // 1. Элемент (ячейка)
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5), // ⭐ ИСПРАВЛЕНО: 0.5 = 50% ширины группы
+            widthDimension: .fractionalWidth(0.5), // 50% ширины группы = 2 колонки
             heightDimension: .estimated(80)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-        // 2. Группа (строка)
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0), // 100% ширины экрана
+            widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(80)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
-            subitems: [item, item] // Два элемента
+            subitems: [item, item]
         )
         group.interItemSpacing = .fixed(8)
 
-        // 3. Секция
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
@@ -125,24 +215,15 @@ final class PaymentViewController: UIViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }
     
-    // MARK: - Observation (iOS 17+ @Observable)
+    // MARK: - Observation
     private func observeViewModel() {
         withObservationTracking {
-            // 1. Читаем свойство, чтобы начать отслеживание
             _ = viewModel.selectedCurrencyId
         } onChange: { [weak self] in
-            // 2. Этот блок сработает при изменении ID
             guard let self else { return }
-            
-            // 3. Обновляем UI строго на главном потоке
             Task { @MainActor in
-                // Используем reloadData вместо reloadItems.
-                // Для маленького списка валют это мгновенно и на 100% безопасно
-                // (избегает конфликтов с анимацией нажатия на ячейку).
                 self.collectionView.reloadData()
-                
-                // 4. Перезапускаем отслеживание для следующего изменения,
-                // так как withObservationTracking срабатывает только один раз
+                self.updatePayButtonState() // ⭐ Обновляем состояние кнопки при смене валюты
                 self.observeViewModel()
             }
         }
@@ -155,11 +236,37 @@ final class PaymentViewController: UIViewController {
         snapshot.appendItems(viewModel.currencies, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
+    
+    // MARK: - State Updates
+    private func updatePayButtonState() {
+        let isDisabled = viewModel.selectedCurrencyId.isEmpty
+        payButton.isEnabled = !isDisabled
+        payButton.alpha = isDisabled ? 0.6 : 1.0 // Аналог .opacity(isDisabled ? 0.6 : 1)
+    }
+    
+    // MARK: - Actions
+    @objc private func agreementTapped() {
+        guard let url = URL(string: CartRequestsConstants.webViewURL) else { return }
+        let webVC = WebViewController(url: url)
+        // Скрываем таб-бар и для веб-вью тоже
+        webVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(webVC, animated: true)
+    }
+    
+    @objc private func payTapped() {
+        guard let currency = viewModel.selectedCurrency else { return }
+        
+        // Здесь логика оплаты
+        print("Оплата на сумму \(viewModel.totalPrice) ETH через \(currency.title)")
+        
+        // Пример перехода на экран успеха:
+        // let successVC = SuccessViewController(currency: currency, total: viewModel.totalPrice)
+        // navigationController?.pushViewController(successVC, animated: true)
+    }
 }
 
 // MARK: - Collection View Cell Wrapper
 final class PaymentCurrencyCollectionViewCell: UICollectionViewCell {
-    
     static let reuseID = "PaymentCurrencyCollectionViewCell"
     
     private let currencyView = CurrencyCell()
@@ -174,22 +281,17 @@ final class PaymentCurrencyCollectionViewCell: UICollectionViewCell {
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        //  ВАЖНО: Принудительно указываем, что ячейка должна быть 50% ширины collectionView
-        // Это заставляет Collection View размещать 2 ячейки в ряд
         guard let collectionView = superview?.superview as? UICollectionView else {
             return super.preferredLayoutAttributesFitting(layoutAttributes)
         }
-        
-        let width = collectionView.bounds.width / 2 - 8 // Делим на 2 колонки и вычитаем половину spacing
+        let width = collectionView.bounds.width / 2 - 4 // Половина ширины минус половина spacing
         var attributes = layoutAttributes
         attributes.frame.size.width = width
-        
         return attributes
     }
     
     private func setupUI() {
         selectedBackgroundView = UIView()
-        
         contentView.addSubview(currencyView)
         currencyView.translatesAutoresizingMaskIntoConstraints = false
         
