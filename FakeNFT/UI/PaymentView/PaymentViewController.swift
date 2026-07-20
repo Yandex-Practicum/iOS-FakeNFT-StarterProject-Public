@@ -244,6 +244,40 @@ final class PaymentViewController: UIViewController {
         payButton.alpha = isDisabled ? 0.6 : 1.0 // Аналог .opacity(isDisabled ? 0.6 : 1)
     }
     
+    // MARK: - Error Handling
+    private func showPaymentErrorAlert() {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Не удалось произвести оплату", comment: "Заголовок ошибки оплаты"),
+            message: nil, // Можно добавить сообщение об ошибке, если нужно
+            preferredStyle: .alert
+        )
+        
+        // Кнопка "Отмена"
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("Отмена", comment: "Кнопка отмены"),
+            style: .cancel
+        ) { [weak self] _ in
+            // Возвращаемся на предыдущий экран (корзину)
+            self?.navigationController?.popViewController(animated: true)
+        }
+        
+        // Кнопка "Повторить"
+        let retryAction = UIAlertAction(
+            title: NSLocalizedString("Повторить", comment: "Кнопка повтора"),
+            style: .default
+        ) { [weak self] _ in
+            // Просто закрываем алерт, пользователь остается на экране оплаты
+            // Можно добавить дополнительную логику, если нужно
+            print("Повторная попытка оплаты...")
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(retryAction)
+        
+        // Показываем алерт
+        present(alert, animated: true)
+    }
+    
     // MARK: - Actions
     @objc private func agreementTapped() {
         guard let url = URL(string: CartRequestsConstants.webViewURL) else { return }
@@ -255,16 +289,28 @@ final class PaymentViewController: UIViewController {
     
     // В PaymentViewController при успешной оплате:
     @objc private func payTapped() {
-        let successVC = SuccessPaymentViewController { [weak self] in
-            // Логика возврата: например, очистить корзину или вернуться на главный экран
-            print("Возврат в корзину")
-            self?.navigationController?.popToRootViewController(animated: true)
-        }
+        guard let currency = viewModel.selectedCurrency else { return }
         
-        // Показываем модально (как sheet в SwiftUI) или пушим
-        // navigationController?.pushViewController(successVC, animated: true)
-        successVC.modalPresentationStyle = .fullScreen
-        present(successVC, animated: true)
+        print("Попытка оплаты на сумму \(viewModel.totalPrice) ETH через \(currency.title)")
+        
+        // Здесь должна быть реальная логика оплаты (API запрос и т.д.)
+        // Для примера симулируем успешную/неуспешную оплату
+        
+        // Пример: если сумма больше 100 ETH - ошибка, иначе успех
+        let isSuccess = viewModel.totalPrice <= 100
+        
+        if isSuccess {
+            // ✅ Успешная оплата - показываем экран успеха
+            let successVC = SuccessPaymentViewController { [weak self] in
+                // Возврат в корзину
+                self?.navigationController?.popToRootViewController(animated: true)
+            }
+            successVC.modalPresentationStyle = .fullScreen
+            present(successVC, animated: true)
+        } else {
+            // ❌ Ошибка оплаты - показываем алерт
+            showPaymentErrorAlert()
+        }
     }
 }
 
