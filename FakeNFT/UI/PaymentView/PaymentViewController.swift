@@ -253,15 +253,18 @@ final class PaymentViewController: UIViewController {
         navigationController?.pushViewController(webVC, animated: true)
     }
     
+    // В PaymentViewController при успешной оплате:
     @objc private func payTapped() {
-        guard let currency = viewModel.selectedCurrency else { return }
+        let successVC = SuccessPaymentViewController { [weak self] in
+            // Логика возврата: например, очистить корзину или вернуться на главный экран
+            print("Возврат в корзину")
+            self?.navigationController?.popToRootViewController(animated: true)
+        }
         
-        // Здесь логика оплаты
-        print("Оплата на сумму \(viewModel.totalPrice) ETH через \(currency.title)")
-        
-        // Пример перехода на экран успеха:
-        // let successVC = SuccessViewController(currency: currency, total: viewModel.totalPrice)
+        // Показываем модально (как sheet в SwiftUI) или пушим
         // navigationController?.pushViewController(successVC, animated: true)
+        successVC.modalPresentationStyle = .fullScreen
+        present(successVC, animated: true)
     }
 }
 
