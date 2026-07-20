@@ -120,6 +120,8 @@ final class CartViewController: UIViewController {
             payButton.widthAnchor.constraint(equalToConstant: CartSizeConstants.paymentButtonWidth),
             payButton.heightAnchor.constraint(equalToConstant: CartSizeConstants.paymentButtonHeight)
         ])
+        
+        payButton.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
     }
 
     private func setupOverlay() {
@@ -215,5 +217,12 @@ final class CartViewController: UIViewController {
             animations()
             completionBlock(true)
         }
+    }
+    
+    // MARK: - Actions
+    @objc private func paymentButtonTapped() {
+        let paymentVM = PaymentViewModel(cartItems: viewModel.items)
+        let paymentVC = PaymentViewController(viewModel: paymentVM)
+        navigationController?.pushViewController(paymentVC, animated: true)
     }
 }

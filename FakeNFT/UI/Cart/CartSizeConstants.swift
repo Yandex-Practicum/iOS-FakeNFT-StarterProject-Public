@@ -30,4 +30,9 @@ enum CartSizeConstants {
 
     static let modalButtonHeight: CGFloat = 44
     static let modalButtonRadius: CGFloat = 12
+    
+    static let carrencyImageSize: CGFloat = 32
+    static let carrencyImageCornerRadius: CGFloat = 8
+    
+    
 }
