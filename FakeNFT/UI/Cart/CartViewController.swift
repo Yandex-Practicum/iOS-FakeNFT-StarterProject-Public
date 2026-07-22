@@ -93,7 +93,7 @@ final class CartViewController: UIViewController {
     }
 
     private func setupTotalSection() {
-        totalContainer.backgroundColor = UIColor(named: "yaLightGrey") ?? .secondarySystemBackground
+        totalContainer.backgroundColor = UIColor(resource: .yaLightGrey)
         totalContainer.cornerRadius = CartSizeConstants.totalSectionRadius
 
         let leftStack = UIStackView(arrangedSubviews: [countLabel, totalLabel])
@@ -102,15 +102,15 @@ final class CartViewController: UIViewController {
         leftStack.alignment = .leading
 
         countLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        countLabel.textColor = UIColor(named: "uniBackground") ?? .label
+        countLabel.textColor = UIColor(resource: .uniBackground)
 
         totalLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         totalLabel.textColor = .systemGreen
 
         payButton.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
         payButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        payButton.setTitleColor(UIColor(named: "yaWhite") ?? .white, for: .normal)
-        payButton.backgroundColor = UIColor(named: "yaBlack") ?? .black
+        payButton.setTitleColor(UIColor(resource: .yaWhite), for: .normal)
+        payButton.backgroundColor = UIColor(resource: .yaBlack)
         payButton.layer.cornerRadius = CartSizeConstants.buttonRadius
         payButton.clipsToBounds = true
 
@@ -164,12 +164,12 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.text = "Корзина пуста"
         label.textAlignment = .center
-        label.textColor = UIColor(named: "yaBlack") ?? .black
+        label.textColor = UIColor(resource: .yaBlack)
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }
 
-    // MARK: - Empty State Logic ⭐
+    // MARK: - Empty State Logic
     private func updateEmptyState() {
         let isEmpty = viewModel.items.isEmpty
         

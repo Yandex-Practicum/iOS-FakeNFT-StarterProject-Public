@@ -15,6 +15,8 @@ final class PaymentViewController: UIViewController {
     // MARK: - Properties
     private let viewModel: PaymentViewModel
     
+    private var dataSource: PaymentDataSource!
+    
     // MARK: - UI Elements (Collection)
     private lazy var collectionView: UICollectionView = {
         let layout = createCompositionalLayout()
@@ -28,7 +30,7 @@ final class PaymentViewController: UIViewController {
     // MARK: - UI Elements (Pay Block)
     private let payBlockView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "yaLightGrey") ?? .systemGray6
+        view.backgroundColor = UIColor(resource: .yaLightGrey)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -46,7 +48,7 @@ final class PaymentViewController: UIViewController {
         let label = UILabel()
         label.text = NSLocalizedString("Совершая покупку, вы соглашаетесь с условиями", comment: "")
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "yaBlack") ?? .black
+        label.textColor = UIColor(resource: .yaBlack)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -56,7 +58,7 @@ final class PaymentViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(NSLocalizedString("Пользовательского соглашения", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        button.setTitleColor(UIColor(named: "uniBlue") ?? .systemBlue, for: .normal)
+        button.setTitleColor(UIColor(resource: .yaBlue), for: .normal)
         button.contentHorizontalAlignment = .leading
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -66,8 +68,8 @@ final class PaymentViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(NSLocalizedString("Оплатить", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        button.setTitleColor(UIColor(named: "yaWhite") ?? .white, for: .normal)
-        button.backgroundColor = UIColor(named: "yaBlack") ?? .black
+        button.setTitleColor(UIColor(resource: .yaWhite), for: .normal)
+        button.backgroundColor = UIColor(resource: .yaBlack)
         button.layer.cornerRadius = CartSizeConstants.payButtonRadius
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -76,27 +78,6 @@ final class PaymentViewController: UIViewController {
     // MARK: - Diffable DataSource
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Currency>
     private enum Section: Hashable { case main }
-    
-    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Currency> = {
-        UICollectionViewDiffableDataSource<Section, Currency>(
-            collectionView: collectionView
-        ) { [weak self] collectionView, indexPath, currency in
-            guard let self else { return UICollectionViewCell() }
-            
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID,
-                for: indexPath
-            ) as! PaymentCurrencyCollectionViewCell
-            
-            let isSelected = viewModel.selectedCurrencyId == currency.id
-            
-            cell.configure(with: currency, isSelected: isSelected) { [weak self] tappedCurrency in
-                self?.viewModel.selectCurrency(tappedCurrency)
-            }
-            
-            return cell
-        }
-    }()
     
     // MARK: - Init
     init(viewModel: PaymentViewModel) {
@@ -112,7 +93,8 @@ final class PaymentViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigation()
+        title = NSLocalizedString("Выберите способ оплаты", comment: "Заголовок выбора оплаты")
+        
         setupView()
         setupCollectionView()
         setupPayBlock()
@@ -122,10 +104,7 @@ final class PaymentViewController: UIViewController {
     }
     
     // MARK: - Setup
-    private func setupNavigation() {
-        title = NSLocalizedString("Выберите способ оплаты", comment: "Заголовок выбора оплаты")
-    }
-    
+
     private func setupView() {
         view.addSubview(collectionView)
         view.addSubview(payBlockView)
@@ -147,6 +126,25 @@ final class PaymentViewController: UIViewController {
             PaymentCurrencyCollectionViewCell.self,
             forCellWithReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID
         )
+        
+        dataSource = PaymentDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, currency in
+            guard let self else { return nil }
+            
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID,
+                for: indexPath
+            ) as? PaymentCurrencyCollectionViewCell else {
+                return nil
+            }
+            
+            let isSelected = viewModel.selectedCurrencyId == currency.id
+            
+            cell.configure(with: currency, isSelected: isSelected) { [weak self] tappedCurrency in
+                self?.viewModel.selectCurrency(tappedCurrency)
+            }
+            
+            return cell
+        }
     }
     
     private func setupPayBlock() {
@@ -223,7 +221,7 @@ final class PaymentViewController: UIViewController {
     
     // MARK: - Snapshot
     private func applyInitialSnapshot() {
-        var snapshot = Snapshot()
+        var snapshot = NSDiffableDataSourceSnapshot<PaymentSection, Currency>()
         snapshot.appendSections([.main])
         snapshot.appendItems(viewModel.currencies, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: false)

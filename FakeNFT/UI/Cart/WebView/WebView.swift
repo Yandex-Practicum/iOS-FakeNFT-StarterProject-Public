@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import os
 
 // MARK: - WebViewController
 final class WebViewController: UIViewController {
@@ -38,7 +39,7 @@ final class WebViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     // MARK: - Lifecycle
@@ -72,7 +73,7 @@ final class WebViewController: UIViewController {
     
     private func loadURL() {
         guard let url = url else {
-            print("❌ URL is nil")
+            os_log(.error, log: .default, "WebView: URL is nil, cannot load request")
             return
         }
         
@@ -103,7 +104,7 @@ extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         activityIndicator.stopAnimating()
-        print("❌ WebView error: \(error.localizedDescription)")
+        os_log(.error, log: .default, "WebView failed to load URL: %{public}@", error.localizedDescription)
         
         let alert = UIAlertController(
             title: "Ошибка загрузки",

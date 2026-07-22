@@ -43,13 +43,13 @@ final class CartItemCell: UITableViewCell {
         thumbImageView.heightAnchor.constraint(equalToConstant: CartSizeConstants.cellImageSize).isActive = true
 
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
-        titleLabel.textColor = UIColor(named: "yaBlack") ?? .black
+        titleLabel.textColor = UIColor(resource: .yaBlack)
         titleLabel.numberOfLines = 1
 
         starsStackView.axis = .horizontal
         starsStackView.spacing = 2
         starsStackView.translatesAutoresizingMaskIntoConstraints = false
-        let defaultStarColor = UIColor(named: "yaLightGrey") ?? .lightGray
+        let defaultStarColor = UIColor(resource: .yaLightGrey)
         
         for _ in 0..<5 {
             let starImageView = UIImageView()
@@ -63,10 +63,10 @@ final class CartItemCell: UITableViewCell {
 
         priceTitleLabel.text = NSLocalizedString("Цена", comment: "")
         priceTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        priceTitleLabel.textColor = UIColor(named: "yaBlack") ?? .black
+        priceTitleLabel.textColor = UIColor(resource: .yaBlack)
 
         priceValueLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        priceValueLabel.textColor = UIColor(named: "yaBlack") ?? .black
+        priceValueLabel.textColor = UIColor(resource: .yaBlack)
 
         let infoStack = UIStackView(arrangedSubviews: [titleLabel, starsStackView, priceTitleLabel, priceValueLabel])
         infoStack.axis = .vertical
@@ -78,7 +78,7 @@ final class CartItemCell: UITableViewCell {
 
         let cartImage = UIImage(named: "cartOn")?.withRenderingMode(.alwaysTemplate)
         deleteButton.setImage(cartImage, for: .normal)
-        deleteButton.tintColor = UIColor(named: "yaBlack") ?? .black
+        deleteButton.tintColor = UIColor(resource: .yaBlack)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
@@ -112,7 +112,7 @@ final class CartItemCell: UITableViewCell {
         priceValueLabel.text = String(format: "%.2f ETH", item.price)
         
         let activeStarColor: UIColor = .systemYellow
-        let inactiveStarColor: UIColor = UIColor(named: "yaLightGrey") ?? .lightGray
+        let inactiveStarColor: UIColor = UIColor(resource: .yaLightGrey)
         
         for (index, view) in starsStackView.arrangedSubviews.enumerated() {
             if let starImageView = view as? UIImageView {

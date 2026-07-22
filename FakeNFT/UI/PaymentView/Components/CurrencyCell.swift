@@ -45,7 +45,7 @@ final class CurrencyCell: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "yaBlack") ?? .black
+        label.textColor = UIColor(resource: .yaBlack)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,7 +53,7 @@ final class CurrencyCell: UIView {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "uniGreen") ?? .systemGreen
+        label.textColor = UIColor(resource: .uniGreen)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -65,12 +65,12 @@ final class CurrencyCell: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
     
     // MARK: - Setup
     private func setupUI() {
-        backgroundColor = UIColor(named: "yaLightGrey") ?? .secondarySystemBackground
+        backgroundColor = UIColor(resource: .yaLightGrey)
         layer.cornerRadius = 12
         clipsToBounds = true
         

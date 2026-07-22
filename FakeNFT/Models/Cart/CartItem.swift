@@ -8,7 +8,7 @@
 import Foundation
 
 struct CartItem: Identifiable, Hashable {
-    let id = UUID()
+    let id: String
     let imageURL: String
     let name: String
     let rating: Int

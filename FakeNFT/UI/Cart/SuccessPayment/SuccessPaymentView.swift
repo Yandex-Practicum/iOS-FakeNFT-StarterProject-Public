@@ -25,7 +25,7 @@ final class SuccessPaymentViewController: UIViewController {
         let label = UILabel()
         label.text = NSLocalizedString("Успех! Оплата прошла, поздравляем с покупкой!", comment: "Текст успешной оплаты")
         label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        label.textColor = UIColor(named: "yaBlack") ?? .black
+        label.textColor = UIColor(resource: .yaBlack)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,8 +36,8 @@ final class SuccessPaymentViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(NSLocalizedString("Вернуться в корзину", comment: "Кнопка возврата в корзину"), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        button.setTitleColor(UIColor(named: "yaWhite") ?? .white, for: .normal)
-        button.backgroundColor = UIColor(named: "yaBlack") ?? .black
+        button.setTitleColor(UIColor(resource: .yaWhite), for: .normal)
+        button.backgroundColor = UIColor(resource: .yaBlack)
         button.layer.cornerRadius = CartSizeConstants.successButtonRadius
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
