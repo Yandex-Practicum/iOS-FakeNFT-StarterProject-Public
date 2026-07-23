@@ -1,5 +1,5 @@
 //
-//  CarrencyCell.swift
+//  CurrencyCell.swift
 //  FakeNFT
 //
 //  Created by Сергей Петров on 20.07.2026.
@@ -106,39 +106,20 @@ final class CurrencyCell: UIView {
         titleLabel.text = currency.title
         nameLabel.text = currency.name
 
-        loadImage(from: currency.image)
-
         layer.borderWidth = isSelected ? 1 : 0
         layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.clear.cgColor
-    }
-    
-    // MARK: - Image Loading
-    private func loadImage(from urlString: String) {
+        
+        let imageUrl = currency.image
         currencyImageView.image = nil
         
-        if let url = URL(string: urlString),
-           (url.scheme == "http" || url.scheme == "https") {
+        Task {
+            let image = await ImageLoaderService.shared.loadImage(from: imageUrl)
             
-            Task {
-                do {
-                    let (data, _) = try await URLSession.shared.data(from: url)
-                    let image = UIImage(data: data)
-                    
-                    Task { @MainActor in
-                        if self.currentCurrency?.image == urlString {
-                            self.currencyImageView.image = image
-                        }
-                    }
-                } catch {
-                    Task { @MainActor in
-                        if self.currentCurrency?.image == urlString {
-                            self.currencyImageView.image = UIImage(systemName: "exclamationmark.triangle")
-                        }
-                    }
+            await MainActor.run {
+                if self.currentCurrency?.image == imageUrl {
+                    self.currencyImageView.image = image ?? UIImage(systemName: "exclamationmark.triangle")
                 }
             }
-        } else {
-            currencyImageView.image = UIImage(named: urlString)
         }
     }
     

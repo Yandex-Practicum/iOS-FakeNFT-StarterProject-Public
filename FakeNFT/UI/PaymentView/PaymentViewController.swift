@@ -1,5 +1,4 @@
-//
-//  PaymentView.swift
+//  PaymentViewController.swift
 //  FakeNFT
 //
 //  Created by Сергей Петров on 20.07.2026.
@@ -8,6 +7,7 @@
 import UIKit
 import Observation
 import WebKit
+import os
 
 // MARK: - PaymentViewController
 final class PaymentViewController: UIViewController {
@@ -15,7 +15,26 @@ final class PaymentViewController: UIViewController {
     // MARK: - Properties
     private let viewModel: PaymentViewModel
     
-    private var dataSource: PaymentDataSource!
+    private lazy var dataSource: PaymentDataSource = {
+        PaymentDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, currency in
+            guard let self else { return nil }
+            
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID,
+                for: indexPath
+            ) as? PaymentCurrencyCollectionViewCell else {
+                return nil
+            }
+            
+            let isSelected = self.viewModel.selectedCurrencyId == currency.id
+            
+            cell.configure(with: currency, isSelected: isSelected) { [weak self] tappedCurrency in
+                self?.viewModel.selectCurrency(tappedCurrency)
+            }
+            
+            return cell
+        }
+    }()
     
     // MARK: - UI Elements (Collection)
     private lazy var collectionView: UICollectionView = {
@@ -75,9 +94,7 @@ final class PaymentViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Diffable DataSource
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Currency>
-    private enum Section: Hashable { case main }
+    var onAction: ((PaymentAction) -> Void)?
     
     // MARK: - Init
     init(viewModel: PaymentViewModel) {
@@ -86,8 +103,9 @@ final class PaymentViewController: UIViewController {
         self.hidesBottomBarWhenPushed = true
     }
     
+    @available(*, unavailable, message: "Используйте init(viewModel:)")
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     // MARK: - Lifecycle
@@ -104,7 +122,6 @@ final class PaymentViewController: UIViewController {
     }
     
     // MARK: - Setup
-
     private func setupView() {
         view.addSubview(collectionView)
         view.addSubview(payBlockView)
@@ -126,25 +143,6 @@ final class PaymentViewController: UIViewController {
             PaymentCurrencyCollectionViewCell.self,
             forCellWithReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID
         )
-        
-        dataSource = PaymentDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, currency in
-            guard let self else { return nil }
-            
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: PaymentCurrencyCollectionViewCell.reuseID,
-                for: indexPath
-            ) as? PaymentCurrencyCollectionViewCell else {
-                return nil
-            }
-            
-            let isSelected = viewModel.selectedCurrencyId == currency.id
-            
-            cell.configure(with: currency, isSelected: isSelected) { [weak self] tappedCurrency in
-                self?.viewModel.selectCurrency(tappedCurrency)
-            }
-            
-            return cell
-        }
     }
     
     private func setupPayBlock() {
@@ -246,50 +244,44 @@ final class PaymentViewController: UIViewController {
             title: NSLocalizedString("Отмена", comment: "Кнопка отмены"),
             style: .cancel
         ) { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
+            self?.onAction?(.cancelPayment)
         }
         
         let retryAction = UIAlertAction(
             title: NSLocalizedString("Повторить", comment: "Кнопка повтора"),
             style: .default
-        ) { [weak self] _ in
-            print("Повторная попытка оплаты...")
+        ) { _ in
+            os_log(.info, log: .default, "User requested to retry payment")
         }
         
         alert.addAction(cancelAction)
         alert.addAction(retryAction)
         
-        present(alert, animated: true)
+        self.present(alert, animated: true)
     }
     
     // MARK: - Actions
     @objc private func agreementTapped() {
-        guard let url = URL(string: CartRequestsConstants.webViewURL) else { return }
-        let webVC = WebViewController(url: url)
-        webVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(webVC, animated: true)
-    }
-    
-    @objc private func payTapped() {
-        guard let currency = viewModel.selectedCurrency else { return }
-        
-        print("Попытка оплаты на сумму \(viewModel.totalPrice) ETH через \(currency.title)")
-        
-        let isSuccess = viewModel.totalPrice <= 100
-        
-        if isSuccess {
-
-            let successVC = SuccessPaymentViewController { [weak self] in
-
-                self?.navigationController?.popToRootViewController(animated: true)
-            }
-            successVC.modalPresentationStyle = .fullScreen
-            present(successVC, animated: true)
-        } else {
-
-            showPaymentErrorAlert()
-        }
-    }
+         guard let url = URL(string: CartRequestsConstants.webViewURL) else {
+             os_log(.error, log: .default, "Invalid agreement URL")
+             return
+         }
+         onAction?(.openAgreement(url))
+     }
+     
+     @objc private func payTapped() {
+         guard let currency = viewModel.selectedCurrency else { return }
+         
+         os_log(.info, log: .default, "Payment attempt: %{public}f ETH via %{public}@", viewModel.totalPrice, currency.title)
+         
+         let isSuccess = viewModel.totalPrice <= 100
+         
+         if isSuccess {
+             onAction?(.paymentSuccess(currency: currency, total: viewModel.totalPrice))
+         } else {
+             showPaymentErrorAlert()
+         }
+     }
 }
 
 // MARK: - Collection View Cell Wrapper
@@ -303,20 +295,21 @@ final class PaymentCurrencyCollectionViewCell: UICollectionViewCell {
         setupUI()
     }
     
+    @available(*, unavailable, message: "Используйте init(frame:)")
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         guard let collectionView = superview?.superview as? UICollectionView else {
             return super.preferredLayoutAttributesFitting(layoutAttributes)
         }
+        
         let width = collectionView.bounds.width / 2 - 4
-        var attributes = layoutAttributes
-        attributes.frame.size.width = width
-        return attributes
+        layoutAttributes.frame.size.width = width
+        
+        return layoutAttributes
     }
-    
     private func setupUI() {
         selectedBackgroundView = UIView()
         contentView.addSubview(currencyView)

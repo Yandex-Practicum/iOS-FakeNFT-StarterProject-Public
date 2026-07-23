@@ -5,11 +5,14 @@
 //  Created by Сергей Петров on 16.07.2026.
 //
 import UIKit
+import os
 
 final class CartViewController: UIViewController {
 
     // MARK: - Dependencies
     private let viewModel = CartViewModel()
+    
+    private var paymentCoordinator: PaymentCoordinator?
 
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -19,8 +22,8 @@ final class CartViewController: UIViewController {
     private let payButton = UIButton(type: .system)
 
     // MARK: - Constraints для анимации появления/исчезновения
-    private var tableViewBottomToContainerConstraint: NSLayoutConstraint!
-    private var tableViewBottomToSafeAreaConstraint: NSLayoutConstraint!
+    private var tableViewBottomToContainerConstraint: NSLayoutConstraint?
+    private var tableViewBottomToSafeAreaConstraint: NSLayoutConstraint?
 
     private let blurOverlayView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
@@ -56,8 +59,12 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         totalContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        tableViewBottomToContainerConstraint = tableView.bottomAnchor.constraint(equalTo: totalContainer.topAnchor)
-        tableViewBottomToSafeAreaConstraint = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        let bottomToContainer = tableView.bottomAnchor.constraint(equalTo: totalContainer.topAnchor)
+        let bottomToSafeArea = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        
+        tableViewBottomToContainerConstraint = bottomToContainer
+        tableViewBottomToSafeAreaConstraint = bottomToSafeArea
+        
 
         NSLayoutConstraint.activate([
             totalContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -67,10 +74,10 @@ final class CartViewController: UIViewController {
 
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            tableViewBottomToContainerConstraint
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+        
+        bottomToContainer.isActive = true
     }
 
     private func setupTable() {
@@ -174,15 +181,10 @@ final class CartViewController: UIViewController {
         let isEmpty = viewModel.items.isEmpty
         
         UIView.animate(withDuration: 0.3, animations: {
-            if isEmpty {
-                self.totalContainer.isHidden = true
-                self.tableViewBottomToContainerConstraint.isActive = false
-                self.tableViewBottomToSafeAreaConstraint.isActive = true
-            } else {
-                self.totalContainer.isHidden = false
-                self.tableViewBottomToSafeAreaConstraint.isActive = false
-                self.tableViewBottomToContainerConstraint.isActive = true
-            }
+            self.totalContainer.isHidden = isEmpty
+            self.tableViewBottomToContainerConstraint?.isActive = !isEmpty
+            self.tableViewBottomToSafeAreaConstraint?.isActive = isEmpty
+            
             self.view.layoutIfNeeded()
         })
     }
@@ -248,8 +250,16 @@ final class CartViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func paymentButtonTapped() {
-        let paymentVM = PaymentViewModel(cartItems: viewModel.items)
-        let paymentVC = PaymentViewController(viewModel: paymentVM)
-        navigationController?.pushViewController(paymentVC, animated: true)
+        guard let navigationController = self.navigationController else {
+            os_log(.error, log: .default, "CartViewController is not inside a UINavigationController")
+            return
+        }
+        
+        paymentCoordinator = PaymentCoordinator(
+            navigationController: navigationController,
+            cartItems: viewModel.items
+        )
+        
+        paymentCoordinator?.start()
     }
 }

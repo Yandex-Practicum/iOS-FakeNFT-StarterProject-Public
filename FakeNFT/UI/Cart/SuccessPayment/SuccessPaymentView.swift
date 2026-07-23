@@ -15,7 +15,7 @@ final class SuccessPaymentViewController: UIViewController {
     
     // MARK: - UI Elements
     private let successImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "successPaymentImage"))
+        let imageView = UIImageView(image: UIImage(resource: .successPayment))
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -51,7 +51,7 @@ final class SuccessPaymentViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     // MARK: - Lifecycle

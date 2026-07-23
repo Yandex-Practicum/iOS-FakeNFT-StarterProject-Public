@@ -39,7 +39,7 @@ final class WebViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        return nil
+        nil
     }
     
     // MARK: - Lifecycle
