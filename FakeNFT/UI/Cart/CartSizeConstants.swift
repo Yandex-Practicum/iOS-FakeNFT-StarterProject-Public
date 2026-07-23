@@ -30,4 +30,19 @@ enum CartSizeConstants {
 
     static let modalButtonHeight: CGFloat = 44
     static let modalButtonRadius: CGFloat = 12
+    
+    static let carrencyImageSize: CGFloat = 32
+    static let carrencyImageCornerRadius: CGFloat = 8
+    
+    // MARK: - Кнопки и Секции (PaymentView)
+    static let payButtonHeight: CGFloat = 60
+    static let payButtonRadius: CGFloat = 16
+    static let payBlockRadius: CGFloat = 12
+    
+    // MARK: - Кнопки и Секции (SuccessPaymentView)
+    static let successImageSize: CGFloat = 278
+    static let successButtonHeight: CGFloat = 60
+    static let successButtonRadius: CGFloat = 16
+    
+    
 }

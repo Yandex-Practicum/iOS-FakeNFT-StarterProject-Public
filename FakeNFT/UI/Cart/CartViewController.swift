@@ -5,11 +5,14 @@
 //  Created by Сергей Петров on 16.07.2026.
 //
 import UIKit
+import os
 
 final class CartViewController: UIViewController {
 
     // MARK: - Dependencies
     private let viewModel = CartViewModel()
+    
+    private var paymentCoordinator: PaymentCoordinator?
 
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -18,6 +21,9 @@ final class CartViewController: UIViewController {
     private let totalLabel = UILabel()
     private let payButton = UIButton(type: .system)
 
+    // MARK: - Constraints для анимации появления/исчезновения
+    private var tableViewBottomToContainerConstraint: NSLayoutConstraint?
+    private var tableViewBottomToSafeAreaConstraint: NSLayoutConstraint?
 
     private let blurOverlayView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
@@ -41,6 +47,7 @@ final class CartViewController: UIViewController {
         setupOverlay()
         applySnapshot(animated: false)
         updateTotal()
+        updateEmptyState()
     }
 
     private func setupUI() {
@@ -52,6 +59,13 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         totalContainer.translatesAutoresizingMaskIntoConstraints = false
 
+        let bottomToContainer = tableView.bottomAnchor.constraint(equalTo: totalContainer.topAnchor)
+        let bottomToSafeArea = tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        
+        tableViewBottomToContainerConstraint = bottomToContainer
+        tableViewBottomToSafeAreaConstraint = bottomToSafeArea
+        
+
         NSLayoutConstraint.activate([
             totalContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             totalContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -60,9 +74,10 @@ final class CartViewController: UIViewController {
 
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: totalContainer.topAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+        
+        bottomToContainer.isActive = true
     }
 
     private func setupTable() {
@@ -85,7 +100,7 @@ final class CartViewController: UIViewController {
     }
 
     private func setupTotalSection() {
-        totalContainer.backgroundColor = UIColor(named: "yaLightGrey") ?? .secondarySystemBackground
+        totalContainer.backgroundColor = UIColor(resource: .yaLightGrey)
         totalContainer.cornerRadius = CartSizeConstants.totalSectionRadius
 
         let leftStack = UIStackView(arrangedSubviews: [countLabel, totalLabel])
@@ -94,15 +109,15 @@ final class CartViewController: UIViewController {
         leftStack.alignment = .leading
 
         countLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        countLabel.textColor = UIColor(named: "uniBackground") ?? .label
+        countLabel.textColor = UIColor(resource: .uniBackground)
 
         totalLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         totalLabel.textColor = .systemGreen
 
         payButton.setTitle(NSLocalizedString("К оплате", comment: ""), for: .normal)
         payButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        payButton.setTitleColor(UIColor(named: "yaWhite") ?? .white, for: .normal)
-        payButton.backgroundColor = UIColor(named: "yaBlack") ?? .black
+        payButton.setTitleColor(UIColor(resource: .yaWhite), for: .normal)
+        payButton.backgroundColor = UIColor(resource: .yaBlack)
         payButton.layer.cornerRadius = CartSizeConstants.buttonRadius
         payButton.clipsToBounds = true
 
@@ -120,10 +135,11 @@ final class CartViewController: UIViewController {
             payButton.widthAnchor.constraint(equalToConstant: CartSizeConstants.paymentButtonWidth),
             payButton.heightAnchor.constraint(equalToConstant: CartSizeConstants.paymentButtonHeight)
         ])
+        
+        payButton.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
     }
 
     private func setupOverlay() {
-
         view.addSubview(blurOverlayView)
         blurOverlayView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -143,6 +159,7 @@ final class CartViewController: UIViewController {
         snapshot.appendItems(viewModel.items, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: animated)
         tableView.backgroundView = viewModel.items.isEmpty ? emptyView() : nil
+        updateEmptyState()
     }
 
     private func updateTotal() {
@@ -154,8 +171,22 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.text = "Корзина пуста"
         label.textAlignment = .center
-        label.textColor = .secondaryLabel
+        label.textColor = UIColor(resource: .yaBlack)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
+    }
+
+    // MARK: - Empty State Logic
+    private func updateEmptyState() {
+        let isEmpty = viewModel.items.isEmpty
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.totalContainer.isHidden = isEmpty
+            self.tableViewBottomToContainerConstraint?.isActive = !isEmpty
+            self.tableViewBottomToSafeAreaConstraint?.isActive = isEmpty
+            
+            self.view.layoutIfNeeded()
+        })
     }
 
     // MARK: - Delete Confirmation
@@ -215,5 +246,20 @@ final class CartViewController: UIViewController {
             animations()
             completionBlock(true)
         }
+    }
+    
+    // MARK: - Actions
+    @objc private func paymentButtonTapped() {
+        guard let navigationController = self.navigationController else {
+            os_log(.error, log: .default, "CartViewController is not inside a UINavigationController")
+            return
+        }
+        
+        paymentCoordinator = PaymentCoordinator(
+            navigationController: navigationController,
+            cartItems: viewModel.items
+        )
+        
+        paymentCoordinator?.start()
     }
 }
