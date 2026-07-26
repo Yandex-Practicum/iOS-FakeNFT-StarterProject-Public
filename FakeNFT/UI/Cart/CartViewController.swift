@@ -13,6 +13,8 @@ final class CartViewController: UIViewController {
     private let viewModel = CartViewModel()
     
     private var paymentCoordinator: PaymentCoordinator?
+    
+    private let sortStorage = CartSortStorage()
 
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -42,12 +44,15 @@ final class CartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupNavigationBar()
         setupTable()
         setupTotalSection()
         setupOverlay()
         applySnapshot(animated: false)
         updateTotal()
         updateEmptyState()
+        
+        applySort(sortStorage.selectedSort)
     }
 
     private func setupUI() {
@@ -78,6 +83,19 @@ final class CartViewController: UIViewController {
         ])
         
         bottomToContainer.isActive = true
+    }
+    
+    private func setupNavigationBar() {
+        let sortImage = UIImage(resource: .sort)
+        let sortButton = UIBarButtonItem(
+            image: sortImage,
+            style: .plain,
+            target: self,
+            action: #selector(sortButtonTapped)
+        )
+        sortButton.tintColor = UIColor(resource: .yaBlack)
+        
+        navigationItem.rightBarButtonItem = sortButton
     }
 
     private func setupTable() {
@@ -261,5 +279,40 @@ final class CartViewController: UIViewController {
         )
         
         paymentCoordinator?.start()
+    }
+
+    @objc private func sortButtonTapped() {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Сортировка", comment: "Заголовок сортировки"),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        for sortType in CartSortType.allCases {
+            let action = UIAlertAction(title: sortType.localizedTitle, style: .default) { [weak self] _ in
+                self?.applySort(sortType)
+            }
+            alert.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("Закрыть", comment: "Закрыть"),
+            style: .cancel
+        )
+        alert.addAction(cancelAction)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
+        present(alert, animated: true)
+    }
+    
+    private func applySort(_ sortType: CartSortType) {
+        sortStorage.selectedSort = sortType
+        
+        viewModel.sortItems(by: sortType)
+        
+        applySnapshot(animated: true)
     }
 }

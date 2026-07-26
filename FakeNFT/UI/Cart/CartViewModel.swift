@@ -20,4 +20,15 @@ final class CartViewModel {
     var totalPrice: Double {
         items.reduce(0) { $0 + $1.price }
     }
+    
+    func sortItems(by sortType: CartSortType) {
+        switch sortType {
+        case .price:
+            items.sort { $0.price < $1.price }
+        case .rating:
+            items.sort { $0.rating > $1.rating }
+        case .name:
+            items.sort { $0.name < $1.name }
+        }
+    }
 }
