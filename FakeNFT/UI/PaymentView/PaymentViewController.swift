@@ -213,21 +213,17 @@ final class PaymentViewController: UIViewController {
             
             Task { @MainActor in
                 os_log(.info, log: .default, "💰 [UI] Состояние изменилось")
-                
-                // Проверяем, пуст ли текущий снапшот (это значит, что данные только что загрузились)
+
                 if self.dataSource.snapshot().numberOfItems == 0 {
-                    // Первая загрузка: создаем снапшот с нуля
+
                     self.applyInitialSnapshot()
                 } else {
-                    // Данные уже есть, но изменился selectedCurrencyId.
-                    // Принудительно перезагружаем коллекцию, чтобы ячейки заново
-                    // вызвали configure и обновили свою обводку (isSelected)
+
                     self.collectionView.reloadData()
                 }
                 
                 self.updatePayButtonState()
-                
-                // Перезапускаем наблюдение для следующих изменений
+
                 self.observeViewModel()
             }
         }
@@ -285,19 +281,27 @@ final class PaymentViewController: UIViewController {
          onAction?(.openAgreement(url))
      }
      
-     @objc private func payTapped() {
-         guard let currency = viewModel.selectedCurrency else { return }
-         
-         os_log(.info, log: .default, "Payment attempt: %{public}f ETH via %{public}@", viewModel.totalPrice, currency.title)
-         
-         let isSuccess = viewModel.totalPrice <= 100
-         
-         if isSuccess {
-             onAction?(.paymentSuccess(currency: currency, total: viewModel.totalPrice))
-         } else {
-             showPaymentErrorAlert()
-         }
-     }
+    @objc private func payTapped() {
+        guard let currency = viewModel.selectedCurrency else { return }
+        
+        os_log(.info, log: .default, "Попытка оплаты: %{public}f ETH через %{public}@", viewModel.totalPrice, currency.title)
+        
+        payButton.isEnabled = false
+        payButton.alpha = 0.6
+        
+        Task { @MainActor in
+            let isSuccess = await viewModel.executePayment()
+            
+            payButton.isEnabled = true
+            payButton.alpha = 1.0
+            
+            if isSuccess {
+                onAction?(.paymentSuccess(currency: currency, total: viewModel.totalPrice))
+            } else {
+                showPaymentErrorAlert()
+            }
+        }
+    }
 }
 
 // MARK: - Collection View Cell Wrapper

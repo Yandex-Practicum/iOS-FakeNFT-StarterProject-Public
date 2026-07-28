@@ -144,4 +144,19 @@ final class CartViewModel {
             idString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
         }
     }
+    
+    // MARK: - Complete and Clear Order
+    func completeOrderAndClear() async {
+        self.items = []
+        
+        do {
+            _ = try await networkClient.send(
+                request: CompleteOrderRequest(nftIds: []),
+                type: OrderResponse.self
+            )
+            os_log(.info, log: .default, "✅ Заказ успешно выполнен и очищен на сервере")
+        } catch {
+            os_log(.error, log: .default, "❌ Ошибка при очистке заказа на сервере: %{public}@", error.localizedDescription)
+        }
+    }
 }

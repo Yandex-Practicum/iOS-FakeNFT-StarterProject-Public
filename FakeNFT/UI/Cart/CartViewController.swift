@@ -68,6 +68,13 @@ final class CartViewController: UIViewController {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await viewModel.loadCart()
+        }
+    }
 
     private func setupUI() {
         view.backgroundColor = .systemBackground

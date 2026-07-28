@@ -56,3 +56,22 @@ struct PayOrderRequest: NetworkRequest {
         self.endpoint = URL(string: RequestConstants.baseURL + "/api/v1/orders/1/payment/\(currencyId)")
     }
 }
+
+// MARK: - Complete Order Request (Выполнение и очистка)
+struct CompleteOrderDto: Dto {
+    let nftIds: [String]
+    
+    func asDictionary() -> [String: String] {
+        return ["nfts[]": ""]
+    }
+}
+
+struct CompleteOrderRequest: NetworkRequest {
+    let endpoint: URL? = URL(string: RequestConstants.baseURL + "/api/v1/orders/1")
+    let httpMethod: HttpMethod = .post
+    let dto: Dto?
+    
+    init(nftIds: [String] = []) {
+        self.dto = CompleteOrderDto(nftIds: nftIds)
+    }
+}

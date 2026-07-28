@@ -56,6 +56,7 @@ final class PaymentViewModel {
         isLoading = false
     }
     
+    // MARK: - Execute Payment
     func executePayment() async -> Bool {
         guard !selectedCurrencyId.isEmpty else { return false }
         
@@ -69,6 +70,11 @@ final class PaymentViewModel {
             )
             
             os_log(.info, log: .default, "Оплата успешна. Order ID: %{public}@", response.orderId)
+            
+            if response.success {
+                await clearCartOnServer()
+            }
+            
             isLoading = false
             return response.success
             
@@ -77,6 +83,19 @@ final class PaymentViewModel {
             os_log(.error, log: .default, "Ошибка оплаты: %{public}@", error.localizedDescription)
             isLoading = false
             return false
+        }
+    }
+    
+    private func clearCartOnServer() async {
+        do {
+            let response = try await networkClient.send(
+                request: CompleteOrderRequest(nftIds: []),
+                type: OrderResponse.self
+            )
+            
+            os_log(.info, log: .default, "✅ Корзина очищена через POST. nfts: %{public}@", response.nfts.joined(separator: ","))
+        } catch {
+            os_log(.error, log: .default, "❌ Ошибка очистки корзины: %{public}@", error.localizedDescription)
         }
     }
     
