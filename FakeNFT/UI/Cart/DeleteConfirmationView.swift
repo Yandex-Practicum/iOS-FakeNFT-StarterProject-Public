@@ -4,6 +4,7 @@
 //
 //  Created by Сергей Петров on 17.07.2026.
 //
+
 import UIKit
 
 final class DeleteConfirmationView: UIView {
@@ -16,6 +17,7 @@ final class DeleteConfirmationView: UIView {
         setupUI(item: item)
     }
 
+    @available(*, unavailable, message: "Используйте init(item:)")
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI(item: nil)
@@ -28,10 +30,23 @@ final class DeleteConfirmationView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = CartSizeConstants.modalImageRadius
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .systemGray6
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: CartSizeConstants.modalImageSize).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: CartSizeConstants.modalImageSize).isActive = true
-        imageView.image = UIImage(named: item?.name ?? "")
+        
+        if let imageURL = item?.imageURL, !imageURL.isEmpty {
+            imageView.image = UIImage(systemName: "photo") 
+            
+            Task {
+                let image = await ImageLoaderService.shared.loadImage(from: imageURL)
+                await MainActor.run {
+                    imageView.image = image ?? UIImage(systemName: "exclamationmark.triangle")
+                }
+            }
+        } else {
+            imageView.image = UIImage(systemName: "photo")
+        }
 
         let messageLabel = UILabel()
         messageLabel.text = "Вы уверены, что хотите\nудалить объект из корзины?"
@@ -87,6 +102,11 @@ final class DeleteConfirmationView: UIView {
         ])
     }
 
-    @objc private func confirmTapped() { onConfirm?() }
-    @objc private func cancelTapped() { onCancel?() }
+    @objc private func confirmTapped() {
+        onConfirm?()
+    }
+    
+    @objc private func cancelTapped() {
+        onCancel?()
+    }
 }

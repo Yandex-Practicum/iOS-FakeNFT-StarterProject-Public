@@ -4,16 +4,14 @@
 //
 //  Created by Сергей Петров on 26.07.2026.
 //
-
 import Foundation
-import Observation
 
 // MARK: - CartSortType
 enum CartSortType: String, CaseIterable, Identifiable {
 
-    case price = "By price"
-    case rating = "By rating"
-    case name = "By name"
+    case price = "price"
+    case rating = "rating"
+    case name = "name"
     
     var id: String { self.rawValue }
     
@@ -24,38 +22,28 @@ enum CartSortType: String, CaseIterable, Identifiable {
         case .rating:
             return NSLocalizedString("По рейтингу", comment: "Сортировка по рейтингу")
         case .name:
-            return NSLocalizedString("По названию", comment: "Сортировка по имени")
+            return NSLocalizedString("По имени", comment: "Сортировка по имени")
         }
     }
 }
 
 // MARK: - CartSortStorage
-@Observable
 final class CartSortStorage {
+    static let shared = CartSortStorage()
     
-    // MARK: - Properties
     private let defaults = UserDefaults.standard
+    private let sortKey = "selectedCartSortType"
     
-    // MARK: - Computed Property
+    private init() {}
+    
     var selectedSort: CartSortType {
         get {
-            let rawValue = defaults.string(forKey: Keys.selectedSortType) ?? CartSortType.name.rawValue
+            let rawValue = defaults.string(forKey: sortKey) ?? CartSortType.name.rawValue
             return CartSortType(rawValue: rawValue) ?? .name
         }
         set {
-            defaults.set(newValue.rawValue, forKey: Keys.selectedSortType)
+            defaults.set(newValue.rawValue, forKey: sortKey)
+            defaults.synchronize()
         }
-    }
-    
-    // MARK: - Init
-    init() {
-        _ = selectedSort
-    }
-}
-
-// MARK: - Private Keys
-private extension CartSortStorage {
-    enum Keys {
-        static let selectedSortType = "selectedCartSortType"
     }
 }

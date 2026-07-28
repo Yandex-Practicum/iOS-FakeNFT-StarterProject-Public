@@ -19,7 +19,7 @@ final class CartViewModel {
     var errorMessage: String?
     
     private let networkClient: NetworkClient
-    private let sortStorage = CartSortStorage()
+    private let sortStorage = CartSortStorage.shared
     
     // MARK: - Init
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
@@ -32,6 +32,13 @@ final class CartViewModel {
         isLoading = true
         errorMessage = nil
         
+        defer {
+            Task { @MainActor in
+                self.isLoading = false
+                os_log(.info, log: .default, "🔄 [ViewModel] isLoading стал false")
+            }
+        }
+        
         do {
             let order = try await networkClient.send(
                 request: GetOrderRequest(),
@@ -40,21 +47,41 @@ final class CartViewModel {
             
             let nftIds = parseNftIds(from: order.nfts)
             
+            if nftIds.isEmpty {
+                self.items = []
+                return
+            }
+            
             var loadedItems: [CartItem] = []
-            for nftId in nftIds {
-                let nftData = try await networkClient.send(
-                    request: GetNftRequest(nftId: nftId),
-                    type: NftResponse.self
-                )
+            
+            try await withThrowingTaskGroup(of: CartItem?.self) { group in
+                for nftId in nftIds {
+                    group.addTask {
+                        do {
+                            let nftData = try await self.networkClient.send(
+                                request: GetNftRequest(nftId: nftId),
+                                type: NftResponse.self
+                            )
+                            
+                            return CartItem(
+                                id: nftData.id,
+                                imageURL: nftData.images.first ?? "",
+                                name: nftData.name,
+                                rating: nftData.rating,
+                                price: nftData.price
+                            )
+                        } catch {
+                            os_log(.error, log: .default, "NFT с id %{public}@ не найден, пропускаем", nftId)
+                            return nil
+                        }
+                    }
+                }
                 
-                let cartItem = CartItem(
-                    id: nftData.id,
-                    imageURL: nftData.images.first ?? "",
-                    name: nftData.name,
-                    rating: nftData.rating,
-                    price: nftData.price
-                )
-                loadedItems.append(cartItem)
+                for try await item in group {
+                    if let validItem = item {
+                        loadedItems.append(validItem)
+                    }
+                }
             }
             
             self.items = loadedItems
@@ -64,8 +91,6 @@ final class CartViewModel {
             errorMessage = error.localizedDescription
             os_log(.error, log: .default, "Ошибка загрузки корзины: %{public}@", error.localizedDescription)
         }
-        
-        isLoading = false
     }
     
     // MARK: - Remove Item

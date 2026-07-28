@@ -5,6 +5,7 @@
 //  Created by Сергей Петров on 16.07.2026.
 //
 import UIKit
+import ProgressHUD
 import os
 
 final class CartViewController: UIViewController {
@@ -14,7 +15,7 @@ final class CartViewController: UIViewController {
     
     private var paymentCoordinator: PaymentCoordinator?
     
-    private let sortStorage = CartSortStorage()
+    private let sortStorage = CartSortStorage.shared
 
     // MARK: - UI
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -48,11 +49,24 @@ final class CartViewController: UIViewController {
         setupTable()
         setupTotalSection()
         setupOverlay()
-        applySnapshot(animated: false)
+        
         updateTotal()
         updateEmptyState()
         
+        observeLoadingState()
+        observeItemsState()
+        
         applySort(sortStorage.selectedSort)
+        
+        if viewModel.isLoading {
+            os_log(.info, log: .default, "⏳ [UI] Показываем HUD из viewDidLoad")
+            ProgressHUD.show("Загрузка корзины...")
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
     }
 
     private func setupUI() {
@@ -193,6 +207,39 @@ final class CartViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return label
     }
+    
+    // MARK: - Observation
+      private func observeLoadingState() {
+          withObservationTracking {
+              _ = viewModel.isLoading
+          } onChange: { [weak self] in
+              guard let self else { return }
+              
+              Task { @MainActor in
+                  if !self.viewModel.isLoading {
+                      os_log(.info, log: .default, "✅ [UI] Вызываем ProgressHUD.dismiss()")
+                      ProgressHUD.dismiss()
+                  }
+                  
+                  self.observeLoadingState()
+              }
+          }
+      }
+
+      private func observeItemsState() {
+          withObservationTracking {
+              _ = viewModel.items
+          } onChange: { [weak self] in
+              guard let self else { return }
+              Task { @MainActor in
+                  os_log(.info, log: .default, "📱 [UI] Обновляем таблицу. Товаров: %{public}d", self.viewModel.items.count)
+                  self.applySnapshot(animated: true)
+                  self.updateTotal()
+                  self.updateEmptyState()
+                  self.observeItemsState()
+              }
+          }
+      }
 
     // MARK: - Empty State Logic
     private func updateEmptyState() {

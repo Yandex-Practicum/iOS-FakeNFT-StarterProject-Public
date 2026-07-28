@@ -4,6 +4,7 @@
 //
 //  Created by Сергей Петров on 17.07.2026.
 //
+
 import UIKit
 
 final class CartItemCell: UITableViewCell {
@@ -26,8 +27,9 @@ final class CartItemCell: UITableViewCell {
         setupUI()
     }
 
+    @available(*, unavailable, message: "Используйте init(style:reuseIdentifier:)")
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     // MARK: - Setup
@@ -38,11 +40,12 @@ final class CartItemCell: UITableViewCell {
         thumbImageView.contentMode = .scaleAspectFill
         thumbImageView.layer.cornerRadius = CartSizeConstants.cellImageCornerRadius
         thumbImageView.clipsToBounds = true
+        thumbImageView.backgroundColor = .systemGray6 // Заглушка, пока грузится картинка
         thumbImageView.translatesAutoresizingMaskIntoConstraints = false
         thumbImageView.widthAnchor.constraint(equalToConstant: CartSizeConstants.cellImageSize).isActive = true
         thumbImageView.heightAnchor.constraint(equalToConstant: CartSizeConstants.cellImageSize).isActive = true
 
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold) // .bold17
+        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         titleLabel.textColor = UIColor(resource: .yaBlack)
         titleLabel.numberOfLines = 1
 
@@ -91,7 +94,7 @@ final class CartItemCell: UITableViewCell {
 
         let mainStack = UIStackView(arrangedSubviews: [thumbImageView, infoStack, spacer, deleteButton])
         mainStack.axis = .horizontal
-        mainStack.spacing = 20 // spacing: 20 из SwiftUI
+        mainStack.spacing = 20
         mainStack.alignment = .center
         mainStack.translatesAutoresizingMaskIntoConstraints = false
 
@@ -107,7 +110,8 @@ final class CartItemCell: UITableViewCell {
 
     // MARK: - Configuration
     func configure(with item: CartItem) {
-        thumbImageView.image = UIImage(named: item.name)
+        thumbImageView.image = UIImage(systemName: "photo")
+        
         titleLabel.text = item.name
         priceValueLabel.text = String(format: "%.2f ETH", item.price)
         
@@ -117,6 +121,16 @@ final class CartItemCell: UITableViewCell {
         for (index, view) in starsStackView.arrangedSubviews.enumerated() {
             if let starImageView = view as? UIImageView {
                 starImageView.tintColor = index < item.rating ? activeStarColor : inactiveStarColor
+            }
+        }
+
+        let urlToLoad = item.imageURL
+        
+        Task {
+            let image = await ImageLoaderService.shared.loadImage(from: urlToLoad)
+            
+            await MainActor.run {
+                self.thumbImageView.image = image ?? UIImage(systemName: "exclamationmark.triangle")
             }
         }
     }
