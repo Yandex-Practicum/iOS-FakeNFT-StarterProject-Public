@@ -206,12 +206,28 @@ final class PaymentViewController: UIViewController {
     // MARK: - Observation
     private func observeViewModel() {
         withObservationTracking {
+            _ = viewModel.currencies
             _ = viewModel.selectedCurrencyId
         } onChange: { [weak self] in
             guard let self else { return }
+            
             Task { @MainActor in
-                self.collectionView.reloadData()
+                os_log(.info, log: .default, "💰 [UI] Состояние изменилось")
+                
+                // Проверяем, пуст ли текущий снапшот (это значит, что данные только что загрузились)
+                if self.dataSource.snapshot().numberOfItems == 0 {
+                    // Первая загрузка: создаем снапшот с нуля
+                    self.applyInitialSnapshot()
+                } else {
+                    // Данные уже есть, но изменился selectedCurrencyId.
+                    // Принудительно перезагружаем коллекцию, чтобы ячейки заново
+                    // вызвали configure и обновили свою обводку (isSelected)
+                    self.collectionView.reloadData()
+                }
+                
                 self.updatePayButtonState()
+                
+                // Перезапускаем наблюдение для следующих изменений
                 self.observeViewModel()
             }
         }

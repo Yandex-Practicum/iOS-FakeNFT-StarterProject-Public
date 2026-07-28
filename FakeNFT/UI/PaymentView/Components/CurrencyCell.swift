@@ -103,25 +103,35 @@ final class CurrencyCell: UIView {
         self.currentCurrency = currency
         self.onTap = onTap
         
-        titleLabel.text = currency.title
-        nameLabel.text = currency.name
-
+        // Очищаем название и имя от возможных запятых (баг API)
+        titleLabel.text = currency.title.replacingOccurrences(of: ",", with: "").trimmingCharacters(in: .whitespaces)
+        nameLabel.text = currency.name.replacingOccurrences(of: ",", with: "").trimmingCharacters(in: .whitespaces)
+        
         layer.borderWidth = isSelected ? 1 : 0
         layer.borderColor = isSelected ? UIColor.black.cgColor : UIColor.clear.cgColor
         
-        let imageUrl = currency.image
-        currencyImageView.image = nil
+        // ⭐ ШАГ 1: Очищаем URL от запятых и пробелов в конце строки
+        let rawURL = currency.image
+        let cleanURL = rawURL.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: ",", with: "")
         
+        // ⭐ ШАГ 2: Ставим заглушку до завершения загрузки
+        currencyImageView.image = UIImage(systemName: "photo")
+        
+        // ⭐ ШАГ 3: Асинхронная загрузка через наш сервис
         Task {
-            let image = await ImageLoaderService.shared.loadImage(from: imageUrl)
+            let image = await ImageLoaderService.shared.loadImage(from: cleanURL)
             
+            // ⭐ ШАГ 4: Обновляем UI строго на главном потоке
             await MainActor.run {
-                if self.currentCurrency?.image == imageUrl {
+                // Защита от артефактов при быстром скролле коллекции
+                if self.currentCurrency?.image == rawURL {
                     self.currencyImageView.image = image ?? UIImage(systemName: "exclamationmark.triangle")
                 }
             }
         }
     }
+    
     
     // MARK: - Actions
     @objc private func cellTapped() {
