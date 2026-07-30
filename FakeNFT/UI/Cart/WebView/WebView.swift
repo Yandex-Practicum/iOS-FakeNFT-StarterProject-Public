@@ -1,0 +1,121 @@
+//
+//  WebView.swift
+//  FakeNFT
+//
+//  Created by Сергей Петров on 20.07.2026.
+//
+
+import UIKit
+import WebKit
+import os
+
+// MARK: - WebViewController
+final class WebViewController: UIViewController {
+    
+    // MARK: - Properties
+    private let url: URL?
+    
+    // MARK: - UI Elements
+    private lazy var webView: WKWebView = {
+        let configuration = WKWebViewConfiguration()
+        
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.allowsBackForwardNavigationGestures = true
+        return webView
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    // MARK: - Init
+    init(url: URL?) {
+        self.url = url
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        setupWebView()
+        loadURL()
+    }
+    
+    // MARK: - Setup
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        view.addSubview(webView)
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupWebView() {
+        webView.navigationDelegate = self
+    }
+    
+    private func loadURL() {
+        guard let url = url else {
+            os_log(.error, log: .default, "WebView: URL is nil, cannot load request")
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+    
+    // MARK: - Actions
+    @objc private func goBackTapped() {
+        if webView.canGoBack {
+            webView.goBack()
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+}
+
+// MARK: - WKNavigationDelegate
+extension WebViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
+        updateNavigationButtons()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        activityIndicator.stopAnimating()
+        os_log(.error, log: .default, "WebView failed to load URL: %{public}@", error.localizedDescription)
+        
+        let alert = UIAlertController(
+            title: "Ошибка загрузки",
+            message: "Не удалось загрузить страницу",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    private func updateNavigationButtons() {
+        navigationItem.hidesBackButton = webView.canGoBack
+    }
+}
