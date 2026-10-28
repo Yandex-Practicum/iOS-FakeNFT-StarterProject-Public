@@ -18,11 +18,11 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     func didTapMyNFTs() {
-        print("Нажата кнопка Мои NFT")
+        view?.navigateToMyNFTs()
     }
     
     func didTapFavorites() {
-        print("Нажата кнопка Избранные NFT")
+        view?.navigateToFavorites()
     }
     
     func didTapWebsite(urlString: String?) {

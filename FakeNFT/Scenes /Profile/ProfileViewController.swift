@@ -105,6 +105,16 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
             self.present(alert, animated: true)
         }
     }
+    
+    func navigateToMyNFTs() {
+            let myNFTVC = MyNFTViewController()
+            navigationController?.pushViewController(myNFTVC, animated: true)
+        }
+        
+        func navigateToFavorites() {
+            let favoritesVC = FavoriteNFTViewController()
+            navigationController?.pushViewController(favoritesVC, animated: true)
+        }
 }
 
 // MARK: - UITableViewDataSource

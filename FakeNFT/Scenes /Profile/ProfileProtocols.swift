@@ -6,6 +6,8 @@ protocol ProfileViewProtocol: AnyObject {
     func hideLoading()
     func showProfile(_ profile: Profile)
     func showError(message: String)
+    func navigateToMyNFTs()
+    func navigateToFavorites()
 }
 
 // То, что View может сказать Presenter
