@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileHeaderView: UIView {
     
@@ -92,7 +93,16 @@ final class ProfileHeaderView: UIView {
         descriptionLabel.text = profile.description
         websiteButton.setTitle(profile.website, for: .normal)
         
-        // Пока не грузим картинку из сети, оставляем заглушку (в будущем прикрутим Kingfisher)
-        // avatarImageView.kf.setImage(with: URL(string: profile.avatar))
+        // Загружаем аватарку
+        if let url = URL(string: profile.avatar) {
+            // placeholder — это картинка, которая показывается, пока идет загрузка из сети
+            let placeholder = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(.systemGray3, renderingMode: .alwaysOriginal)
+            
+            avatarImageView.kf.setImage(
+                with: url,
+                placeholder: placeholder,
+                options: [.transition(.fade(0.2))] // Красивое появление картинки
+            )
+        }
     }
 }
