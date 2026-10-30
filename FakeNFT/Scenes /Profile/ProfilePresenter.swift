@@ -8,6 +8,9 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     // Сетевой клиент
     private let networkClient: NetworkClient
     
+    // Храним текущий профиль, чтобы передать его на экран редактирования
+    private var currentProfile: Profile?
+    
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient
     }
@@ -29,11 +32,22 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         print("Нажата ссылка на сайт: \(urlString ?? "нет ссылки")")
     }
     
+    func updateProfile(with newProfile: Profile) {
+        self.currentProfile = newProfile
+        view?.showProfile(newProfile)
+    }
+    
+    // Метод для нажатия на карандаш
+    func didTapEdit() {
+        guard let profile = currentProfile else { return }
+        view?.showEditScreen(with: profile)
+    }
+    
     // MARK: - Private Methods
     private func loadProfile() {
         view?.showLoading()
         
-        // СЕРВЕР НЕДОСТУПЕН
+        // СЕРВЕР НЕДОСТУПЕН (используем мок)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.view?.hideLoading()
             
@@ -46,6 +60,11 @@ final class ProfilePresenter: ProfilePresenterProtocol {
                 nfts: [],
                 likes: []
             )
+            
+            // Сохраняем профиль в свойство, чтобы работал didTapEdit
+            self?.currentProfile = mockProfile
+            
+            // Отображаем профиль на экране
             self?.view?.showProfile(mockProfile)
         }
     }

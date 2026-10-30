@@ -8,6 +8,7 @@ protocol ProfileViewProtocol: AnyObject {
     func showError(message: String)
     func navigateToMyNFTs()
     func navigateToFavorites()
+    func showEditScreen(with profile: Profile)
 }
 
 // То, что View может сказать Presenter
@@ -16,5 +17,7 @@ protocol ProfilePresenterProtocol: AnyObject {
     func viewDidLoad()
     func didTapMyNFTs()
     func didTapFavorites()
+    func didTapEdit()
     func didTapWebsite(urlString: String?)
+    func updateProfile(with newProfile: Profile)
 }

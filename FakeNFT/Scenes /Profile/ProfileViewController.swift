@@ -36,10 +36,27 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        setupNavigationBar()
         setupViews()
         setupConstraints()
         
-        presenter.viewDidLoad() // Говорим презентеру, что экран загрузился
+        presenter.viewDidLoad()
+    }
+    
+    // Настройка правой кнопки (карандаш)
+    private func setupNavigationBar() {
+        let editButton = UIBarButtonItem(
+            image: UIImage(systemName: "pencil"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapEditButton)
+        )
+        navigationItem.rightBarButtonItem = editButton
+    }
+    
+    @objc private func didTapEditButton() {
+        presenter.didTapEdit()
     }
     
     private func setupViews() {
@@ -106,15 +123,27 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
         }
     }
     
-    func navigateToMyNFTs() {
-            let myNFTVC = MyNFTViewController()
-            navigationController?.pushViewController(myNFTVC, animated: true)
-        }
+    // Открытие экрана редактирования
+    func showEditScreen(with profile: Profile) {
+        let editVC = EditProfileViewController(profile: profile)
         
-        func navigateToFavorites() {
-            let favoritesVC = FavoriteNFTViewController()
-            navigationController?.pushViewController(favoritesVC, animated: true)
-        }
+        editVC.onProfileUpdated = { [weak self] updatedProfile in
+                    self?.presenter.updateProfile(with: updatedProfile)
+                }
+        
+        let navController = UINavigationController(rootViewController: editVC)
+        present(navController, animated: true)
+    }
+    
+    func navigateToMyNFTs() {
+        let myNFTVC = MyNFTViewController()
+        navigationController?.pushViewController(myNFTVC, animated: true)
+    }
+    
+    func navigateToFavorites() {
+        let favoritesVC = FavoriteNFTViewController()
+        navigationController?.pushViewController(favoritesVC, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
