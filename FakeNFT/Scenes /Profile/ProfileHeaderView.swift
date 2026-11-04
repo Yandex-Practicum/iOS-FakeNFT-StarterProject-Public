@@ -17,8 +17,8 @@ final class ProfileHeaderView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        label.textColor = .label
+        label.font = UIFont(name: "SFProText-Bold", size: 22) ?? .systemFont(ofSize: 22, weight: .bold)
+        label.textColor = UIColor(named: "YPBlack") ?? .black
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -26,8 +26,8 @@ final class ProfileHeaderView: UIView {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .label
+        label.font = UIFont(name: "SFProText-Regular", size: 13) ?? .systemFont(ofSize: 13, weight: .regular)
+        label.textColor = UIColor(named: "YPBlack") ?? .black
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,8 +35,8 @@ final class ProfileHeaderView: UIView {
     
     private lazy var websiteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.setTitleColor(.systemBlue, for: .normal) // В макете ссылка синяя
+        button.titleLabel?.font = UIFont(name: "SFProText-Regular", size: 15) ?? .systemFont(ofSize: 15)
         button.contentHorizontalAlignment = .leading
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -69,17 +69,17 @@ final class ProfileHeaderView: UIView {
             avatarImageView.widthAnchor.constraint(equalToConstant: 70),
             avatarImageView.heightAnchor.constraint(equalToConstant: 70),
             
-            // Имя (справа от аватара, по центру аватара)
+            // Имя (по центру аватарки, отступ 16 от правого края аватарки)
             nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            // Описание (под аватаром)
+            // Описание (под аватаром, отступ 20)
             descriptionLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 20),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            // Ссылка на сайт (под описанием)
+            // Ссылка на сайт (под описанием, отступ 8)
             websiteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
             websiteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             websiteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -90,19 +90,24 @@ final class ProfileHeaderView: UIView {
     // MARK: - Configure
     func configure(with profile: Profile) {
         nameLabel.text = profile.name
-        descriptionLabel.text = profile.description
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 5 // line-height 18 из Figma
+        descriptionLabel.attributedText = NSAttributedString(
+            string: profile.description ?? "",
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .font: UIFont(name: "SFProText-Regular", size: 13) ?? .systemFont(ofSize: 13),
+                .foregroundColor: UIColor(named: "YPBlack") ?? .black
+            ]
+        )
+        
         websiteButton.setTitle(profile.website, for: .normal)
         
-        // Загружаем аватарку
-        if let url = URL(string: profile.avatar) {
-            // placeholder — это картинка, которая показывается, пока идет загрузка из сети
+        if let urlString = profile.avatar.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let url = URL(string: urlString) {
             let placeholder = UIImage(systemName: "person.crop.circle.fill")?.withTintColor(.systemGray3, renderingMode: .alwaysOriginal)
-            
-            avatarImageView.kf.setImage(
-                with: url,
-                placeholder: placeholder,
-                options: [.transition(.fade(0.2))] // Красивое появление картинки
-            )
+            avatarImageView.kf.setImage(with: url, placeholder: placeholder, options: [.transition(.fade(0.2))])
         }
     }
 }

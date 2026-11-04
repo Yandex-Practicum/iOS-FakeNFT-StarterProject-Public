@@ -1,12 +1,10 @@
 import UIKit
-import ProgressHUD // Используем библиотеку для лоадера, которая уже есть в скелете
+import ProgressHUD
 
 final class ProfileViewController: UIViewController, ProfileViewProtocol {
     
-    // MARK: - Presenter
     private let presenter: ProfilePresenterProtocol
     
-    // MARK: - UI Элементы
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProfileMenuCell")
@@ -18,11 +16,8 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
     }()
     
     private lazy var headerView = ProfileHeaderView()
-    
-    // Меню
     private let menuItems = ["Мои NFT", "Избранные NFT"]
     
-    // MARK: - Init
     init(presenter: ProfilePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -32,26 +27,26 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Жизненный цикл
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
         setupNavigationBar()
         setupViews()
         setupConstraints()
-        
         presenter.viewDidLoad()
     }
     
-    // Настройка правой кнопки (карандаш)
     private func setupNavigationBar() {
+        let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
+        let editImage = UIImage(systemName: "square.and.pencil", withConfiguration: config)
+        
         let editButton = UIBarButtonItem(
-            image: UIImage(systemName: "pencil"),
+            image: editImage,
             style: .plain,
             target: self,
             action: #selector(didTapEditButton)
         )
+        editButton.tintColor = UIColor(named: "YPBlack") ?? .black
         navigationItem.rightBarButtonItem = editButton
     }
     
@@ -74,15 +69,12 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
     }
     
     private func updateHeaderLayout() {
-        // Важно для UITableView: нужно правильно рассчитать размер шапки
         guard let header = tableView.tableHeaderView else { return }
-        
         let size = header.systemLayoutSizeFitting(
             CGSize(width: tableView.bounds.width, height: UIView.layoutFittingCompressedSize.height),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-        
         if header.frame.height != size.height {
             header.frame.size.height = size.height
             tableView.tableHeaderView = header
@@ -94,24 +86,13 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
         updateHeaderLayout()
     }
     
-    // MARK: - ProfileViewProtocol
-    
-    func showLoading() {
-        DispatchQueue.main.async {
-            ProgressHUD.show()
-        }
-    }
-    
-    func hideLoading() {
-        DispatchQueue.main.async {
-            ProgressHUD.dismiss()
-        }
-    }
+    func showLoading() { DispatchQueue.main.async { ProgressHUD.show() } }
+    func hideLoading() { DispatchQueue.main.async { ProgressHUD.dismiss() } }
     
     func showProfile(_ profile: Profile) {
         DispatchQueue.main.async {
             self.headerView.configure(with: profile)
-            self.updateHeaderLayout() // Пересчитываем высоту шапки
+            self.updateHeaderLayout()
         }
     }
     
@@ -123,14 +104,11 @@ final class ProfileViewController: UIViewController, ProfileViewProtocol {
         }
     }
     
-    // Открытие экрана редактирования
     func showEditScreen(with profile: Profile) {
         let editVC = EditProfileViewController(profile: profile)
-        
         editVC.onProfileUpdated = { [weak self] updatedProfile in
-                    self?.presenter.updateProfile(with: updatedProfile)
-                }
-        
+            self?.presenter.updateProfile(with: updatedProfile)
+        }
         let navController = UINavigationController(rootViewController: editVC)
         present(navController, animated: true)
     }
@@ -157,10 +135,22 @@ extension ProfileViewController: UITableViewDataSource {
         
         var content = cell.defaultContentConfiguration()
         content.text = menuItems[indexPath.row]
-        content.textProperties.font = .systemFont(ofSize: 17, weight: .bold)
+        content.textProperties.font = UIFont(name: "SFProText-Bold", size: 17) ?? .systemFont(ofSize: 17, weight: .bold)
+        content.textProperties.color = UIColor(named: "YPBlack") ?? .black
         cell.contentConfiguration = content
         
-        cell.accessoryType = .disclosureIndicator
+        // Создаем свою стрелочку нужного цвета
+        let chevronImageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevronImageView.tintColor = UIColor(named: "YPBlack") ?? .black
+        chevronImageView.contentMode = .scaleAspectFit
+        
+        // Ставим её как правый аксессуар и отключаем стандартный серый
+        cell.accessoryView = chevronImageView
+        cell.accessoryType = .none
+        
+        // Делаем фон ячейки прозрачным, чтобы в темной теме не было белых полос
+        cell.backgroundColor = .clear
+        
         return cell
     }
 }
@@ -168,12 +158,11 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 54 // Высота из макета
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         if indexPath.row == 0 {
             presenter.didTapMyNFTs()
         } else {
